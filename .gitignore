@@ -1,4 +1,7 @@
 *.class
+*.iml
+.idea
+logs
 
 # Package Files #
 *.jar
