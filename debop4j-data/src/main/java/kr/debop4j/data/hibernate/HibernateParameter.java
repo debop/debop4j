@@ -3,6 +3,7 @@ package kr.debop4j.data.hibernate;
 import com.google.common.base.Objects;
 import kr.debop4j.data.NamedParameterBase;
 import lombok.Getter;
+import lombok.Setter;
 
 /**
  * Hibernate용 Parameter 정보를 표현합니다.
@@ -14,6 +15,7 @@ public class HibernateParameter extends NamedParameterBase {
     private static final long serialVersionUID = -6291985997768450558L;
 
     @Getter
+    @Setter
     private org.hibernate.type.Type type;
 
     public HibernateParameter(String name, Object value) {

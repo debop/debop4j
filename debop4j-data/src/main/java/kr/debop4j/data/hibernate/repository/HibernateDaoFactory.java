@@ -15,7 +15,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class HibernateDaoFactory {
 
-    private static final String HIBERNATE_DAO_KEY = "kr.nsoft.data.hibernate.dao.IHibernateDao";
+    private static final String HIBERNATE_DAO_KEY = "kr.debop4j.data.hibernate.dao.IHibernateDao";
 
     public <E extends IStatefulEntity> IHibernateDao<E> getOrCreateHibernateDao(Class<E> entityClass) {
         Guard.shouldNotBeNull(entityClass, "entityClass");

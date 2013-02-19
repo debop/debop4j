@@ -63,7 +63,7 @@ public final class UnitOfWorks {
 
     public static synchronized IUnitOfWorkFactory getUnitOfWorkFactory() {
         if (unitOfWorkFactory == null) {
-            unitOfWorkFactory = Springs.getBeansByType(IUnitOfWorkFactory.class).get(0);
+            unitOfWorkFactory = Springs.getFirstBeanByType(IUnitOfWorkFactory.class);
 
             if (log.isInfoEnabled())
                 log.info("IUnitOfWorkFactory Bean을 가져옵니다. unitOfWorkFactory=[{}]", unitOfWorkFactory);

@@ -22,19 +22,19 @@ public class UnitOfWorkTransactionAdapter implements IUnitOfWorkTransaction {
     @Override
     public void commit() {
         if (log.isDebugEnabled())
-            log.debug("현 Transaction의 Commit 작업을 시작합니다.");
+            log.debug("현 Transaction의 Commit 작업을 시작합니다...");
 
         transaction.commit();
 
         if (log.isDebugEnabled())
-            log.debug("현 Transaction의 Commit 작업이 성공했습니다.");
+            log.debug("현 Transaction의 Commit 작업을 완료했습니다.");
     }
 
     @Override
     public void rollback() {
 
         if (log.isDebugEnabled())
-            log.debug("현 Transaction에 예외가 발생하여 rollback 합니다.");
+            log.debug("현 Transaction에 예외가 발생하여 rollback 합니다...");
 
         transaction.rollback();
 

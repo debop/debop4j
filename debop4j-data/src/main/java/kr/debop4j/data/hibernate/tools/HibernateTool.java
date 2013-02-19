@@ -36,13 +36,11 @@ import static kr.debop4j.core.Guard.shouldNotBeNull;
 @Slf4j
 public class HibernateTool {
 
-    private HibernateTool() {
-    }
-
-    private static final boolean isDebugEnabled = log.isDebugEnabled();
+    private HibernateTool() { }
 
     public static HibernateDaoFactory getHibernateDaoFactory() {
-        return Springs.getBean(HibernateDaoFactory.class);
+        // 이 작업이 가능하려면 Springs 로 Initialize 를 수행할 수 있도록 해 주어야 합니다.
+        return Springs.getFirstBeanByType(HibernateDaoFactory.class);
     }
 
     public static <E extends IStatefulEntity> IHibernateDao getHibernateDao(Class<E> entityClass) {
@@ -64,6 +62,12 @@ public class HibernateTool {
         registry.getEventListenerGroup(EventType.PRE_UPDATE).appendListener(listener);
     }
 
+    /**
+     * {@link HibernateParameter} 정보를 Name, Value 형태의 맵으로 변환합니다.
+     *
+     * @param parameters
+     * @return
+     */
     public static Map<String, Object> toMap(HibernateParameter... parameters) {
         Map<String, Object> map = Maps.newHashMap();
         for (HibernateParameter parameter : parameters) {
@@ -72,11 +76,16 @@ public class HibernateTool {
         return map;
     }
 
-
+    /**
+     * 지정된 수형에 대한 Detached Criteria 를 제공합니다.
+     */
     public static <T extends IStatefulEntity> DetachedCriteria createDetachedCriteria(Class<T> clazz) {
         return DetachedCriteria.forClass(clazz);
     }
 
+    /**
+     * 지정된 수형에 대한 Detached Criteria 를 제공합니다.
+     */
     public static Criteria createCriteria(Class entityClass, Session session, Order[] orders, Criterion... criterions) {
         if (log.isDebugEnabled())
             log.debug("엔티티 [{}] 에 대한 Criteria를 생성합니다...", entityClass.getName());
@@ -179,7 +188,7 @@ public class HibernateTool {
         Guard.shouldNotBeNull(query, "query");
 
         for (HibernateParameter param : params) {
-            if (isDebugEnabled)
+            if (log.isDebugEnabled())
                 log.debug("쿼리문의 인자값을 설정합니다. param=[{}]", param);
 
             query.setParameter(param.getName(),
@@ -195,7 +204,7 @@ public class HibernateTool {
     public static Criteria setPaging(Criteria criteria, Integer firstResult, Integer maxResults) {
         Guard.shouldNotBeNull(criteria, "criteria");
 
-        if (isDebugEnabled)
+        if (log.isDebugEnabled())
             log.debug("criteria에 fetch range를 지정합니다. firstResult=[{}], maxResults=[{}]", firstResult, maxResults);
 
         if (firstResult != null && firstResult >= 0)
@@ -213,7 +222,7 @@ public class HibernateTool {
     public static Query setPaging(Query query, Integer firstResult, Integer maxResults) {
         Guard.shouldNotBeNull(query, "query");
 
-        if (isDebugEnabled)
+        if (log.isDebugEnabled())
             log.debug("query에 fetch range를 지정합니다. firstResult=[{}], maxResults=[{}]", firstResult, maxResults);
 
         if (firstResult != null && firstResult >= 0)

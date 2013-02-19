@@ -16,7 +16,7 @@ import java.util.Map;
 @Slf4j
 public class UnitOfWorkFactory implements IUnitOfWorkFactory {
 
-    public static final String CURRENT_HIBERNATE_SESSION = "hibernateUnitOfWorkFactory.current.hibernate.session";
+    public static final String CURRENT_HIBERNATE_SESSION = UnitOfWorkFactory.class.getName() + ".current.hibernate.session";
 
     protected final Object syncLock = new Object();
     protected SessionFactory sessionFactory;
@@ -76,15 +76,9 @@ public class UnitOfWorkFactory implements IUnitOfWorkFactory {
         if (factory == null)
             factory = this.sessionFactory;
 
-        if(log.isDebugEnabled())
+        if (log.isDebugEnabled())
             log.debug("Local ThreadContext 에 Session을 설정합니다...");
 
-//        Session session;
-//        try {
-//            session = factory.getCurrentSession();
-//        } catch (Exception ignored) {
-//            session = factory.openSession();
-//        }
         Session session = factory.openSession();
         Local.put(CURRENT_HIBERNATE_SESSION, session);
 

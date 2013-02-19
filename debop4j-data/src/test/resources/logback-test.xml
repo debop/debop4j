@@ -10,7 +10,7 @@
     </appender>
 
     <appender name="file" class="ch.qos.logback.core.FileAppender">
-        <file>out/logs/kr.kth.commons.log.txt</file>
+        <file>target/logs/kr.kth.commons.log.txt</file>
         <append>true</append>
         <encoder>
             <pattern>%d{HH:mm:ss.SSS} %-5level [%thread] %logger{16}.%method : %msg%n</pattern>

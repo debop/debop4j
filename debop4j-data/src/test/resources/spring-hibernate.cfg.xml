@@ -32,7 +32,7 @@
 
         <!-- 검색 : hibernate-search 를 이용 : listener 도 추가해야 한다.-->
         <property name="hibernate.search.default.directory_provider">filesystem</property>
-        <property name="hibernate.search.default.indexBase">out/lucene/indexes</property>
+        <property name="hibernate.search.default.indexBase">target/lucene/indexes</property>
 
 
         <!-- one-to-many bidirectional association -->
