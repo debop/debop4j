@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="kr.debop4j.data.mapping.model.hbm.joinedSubclass" default-access="field">
+
+    <class name="JoinedSubClass_Company"
+           table="JoinedSubclass_Company"
+           dynamic-insert="true" dynamic-update="true">
+
+        <id name="id" column="CompanyId" type="long" unsaved-value="0">
+            <generator class="native"/>
+        </id>
+
+        <property name="name" column="CompanyName" not-null="true"/>
+
+    </class>
+
+</hibernate-mapping>

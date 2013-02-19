@@ -1,9 +1,9 @@
 package kr.debop4j.core.io;
 
-import kr.nsoft.commons.Guard;
-import kr.nsoft.commons.ISerializer;
-import kr.nsoft.commons.compress.GZipCompressor;
-import kr.nsoft.commons.compress.ICompressor;
+import kr.debop4j.core.Guard;
+import kr.debop4j.core.ISerializer;
+import kr.debop4j.core.compress.GZipCompressor;
+import kr.debop4j.core.compress.ICompressor;
 import lombok.extern.slf4j.Slf4j;
 
 /**

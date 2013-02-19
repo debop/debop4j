@@ -1,7 +1,7 @@
 package kr.debop4j.core.reflect;
 
 import com.google.common.collect.Lists;
-import kr.nsoft.commons.Guard;
+import kr.debop4j.core.Guard;
 import org.objectweb.asm.ClassWriter;
 import org.objectweb.asm.Label;
 import org.objectweb.asm.MethodVisitor;
@@ -107,7 +107,7 @@ abstract public class FieldAccess {
 
         String className = type.getName();
         String accessClassName = className + "FieldAccess";
-        if (accessClassName.startsWith("java.")) accessClassName = ReflectConsts.BaseNamespace + "." + accessClassName;
+        if (accessClassName.startsWith("java.")) accessClassName = ReflectConsts.BASE_PACKAGE + "." + accessClassName;
         Class accessClass = null;
 
         AccessClassLoader loader = AccessClassLoader.get(type);
@@ -119,7 +119,7 @@ abstract public class FieldAccess {
                 String classNameInternal = className.replace('.', '/');
 
                 ClassWriter cw = new ClassWriter(0);
-                cw.visit(V1_1, ACC_PUBLIC + ACC_SUPER, accessClassNameInternal, null, ReflectConsts.FieldAccessPath,
+                cw.visit(V1_1, ACC_PUBLIC + ACC_SUPER, accessClassNameInternal, null, ReflectConsts.FIELD_ACCESS_PATH,
                          null);
                 insertConstructor(cw);
                 insertGetObject(cw, classNameInternal, fields);
@@ -158,7 +158,7 @@ abstract public class FieldAccess {
         MethodVisitor mv = cw.visitMethod(ACC_PUBLIC, "<init>", "()V", null, null);
         mv.visitCode();
         mv.visitVarInsn(ALOAD, 0);
-        mv.visitMethodInsn(INVOKESPECIAL, ReflectConsts.FieldAccessPath, "<init>", "()V");
+        mv.visitMethodInsn(INVOKESPECIAL, ReflectConsts.FIELD_ACCESS_PATH, "<init>", "()V");
         mv.visitInsn(RETURN);
         mv.visitMaxs(1, 1);
         mv.visitEnd();

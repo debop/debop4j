@@ -1,6 +1,6 @@
 package kr.debop4j.core.compress;
 
-import kr.nsoft.commons.tools.StringTool;
+import kr.debop4j.core.tools.StringTool;
 
 import java.io.IOException;
 

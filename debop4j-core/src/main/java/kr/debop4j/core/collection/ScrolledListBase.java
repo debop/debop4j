@@ -6,7 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 
 import java.util.List;
 
-import static kr.nsoft.commons.Guard.shouldNotBeNull;
+import static kr.debop4j.core.Guard.shouldNotBeNull;
 
 /**
  * 스크롤되는 목록을 표현하는 클래스입니다.

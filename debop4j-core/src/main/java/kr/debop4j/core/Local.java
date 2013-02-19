@@ -3,10 +3,9 @@ package kr.debop4j.core;
 import com.google.common.collect.Maps;
 import lombok.extern.slf4j.Slf4j;
 
-import javax.annotation.concurrent.ThreadSafe;
 import java.util.HashMap;
 
-import static kr.nsoft.commons.Guard.shouldNotBeNull;
+import static kr.debop4j.core.Guard.shouldNotBeNull;
 
 
 /**
@@ -15,7 +14,6 @@ import static kr.nsoft.commons.Guard.shouldNotBeNull;
  * Date: 12. 9. 12
  */
 @Slf4j
-@ThreadSafe
 public class Local {
 
     private Local() { }

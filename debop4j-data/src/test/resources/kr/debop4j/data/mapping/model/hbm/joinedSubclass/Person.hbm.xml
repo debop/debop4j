@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="kr.debop4j.data.mapping.model.hbm.joinedSubclass" default-access="field">
+
+    <class name="JoinedSubClass_Person" table="JoinedSubclass_Person" abstract="true"
+           dynamic-insert="true" dynamic-update="true">
+        <id name="id" column="PersonId" type="long" unsaved-value="0">
+            <generator class="native"/>
+        </id>
+
+        <property name="name" column="PersonName" not-null="true"/>
+        <many-to-one name="company" column="CompanyId" class="JoinedSubClass_Company" lazy="proxy"/>
+    </class>
+
+    <joined-subclass name="JoinedSubClass_Employee" table="JoinedSubclass_Employee" extends="JoinedSubClass_Person">
+        <key column="PersonId"/>
+
+        <property name="title" column="EmployeeTitle"/>
+        <many-to-one name="manager" column="ManagerId" class="JoinedSubClass_Employee" lazy="proxy"/>
+    </joined-subclass>
+
+    <joined-subclass name="JoinedSubClass_Customer" table="JoinedSubclass_Customer" extends="JoinedSubClass_Person">
+        <key column="PersonId"/>
+
+        <many-to-one name="contactOwner" column="contactOwnerId" class="JoinedSubClass_Employee" lazy="proxy"/>
+    </joined-subclass>
+
+</hibernate-mapping>

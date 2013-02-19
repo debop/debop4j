@@ -3,7 +3,6 @@ package kr.debop4j.core.tools;
 import com.google.common.base.*;
 import com.google.common.collect.Lists;
 import com.google.common.primitives.Chars;
-import com.sun.istack.internal.Nullable;
 import kr.debop4j.core.BinaryStringFormat;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.codec.DecoderException;
@@ -11,6 +10,7 @@ import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.codec.binary.Hex;
 import org.apache.commons.codec.binary.StringUtils;
 
+import javax.annotation.Nullable;
 import java.lang.reflect.Field;
 import java.nio.charset.Charset;
 import java.util.ArrayList;

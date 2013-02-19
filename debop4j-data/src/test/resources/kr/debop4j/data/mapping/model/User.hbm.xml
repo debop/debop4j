@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="kr.debop4j.data.mapping.model.hbm" default-access="field">
+
+    <class name="User" table="USERS" dynamic-insert="true" dynamic-update="true">
+
+        <id name="id" column="UserId" type="long" unsaved-value="0">
+            <generator class="native"/>
+        </id>
+
+        <natural-id>
+            <property name="username" column="UserName" length="128" not-null="true"/>
+            <property name="userpwd" column="UserPwd" length="128" not-null="true"/>
+        </natural-id>
+
+        <property name="firstname" column="FirstName" length="255" not-null="true"/>
+        <property name="lastname" column="LastName" length="255" not-null="true"/>
+        <property name="userEmail" column="UserEmail" length="255"/>
+
+        <component name="homeAddress" class="kr.debop4j.data.mapping.model.hbm.Address">
+            <property name="street" column="HomeStreet"/>
+            <property name="zipcode" column="HomeZipCode"/>
+            <property name="city" column="HomeCity"/>
+        </component>
+
+        <component name="officeAddress" class="kr.debop4j.data.mapping.model.hbm.Address">
+            <property name="street" column="OfficeStreet"/>
+            <property name="zipcode" column="OfficeZipCode"/>
+            <property name="city" column="OfficeCity"/>
+        </component>
+    </class>
+
+</hibernate-mapping>

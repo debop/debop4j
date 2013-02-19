@@ -1,7 +1,7 @@
 package kr.debop4j.core.reflect;
 
 import com.google.common.collect.Lists;
-import kr.nsoft.commons.Guard;
+import kr.debop4j.core.Guard;
 import lombok.extern.slf4j.Slf4j;
 
 import java.lang.reflect.Method;

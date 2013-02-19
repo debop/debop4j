@@ -1,7 +1,7 @@
 package kr.debop4j.core.json;
 
-import kr.nsoft.commons.Guard;
-import kr.nsoft.commons.spring.Springs;
+import kr.debop4j.core.Guard;
+import kr.debop4j.core.spring.Springs;
 import lombok.extern.slf4j.Slf4j;
 
 /**

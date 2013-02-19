@@ -12,8 +12,8 @@ import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 
-import static kr.nsoft.commons.Guard.shouldNotBeNull;
-import static kr.nsoft.commons.Guard.shouldNotBeWhiteSpace;
+import static kr.debop4j.core.Guard.shouldNotBeNull;
+import static kr.debop4j.core.Guard.shouldNotBeWhiteSpace;
 
 
 /**

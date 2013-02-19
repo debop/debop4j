@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="kr.debop4j.data.mapping.model.hbm.collection" default-access="field">
+
+    <class name="Item" table="Item_with_enum" dynamic-insert="true" dynamic-update="true">
+
+        <id name="id" column="ItemId" type="long" unsaved-value="0">
+            <generator class="native"/>
+        </id>
+
+        <property name="name" not-null="true"/>
+        <property name="description"/>
+        <property name="initialPrice" type="big_decimal"/>
+        <property name="reservePrice" type="big_decimal"/>
+
+        <property name="startDate" type="date"/>
+        <property name="endDate" type="date"/>
+
+        <property name="approvalDate" type="date"/>
+
+        <property name="state" type="string"/>
+
+        <set name="images" cascade="all" inverse="false" lazy="false" fetch="subselect">
+            <key column="ItemId"/>
+            <composite-element class="Image">
+                <parent name="item"/>
+                <property name="name"/>
+                <property name="filename"/>
+                <property name="sizeX" type="int"/>
+                <property name="sizeY" type="int"/>
+            </composite-element>
+        </set>
+    </class>
+
+</hibernate-mapping>

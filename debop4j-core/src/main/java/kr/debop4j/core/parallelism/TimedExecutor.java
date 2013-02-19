@@ -1,8 +1,8 @@
 package kr.debop4j.core.parallelism;
 
-import kr.nsoft.commons.Executable;
-import kr.nsoft.commons.ExecutableAdapter;
-import kr.nsoft.commons.Guard;
+import kr.debop4j.core.Executable;
+import kr.debop4j.core.ExecutableAdapter;
+import kr.debop4j.core.Guard;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 

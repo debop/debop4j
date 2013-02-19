@@ -1,9 +1,9 @@
 package kr.debop4j.core.reflect;
 
 import com.google.common.collect.Lists;
-import kr.nsoft.commons.Guard;
-import kr.nsoft.commons.tools.ArrayTool;
-import kr.nsoft.commons.tools.StringTool;
+import kr.debop4j.core.Guard;
+import kr.debop4j.core.tools.ArrayTool;
+import kr.debop4j.core.tools.StringTool;
 
 import java.lang.reflect.Constructor;
 import java.util.List;

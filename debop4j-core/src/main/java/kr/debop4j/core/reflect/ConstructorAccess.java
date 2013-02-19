@@ -1,6 +1,6 @@
 package kr.debop4j.core.reflect;
 
-import kr.nsoft.commons.Guard;
+import kr.debop4j.core.Guard;
 import lombok.Getter;
 import org.objectweb.asm.ClassWriter;
 import org.objectweb.asm.MethodVisitor;
@@ -47,7 +47,7 @@ public abstract class ConstructorAccess<T> {
         String className = type.getName();
         String accessClassName = className + "ConstructorAccess";
         if (accessClassName.startsWith("java."))
-            accessClassName = ReflectConsts.BaseNamespace + "." + accessClassName;
+            accessClassName = ReflectConsts.BASE_PACKAGE + "." + accessClassName;
 
         Class accessClass = null;
         AccessClassLoader loader = AccessClassLoader.get(type);
@@ -77,7 +77,7 @@ public abstract class ConstructorAccess<T> {
                 }
 
                 ClassWriter cw = new ClassWriter(0);
-                cw.visit(V1_1, ACC_PUBLIC + ACC_SUPER, accessClassNameInternal, null, ReflectConsts.ConstructorAccessPath, null);
+                cw.visit(V1_1, ACC_PUBLIC + ACC_SUPER, accessClassNameInternal, null, ReflectConsts.CONSTRUCTOR_ACCESS_PATH, null);
 
                 insertConstructor(cw);
                 insertNewInstance(cw, classNameInternal);
@@ -103,7 +103,7 @@ public abstract class ConstructorAccess<T> {
         MethodVisitor mv = cw.visitMethod(ACC_PUBLIC, "<init>", "()V", null, null);
         mv.visitCode();
         mv.visitVarInsn(ALOAD, 0);
-        mv.visitMethodInsn(INVOKESPECIAL, ReflectConsts.ConstructorAccessPath, "<init>", "()V");
+        mv.visitMethodInsn(INVOKESPECIAL, ReflectConsts.CONSTRUCTOR_ACCESS_PATH, "<init>", "()V");
         mv.visitInsn(RETURN);
         mv.visitMaxs(1, 1);
         mv.visitEnd();

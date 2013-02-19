@@ -1,9 +1,9 @@
 package kr.debop4j.core.spring.configuration;
 
-import kr.nsoft.commons.compress.BZip2Compressor;
-import kr.nsoft.commons.compress.DeflateCompressor;
-import kr.nsoft.commons.compress.GZipCompressor;
-import kr.nsoft.commons.compress.XZCompressor;
+import kr.debop4j.core.compress.BZip2Compressor;
+import kr.debop4j.core.compress.DeflateCompressor;
+import kr.debop4j.core.compress.GZipCompressor;
+import kr.debop4j.core.compress.XZCompressor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

@@ -3,8 +3,8 @@ package kr.debop4j.core.parallelism;
 import com.google.common.base.Predicate;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
-import kr.nsoft.commons.Action1;
-import kr.nsoft.commons.Function1;
+import kr.debop4j.core.Action1;
+import kr.debop4j.core.Function1;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 
@@ -13,7 +13,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.concurrent.*;
 
-import static kr.nsoft.commons.Guard.shouldNotBeNull;
+import static kr.debop4j.core.Guard.shouldNotBeNull;
 
 /**
  * 비동기 작업 관련 Utility Class

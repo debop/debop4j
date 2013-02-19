@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="kr.debop4j.data.mapping.model.hbm.join" default-access="field">
+
+    <class name="Join_Customer" table="Join_Customer" dynamic-insert="true" dynamic-update="true">
+
+        <id name="id" column="CustomerId" type="long" unsaved-value="0">
+            <generator class="native"/>
+        </id>
+
+        <property name="name" column="CompanyName" type="string" length="255" not-null="true"/>
+        <property name="email" column="CompanyEmail" length="255"/>
+        <property name="created" column="EventDate" type="date"/>
+
+        <property name="updateTimestamp" column="UpdateTimestamp" type="timestamp" insert="false" update="false"/>
+
+        <join table="Join_Customer_Address">
+            <key column="CustomerId"/>
+            <component name="address" class="Address">
+                <property name="street" column="Street"/>
+                <property name="zipcode" column="ZipCode"/>
+                <property name="city" column="City"/>
+            </component>
+        </join>
+    </class>
+
+</hibernate-mapping>

@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="kr.debop4j.data.mapping.model.hbm" default-access="field">
+
+    <class name="Event" table="Event" dynamic-insert="true" dynamic-update="true">
+
+        <id name="id" column="EventId" type="long" unsaved-value="0">
+            <generator class="native"/>
+        </id>
+
+        <natural-id>
+            <property name="title" column="EventTitle" length="255" not-null="true"/>
+            <property name="date" type="timestamp" column="EventDate"/>
+        </natural-id>
+
+        <property name="updateTimestamp" column="UpdateTimestamp" type="timestamp"/>
+
+        <many-to-one name="category" class="kr.debop4j.data.mapping.model.hbm.Category" column="CategoryId"
+                     lazy="proxy"/>
+    </class>
+
+</hibernate-mapping>

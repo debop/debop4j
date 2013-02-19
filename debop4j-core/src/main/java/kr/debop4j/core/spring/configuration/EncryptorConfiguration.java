@@ -1,9 +1,9 @@
 package kr.debop4j.core.spring.configuration;
 
-import kr.nsoft.commons.cryptography.disgest.*;
-import kr.nsoft.commons.cryptography.symmetric.DESByteEncryptor;
-import kr.nsoft.commons.cryptography.symmetric.RC2ByteEncryptor;
-import kr.nsoft.commons.cryptography.symmetric.TripleDESByteEncryptor;
+import kr.debop4j.core.cryptography.disgest.*;
+import kr.debop4j.core.cryptography.symmetric.DESByteEncryptor;
+import kr.debop4j.core.cryptography.symmetric.RC2ByteEncryptor;
+import kr.debop4j.core.cryptography.symmetric.TripleDESByteEncryptor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 

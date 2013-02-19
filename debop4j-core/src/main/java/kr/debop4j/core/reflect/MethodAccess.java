@@ -1,8 +1,8 @@
 package kr.debop4j.core.reflect;
 
 import com.google.common.collect.Lists;
-import kr.nsoft.commons.Guard;
-import kr.nsoft.commons.tools.StringTool;
+import kr.debop4j.core.Guard;
+import kr.debop4j.core.tools.StringTool;
 import lombok.Getter;
 import org.objectweb.asm.*;
 
@@ -82,7 +82,7 @@ abstract public class MethodAccess {
         String className = type.getName();
         String accessClassName = className + "MethodAccess";
         if (accessClassName.startsWith("java."))
-            accessClassName = ReflectConsts.BaseNamespace + "." + accessClassName;
+            accessClassName = ReflectConsts.BASE_PACKAGE + "." + accessClassName;
         Class accessClass = null;
 
         AccessClassLoader loader = AccessClassLoader.get(type);
@@ -95,13 +95,13 @@ abstract public class MethodAccess {
 
                 ClassWriter cw = new ClassWriter(ClassWriter.COMPUTE_MAXS);
                 MethodVisitor mv;
-                cw.visit(V1_1, ACC_PUBLIC + ACC_SUPER, accessClassNameInternal, null, ReflectConsts.MethodAccessPath,
+                cw.visit(V1_1, ACC_PUBLIC + ACC_SUPER, accessClassNameInternal, null, ReflectConsts.METHOD_ACCESS_PATH,
                          null);
                 {
                     mv = cw.visitMethod(ACC_PUBLIC, "<init>", "()V", null, null);
                     mv.visitCode();
                     mv.visitVarInsn(ALOAD, 0);
-                    mv.visitMethodInsn(INVOKESPECIAL, ReflectConsts.MethodAccessPath, "<init>", "()V");
+                    mv.visitMethodInsn(INVOKESPECIAL, ReflectConsts.METHOD_ACCESS_PATH, "<init>", "()V");
                     mv.visitInsn(RETURN);
                     mv.visitMaxs(0, 0);
                     mv.visitEnd();

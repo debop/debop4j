@@ -15,6 +15,7 @@
 
     <properties>
         <jedis.version>2.1.0</jedis.version>
+        <lambdaj.version>2.3.3</lambdaj.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
@@ -34,7 +35,7 @@
 
         <!--<dependency>-->
         <!--<groupId>com.ning</groupId>-->
-        <!--<artifactId>async-http-client</artifactId>-->
+        <!--<artifactId>examples.async-http-client</artifactId>-->
         <!--<version>1.7.5</version>-->
         <!--<exclusions>-->
         <!--<exclusion>-->
@@ -103,6 +104,12 @@
             <artifactId>jackson-databind</artifactId>
             <version>2.0.6</version>
             <scope>compile</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>com.googlecode.lambdaj</groupId>
+            <artifactId>lambdaj</artifactId>
+            <version>${lambdaj.version}</version>
         </dependency>
 
     </dependencies>
