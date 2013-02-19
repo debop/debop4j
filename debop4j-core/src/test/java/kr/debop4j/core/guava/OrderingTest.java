@@ -14,7 +14,7 @@ import java.util.List;
 import static com.google.common.collect.Lists.newArrayList;
 
 /**
- * kr.nsoft.commons.guava.OrderingTest
+ * kr.debop4j.core.guava.OrderingTest
  * User: sunghyouk.bae@gmail.com
  * Date: 13. 1. 22.
  */

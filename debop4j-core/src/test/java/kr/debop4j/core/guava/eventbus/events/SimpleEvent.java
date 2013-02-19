@@ -3,7 +3,7 @@ package kr.debop4j.core.guava.eventbus.events;
 import lombok.Getter;
 
 /**
- * kr.nsoft.commons.guava.eventbus.events.SimpleEvent
+ * kr.debop4j.core.guava.eventbus.events.SimpleEvent
  * User: sunghyouk.bae@gmail.com
  * Date: 12. 12. 10.
  */

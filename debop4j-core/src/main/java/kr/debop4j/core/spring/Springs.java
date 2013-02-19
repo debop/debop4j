@@ -34,7 +34,7 @@ public final class Springs {
     private Springs() {}
 
     public static final String DEFAULT_APPLICATION_CONTEXT_XML = "applicationContext.xml";
-    private static final String LOCAL_SPRING_CONTEXT = "kr.nsoft.commons.spring.Springs.globalContext";
+    private static final String LOCAL_SPRING_CONTEXT = "kr.debop4j.core.spring.Springs.globalContext";
     private static final String NOT_INITIALIZED_MSG =
             "Springs의 ApplicationContext가 초기화되지 않았습니다. 사용하기 전에  Springs.init()을 호출해주기시 바랍니다.";
 

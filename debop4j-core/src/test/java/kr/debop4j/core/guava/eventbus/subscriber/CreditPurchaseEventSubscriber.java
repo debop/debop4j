@@ -5,7 +5,7 @@ import com.google.common.eventbus.Subscribe;
 import kr.debop4j.core.guava.eventbus.events.CreditPurchaseEvent;
 
 /**
- * kr.nsoft.commons.guava.eventbus.subscriber.CreditPurchaseEventSubscriber
+ * kr.debop4j.core.guava.eventbus.subscriber.CreditPurchaseEventSubscriber
  * User: sunghyouk.bae@gmail.com
  * Date: 12. 12. 10.
  */

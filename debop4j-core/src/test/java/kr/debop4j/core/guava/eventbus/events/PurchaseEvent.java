@@ -4,7 +4,7 @@ import com.google.common.base.Objects;
 import lombok.Getter;
 
 /**
- * kr.nsoft.commons.guava.eventbus.events.PurchaseEvent
+ * kr.debop4j.core.guava.eventbus.events.PurchaseEvent
  * User: sunghyouk.bae@gmail.com
  * Date: 12. 12. 10.
  */

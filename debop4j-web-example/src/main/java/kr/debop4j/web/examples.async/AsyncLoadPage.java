@@ -28,6 +28,8 @@ import java.util.concurrent.Future;
 @WebServlet(urlPatterns = "/async", asyncSupported = true)
 public class AsyncLoadPage extends HttpServlet {
 
+    private static final long serialVersionUID = 8839854702079067625L;
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         AsyncContext asyncContext = req.startAsync(req, resp);
@@ -47,12 +49,12 @@ public class AsyncLoadPage extends HttpServlet {
 
         @Override
         public void run() {
-            //To change body of implemented methods use File | Settings | File Templates.if (log.isDebugEnabled())
+            // To change body of implemented methods use File | Settings | File Templates.if (log.isDebugEnabled())
             log.debug("URI=[{}] 의 웹 컨텐츠를 비동기 방식으로 다운로드 받아 캐시합니다.", url);
 
             try {
 
-                String responseStr = "";
+                String responseStr;
                 HttpAsyncClient httpClient = new DefaultHttpAsyncClient();
                 httpClient.start();
                 HttpGet request = new HttpGet(url);

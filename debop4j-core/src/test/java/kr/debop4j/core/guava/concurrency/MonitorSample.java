@@ -6,7 +6,7 @@ import com.google.common.util.concurrent.Monitor;
 import java.util.List;
 
 /**
- * kr.nsoft.commons.guava.concurrency.MonitorSample
+ * kr.debop4j.core.guava.concurrency.MonitorSample
  * User: sunghyouk.bae@gmail.com
  * Date: 12. 12. 10.
  */

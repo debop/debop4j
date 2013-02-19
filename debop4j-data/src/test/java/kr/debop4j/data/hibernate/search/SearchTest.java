@@ -1,11 +1,12 @@
 package kr.debop4j.data.hibernate.search;
 
+import kr.debop4j.data.hibernate.search.model.SearchItem;
 import lombok.extern.slf4j.Slf4j;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
+import org.hibernate.search.FullTextSession;
 import org.hibernate.search.impl.FullTextSessionImpl;
-import org.hibernate.search.model.SearchItem;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;

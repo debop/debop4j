@@ -10,7 +10,7 @@ import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 
 /**
- * kr.nsoft.commons.json.JsonToolTest
+ * kr.debop4j.core.json.JsonToolTest
  * User: sunghyouk.bae@gmail.com
  * Date: 12. 12. 5.
  */

@@ -9,7 +9,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 
 /**
- * kr.nsoft.commons.reflect.FieldAccessTest
+ * kr.debop4j.core.reflect.FieldAccessTest
  * User: sunghyouk.bae@gmail.com
  * Date: 13. 1. 21
  */

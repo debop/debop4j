@@ -252,7 +252,7 @@ public class EntityTool {
     }
 
     /**
-     * 원본 엔티티를 대상 엔티티로 매핑을 수행합니다. {@link kr.nsoft.commons.tools.MapperTool} 을 사용합니다.
+     * 원본 엔티티를 대상 엔티티로 매핑을 수행합니다. {@link kr.debop4j.core.tools.MapperTool} 을 사용합니다.
      */
     public static <S, T> List<T> mapEntities(List<S> sources, List<T> targets) {
         Guard.shouldNotBeNull(sources, "sources");

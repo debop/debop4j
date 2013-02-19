@@ -27,7 +27,7 @@ public final class UnitOfWorks {
             log.info("UnitOfWorks 인스턴스가 생성되었습니다.");
     }
 
-    private static final String CURRENT_UNIT_OF_WORK_KEY = "kr.nsoft.data.hibernate.unitofwork.UnitOfWorks";
+    private static final String CURRENT_UNIT_OF_WORK_KEY = "kr.debop4j.data.hibernate.unitofwork.UnitOfWorks";
     private static final String UNIT_OF_WORK_NOT_STARTED = "UnitOfWorks가 시작되지 않았습니다. 사용 전에 UnitOfWorks.start()를 호출하세요.";
 
     private static volatile IUnitOfWork globalNonThreadSafeUnitOfWork;

@@ -6,7 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 import java.util.HashMap;
 
 /**
- * kr.nsoft.commons.reflect.benchmark.Benchmark
+ * kr.debop4j.core.reflect.benchmark.Benchmark
  * User: sunghyouk.bae@gmail.com
  * Date: 13. 1. 21
  */

@@ -7,7 +7,7 @@ import org.junit.Test;
 import java.lang.reflect.Field;
 
 /**
- * kr.nsoft.commons.reflect.benchmark.FieldAccessBenchmark
+ * kr.debop4j.core.reflect.benchmark.FieldAccessBenchmark
  * User: sunghyouk.bae@gmail.com
  * Date: 13. 1. 21
  */

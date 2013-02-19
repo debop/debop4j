@@ -17,7 +17,7 @@ import java.util.concurrent.CountDownLatch;
 import static org.junit.Assert.assertEquals;
 
 /**
- * kr.nsoft.commons.guava.eventbus.EventBusTest
+ * kr.debop4j.core.guava.eventbus.EventBusTest
  * User: sunghyouk.bae@gmail.com
  * Date: 12. 12. 10.
  */

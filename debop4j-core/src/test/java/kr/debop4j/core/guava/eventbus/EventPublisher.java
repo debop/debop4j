@@ -7,7 +7,7 @@ import kr.debop4j.core.guava.eventbus.events.NoSubscriberEvent;
 import kr.debop4j.core.guava.eventbus.events.SimpleEvent;
 
 /**
- * kr.nsoft.commons.guava.eventbus.EventPublisher
+ * kr.debop4j.core.guava.eventbus.EventPublisher
  * User: sunghyouk.bae@gmail.com
  * Date: 12. 12. 10.
  */

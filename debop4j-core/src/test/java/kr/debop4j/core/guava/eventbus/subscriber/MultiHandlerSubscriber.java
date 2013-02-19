@@ -11,7 +11,7 @@ import lombok.Getter;
 import java.util.List;
 
 /**
- * kr.nsoft.commons.guava.eventbus.subscriber.MultiHandlerSubscriber
+ * kr.debop4j.core.guava.eventbus.subscriber.MultiHandlerSubscriber
  * User: sunghyouk.bae@gmail.com
  * Date: 12. 12. 10.
  */

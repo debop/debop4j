@@ -5,7 +5,7 @@ import com.google.common.util.concurrent.Monitor;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
- * kr.nsoft.commons.guava.concurrency.MonitorExample
+ * kr.debop4j.core.guava.concurrency.MonitorExample
  * User: sunghyouk.bae@gmail.com
  * Date: 12. 12. 10.
  */

@@ -3,7 +3,7 @@ package kr.debop4j.core;
 import lombok.Getter;
 
 /**
- * kr.nsoft.commons.AutoCloseableAction
+ * 자동으로 리소스를 정리하는 메소드를 가진 클래스입니다.
  * User: sunghyouk.bae@gmail.com
  * Date: 12. 11. 30.
  */

@@ -11,7 +11,7 @@ import java.util.concurrent.Callable;
 import java.util.concurrent.Future;
 
 /**
- * kr.nsoft.commons.tools.With
+ * kr.debop4j.core.tools.With
  * User: sunghyouk.bae@gmail.com
  * Date: 12. 11. 30.
  */

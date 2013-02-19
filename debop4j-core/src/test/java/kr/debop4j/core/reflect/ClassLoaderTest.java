@@ -11,7 +11,7 @@ import java.io.IOException;
 import java.io.InputStream;
 
 /**
- * kr.nsoft.commons.reflect.ClassLoaderTest
+ * kr.debop4j.core.reflect.ClassLoaderTest
  * User: sunghyouk.bae@gmail.com
  * Date: 13. 1. 21
  */

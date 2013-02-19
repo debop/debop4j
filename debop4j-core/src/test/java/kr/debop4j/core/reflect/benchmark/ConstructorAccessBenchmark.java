@@ -5,7 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 
 /**
- * kr.nsoft.commons.reflect.benchmark.ConstructorAccessBenchmark
+ * kr.debop4j.core.reflect.benchmark.ConstructorAccessBenchmark
  * User: sunghyouk.bae@gmail.com
  * Date: 13. 1. 21
  */

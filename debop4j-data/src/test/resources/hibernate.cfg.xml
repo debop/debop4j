@@ -54,23 +54,23 @@
         <property name="hbm2ddl.auto">create</property>
 
         <!-- one-to-many bidirectional association -->
-        <mapping resource="org/hibernate/example/domain/model/Category.hbm.xml"/>
-        <mapping resource="org/hibernate/example/domain/model/Event.hbm.xml"/>
+        <mapping resource="kr/debop4j/data/mapping/model/hbm/Category.hbm.xml"/>
+        <mapping resource="kr/debop4j/data/mapping/model/hbm/Event.hbm.xml"/>
 
         <!-- have 2 component -->
-        <mapping resource="org/hibernate/example/domain/model/User.hbm.xml"/>
+        <mapping resource="kr/debop4j/data/mapping/model/hbm/User.hbm.xml"/>
 
         <!-- collection -->
-        <mapping resource="org/hibernate/example/domain/model/collection/Item.hbm.xml"/>
+        <mapping resource="kr/debop4j/data/mapping/model/hbm/collection/Item.hbm.xml"/>
 
         <!-- join component -->
-        <mapping resource="org/hibernate/example/domain/model/join/Customer.hbm.xml"/>
+        <mapping resource="kr/debop4j/data/mapping/model/hbm/join/Customer.hbm.xml"/>
 
         <!-- joined-subclass component -->
-        <mapping resource="org/hibernate/example/domain/model/joinedSubclass/Company.hbm.xml"/>
-        <mapping resource="org/hibernate/example/domain/model/joinedSubclass/Person.hbm.xml"/>
+        <mapping resource="kr/debop4j/data/mapping/model/hbm/joinedSubclass/Company.hbm.xml"/>
+        <mapping resource="kr/debop4j/data/mapping/model/hbm/joinedSubclass/Person.hbm.xml"/>
 
-        <!-- JPA -->
-        <mapping class="org.hibernate.example.domain.model.StatefulEntityImpl"/>
+        <!-- Annotated Enitity -->
+        <mapping class="kr.debop4j.data.mapping.model.hbm.StatefulEntityImpl"/>
     </session-factory>
 </hibernate-configuration>

@@ -7,7 +7,7 @@ import org.junit.Test;
 import java.util.concurrent.Callable;
 
 /**
- * kr.nsoft.commons.unitTesting.TestToolTest
+ * kr.debop4j.core.unitTesting.TestToolTest
  * User: sunghyouk.bae@gmail.com
  * Date: 12. 12. 3.
  */

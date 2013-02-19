@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.concurrent.*;
 
 /**
- * kr.nsoft.commons.unitTesting.TestTool
+ * kr.debop4j.core.unitTesting.TestTool
  * User: sunghyouk.bae@gmail.com
  * Date: 12. 12. 3.
  */

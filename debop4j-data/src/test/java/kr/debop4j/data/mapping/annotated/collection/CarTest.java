@@ -1,6 +1,8 @@
 package kr.debop4j.data.mapping.annotated.collection;
 
 import kr.debop4j.core.spring.Springs;
+import kr.debop4j.data.mapping.model.annotated.collection.Car;
+import kr.debop4j.data.mapping.model.annotated.collection.CarOption;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.junit.*;

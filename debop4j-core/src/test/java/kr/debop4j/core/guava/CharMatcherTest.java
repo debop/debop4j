@@ -7,7 +7,7 @@ import org.junit.Assert;
 import org.junit.Test;
 
 /**
- * kr.nsoft.commons.guava.CharMatcherTest
+ * kr.debop4j.core.guava.CharMatcherTest
  * User: sunghyouk.bae@gmail.com
  * Date: 13. 1. 22.
  */

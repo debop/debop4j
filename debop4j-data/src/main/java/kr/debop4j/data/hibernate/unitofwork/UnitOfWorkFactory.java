@@ -14,7 +14,7 @@ import java.util.Map;
  * Date: 12. 11. 30.
  */
 @Slf4j
-public class HibernateUnitOfWorkFactory implements IUnitOfWorkFactory {
+public class UnitOfWorkFactory implements IUnitOfWorkFactory {
 
     public static final String CURRENT_HIBERNATE_SESSION = "hibernateUnitOfWorkFactory.current.hibernate.session";
 
@@ -60,6 +60,7 @@ public class HibernateUnitOfWorkFactory implements IUnitOfWorkFactory {
         Local.put(CURRENT_HIBERNATE_SESSION, session);
     }
 
+
     @Override
     public void Init() {
         if (log.isInfoEnabled())
@@ -75,6 +76,15 @@ public class HibernateUnitOfWorkFactory implements IUnitOfWorkFactory {
         if (factory == null)
             factory = this.sessionFactory;
 
+        if(log.isDebugEnabled())
+            log.debug("Local ThreadContext 에 Session을 설정합니다...");
+
+//        Session session;
+//        try {
+//            session = factory.getCurrentSession();
+//        } catch (Exception ignored) {
+//            session = factory.openSession();
+//        }
         Session session = factory.openSession();
         Local.put(CURRENT_HIBERNATE_SESSION, session);
 

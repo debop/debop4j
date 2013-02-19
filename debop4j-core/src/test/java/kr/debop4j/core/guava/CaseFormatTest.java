@@ -8,7 +8,7 @@ import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 
 /**
- * kr.nsoft.commons.guava.CaseFormatTest
+ * kr.debop4j.core.guava.CaseFormatTest
  * User: sunghyouk.bae@gmail.com
  * Date: 13. 1. 22.
  */

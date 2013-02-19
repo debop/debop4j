@@ -8,7 +8,7 @@ import java.lang.reflect.Method;
 import java.util.List;
 
 /**
- * kr.nsoft.commons.reflect.AccessClassLoader
+ * kr.debop4j.core.reflect.AccessClassLoader
  * User: sunghyouk.bae@gmail.com
  * Date: 13. 1. 21
  */

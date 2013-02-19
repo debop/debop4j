@@ -4,7 +4,7 @@ import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * kr.nsoft.commons.ExecutableAdapter
+ * kr.debop4j.core.ExecutableAdapter
  * User: sunghyouk.bae@gmail.com
  * Date: 12. 12. 16.
  */

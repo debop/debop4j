@@ -32,25 +32,28 @@
 
         <!-- 검색 : hibernate-search 를 이용 : listener 도 추가해야 한다.-->
         <property name="hibernate.search.default.directory_provider">filesystem</property>
-        <property name="hibernate.search.default.indexBase">./lucene/indexes</property>
+        <property name="hibernate.search.default.indexBase">out/lucene/indexes</property>
 
 
         <!-- one-to-many bidirectional association -->
-        <mapping resource="org/hibernate/example/domain/model/Category.hbm.xml"/>
-        <mapping resource="org/hibernate/example/domain/model/Event.hbm.xml"/>
+        <mapping resource="kr/debop4j/data/mapping/model/hbm/Category.hbm.xml"/>
+        <mapping resource="kr/debop4j/data/mapping/model/hbm/Event.hbm.xml"/>
 
         <!-- have 2 component -->
-        <mapping resource="org/hibernate/example/domain/model/User.hbm.xml"/>
+        <mapping resource="kr/debop4j/data/mapping/model/hbm/User.hbm.xml"/>
 
         <!-- collection -->
-        <mapping resource="org/hibernate/example/domain/model/collection/Item.hbm.xml"/>
+        <mapping resource="kr/debop4j/data/mapping/model/hbm/collection/Item.hbm.xml"/>
 
         <!-- join component -->
-        <mapping resource="org/hibernate/example/domain/model/join/Customer.hbm.xml"/>
+        <mapping resource="kr/debop4j/data/mapping/model/hbm/join/Customer.hbm.xml"/>
 
         <!-- joined-subclass component -->
-        <mapping resource="org/hibernate/example/domain/model/joinedSubclass/Company.hbm.xml"/>
-        <mapping resource="org/hibernate/example/domain/model/joinedSubclass/Person.hbm.xml"/>
+        <mapping resource="kr/debop4j/data/mapping/model/hbm/joinedSubclass/Company.hbm.xml"/>
+        <mapping resource="kr/debop4j/data/mapping/model/hbm/joinedSubclass/Person.hbm.xml"/>
+
+        <!-- Annotated Enitity -->
+        <mapping class="kr.debop4j.data.mapping.model.hbm.StatefulEntityImpl"/>
 
         <event type="post-update">
             <listener class="org.hibernate.search.event.impl.FullTextIndexEventListener"/>

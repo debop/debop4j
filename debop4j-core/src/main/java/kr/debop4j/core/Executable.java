@@ -1,7 +1,7 @@
 package kr.debop4j.core;
 
 /**
- * kr.nsoft.commons.Executable
+ * kr.debop4j.core.Executable
  * User: sunghyouk.bae@gmail.com
  * Date: 12. 12. 16.
  */

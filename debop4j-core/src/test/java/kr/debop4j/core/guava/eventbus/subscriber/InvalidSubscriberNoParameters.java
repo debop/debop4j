@@ -4,7 +4,7 @@ import com.google.common.eventbus.EventBus;
 import com.google.common.eventbus.Subscribe;
 
 /**
- * kr.nsoft.commons.guava.eventbus.subscriber.InvalidSubscriberNoParameters
+ * kr.debop4j.core.guava.eventbus.subscriber.InvalidSubscriberNoParameters
  * User: sunghyouk.bae@gmail.com
  * Date: 12. 12. 10.
  */

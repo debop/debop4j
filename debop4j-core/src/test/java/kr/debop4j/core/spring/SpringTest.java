@@ -17,7 +17,7 @@ import static kr.debop4j.core.spring.Springs.getOrRegisterBean;
 import static org.junit.Assert.*;
 
 /**
- * kr.nsoft.commons.spring.SpringTest
+ * kr.debop4j.core.spring.SpringTest
  * User: sunghyouk.bae@gmail.com
  * Date: 12. 12. 2.
  */

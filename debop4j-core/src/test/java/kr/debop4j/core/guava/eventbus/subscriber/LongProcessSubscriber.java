@@ -9,7 +9,7 @@ import kr.debop4j.core.guava.eventbus.events.CreditPurchaseEvent;
 import java.util.concurrent.CountDownLatch;
 
 /**
- * kr.nsoft.commons.guava.eventbus.subscriber.LongProcessSubscriber
+ * kr.debop4j.core.guava.eventbus.subscriber.LongProcessSubscriber
  * User: sunghyouk.bae@gmail.com
  * Date: 12. 12. 10.
  */

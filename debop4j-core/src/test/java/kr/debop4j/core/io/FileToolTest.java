@@ -12,7 +12,7 @@ import java.util.List;
 import static org.junit.Assert.*;
 
 /**
- * kr.nsoft.commons.io.FileToolTest
+ * kr.debop4j.core.io.FileToolTest
  * User: sunghyouk.bae@gmail.com
  * Date: 12. 12. 11.
  */

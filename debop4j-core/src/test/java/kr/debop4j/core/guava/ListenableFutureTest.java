@@ -16,7 +16,7 @@ import java.util.concurrent.Callable;
 import java.util.concurrent.Executors;
 
 /**
- * kr.nsoft.commons.guava.ListenableFutureTest
+ * kr.debop4j.core.guava.ListenableFutureTest
  * User: sunghyouk.bae@gmail.com
  * Date: 13. 1. 23.
  */

@@ -9,7 +9,7 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 /**
- * kr.nsoft.commons.spring.AnnotatedContextTest
+ * kr.debop4j.core.spring.AnnotatedContextTest
  * User: sunghyouk.bae@gmail.com
  * Date: 12. 12. 2.
  */

@@ -6,7 +6,7 @@ import com.google.common.eventbus.EventBus;
 import java.util.List;
 
 /**
- * kr.nsoft.commons.guava.eventbus.subscriber.EventSubscriber
+ * kr.debop4j.core.guava.eventbus.subscriber.EventSubscriber
  * User: sunghyouk.bae@gmail.com
  * Date: 12. 12. 10.
  */

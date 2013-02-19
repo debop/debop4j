@@ -5,7 +5,7 @@ import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * kr.nsoft.commons.guava.eventbus.events.CashPurchaseEvent
+ * kr.debop4j.core.guava.eventbus.events.CashPurchaseEvent
  * User: sunghyouk.bae@gmail.com
  * Date: 12. 12. 10.
  */

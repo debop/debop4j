@@ -8,7 +8,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 /**
- * kr.nsoft.commons.spring.SpringTestConfig
+ * kr.debop4j.core.spring.SpringTestConfig
  * User: sunghyouk.bae@gmail.com
  * Date: 12. 12. 2.
  */

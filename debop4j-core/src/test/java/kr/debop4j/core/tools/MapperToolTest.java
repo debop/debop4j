@@ -12,7 +12,7 @@ import org.junit.Test;
 import java.util.List;
 
 /**
- * kr.nsoft.commons.tools.MapperToolTest
+ * kr.debop4j.core.tools.MapperToolTest
  * User: sunghyouk.bae@gmail.com
  * Date: 12. 12. 6.
  */

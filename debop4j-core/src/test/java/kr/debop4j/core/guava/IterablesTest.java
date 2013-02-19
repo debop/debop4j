@@ -9,7 +9,7 @@ import org.junit.Test;
 import java.util.List;
 
 /**
- * kr.nsoft.commons.guava.IterablesTest
+ * kr.debop4j.core.guava.IterablesTest
  * User: sunghyouk.bae@gmail.com
  * Date: 13. 1. 11.
  */

@@ -3,16 +3,15 @@ package kr.debop4j.data.hibernate.repository;
 import kr.debop4j.core.spring.Springs;
 import kr.debop4j.data.hibernate.unitofwork.IUnitOfWork;
 import kr.debop4j.data.hibernate.unitofwork.UnitOfWorks;
+import kr.debop4j.data.mapping.model.annotated.JpaUser;
+import kr.debop4j.data.mapping.model.hbm.Category;
+import kr.debop4j.data.mapping.model.hbm.Event;
 import lombok.extern.slf4j.Slf4j;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.example.domain.model.Category;
-import org.hibernate.example.domain.model.Event;
-import org.jpa.example.domain.model.JpaUser;
 import org.junit.*;
 import org.springframework.orm.hibernate4.HibernateTransactionManager;
-import org.springframework.transaction.TransactionStatus;
-import org.springframework.transaction.support.DefaultTransactionDefinition;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -37,7 +36,7 @@ public class HibernateDaoTest {
     @Before
     public void before() {
         hibernateDaofactory = Springs.getBean(HibernateDaoFactory.class);
-        transactionManager = Springs.getBean(HibernateTransactionManager.class);
+    //    transactionManager = Springs.getBean(HibernateTransactionManager.class);
 
         unitOfWork = UnitOfWorks.start();
     }
@@ -55,20 +54,21 @@ public class HibernateDaoTest {
     }
 
     @Test
+    @Transactional
     public void createHibernateDao() {
 
         Assert.assertNotNull(hibernateDaofactory);
 
-        TransactionStatus txstatus = transactionManager.getTransaction(new DefaultTransactionDefinition());
+        //TransactionStatus txstatus = transactionManager.getTransaction(new DefaultTransactionDefinition());
         try {
             IHibernateDao<JpaUser> jpaUserDao = hibernateDaofactory.getOrCreateHibernateDao(JpaUser.class);
             List<JpaUser> users = jpaUserDao.getAll();
 
             Assert.assertEquals(0, users.size());
 
-            transactionManager.commit(txstatus);
+            //transactionManager.commit(txstatus);
         } catch (Exception e) {
-            transactionManager.rollback(txstatus);
+            //transactionManager.rollback(txstatus);
             log.error("예외가 발생했습니다.", e);
             Assert.fail();
         }

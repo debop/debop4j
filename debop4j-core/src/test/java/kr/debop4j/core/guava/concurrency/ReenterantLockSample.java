@@ -7,7 +7,7 @@ import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.ReentrantLock;
 
 /**
- * kr.nsoft.commons.guava.concurrency.ReenterantLockSample
+ * kr.debop4j.core.guava.concurrency.ReenterantLockSample
  * User: sunghyouk.bae@gmail.com
  * Date: 12. 12. 10.
  */

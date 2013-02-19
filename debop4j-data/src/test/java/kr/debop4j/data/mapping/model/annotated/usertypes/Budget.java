@@ -31,12 +31,12 @@ public class Budget extends JpaEntityBase {
     @Column(name = "BUGET_ID")
     private Long id;
 
-    @Type(type = "org.annotated.mapping.domain.model.usertypes.MonetaryAmountUserType")
+    @Type(type = "kr.debop4j.data.mapping.model.annotated.usertypes.MonetaryAmountUserType")
     @Column(name = "INITIAL_PRICE", nullable = true)
     private MonetaryAmount initialPrice;
 
 
-    @Type(type = "org.annotated.mapping.domain.model.usertypes.MonetaryAmountCompositeUserType")
+    @Type(type = "kr.debop4j.data.mapping.model.annotated.usertypes.MonetaryAmountCompositeUserType")
     @Columns(columns =
                      {
                              @Column(name = "COMPOSITE_AMOUNT"),

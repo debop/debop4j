@@ -10,7 +10,7 @@ import java.util.List;
 import static org.junit.Assert.assertEquals;
 
 /**
- * kr.nsoft.commons.collection.NumberRangeTest
+ * kr.debop4j.core.collection.NumberRangeTest
  * User: sunghyouk.bae@gmail.com
  * Date: 13. 1. 12.
  */
