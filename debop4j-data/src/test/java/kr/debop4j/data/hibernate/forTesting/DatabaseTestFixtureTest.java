@@ -32,7 +32,6 @@ public class DatabaseTestFixtureTest extends DatabaseTestFixtureBase {
         verifyCanCreateUseAndDisposeSession();
     }
 
-
     protected void verifyCanCreateUnitOfWorkContextFor(Class dbConfigClass) {
         int nextContextPos = getContexts().size();
 
