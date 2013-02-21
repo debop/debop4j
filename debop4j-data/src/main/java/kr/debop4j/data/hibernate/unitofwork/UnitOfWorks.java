@@ -147,6 +147,46 @@ public final class UnitOfWorks {
         return getCurrent();
     }
 
+    /**
+     * 현재 실행중인 UnitOfWork를 종료합니다.
+     */
+    public static void stop() {
+        stop(false);
+    }
+
+    /**
+     * 현재 실행중인 UnitOfWork를 종료합니다.
+     *
+     * @param needFlushing Session에 반영된 내용을 Flushing 할 것인지 여부
+     */
+    public static void stop(boolean needFlushing) {
+        if (log.isDebugEnabled())
+            log.debug("현재 실행중인 UnitOfWork를 중지합니다... needFlushing=[{}]", needFlushing);
+
+        if (isStarted() && getCurrent() != null) {
+            if (needFlushing) {
+                try {
+                    if (log.isDebugEnabled())
+                        log.debug("현 UnitOfWork의 Session에 대해 flushing 작업을 시작합니다...");
+
+                    getCurrent().flushSession();
+
+                    if (log.isDebugEnabled())
+                        log.debug("현 UnitOfWork의 Session에 대해 flushing 작업을 완료합니다...");
+                } catch (Exception ignored) {
+                    log.error("UnitOfWork의 Session을 Flushing하는 중 예외가 발생했습니다.", ignored);
+                }
+            }
+
+            getCurrent().close();
+            setCurrent(null);
+
+            if (log.isDebugEnabled()) {
+                log.debug("현재 실행중인 UnitOfWork를 종료했습니다.");
+            }
+        }
+    }
+
     public static synchronized void closeUnitOfWork(IUnitOfWork unitOfWork) {
         if (log.isDebugEnabled())
             log.debug("UnitOfWork를 종료합니다. 종료되는 IUnitOfWork 의 Previous 를 Current UnitOfWork로 교체합니다.");

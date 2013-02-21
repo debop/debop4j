@@ -36,4 +36,11 @@ public class MappingInfo {
         Package[] arr = new Package[mappedPackages.size()];
         return mappedPackages.toArray(arr);
     }
+
+    public String[] getMappedPackageNames() {
+        List<String> names = Lists.newArrayList();
+        for (Package pkg : mappedPackages)
+            names.add(pkg.getName());
+        return (String[]) names.toArray();
+    }
 }

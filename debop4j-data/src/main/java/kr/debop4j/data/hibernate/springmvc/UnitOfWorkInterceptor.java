@@ -1,6 +1,5 @@
 package kr.debop4j.data.hibernate.springmvc;
 
-import kr.debop4j.data.hibernate.unitofwork.IUnitOfWork;
 import kr.debop4j.data.hibernate.unitofwork.UnitOfWorks;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.servlet.HandlerInterceptor;
@@ -47,11 +46,21 @@ public class UnitOfWorkInterceptor implements HandlerInterceptor {
                                 HttpServletResponse response,
                                 Object handler,
                                 Exception ex) throws Exception {
-        IUnitOfWork unitOfWork = UnitOfWorks.getCurrent();
-        if (unitOfWork != null) {
-            unitOfWork.close();
+
+        if (UnitOfWorks.isStarted()) {
+            if (log.isDebugEnabled())
+                log.debug("Hint: Session 변경 내용이 DB에 적용하기 위해서는 UnitOfWorks.getCurrent().flushSession() 를 수행해 주세요^^");
+
+            UnitOfWorks.stop();
+
             if (log.isDebugEnabled())
                 log.debug("Client 요청 처리를 완료하였으므로, UnitOfWork를 종료했습니다.");
         }
+//        IUnitOfWork unitOfWork = UnitOfWorks.getCurrent();
+//        if (unitOfWork != null) {
+//            unitOfWork.close();
+//            if (log.isDebugEnabled())
+//                log.debug("Client 요청 처리를 완료하였으므로, UnitOfWork를 종료했습니다.");
+//        }
     }
 }

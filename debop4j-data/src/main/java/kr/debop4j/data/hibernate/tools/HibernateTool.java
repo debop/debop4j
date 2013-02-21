@@ -14,6 +14,7 @@ import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.cfg.Configuration;
 import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Order;
@@ -21,6 +22,7 @@ import org.hibernate.event.service.spi.EventListenerRegistry;
 import org.hibernate.event.spi.EventType;
 import org.hibernate.internal.CriteriaImpl;
 import org.hibernate.internal.SessionFactoryImpl;
+import org.hibernate.service.ServiceRegistryBuilder;
 import org.hibernate.type.ObjectType;
 
 import java.util.Map;
@@ -37,6 +39,16 @@ import static kr.debop4j.core.Guard.shouldNotBeNull;
 public class HibernateTool {
 
     private HibernateTool() { }
+
+    public static SessionFactory buildSessionFactory(Configuration cfg) {
+        if (log.isInfoEnabled())
+            log.info("SessionFactory를 빌드합니다.");
+
+        ServiceRegistryBuilder registryBuilder = new ServiceRegistryBuilder().applySettings(cfg.getProperties());
+        SessionFactory factory = cfg.buildSessionFactory(registryBuilder.buildServiceRegistry());
+
+        return factory;
+    }
 
     public static HibernateDaoFactory getHibernateDaoFactory() {
         // 이 작업이 가능하려면 Springs 로 Initialize 를 수행할 수 있도록 해 주어야 합니다.
