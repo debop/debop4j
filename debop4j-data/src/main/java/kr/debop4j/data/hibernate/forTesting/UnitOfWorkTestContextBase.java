@@ -58,6 +58,10 @@ public abstract class UnitOfWorkTestContextBase implements AutoCloseable {
                 UnitOfWorks.stop();
                 UnitOfWorks.closeUnitOfWorkFactory();
             }
+
+            if (Springs.isNotInitialized())
+                Springs.init(getSpringContext());
+
             UnitOfWorks.start();
 
             setupDatabase(UnitOfWorks.getCurrentSession());

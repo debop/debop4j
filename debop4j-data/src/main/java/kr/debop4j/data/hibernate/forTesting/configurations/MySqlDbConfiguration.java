@@ -4,6 +4,7 @@ import kr.debop4j.data.hibernate.forTesting.DatabaseEngine;
 import org.hibernate.cfg.Environment;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import javax.sql.DataSource;
 import java.util.Properties;
@@ -14,6 +15,7 @@ import java.util.Properties;
  * Date: 13. 2. 21.
  */
 @Configuration
+@EnableTransactionManagement
 public abstract class MySqlDbConfiguration extends DbConfiguration {
 
     @Override

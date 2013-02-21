@@ -4,6 +4,7 @@ import kr.debop4j.data.hibernate.forTesting.DatabaseEngine;
 import org.hibernate.cfg.Environment;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import javax.sql.DataSource;
 import java.util.Properties;
@@ -14,6 +15,7 @@ import java.util.Properties;
  * Date: 13. 2. 21.
  */
 @Configuration
+@EnableTransactionManagement
 public abstract class HSqlDbConfiguration extends DbConfiguration {
 
     public DatabaseEngine getDatabaseEngine() {
@@ -30,7 +32,7 @@ public abstract class HSqlDbConfiguration extends DbConfiguration {
     @Bean
     public DataSource dataSource() {
         return buildDataSource("org.hsqldb.jdbcDriver",
-                               "jdbc:sqlite:" + getDatabaseName() + ":test",
+                               "jdbc:hsqldb:" + getDatabaseName() + ":test",
                                "sa",
                                "");
     }
@@ -40,7 +42,7 @@ public abstract class HSqlDbConfiguration extends DbConfiguration {
     public Properties hibernateProperties() {
         Properties props = super.hibernateProperties();
 
-        props.put(Environment.DIALECT, "org.hibernate.dialect.HsQLDialect");
+        props.put(Environment.DIALECT, "org.hibernate.dialect.HSQLDialect");
 
         return props;
     }

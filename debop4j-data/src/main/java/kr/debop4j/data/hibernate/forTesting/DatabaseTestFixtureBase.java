@@ -48,15 +48,18 @@ public abstract class DatabaseTestFixtureBase {
     }
 
     protected static UnitOfWorkTestContextBase getUnitOfWorkTestContext(final Class dbConfigurationClass) {
-        Predicate<UnitOfWorkTestContextBase> criteria =
-                new Predicate<UnitOfWorkTestContextBase>() {
-                    @Override
-                    public boolean apply(@Nullable UnitOfWorkTestContextBase input) {
-                        return dbConfigurationClass == input.getDbConfigurationClass();
-                    }
-                };
 
-        UnitOfWorkTestContextBase context = Iterables.find(contexts, criteria);
+        UnitOfWorkTestContextBase context = null;
+        if (contexts.size() > 0) {
+            Predicate<UnitOfWorkTestContextBase> criteria =
+                    new Predicate<UnitOfWorkTestContextBase>() {
+                        @Override
+                        public boolean apply(@Nullable UnitOfWorkTestContextBase input) {
+                            return (input != null) && dbConfigurationClass == input.getDbConfigurationClass();
+                        }
+                    };
+            context = Iterables.find(contexts, criteria);
+        }
 
         if (context == null) {
             context = UnitOfWorkTestContextBase.create(dbConfigurationClass);

@@ -25,7 +25,7 @@ public class MultiInterceptor extends EmptyInterceptor {
 
     @Getter
     @Setter
-    private List<Interceptor> interceptors;
+    private List<Interceptor> interceptors = Lists.newArrayList();
 
     public MultiInterceptor() { }
 
