@@ -143,7 +143,6 @@ public final class Springs {
         if (log.isDebugEnabled())
             log.debug("ApplicationContext=[{}] 을 Reset 합니다...", contextToReset);
 
-
         if (getLocalContext() == contextToReset) {
             getLocalContextStack().pop();
 

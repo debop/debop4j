@@ -1,4 +1,4 @@
-package kr.debop4j.data.hibernate.forTesting.configurations;
+package kr.debop4j.data.hibernate.springconfiguration;
 
 import org.hibernate.cfg.Environment;
 import org.springframework.context.annotation.Bean;
@@ -9,13 +9,13 @@ import javax.sql.DataSource;
 import java.util.Properties;
 
 /**
- * kr.debop4j.data.hibernate.forTesting.configurations.H2DbConfiguration
+ * H2 Embedded DB를 사용하는 Hibernate 설정정입니다.
  * User: sunghyouk.bae@gmail.com
  * Date: 13. 2. 21.
  */
 @Configuration
 @EnableTransactionManagement
-public abstract class H2DbConfiguration extends DbConfiguration {
+public abstract class H2ConfigBase extends HibernateConfigBase {
 
     @Override
     protected String getDatabaseName() {
@@ -26,7 +26,7 @@ public abstract class H2DbConfiguration extends DbConfiguration {
     @Bean
     public DataSource dataSource() {
         return buildDataSource("org.h2.Driver",
-                               "jdbc:h2:" + getDatabaseName() + ":test",
+                               "jdbc:h2:" + getDatabaseName() + ":test;DB_CLOSE_DELAY=-1",
                                "sa",
                                "");
     }

@@ -1,4 +1,4 @@
-package kr.debop4j.data.hibernate.forTesting.configurations;
+package kr.debop4j.data.hibernate.springconfiguration;
 
 import org.hibernate.cfg.Environment;
 import org.springframework.context.annotation.Bean;
@@ -9,13 +9,13 @@ import javax.sql.DataSource;
 import java.util.Properties;
 
 /**
- * kr.debop4j.data.hibernate.forTesting.configurations.PostgreSqlDbConfiguration
+ * kr.debop4j.data.hibernate.springconfiguration.PostgreSqlDbConfiguration
  * User: sunghyouk.bae@gmail.com
  * Date: 13. 2. 21.
  */
 @Configuration
 @EnableTransactionManagement
-public abstract class PostgreSqlDbConfiguration extends DbConfiguration {
+public abstract class PostgreSqlConfigBase extends HibernateConfigBase {
 
     @Override
     public String getDatabaseName() {

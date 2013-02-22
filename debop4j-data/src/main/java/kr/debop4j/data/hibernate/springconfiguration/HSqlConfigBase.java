@@ -1,4 +1,4 @@
-package kr.debop4j.data.hibernate.forTesting.configurations;
+package kr.debop4j.data.hibernate.springconfiguration;
 
 import kr.debop4j.data.hibernate.forTesting.DatabaseEngine;
 import org.hibernate.cfg.Environment;
@@ -10,39 +10,35 @@ import javax.sql.DataSource;
 import java.util.Properties;
 
 /**
- * kr.debop4j.data.hibernate.forTesting.configurations.MySqlDbConfiguration
+ * kr.debop4j.data.hibernate.springconfiguration.HSqlDbConfiguration
  * User: sunghyouk.bae@gmail.com
  * Date: 13. 2. 21.
  */
 @Configuration
 @EnableTransactionManagement
-public abstract class MySqlDbConfiguration extends DbConfiguration {
+public abstract class HSqlConfigBase extends HibernateConfigBase {
 
-    @Override
     public DatabaseEngine getDatabaseEngine() {
-        return DatabaseEngine.MySQL;
+        return DatabaseEngine.HSql;
     }
 
-    @Override
     public String getDatabaseName() {
-        return "hibernate";
+        return "mem";
     }
 
     @Bean
-    @Override
     public DataSource dataSource() {
-        return buildDataSource("com.mysql.jdbc.Driver",
-                               "jdbc:mysql://localhost/" + getDatabaseName(),
-                               "root",
-                               "root");
+        return buildDataSource("org.hsqldb.jdbcDriver",
+                               "jdbc:hsqldb:" + getDatabaseName() + ":test",
+                               "sa",
+                               "");
     }
 
-    @Override
     @Bean
     public Properties hibernateProperties() {
         Properties props = super.hibernateProperties();
 
-        props.put(Environment.DIALECT, "org.hibernate.dialect.MySQL5InnoDBDialect");
+        props.put(Environment.DIALECT, "org.hibernate.dialect.HSQLDialect");
 
         return props;
     }

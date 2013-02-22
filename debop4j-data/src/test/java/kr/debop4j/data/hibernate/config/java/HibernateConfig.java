@@ -35,6 +35,7 @@ public class HibernateConfig {
 
     @Bean
     public DataSource dataSource() {
+
         EmbeddedDatabaseFactoryBean bean = new EmbeddedDatabaseFactoryBean();
         ResourceDatabasePopulator databasePopulator = new ResourceDatabasePopulator();
         databasePopulator.addScript(new ClassPathResource("kr/debop4j/data/hibernate/config/java/schema.sql"));

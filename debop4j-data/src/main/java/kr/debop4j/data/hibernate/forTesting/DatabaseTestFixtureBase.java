@@ -4,11 +4,13 @@ import com.google.common.base.Predicate;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 import kr.debop4j.core.Local;
+import kr.debop4j.data.hibernate.unitofwork.UnitOfWorks;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 
 import javax.annotation.Nullable;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 /**
  * 여러 Database에 대해, Hibernate 작업 Test를 위한 기본 클래스입니다.
@@ -58,7 +60,11 @@ public abstract class DatabaseTestFixtureBase {
                             return (input != null) && dbConfigurationClass == input.getDbConfigurationClass();
                         }
                     };
-            context = Iterables.find(contexts, criteria);
+            try {
+                context = Iterables.find(contexts, criteria);
+            } catch (NoSuchElementException ignored) {
+                context = null;
+            }
         }
 
         if (context == null) {
@@ -92,6 +98,8 @@ public abstract class DatabaseTestFixtureBase {
 
         setRunningInTestMode(false);
         contexts.clear();
+
+        UnitOfWorks.closeUnitOfWorkFactory();
 
         if (log.isDebugEnabled())
             log.debug("모든 UnitOfWorkTestContext를 종료했습니다.");

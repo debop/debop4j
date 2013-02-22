@@ -34,6 +34,7 @@ public abstract class UnitOfWorkTestContextBase implements AutoCloseable {
     protected UnitOfWorkTestContextBase(Class dbConfigurationClass) {
         this.dbConfigurationClass = dbConfigurationClass;
 
+
         springContext = new AnnotationConfigApplicationContext(dbConfigurationClass);
         Springs.init(springContext);
     }
