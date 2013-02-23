@@ -2,11 +2,16 @@ package kr.debop4j.data.hibernate.forTesting;
 
 import com.google.common.base.Objects;
 import kr.debop4j.core.tools.HashTool;
-import kr.debop4j.data.model.AnnotatedEntityBase;
+import kr.debop4j.data.model.LongAnnotatedEntityBase;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.DynamicUpdate;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
+import javax.persistence.Version;
 
 /**
  * kr.debop4j.data.hibernate.forTesting.LongEntityForTesting
@@ -15,13 +20,18 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name = "LongEntity_ForTesting")
+@DynamicInsert
+@DynamicUpdate
 @Getter
 @Setter
-public class LongEntityForTesting extends AnnotatedEntityBase {
+public class LongEntityForTesting extends LongAnnotatedEntityBase {
 
-    @Id
-    @GeneratedValue
-    private Long id;
+    protected LongEntityForTesting() {}
+
+    public LongEntityForTesting(String code) {
+        this.code = code;
+    }
+
 
     @Column(nullable = false)
     public String code;
@@ -31,14 +41,10 @@ public class LongEntityForTesting extends AnnotatedEntityBase {
     @Version
     public int version;
 
-    public LongEntityForTesting(String code) {
-        this.code = code;
-    }
-
     @Override
     public int hashCode() {
         if (isPersisted())
-            return HashTool.compute(id);
+            return super.hashCode();
 
         return HashTool.compute(code, name);
     }
@@ -46,7 +52,6 @@ public class LongEntityForTesting extends AnnotatedEntityBase {
     @Override
     protected Objects.ToStringHelper buildStringHelper() {
         return super.buildStringHelper()
-                .add("id", id)
                 .add("code", code)
                 .add("name", name)
                 .add("age", age);

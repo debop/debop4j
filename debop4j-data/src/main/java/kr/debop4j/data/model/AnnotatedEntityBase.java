@@ -3,6 +3,7 @@ package kr.debop4j.data.model;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 
+import javax.persistence.MappedSuperclass;
 import javax.persistence.PostLoad;
 import javax.persistence.PostPersist;
 
@@ -11,6 +12,7 @@ import javax.persistence.PostPersist;
  * User: sunghyouk.bae@gmail.com
  * Date: 12. 12. 7.
  */
+@MappedSuperclass
 @DynamicInsert
 @DynamicUpdate
 public abstract class AnnotatedEntityBase extends StatefulEntityBase {
