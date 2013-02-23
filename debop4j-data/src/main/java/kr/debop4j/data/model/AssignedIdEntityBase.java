@@ -2,6 +2,7 @@ package kr.debop4j.data.model;
 
 import com.google.common.base.Objects;
 
+import javax.persistence.MappedSuperclass;
 import java.io.Serializable;
 
 /**
@@ -9,6 +10,7 @@ import java.io.Serializable;
  * User: sunghyouk.bae@gmail.com
  * Date: 13. 1. 27.
  */
+@MappedSuperclass
 public class AssignedIdEntityBase<TId extends Serializable> extends EntityBase<TId> implements IAssignedEntity<TId> {
     private static final long serialVersionUID = 2441448634046269391L;
 

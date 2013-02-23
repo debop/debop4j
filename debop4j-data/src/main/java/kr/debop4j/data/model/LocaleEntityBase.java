@@ -6,6 +6,7 @@ import kr.debop4j.core.tools.ReflectTool;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 
+import javax.persistence.MappedSuperclass;
 import java.io.Serializable;
 import java.util.Locale;
 import java.util.Map;
@@ -17,6 +18,7 @@ import java.util.Set;
  * Date: 12. 9. 19
  */
 @Slf4j
+@MappedSuperclass
 public abstract class LocaleEntityBase<TId extends Serializable, TLocaleValue extends ILocaleValue>
         extends EntityBase<TId> implements ILocaleEntity<TLocaleValue> {
 

@@ -1,4 +1,4 @@
-package kr.debop4j.data.mapping.annotated.collection;
+package kr.debop4j.data.hibernate.annotated.collection;
 
 import kr.debop4j.core.spring.Springs;
 import kr.debop4j.data.mapping.model.annotated.collection.Car;

@@ -3,6 +3,7 @@ package kr.debop4j.data.model;
 import com.google.common.collect.Maps;
 import lombok.Getter;
 
+import javax.persistence.MappedSuperclass;
 import java.io.Serializable;
 import java.util.Map;
 import java.util.Set;
@@ -12,6 +13,7 @@ import java.util.Set;
  * User: sunghyouk.bae@gmail.com
  * Date: 12. 9. 19
  */
+@MappedSuperclass
 public abstract class LocaleMetaEntityBase<TId extends Serializable, TLocaleValue extends ILocaleValue>
         extends LocaleEntityBase<TId, TLocaleValue> implements IMetaEntity {
 

@@ -3,6 +3,7 @@ package kr.debop4j.data.model;
 import com.google.common.collect.Maps;
 import lombok.Getter;
 
+import javax.persistence.MappedSuperclass;
 import java.io.Serializable;
 import java.util.Map;
 import java.util.Set;
@@ -12,6 +13,7 @@ import java.util.Set;
  * User: sunghyouk.bae@gmail.com
  * Date: 12. 9. 19
  */
+@MappedSuperclass
 public abstract class MetaEntityBase<TId extends Serializable> extends EntityBase<TId> implements IMetaEntity {
 
     private static final long serialVersionUID = 8802449633388271176L;

@@ -2,9 +2,13 @@ package kr.debop4j.data.model;
 
 import com.google.common.base.Objects;
 import com.google.common.collect.Sets;
+import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Set;
 
@@ -13,6 +17,9 @@ import java.util.Set;
  * User: sunghyouk.bae@gmail.com
  * Date: 12. 9. 15.
  */
+@MappedSuperclass
+@Getter
+@Setter
 public abstract class TreeEntityBase<T extends ITreeEntity<T>, TId extends Serializable>
         extends EntityBase<TId> implements ITreeEntity<T> {
 
@@ -21,21 +28,21 @@ public abstract class TreeEntityBase<T extends ITreeEntity<T>, TId extends Seria
     /**
      * {@inheritDoc}
      */
-    @Getter
-    @Setter
+    @ManyToOne
+    @JoinColumn(name = "parentId")
     private T parent;
 
     /**
      * {@inheritDoc}
      */
-    @Getter
+    @Setter(AccessLevel.PROTECTED)
+    @OneToMany(mappedBy = "parent", cascade = {CascadeType.ALL})
+    @LazyCollection(LazyCollectionOption.EXTRA)
     private Set<T> children = Sets.newLinkedHashSet();
 
     /**
      * {@inheritDoc}
      */
-    @Getter
-    @Setter
     private TreeNodePosition nodePosition = new TreeNodePosition();
 
     @Override

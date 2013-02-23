@@ -22,6 +22,7 @@
                 <value>kr.debop4j.data.mapping.model.annotated.onetomany</value>
                 <value>kr.debop4j.data.mapping.model.annotated.onetoone</value>
                 <value>kr.debop4j.data.mapping.model.annotated.subclass</value>
+                <value>kr.debop4j.data.mapping.model.annotated.tree</value>
                 <value>kr.debop4j.data.mapping.model.annotated.unionSubclass</value>
                 <value>kr.debop4j.data.mapping.model.annotated.usertypes</value>
 

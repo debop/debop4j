@@ -7,12 +7,15 @@ import kr.debop4j.core.tools.HashTool;
 import lombok.Getter;
 import lombok.Setter;
 
+import javax.persistence.Embeddable;
+
 
 /**
  * 메타 정보를 표현하는 클래스입니다.
  * User: sunghyouk.bae@gmail.com
  * Date: 12. 9. 19
  */
+@Embeddable
 @Getter
 @Setter
 public class SimpleMetaValue extends ValueObjectBase implements IMetaValue {

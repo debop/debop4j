@@ -1,4 +1,4 @@
-package kr.debop4j.data.mapping.annotated;
+package kr.debop4j.data.hibernate.annotated;
 
 import com.google.common.base.Objects;
 import kr.debop4j.data.model.EntityBase;

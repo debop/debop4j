@@ -7,11 +7,14 @@ import kr.debop4j.core.tools.HashTool;
 import lombok.Getter;
 import lombok.Setter;
 
+import javax.persistence.Embeddable;
+
 /**
  * 트리 형식의 자료 구조의 하나의 노드의 위치를 나타냅니다.
  * User: sunghyouk.bae@gmail.com
  * Date: 12. 9. 13.
  */
+@Embeddable
 @Getter
 @Setter
 public class TreeNodePosition extends ValueObjectBase {

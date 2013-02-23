@@ -26,6 +26,7 @@ public abstract class UnitOfWorkTestContextBase implements AutoCloseable {
     public final String CurrentHibernateSessionKey = UUID.randomUUID().toString();
 
     protected GenericApplicationContext springContext;
+
     @Getter
     private Class dbConfigurationClass;
     @Getter
@@ -33,7 +34,6 @@ public abstract class UnitOfWorkTestContextBase implements AutoCloseable {
 
     protected UnitOfWorkTestContextBase(Class dbConfigurationClass) {
         this.dbConfigurationClass = dbConfigurationClass;
-
 
         springContext = new AnnotationConfigApplicationContext(dbConfigurationClass);
         Springs.init(springContext);

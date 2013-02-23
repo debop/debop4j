@@ -7,11 +7,14 @@ import lombok.Getter;
 import lombok.Setter;
 import org.joda.time.DateTime;
 
+import javax.persistence.Embeddable;
+
 /**
  * kr.nsoft.data.domain.kr.debop4j.data.mapping.model.DateTimeRange
  * User: sunghyouk.bae@gmail.com
  * Date: 13. 1. 22.
  */
+@Embeddable
 @Getter
 @Setter
 public class DateTimeRange extends ValueObjectBase {
@@ -26,44 +29,33 @@ public class DateTimeRange extends ValueObjectBase {
 
     private DateTime start;
     private DateTime end;
-    private boolean readonly;
+    //private boolean readonly;
 
     public DateTimeRange() {
-        this(MinPeriodTime, MaxPeriodTime, false);
+        this(MinPeriodTime, MaxPeriodTime);
     }
+
 
     public DateTimeRange(DateTime start, DateTime end) {
-        this(start, end, false);
-    }
-
-    public DateTimeRange(DateTime start, DateTime end, boolean readonly) {
         this.start = (start != null) ? start : MinPeriodTime;
         this.end = (end != null) ? end : MaxPeriodTime;
-        this.readonly = readonly;
     }
 
     public DateTimeRange(DateTimeRange source) {
         this.start = source.start;
         this.end = source.end;
-        this.readonly = source.readonly;
     }
 
-    public DateTimeRange(DateTimeRange source, boolean readonly) {
-        this.start = source.start;
-        this.end = source.end;
-        this.readonly = readonly;
-    }
 
     @Override
     public int hashCode() {
-        return HashTool.compute(start, end, readonly);
+        return HashTool.compute(start, end);
     }
 
     @Override
     protected Objects.ToStringHelper buildStringHelper() {
         return super.buildStringHelper()
                 .add("start", start)
-                .add("end", end)
-                .add("readonly", readonly);
+                .add("end", end);
     }
 }

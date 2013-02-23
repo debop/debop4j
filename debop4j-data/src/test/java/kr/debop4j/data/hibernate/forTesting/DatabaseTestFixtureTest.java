@@ -2,6 +2,7 @@ package kr.debop4j.data.hibernate.forTesting;
 
 import kr.debop4j.core.spring.Springs;
 import kr.debop4j.data.hibernate.forTesting.configs.*;
+import kr.debop4j.data.hibernate.unitofwork.UnitOfWorks;
 import lombok.extern.slf4j.Slf4j;
 import org.hibernate.Session;
 import org.junit.After;
@@ -18,8 +19,7 @@ import org.junit.Test;
 public class DatabaseTestFixtureTest extends DatabaseTestFixtureBase {
 
     @Before
-    public void before() {
-    }
+    public void before() { }
 
     @After
     public void after() {
@@ -32,30 +32,51 @@ public class DatabaseTestFixtureTest extends DatabaseTestFixtureBase {
     public void canCreateUnitOfWorkContextForHSql() {
         verifyCanCreateUnitOfWorkContextFor(HSqlConfig.class);
         verifyCanCreateUseAndDisposeSession();
+        verifyCanCreateUseAndDisposeUnitOfWork();
     }
 
     @Test
     public void canCreateUnitOfWorkContextForH2() {
         verifyCanCreateUnitOfWorkContextFor(H2Config.class);
         verifyCanCreateUseAndDisposeSession();
+        verifyCanCreateUseAndDisposeUnitOfWork();
     }
 
     @Test
     public void canCreateUnitOfWorkContextForDerby() {
         verifyCanCreateUnitOfWorkContextFor(DerbyConfig.class);
         verifyCanCreateUseAndDisposeSession();
+        verifyCanCreateUseAndDisposeUnitOfWork();
     }
 
     @Test
     public void canCreateUnitOfWorkContextForPostgreSql() {
         verifyCanCreateUnitOfWorkContextFor(PostgreSqlConfig.class);
         verifyCanCreateUseAndDisposeSession();
+        verifyCanCreateUseAndDisposeUnitOfWork();
     }
 
     @Test
     public void canCreateUnitOfWorkContextForMySql() {
         verifyCanCreateUnitOfWorkContextFor(MySqlConfig.class);
         verifyCanCreateUseAndDisposeSession();
+        verifyCanCreateUseAndDisposeUnitOfWork();
+    }
+
+    @Test
+    public void eachUnitOfWrokContextConfigurationWillBeCreatedOnlyOnce() {
+        initHibernateAndSpring(HSqlConfig.class);
+        initHibernateAndSpring(HSqlConfig.class);
+
+        Assert.assertEquals(1, getContexts().size());
+    }
+
+    @Test
+    public void newUnitOfWorkContextCreatedForDifferentWindsorConfigFiles() {
+        initHibernateAndSpring(HSqlConfig.class);
+        initHibernateAndSpring(HSqlConfig2.class);
+
+        Assert.assertEquals(2, getContexts().size());
     }
 
     protected void verifyCanCreateUnitOfWorkContextFor(Class dbConfigClass) {
@@ -75,12 +96,48 @@ public class DatabaseTestFixtureTest extends DatabaseTestFixtureBase {
             session = getCurrentContext().createSession();
             Assert.assertNotNull(session);
 
-            LongEntityForTesting entity = new LongEntityForTesting("abcd");
-            session.save(entity);
+            session.save(new LongEntityForTesting());
             session.flush();
         } finally {
             getCurrentContext().disposeSession(session);
             getCurrentContext().disposeUnitOfWork();
         }
+    }
+
+    protected void verifyCanCreateUseAndDisposeUnitOfWork() {
+        try {
+            getCurrentContext().createUnitOfWork();
+            log.debug("Session=[{}]", UnitOfWorks.getCurrentSession());
+            UnitOfWorks.getCurrentSession().save(new LongEntityForTesting());
+            UnitOfWorks.getCurrentSession().flush();
+        } finally {
+            getCurrentContext().disposeUnitOfWork();
+        }
+    }
+
+    protected void verifyCanCreateUseAndDiposeNestedUnitOfWork() {
+        Assert.assertEquals("level before starting UnitOfWork = -1",
+                            -1,
+                            getCurrentContext().getUnitOfWorkNestingLevel());
+
+        getCurrentContext().createUnitOfWork();
+        Assert.assertEquals("level before starting UnitOfWork = 0",
+                            0,
+                            getCurrentContext().getUnitOfWorkNestingLevel());
+
+        getCurrentContext().createNestedUnitOfWork();
+        Assert.assertEquals("level after starting UnitOfWork = 1",
+                            1,
+                            getCurrentContext().getUnitOfWorkNestingLevel());
+
+        // in nested unit of work
+        UnitOfWorks.getCurrentSession().save(new LongEntityForTesting());
+        UnitOfWorks.getCurrentSession().flush();
+        getCurrentContext().disposeUnitOfWork();
+
+        // in original unit of work
+        UnitOfWorks.getCurrentSession().save(new LongEntityForTesting());
+        UnitOfWorks.getCurrentSession().flush();
+        getCurrentContext().disposeUnitOfWork();
     }
 }

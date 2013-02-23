@@ -26,8 +26,8 @@
         <property name="show_sql">true</property>
         <property name="format_sql">true</property>
 
-        <!-- spawn | spawn-drop | update | validate -->
-        <property name="hbm2ddl.auto">create</property>
+        <!-- none | create | spawn | spawn-drop | update | validate -->
+        <property name="hbm2ddl.auto">update</property>
 
 
         <!-- 검색 : hibernate-search 를 이용 : listener 도 추가해야 한다.-->

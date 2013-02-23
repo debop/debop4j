@@ -5,6 +5,7 @@ import com.google.common.base.Objects;
 import kr.debop4j.core.tools.ReflectTool;
 import lombok.extern.slf4j.Slf4j;
 
+import javax.persistence.*;
 import java.io.Serializable;
 
 /**
@@ -13,15 +14,18 @@ import java.io.Serializable;
  * Date: 12. 11. 19
  */
 @Slf4j
+@MappedSuperclass
 public abstract class EntityBase<TId extends Serializable> extends StatefulEntityBase implements IEntity<TId> {
 
     private static final long serialVersionUID = 4766509654284022534L;
+
+    @Id
+    @GeneratedValue
     protected TId id;
 
     /**
      * {@inheritDoc}
      */
-    @Override
     @SuppressWarnings("unchecked")
     public <TId> TId getId() {
         return (TId) this.id;
@@ -48,6 +52,16 @@ public abstract class EntityBase<TId extends Serializable> extends StatefulEntit
                     ((!isPersisted() || entity.isPersisted()) && hashSameBusinessSignature(entity));
         }
         return false;
+    }
+
+    @PostPersist
+    public final void postPersist() {
+        onPersist();
+    }
+
+    @PostLoad
+    public final void postLoad() {
+        onLoad();
     }
 
     /**

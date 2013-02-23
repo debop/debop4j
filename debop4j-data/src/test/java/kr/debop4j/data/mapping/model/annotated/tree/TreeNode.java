@@ -1,8 +1,8 @@
-package kr.debop4j.data.hibernate.forTesting;
+package kr.debop4j.data.mapping.model.annotated.tree;
 
 import com.google.common.base.Objects;
 import kr.debop4j.core.tools.HashTool;
-import kr.debop4j.data.model.LongAnnotatedEntityBase;
+import kr.debop4j.data.model.TreeEntityBase;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.DynamicInsert;
@@ -10,41 +10,37 @@ import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.Entity;
 import javax.persistence.Table;
-import javax.persistence.Version;
 
 /**
- * kr.debop4j.data.hibernate.forTesting.LongEntityForTesting
+ * kr.debop4j.data.mapping.model.annotated.tree.TreeNode
  * User: sunghyouk.bae@gmail.com
- * Date: 13. 2. 21.
+ * Date: 13. 2. 23.
  */
 @Entity
-@Table(name = "LongEntity_ForTesting")
+@Table(name = "A_TREENODE")
 @DynamicInsert
 @DynamicUpdate
 @Getter
 @Setter
-public class LongEntityForTesting extends LongAnnotatedEntityBase {
+public class TreeNode extends TreeEntityBase<TreeNode, Integer> {
 
-    public String code;
-    public String name;
-    public Integer age;
-
-    @Version
-    public int version;
+    private String title;
+    private String data;
+    private String description;
 
     @Override
     public int hashCode() {
         if (isPersisted())
             return super.hashCode();
 
-        return HashTool.compute(code, name);
+        return HashTool.compute(title, data);
     }
 
     @Override
     protected Objects.ToStringHelper buildStringHelper() {
         return super.buildStringHelper()
-                .add("code", code)
-                .add("name", name)
-                .add("age", age);
+                .add("title", title)
+                .add("data", data)
+                .add("description", description);
     }
 }
