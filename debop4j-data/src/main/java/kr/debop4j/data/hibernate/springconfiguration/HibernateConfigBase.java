@@ -116,9 +116,9 @@ public abstract class HibernateConfigBase {
         factoryBean.setDataSource(dataSource());
         factoryBean.setEntityInterceptor(hibernateInterceptor());
 
+        // Drived class에서 추가 작업을 수행할 수 있도록 합니다.
         setupSessionFactory(factoryBean);
 
-        // 꼭 이 함수를 호출해야 합니다.
         try {
             factoryBean.afterPropertiesSet();
 
