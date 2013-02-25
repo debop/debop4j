@@ -24,7 +24,6 @@ public abstract class PostgreSqlConfigBase extends HibernateConfigBase {
 
     @Bean
     public DataSource dataSource() {
-
         return buildDataSource("org.postgresql.Driver",
                                "jdbc:postgresql://localhost/" + getDatabaseName() + "?Set=UTF8",
                                "root",

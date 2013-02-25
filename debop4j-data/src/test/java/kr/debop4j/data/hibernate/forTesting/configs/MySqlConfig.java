@@ -23,4 +23,18 @@ public class MySqlConfig extends MySqlConfigBase {
         super.setupSessionFactory(factoryBean);
         factoryBean.setAnnotatedClasses(new Class[]{LongEntityForTesting.class});
     }
+
+//    @Bean
+//    public DataSource dataSource() {
+//
+//        // NOTE: pgBouncer 로 연결 시 꼭 prepareThreshold=0 를 추가해야 합니다.
+//        //
+//        BasicDataSource ds = new BasicDataSource();
+//        ds.setDriverClassName("com.mysql.jdbc.Driver");
+//        ds.setUrl("jdbc:mysql://localhost/" + getDatabaseName());
+//        ds.setUsername("root");
+//        ds.setPassword("root");
+//
+//        return ds;
+//    }
 }

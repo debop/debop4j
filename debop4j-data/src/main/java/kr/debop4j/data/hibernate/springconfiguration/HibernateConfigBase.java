@@ -1,8 +1,6 @@
 package kr.debop4j.data.hibernate.springconfiguration;
 
-import com.jolbox.bonecp.BoneCPDataSource;
 import kr.debop4j.core.tools.StringTool;
-import kr.debop4j.data.hibernate.forTesting.DatabaseEngine;
 import kr.debop4j.data.hibernate.forTesting.UnitOfWorkTestContextBase;
 import kr.debop4j.data.hibernate.interceptor.MultiInterceptor;
 import kr.debop4j.data.hibernate.interceptor.StatefulEntityInterceptor;
@@ -12,6 +10,7 @@ import kr.debop4j.data.hibernate.unitofwork.UnitOfWorkFactory;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.dbcp.BasicDataSource;
 import org.hibernate.ConnectionReleaseMode;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Environment;
@@ -40,10 +39,6 @@ public abstract class HibernateConfigBase {
     @Setter
     private UnitOfWorkTestContextBase testContext;
 
-    public DatabaseEngine getDatabaseEngine() {
-        return DatabaseEngine.HSql;
-    }
-
     abstract protected String getDatabaseName();
 
     abstract protected String[] getMappedPackageNames();
@@ -66,20 +61,35 @@ public abstract class HibernateConfigBase {
     protected DataSource buildDataSource(String driverClass, String url, String username, String password) {
 
         if (log.isDebugEnabled())
-            log.debug("build DataSource... driverClass=[{}], url=[{}], username=[{}], password=[{}]",
+            log.debug("build BoneCPDataSource... driverClass=[{}], url=[{}], username=[{}], password=[{}]",
                       driverClass, url, username, password);
 
-        BoneCPDataSource ds = new BoneCPDataSource();
-        ds.setDriverClass(driverClass);
-        ds.setJdbcUrl(url);
+        BasicDataSource ds = new BasicDataSource();
+        ds.setDriverClassName(driverClass);
+        ds.setUrl(url);
         if (StringTool.isNotWhiteSpace(username))
             ds.setUsername(username);
         if (StringTool.isNotWhiteSpace(password))
             ds.setPassword(password);
-        ds.setPartitionCount(2);
-        ds.setMaxConnectionsPerPartition(50);
 
         return ds;
+
+        //NOTE: BoneCP가 버그가 있다. - 테스트 후 잘되는 DB만 쓸 것
+
+//        BoneCPDataSource ds = new BoneCPDataSource();
+//
+//        ds.setDriverClass(driverClass);
+//        ds.setJdbcUrl(url);
+//
+//        if (StringTool.isNotWhiteSpace(username))
+//            ds.setUsername(username);
+//        if (StringTool.isNotWhiteSpace(password))
+//            ds.setPassword(password);
+//
+//        ds.setPartitionCount(2);
+//        ds.setMaxConnectionsPerPartition(50);
+//
+//        return ds;
     }
 
     protected DataSource buildEmbeddedDataSource() {

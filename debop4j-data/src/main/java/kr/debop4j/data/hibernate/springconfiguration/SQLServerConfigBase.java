@@ -22,7 +22,7 @@ public abstract class SQLServerConfigBase extends HibernateConfigBase {
     public DataSource dataSource() {
         return buildDataSource("com.microsoft.sqlserver.jdbc.SQLServerDriver",
                                "jdbc:sqlserver://localhost/" + getDatabaseName() + ";integratedSecurity=true;",
-                               "",
-                               "");
+                               "sa",
+                               "sa");
     }
 }

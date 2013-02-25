@@ -1,6 +1,5 @@
 package kr.debop4j.data.hibernate.springconfiguration;
 
-import kr.debop4j.data.hibernate.forTesting.DatabaseEngine;
 import org.hibernate.cfg.Environment;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -19,17 +18,12 @@ import java.util.Properties;
 public abstract class MySqlConfigBase extends HibernateConfigBase {
 
     @Override
-    public DatabaseEngine getDatabaseEngine() {
-        return DatabaseEngine.MySQL;
-    }
-
-    @Override
     public String getDatabaseName() {
         return "hibernate";
     }
 
-    @Bean
     @Override
+    @Bean
     public DataSource dataSource() {
         return buildDataSource("com.mysql.jdbc.Driver",
                                "jdbc:mysql://localhost/" + getDatabaseName(),
