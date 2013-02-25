@@ -22,7 +22,7 @@ public abstract class PostgreSqlConfigBase extends HibernateConfigBase {
         return "hibernate";
     }
 
-    @Bean
+    @Bean(destroyMethod = "close")
     public DataSource dataSource() {
         return buildDataSource("org.postgresql.Driver",
                                "jdbc:postgresql://localhost/" + getDatabaseName() + "?Set=UTF8",
@@ -30,7 +30,6 @@ public abstract class PostgreSqlConfigBase extends HibernateConfigBase {
                                "root");
     }
 
-    @Override
     @Bean
     public Properties hibernateProperties() {
         Properties props = super.hibernateProperties();

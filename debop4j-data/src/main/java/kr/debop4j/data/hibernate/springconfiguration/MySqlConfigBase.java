@@ -22,8 +22,7 @@ public abstract class MySqlConfigBase extends HibernateConfigBase {
         return "hibernate";
     }
 
-    @Override
-    @Bean
+    @Bean(destroyMethod = "close")
     public DataSource dataSource() {
         return buildDataSource("com.mysql.jdbc.Driver",
                                "jdbc:mysql://localhost/" + getDatabaseName(),

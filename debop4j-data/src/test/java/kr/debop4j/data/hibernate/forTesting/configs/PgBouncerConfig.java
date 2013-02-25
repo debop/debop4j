@@ -16,7 +16,7 @@ import javax.sql.DataSource;
 @EnableTransactionManagement
 public class PgBouncerConfig extends PostgreSqlConfig {
 
-    @Bean
+    @Bean(destroyMethod = "close")
     public DataSource dataSource() {
 //        return buildDataSource("org.postgresql.Driver",
 //                               "jdbc:postgresql://localhost:6432/" + getDatabaseName() + "?prepareThreshold=0",

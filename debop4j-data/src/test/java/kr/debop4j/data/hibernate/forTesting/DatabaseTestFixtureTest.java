@@ -5,7 +5,10 @@ import kr.debop4j.data.hibernate.forTesting.configs.*;
 import kr.debop4j.data.hibernate.unitofwork.UnitOfWorks;
 import lombok.extern.slf4j.Slf4j;
 import org.hibernate.Session;
-import org.junit.*;
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * 다양한 Database에 대해 hibernate Domain Model을 테스트 할 수 잇도록 합니다.
@@ -61,7 +64,7 @@ public class DatabaseTestFixtureTest extends DatabaseTestFixtureBase {
     }
 
     @Test
-    @Ignore("pgBouncer는 아직 불안하다.")
+    //@Ignore("pgBouncer는 아직 불안하다.")
     public void canCreateUnitOfWorkContextForPgBouncer() {
         verifyCanCreateUnitOfWorkContextFor(PgBouncerConfig.class);
         verifyCanCreateUseAndDisposeSession();

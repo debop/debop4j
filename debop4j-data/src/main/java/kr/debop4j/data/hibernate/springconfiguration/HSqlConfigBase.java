@@ -26,7 +26,7 @@ public abstract class HSqlConfigBase extends HibernateConfigBase {
         return "mem";
     }
 
-    @Bean
+    @Bean(destroyMethod = "close")
     public DataSource dataSource() {
         return buildDataSource("org.hsqldb.jdbcDriver",
                                "jdbc:hsqldb:" + getDatabaseName() + ":test",
