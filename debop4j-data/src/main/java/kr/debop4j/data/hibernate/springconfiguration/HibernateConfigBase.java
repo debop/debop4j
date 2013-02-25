@@ -1,7 +1,5 @@
 package kr.debop4j.data.hibernate.springconfiguration;
 
-import com.jolbox.bonecp.BoneCPDataSource;
-import kr.debop4j.core.tools.StringTool;
 import kr.debop4j.data.hibernate.forTesting.UnitOfWorkTestContextBase;
 import kr.debop4j.data.hibernate.interceptor.MultiInterceptor;
 import kr.debop4j.data.hibernate.interceptor.StatefulEntityInterceptor;
@@ -11,6 +9,7 @@ import kr.debop4j.data.hibernate.unitofwork.UnitOfWorkFactory;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.tomcat.jdbc.pool.PoolProperties;
 import org.hibernate.ConnectionReleaseMode;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Environment;
@@ -61,34 +60,29 @@ public abstract class HibernateConfigBase {
     protected DataSource buildDataSource(String driverClass, String url, String username, String password) {
 
         if (log.isDebugEnabled())
-            log.debug("build BoneCPDataSource... driverClass=[{}], url=[{}], username=[{}], password=[{}]",
+            log.debug("build Tomcat pool DataSource... driverClass=[{}], url=[{}], username=[{}], password=[{}]",
                       driverClass, url, username, password);
 
-//        BasicDataSource ds = new BasicDataSource();
-//        ds.setDriverClassName(driverClass);
-//        ds.setUrl(url);
-//        if (StringTool.isNotWhiteSpace(username))
-//            ds.setUsername(username);
-//        if (StringTool.isNotWhiteSpace(password))
-//            ds.setPassword(password);
-//
-//        return ds;
+        PoolProperties p = new PoolProperties();
+        p.setUrl(url);
+        p.setDriverClassName(driverClass);
+        p.setUsername(username);
+        p.setPassword(password);
+        p.setJmxEnabled(true);
+        p.setTestWhileIdle(false);
+        p.setTestOnBorrow(true);
+        p.setValidationQuery("SELECT 1");
+        p.setTestOnReturn(false);
+        p.setValidationInterval(30000);
+        p.setTimeBetweenEvictionRunsMillis(30000);
+        p.setMaxActive(100);
+        p.setInitialSize(10);
+        p.setMaxWait(10000);
+        p.setRemoveAbandonedTimeout(60);
+        p.setMinEvictableIdleTimeMillis(30000);
+        p.setMinIdle(10);
 
-        //NOTE: BoneCP가 버그가 있다. - 테스트 후 잘되는 DB만 쓸 것
-
-        BoneCPDataSource ds = new BoneCPDataSource();
-
-        ds.setDriverClass(driverClass);
-        ds.setJdbcUrl(url);
-
-        if (StringTool.isNotWhiteSpace(username))
-            ds.setUsername(username);
-        if (StringTool.isNotWhiteSpace(password))
-            ds.setPassword(password);
-
-        ds.setPartitionCount(2);
-        ds.setMaxConnectionsPerPartition(50);
-
+        DataSource ds = new org.apache.tomcat.jdbc.pool.DataSource(p);
         return ds;
     }
 

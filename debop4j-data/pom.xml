@@ -18,7 +18,7 @@
         <hibernate.search.version>4.2.0.Final</hibernate.search.version>
         <hibernate.validator.version>4.3.1.Final</hibernate.validator.version>
         <lucene.version>3.6.2</lucene.version>
-        <bonecp.version>0.7.1.RELEASE</bonecp.version>
+        <tomcat.jdbc.version>7.0.37</tomcat.jdbc.version>
         <twitter4j.version>3.0.3</twitter4j.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
@@ -210,21 +210,11 @@
             </exclusions>
         </dependency>
 
-        <!-- BoneCP를 기본으로 사용합니다. -->
+        <!-- tomcat connection pool 성능이 좋다. -->
         <dependency>
-            <groupId>com.jolbox</groupId>
-            <artifactId>bonecp-provider</artifactId>
-            <version>${bonecp.version}</version>
-            <exclusions>
-                <exclusion>
-                    <artifactId>slf4j-api</artifactId>
-                    <groupId>org.slf4j</groupId>
-                </exclusion>
-                <exclusion>
-                    <artifactId>guava</artifactId>
-                    <groupId>com.google.guava</groupId>
-                </exclusion>
-            </exclusions>
+            <groupId>org.apache.tomcat</groupId>
+            <artifactId>tomcat-jdbc</artifactId>
+            <version>${tomcat.jdbc.version}</version>
         </dependency>
 
         <!-- dbcp는 테스트용으로 사용합니다. BoneCP가 불안할 때 dbcp를 사용하세요 -->
@@ -234,6 +224,7 @@
             <version>1.4</version>
             <scope>test</scope>
         </dependency>
+
 
         <dependency>
             <groupId>org.hsqldb</groupId>
