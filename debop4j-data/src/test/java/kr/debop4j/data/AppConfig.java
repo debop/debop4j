@@ -1,21 +1,18 @@
-package kr.debop4j.data.hibernate.springconfiguration;
+package kr.debop4j.data;
 
-import kr.debop4j.data.hibernate.forTesting.UnitOfWorkTestContextBase;
 import kr.debop4j.data.hibernate.interceptor.MultiInterceptor;
 import kr.debop4j.data.hibernate.interceptor.StatefulEntityInterceptor;
 import kr.debop4j.data.hibernate.interceptor.UpdateTimestampedInterceptor;
 import kr.debop4j.data.hibernate.repository.HibernateDaoFactory;
 import kr.debop4j.data.hibernate.unitofwork.UnitOfWorkFactory;
+import kr.debop4j.data.hibernate.unitofwork.UnitOfWorks;
 import kr.debop4j.data.jdbc.JdbcTool;
-import lombok.Getter;
-import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.hibernate.ConnectionReleaseMode;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Environment;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseFactoryBean;
 import org.springframework.orm.hibernate4.HibernateTransactionManager;
 import org.springframework.orm.hibernate4.LocalSessionFactoryBean;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
@@ -25,22 +22,20 @@ import java.io.IOException;
 import java.util.Properties;
 
 /**
- * hibernate 의 환경설정을 spring framework의 bean 환경설정으로 구현했습니다.
+ * kr.debop4j.data.AppConfig
  * User: sunghyouk.bae@gmail.com
- * Date: 13. 2. 21.
+ * Date: 13. 2. 26
  */
 @Configuration
 @EnableTransactionManagement
+// @ComponentScan(basePackages={"kr.debop4j.data"})
 @Slf4j
-public abstract class HibernateConfigBase {
+public class AppConfig {
 
-    @Getter
-    @Setter
-    private UnitOfWorkTestContextBase testContext;
-
-    abstract protected String getDatabaseName();
-
-    abstract protected String[] getMappedPackageNames();
+    @Bean(destroyMethod = "close")
+    public DataSource dataSource() {
+        return JdbcTool.getEmbeddedHsqlDataSource();
+    }
 
     protected Properties hibernateProperties() {
 
@@ -57,27 +52,19 @@ public abstract class HibernateConfigBase {
         return props;
     }
 
-    protected DataSource buildDataSource(String driverClass, String url, String username, String password) {
-        return JdbcTool.getDataSource(driverClass, url, username, password);
-    }
-
-    protected DataSource buildEmbeddedDataSource() {
-        EmbeddedDatabaseFactoryBean bean = new EmbeddedDatabaseFactoryBean();
-        bean.afterPropertiesSet();   // EmbeddedDatabaseFactoryBean가 FactoryBean이므로 필요합니다.
-        return bean.getObject();
-    }
-
-    @Bean(destroyMethod = "close")
-    abstract public DataSource dataSource();
-
-    /**
-     * factoryBean 에 추가 설정을 지정할 수 있습니다.
-     *
-     * @param factoryBean
-     */
-    protected void setupSessionFactory(LocalSessionFactoryBean factoryBean) {
-        // Nothing
-    }
+    private static String[] mappingPackages = new String[]{
+            "kr.debop4j.data.mapping.model.annotated",
+            "kr.debop4j.data.mapping.model.annotated.collection",
+            "kr.debop4j.data.mapping.model.annotated.join",
+            "kr.debop4j.data.mapping.model.annotated.joinedSubclass",
+            "kr.debop4j.data.mapping.model.annotated.onetomany",
+            "kr.debop4j.data.mapping.model.annotated.onetoone",
+            "kr.debop4j.data.mapping.model.annotated.subclass",
+            "kr.debop4j.data.mapping.model.annotated.tree",
+            "kr.debop4j.data.mapping.model.annotated.unionSubclass",
+            "kr.debop4j.data.mapping.model.annotated.usertypes",
+            "kr.debop4j.data.hibernate.search.model"
+    };
 
     @Bean
     public SessionFactory sessionFactory() {
@@ -87,16 +74,10 @@ public abstract class HibernateConfigBase {
 
         LocalSessionFactoryBean factoryBean = new LocalSessionFactoryBean();
 
-        String[] packageNames = getMappedPackageNames();
-        if (packageNames != null)
-            factoryBean.setPackagesToScan(getMappedPackageNames());
-
         factoryBean.setHibernateProperties(hibernateProperties());
         factoryBean.setDataSource(dataSource());
         factoryBean.setEntityInterceptor(hibernateInterceptor());
-
-        // Drived class에서 추가 작업을 수행할 수 있도록 합니다.
-        setupSessionFactory(factoryBean);
+        factoryBean.setPackagesToScan(mappingPackages);
 
         try {
             factoryBean.afterPropertiesSet();
@@ -140,6 +121,7 @@ public abstract class HibernateConfigBase {
     public UnitOfWorkFactory unitOfWorkFactory() {
         UnitOfWorkFactory factory = new UnitOfWorkFactory();
         factory.setSessionFactory(sessionFactory());
+        UnitOfWorks.setUnitOfWorkFactory(factory);
         return factory;
     }
 
@@ -148,4 +130,3 @@ public abstract class HibernateConfigBase {
         return new HibernateDaoFactory();
     }
 }
-
