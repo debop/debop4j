@@ -1,6 +1,7 @@
 package kr.debop4j.data.hibernate.repository;
 
 import kr.debop4j.core.spring.Springs;
+import kr.debop4j.data.AppConfig;
 import kr.debop4j.data.hibernate.unitofwork.IUnitOfWork;
 import kr.debop4j.data.hibernate.unitofwork.UnitOfWorks;
 import kr.debop4j.data.mapping.model.annotated.JpaUser;
@@ -16,35 +17,35 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 /**
- * kr.nsoft.data.hibernate.dao.HibernateDaoTest
+ * kr.nsoft.data.hibernate.dao.HibernateRepositoryTest
  * User: sunghyouk.bae@gmail.com
  * Date: 12. 11. 26.
  */
 @Slf4j
-public class HibernateDaoTest {
+public class HibernateRepositoryTest {
 
-    HibernateDaoFactory hibernateDaofactory;
+    HibernateRepositoryFactory hibernateRepositoryfactory;
     HibernateTransactionManager transactionManager;
     IUnitOfWork unitOfWork;
 
     @BeforeClass
     public static void beforeClass() {
         if (Springs.isNotInitialized())
-            Springs.init("applicationContext.xml");
+            Springs.initByAnnotatedClasses(AppConfig.class);
     }
 
     @Before
     public void before() {
-        hibernateDaofactory = Springs.getBean(HibernateDaoFactory.class);
-    //    transactionManager = Springs.getBean(HibernateTransactionManager.class);
+        hibernateRepositoryfactory = Springs.getBean(HibernateRepositoryFactory.class);
+        transactionManager = Springs.getBean(HibernateTransactionManager.class);
 
-        unitOfWork = UnitOfWorks.start();
+        UnitOfWorks.start();
     }
 
     @After
     public void after() throws Exception {
-        if (unitOfWork != null)
-            unitOfWork.close();
+        if (UnitOfWorks.isStarted())
+            UnitOfWorks.stop();
     }
 
     @AfterClass
@@ -57,11 +58,11 @@ public class HibernateDaoTest {
     @Transactional
     public void createHibernateDao() {
 
-        Assert.assertNotNull(hibernateDaofactory);
+        Assert.assertNotNull(hibernateRepositoryfactory);
 
         //TransactionStatus txstatus = transactionManager.getTransaction(new DefaultTransactionDefinition());
         try {
-            IHibernateDao<JpaUser> jpaUserDao = hibernateDaofactory.getOrCreateHibernateDao(JpaUser.class);
+            IHibernateRepository<JpaUser> jpaUserDao = hibernateRepositoryfactory.getOrCreateHibernateRepository(JpaUser.class);
             List<JpaUser> users = jpaUserDao.getAll();
 
             Assert.assertEquals(0, users.size());
@@ -69,14 +70,14 @@ public class HibernateDaoTest {
             //transactionManager.commit(txstatus);
         } catch (Exception e) {
             //transactionManager.rollback(txstatus);
-            log.error("예외가 발생했습니다.", e);
+            HibernateRepositoryTest.log.error("예외가 발생했습니다.", e);
             Assert.fail();
         }
     }
 
     @Test
     public void createCategoryHiberateDao() {
-        IHibernateDao<Category> categoryDao = hibernateDaofactory.getOrCreateHibernateDao(Category.class);
+        IHibernateRepository<Category> categoryDao = hibernateRepositoryfactory.getOrCreateHibernateRepository(Category.class);
         List<Category> categories = categoryDao.getAll();
         Assert.assertEquals(0, categories.size());
     }

@@ -3,7 +3,7 @@ package kr.debop4j.data;
 import kr.debop4j.data.hibernate.interceptor.MultiInterceptor;
 import kr.debop4j.data.hibernate.interceptor.StatefulEntityInterceptor;
 import kr.debop4j.data.hibernate.interceptor.UpdateTimestampedInterceptor;
-import kr.debop4j.data.hibernate.repository.HibernateDaoFactory;
+import kr.debop4j.data.hibernate.repository.HibernateRepositoryFactory;
 import kr.debop4j.data.hibernate.unitofwork.UnitOfWorkFactory;
 import kr.debop4j.data.hibernate.unitofwork.UnitOfWorks;
 import kr.debop4j.data.jdbc.JdbcTool;
@@ -126,7 +126,7 @@ public class AppConfig {
     }
 
     @Bean
-    public HibernateDaoFactory hibernateDaoFactory() {
-        return new HibernateDaoFactory();
+    public HibernateRepositoryFactory hibernateDaoFactory() {
+        return new HibernateRepositoryFactory();
     }
 }
