@@ -9,7 +9,7 @@ import javax.sql.DataSource;
 import java.util.Properties;
 
 /**
- * kr.debop4j.data.hibernate.springconfiguration.PostgreSqlDbConfiguration
+ * PostgreSQL DB를 사용하는 Hibernate 용 환경설정입니다.
  * User: sunghyouk.bae@gmail.com
  * Date: 13. 2. 21.
  */

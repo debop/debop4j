@@ -12,10 +12,12 @@ import kr.debop4j.data.hibernate.unitofwork.UnitOfWorks;
 import kr.debop4j.data.model.IStatefulEntity;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
-import org.hibernate.*;
+import org.hibernate.Criteria;
+import org.hibernate.LockOptions;
+import org.hibernate.Query;
+import org.hibernate.Session;
 import org.hibernate.criterion.*;
 import org.hibernate.transform.Transformers;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.io.Serializable;
@@ -30,20 +32,17 @@ import java.util.List;
  * User: sunghyouk.bae@gmail.com
  * Date: 12. 11. 27.
  */
-@Slf4j
 @Repository
+@Slf4j
 @SuppressWarnings("unchecked")
-public class HibernateDaoImpl<E extends IStatefulEntity> implements IHibernateDao<E> {
+public class HibernateRepository<E extends IStatefulEntity> implements IHibernateRepository<E> {
 
     @Getter
     private Class<E> entityClass;
 
     String entityName;
 
-    @Autowired
-    private SessionFactory sessionFactory;
-
-    public HibernateDaoImpl(Class<E> entityClass) {
+    public HibernateRepository(Class<E> entityClass) {
         this.entityClass = entityClass;
         this.entityName = this.entityClass.getName();
     }

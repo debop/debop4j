@@ -1,7 +1,6 @@
 package kr.debop4j.data.hibernate.repository;
 
 import kr.debop4j.core.spring.Springs;
-import kr.debop4j.data.AppConfig;
 import kr.debop4j.data.hibernate.unitofwork.IUnitOfWork;
 import kr.debop4j.data.hibernate.unitofwork.UnitOfWorks;
 import kr.debop4j.data.mapping.model.annotated.JpaUser;
@@ -31,21 +30,21 @@ public class HibernateDaoTest {
     @BeforeClass
     public static void beforeClass() {
         if (Springs.isNotInitialized())
-            Springs.initByAnnotatedClasses(AppConfig.class);
+            Springs.init("applicationContext.xml");
     }
 
     @Before
     public void before() {
         hibernateDaofactory = Springs.getBean(HibernateDaoFactory.class);
-        transactionManager = Springs.getBean(HibernateTransactionManager.class);
+    //    transactionManager = Springs.getBean(HibernateTransactionManager.class);
 
-        UnitOfWorks.start();
+        unitOfWork = UnitOfWorks.start();
     }
 
     @After
     public void after() throws Exception {
-        if (UnitOfWorks.isStarted())
-            UnitOfWorks.stop();
+        if (unitOfWork != null)
+            unitOfWork.close();
     }
 
     @AfterClass

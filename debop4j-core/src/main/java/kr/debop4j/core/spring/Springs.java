@@ -372,6 +372,22 @@ public final class Springs {
         return false;
     }
 
+    public static synchronized boolean registerBean(String beanName, Object instance) {
+        Guard.shouldNotBeEmpty(beanName, "beanName");
+
+        try {
+            getContext().getBeanFactory().registerSingleton(beanName, instance);
+            return true;
+        } catch (Exception e) {
+            log.error("인스턴스를 빈으로 등록하는데 실패했습니다. beanName=" + beanName, e);
+            return false;
+        }
+    }
+
+    public static synchronized boolean registerSingletonBean(String beanName, Object instance) {
+        return registerBean(beanName, instance);
+    }
+
     public static synchronized <T> boolean registerSingletonBean(Class<T> beanClass, PropertyValue... pvs) {
         Guard.shouldNotBeNull(beanClass, "beanClass");
         return registerSingletonBean(beanClass.getName(), beanClass, pvs);
