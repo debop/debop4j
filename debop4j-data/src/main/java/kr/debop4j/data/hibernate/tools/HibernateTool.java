@@ -6,8 +6,8 @@ import kr.debop4j.core.spring.Springs;
 import kr.debop4j.core.tools.SerializeTool;
 import kr.debop4j.data.hibernate.HibernateParameter;
 import kr.debop4j.data.hibernate.listener.UpdateTimestampedEventListener;
-import kr.debop4j.data.hibernate.repository.HibernateDaoFactory;
-import kr.debop4j.data.hibernate.repository.IHibernateDao;
+import kr.debop4j.data.hibernate.repository.HibernateRepositoryFactory;
+import kr.debop4j.data.hibernate.repository.IHibernateRepository;
 import kr.debop4j.data.model.IStatefulEntity;
 import lombok.extern.slf4j.Slf4j;
 import org.hibernate.Criteria;
@@ -50,13 +50,13 @@ public class HibernateTool {
         return factory;
     }
 
-    public static HibernateDaoFactory getHibernateDaoFactory() {
+    public static HibernateRepositoryFactory getHibernateDaoFactory() {
         // 이 작업이 가능하려면 Springs 로 Initialize 를 수행할 수 있도록 해 주어야 합니다.
-        return Springs.getFirstBeanByType(HibernateDaoFactory.class);
+        return Springs.getFirstBeanByType(HibernateRepositoryFactory.class);
     }
 
-    public static <E extends IStatefulEntity> IHibernateDao getHibernateDao(Class<E> entityClass) {
-        return getHibernateDaoFactory().getOrCreateHibernateDao(entityClass);
+    public static <E extends IStatefulEntity> IHibernateRepository getHibernateDao(Class<E> entityClass) {
+        return getHibernateDaoFactory().getOrCreateHibernateRepository(entityClass);
     }
 
     public static void registerUpdateTimestampEventListener(SessionFactory sessionFactory) {

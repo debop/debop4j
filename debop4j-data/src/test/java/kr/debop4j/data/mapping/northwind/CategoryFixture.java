@@ -1,6 +1,6 @@
 package kr.debop4j.data.mapping.northwind;
 
-import kr.debop4j.data.hibernate.repository.IHibernateDao;
+import kr.debop4j.data.hibernate.repository.IHibernateRepository;
 import kr.debop4j.data.mapping.northwind.model.Category;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
@@ -15,7 +15,7 @@ import java.util.List;
 @Slf4j
 public class CategoryFixture extends NorthwindDbTestFixtureBase {
 
-    public IHibernateDao<Category> getCategoryDao() {
+    public IHibernateRepository<Category> getCategoryDao() {
         return getDao(Category.class);
     }
 

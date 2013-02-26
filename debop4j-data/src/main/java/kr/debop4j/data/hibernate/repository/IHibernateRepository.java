@@ -17,7 +17,7 @@ import java.util.List;
  * User: sunghyouk.bae@gmail.com
  * Date: 12. 11. 27.
  */
-public interface IHibernateDao<E extends IStatefulEntity> {
+public interface IHibernateRepository<E extends IStatefulEntity> {
 
     Class<E> getEntityClass();
 

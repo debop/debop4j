@@ -4,8 +4,8 @@ import com.google.common.collect.Iterables;
 import kr.debop4j.core.spring.Springs;
 import kr.debop4j.data.hibernate.HibernateParameter;
 import kr.debop4j.data.hibernate.forTesting.DatabaseTestFixtureBase;
-import kr.debop4j.data.hibernate.repository.HibernateDaoFactory;
-import kr.debop4j.data.hibernate.repository.IHibernateDao;
+import kr.debop4j.data.hibernate.repository.HibernateRepositoryFactory;
+import kr.debop4j.data.hibernate.repository.IHibernateRepository;
 import kr.debop4j.data.hibernate.unitofwork.UnitOfWorks;
 import kr.debop4j.data.mapping.northwind.config.PostgreSqlConfig;
 import kr.debop4j.data.mapping.northwind.model.Customer;
@@ -50,8 +50,8 @@ public class NorthwindDbTestFixtureBase extends DatabaseTestFixtureBase {
     public static final HibernateParameter CustomerParameter =
             new HibernateParameter("customerId", "ANATR", StringType.INSTANCE);
 
-    public static <E extends IStatefulEntity> IHibernateDao<E> getDao(Class<E> entityCalss) {
-        return Springs.getBean(HibernateDaoFactory.class).getOrCreateHibernateDao(entityCalss);
+    public static <E extends IStatefulEntity> IHibernateRepository<E> getDao(Class<E> entityCalss) {
+        return Springs.getBean(HibernateRepositoryFactory.class).getOrCreateHibernateRepository(entityCalss);
     }
 
     public static <E> void print(Iterable<E> collection) {

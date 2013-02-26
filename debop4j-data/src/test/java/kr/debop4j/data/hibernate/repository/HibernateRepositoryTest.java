@@ -16,14 +16,14 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 /**
- * kr.nsoft.data.hibernate.dao.HibernateDaoTest
+ * kr.nsoft.data.hibernate.dao.HibernateRepositoryTest
  * User: sunghyouk.bae@gmail.com
  * Date: 12. 11. 26.
  */
 @Slf4j
-public class HibernateDaoTest {
+public class HibernateRepositoryTest {
 
-    HibernateDaoFactory hibernateDaofactory;
+    HibernateRepositoryFactory repositoryFactory;
     HibernateTransactionManager transactionManager;
     IUnitOfWork unitOfWork;
 
@@ -35,8 +35,8 @@ public class HibernateDaoTest {
 
     @Before
     public void before() {
-        hibernateDaofactory = Springs.getBean(HibernateDaoFactory.class);
-    //    transactionManager = Springs.getBean(HibernateTransactionManager.class);
+        repositoryFactory = Springs.getBean(HibernateRepositoryFactory.class);
+        //    transactionManager = Springs.getBean(HibernateTransactionManager.class);
 
         unitOfWork = UnitOfWorks.start();
     }
@@ -57,11 +57,11 @@ public class HibernateDaoTest {
     @Transactional
     public void createHibernateDao() {
 
-        Assert.assertNotNull(hibernateDaofactory);
+        Assert.assertNotNull(repositoryFactory);
 
         //TransactionStatus txstatus = transactionManager.getTransaction(new DefaultTransactionDefinition());
         try {
-            IHibernateDao<JpaUser> jpaUserDao = hibernateDaofactory.getOrCreateHibernateDao(JpaUser.class);
+            IHibernateRepository<JpaUser> jpaUserDao = repositoryFactory.getOrCreateHibernateRepository(JpaUser.class);
             List<JpaUser> users = jpaUserDao.getAll();
 
             Assert.assertEquals(0, users.size());
@@ -69,14 +69,14 @@ public class HibernateDaoTest {
             //transactionManager.commit(txstatus);
         } catch (Exception e) {
             //transactionManager.rollback(txstatus);
-            log.error("예외가 발생했습니다.", e);
+            HibernateRepositoryTest.log.error("예외가 발생했습니다.", e);
             Assert.fail();
         }
     }
 
     @Test
     public void createCategoryHiberateDao() {
-        IHibernateDao<Category> categoryDao = hibernateDaofactory.getOrCreateHibernateDao(Category.class);
+        IHibernateRepository<Category> categoryDao = repositoryFactory.getOrCreateHibernateRepository(Category.class);
         List<Category> categories = categoryDao.getAll();
         Assert.assertEquals(0, categories.size());
     }

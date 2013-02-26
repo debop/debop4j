@@ -10,7 +10,7 @@ import kr.debop4j.core.parallelism.Parallels;
 import kr.debop4j.core.tools.MapperTool;
 import kr.debop4j.core.tools.StringTool;
 import kr.debop4j.data.hibernate.HibernateParameter;
-import kr.debop4j.data.hibernate.repository.IHibernateDao;
+import kr.debop4j.data.hibernate.repository.IHibernateRepository;
 import kr.debop4j.data.model.*;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
@@ -181,7 +181,7 @@ public class EntityTool {
             log.debug("IEntity [{}] 의 Locale[{}]를 가지는 엔티티 조회 hql=[{}]",
                       entityClass.getName(), locale, hql);
 
-        IHibernateDao<T> dao = HibernateTool.getHibernateDao(entityClass);
+        IHibernateRepository<T> dao = HibernateTool.getHibernateDao(entityClass);
         return dao.findByQueryString(hql, new HibernateParameter("key", locale, LocaleType.INSTANCE));
 
     }
@@ -197,7 +197,7 @@ public class EntityTool {
             log.debug("IEntity [{}] 에 Locale 속성[{}]의 값이 [{}] 인 엔티티를 조회합니다. hql=[{}]",
                       entityClass.getName(), propertyName, value, hql);
 
-        IHibernateDao<T> dao = HibernateTool.getHibernateDao(entityClass);
+        IHibernateRepository<T> dao = HibernateTool.getHibernateDao(entityClass);
         return dao.findByQueryString(hql, new HibernateParameter(propertyName, value, ObjectType.INSTANCE));
     }
 
@@ -219,7 +219,7 @@ public class EntityTool {
         if (log.isDebugEnabled())
             log.debug("엔티티 [{}]의 메타데이타 키 [{}] 를 가지는 엔티티 조회 hql=[{}]", entityClass.getName(), key, hql);
 
-        IHibernateDao<T> dao = HibernateTool.getHibernateDao(entityClass);
+        IHibernateRepository<T> dao = HibernateTool.getHibernateDao(entityClass);
         return dao.findByQueryString(hql, new HibernateParameter("key", key, StringType.INSTANCE));
     }
 
@@ -230,7 +230,7 @@ public class EntityTool {
         if (log.isDebugEnabled())
             log.debug("메타데이타 value[{}]를 가지는 엔티티 조회 hql=[{}]", value, hql);
 
-        IHibernateDao<T> dao = HibernateTool.getHibernateDao(entityClass);
+        IHibernateRepository<T> dao = HibernateTool.getHibernateDao(entityClass);
         return dao.findByQueryString(hql, new HibernateParameter("value", value, StringType.INSTANCE));
     }
 
