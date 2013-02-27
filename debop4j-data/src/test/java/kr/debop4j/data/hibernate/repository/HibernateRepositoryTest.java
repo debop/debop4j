@@ -56,7 +56,7 @@ public class HibernateRepositoryTest {
 
     @Test
     @Transactional
-    public void createHibernateDao() {
+    public void createHibernateRepository() {
 
         Assert.assertNotNull(hibernateRepositoryfactory);
 
@@ -76,8 +76,9 @@ public class HibernateRepositoryTest {
     }
 
     @Test
-    public void createCategoryHiberateDao() {
-        IHibernateRepository<Category> categoryDao = hibernateRepositoryfactory.getOrCreateHibernateRepository(Category.class);
+    public void createCategoryHiberateRepository() {
+        IHibernateRepository<Category> categoryDao =
+                hibernateRepositoryfactory.getOrCreateHibernateRepository(Category.class);
         List<Category> categories = categoryDao.getAll();
         Assert.assertEquals(0, categories.size());
     }

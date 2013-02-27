@@ -186,7 +186,6 @@
                     <groupId>org.codehaus.jackson</groupId>
                 </exclusion>
             </exclusions>
-            <scope>test</scope>
         </dependency>
 
         <dependency>

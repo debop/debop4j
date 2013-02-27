@@ -17,7 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
  * Date: 13. 2. 19.
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = HibernateConfig.class)
+@ContextConfiguration(classes = {HibernateConfig.class})
 public class HibernateConfigTest {
 
     @Autowired

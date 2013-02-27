@@ -3,14 +3,16 @@ package kr.debop4j.data;
 import kr.debop4j.data.hibernate.interceptor.MultiInterceptor;
 import kr.debop4j.data.hibernate.interceptor.StatefulEntityInterceptor;
 import kr.debop4j.data.hibernate.interceptor.UpdateTimestampedInterceptor;
+import kr.debop4j.data.hibernate.listener.UpdateTimestampedEventListener;
 import kr.debop4j.data.hibernate.repository.HibernateRepositoryFactory;
+import kr.debop4j.data.hibernate.tools.HibernateTool;
 import kr.debop4j.data.hibernate.unitofwork.UnitOfWorkFactory;
-import kr.debop4j.data.hibernate.unitofwork.UnitOfWorks;
 import kr.debop4j.data.jdbc.JdbcTool;
 import lombok.extern.slf4j.Slf4j;
 import org.hibernate.ConnectionReleaseMode;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Environment;
+import org.hibernate.event.spi.EventType;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.orm.hibernate4.HibernateTransactionManager;
@@ -49,6 +51,10 @@ public class AppConfig {
         props.put(Environment.CURRENT_SESSION_CONTEXT_CLASS, "thread");
         props.put(Environment.STATEMENT_BATCH_SIZE, "50");
 
+        // Hibernate search
+        props.put("hibernate.search.default.directory_provider", "filesystem");
+        props.put("hibernate.search.default.indexBase", "~/tmp/target/lucene/indexes");
+
         return props;
     }
 
@@ -85,7 +91,14 @@ public class AppConfig {
             if (log.isInfoEnabled())
                 log.info("SessionFactory Bean을 생성했습니다!!!");
 
-            return factoryBean.getObject();
+            SessionFactory sessionFactory = factoryBean.getObject();
+
+            // EventListener를 등록한다.
+            HibernateTool.registerEventListener(sessionFactory,
+                                                new UpdateTimestampedEventListener(),
+                                                EventType.PRE_INSERT, EventType.PRE_UPDATE);
+
+            return sessionFactory;
 
         } catch (IOException e) {
             throw new RuntimeException("SessionFactory 빌드에 실패했습니다.", e);
@@ -121,12 +134,14 @@ public class AppConfig {
     public UnitOfWorkFactory unitOfWorkFactory() {
         UnitOfWorkFactory factory = new UnitOfWorkFactory();
         factory.setSessionFactory(sessionFactory());
-        UnitOfWorks.setUnitOfWorkFactory(factory);
+
+        // 꼭 Springs.init(AppConfig.clss) 를 먼저 수행해줘야 합니다
+        // UnitOfWorks.setUnitOfWorkFactory(factory);
         return factory;
     }
 
     @Bean
-    public HibernateRepositoryFactory hibernateDaoFactory() {
+    public HibernateRepositoryFactory hibernateRepositoryFactory() {
         return new HibernateRepositoryFactory();
     }
 }

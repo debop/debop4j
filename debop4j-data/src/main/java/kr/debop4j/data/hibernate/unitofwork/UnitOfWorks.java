@@ -67,6 +67,7 @@ public final class UnitOfWorks {
 
             if (log.isInfoEnabled())
                 log.info("IUnitOfWorkFactory Bean을 가져옵니다. unitOfWorkFactory=[{}]", unitOfWorkFactory);
+
             Guard.shouldNotBeNull(unitOfWorkFactory, "unitOfWorkFactory");
         }
         return unitOfWorkFactory;

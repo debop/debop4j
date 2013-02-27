@@ -4,6 +4,7 @@ import com.google.common.collect.Maps;
 import kr.debop4j.core.Guard;
 import kr.debop4j.core.spring.Springs;
 import kr.debop4j.core.tools.SerializeTool;
+import kr.debop4j.core.tools.StringTool;
 import kr.debop4j.data.hibernate.HibernateParameter;
 import kr.debop4j.data.hibernate.listener.UpdateTimestampedEventListener;
 import kr.debop4j.data.hibernate.repository.HibernateRepositoryFactory;
@@ -59,26 +60,33 @@ public class HibernateTool {
         return getHibernateDaoFactory().getOrCreateHibernateRepository(entityClass);
     }
 
-    public static void registerUpdateTimestampEventListener(SessionFactory sessionFactory) {
+    public static void registerEventListener(SessionFactory sessionFactory, Object listener, EventType... eventTypes) {
+        Guard.shouldNotBeNull(sessionFactory, "sessionFactory");
+        Guard.shouldNotBeNull(listener, "listener");
 
-        if (log.isInfoEnabled())
-            log.info("지정된 SessionFactory에 UpdateTimestampedEventListener를 등록합니다.");
+        if (log.isDebugEnabled())
+            log.debug("sessionFactory에 event listener를 등록합니다... listener=[{}], eventTypes=[{}]",
+                      listener, StringTool.listToString(eventTypes));
 
         EventListenerRegistry registry =
                 ((SessionFactoryImpl) sessionFactory)
                         .getServiceRegistry()
                         .getService(EventListenerRegistry.class);
 
-        UpdateTimestampedEventListener listener = new UpdateTimestampedEventListener();
-        registry.getEventListenerGroup(EventType.PRE_INSERT).appendListener(listener);
-        registry.getEventListenerGroup(EventType.PRE_UPDATE).appendListener(listener);
+        for (EventType eventType : eventTypes) {
+            registry.getEventListenerGroup(eventType).appendListener(listener);
+        }
+
+    }
+
+    public static void registerUpdateTimestampEventListener(SessionFactory sessionFactory) {
+        registerEventListener(sessionFactory,
+                              new UpdateTimestampedEventListener(),
+                              EventType.PRE_INSERT, EventType.PRE_UPDATE);
     }
 
     /**
      * {@link HibernateParameter} 정보를 Name, Value 형태의 맵으로 변환합니다.
-     *
-     * @param parameters
-     * @return
      */
     public static Map<String, Object> toMap(HibernateParameter... parameters) {
         Map<String, Object> map = Maps.newHashMap();

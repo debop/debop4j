@@ -1,6 +1,7 @@
 package kr.debop4j.data.hibernate.annotated.collection;
 
 import kr.debop4j.core.spring.Springs;
+import kr.debop4j.data.AppConfig;
 import kr.debop4j.data.mapping.model.annotated.collection.Car;
 import kr.debop4j.data.mapping.model.annotated.collection.CarOption;
 import org.hibernate.Session;
@@ -21,7 +22,8 @@ public class CarTest {
     @BeforeClass
     public static void beforeClass() {
         if (Springs.isNotInitialized())
-            Springs.init("applicationContext.xml");
+            Springs.initByAnnotatedClasses(AppConfig.class);
+        //Springs.init("applicationContext.xml");
 
         sessionFactory = Springs.getBean(SessionFactory.class);
     }

@@ -1,6 +1,9 @@
 package kr.debop4j.data.hibernate.search;
 
+import kr.debop4j.core.spring.Springs;
+import kr.debop4j.data.AppConfig;
 import kr.debop4j.data.hibernate.search.model.SearchItem;
+import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -9,33 +12,34 @@ import org.hibernate.search.FullTextSession;
 import org.hibernate.search.impl.FullTextSessionImpl;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.util.List;
 
 /**
- * org.hibernate.search.SearchTest
+ * Hibernate Search 를 테스트합니다.
  * User: sunghyouk.bae@gmail.com
  * Date: 13. 2. 5
  */
 @Slf4j
-@RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = "/applicationContext.xml")
 public class SearchTest {
 
-    @Autowired
-    SessionFactory sessionFactory;
+    @BeforeClass
+    public static void beforeClass() {
+        if (Springs.isNotInitialized())
+            Springs.initByAnnotatedClasses(AppConfig.class);
+    }
+
+    @Getter(lazy = true)
+    private final SessionFactory sessionFactory = Springs.getFirstBeanByType(SessionFactory.class);
 
     private Session session;
     private FullTextSession fullTextSession;
 
     @Before
     public void before() {
-        session = sessionFactory.openSession();
+        session = getSessionFactory().openSession();
         fullTextSession = new FullTextSessionImpl(session);
     }
 
@@ -52,7 +56,11 @@ public class SearchTest {
         fullTextSession.flush();
         fullTextSession.clear();
 
-        List<SearchItem> list = (List<SearchItem>) fullTextSession.createCriteria(SearchItem.class).add(Restrictions.ilike("title", "제목")).list();
+        List<SearchItem> list = (List<SearchItem>)
+                fullTextSession
+                        .createCriteria(SearchItem.class)
+                        .add(Restrictions.ilike("title", "제목"))
+                        .list();
 
         Assert.assertNotNull(list);
         for (SearchItem loaded : list)
