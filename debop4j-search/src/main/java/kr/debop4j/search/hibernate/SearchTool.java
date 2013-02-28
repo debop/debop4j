@@ -1,4 +1,4 @@
-package kr.debop4j.data.hibernate.search;
+package kr.debop4j.search.hibernate;
 
 import kr.debop4j.core.Guard;
 import kr.debop4j.data.hibernate.tools.HibernateTool;
@@ -8,9 +8,9 @@ import org.hibernate.event.spi.EventType;
 import org.hibernate.search.event.impl.FullTextIndexEventListener;
 
 /**
- * kr.debop4j.data.hibernate.search.SearchTool
+ * kr.debop4j.search.hibernate.SearchTool
  * User: sunghyouk.bae@gmail.com
- * Date: 13. 2. 27.
+ * Date: 13. 2. 28.
  */
 @Slf4j
 public class SearchTool {

@@ -1,18 +1,15 @@
-package kr.debop4j.data;
+package kr.debop4j.search;
 
 import kr.debop4j.data.hibernate.interceptor.MultiInterceptor;
 import kr.debop4j.data.hibernate.interceptor.StatefulEntityInterceptor;
 import kr.debop4j.data.hibernate.interceptor.UpdateTimestampedInterceptor;
-import kr.debop4j.data.hibernate.listener.UpdateTimestampedEventListener;
 import kr.debop4j.data.hibernate.repository.HibernateRepositoryFactory;
-import kr.debop4j.data.hibernate.tools.HibernateTool;
 import kr.debop4j.data.hibernate.unitofwork.UnitOfWorkFactory;
 import kr.debop4j.data.jdbc.JdbcTool;
 import lombok.extern.slf4j.Slf4j;
 import org.hibernate.ConnectionReleaseMode;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Environment;
-import org.hibernate.event.spi.EventType;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.orm.hibernate4.HibernateTransactionManager;
@@ -24,13 +21,12 @@ import java.io.IOException;
 import java.util.Properties;
 
 /**
- * kr.debop4j.data.AppConfig
+ * kr.debop4j.search.AppConfig
  * User: sunghyouk.bae@gmail.com
- * Date: 13. 2. 26
+ * Date: 13. 2. 28.
  */
 @Configuration
 @EnableTransactionManagement
-// @ComponentScan(basePackages={"kr.debop4j.data"})
 @Slf4j
 public class AppConfig {
 
@@ -51,21 +47,15 @@ public class AppConfig {
         props.put(Environment.CURRENT_SESSION_CONTEXT_CLASS, "thread");
         props.put(Environment.STATEMENT_BATCH_SIZE, "50");
 
+        // Hibernate search
+        props.put("hibernate.search.default.directory_provider", "filesystem");
+        props.put("hibernate.search.default.indexBase", "lucene/indexes");
+
         return props;
     }
 
     private static String[] mappingPackages = new String[]{
-            "kr.debop4j.data.mapping.model.annotated",
-            "kr.debop4j.data.mapping.model.annotated.collection",
-            "kr.debop4j.data.mapping.model.annotated.join",
-            "kr.debop4j.data.mapping.model.annotated.joinedSubclass",
-            "kr.debop4j.data.mapping.model.annotated.onetomany",
-            "kr.debop4j.data.mapping.model.annotated.onetoone",
-            "kr.debop4j.data.mapping.model.annotated.subclass",
-            "kr.debop4j.data.mapping.model.annotated.tree",
-            "kr.debop4j.data.mapping.model.annotated.unionSubclass",
-            "kr.debop4j.data.mapping.model.annotated.usertypes",
-            "kr.debop4j.data.hibernate.search.model"
+            "kr.debop4j.search.hibernate.model"
     };
 
     @Bean
@@ -90,9 +80,9 @@ public class AppConfig {
             SessionFactory sessionFactory = factoryBean.getObject();
 
             // EventListener를 등록한다.
-            HibernateTool.registerEventListener(sessionFactory,
-                                                new UpdateTimestampedEventListener(),
-                                                EventType.PRE_INSERT, EventType.PRE_UPDATE);
+//            HibernateTool.registerEventListener(sessionFactory,
+//                                                new UpdateTimestampedEventListener(),
+//                                                EventType.PRE_INSERT, EventType.PRE_UPDATE);
 
             return sessionFactory;
 

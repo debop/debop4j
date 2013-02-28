@@ -11,7 +11,21 @@
     <name>debop4j-web-example Maven Webapp</name>
     <url>http://maven.apache.org</url>
 
+    <properties>
+        <basedir>/User/debop/work/java/debop4j/debop4j-web-example</basedir>
+    </properties>
+
     <dependencies>
+
+        <!-- 로컬 파일 링크 -->
+        <dependency>
+            <groupId>com.kendo</groupId>
+            <artifactId>com.kendoui.taglib</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${basedir}/lib/kendo-taglib-2012.3.1114.jar</systemPath>
+        </dependency>
+
         <dependency>
             <groupId>debop4j</groupId>
             <artifactId>debop4j-core</artifactId>

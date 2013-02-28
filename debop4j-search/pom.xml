@@ -1,6 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
         <artifactId>debop4j</artifactId>
@@ -9,22 +7,45 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>debop4j-data</artifactId>
+    <artifactId>debop4j-search</artifactId>
     <packaging>jar</packaging>
+
+    <name>debop4j-search</name>
+    <url>http://maven.apache.org</url>
 
     <properties>
         <springframework.data.version>1.0.0.RELEASE</springframework.data.version>
         <hibernate.version>4.1.9.Final</hibernate.version>
+        <hibernate.search.version>4.2.0.Final</hibernate.search.version>
         <hibernate.validator.version>4.3.1.Final</hibernate.validator.version>
+        <hibernate.ogm.version>4.0.0.Beta2</hibernate.ogm.version>
+        <lucene.version>3.6.2</lucene.version>
+
         <tomcat.jdbc.version>7.0.37</tomcat.jdbc.version>
         <twitter4j.version>3.0.3</twitter4j.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+        <basedir>/User/debop/work/java/debop4j/debop4j-search</basedir>
     </properties>
 
     <dependencies>
+        <!-- 로컬 파일 링크 -->
+        <dependency>
+            <groupId>org.snu.ids</groupId>
+            <artifactId>org.snu.ids.ha</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${basedir}/lib/org.snu.ids.ha.jar</systemPath>
+        </dependency>
+
         <dependency>
             <groupId>debop4j</groupId>
             <artifactId>debop4j-core</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>debop4j</groupId>
+            <artifactId>debop4j-data</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
 
@@ -160,6 +181,46 @@
 
         <dependency>
             <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-search</artifactId>
+            <version>${hibernate.search.version}</version>
+            <exclusions>
+                <exclusion>
+                    <artifactId>guava</artifactId>
+                    <groupId>com.google.guava</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>slf4j-api</artifactId>
+                    <groupId>org.slf4j</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>jboss-logging</artifactId>
+                    <groupId>org.jboss.logging</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>jackson-core-asl</artifactId>
+                    <groupId>org.codehaus.jackson</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>jackson-mapper-asl</artifactId>
+                    <groupId>org.codehaus.jackson</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>lucene-core</artifactId>
+                    <groupId>org.apache.lucene</groupId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.lucene</groupId>
+            <artifactId>lucene-core</artifactId>
+            <version>${lucene.version}</version>
+            <scope>test</scope>
+        </dependency>
+
+
+        <dependency>
+            <groupId>org.hibernate</groupId>
             <artifactId>hibernate-validator</artifactId>
             <version>${hibernate.validator.version}</version>
             <scope>test</scope>
@@ -169,6 +230,63 @@
                     <groupId>org.jboss.logging</groupId>
                 </exclusion>
             </exclusions>
+        </dependency>
+
+        <!-- Hibernate-OGM -->
+        <dependency>
+            <groupId>org.hibernate.ogm</groupId>
+            <artifactId>hibernate-ogm-core</artifactId>
+            <version>${hibernate.ogm.version}</version>
+            <exclusions>
+                <exclusion>
+                    <artifactId>hibernate-search-engine</artifactId>
+                    <groupId>org.hibernate</groupId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+        <dependency>
+            <groupId>org.hibernate.ogm</groupId>
+            <artifactId>hibernate-ogm-ehcache</artifactId>
+            <version>${hibernate.ogm.version}</version>
+            <exclusions>
+                <exclusion>
+                    <artifactId>ehcache-core</artifactId>
+                    <groupId>net.sf.ehcache</groupId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>org.hibernate.jpql</groupId>
+            <artifactId>hibernate-jpql-parser</artifactId>
+            <version>1.0.0.Alpha1</version>
+            <exclusions>
+                <exclusion>
+                    <artifactId>hibernate-search-engine</artifactId>
+                    <groupId>org.hibernate</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>antlr</artifactId>
+                    <groupId>org.antlr</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>lucene-core</artifactId>
+                    <groupId>org.apache.lucene</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>jboss-logging</artifactId>
+                    <groupId>org.jboss.logging</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>hibernate-search-engine</artifactId>
+                    <groupId>org.hibernate</groupId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>org.antlr</groupId>
+            <artifactId>antlr</artifactId>
+            <version>3.5</version>
         </dependency>
 
         <!-- tomcat connection pool 성능이 좋다. -->
@@ -257,6 +375,5 @@
                 </exclusion>
             </exclusions>
         </dependency>
-
     </dependencies>
 </project>
