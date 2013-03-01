@@ -30,7 +30,8 @@ public class Car extends AnnotatedEntityBase {
     private Long id;
 
     @CollectionTable(name = "CarOptionMap", joinColumns = @JoinColumn(name = "CarId"))
-    @ElementCollection(fetch = FetchType.EAGER)
+    @MapKeyClass(String.class)
+    @ElementCollection(targetClass = String.class, fetch = FetchType.EAGER)
     private Map<String, String> options = Maps.newHashMap();
 
     @CollectionTable(name = "CarOptionTable", joinColumns = @JoinColumn(name = "CarId"))

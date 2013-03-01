@@ -1,35 +1,39 @@
 package kr.debop4j.data.hibernate.annotated.collection;
 
 import kr.debop4j.core.spring.Springs;
-import kr.debop4j.data.AppConfig;
+import kr.debop4j.data.hibernate.HibernateTestBase;
 import kr.debop4j.data.mapping.model.annotated.collection.Car;
 import kr.debop4j.data.mapping.model.annotated.collection.CarOption;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.junit.*;
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * org.annotated.mapping.domain.model.collection.CarTest
  * User: sunghyouk.bae@gmail.com
  * Date: 12. 12. 15.
  */
-public class CarTest {
+public class CarTest extends HibernateTestBase {
 
-    private static SessionFactory sessionFactory;
-
+    private SessionFactory sessionFactory;
     private Session session;
 
-    @BeforeClass
-    public static void beforeClass() {
-        if (Springs.isNotInitialized())
-            Springs.initByAnnotatedClasses(AppConfig.class);
-        //Springs.init("applicationContext.xml");
+//    @BeforeClass
+//    public static void beforeClass() {
+//        if (Springs.isNotInitialized())
+//            Springs.initByAnnotatedClasses(AppConfig.class);
+//        //Springs.init("applicationContext.xml");
+//
+//        sessionFactory = Springs.getBean(SessionFactory.class);
+//    }
 
-        sessionFactory = Springs.getBean(SessionFactory.class);
-    }
 
     @Before
     public void before() {
+        sessionFactory = Springs.getBean(SessionFactory.class);
         session = sessionFactory.openSession();
     }
 

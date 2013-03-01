@@ -2,6 +2,7 @@ package kr.debop4j.data.hibernate.repository;
 
 import kr.debop4j.core.spring.Springs;
 import kr.debop4j.data.AppConfig;
+import kr.debop4j.data.hibernate.HibernateTestBase;
 import kr.debop4j.data.hibernate.unitofwork.IUnitOfWork;
 import kr.debop4j.data.hibernate.unitofwork.UnitOfWorks;
 import kr.debop4j.data.mapping.model.annotated.JpaUser;
@@ -22,7 +23,7 @@ import java.util.List;
  * Date: 12. 11. 26.
  */
 @Slf4j
-public class HibernateRepositoryTest {
+public class HibernateRepositoryTest extends HibernateTestBase {
 
     HibernateRepositoryFactory hibernateRepositoryfactory;
     HibernateTransactionManager transactionManager;
@@ -30,8 +31,9 @@ public class HibernateRepositoryTest {
 
     @BeforeClass
     public static void beforeClass() {
-        if (Springs.isNotInitialized())
-            Springs.initByAnnotatedClasses(AppConfig.class);
+//        if (Springs.isNotInitialized())
+//            Springs.initByAnnotatedClasses(AppConfig.class);
+        initHibernateAndSpring(AppConfig.class);
     }
 
     @Before
