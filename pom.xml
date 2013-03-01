@@ -21,6 +21,7 @@
         <module>debop4j-web-example</module>
         <module>debop4j-redis</module>
         <module>debop4j-search</module>
+        <module>debop4j-access</module>
     </modules>
 
     <properties>
