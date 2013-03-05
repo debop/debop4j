@@ -21,7 +21,7 @@ import java.util.Date;
  * Date: 13. 3. 1.
  */
 @Entity
-@Table
+@Table(name = "Department")
 @DynamicInsert
 @DynamicUpdate
 @Getter
@@ -86,8 +86,8 @@ public class Department extends TreeEntityBase<Department, Long> implements IUpd
     @Override
     protected Objects.ToStringHelper buildStringHelper() {
         return super.buildStringHelper()
-                .add("id", id)
-                .add("code", code)
-                .add("name", name);
+                    .add("id", id)
+                    .add("code", code)
+                    .add("name", name);
     }
 }

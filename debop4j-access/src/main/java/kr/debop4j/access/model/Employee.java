@@ -1,6 +1,7 @@
 package kr.debop4j.access.model;
 
 import com.google.common.base.Objects;
+import kr.debop4j.core.Guard;
 import kr.debop4j.core.tools.HashTool;
 import kr.debop4j.data.model.IUpdateTimestampedEntity;
 import kr.debop4j.data.model.LongAnnotatedEntityBase;
@@ -27,13 +28,16 @@ import java.util.Date;
 @Setter
 public class Employee extends LongAnnotatedEntityBase implements ICodeBaseEntity, IUpdateTimestampedEntity {
 
-    private Employee() {}
+    protected Employee() {}
 
-    private Employee(Company company, String employeeCode) {
+    public Employee(Company company, String employeeCode) {
         this(company, employeeCode, employeeCode);
     }
 
-    private Employee(Company company, String employeeCode, String employeeName) {
+    public Employee(Company company, String employeeCode, String employeeName) {
+        Guard.shouldNotBeNull(company, "company");
+        Guard.shouldNotBeEmpty(employeeCode, "employeeCode");
+
         this.company = company;
         this.code = employeeCode;
         this.name = employeeName;
@@ -55,6 +59,7 @@ public class Employee extends LongAnnotatedEntityBase implements ICodeBaseEntity
     @Column(name = "EmployeeName", nullable = false, length = 128)
     private String name;
 
+    @Column(name = "updateTimestamp")
     @Temporal(TemporalType.TIMESTAMP)
     private Timestamp updateTimestamp;
 
@@ -73,8 +78,8 @@ public class Employee extends LongAnnotatedEntityBase implements ICodeBaseEntity
     @Override
     protected Objects.ToStringHelper buildStringHelper() {
         return super.buildStringHelper()
-                .add("id", id)
-                .add("code", code)
-                .add("name", name);
+                    .add("id", id)
+                    .add("code", code)
+                    .add("name", name);
     }
 }
