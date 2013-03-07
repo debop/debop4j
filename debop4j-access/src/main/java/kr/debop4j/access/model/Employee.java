@@ -3,8 +3,8 @@ package kr.debop4j.access.model;
 import com.google.common.base.Objects;
 import kr.debop4j.core.Guard;
 import kr.debop4j.core.tools.HashTool;
+import kr.debop4j.data.model.AnnotatedEntityBase;
 import kr.debop4j.data.model.IUpdateTimestampedEntity;
-import kr.debop4j.data.model.LongAnnotatedEntityBase;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.DynamicInsert;
@@ -12,7 +12,6 @@ import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.Index;
 
 import javax.persistence.*;
-import java.sql.Timestamp;
 import java.util.Date;
 
 /**
@@ -26,7 +25,7 @@ import java.util.Date;
 @DynamicUpdate
 @Getter
 @Setter
-public class Employee extends LongAnnotatedEntityBase implements ICodeBaseEntity, IUpdateTimestampedEntity {
+public class Employee extends AnnotatedEntityBase implements ICodeBaseEntity, IUpdateTimestampedEntity {
 
     protected Employee() {}
 
@@ -50,22 +49,27 @@ public class Employee extends LongAnnotatedEntityBase implements ICodeBaseEntity
 
     @ManyToOne
     @JoinColumn(name = "CompanyId", nullable = false)
+    @Index(name = "ix_employee_code")
     private Company company;
 
     @Column(name = "EmployeeCode", nullable = false, length = 64)
-    @Index(name = "ix_employee_code", columnNames = {"code", "name"})
+    @Index(name = "ix_employee_code")
     private String code;
 
     @Column(name = "EmployeeName", nullable = false, length = 128)
+    @Index(name = "ix_employee_code")
     private String name;
+
+    @Column(name = "IsActive")
+    private Boolean active;
 
     @Column(name = "updateTimestamp")
     @Temporal(TemporalType.TIMESTAMP)
-    private Timestamp updateTimestamp;
+    private Date updateTimestamp;
 
     @Override
     public void updateUpdateTimestamp() {
-        updateTimestamp = new Timestamp(new Date().getTime());
+        updateTimestamp = new Date();
     }
 
     @Override
@@ -78,8 +82,9 @@ public class Employee extends LongAnnotatedEntityBase implements ICodeBaseEntity
     @Override
     protected Objects.ToStringHelper buildStringHelper() {
         return super.buildStringHelper()
-                    .add("id", id)
-                    .add("code", code)
-                    .add("name", name);
+                .add("id", id)
+                .add("companyId", company.getId())
+                .add("code", code)
+                .add("name", name);
     }
 }

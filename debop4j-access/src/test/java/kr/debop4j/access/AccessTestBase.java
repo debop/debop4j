@@ -12,12 +12,12 @@ import org.junit.BeforeClass;
 public class AccessTestBase extends DatabaseTestFixtureBase {
 
     @BeforeClass
-    private static void beforeClass() {
+    public static void beforeClass() {
         initHibernateAndSpring(AppConfig.class);
     }
 
     @AfterClass
-    private static void afterClass() {
+    public static void afterClass() {
         closeUnitOfWorkTestContexts();
     }
 }

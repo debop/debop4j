@@ -13,7 +13,6 @@ import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.Index;
 
 import javax.persistence.*;
-import java.sql.Timestamp;
 import java.util.Date;
 
 /**
@@ -50,21 +49,29 @@ public class Company extends AnnotatedEntityBase implements IUpdateTimestampedEn
     private Long id;
 
     @Column(name = "CompanyCode", nullable = false, length = 128)
-    @Index(name = "ix_company_code", columnNames = {"code", "name"})
+    @Index(name = "ix_company_code")
     private String code;
 
     @Column(name = "CompanyName", nullable = false, length = 128)
+    @Index(name = "ix_company_code")
     private String name;
 
     @Column(name = "CompanyEName", length = 128)
     private String ename;
 
+    @Column(name = "IsActive")
+    private Boolean active;
+
     @Column(name = "CompanyDesc", length = 4000)
     private String description;
 
     @Temporal(TemporalType.TIMESTAMP)
-    private Timestamp updateTimestamp;
+    private Date updateTimestamp;
 
+    @Override
+    public void updateUpdateTimestamp() {
+        updateTimestamp = new Date();
+    }
 
     @Override
     public int hashCode() {
@@ -79,11 +86,5 @@ public class Company extends AnnotatedEntityBase implements IUpdateTimestampedEn
                 .add("id", id)
                 .add("code", code)
                 .add("name", name);
-    }
-
-
-    @Override
-    public void updateUpdateTimestamp() {
-        updateTimestamp = new Timestamp(new Date().getTime());
     }
 }

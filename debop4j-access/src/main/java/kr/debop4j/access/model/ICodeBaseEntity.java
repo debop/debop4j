@@ -7,6 +7,11 @@ package kr.debop4j.access.model;
  */
 public interface ICodeBaseEntity {
 
+    /**
+     * 코드 정보
+     *
+     * @return
+     */
     String getCode();
 
     void setCode(String code);

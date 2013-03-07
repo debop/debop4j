@@ -7,6 +7,7 @@ import kr.debop4j.core.tools.HashTool;
 import lombok.Getter;
 import lombok.Setter;
 
+import javax.persistence.Column;
 import javax.persistence.Embeddable;
 
 /**
@@ -21,7 +22,10 @@ public class TreeNodePosition extends ValueObjectBase {
 
     private static final long serialVersionUID = 7724440843329055902L;
 
+    @Column(name = "TreeLevel")
     private Integer level;
+
+    @Column(name = "TreeOrder")
     private Integer order;
 
     public TreeNodePosition() {

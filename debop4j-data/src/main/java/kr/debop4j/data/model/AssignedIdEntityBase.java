@@ -17,7 +17,7 @@ public class AssignedIdEntityBase<TId extends Serializable> extends EntityBase<T
     protected AssignedIdEntityBase() {}
 
     protected AssignedIdEntityBase(TId assignedId) {
-        this.id = assignedId;
+        super.setId(assignedId);
     }
 
     /**
@@ -27,7 +27,7 @@ public class AssignedIdEntityBase<TId extends Serializable> extends EntityBase<T
      */
     @Override
     public void setId(TId newId) {
-        id = newId;
+        super.setId(newId);
     }
 
     /**
@@ -36,6 +36,6 @@ public class AssignedIdEntityBase<TId extends Serializable> extends EntityBase<T
      * @return hash code
      */
     public int hashCode() {
-        return (id != null) ? Objects.hashCode(id) : System.identityHashCode(this);
+        return (getId() != null) ? Objects.hashCode(getId()) : System.identityHashCode(this);
     }
 }

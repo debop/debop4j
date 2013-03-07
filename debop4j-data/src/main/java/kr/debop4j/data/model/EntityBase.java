@@ -21,7 +21,7 @@ public abstract class EntityBase<TId extends Serializable> extends StatefulEntit
 
     @Id
     @GeneratedValue
-    protected TId id;
+    private TId id;
 
     /**
      * {@inheritDoc}

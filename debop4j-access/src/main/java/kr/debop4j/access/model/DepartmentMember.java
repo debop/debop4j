@@ -13,7 +13,6 @@ import org.hibernate.annotations.Index;
 import org.joda.time.DateTime;
 
 import javax.persistence.*;
-import java.sql.Timestamp;
 import java.util.Date;
 
 /**
@@ -43,17 +42,17 @@ public class DepartmentMember extends LongAnnotatedEntityBase implements IUpdate
     /**
      * 소속 부서
      */
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "DepartmentId", nullable = false)
-    @Index(name = "ix_departmentmember")
+    @Index(name = "ix_department_member")
     private Department department;
 
     /**
      * 소속 직원
      */
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "EmployeeId", nullable = false)
-    @Index(name = "ix_departmentmember")
+    @Index(name = "ix_department_member")
     private Employee employee;
 
     /**
@@ -68,7 +67,7 @@ public class DepartmentMember extends LongAnnotatedEntityBase implements IUpdate
     @Column(name = "EndTime")
     private DateTime endTime;
 
-    @Column(name = "active")
+    @Column(name = "IsActive")
     private Boolean active;
 
     /**
@@ -78,11 +77,11 @@ public class DepartmentMember extends LongAnnotatedEntityBase implements IUpdate
     private String employeeTitle;
 
     @Temporal(TemporalType.TIMESTAMP)
-    private Timestamp updateTimestamp;
+    private Date updateTimestamp;
 
     @Override
     public void updateUpdateTimestamp() {
-        updateTimestamp = new Timestamp(new Date().getTime());
+        updateTimestamp = new Date();
     }
 
     @Override
@@ -95,10 +94,11 @@ public class DepartmentMember extends LongAnnotatedEntityBase implements IUpdate
     @Override
     protected Objects.ToStringHelper buildStringHelper() {
         return super.buildStringHelper()
-                    .add("department", department)
-                    .add("employee", employee)
-                    .add("startTime", startTime)
-                    .add("endTime", endTime);
+                .add("departmentId", department.getId())
+                .add("employeeId", employee.getId())
+                .add("active", active)
+                .add("startTime", startTime)
+                .add("endTime", endTime);
     }
 
 

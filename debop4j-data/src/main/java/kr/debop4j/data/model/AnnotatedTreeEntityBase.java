@@ -5,44 +5,35 @@ import com.google.common.collect.Sets;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
-import java.io.Serializable;
 import java.util.Set;
 
 /**
- * 트리 형태의 엔티티의 기본 클래스입니다.
+ * kr.debop4j.data.model.AnnotatedTreeEntityBase
  * User: sunghyouk.bae@gmail.com
- * Date: 12. 9. 15.
+ * Date: 13. 3. 7.
  */
 @MappedSuperclass
+@DynamicInsert
+@DynamicUpdate
 @Getter
 @Setter
-public abstract class TreeEntityBase<T extends ITreeEntity<T>, TId extends Serializable>
-        extends EntityBase<TId> implements ITreeEntity<T> {
+public class AnnotatedTreeEntityBase<T extends ITreeEntity<T>> extends AnnotatedEntityBase implements ITreeEntity<T> {
 
-    private static final long serialVersionUID = 5383928955741762564L;
-
-    /**
-     * {@inheritDoc}
-     */
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ParentId")
     private T parent;
 
-    /**
-     * {@inheritDoc}
-     */
     @Setter(AccessLevel.PROTECTED)
     @OneToMany(mappedBy = "parent", cascade = {CascadeType.ALL})
     @LazyCollection(LazyCollectionOption.EXTRA)
     private Set<T> children = Sets.newLinkedHashSet();
 
-    /**
-     * {@inheritDoc}
-     */
     @Embedded
     private TreeNodePosition nodePosition = new TreeNodePosition();
 
