@@ -3,8 +3,6 @@ package kr.debop4j.access.model;
 import com.google.common.base.Objects;
 import kr.debop4j.core.Guard;
 import kr.debop4j.core.tools.HashTool;
-import kr.debop4j.data.model.AnnotatedEntityBase;
-import kr.debop4j.data.model.IUpdateTimestampedEntity;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.DynamicInsert;
@@ -12,7 +10,6 @@ import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.Index;
 
 import javax.persistence.*;
-import java.util.Date;
 
 /**
  * kr.debop4j.access.model.Employee
@@ -21,11 +18,12 @@ import java.util.Date;
  */
 @Entity
 @Table(name = "Employee")
+@Inheritance(strategy = InheritanceType.JOINED)
 @DynamicInsert
 @DynamicUpdate
 @Getter
 @Setter
-public class Employee extends AnnotatedEntityBase implements ICodeBaseEntity, IUpdateTimestampedEntity {
+public class Employee extends AccessEntityBase implements ICodeBaseEntity {
 
     protected Employee() {}
 
@@ -63,14 +61,11 @@ public class Employee extends AnnotatedEntityBase implements ICodeBaseEntity, IU
     @Column(name = "IsActive")
     private Boolean active;
 
-    @Column(name = "updateTimestamp")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date updateTimestamp;
+    @Column(name = "Description", length = 4000)
+    private String description;
 
-    @Override
-    public void updateUpdateTimestamp() {
-        updateTimestamp = new Date();
-    }
+    @Column(name = "ExAttr", length = 4000)
+    private String exAttr;
 
     @Override
     public int hashCode() {
@@ -82,9 +77,9 @@ public class Employee extends AnnotatedEntityBase implements ICodeBaseEntity, IU
     @Override
     protected Objects.ToStringHelper buildStringHelper() {
         return super.buildStringHelper()
-                .add("id", id)
-                .add("companyId", company.getId())
-                .add("code", code)
-                .add("name", name);
+                    .add("id", id)
+                    .add("companyId", company.getId())
+                    .add("code", code)
+                    .add("name", name);
     }
 }

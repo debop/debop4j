@@ -25,7 +25,8 @@ import java.util.Date;
 @DynamicUpdate
 @Getter
 @Setter
-public class Department extends AnnotatedTreeEntityBase<Department> implements IUpdateTimestampedEntity, ICodeBaseEntity {
+public class Department extends AnnotatedTreeEntityBase<Department>
+        implements ICodeBaseEntity, IUpdateTimestampedEntity {
 
     private static final long serialVersionUID = -2198558891376603272L;
 
@@ -72,6 +73,9 @@ public class Department extends AnnotatedTreeEntityBase<Department> implements I
     @Column(name = "DepartmentDesc", length = 4000)
     private String description;
 
+    @Column(name = "ExAttr", length = 4000)
+    private String exAttr;
+
     @Temporal(TemporalType.TIMESTAMP)
     private Date updateTimestamp;
 
@@ -90,9 +94,9 @@ public class Department extends AnnotatedTreeEntityBase<Department> implements I
     @Override
     protected Objects.ToStringHelper buildStringHelper() {
         return super.buildStringHelper()
-                .add("id", id)
-                .add("companyId", company.getId())
-                .add("code", code)
-                .add("name", name);
+                    .add("id", id)
+                    .add("companyId", company.getId())
+                    .add("code", code)
+                    .add("name", name);
     }
 }

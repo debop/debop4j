@@ -3,8 +3,6 @@ package kr.debop4j.access.model;
 import com.google.common.base.Objects;
 import kr.debop4j.core.Guard;
 import kr.debop4j.core.tools.HashTool;
-import kr.debop4j.data.model.IUpdateTimestampedEntity;
-import kr.debop4j.data.model.LongAnnotatedEntityBase;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.DynamicInsert;
@@ -12,7 +10,6 @@ import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.Index;
 
 import javax.persistence.*;
-import java.util.Date;
 
 /**
  * 그룹의 구성원
@@ -25,7 +22,7 @@ import java.util.Date;
 @DynamicUpdate
 @Getter
 @Setter
-public class GroupMember extends LongAnnotatedEntityBase implements IUpdateTimestampedEntity {
+public class GroupMember extends AccessEntityBase {
 
     protected GroupMember() {}
 
@@ -35,6 +32,11 @@ public class GroupMember extends LongAnnotatedEntityBase implements IUpdateTimes
         this.memberKind = memberKind;
         this.memberId = memberId;
     }
+
+    @Id
+    @GeneratedValue
+    @Column(name = "GroupMemberId")
+    private Long id;
 
     @ManyToOne
     @JoinColumn(name = "departmentId", nullable = false)
@@ -53,26 +55,19 @@ public class GroupMember extends LongAnnotatedEntityBase implements IUpdateTimes
     @Column(name = "IsActive")
     private Boolean active;
 
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date updateTimestamp;
-
-    @Override
-    public void updateUpdateTimestamp() {
-        updateTimestamp = new Date();
-    }
-
     @Override
     public int hashCode() {
         if (isPersisted())
-            return super.hashCode();
+            return HashTool.compute(id);
         return HashTool.compute(department, memberKind, memberId);
     }
 
     @Override
     protected Objects.ToStringHelper buildStringHelper() {
         return super.buildStringHelper()
-                .add("departmentId", department.getId())
-                .add("memberKind", memberKind)
-                .add("memberId", memberId);
+                    .add("id", id)
+                    .add("departmentId", department.getId())
+                    .add("memberKind", memberKind)
+                    .add("memberId", memberId);
     }
 }

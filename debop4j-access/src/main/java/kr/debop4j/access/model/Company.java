@@ -1,10 +1,11 @@
 package kr.debop4j.access.model;
 
 import com.google.common.base.Objects;
+import com.google.common.collect.Maps;
 import kr.debop4j.core.Guard;
+import kr.debop4j.core.ValueObjectBase;
 import kr.debop4j.core.tools.HashTool;
-import kr.debop4j.data.model.AnnotatedEntityBase;
-import kr.debop4j.data.model.IUpdateTimestampedEntity;
+import kr.debop4j.data.model.ILocaleValue;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
@@ -13,7 +14,8 @@ import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.Index;
 
 import javax.persistence.*;
-import java.util.Date;
+import java.util.Locale;
+import java.util.Map;
 
 /**
  * 회사 정보
@@ -26,7 +28,7 @@ import java.util.Date;
 @DynamicUpdate
 @Getter
 @Setter
-public class Company extends AnnotatedEntityBase implements IUpdateTimestampedEntity {
+public class Company extends AccessLocaledEntityBase<Company.CompanyLocale> implements ICodeBaseEntity {
 
     protected Company() {}
 
@@ -65,12 +67,19 @@ public class Company extends AnnotatedEntityBase implements IUpdateTimestampedEn
     @Column(name = "CompanyDesc", length = 4000)
     private String description;
 
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date updateTimestamp;
+    @Column(name = "ExAttr", length = 4000)
+    private String exAttr;
 
-    @Override
-    public void updateUpdateTimestamp() {
-        updateTimestamp = new Date();
+    /**
+     * 다국어 지원을 위한 정보
+     */
+    @CollectionTable(name = "CompanyLocale", joinColumns = @JoinColumn(name = "CompanyId"))
+    @MapKeyClass(Locale.class)
+    @ElementCollection(targetClass = CompanyLocale.class, fetch = FetchType.LAZY)
+    private Map<Locale, CompanyLocale> localeMap = Maps.newHashMap();
+
+    public Map<Locale, CompanyLocale> getLocaleMap() {
+        return localeMap;
     }
 
     @Override
@@ -83,8 +92,26 @@ public class Company extends AnnotatedEntityBase implements IUpdateTimestampedEn
     @Override
     protected Objects.ToStringHelper buildStringHelper() {
         return super.buildStringHelper()
-                .add("id", id)
-                .add("code", code)
-                .add("name", name);
+                    .add("id", id)
+                    .add("code", code)
+                    .add("name", name);
+    }
+
+    @Getter
+    @Setter
+    @Embeddable
+    @DynamicInsert
+    @DynamicUpdate
+    public static class CompanyLocale extends ValueObjectBase implements ILocaleValue {
+
+        public CompanyLocale() {}
+
+        public CompanyLocale(String name, String description) {
+            this.name = name;
+            this.description = description;
+        }
+
+        private String name;
+        private String description;
     }
 }

@@ -17,7 +17,7 @@ import javax.persistence.Embeddable;
 @Embeddable
 @Getter
 @Setter
-public class Address extends ValueObjectBase {
+public class AddressComponent extends ValueObjectBase {
 
     private String street1;
     private String street2;
@@ -42,7 +42,7 @@ public class Address extends ValueObjectBase {
     @Override
     protected Objects.ToStringHelper buildStringHelper() {
         return super.buildStringHelper()
-                .add("zipcode", zipcode)
-                .add("country", country);
+                    .add("zipcode", zipcode)
+                    .add("country", country);
     }
 }

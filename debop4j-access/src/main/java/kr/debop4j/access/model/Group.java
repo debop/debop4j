@@ -3,8 +3,6 @@ package kr.debop4j.access.model;
 import com.google.common.base.Objects;
 import kr.debop4j.core.Guard;
 import kr.debop4j.core.tools.HashTool;
-import kr.debop4j.data.model.AnnotatedEntityBase;
-import kr.debop4j.data.model.IUpdateTimestampedEntity;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
@@ -13,7 +11,6 @@ import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.Index;
 
 import javax.persistence.*;
-import java.util.Date;
 
 /**
  * 가상의 조직을 나타냅니다.
@@ -21,12 +18,12 @@ import java.util.Date;
  * Date: 13. 3. 5
  */
 @Entity
-@Table(name = "Groups")
+@Table(name = "GROUPS")
 @DynamicInsert
 @DynamicUpdate
 @Getter
 @Setter
-public class Group extends AnnotatedEntityBase implements ICodeBaseEntity, IUpdateTimestampedEntity {
+public class Group extends AccessEntityBase implements ICodeBaseEntity {
 
     protected Group() { }
 
@@ -46,39 +43,31 @@ public class Group extends AnnotatedEntityBase implements ICodeBaseEntity, IUpda
 
     @Id
     @GeneratedValue
-    @Column(name = "GroupId")
+    @Column(name = "GROUP_ID")
     @Setter(AccessLevel.PROTECTED)
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "CompanyId", nullable = false)
+    @JoinColumn(name = "COMPANY_ID", nullable = false)
     @Index(name = "ix_group_code")
     private Company company;
 
-    @Column(name = "GroupCode", nullable = false, length = 32)
+    @Column(name = "GROUP_CODE", nullable = false, length = 32)
     @Index(name = "ix_group_code")
     private String code;
 
-    @Column(name = "GroupName", nullable = false, length = 256)
+    @Column(name = "GROUP_NAME", nullable = false, length = 256)
     @Index(name = "ix_group_code")
     private String name;
 
-    @Column(name = "GroupEName", length = 256)
+    @Column(name = "GROUP_ENAME", length = 256)
     private String ename;
 
     @Column(name = "IsActive")
     private Boolean active;
 
-    @Column(name = "GroupDesc", length = 2000)
+    @Column(name = "GROUP_DESC", length = 2000)
     private String description;
-
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date updateTimestamp;
-
-    @Override
-    public void updateUpdateTimestamp() {
-        updateTimestamp = new Date();
-    }
 
     @Override
     public int hashCode() {
@@ -90,9 +79,9 @@ public class Group extends AnnotatedEntityBase implements ICodeBaseEntity, IUpda
     @Override
     protected Objects.ToStringHelper buildStringHelper() {
         return super.buildStringHelper()
-                .add("id", id)
-                .add("comapnyId", company.getId())
-                .add("code", code)
-                .add("name", name);
+                    .add("id", id)
+                    .add("comapnyId", company.getId())
+                    .add("code", code)
+                    .add("name", name);
     }
 }

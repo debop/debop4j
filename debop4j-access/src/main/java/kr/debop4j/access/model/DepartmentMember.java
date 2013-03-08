@@ -3,8 +3,6 @@ package kr.debop4j.access.model;
 import com.google.common.base.Objects;
 import kr.debop4j.core.Guard;
 import kr.debop4j.core.tools.HashTool;
-import kr.debop4j.data.model.IUpdateTimestampedEntity;
-import kr.debop4j.data.model.LongAnnotatedEntityBase;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.DynamicInsert;
@@ -13,7 +11,6 @@ import org.hibernate.annotations.Index;
 import org.joda.time.DateTime;
 
 import javax.persistence.*;
-import java.util.Date;
 
 /**
  * 한 부서의 구성원 정보
@@ -26,7 +23,7 @@ import java.util.Date;
 @DynamicUpdate
 @Getter
 @Setter
-public class DepartmentMember extends LongAnnotatedEntityBase implements IUpdateTimestampedEntity {
+public class DepartmentMember extends AccessEntityBase {
 
     protected DepartmentMember() {}
 
@@ -38,6 +35,12 @@ public class DepartmentMember extends LongAnnotatedEntityBase implements IUpdate
         this.department = department;
         this.employee = employee;
     }
+
+    @Id
+    @GeneratedValue
+    @Column(name = "DeptMemberId")
+    private Long id;
+
 
     /**
      * 소속 부서
@@ -67,8 +70,11 @@ public class DepartmentMember extends LongAnnotatedEntityBase implements IUpdate
     @Column(name = "EndTime")
     private DateTime endTime;
 
-    @Column(name = "IsActive")
+    @Column(name = "Active")
     private Boolean active;
+
+    @Column(name = "ExAttr", length = 4000)
+    private String exAttr;
 
     /**
      * 직책
@@ -76,30 +82,21 @@ public class DepartmentMember extends LongAnnotatedEntityBase implements IUpdate
     @Column(name = "EmployeeTitle", length = 128)
     private String employeeTitle;
 
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date updateTimestamp;
-
-    @Override
-    public void updateUpdateTimestamp() {
-        updateTimestamp = new Date();
-    }
-
     @Override
     public int hashCode() {
         if (isPersisted())
-            return super.hashCode();
+            return HashTool.compute(id);
         return HashTool.compute(department, employee);
     }
 
     @Override
     protected Objects.ToStringHelper buildStringHelper() {
         return super.buildStringHelper()
-                .add("departmentId", department.getId())
-                .add("employeeId", employee.getId())
-                .add("active", active)
-                .add("startTime", startTime)
-                .add("endTime", endTime);
+                    .add("id", id)
+                    .add("departmentId", department.getId())
+                    .add("employeeId", employee.getId())
+                    .add("active", active)
+                    .add("startTime", startTime)
+                    .add("endTime", endTime);
     }
-
-
 }
