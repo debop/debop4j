@@ -1,6 +1,7 @@
-package kr.debop4j.access.model;
+package kr.debop4j.access.model.organization;
 
 import com.google.common.base.Objects;
+import kr.debop4j.access.model.ICodeBaseEntity;
 import kr.debop4j.core.Guard;
 import kr.debop4j.core.tools.HashTool;
 import kr.debop4j.data.model.AnnotatedTreeEntityBase;
@@ -28,7 +29,7 @@ import java.util.Date;
 public class Department extends AnnotatedTreeEntityBase<Department>
         implements ICodeBaseEntity, IUpdateTimestampedEntity {
 
-    private static final long serialVersionUID = -2198558891376603272L;
+    private static final long serialVersionUID = 512869366829603899L;
 
     protected Department() {}
 
@@ -53,7 +54,7 @@ public class Department extends AnnotatedTreeEntityBase<Department>
 
     @ManyToOne
     @JoinColumn(name = "CompanyId", nullable = false)
-    @Index(name = "ix_department_code") //, columnNames = {"CompanyId", "DepartmentCode", "DepartmentName"})
+    @Index(name = "ix_department_code")
     private Company company;
 
     @Column(name = "DepartmentCode", nullable = false, length = 64)
@@ -94,9 +95,9 @@ public class Department extends AnnotatedTreeEntityBase<Department>
     @Override
     protected Objects.ToStringHelper buildStringHelper() {
         return super.buildStringHelper()
-                    .add("id", id)
-                    .add("companyId", company.getId())
-                    .add("code", code)
-                    .add("name", name);
+                .add("id", id)
+                .add("companyId", company.getId())
+                .add("code", code)
+                .add("name", name);
     }
 }

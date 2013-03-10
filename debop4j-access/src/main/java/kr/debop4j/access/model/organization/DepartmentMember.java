@@ -1,6 +1,8 @@
-package kr.debop4j.access.model;
+package kr.debop4j.access.model.organization;
 
 import com.google.common.base.Objects;
+import kr.debop4j.access.model.AccessEntityBase;
+import kr.debop4j.access.model.common.EmployeeTitle;
 import kr.debop4j.core.Guard;
 import kr.debop4j.core.tools.HashTool;
 import lombok.Getter;
@@ -25,6 +27,8 @@ import javax.persistence.*;
 @Setter
 public class DepartmentMember extends AccessEntityBase {
 
+    private static final long serialVersionUID = 6458394469111394831L;
+
     protected DepartmentMember() {}
 
     public DepartmentMember(Department department, Employee employee) {
@@ -40,7 +44,6 @@ public class DepartmentMember extends AccessEntityBase {
     @GeneratedValue
     @Column(name = "DeptMemberId")
     private Long id;
-
 
     /**
      * 소속 부서
@@ -79,8 +82,9 @@ public class DepartmentMember extends AccessEntityBase {
     /**
      * 직책
      */
-    @Column(name = "EmployeeTitle", length = 128)
-    private String employeeTitle;
+    @ManyToOne
+    @JoinColumn(name = "EmpTitleId")
+    private EmployeeTitle empTitle;
 
     @Override
     public int hashCode() {
@@ -92,11 +96,12 @@ public class DepartmentMember extends AccessEntityBase {
     @Override
     protected Objects.ToStringHelper buildStringHelper() {
         return super.buildStringHelper()
-                    .add("id", id)
-                    .add("departmentId", department.getId())
-                    .add("employeeId", employee.getId())
-                    .add("active", active)
-                    .add("startTime", startTime)
-                    .add("endTime", endTime);
+                .add("id", id)
+                .add("departmentId", department.getId())
+                .add("employeeId", employee.getId())
+                .add("employeeTitle", empTitle)
+                .add("active", active)
+                .add("startTime", startTime)
+                .add("endTime", endTime);
     }
 }

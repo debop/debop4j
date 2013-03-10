@@ -1,4 +1,4 @@
-package kr.debop4j.access.model;
+package kr.debop4j.access.model.organization;
 
 /**
  * 조직의 종류 (회사, 부서, 그룹, 직원)

@@ -17,7 +17,7 @@ import javax.persistence.*;
  * Date: 13. 3. 8 오후 1:07
  */
 @Entity
-@Table(name = "CODE_ITEM")
+@Table(name = "CodeItem")
 @DynamicInsert
 @DynamicUpdate
 @Getter
@@ -64,9 +64,9 @@ public class CodeItem extends AccessEntityBase {
     @Override
     protected Objects.ToStringHelper buildStringHelper() {
         return super.buildStringHelper()
-                    .add("id", id)
-                    .add("codeId", code.getId())
-                    .add("name", name)
-                    .add("value", value);
+                .add("id", id)
+                .add("codeId", code.getId())
+                .add("name", name)
+                .add("value", value);
     }
 }

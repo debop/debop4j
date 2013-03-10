@@ -1,6 +1,6 @@
 package kr.debop4j.access;
 
-import kr.debop4j.access.model.Company;
+import kr.debop4j.access.model.organization.Company;
 import kr.debop4j.access.repository.CompanyRepository;
 import kr.debop4j.access.service.OrganizationService;
 import kr.debop4j.data.hibernate.repository.IHibernateRepository;

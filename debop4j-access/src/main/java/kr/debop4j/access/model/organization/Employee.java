@@ -1,6 +1,10 @@
-package kr.debop4j.access.model;
+package kr.debop4j.access.model.organization;
 
 import com.google.common.base.Objects;
+import kr.debop4j.access.model.AccessEntityBase;
+import kr.debop4j.access.model.ICodeBaseEntity;
+import kr.debop4j.access.model.common.EmployeeGrade;
+import kr.debop4j.access.model.common.EmployeePosition;
 import kr.debop4j.core.Guard;
 import kr.debop4j.core.tools.HashTool;
 import lombok.Getter;
@@ -12,7 +16,7 @@ import org.hibernate.annotations.Index;
 import javax.persistence.*;
 
 /**
- * kr.debop4j.access.model.Employee
+ * 직원 정보
  * User: sunghyouk.bae@gmail.com
  * Date: 13. 3. 1.
  */
@@ -24,6 +28,8 @@ import javax.persistence.*;
 @Getter
 @Setter
 public class Employee extends AccessEntityBase implements ICodeBaseEntity {
+
+    private static final long serialVersionUID = 2919375838394714017L;
 
     protected Employee() {}
 
@@ -61,6 +67,14 @@ public class Employee extends AccessEntityBase implements ICodeBaseEntity {
     @Column(name = "IsActive")
     private Boolean active;
 
+    @ManyToOne
+    @JoinColumn(name = "EmpGradeId")
+    private EmployeeGrade empGrade;
+
+    @ManyToOne
+    @JoinColumn(name = "EmpPositionId")
+    private EmployeePosition empPosition;
+
     @Column(name = "Description", length = 4000)
     private String description;
 
@@ -77,9 +91,12 @@ public class Employee extends AccessEntityBase implements ICodeBaseEntity {
     @Override
     protected Objects.ToStringHelper buildStringHelper() {
         return super.buildStringHelper()
-                    .add("id", id)
-                    .add("companyId", company.getId())
-                    .add("code", code)
-                    .add("name", name);
+                .add("id", id)
+                .add("companyId", company.getId())
+                .add("code", code)
+                .add("name", name)
+                .add("active", active)
+                .add("empGrade", empGrade)
+                .add("empPosition", empPosition);
     }
 }

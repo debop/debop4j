@@ -1,6 +1,7 @@
-package kr.debop4j.access.model;
+package kr.debop4j.access.model.organization;
 
 import com.google.common.base.Objects;
+import kr.debop4j.access.model.AccessEntityBase;
 import kr.debop4j.core.Guard;
 import kr.debop4j.core.tools.HashTool;
 import lombok.Getter;
@@ -23,6 +24,8 @@ import javax.persistence.*;
 @Getter
 @Setter
 public class GroupMember extends AccessEntityBase {
+
+    private static final long serialVersionUID = 538564009832398711L;
 
     protected GroupMember() {}
 
@@ -65,9 +68,9 @@ public class GroupMember extends AccessEntityBase {
     @Override
     protected Objects.ToStringHelper buildStringHelper() {
         return super.buildStringHelper()
-                    .add("id", id)
-                    .add("departmentId", department.getId())
-                    .add("memberKind", memberKind)
-                    .add("memberId", memberId);
+                .add("id", id)
+                .add("departmentId", department.getId())
+                .add("memberKind", memberKind)
+                .add("memberId", memberId);
     }
 }

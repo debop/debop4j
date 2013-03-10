@@ -2,8 +2,8 @@ package kr.debop4j.access.model.common;
 
 import com.google.common.base.Objects;
 import kr.debop4j.access.model.AccessEntityBase;
-import kr.debop4j.access.model.Company;
 import kr.debop4j.access.model.ICodeBaseEntity;
+import kr.debop4j.access.model.organization.Company;
 import kr.debop4j.core.Guard;
 import kr.debop4j.core.tools.HashTool;
 import lombok.Getter;
@@ -13,6 +13,7 @@ import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.Index;
 
 import javax.persistence.*;
+import java.util.UUID;
 
 /**
  * 직급, 직위, 직책 등 직원과 관련된 코드 정보를 나타내는 추상클래스입니다.
@@ -27,6 +28,8 @@ import javax.persistence.*;
 @Setter
 public abstract class EmployeeCodeBase extends AccessEntityBase implements ICodeBaseEntity {
 
+    private static final long serialVersionUID = -3706853105005691162L;
+
     protected EmployeeCodeBase() {}
 
     protected EmployeeCodeBase(Company company, String code) {
@@ -38,15 +41,17 @@ public abstract class EmployeeCodeBase extends AccessEntityBase implements ICode
         Guard.shouldNotBeEmpty(code, "code");
         Guard.shouldNotBeEmpty(name, "name");
 
+        id = UUID.randomUUID();
+
         this.company = company;
         this.code = code;
         this.name = name;
     }
 
     @Id
-    @GeneratedValue
+    //@GeneratedValue  // PostgreSQL, Oracle 처럼 Database 전역 Sequence 가 있는 경우에만 Table per class 상속이 가능하다.
     @Column(name = "CodeId")
-    private Long id;
+    private UUID id;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "CompanyId")
@@ -81,9 +86,9 @@ public abstract class EmployeeCodeBase extends AccessEntityBase implements ICode
     @Override
     protected Objects.ToStringHelper buildStringHelper() {
         return super.buildStringHelper()
-                    .add("id", id)
-                    .add("code", code)
-                    .add("name", name)
-                    .add("company", company);
+                .add("id", id)
+                .add("code", code)
+                .add("name", name)
+                .add("company", company);
     }
 }

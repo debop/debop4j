@@ -20,9 +20,11 @@ import java.util.Date;
 public abstract class AccessLocaledEntityBase<TLocaleValue extends ILocaleValue>
         extends AnnotatedLocaleEntityBase implements IUpdateTimestampedEntity {
 
+    private static final long serialVersionUID = 4105817032363041651L;
+
     @Getter
     @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "UPDATE_TIMESTAMP")
+    @Column(name = "updateTimestamp")
     private Date updateTimestamp;
 
     public void updateUpdateTimestamp() {

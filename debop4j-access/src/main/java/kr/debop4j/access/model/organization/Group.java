@@ -1,6 +1,8 @@
-package kr.debop4j.access.model;
+package kr.debop4j.access.model.organization;
 
 import com.google.common.base.Objects;
+import kr.debop4j.access.model.AccessEntityBase;
+import kr.debop4j.access.model.ICodeBaseEntity;
 import kr.debop4j.core.Guard;
 import kr.debop4j.core.tools.HashTool;
 import lombok.AccessLevel;
@@ -18,12 +20,14 @@ import javax.persistence.*;
  * Date: 13. 3. 5
  */
 @Entity
-@Table(name = "GROUPS")
+@Table(name = "`Group`")
 @DynamicInsert
 @DynamicUpdate
 @Getter
 @Setter
 public class Group extends AccessEntityBase implements ICodeBaseEntity {
+
+    private static final long serialVersionUID = 514703125940494102L;
 
     protected Group() { }
 
@@ -79,9 +83,9 @@ public class Group extends AccessEntityBase implements ICodeBaseEntity {
     @Override
     protected Objects.ToStringHelper buildStringHelper() {
         return super.buildStringHelper()
-                    .add("id", id)
-                    .add("comapnyId", company.getId())
-                    .add("code", code)
-                    .add("name", name);
+                .add("id", id)
+                .add("comapnyId", company.getId())
+                .add("code", code)
+                .add("name", name);
     }
 }

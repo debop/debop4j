@@ -3,7 +3,7 @@ package kr.debop4j.access.model.common;
 import com.google.common.base.Objects;
 import com.google.common.collect.Sets;
 import kr.debop4j.access.model.AccessEntityBase;
-import kr.debop4j.access.model.Company;
+import kr.debop4j.access.model.organization.Company;
 import kr.debop4j.core.tools.HashTool;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -22,7 +22,7 @@ import java.util.Set;
  * Date: 13. 3. 8 오후 1:07
  */
 @Entity
-@Table(name = "Codes")
+@Table(name = "`Code`")
 @DynamicInsert
 @DynamicUpdate
 @Getter
@@ -70,9 +70,9 @@ public class Code extends AccessEntityBase {
     @Override
     protected Objects.ToStringHelper buildStringHelper() {
         return super.buildStringHelper()
-                    .add("id", id)
-                    .add("companyId", (company != null) ? company.getId() : null)
-                    .add("code", code)
-                    .add("name", name);
+                .add("id", id)
+                .add("companyId", (company != null) ? company.getId() : null)
+                .add("code", code)
+                .add("name", name);
     }
 }

@@ -1,7 +1,9 @@
-package kr.debop4j.access.model;
+package kr.debop4j.access.model.organization;
 
 import com.google.common.base.Objects;
 import com.google.common.collect.Maps;
+import kr.debop4j.access.model.AccessLocaledEntityBase;
+import kr.debop4j.access.model.ICodeBaseEntity;
 import kr.debop4j.core.Guard;
 import kr.debop4j.core.ValueObjectBase;
 import kr.debop4j.core.tools.HashTool;
@@ -29,6 +31,8 @@ import java.util.Map;
 @Getter
 @Setter
 public class Company extends AccessLocaledEntityBase<Company.CompanyLocale> implements ICodeBaseEntity {
+
+    private static final long serialVersionUID = -7337020664879632947L;
 
     protected Company() {}
 
@@ -92,9 +96,9 @@ public class Company extends AccessLocaledEntityBase<Company.CompanyLocale> impl
     @Override
     protected Objects.ToStringHelper buildStringHelper() {
         return super.buildStringHelper()
-                    .add("id", id)
-                    .add("code", code)
-                    .add("name", name);
+                .add("id", id)
+                .add("code", code)
+                .add("name", name);
     }
 
     @Getter

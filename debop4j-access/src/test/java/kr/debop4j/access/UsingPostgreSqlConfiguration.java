@@ -1,7 +1,8 @@
 package kr.debop4j.access;
 
-import kr.debop4j.access.model.Company;
 import kr.debop4j.access.model.common.Code;
+import kr.debop4j.access.model.organization.Company;
+import kr.debop4j.access.model.product.Product;
 import kr.debop4j.data.hibernate.springconfiguration.PostgreSqlConfigBase;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
@@ -26,7 +27,8 @@ public class UsingPostgreSqlConfiguration extends PostgreSqlConfigBase {
     protected String[] getMappedPackageNames() {
         return new String[]{
                 Code.class.getPackage().getName(),
-                Company.class.getPackage().getName()
+                Company.class.getPackage().getName(),
+                Product.class.getPackage().getName(),
         };
     }
 

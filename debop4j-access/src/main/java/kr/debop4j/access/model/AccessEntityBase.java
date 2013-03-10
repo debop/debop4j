@@ -18,9 +18,11 @@ import java.util.Date;
 @MappedSuperclass
 public abstract class AccessEntityBase extends AnnotatedEntityBase implements IUpdateTimestampedEntity {
 
+    private static final long serialVersionUID = -7640693368412411167L;
+
     @Getter
     @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "UPDATE_TIMESTAMP")
+    @Column(name = "updateTimestamp")
     private Date updateTimestamp;
 
     public void updateUpdateTimestamp() {

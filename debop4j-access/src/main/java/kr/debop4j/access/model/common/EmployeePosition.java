@@ -1,6 +1,6 @@
 package kr.debop4j.access.model.common;
 
-import kr.debop4j.access.model.Company;
+import kr.debop4j.access.model.organization.Company;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.DynamicInsert;
@@ -15,12 +15,14 @@ import javax.persistence.Table;
  * Date: 13. 3. 8 오후 5:05
  */
 @Entity
-@Table(name = "EmployeePosition")
+@Table(name = "EmpPosition")
 @DynamicInsert
 @DynamicUpdate
 @Getter
 @Setter
 public class EmployeePosition extends EmployeeCodeBase {
+
+    private static final long serialVersionUID = 4057406303429886156L;
 
     protected EmployeePosition() {}
 

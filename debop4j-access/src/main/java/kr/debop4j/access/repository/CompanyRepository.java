@@ -1,6 +1,6 @@
 package kr.debop4j.access.repository;
 
-import kr.debop4j.access.model.Company;
+import kr.debop4j.access.model.organization.Company;
 import kr.debop4j.data.hibernate.repository.HibernateRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
