@@ -14,12 +14,14 @@ import org.hibernate.annotations.Index;
 import javax.persistence.*;
 
 /**
- * kr.debop4j.access.model.product.Product
+ * 제품을 나타냅니다. 제품별로 사용자 관리, 권한 관리를 수행하도록 합니다.
  * User: sunghyouk.bae@gmail.com
  * Date: 13. 3. 10.
  */
 @Entity
-@Table(name = "Product")
+@Table(name = "Product",
+       uniqueConstraints = {@UniqueConstraint(name = "uq_product_code",
+                                              columnNames = {"productCode"})})
 @DynamicInsert
 @DynamicUpdate
 @Getter

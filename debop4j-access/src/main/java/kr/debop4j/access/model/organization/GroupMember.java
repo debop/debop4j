@@ -42,7 +42,7 @@ public class GroupMember extends AccessEntityBase {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "departmentId", nullable = false)
+    @JoinColumn(name = "DepartmentId", nullable = false)
     @Index(name = "ix_groupmember")
     private Department department;
 
@@ -55,7 +55,7 @@ public class GroupMember extends AccessEntityBase {
     @Index(name = "ix_groupmember")
     private Long memberId;
 
-    @Column(name = "IsActive")
+    @Column(name = "Active")
     private Boolean active;
 
     @Override

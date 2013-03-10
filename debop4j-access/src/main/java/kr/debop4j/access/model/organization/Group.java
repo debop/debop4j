@@ -52,31 +52,35 @@ public class Group extends AccessEntityBase implements ICodeBaseEntity {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "COMPANY_ID", nullable = false)
+    @JoinColumn(name = "CompanyId", nullable = false)
     @Index(name = "ix_group_code")
     private Company company;
 
-    @Column(name = "GROUP_CODE", nullable = false, length = 32)
+    @Column(name = "GroupCode", nullable = false, length = 32)
     @Index(name = "ix_group_code")
     private String code;
 
-    @Column(name = "GROUP_NAME", nullable = false, length = 256)
+    @Column(name = "GroupName", nullable = false, length = 256)
     @Index(name = "ix_group_code")
     private String name;
 
-    @Column(name = "GROUP_ENAME", length = 256)
+    @Column(name = "GroupEName", length = 256)
     private String ename;
 
-    @Column(name = "IsActive")
+    @Column(name = "active")
     private Boolean active;
 
-    @Column(name = "GROUP_DESC", length = 2000)
+    @Column(name = "GroupDesc", length = 2000)
     private String description;
+
+    @Column(name = "GroupExAttr", length = 2000)
+    private String exAttr;
 
     @Override
     public int hashCode() {
         if (isPersisted())
             return HashTool.compute(id);
+
         return HashTool.compute(company, code);
     }
 

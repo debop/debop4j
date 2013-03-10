@@ -14,7 +14,7 @@ import org.hibernate.annotations.Index;
 import javax.persistence.*;
 
 /**
- * kr.debop4j.access.model.product.UserPreference
+ * 사용자 환경 설정 정보
  * User: sunghyouk.bae@gmail.com
  * Date: 13. 3. 10.
  */

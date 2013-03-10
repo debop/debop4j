@@ -15,7 +15,7 @@ import org.joda.time.DateTime;
 import javax.persistence.*;
 
 /**
- * 한 부서의 구성원 정보
+ * 한 부서의 구성원 정보 (직원의 겸직이 가능하므로, 부서-직원은 many-to-many 관계를 가집입니다)
  * User: sunghyouk.bae@gmail.com
  * Date: 13. 3. 5 오후 4:33
  */

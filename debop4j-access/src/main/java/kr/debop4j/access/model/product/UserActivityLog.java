@@ -119,7 +119,5 @@ public class UserActivityLog extends AnnotatedEntityBase {
                 .add("companyCode", companyCode)
                 .add("companyName", companyName)
                 .add("username", username);
-
-
     }
 }
