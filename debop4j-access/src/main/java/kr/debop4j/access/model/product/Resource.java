@@ -9,6 +9,7 @@ import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
+import org.hibernate.annotations.NaturalId;
 
 import javax.persistence.*;
 
@@ -50,9 +51,11 @@ public class Resource extends AccessEntityBase implements ICodeBaseEntity {
 
     @ManyToOne
     @JoinColumn(name = "ProductId", nullable = false)
+    @NaturalId
     private Product product;
 
     @Column(name = "ResourceCode", nullable = false, length = 128)
+    @NaturalId
     private String code;
 
     @Column(name = "ResourceName", nullable = false, length = 128)

@@ -21,7 +21,7 @@ import java.io.IOException;
 import java.util.Properties;
 
 /**
- * kr.debop4j.search.AppConfig
+ * hibernate와 hibernate-search를 이용한 검색 라이브러리를 테스트하기 위한 Spring 환경설정 파일입니다.
  * User: sunghyouk.bae@gmail.com
  * Date: 13. 2. 28.
  */
@@ -47,7 +47,7 @@ public class AppConfig {
         props.put(Environment.CURRENT_SESSION_CONTEXT_CLASS, "thread");
         props.put(Environment.STATEMENT_BATCH_SIZE, "50");
 
-        // Hibernate search
+        // hibernate-search 환경설정
         props.put("hibernate.search.default.directory_provider", "filesystem");
         props.put("hibernate.search.default.indexBase", "lucene/indexes");
 
@@ -79,10 +79,14 @@ public class AppConfig {
 
             SessionFactory sessionFactory = factoryBean.getObject();
 
+            // NOTE: hibernate-search에서 직접 등록합니다. 할 필요가 없습니다.
             // EventListener를 등록한다.
 //            HibernateTool.registerEventListener(sessionFactory,
 //                                                new UpdateTimestampedEventListener(),
 //                                                EventType.PRE_INSERT, EventType.PRE_UPDATE);
+
+            if (log.isInfoEnabled())
+                log.info("SessionFactory Bean을 생성했습니다!!!");
 
             return sessionFactory;
 
@@ -121,7 +125,7 @@ public class AppConfig {
         UnitOfWorkFactory factory = new UnitOfWorkFactory();
         factory.setSessionFactory(sessionFactory());
 
-        // 꼭 Springs.init(AppConfig.clss) 를 먼저 수행해줘야 합니다
+        // 꼭 Springs.initByAnnotatedClasses(AppConfig.clss) 를 먼저 수행해줘야 합니다
         // UnitOfWorks.setUnitOfWorkFactory(factory);
         return factory;
     }

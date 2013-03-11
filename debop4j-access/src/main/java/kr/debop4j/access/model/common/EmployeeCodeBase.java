@@ -5,25 +5,22 @@ import kr.debop4j.access.model.AccessEntityBase;
 import kr.debop4j.access.model.ICodeBaseEntity;
 import kr.debop4j.access.model.organization.Company;
 import kr.debop4j.core.Guard;
-import kr.debop4j.core.tools.HashTool;
 import lombok.Getter;
 import lombok.Setter;
-import org.hibernate.annotations.DynamicInsert;
-import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.Index;
 
 import javax.persistence.*;
-import java.util.UUID;
 
 /**
  * 직급, 직위, 직책 등 직원과 관련된 코드 정보를 나타내는 추상클래스입니다.
  * User: sunghyouk.bae@gmail.com
  * Date: 13. 3. 8 오후 4:45
  */
-@Entity
-@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
-@DynamicInsert
-@DynamicUpdate
+// @Entity
+// @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
+// @DynamicInsert
+// @DynamicUpdate
+@MappedSuperclass
 @Getter
 @Setter
 public abstract class EmployeeCodeBase extends AccessEntityBase implements ICodeBaseEntity {
@@ -41,17 +38,11 @@ public abstract class EmployeeCodeBase extends AccessEntityBase implements ICode
         Guard.shouldNotBeEmpty(code, "code");
         Guard.shouldNotBeEmpty(name, "name");
 
-        id = UUID.randomUUID();
-
         this.company = company;
         this.code = code;
         this.name = name;
     }
 
-    @Id
-    //@GeneratedValue  // PostgreSQL, Oracle 처럼 Database 전역 Sequence 가 있는 경우에만 Table per class 상속이 가능하다.
-    @Column(name = "CodeId")
-    private UUID id;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "CompanyId")
@@ -75,18 +66,9 @@ public abstract class EmployeeCodeBase extends AccessEntityBase implements ICode
     @Column(name = "ExAttr", length = 2000)
     private String exAttr;
 
-
-    @Override
-    public int hashCode() {
-        if (isPersisted())
-            return HashTool.compute(id);
-        return HashTool.compute(company, code);
-    }
-
     @Override
     protected Objects.ToStringHelper buildStringHelper() {
         return super.buildStringHelper()
-                .add("id", id)
                 .add("code", code)
                 .add("name", name)
                 .add("company", company);

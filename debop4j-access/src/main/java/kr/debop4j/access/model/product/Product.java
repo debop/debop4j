@@ -10,6 +10,7 @@ import lombok.Setter;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.Index;
+import org.hibernate.annotations.NaturalId;
 
 import javax.persistence.*;
 
@@ -19,9 +20,7 @@ import javax.persistence.*;
  * Date: 13. 3. 10.
  */
 @Entity
-@Table(name = "Product",
-       uniqueConstraints = {@UniqueConstraint(name = "uq_product_code",
-                                              columnNames = {"productCode"})})
+@Table(name = "Product")
 @DynamicInsert
 @DynamicUpdate
 @Getter
@@ -51,6 +50,7 @@ public class Product extends AccessEntityBase implements ICodeBaseEntity {
 
     @Column(name = "ProductCode", nullable = false, length = 128)
     @Index(name = "ix_product_code")
+    @NaturalId(mutable = true)
     private String code;
 
     @Column(name = "ProductName", nullable = false, length = 255)

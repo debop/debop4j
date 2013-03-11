@@ -42,7 +42,7 @@ public class AddressComponent extends ValueObjectBase {
     @Override
     protected Objects.ToStringHelper buildStringHelper() {
         return super.buildStringHelper()
-                    .add("zipcode", zipcode)
-                    .add("country", country);
+                .add("zipcode", zipcode)
+                .add("country", country);
     }
 }

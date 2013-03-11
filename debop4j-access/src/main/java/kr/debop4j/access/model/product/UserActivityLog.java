@@ -61,7 +61,6 @@ public class UserActivityLog extends AnnotatedEntityBase {
 
     @Id
     @GeneratedValue
-    @Column(name = "LogId")
     private Long id;
 
     @Column(name = "ActiviyKind", nullable = false, length = 128)
@@ -79,16 +78,19 @@ public class UserActivityLog extends AnnotatedEntityBase {
     @Column(nullable = false, length = 128)
     private String companyCode;
 
+    @Column(length = 255)
     private String companyName;
 
     @Column(length = 128)
     private String departmentCode;
 
+    @Column(length = 255)
     private String departmentName;
 
     @Column(length = 128)
     private String employeeCode;
 
+    @Column(length = 255)
     private String employeeName;
 
     @Column(nullable = false, length = 128)

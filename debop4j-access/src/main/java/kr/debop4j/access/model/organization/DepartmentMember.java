@@ -10,9 +10,9 @@ import lombok.Setter;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.Index;
-import org.joda.time.DateTime;
 
 import javax.persistence.*;
+import java.util.Date;
 
 /**
  * 한 부서의 구성원 정보 (직원의 겸직이 가능하므로, 부서-직원은 many-to-many 관계를 가집입니다)
@@ -65,13 +65,15 @@ public class DepartmentMember extends AccessEntityBase {
      * 소속 시작일
      */
     @Column(name = "StartTime")
-    private DateTime startTime;
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date startTime;
 
     /**
      * 소속 종료일
      */
     @Column(name = "EndTime")
-    private DateTime endTime;
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date endTime;
 
     @Column(name = "Active")
     private Boolean active;

@@ -27,11 +27,12 @@ public class User extends AccessEntityBase {
 
     private User() {}
 
-    protected User(String username, String password) {
-        this(null, null, username, password);
+    protected User(Company company, String username, String password) {
+        this(company, null, null, username, password);
     }
 
-    protected User(Department department, Employee employee, String username, String password) {
+    protected User(Company company, Department department, Employee employee, String username, String password) {
+        Guard.shouldNotBeNull(company, "company");
         Guard.shouldNotBeEmpty(username, "username");
         Guard.shouldNotBeEmpty(password, "password");
 
@@ -46,6 +47,10 @@ public class User extends AccessEntityBase {
     @GeneratedValue
     @Column(name = "UserId")
     private Long id;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "CompanyId")
+    private Company company;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "DepartmentId")
@@ -69,8 +74,10 @@ public class User extends AccessEntityBase {
     @Column(name = "active")
     private Boolean active;
 
+    @Column(length = 255)
     private String confirmQuestion;
 
+    @Column(length = 255)
     private String confirmAnswer;
 
     @Override
@@ -88,6 +95,7 @@ public class User extends AccessEntityBase {
                 .add("password", password)
                 .add("nickname", nickname)
                 .add("active", active)
+                .add("company", company)
                 .add("employee", employee)
                 .add("department", department);
     }
