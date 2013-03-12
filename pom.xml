@@ -26,6 +26,7 @@
         <springframework.version>3.2.1.RELEASE</springframework.version>
         <slf4j.version>1.7.2</slf4j.version>
         <logback.version>1.0.9</logback.version>
+        <ehcache.spring.annotations>1.2.0</ehcache.spring.annotations>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
@@ -169,6 +170,11 @@
             <groupId>org.springframework</groupId>
             <artifactId>spring-context-support</artifactId>
             <version>${springframework.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.googlecode.ehcache-spring-annotations</groupId>
+            <artifactId>ehcache-spring-annotations</artifactId>
+            <version>${ehcache.spring.annotations}</version>
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
