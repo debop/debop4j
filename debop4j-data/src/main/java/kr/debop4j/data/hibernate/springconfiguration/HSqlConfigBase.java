@@ -3,19 +3,15 @@ package kr.debop4j.data.hibernate.springconfiguration;
 import kr.debop4j.data.hibernate.forTesting.DatabaseEngine;
 import org.hibernate.cfg.Environment;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import javax.sql.DataSource;
 import java.util.Properties;
 
 /**
- * kr.debop4j.data.hibernate.springconfiguration.HSqlDbConfiguration
+ * HSql 을 DB로 사용하는 Hibernate Configuration
  * User: sunghyouk.bae@gmail.com
  * Date: 13. 2. 21.
  */
-@Configuration
-@EnableTransactionManagement
 public abstract class HSqlConfigBase extends HibernateConfigBase {
 
     public DatabaseEngine getDatabaseEngine() {
@@ -34,12 +30,9 @@ public abstract class HSqlConfigBase extends HibernateConfigBase {
                                "");
     }
 
-    @Bean
-    public Properties hibernateProperties() {
+    protected Properties hibernateProperties() {
         Properties props = super.hibernateProperties();
-
         props.put(Environment.DIALECT, "org.hibernate.dialect.HSQLDialect");
-
         return props;
     }
 }

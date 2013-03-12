@@ -18,7 +18,6 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.criterion.*;
 import org.hibernate.transform.Transformers;
-import org.springframework.stereotype.Repository;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -32,7 +31,6 @@ import java.util.List;
  * User: sunghyouk.bae@gmail.com
  * Date: 12. 11. 27.
  */
-@Repository
 @Slf4j
 @SuppressWarnings("unchecked")
 public class HibernateRepository<E extends IStatefulEntity> implements IHibernateRepository<E> {

@@ -15,10 +15,12 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @EnableTransactionManagement
 public class HSqlConfig extends HSqlConfigBase {
 
+    @Override
     protected String[] getMappedPackageNames() {
         return new String[0];
     }
 
+    @Override
     protected void setupSessionFactory(LocalSessionFactoryBean factoryBean) {
         super.setupSessionFactory(factoryBean);
 

@@ -31,8 +31,6 @@ public class HibernateRepositoryTest extends HibernateTestBase {
 
     @BeforeClass
     public static void beforeClass() {
-//        if (Springs.isNotInitialized())
-//            Springs.initByAnnotatedClasses(AppConfig.class);
         initHibernateAndSpring(AppConfig.class);
     }
 

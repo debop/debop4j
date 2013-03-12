@@ -1,11 +1,10 @@
 package kr.debop4j.data.hibernate.annotated.collection;
 
-import kr.debop4j.core.spring.Springs;
 import kr.debop4j.data.hibernate.HibernateTestBase;
+import kr.debop4j.data.hibernate.unitofwork.UnitOfWorks;
 import kr.debop4j.data.mapping.model.annotated.collection.Car;
 import kr.debop4j.data.mapping.model.annotated.collection.CarOption;
 import org.hibernate.Session;
-import org.hibernate.SessionFactory;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -18,32 +17,15 @@ import org.junit.Test;
  */
 public class CarTest extends HibernateTestBase {
 
-    private SessionFactory sessionFactory;
     private Session session;
-
-//    @BeforeClass
-//    public static void beforeClass() {
-//        if (Springs.isNotInitialized())
-//            Springs.initByAnnotatedClasses(AppConfig.class);
-//        //Springs.init("applicationContext.xml");
-//
-//        sessionFactory = Springs.getBean(SessionFactory.class);
-//    }
-
 
     @Before
     public void before() {
-        sessionFactory = Springs.getBean(SessionFactory.class);
-        session = sessionFactory.openSession();
+        session = UnitOfWorks.getCurrentSession();
     }
 
     @After
-    public void after() {
-        if (session != null) {
-            session.close();
-            session = null;
-        }
-    }
+    public void after() { }
 
 
     @Test

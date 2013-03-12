@@ -1,7 +1,6 @@
 package kr.debop4j.access;
 
 import kr.debop4j.access.model.organization.Company;
-import kr.debop4j.access.model.organization.CompanyCode;
 import kr.debop4j.access.model.product.Product;
 import kr.debop4j.access.model.workcalendar.WorkCalendar;
 import kr.debop4j.data.hibernate.springconfiguration.HSqlConfigBase;
@@ -24,7 +23,6 @@ public class UsingHSqlConfiguration extends HSqlConfigBase {
     @Override
     protected String[] getMappedPackageNames() {
         return new String[]{
-                CompanyCode.class.getPackage().getName(),
                 Company.class.getPackage().getName(),
                 Product.class.getPackage().getName(),
                 WorkCalendar.class.getPackage().getName(),
@@ -39,7 +37,6 @@ public class UsingHSqlConfiguration extends HSqlConfigBase {
         props.put(Environment.USE_QUERY_CACHE, true);
         props.put(Environment.CACHE_REGION_FACTORY, SingletonEhCacheRegionFactory.class.getName());
         props.put(Environment.CACHE_PROVIDER_CONFIG, "classpath:ehcache.xml");
-        ;
 
         return props;
     }

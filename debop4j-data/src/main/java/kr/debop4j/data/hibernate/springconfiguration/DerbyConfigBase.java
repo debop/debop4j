@@ -2,8 +2,6 @@ package kr.debop4j.data.hibernate.springconfiguration;
 
 import org.hibernate.cfg.Environment;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import javax.sql.DataSource;
 import java.util.Properties;
@@ -13,8 +11,6 @@ import java.util.Properties;
  * User: sunghyouk.bae@gmail.com
  * Date: 13. 2. 22.
  */
-@Configuration
-@EnableTransactionManagement
 public abstract class DerbyConfigBase extends HibernateConfigBase {
 
     protected String getDatabaseName() {

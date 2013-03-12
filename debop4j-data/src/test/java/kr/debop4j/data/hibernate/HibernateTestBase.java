@@ -15,6 +15,7 @@ public abstract class HibernateTestBase extends DatabaseTestFixtureBase {
     @BeforeClass
     public static void beforeClass() {
         initHibernateAndSpring(AppConfig.class);
+        getCurrentContext().createUnitOfWork();
     }
 
     @AfterClass

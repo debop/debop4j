@@ -16,6 +16,7 @@ import java.util.Map;
  * Date: 12. 12. 15.
  */
 @Entity
+@Table(name = "`JPA_Car`")
 @DynamicInsert
 @DynamicUpdate
 @Getter

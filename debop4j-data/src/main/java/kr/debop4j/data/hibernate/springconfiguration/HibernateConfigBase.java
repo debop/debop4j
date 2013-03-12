@@ -1,5 +1,6 @@
 package kr.debop4j.data.hibernate.springconfiguration;
 
+import kr.debop4j.core.tools.StringTool;
 import kr.debop4j.data.hibernate.forTesting.UnitOfWorkTestContextBase;
 import kr.debop4j.data.hibernate.interceptor.MultiInterceptor;
 import kr.debop4j.data.hibernate.interceptor.StatefulEntityInterceptor;
@@ -14,11 +15,9 @@ import org.hibernate.ConnectionReleaseMode;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Environment;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseFactoryBean;
 import org.springframework.orm.hibernate4.HibernateTransactionManager;
 import org.springframework.orm.hibernate4.LocalSessionFactoryBean;
-import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import javax.sql.DataSource;
 import java.io.IOException;
@@ -29,8 +28,6 @@ import java.util.Properties;
  * User: sunghyouk.bae@gmail.com
  * Date: 13. 2. 21.
  */
-@Configuration
-@EnableTransactionManagement
 @Slf4j
 public abstract class HibernateConfigBase {
 
@@ -72,8 +69,6 @@ public abstract class HibernateConfigBase {
 
     /**
      * factoryBean 에 추가 설정을 지정할 수 있습니다.
-     *
-     * @param factoryBean
      */
     protected void setupSessionFactory(LocalSessionFactoryBean factoryBean) {
         // Nothing
@@ -88,8 +83,10 @@ public abstract class HibernateConfigBase {
         LocalSessionFactoryBean factoryBean = new LocalSessionFactoryBean();
 
         String[] packageNames = getMappedPackageNames();
-        if (packageNames != null)
-            factoryBean.setPackagesToScan(getMappedPackageNames());
+        if (packageNames != null) {
+            log.info("hibernate용 entity를 scan합니다. packages=[{}]", StringTool.listToString(packageNames));
+            factoryBean.setPackagesToScan(packageNames);
+        }
 
         factoryBean.setHibernateProperties(hibernateProperties());
         factoryBean.setDataSource(dataSource());
@@ -144,7 +141,7 @@ public abstract class HibernateConfigBase {
     }
 
     @Bean
-    public HibernateRepositoryFactory hibernateDaoFactory() {
+    public HibernateRepositoryFactory hibernateRepositoryFactory() {
         return new HibernateRepositoryFactory();
     }
 }
