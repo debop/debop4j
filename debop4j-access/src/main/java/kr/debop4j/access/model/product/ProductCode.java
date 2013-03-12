@@ -1,9 +1,8 @@
-package kr.debop4j.access.model.common;
+package kr.debop4j.access.model.product;
 
 import com.google.common.base.Objects;
 import com.google.common.collect.Sets;
 import kr.debop4j.access.model.AccessEntityBase;
-import kr.debop4j.access.model.organization.Company;
 import kr.debop4j.core.tools.HashTool;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -17,22 +16,24 @@ import javax.persistence.Table;
 import java.util.Set;
 
 /**
- * 코드
+ * 제품에서 사용하는 마스터 코드 정보
  * User: sunghyouk.bae@gmail.com
- * Date: 13. 3. 8 오후 1:07
+ * Date: 13. 3. 12.
  */
 @Entity
-@Table(name = "`Code`")
+@Table(name = "ProductCode")
 @DynamicInsert
 @DynamicUpdate
 @Getter
 @Setter
-public class Code extends AccessEntityBase {
+public class ProductCode extends AccessEntityBase {
 
-    private Code() {}
+    private static final long serialVersionUID = 305315517508305093L;
 
-    public Code(Company company, String code, String name) {
-        this.company = company;
+    protected ProductCode() {}
+
+    public ProductCode(Product product, String code, String name) {
+        this.product = product;
         this.code = code;
         this.name = name;
     }
@@ -43,36 +44,46 @@ public class Code extends AccessEntityBase {
     @Setter(AccessLevel.PROTECTED)
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "CompanyId", nullable = false)
-    @Index(name = "ix_code")
-    private Company company;
+    @ManyToOne
+    @JoinColumn(name = "ProductId", nullable = false)
+    @Index(name = "ix_productcode")
+    @NaturalId
+    private Product product;
 
     @Column(name = "CodeValue", nullable = false, length = 128)
-    @Index(name = "ix_code")
+    @Index(name = "ix_productcode")
+    @NaturalId
     private String code;
 
     @Column(name = "CodeName", nullable = false, length = 255)
-    @Index(name = "ix_code")
     private String name;
+
+    @Column(name = "Descripton", length = 2000)
+    private String description;
+
+    //@Basic(fetch = FetchType.LAZY)
+    @Column(name = "ExAttr", length = 2000)
+    private String exAttr;
 
     @OneToMany(mappedBy = "code", fetch = FetchType.EAGER, cascade = {CascadeType.ALL})
     @LazyCollection(value = LazyCollectionOption.EXTRA)
-    private Set<CodeItem> items = Sets.newHashSet();
+    @Fetch(FetchMode.SELECT)
+    private Set<ProductCodeItem> items = Sets.newHashSet();
+
 
     @Override
     public int hashCode() {
         if (isPersisted())
             return HashTool.compute(id);
-        return HashTool.compute(company, code);
+        return HashTool.compute(product, code);
     }
 
     @Override
     protected Objects.ToStringHelper buildStringHelper() {
         return super.buildStringHelper()
                 .add("id", id)
-                .add("companyId", (company != null) ? company.getId() : null)
                 .add("code", code)
-                .add("name", name);
+                .add("name", name)
+                .add("product", product);
     }
 }

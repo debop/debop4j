@@ -3,12 +3,11 @@ package kr.debop4j.access.model.organization;
 import com.google.common.base.Objects;
 import kr.debop4j.access.model.AccessEntityBase;
 import kr.debop4j.access.model.ICodeBaseEntity;
-import kr.debop4j.access.model.common.EmployeeGrade;
-import kr.debop4j.access.model.common.EmployeePosition;
 import kr.debop4j.core.Guard;
 import kr.debop4j.core.tools.HashTool;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.Index;
@@ -22,7 +21,7 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name = "Employee")
-@Inheritance(strategy = InheritanceType.JOINED)
+@org.hibernate.annotations.Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 @DynamicInsert
 @DynamicUpdate
 @Getter
@@ -64,6 +63,7 @@ public class Employee extends AccessEntityBase implements ICodeBaseEntity {
     @Index(name = "ix_employee_code")
     private String name;
 
+    @Basic
     @Column(name = "IsActive")
     private Boolean active;
 
@@ -78,6 +78,7 @@ public class Employee extends AccessEntityBase implements ICodeBaseEntity {
     @Column(name = "Description", length = 4000)
     private String description;
 
+    @Basic(fetch = FetchType.LAZY)
     @Column(name = "ExAttr", length = 4000)
     private String exAttr;
 
@@ -92,7 +93,6 @@ public class Employee extends AccessEntityBase implements ICodeBaseEntity {
     protected Objects.ToStringHelper buildStringHelper() {
         return super.buildStringHelper()
                 .add("id", id)
-                .add("companyId", company.getId())
                 .add("code", code)
                 .add("name", name)
                 .add("active", active)

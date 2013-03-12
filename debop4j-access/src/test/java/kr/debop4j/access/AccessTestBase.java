@@ -14,6 +14,12 @@ public class AccessTestBase extends DatabaseTestFixtureBase {
     @BeforeClass
     public static void beforeClass() {
         initHibernateAndSpring(AppConfig.class);
+        getCurrentContext().createUnitOfWork();
+
+        // 여기에 AccessContext.Current 에 값을 넣는다.
+        AccessContext.Current.setCompanyCode("KTH");
+        AccessContext.Current.setDepartmentCode("Platform");
+        AccessContext.Current.setUsername("debop");
     }
 
     @AfterClass

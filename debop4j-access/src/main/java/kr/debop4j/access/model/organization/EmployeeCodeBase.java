@@ -1,9 +1,8 @@
-package kr.debop4j.access.model.common;
+package kr.debop4j.access.model.organization;
 
 import com.google.common.base.Objects;
 import kr.debop4j.access.model.AccessEntityBase;
 import kr.debop4j.access.model.ICodeBaseEntity;
-import kr.debop4j.access.model.organization.Company;
 import kr.debop4j.core.Guard;
 import lombok.Getter;
 import lombok.Setter;

@@ -11,11 +11,12 @@ import kr.debop4j.data.model.ILocaleValue;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
-import org.hibernate.annotations.DynamicInsert;
-import org.hibernate.annotations.DynamicUpdate;
-import org.hibernate.annotations.Index;
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.*;
 
 import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 import java.util.Locale;
 import java.util.Map;
 
@@ -26,6 +27,7 @@ import java.util.Map;
  */
 @Entity
 @Table(name = "Company")
+@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 @DynamicInsert
 @DynamicUpdate
 @Getter
@@ -46,6 +48,7 @@ public class Company extends AccessLocaledEntityBase<Company.CompanyLocale> impl
 
         this.code = companyCode;
         this.name = companyName;
+        this.active = true;
     }
 
     @Id
@@ -65,12 +68,15 @@ public class Company extends AccessLocaledEntityBase<Company.CompanyLocale> impl
     @Column(name = "CompanyEName", length = 128)
     private String ename;
 
+    @Basic
     @Column(name = "IsActive")
     private Boolean active;
 
+    @Basic
     @Column(name = "CompanyDesc", length = 4000)
     private String description;
 
+    @Basic
     @Column(name = "ExAttr", length = 4000)
     private String exAttr;
 

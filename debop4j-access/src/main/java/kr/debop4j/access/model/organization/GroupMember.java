@@ -6,11 +6,12 @@ import kr.debop4j.core.Guard;
 import kr.debop4j.core.tools.HashTool;
 import lombok.Getter;
 import lombok.Setter;
-import org.hibernate.annotations.DynamicInsert;
-import org.hibernate.annotations.DynamicUpdate;
-import org.hibernate.annotations.Index;
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.*;
 
 import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 
 /**
  * 그룹의 구성원
@@ -19,6 +20,7 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name = "GroupMember")
+@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 @DynamicInsert
 @DynamicUpdate
 @Getter
@@ -29,11 +31,13 @@ public class GroupMember extends AccessEntityBase {
 
     protected GroupMember() {}
 
-    public GroupMember(Department department, OrganizationKind memberKind, Long memberId) {
-        Guard.shouldNotBeNull(department, "department");
-        this.department = department;
+    public GroupMember(Group group, OrganizationKind memberKind, Long memberId) {
+        Guard.shouldNotBeNull(group, "group");
+        this.group = group;
         this.memberKind = memberKind;
         this.memberId = memberId;
+
+        this.group.getMembers().add(this);
     }
 
     @Id
@@ -42,9 +46,9 @@ public class GroupMember extends AccessEntityBase {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "DepartmentId", nullable = false)
+    @JoinColumn(name = "GroupId", nullable = false)
     @Index(name = "ix_groupmember")
-    private Department department;
+    private Group group;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "MemberKind", nullable = false, length = 128)
@@ -55,22 +59,27 @@ public class GroupMember extends AccessEntityBase {
     @Index(name = "ix_groupmember")
     private Long memberId;
 
-    @Column(name = "Active")
+    @Basic
+    @Column(name = "IsActive")
     private Boolean active;
+
+    @Basic(fetch = FetchType.LAZY)
+    @Column(name = "ExAttr", length = 2000)
+    private String exAttr;
 
     @Override
     public int hashCode() {
         if (isPersisted())
             return HashTool.compute(id);
-        return HashTool.compute(department, memberKind, memberId);
+        return HashTool.compute(group, memberKind, memberId);
     }
 
     @Override
     protected Objects.ToStringHelper buildStringHelper() {
         return super.buildStringHelper()
                 .add("id", id)
-                .add("departmentId", department.getId())
                 .add("memberKind", memberKind)
-                .add("memberId", memberId);
+                .add("memberId", memberId)
+                .add("groupId", group.getId());
     }
 }

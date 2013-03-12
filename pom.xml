@@ -15,13 +15,11 @@
     </scm>
     <modules>
         <module>debop4j-core</module>
-        <module>debop4j-timeperiod</module>
         <module>debop4j-data</module>
-        <module>debop4j-web</module>
-        <module>debop4j-web-example</module>
-        <module>debop4j-redis</module>
         <module>debop4j-search</module>
         <module>debop4j-access</module>
+        <module>debop4j-web</module>
+        <module>debop4j-web-example</module>
     </modules>
 
     <properties>

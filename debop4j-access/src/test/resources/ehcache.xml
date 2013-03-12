@@ -1,0 +1,14 @@
+<ehcache>
+    <diskStore path="java.io.temdir"/>
+    <defaultCache
+            maxEntriesLocalHeap="10000"
+            maxEntriesLocalDisk="10000000"
+            eternal="false"
+            timeToIdleSeconds="600"
+            timeToLiveSeconds="600"
+            diskSpoolBufferSizeMB="30"
+            diskExpiryThreadIntervalSeconds="120"
+            overflowToDisk="true"
+            memoryStoreEvictionPolicy="LRU"
+            statistics="false"/>
+</ehcache>

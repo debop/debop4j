@@ -2,16 +2,16 @@ package kr.debop4j.access.model.organization;
 
 import com.google.common.base.Objects;
 import kr.debop4j.access.model.AccessEntityBase;
-import kr.debop4j.access.model.common.EmployeeTitle;
 import kr.debop4j.core.Guard;
 import kr.debop4j.core.tools.HashTool;
 import lombok.Getter;
 import lombok.Setter;
-import org.hibernate.annotations.DynamicInsert;
-import org.hibernate.annotations.DynamicUpdate;
-import org.hibernate.annotations.Index;
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.*;
 
 import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 import java.util.Date;
 
 /**
@@ -21,6 +21,7 @@ import java.util.Date;
  */
 @Entity
 @Table(name = "DepartmentMember")
+@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 @DynamicInsert
 @DynamicUpdate
 @Getter
@@ -38,6 +39,8 @@ public class DepartmentMember extends AccessEntityBase {
 
         this.department = department;
         this.employee = employee;
+
+        this.department.getMembers().add(this);
     }
 
     @Id

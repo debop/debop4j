@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.concurrent.FutureTask;
 
 /**
- * 복수 개의 Interceptor들을 병렬 방식으로 수행하도록 하는 Interceptor입니다.
+ * 복수 개의 Interceptor들을 모두 수행하도록 하는 Interceptor입니다. (기본적으로 Interceptor를 하나만 등록하게 되어 있어서)
  * User: sunghyouk.bae@gmail.com
  * Date: 12. 9. 23.
  */

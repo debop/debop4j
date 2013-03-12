@@ -18,7 +18,7 @@ import java.util.Date;
 import java.util.Objects;
 
 /**
- * kr.nsoft.data.hibernate.usertype.TimeRangeUserType
+ * kr.debop4j.data.hibernate.usertype.TimeRangeUserType
  * User: sunghyouk.bae@gmail.com
  * Date: 12. 12. 3.
  */

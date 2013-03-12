@@ -32,9 +32,11 @@ public class OneToMany_Bid extends JpaEntityBase {
     @JoinColumn(name = "ITEM_ID", nullable = false)
     private OneToMany_Item item;
 
+    @Basic
     @Column(name = "AMOUNT", nullable = false)
     private BigDecimal amount;
 
+    // Mapping 하지 않을 정보
     @Transient
     private Timestamp timestamp;
 

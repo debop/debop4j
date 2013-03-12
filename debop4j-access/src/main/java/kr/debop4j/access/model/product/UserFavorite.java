@@ -4,9 +4,13 @@ import com.google.common.base.Objects;
 import kr.debop4j.access.model.AccessEntityBase;
 import kr.debop4j.access.model.organization.User;
 import kr.debop4j.core.tools.HashTool;
-import org.hibernate.annotations.Index;
+import lombok.Getter;
+import lombok.Setter;
+import org.hibernate.annotations.*;
 
 import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 import java.util.Date;
 
 /**
@@ -16,6 +20,11 @@ import java.util.Date;
  */
 @Entity
 @Table(name = "UserFavorite")
+@org.hibernate.annotations.Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+@DynamicInsert
+@DynamicUpdate
+@Getter
+@Setter
 public class UserFavorite extends AccessEntityBase {
 
     private static final long serialVersionUID = 5857584976380701117L;
@@ -27,30 +36,37 @@ public class UserFavorite extends AccessEntityBase {
 
     @ManyToOne
     @JoinColumn(name = "ProductId", nullable = false)
-    @Index(name = "ix_user_favorite")
+    @Index(name = "ix_userfavorite")
+    @NaturalId
     private Product product;
 
     @ManyToOne
     @JoinColumn(name = "UserId", nullable = false)
-    @Index(name = "ix_user_favorite")
+    @Index(name = "ix_userfavorite")
+    @NaturalId
     private User user;
 
-    @Column(name = "Content", nullable = false, length = 4000)
+    @Column(name = "Content", nullable = false, length = 2000)
+    @NaturalId
     private String content;
 
     @Temporal(TemporalType.TIMESTAMP)
     private Date registDate;
 
+    @Basic
+    @Column(name = "IsActive")
     private Boolean active;
 
     /**
      * 우선순위
      */
+    @Basic
     private Integer preference;
 
     @Column(length = 2000)
     private String description;
 
+    @Basic(fetch = FetchType.LAZY)
     @Column(length = 2000)
     private String exAttr;
 

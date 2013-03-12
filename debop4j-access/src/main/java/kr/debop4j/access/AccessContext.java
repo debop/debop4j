@@ -27,13 +27,13 @@ public class AccessContext {
     private static final String CurrentUsernameKey = "kr.debop4j.access.current.username.key";
 
 
-    private static class Current {
+    public static class Current {
 
-        private static String getCompanyCode() {
+        public static String getCompanyCode() {
             return (String) Local.get(CurrentCompanyCodeKey);
         }
 
-        private static void setCompanyCode(String companyCode) {
+        public static void setCompanyCode(String companyCode) {
             Guard.shouldNotBeEmpty(companyCode, "companyCode");
             Local.put(CurrentCompanyCodeKey, companyCode);
         }
@@ -45,11 +45,11 @@ public class AccessContext {
                     .uniqueResult();
         }
 
-        private static String getDepartmentCode() {
+        public static String getDepartmentCode() {
             return (String) Local.get(CurrentDepartmentCodeKey);
         }
 
-        private static void setDepartmentCode(String departmentCode) {
+        public static void setDepartmentCode(String departmentCode) {
             Guard.shouldNotBeEmpty(departmentCode, "departmentCode");
             Local.put(CurrentDepartmentCodeKey, departmentCode);
         }
@@ -61,11 +61,11 @@ public class AccessContext {
                     .uniqueResult();
         }
 
-        private static String getUsername() {
+        public static String getUsername() {
             return (String) Local.get(CurrentUsernameKey);
         }
 
-        private static void setUsername(String username) {
+        public static void setUsername(String username) {
             Guard.shouldNotBeEmpty(username, "username");
             Local.put(CurrentUsernameKey, username);
         }

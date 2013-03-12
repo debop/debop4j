@@ -1,6 +1,7 @@
 package kr.debop4j.access.model.organization;
 
 import com.google.common.base.Objects;
+import com.google.common.collect.Sets;
 import kr.debop4j.access.model.AccessEntityBase;
 import kr.debop4j.access.model.ICodeBaseEntity;
 import kr.debop4j.core.Guard;
@@ -8,11 +9,14 @@ import kr.debop4j.core.tools.HashTool;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
-import org.hibernate.annotations.DynamicInsert;
-import org.hibernate.annotations.DynamicUpdate;
-import org.hibernate.annotations.Index;
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.*;
 
+import javax.persistence.CascadeType;
 import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.Table;
+import java.util.Set;
 
 /**
  * 가상의 조직을 나타냅니다.
@@ -21,6 +25,7 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name = "`Group`")
+@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 @DynamicInsert
 @DynamicUpdate
 @Getter
@@ -75,6 +80,12 @@ public class Group extends AccessEntityBase implements ICodeBaseEntity {
 
     @Column(name = "GroupExAttr", length = 2000)
     private String exAttr;
+
+
+    @OneToMany(mappedBy = "group", cascade = {CascadeType.ALL})
+    @LazyCollection(value = LazyCollectionOption.EXTRA)
+    @Fetch(FetchMode.SELECT)
+    private Set<GroupMember> members = Sets.newHashSet();
 
     @Override
     public int hashCode() {

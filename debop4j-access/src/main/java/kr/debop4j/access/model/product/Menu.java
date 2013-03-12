@@ -8,6 +8,7 @@ import kr.debop4j.data.model.ITreeEntity;
 import kr.debop4j.data.model.IUpdateTimestampedEntity;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.Index;
@@ -22,6 +23,7 @@ import java.util.Date;
  */
 @Entity
 @Table(name = "Menu")
+@org.hibernate.annotations.Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 @DynamicInsert
 @DynamicUpdate
 @Getter
