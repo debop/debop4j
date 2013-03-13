@@ -1,6 +1,7 @@
 package kr.debop4j.access.model.workcalendar;
 
 import com.google.common.base.Objects;
+import com.google.common.collect.Sets;
 import kr.debop4j.access.model.AccessEntityBase;
 import kr.debop4j.core.timeperiod.ITimePeriod;
 import kr.debop4j.core.timeperiod.TimeRange;
@@ -13,9 +14,10 @@ import org.hibernate.annotations.*;
 import javax.persistence.*;
 import javax.persistence.Entity;
 import javax.persistence.Table;
+import java.util.Set;
 
 /**
- * kr.debop4j.access.model.workcalendar.WorkCalendarRule
+ * Working Calendar에서 작업 시간, 예외 시간 등의 룰을 나타냅니다.
  * User: sunghyouk.bae@gmail.com
  * Date: 13. 3. 11.
  */
@@ -26,6 +28,8 @@ import javax.persistence.Table;
 @Getter
 @Setter
 public class WorkCalendarRule extends AccessEntityBase {
+
+    private static final long serialVersionUID = 8363967938674620509L;
 
     @Id
     @GeneratedValue
@@ -67,62 +71,15 @@ public class WorkCalendarRule extends AccessEntityBase {
     private String exceptionClassName;
 
     @Type(type = "kr.debop4j.data.hibernate.usertype.TimeRangeUserType")
-    @Columns(columns =
-                     {
-                             @Column(name = "StartTime"),
-                             @Column(name = "EndTime")
-                     })
+    @Columns(columns = {@Column(name = "StartTime"), @Column(name = "EndTime")})
     @Setter(AccessLevel.PROTECTED)
     private ITimePeriod rulePeriod = new TimeRange();
 
+    @CollectionTable(name = "WorkCalendarRulePeriod", joinColumns = {@JoinColumn(name = "RuleId")})
+    @ElementCollection(targetClass = ITimePeriod.class, fetch = FetchType.EAGER)
     @Type(type = "kr.debop4j.data.hibernate.usertype.TimeRangeUserType")
-    @Columns(columns =
-                     {
-                             @Column(name = "StartTime1"),
-                             @Column(name = "EndTime1")
-                     })
-    @Setter(AccessLevel.PROTECTED)
-    private ITimePeriod rulePeriod1 = new TimeRange();
-
-    @Type(type = "kr.debop4j.data.hibernate.usertype.TimeRangeUserType")
-    @Columns(columns =
-                     {
-                             @Column(name = "StartTime2"),
-                             @Column(name = "EndTime2")
-                     })
-    @Setter(AccessLevel.PROTECTED)
-    private ITimePeriod rulePeriod2 = new TimeRange();
-
-    @Type(type = "kr.debop4j.data.hibernate.usertype.TimeRangeUserType")
-    @Columns(columns =
-                     {
-                             @Column(name = "StartTime3"),
-                             @Column(name = "EndTime3")
-                     })
-    @Setter(AccessLevel.PROTECTED)
-    private ITimePeriod rulePeriod3 = new TimeRange();
-
-    @Type(type = "kr.debop4j.data.hibernate.usertype.TimeRangeUserType")
-    @Columns(columns =
-                     {
-                             @Column(name = "StartTime4"),
-                             @Column(name = "EndTime4")
-                     })
-    @Setter(AccessLevel.PROTECTED)
-    private ITimePeriod rulePeriod4 = new TimeRange();
-
-    @Type(type = "kr.debop4j.data.hibernate.usertype.TimeRangeUserType")
-    @Columns(columns =
-                     {
-                             @Column(name = "StartTime5"),
-                             @Column(name = "EndTime5")
-                     })
-    @Setter(AccessLevel.PROTECTED)
-    private ITimePeriod rulePeriod5 = new TimeRange();
-
-    private final ITimePeriod[] rulePeriods = new ITimePeriod[]{
-            rulePeriod1, rulePeriod2, rulePeriod3, rulePeriod4, rulePeriod5
-    };
+    @Columns(columns = {@Column(name = "StartTime"), @Column(name = "EndTime")})
+    private final Set<ITimePeriod> rulePeriods = Sets.newHashSet();
 
     private Integer viewOrder;
 
