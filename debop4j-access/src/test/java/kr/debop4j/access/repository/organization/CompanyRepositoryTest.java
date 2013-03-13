@@ -11,6 +11,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.junit.Assert;
 import org.junit.Test;
 
+import java.util.Locale;
+
 /**
  * kr.debop4j.access.repository.organization.CompanyRepositoryTest
  * User: sunghyouk.bae@gmail.com
@@ -56,5 +58,28 @@ public class CompanyRepositoryTest extends RepositoryTestBase {
         Company loaded = Iterables.getFirst(getRepository().findByName("케이"), null);
         Assert.assertNotNull(loaded);
         Assert.assertTrue(StringTool.contains(loaded.getName(), "케이"));
+    }
+
+    @Test
+    public void localeTest() {
+        Company company = createCompany();
+
+        company.addLocaleValue(Locale.KOREA,
+                               new Company.CompanyLocale("케이티하이텔", "케이티 자회사입니다."));
+
+        company.addLocaleValue(Locale.ENGLISH,
+                               new Company.CompanyLocale("KTHitel", "KTHitel ~"));
+
+        getRepository().saveOrUpdate(company);
+        UnitOfWorks.getCurrent().transactionalFlush();
+        UnitOfWorks.getCurrent().clearSession();
+
+        Company loaded = getRepository().get(company.getId());
+        Assert.assertNotNull(loaded);
+        Assert.assertEquals(2, loaded.getLocaleMap().size());
+
+        for (Company.CompanyLocale companyLocale : loaded.getLocaleMap().values()) {
+            log.debug("CompanyLocale=[{}]", companyLocale);
+        }
     }
 }

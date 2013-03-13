@@ -1,4 +1,4 @@
-package kr.debop4j.core.cacheRepository;
+package kr.debop4j.core.cacherepository;
 
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;

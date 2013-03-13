@@ -1,4 +1,4 @@
-package kr.debop4j.core.cacheRepository;
+package kr.debop4j.core.cacherepository;
 
 import com.carrotsearch.junitbenchmarks.BenchmarkRule;
 import kr.debop4j.core.Stopwatch;

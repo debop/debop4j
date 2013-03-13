@@ -3,7 +3,6 @@ package kr.debop4j.access;
 import kr.debop4j.access.model.organization.Company;
 import kr.debop4j.access.model.organization.CompanyCode;
 import kr.debop4j.access.model.product.Product;
-import kr.debop4j.access.model.workcalendar.WorkCalendar;
 import kr.debop4j.data.hibernate.springconfiguration.PostgreSqlConfigBase;
 import org.hibernate.cache.ehcache.SingletonEhCacheRegionFactory;
 import org.hibernate.cfg.Environment;
@@ -32,7 +31,7 @@ public class UsingPostgreSqlConfiguration extends PostgreSqlConfigBase {
                 CompanyCode.class.getPackage().getName(),
                 Company.class.getPackage().getName(),
                 Product.class.getPackage().getName(),
-                WorkCalendar.class.getPackage().getName(),
+                kr.debop4j.access.model.workcalendar.WorkCalendar.class.getPackage().getName(),
         };
     }
 

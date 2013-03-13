@@ -24,7 +24,7 @@ public abstract class WorkTimeByTimeBase extends AccessEntityBase implements IWo
     protected WorkTimeByTimeBase() {}
 
     public WorkTimeByTimeBase(WorkCalendar workCalendar, Date workTime) {
-        Guard.shouldNotBeNull(workCalendar, "workCalendar");
+        Guard.shouldNotBeNull(workCalendar, "workcalendar");
         this.workCalendar = workCalendar;
         this.workTime = workTime;
     }
@@ -53,9 +53,9 @@ public abstract class WorkTimeByTimeBase extends AccessEntityBase implements IWo
     @Override
     protected Objects.ToStringHelper buildStringHelper() {
         return super.buildStringHelper()
-                .add("workTime", workTime)
-                .add("isWork", work)
-                .add("workInMinute", workInMinute)
-                .add("workCalendar", workCalendar);
+                    .add("workTime", workTime)
+                    .add("isWork", work)
+                    .add("workInMinute", workInMinute)
+                    .add("workcalendar", workCalendar);
     }
 }

@@ -1,4 +1,4 @@
-package kr.debop4j.core.cacheRepository;
+package kr.debop4j.core.cacherepository;
 
 import java.util.Map;
 import java.util.concurrent.Future;

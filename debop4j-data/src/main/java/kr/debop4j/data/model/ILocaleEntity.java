@@ -18,7 +18,7 @@ public interface ILocaleEntity<TLocaleValue extends ILocaleValue> extends IState
     /**
      * 정의된 {@link java.util.Locale} 정보
      */
-    Set<Locale> getLcoales();
+    Set<Locale> getLocales();
 
     /**
      * 지역화 정보를 추가합니다.

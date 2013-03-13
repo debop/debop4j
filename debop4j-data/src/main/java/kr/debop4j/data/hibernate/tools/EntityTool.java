@@ -139,8 +139,8 @@ public class EntityTool {
     DetachedCriteria GetDescendentsCriteria(T entity, Session session, Class<T> entityClass) {
         return
                 DetachedCriteria.forClass(entityClass)
-                        .createAlias(PROPERTY_ANCESTORS, "ans")
-                        .add(Restrictions.eq("ans.id", entity.getId()));
+                                .createAlias(PROPERTY_ANCESTORS, "ans")
+                                .add(Restrictions.eq("ans.id", entity.getId()));
     }
 
     public static <T extends IHierarchyEntity<T> & IEntity<TId>, TId extends Serializable>
@@ -169,7 +169,7 @@ public class EntityTool {
 
     public static <T extends ILocaleEntity<TLocaleValue>, TLocaleValue extends ILocaleValue>
     void CopyLocale(T source, T destination) {
-        for (Locale locale : source.getLcoales())
+        for (Locale locale : source.getLocales())
             destination.addLocaleValue(locale, source.getLocaleValue(locale));
     }
 

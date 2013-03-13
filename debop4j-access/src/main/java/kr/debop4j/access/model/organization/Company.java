@@ -73,11 +73,11 @@ public class Company extends AccessLocaledEntityBase<Company.CompanyLocale> impl
     private Boolean active;
 
     @Basic
-    @Column(name = "CompanyDesc", length = 4000)
+    @Column(name = "CompanyDesc", length = 2000)
     private String description;
 
-    @Basic
-    @Column(name = "ExAttr", length = 4000)
+    @Basic(fetch = FetchType.LAZY)
+    @Column(name = "ExAttr", length = 2000)
     private String exAttr;
 
     /**
@@ -102,9 +102,11 @@ public class Company extends AccessLocaledEntityBase<Company.CompanyLocale> impl
     @Override
     protected Objects.ToStringHelper buildStringHelper() {
         return super.buildStringHelper()
-                .add("id", id)
-                .add("code", code)
-                .add("name", name);
+                    .add("id", id)
+                    .add("code", code)
+                    .add("name", name)
+                    .add("active", active)
+                    .add("description", description);
     }
 
     @Getter
@@ -123,5 +125,12 @@ public class Company extends AccessLocaledEntityBase<Company.CompanyLocale> impl
 
         private String name;
         private String description;
+
+        @Override
+        protected Objects.ToStringHelper buildStringHelper() {
+            return super.buildStringHelper()
+                        .add("name", name)
+                        .add("description", description);
+        }
     }
 }

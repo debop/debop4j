@@ -66,7 +66,7 @@ public abstract class LocaleEntityBase<TId extends Serializable, TLocaleValue ex
     }
 
     @Override
-    public Set<Locale> getLcoales() {
+    public Set<Locale> getLocales() {
         return getLocaleMap().keySet();
     }
 

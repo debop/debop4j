@@ -1,4 +1,4 @@
-package kr.debop4j.core.cacheRepository;
+package kr.debop4j.core.cacherepository;
 
 /**
  * Cache 시스템에 정보를 관리하는 ICacheRepository 의 인터페이스입니다.

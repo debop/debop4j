@@ -62,7 +62,7 @@ public abstract class AnnotatedLocaleEntityBase<TLocaleValue extends ILocaleValu
     }
 
     @Override
-    public Set<Locale> getLcoales() {
+    public Set<Locale> getLocales() {
         return getLocaleMap().keySet();
     }
 
