@@ -42,7 +42,6 @@ public class Product extends AccessEntityBase implements ICodeBaseEntity {
         this.name = name;
     }
 
-
     @Id
     @GeneratedValue
     @Column(name = "ProductId")
@@ -79,10 +78,10 @@ public class Product extends AccessEntityBase implements ICodeBaseEntity {
     @Override
     protected Objects.ToStringHelper buildStringHelper() {
         return super.buildStringHelper()
-                .add("id", id)
-                .add("code", code)
-                .add("name", name)
-                .add("abbrName", abbrName)
-                .add("active", active);
+                    .add("id", id)
+                    .add("code", code)
+                    .add("name", name)
+                    .add("abbrName", abbrName)
+                    .add("active", active);
     }
 }

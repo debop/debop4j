@@ -1,9 +1,9 @@
-<ehcache>
+<ehcache name="access-cache">
     <diskStore path="ehcache"/>
     <defaultCache
-            maxEntriesLocalHeap="10000"
-            maxEntriesLocalDisk="10000000"
-            eternal="true"
+            maxBytesLocalHeap="100M"
+            maxBytesLocalDisk="20G"
+            eternal="false"
             timeToIdleSeconds="600"
             timeToLiveSeconds="600"
             diskSpoolBufferSizeMB="30"

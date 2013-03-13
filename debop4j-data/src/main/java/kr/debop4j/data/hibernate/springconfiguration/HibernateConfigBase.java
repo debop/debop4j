@@ -70,9 +70,7 @@ public abstract class HibernateConfigBase {
     /**
      * factoryBean 에 추가 설정을 지정할 수 있습니다.
      */
-    protected void setupSessionFactory(LocalSessionFactoryBean factoryBean) {
-        // Nothing
-    }
+    protected void setupSessionFactory(LocalSessionFactoryBean factoryBean) { }
 
     @Bean
     public SessionFactory sessionFactory() {

@@ -6,7 +6,7 @@ import static org.hibernate.internal.util.StringHelper.toUpperCase;
 import static org.hibernate.internal.util.StringHelper.unqualify;
 
 /**
- * 속성명을 ORACLE 명명규칙을 사용하여 DB 엔티티의 요소를 변경한다.
+ * 속성명을 ORACLE 명명규칙을 사용하여 DB 엔티티의 요소를 변경한다. (Configuration.setNamingStrategy() 메소드를 사용합니다.)
  * JpaUser: sunghyouk.bae@gmail.com
  * Date: 12. 11. 19
  */
