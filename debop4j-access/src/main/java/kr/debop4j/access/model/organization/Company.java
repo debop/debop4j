@@ -5,10 +5,10 @@ import com.google.common.collect.Maps;
 import kr.debop4j.access.model.AccessLocaledEntityBase;
 import kr.debop4j.access.model.ICodeBaseEntity;
 import kr.debop4j.core.Guard;
-import kr.debop4j.core.ValueObjectBase;
 import kr.debop4j.core.tools.HashTool;
 import kr.debop4j.data.model.ILocaleValue;
 import lombok.AccessLevel;
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.Cache;
@@ -83,9 +83,10 @@ public class Company extends AccessLocaledEntityBase<Company.CompanyLocale> impl
     /**
      * 다국어 지원을 위한 정보
      */
-    @CollectionTable(name = "CompanyLocale", joinColumns = @JoinColumn(name = "CompanyId"))
-    @MapKeyClass(Locale.class)
+    @CollectionTable(name = "CompanyLocale", joinColumns = {@JoinColumn(name = "CompanyId")})
     @ElementCollection(targetClass = CompanyLocale.class, fetch = FetchType.LAZY)
+    @MapKeyClass(Locale.class)
+    @Cascade({org.hibernate.annotations.CascadeType.ALL})
     private Map<Locale, CompanyLocale> localeMap = Maps.newHashMap();
 
     public Map<Locale, CompanyLocale> getLocaleMap() {
@@ -102,19 +103,18 @@ public class Company extends AccessLocaledEntityBase<Company.CompanyLocale> impl
     @Override
     protected Objects.ToStringHelper buildStringHelper() {
         return super.buildStringHelper()
-                    .add("id", id)
-                    .add("code", code)
-                    .add("name", name)
-                    .add("active", active)
-                    .add("description", description);
+                .add("id", id)
+                .add("code", code)
+                .add("name", name)
+                .add("active", active)
+                .add("description", description);
     }
 
-    @Getter
-    @Setter
+    @Data
     @Embeddable
     @DynamicInsert
     @DynamicUpdate
-    public static class CompanyLocale extends ValueObjectBase implements ILocaleValue {
+    public static class CompanyLocale implements ILocaleValue {
 
         public CompanyLocale() {}
 
@@ -123,14 +123,11 @@ public class Company extends AccessLocaledEntityBase<Company.CompanyLocale> impl
             this.description = description;
         }
 
+        @Column(name = "CompanyName", length = 128)
         private String name;
-        private String description;
 
-        @Override
-        protected Objects.ToStringHelper buildStringHelper() {
-            return super.buildStringHelper()
-                        .add("name", name)
-                        .add("description", description);
-        }
+        @Basic
+        @Column(name = "CompanyDesc", length = 2000)
+        private String description;
     }
 }

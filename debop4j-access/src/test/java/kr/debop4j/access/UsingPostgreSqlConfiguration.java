@@ -4,11 +4,9 @@ import kr.debop4j.access.model.organization.Company;
 import kr.debop4j.access.model.organization.CompanyCode;
 import kr.debop4j.access.model.product.Product;
 import kr.debop4j.data.hibernate.springconfiguration.PostgreSqlConfigBase;
-import kr.debop4j.data.hibernate.tools.OracleNamingStrategy;
 import org.hibernate.cache.ehcache.SingletonEhCacheRegionFactory;
 import org.hibernate.cfg.Environment;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.orm.hibernate4.LocalSessionFactoryBean;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import java.util.Properties;
@@ -49,9 +47,9 @@ public class UsingPostgreSqlConfiguration extends PostgreSqlConfigBase {
         return props;
     }
 
-    @Override
-    protected void setupSessionFactory(LocalSessionFactoryBean factoryBean) {
-        super.setupSessionFactory(factoryBean);
-        factoryBean.setNamingStrategy(new OracleNamingStrategy());
-    }
+//    @Override
+//    protected void setupSessionFactory(LocalSessionFactoryBean factoryBean) {
+//        super.setupSessionFactory(factoryBean);
+//        factoryBean.setNamingStrategy(new OracleNamingStrategy());
+//    }
 }

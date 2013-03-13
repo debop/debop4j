@@ -42,6 +42,9 @@ public class CompanyRepositoryTest extends RepositoryTestBase {
         Company loaded = getRepository().get(company.getId());
         Assert.assertEquals(company.getCode(), loaded.getCode());
         Assert.assertEquals(company.getName(), loaded.getName());
+
+        getRepository().delete(loaded);
+        UnitOfWorks.getCurrent().flushSession();
     }
 
     @Test
@@ -50,14 +53,21 @@ public class CompanyRepositoryTest extends RepositoryTestBase {
         Company loaded = getRepository().findByCode(DefaultCompanyCode);
         Assert.assertNotNull(loaded);
         Assert.assertEquals(DefaultCompanyCode, loaded.getCode());
+
+        getRepository().delete(loaded);
+        UnitOfWorks.getCurrent().flushSession();
     }
 
     @Test
     public void getByName() {
         Company company = createCompany();
         Company loaded = Iterables.getFirst(getRepository().findByName("케이"), null);
+
         Assert.assertNotNull(loaded);
         Assert.assertTrue(StringTool.contains(loaded.getName(), "케이"));
+
+        getRepository().delete(loaded);
+        UnitOfWorks.getCurrent().flushSession();
     }
 
     @Test
@@ -81,5 +91,8 @@ public class CompanyRepositoryTest extends RepositoryTestBase {
         for (Company.CompanyLocale companyLocale : loaded.getLocaleMap().values()) {
             log.debug("CompanyLocale=[{}]", companyLocale);
         }
+
+        getRepository().delete(loaded);
+        UnitOfWorks.getCurrent().flushSession();
     }
 }

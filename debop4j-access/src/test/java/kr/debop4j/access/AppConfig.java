@@ -13,6 +13,6 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @Configuration
 @EnableTransactionManagement
 @ComponentScan({"kr.debop4j.access.repository", "kr.debop4j.access.service"})
-@Import({UsingHSqlConfiguration.class})
+@Import({UsingPostgreSqlConfiguration.class})
 public class AppConfig {
 }
