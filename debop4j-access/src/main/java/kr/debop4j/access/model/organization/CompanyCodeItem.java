@@ -28,6 +28,10 @@ public class CompanyCodeItem extends AccessEntityBase {
 
     protected CompanyCodeItem() {}
 
+    public CompanyCodeItem(CompanyCode code, String itemName) {
+        this(code, itemName, itemName);
+    }
+
     public CompanyCodeItem(CompanyCode code, String itemName, String itemValue) {
         Guard.shouldNotBeNull(code, "code");
         Guard.shouldNotBeEmpty(itemValue, "itemValue");
@@ -55,6 +59,10 @@ public class CompanyCodeItem extends AccessEntityBase {
     @Column(name = "ItemValue", length = 2000)
     private String value;
 
+    @Basic
+    @Column(name = "IsActive")
+    private Boolean active;
+
     @Column(name = "Descripton", length = 2000)
     private String description;
 
@@ -74,6 +82,8 @@ public class CompanyCodeItem extends AccessEntityBase {
         return super.buildStringHelper()
                 .add("id", id)
                 .add("name", name)
-                .add("value", value);
+                .add("value", value)
+                .add("active", active)
+                .add("description", description);
     }
 }

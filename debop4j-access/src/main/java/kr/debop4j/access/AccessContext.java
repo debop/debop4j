@@ -2,7 +2,7 @@ package kr.debop4j.access;
 
 import kr.debop4j.access.model.organization.Company;
 import kr.debop4j.access.model.organization.Department;
-import kr.debop4j.access.model.organization.User;
+import kr.debop4j.access.model.product.User;
 import kr.debop4j.core.Guard;
 import kr.debop4j.core.Local;
 import kr.debop4j.data.hibernate.unitofwork.UnitOfWorks;

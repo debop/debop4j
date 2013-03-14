@@ -28,6 +28,9 @@ import java.util.Map;
 @Entity
 @Table(name = "Company")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+@org.hibernate.annotations.Table(appliesTo = "Company",
+                                 indexes = @org.hibernate.annotations.Index(name = "ix_company_code",
+                                                                            columnNames = {"CompanyCode", "CompanyName"}))
 @DynamicInsert
 @DynamicUpdate
 @Getter

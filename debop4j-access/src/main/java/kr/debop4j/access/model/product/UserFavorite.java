@@ -2,7 +2,6 @@ package kr.debop4j.access.model.product;
 
 import com.google.common.base.Objects;
 import kr.debop4j.access.model.AccessEntityBase;
-import kr.debop4j.access.model.organization.User;
 import kr.debop4j.core.tools.HashTool;
 import lombok.Getter;
 import lombok.Setter;

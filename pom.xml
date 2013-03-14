@@ -20,6 +20,7 @@
         <module>debop4j-access</module>
         <module>debop4j-web</module>
         <module>debop4j-web-example</module>
+        <module>debop4j-graph</module>
     </modules>
 
     <properties>

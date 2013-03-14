@@ -27,6 +27,9 @@ import java.util.Set;
 @Entity
 @Table(name = "Department")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+@org.hibernate.annotations.Table(appliesTo = "Department",
+                                 indexes = @org.hibernate.annotations.Index(name = "ix_department_code",
+                                                                            columnNames = {"CompanyId", "DepartmentCode"}))
 @DynamicInsert
 @DynamicUpdate
 @Getter
@@ -59,15 +62,12 @@ public class Department extends AnnotatedTreeEntityBase<Department>
 
     @ManyToOne
     @JoinColumn(name = "CompanyId", nullable = false)
-    @Index(name = "ix_department_code")
     private Company company;
 
     @Column(name = "DepartmentCode", nullable = false, length = 64)
-    @Index(name = "ix_department_code")
     private String code;
 
     @Column(name = "DepartmentName", nullable = false, length = 128)
-    @Index(name = "ix_department_code")
     private String name;
 
     @Column(name = "DepartmentEName", length = 128)

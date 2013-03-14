@@ -7,11 +7,11 @@ import kr.debop4j.core.tools.HashTool;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.Cache;
-import org.hibernate.annotations.*;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
+import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.*;
-import javax.persistence.Entity;
-import javax.persistence.Table;
 
 /**
  * 그룹의 구성원
@@ -21,6 +21,12 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "GroupMember")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+@org.hibernate.annotations.Table(appliesTo = "GroupMember",
+                                 indexes = @org.hibernate.annotations.Index(name = "ix_groupMember",
+                                                                            columnNames = {
+                                                                                    "GroupId",
+                                                                                    "MemberKind",
+                                                                                    "MemberId"}))
 @DynamicInsert
 @DynamicUpdate
 @Getter
@@ -47,16 +53,13 @@ public class GroupMember extends AccessEntityBase {
 
     @ManyToOne
     @JoinColumn(name = "GroupId", nullable = false)
-    @Index(name = "ix_groupmember")
     private Group group;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "MemberKind", nullable = false, length = 128)
-    @Index(name = "ix_groupmember")
     private OrganizationKind memberKind = OrganizationKind.Employee;
 
     @Column(name = "MemberId", nullable = false)
-    @Index(name = "ix_groupmember")
     private Long memberId;
 
     @Basic

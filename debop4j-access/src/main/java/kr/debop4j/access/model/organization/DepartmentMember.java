@@ -7,11 +7,11 @@ import kr.debop4j.core.tools.HashTool;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.Cache;
-import org.hibernate.annotations.*;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
+import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.*;
-import javax.persistence.Entity;
-import javax.persistence.Table;
 import java.util.Date;
 
 /**
@@ -22,6 +22,9 @@ import java.util.Date;
 @Entity
 @Table(name = "DepartmentMember")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+@org.hibernate.annotations.Table(appliesTo = "DepartmentMember",
+                                 indexes = @org.hibernate.annotations.Index(name = "ix_DepartmentMember",
+                                                                            columnNames = {"DepartmentId", "EmployeeId"}))
 @DynamicInsert
 @DynamicUpdate
 @Getter
@@ -53,7 +56,6 @@ public class DepartmentMember extends AccessEntityBase {
      */
     @ManyToOne
     @JoinColumn(name = "DepartmentId", nullable = false)
-    @Index(name = "ix_department_member")
     private Department department;
 
     /**
@@ -61,7 +63,6 @@ public class DepartmentMember extends AccessEntityBase {
      */
     @ManyToOne
     @JoinColumn(name = "EmployeeId", nullable = false)
-    @Index(name = "ix_department_member")
     private Employee employee;
 
     /**

@@ -26,6 +26,12 @@ import java.util.Set;
 @Entity
 @Table(name = "`Group`")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+@org.hibernate.annotations.Table(appliesTo = "`Group`",
+                                 indexes = @org.hibernate.annotations.Index(name = "ix_group_code",
+                                                                            columnNames = {
+                                                                                    "CompanyId",
+                                                                                    "GroupCode",
+                                                                                    "GroupName"}))
 @DynamicInsert
 @DynamicUpdate
 @Getter
@@ -48,6 +54,7 @@ public class Group extends AccessEntityBase implements ICodeBaseEntity {
         this.company = company;
         this.code = groupCode;
         this.name = groupName;
+        this.active = true;
     }
 
     @Id
@@ -58,15 +65,12 @@ public class Group extends AccessEntityBase implements ICodeBaseEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "CompanyId", nullable = false)
-    @Index(name = "ix_group_code")
     private Company company;
 
     @Column(name = "GroupCode", nullable = false, length = 32)
-    @Index(name = "ix_group_code")
     private String code;
 
     @Column(name = "GroupName", nullable = false, length = 256)
-    @Index(name = "ix_group_code")
     private String name;
 
     @Column(name = "GroupEName", length = 256)

@@ -25,6 +25,7 @@ import java.util.Set;
 @org.hibernate.annotations.Table(appliesTo = "ProductCode",
                                  indexes = @org.hibernate.annotations.Index(name = "ix_product_code",
                                                                             columnNames = {"ProductId", "CodeValue"}))
+@org.hibernate.annotations.Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 @DynamicInsert
 @DynamicUpdate
 @Getter
@@ -82,9 +83,9 @@ public class ProductCode extends AccessEntityBase {
     @Override
     protected Objects.ToStringHelper buildStringHelper() {
         return super.buildStringHelper()
-                    .add("id", id)
-                    .add("code", code)
-                    .add("name", name)
-                    .add("product", product);
+                .add("id", id)
+                .add("code", code)
+                .add("name", name)
+                .add("product", product);
     }
 }

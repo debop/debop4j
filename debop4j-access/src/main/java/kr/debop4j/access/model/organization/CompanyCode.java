@@ -3,6 +3,7 @@ package kr.debop4j.access.model.organization;
 import com.google.common.base.Objects;
 import com.google.common.collect.Sets;
 import kr.debop4j.access.model.AccessEntityBase;
+import kr.debop4j.core.Guard;
 import kr.debop4j.core.tools.HashTool;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -30,7 +31,14 @@ public class CompanyCode extends AccessEntityBase {
 
     protected CompanyCode() {}
 
+    public CompanyCode(Company company, String code) {
+        this(company, code, code);
+    }
+
     public CompanyCode(Company company, String code, String name) {
+        Guard.shouldNotBeNull(company, "company");
+        Guard.shouldNotBeEmpty(code, "code");
+
         this.company = company;
         this.code = code;
         this.name = name;
@@ -80,6 +88,7 @@ public class CompanyCode extends AccessEntityBase {
                 .add("id", id)
                 .add("code", code)
                 .add("name", name)
+                .add("description", description)
                 .add("company", company);
     }
 }

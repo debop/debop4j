@@ -1,7 +1,10 @@
-package kr.debop4j.access.model.organization;
+package kr.debop4j.access.model.product;
 
 import com.google.common.base.Objects;
 import kr.debop4j.access.model.AccessEntityBase;
+import kr.debop4j.access.model.organization.Company;
+import kr.debop4j.access.model.organization.Department;
+import kr.debop4j.access.model.organization.Employee;
 import kr.debop4j.core.Guard;
 import kr.debop4j.core.tools.HashTool;
 import lombok.Getter;
@@ -9,7 +12,6 @@ import lombok.Setter;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
-import org.hibernate.annotations.Index;
 
 import javax.persistence.*;
 
@@ -21,34 +23,53 @@ import javax.persistence.*;
 @Entity
 @Table(name = "`User`")
 @org.hibernate.annotations.Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+@org.hibernate.annotations.Table(appliesTo = "`User`",
+                                 indexes = @org.hibernate.annotations.Index(name = "ix_user",
+                                                                            columnNames = {
+                                                                                    "ProductId",
+                                                                                    "CompanyId",
+                                                                                    "UserName",
+                                                                                    "Password"}))
 @DynamicInsert
 @DynamicUpdate
 @Getter
 @Setter
 public class User extends AccessEntityBase {
 
+    private static final long serialVersionUID = 7743783792450069754L;
+
     private User() {}
 
-    protected User(Company company, String username, String password) {
-        this(company, null, null, username, password);
+    public User(Product product, String username, String password) {
+        this(product, null, null, null, username, password);
     }
 
-    protected User(Company company, Department department, Employee employee, String username, String password) {
-        Guard.shouldNotBeNull(company, "company");
+    public User(Product product, Company company, String username, String password) {
+        this(product, company, null, null, username, password);
+    }
+
+    public User(Product product, Company company, Department department, Employee employee, String username, String password) {
+        Guard.shouldNotBeNull(product, "product");
         Guard.shouldNotBeEmpty(username, "username");
         Guard.shouldNotBeEmpty(password, "password");
 
+        this.product = product;
+        this.company = company;
         this.department = department;
         this.employee = employee;
         this.username = username;
         this.password = password;
+        this.active = true;
     }
-
 
     @Id
     @GeneratedValue
     @Column(name = "UserId")
     private Long id;
+
+    @ManyToOne
+    @JoinColumn(name = "ProductId", nullable = false)
+    private Product product;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "CompanyId")
@@ -63,11 +84,9 @@ public class User extends AccessEntityBase {
     private Employee employee;
 
     @Column(nullable = false, length = 32)
-    @Index(name = "ix_user_username")
     private String username;
 
     @Column(nullable = false, length = 128)
-    @Index(name = "ix_user_username")
     private String password;
 
     @Column(length = 64)
@@ -97,6 +116,7 @@ public class User extends AccessEntityBase {
                 .add("password", password)
                 .add("nickname", nickname)
                 .add("active", active)
+                .add("product", product)
                 .add("company", company)
                 .add("employee", employee)
                 .add("department", department);

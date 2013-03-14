@@ -10,7 +10,6 @@ import lombok.Setter;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
-import org.hibernate.annotations.Index;
 
 import javax.persistence.*;
 
@@ -22,6 +21,12 @@ import javax.persistence.*;
 @Entity
 @Table(name = "Employee")
 @org.hibernate.annotations.Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+@org.hibernate.annotations.Table(appliesTo = "Employee",
+                                 indexes = @org.hibernate.annotations.Index(name = "ix_department_code",
+                                                                            columnNames = {
+                                                                                    "CompanyId",
+                                                                                    "EmployeeCode",
+                                                                                    "EmployeeName"}))
 @DynamicInsert
 @DynamicUpdate
 @Getter
@@ -52,15 +57,12 @@ public class Employee extends AccessEntityBase implements ICodeBaseEntity {
 
     @ManyToOne
     @JoinColumn(name = "CompanyId", nullable = false)
-    @Index(name = "ix_employee_code")
     private Company company;
 
     @Column(name = "EmployeeCode", nullable = false, length = 64)
-    @Index(name = "ix_employee_code")
     private String code;
 
     @Column(name = "EmployeeName", nullable = false, length = 128)
-    @Index(name = "ix_employee_code")
     private String name;
 
     @Basic
