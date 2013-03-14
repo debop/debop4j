@@ -20,8 +20,12 @@ import javax.persistence.*;
  * Date: 13. 3. 10.
  */
 @Entity
-@Table(name = "Resource")
 @org.hibernate.annotations.Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+@org.hibernate.annotations.Table(appliesTo = "Resource",
+                                 indexes = @org.hibernate.annotations.Index(name = "ix_resource",
+                                                                            columnNames = {
+                                                                                    "ProductId",
+                                                                                    "ResourceCode"}))
 @DynamicInsert
 @DynamicUpdate
 @Getter
@@ -63,8 +67,8 @@ public class Resource extends AccessEntityBase implements ICodeBaseEntity {
     @Column(name = "ResourceName", nullable = false, length = 128)
     private String name;
 
-    @Column(name = "ResourceActive")
-    private Boolean active;
+    @Column(name = "IsActive")
+    private Boolean isActive;
 
     @Column(name = "ResourceDesc", length = 4000)
     private String description;
@@ -85,6 +89,6 @@ public class Resource extends AccessEntityBase implements ICodeBaseEntity {
                 .add("id", id)
                 .add("code", code)
                 .add("name", name)
-                .add("active", active);
+                .add("isActive", isActive);
     }
 }

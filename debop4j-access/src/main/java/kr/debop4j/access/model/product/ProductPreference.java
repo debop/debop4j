@@ -6,11 +6,11 @@ import kr.debop4j.core.tools.HashTool;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.Cache;
-import org.hibernate.annotations.*;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
+import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.*;
-import javax.persistence.Entity;
-import javax.persistence.Table;
 
 /**
  * 제품의 설정 정보
@@ -20,6 +20,11 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "ProductPreference")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+@org.hibernate.annotations.Table(appliesTo = "ProductPreference",
+                                 indexes = @org.hibernate.annotations.Index(name = "ix_productPreference",
+                                                                            columnNames = {
+                                                                                    "ProductId",
+                                                                                    "PrefKey"}))
 @DynamicInsert
 @DynamicUpdate
 @Getter
@@ -42,7 +47,6 @@ public class ProductPreference extends PreferenceBase {
 
     @ManyToOne
     @JoinColumn(name = "ProductId")
-    @Index(name = "ix_productPreference")
     private Product product;
 
     @Override
@@ -56,7 +60,6 @@ public class ProductPreference extends PreferenceBase {
     protected Objects.ToStringHelper buildStringHelper() {
         return super.buildStringHelper()
                 .add("id", id)
-                .add("key", getKey())
-                .add("value", getValue());
+                .add("product", product);
     }
 }

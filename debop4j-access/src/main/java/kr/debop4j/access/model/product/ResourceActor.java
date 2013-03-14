@@ -9,7 +9,6 @@ import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
-import org.hibernate.annotations.Index;
 
 import javax.persistence.*;
 import java.util.EnumSet;
@@ -22,6 +21,13 @@ import java.util.Set;
  */
 @Entity
 @Table(name = "ResourceActor")
+@org.hibernate.annotations.Table(appliesTo = "ResourceActor",
+                                 indexes = @org.hibernate.annotations.Index(name = "ix_ResourceActor",
+                                                                            columnNames = {
+                                                                                    "ResourceId",
+                                                                                    "CompanyId",
+                                                                                    "ActorKind",
+                                                                                    "ActorId"}))
 @DynamicInsert
 @DynamicUpdate
 @Getter
@@ -32,15 +38,15 @@ public class ResourceActor extends AccessEntityBase {
 
     protected ResourceActor() {}
 
-    public ResourceActor(Resource resource, Company company, ActorKind actorKind, String actorCode) {
+    public ResourceActor(Resource resource, Company company, ActorKind actorKind, Long actorId) {
         Guard.shouldNotBeNull(resource, "resource");
         Guard.shouldNotBeNull(company, "company");
-        Guard.shouldNotBeEmpty(actorCode, "actorCode");
+        Guard.shouldNotBeNull(actorId, "actorId");
 
         this.resource = resource;
         this.company = company;
         this.actorKind = actorKind;
-        this.actorCode = actorCode;
+        this.actorId = actorId;
     }
 
     @Id
@@ -49,21 +55,19 @@ public class ResourceActor extends AccessEntityBase {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @Index(name = "ix_resource_actor")
+    @JoinColumn(name = "ResourceId", nullable = false)
     private Resource resource;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @Index(name = "ix_resource_actor")
+    @JoinColumn(name = "CompanyId", nullable = false)
     private Company company;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "ActorKind", nullable = false, length = 128)
-    @Index(name = "ix_resource_actor")
     private ActorKind actorKind = ActorKind.User;
 
-    @Column(name = "ActorCode", nullable = false, length = 128)
-    @Index(name = "ix_resource_actor")
-    private String actorCode;
+    @Column(name = "ActorId", nullable = false)
+    private Long actorId;
 
     // one-to-many 이면서 child가 component 인 경우!!!
     @ElementCollection(fetch = FetchType.EAGER)
@@ -79,7 +83,7 @@ public class ResourceActor extends AccessEntityBase {
     public int hashCode() {
         if (isPersisted())
             return HashTool.compute(id);
-        return HashTool.compute(resource, company, actorKind, actorCode);
+        return HashTool.compute(resource, company, actorKind, actorId);
     }
 
     @Override
@@ -87,7 +91,7 @@ public class ResourceActor extends AccessEntityBase {
         return super.buildStringHelper()
                 .add("id", id)
                 .add("actorKind", actorKind)
-                .add("actorCode", actorCode)
+                .add("actorId", actorId)
                 .add("authorityKinds", authorityKinds)
                 .add("resource", resource)
                 .add("company", company);

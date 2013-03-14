@@ -39,12 +39,8 @@ public abstract class WorkTimeByTimeBase extends AccessEntityBase implements IWo
     @Setter(AccessLevel.PROTECTED)
     private Date workTime;
 
-    @Column(name = "IsWork")
-    private Boolean work;
-
-    public Boolean isWork() {
-        return work;
-    }
+    @Column(name = "IsWorking")
+    private Boolean isWorking;
 
     @Column(name = "WorkInMinute")
     private Integer workInMinute;
@@ -55,9 +51,9 @@ public abstract class WorkTimeByTimeBase extends AccessEntityBase implements IWo
     @Override
     protected Objects.ToStringHelper buildStringHelper() {
         return super.buildStringHelper()
-                    .add("workTime", workTime)
-                    .add("isWork", work)
-                    .add("workInMinute", workInMinute)
-                    .add("workcalendar", workCalendar);
+                .add("workTime", workTime)
+                .add("isWorking", isWorking)
+                .add("workInMinute", workInMinute)
+                .add("workcalendar", workCalendar);
     }
 }

@@ -2,6 +2,7 @@ package kr.debop4j.access.model.product;
 
 import com.google.common.base.Objects;
 import kr.debop4j.access.model.AccessEntityBase;
+import kr.debop4j.core.Guard;
 import kr.debop4j.core.tools.HashTool;
 import lombok.Getter;
 import lombok.Setter;
@@ -9,7 +10,6 @@ import org.hibernate.annotations.*;
 
 import javax.persistence.*;
 import javax.persistence.Entity;
-import javax.persistence.Table;
 import java.util.Date;
 
 /**
@@ -18,7 +18,6 @@ import java.util.Date;
  * Date: 13. 3. 11.
  */
 @Entity
-@Table(name = "UserFavorite")
 @org.hibernate.annotations.Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 @DynamicInsert
 @DynamicUpdate
@@ -28,16 +27,19 @@ public class UserFavorite extends AccessEntityBase {
 
     private static final long serialVersionUID = 5857584976380701117L;
 
+    protected UserFavorite() {}
+
+    public UserFavorite(User user, String content) {
+        Guard.shouldNotBeNull(user, "user");
+
+        this.user = user;
+        this.content = content;
+    }
+
     @Id
     @GeneratedValue
     @Column(name = "UserFavoriteId")
     private Long id;
-
-    @ManyToOne
-    @JoinColumn(name = "ProductId", nullable = false)
-    @Index(name = "ix_userfavorite")
-    @NaturalId
-    private Product product;
 
     @ManyToOne
     @JoinColumn(name = "UserId", nullable = false)
@@ -73,14 +75,13 @@ public class UserFavorite extends AccessEntityBase {
     public int hashCode() {
         if (isPersisted())
             return HashTool.compute(id);
-        return HashTool.compute(product, user, content);
+        return HashTool.compute(user, content);
     }
 
     @Override
     protected Objects.ToStringHelper buildStringHelper() {
         return super.buildStringHelper()
                 .add("id", id)
-                .add("product", product)
                 .add("user", user)
                 .add("content", content)
                 .add("registDate", registDate)

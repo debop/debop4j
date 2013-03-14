@@ -20,11 +20,11 @@ public interface IWorkTimeByTime {
     Date getWorkTime();
 
     /**
-     * 작업 시간 여부
+     * IsWorking
      *
      * @return
      */
-    Boolean isWork();
+    Boolean getIsWorking();
 
     /**
      * 지정된 WorkTime의 작업시간을 분단위로 환산해서 표현함

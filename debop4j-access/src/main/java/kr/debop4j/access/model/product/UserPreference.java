@@ -6,11 +6,11 @@ import kr.debop4j.core.Guard;
 import kr.debop4j.core.tools.HashTool;
 import lombok.Getter;
 import lombok.Setter;
-import org.hibernate.annotations.*;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
+import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.DynamicUpdate;
 
-import javax.persistence.Entity;
 import javax.persistence.*;
-import javax.persistence.Table;
 
 /**
  * 사용자 환경 설정 정보
@@ -18,11 +18,12 @@ import javax.persistence.Table;
  * Date: 13. 3. 10.
  */
 @Entity
-@Table(name = "UserPreference")
-//@Table(name = "UserPreference",
-//       uniqueConstraints = {@UniqueConstraint(name = "uq_user_preference",
-//                                              columnNames = {"ProductId", "UserId", "UserPrefKey"})})
 @org.hibernate.annotations.Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+@org.hibernate.annotations.Table(appliesTo = "UserPreference",
+                                 indexes = @org.hibernate.annotations.Index(name = "ix_userpreference",
+                                                                            columnNames = {
+                                                                                    "UserId",
+                                                                                    "PrefKey"}))
 @DynamicInsert
 @DynamicUpdate
 @Getter
@@ -33,13 +34,11 @@ public class UserPreference extends PreferenceBase {
 
     protected UserPreference() {}
 
-    public UserPreference(Product product, User user, String key, String value) {
+    public UserPreference(User user, String key, String value) {
         super(key, value);
 
-        Guard.shouldNotBeNull(product, "product");
         Guard.shouldNotBeNull(user, "user");
 
-        this.product = product;
         this.user = user;
     }
 
@@ -48,29 +47,20 @@ public class UserPreference extends PreferenceBase {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "ProductId", nullable = false)
-    @Index(name = "ix_user_preference")
-    @NaturalId
-    private Product product;
-
-    @ManyToOne
     @JoinColumn(name = "UserId", nullable = false)
-    @Index(name = "ix_user_preference")
-    @NaturalId
     private User user;
 
     @Override
     public int hashCode() {
         if (isPersisted())
             return HashTool.compute(id);
-        return HashTool.compute(product, user, getKey());
+        return HashTool.compute(user, getKey());
     }
 
     @Override
     protected Objects.ToStringHelper buildStringHelper() {
         return super.buildStringHelper()
                 .add("id", id)
-                .add("product", product.getId())
                 .add("user", user.getId())
                 .add("key", getKey())
                 .add("value", getValue());
