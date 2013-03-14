@@ -3,6 +3,7 @@ package kr.debop4j.access.model.workcalendar;
 import com.google.common.base.Objects;
 import kr.debop4j.access.model.AccessEntityBase;
 import kr.debop4j.core.Guard;
+import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -35,6 +36,7 @@ public abstract class WorkTimeByTimeBase extends AccessEntityBase implements IWo
 
     @Column(name = "WorkTime", nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
+    @Setter(AccessLevel.PROTECTED)
     private Date workTime;
 
     @Column(name = "IsWork")

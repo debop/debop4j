@@ -35,13 +35,13 @@ public class WorkTimeByMinute extends WorkTimeByTimeBase {
     @Column(name = "WorkTimeId")
     private Long id;
 
-    @Temporal(TemporalType.TIMESTAMP)
+    @Transient
     public Date getWorkMinute() {
         return super.getWorkTime();
     }
 
-    public void setWorkMinute(Date workHour) {
-        super.setWorkTime(workHour);
+    public void setWorkMinute(Date workMinute) {
+        super.setWorkTime(workMinute);
     }
 
 
@@ -55,7 +55,7 @@ public class WorkTimeByMinute extends WorkTimeByTimeBase {
     @Override
     protected Objects.ToStringHelper buildStringHelper() {
         return super.buildStringHelper()
-                .add("id", id)
-                .add("workHour", getWorkMinute());
+                    .add("id", id)
+                    .add("workHour", getWorkMinute());
     }
 }

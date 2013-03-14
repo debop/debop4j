@@ -1,7 +1,14 @@
 package kr.debop4j.access;
 
+import kr.debop4j.core.spring.Springs;
 import kr.debop4j.data.hibernate.forTesting.DatabaseTestFixtureBase;
+import kr.debop4j.data.hibernate.repository.IHibernateRepository;
+import kr.debop4j.data.hibernate.repository.IHibernateRepositoryFactory;
+import kr.debop4j.data.model.IStatefulEntity;
+import lombok.Getter;
+import org.junit.After;
 import org.junit.AfterClass;
+import org.junit.Before;
 import org.junit.BeforeClass;
 
 /**
@@ -17,13 +24,34 @@ public class AccessTestBase extends DatabaseTestFixtureBase {
         getCurrentContext().createUnitOfWork();
 
         // 여기에 AccessContext.Current 에 값을 넣는다.
-        AccessContext.Current.setCompanyCode("KTH");
-        AccessContext.Current.setDepartmentCode("Platform");
-        AccessContext.Current.setUsername("debop");
+        AccessContext.Current.setCompanyCode(SampleData.getCompanyCode());
+        AccessContext.Current.setDepartmentCode(SampleData.getDepartmentCode());
+        AccessContext.Current.setUsername(SampleData.getUserName());
     }
 
     @AfterClass
     public static void afterClass() {
         closeUnitOfWorkTestContexts();
+    }
+
+    @Before
+    public void before() {
+        doBefore();
+    }
+
+    @After
+    public void after() {
+        doAfter();
+    }
+
+    protected void doBefore() {}
+
+    protected void doAfter() {}
+
+    @Getter(lazy = true)
+    private static final IHibernateRepositoryFactory factory = Springs.getBean(IHibernateRepositoryFactory.class);
+
+    public <T extends IStatefulEntity> IHibernateRepository<T> getRepository(Class<T> entityClass) {
+        return getFactory().getOrCreateHibernateRepository(entityClass);
     }
 }

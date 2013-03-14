@@ -4,12 +4,12 @@
             maxEntriesLocalHeap="100000"
             maxEntriesLocalDisk="10000000"
             maxBytesLocalDisk="20G"
-            eternal="false"
+            eternal="true"
             timeToIdleSeconds="600"
             timeToLiveSeconds="600"
             diskSpoolBufferSizeMB="30"
             diskExpiryThreadIntervalSeconds="120"
-            overflowToDisk="true"
+            overflowToDisk="false"
             memoryStoreEvictionPolicy="LRU"
-            statistics="false"/>
+            statistics="true"/>
 </ehcache>

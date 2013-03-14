@@ -22,6 +22,9 @@ import java.util.Set;
  */
 @Entity
 @Table(name = "ProductCode")
+@org.hibernate.annotations.Table(appliesTo = "ProductCode",
+                                 indexes = @org.hibernate.annotations.Index(name = "ix_product_code",
+                                                                            columnNames = {"ProductId", "CodeValue"}))
 @DynamicInsert
 @DynamicUpdate
 @Getter
@@ -46,12 +49,10 @@ public class ProductCode extends AccessEntityBase {
 
     @ManyToOne
     @JoinColumn(name = "ProductId", nullable = false)
-    @Index(name = "ix_productcode")
     @NaturalId
     private Product product;
 
     @Column(name = "CodeValue", nullable = false, length = 128)
-    @Index(name = "ix_productcode")
     @NaturalId
     private String code;
 
@@ -81,9 +82,9 @@ public class ProductCode extends AccessEntityBase {
     @Override
     protected Objects.ToStringHelper buildStringHelper() {
         return super.buildStringHelper()
-                .add("id", id)
-                .add("code", code)
-                .add("name", name)
-                .add("product", product);
+                    .add("id", id)
+                    .add("code", code)
+                    .add("name", name)
+                    .add("product", product);
     }
 }
