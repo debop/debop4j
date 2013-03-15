@@ -1,15 +1,14 @@
-<ehcache name="access-cache">
-    <diskStore path="ehcache"/>
+<ehcache xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="http://www.ehcache.org/ehcache.xsd"
+         updateCheck="false" monitoring="autodetect" dynamicConfig="false"
+         maxBytesLocalHeap="75%" name="debop4j-access-cache">
+
+    <diskStore path="java.io.tmpdir"/>
+
     <defaultCache
-            maxEntriesLocalHeap="100000"
-            maxEntriesLocalDisk="10000000"
-            maxBytesLocalDisk="20G"
             eternal="true"
-            timeToIdleSeconds="600"
-            timeToLiveSeconds="600"
-            diskSpoolBufferSizeMB="30"
-            diskExpiryThreadIntervalSeconds="120"
-            overflowToDisk="false"
-            memoryStoreEvictionPolicy="LRU"
-            statistics="true"/>
+            overflowToDisk="true"
+            maxEntriesLocalDisk="1000000000"
+            statistics="false"
+            />
 </ehcache>

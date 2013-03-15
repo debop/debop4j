@@ -4,6 +4,7 @@
         <artifactId>debop4j</artifactId>
         <groupId>debop4j</groupId>
         <version>1.0-SNAPSHOT</version>
+        <relativePath>../pom.xml</relativePath>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
@@ -12,21 +13,6 @@
 
     <name>debop4j-search</name>
     <url>http://maven.apache.org</url>
-
-    <properties>
-        <springframework.data.version>1.0.0.RELEASE</springframework.data.version>
-        <hibernate.version>4.1.9.Final</hibernate.version>
-        <hibernate.search.version>4.2.0.Final</hibernate.search.version>
-        <hibernate.validator.version>4.3.1.Final</hibernate.validator.version>
-        <hibernate.ogm.version>4.0.0.Beta2</hibernate.ogm.version>
-        <lucene.version>3.6.2</lucene.version>
-
-        <tomcat.jdbc.version>7.0.37</tomcat.jdbc.version>
-        <twitter4j.version>3.0.3</twitter4j.version>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-
-        <basedir>/User/debop/work/java/debop4j/debop4j-search</basedir>
-    </properties>
 
     <dependencies>
         <!-- 로컬 파일 링크 -->
@@ -148,6 +134,12 @@
                 </exclusion>
             </exclusions>
         </dependency>
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-testing</artifactId>
+            <version>${hibernate.version}</version>
+            <scope>test</scope>
+        </dependency>
 
         <dependency>
             <groupId>org.javassist</groupId>
@@ -158,7 +150,7 @@
         <dependency>
             <groupId>net.sf.ehcache</groupId>
             <artifactId>ehcache-core</artifactId>
-            <version>2.6.3</version>
+            <version>${ehcache.version}</version>
             <exclusions>
                 <exclusion>
                     <artifactId>slf4j-api</artifactId>
@@ -255,6 +247,16 @@
                     <groupId>net.sf.ehcache</groupId>
                 </exclusion>
             </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>org.hibernate.ogm</groupId>
+            <artifactId>hibernate-ogm-mongodb</artifactId>
+            <version>${hibernate.ogm.mongo.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.mongodb</groupId>
+            <artifactId>mongo-java-driver</artifactId>
+            <version>${mongo.driver.version}</version>
         </dependency>
         <dependency>
             <groupId>org.hibernate.jpql</groupId>

@@ -60,7 +60,7 @@ public abstract class HibernateConfigBase {
 
     protected DataSource buildEmbeddedDataSource() {
         EmbeddedDatabaseFactoryBean bean = new EmbeddedDatabaseFactoryBean();
-        bean.afterPropertiesSet();   // EmbeddedDatabaseFactoryBean가 FactoryBean이므로 필요합니다.
+        bean.afterPropertiesSet();
         return bean.getObject();
     }
 

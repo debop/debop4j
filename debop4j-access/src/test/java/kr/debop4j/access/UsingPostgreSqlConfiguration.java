@@ -3,6 +3,7 @@ package kr.debop4j.access;
 import kr.debop4j.access.model.organization.Company;
 import kr.debop4j.access.model.organization.CompanyCode;
 import kr.debop4j.access.model.product.Product;
+import kr.debop4j.access.model.workcalendar.WorkCalendar;
 import kr.debop4j.data.hibernate.springconfiguration.PostgreSqlConfigBase;
 import org.hibernate.cache.ehcache.SingletonEhCacheRegionFactory;
 import org.hibernate.cfg.Environment;
@@ -12,7 +13,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 import java.util.Properties;
 
 /**
- * kr.debop4j.access.UsingPostgreSqlConfiguration
+ * PostgreSQL DB를 사용하는 Hibernate 환경설정입니다.
  * User: sunghyouk.bae@gmail.com
  * Date: 13. 3. 7.
  */
@@ -31,7 +32,7 @@ public class UsingPostgreSqlConfiguration extends PostgreSqlConfigBase {
                 CompanyCode.class.getPackage().getName(),
                 Company.class.getPackage().getName(),
                 Product.class.getPackage().getName(),
-                kr.debop4j.access.model.workcalendar.WorkCalendar.class.getPackage().getName(),
+                WorkCalendar.class.getPackage().getName(),
         };
     }
 
@@ -46,10 +47,4 @@ public class UsingPostgreSqlConfiguration extends PostgreSqlConfigBase {
 
         return props;
     }
-
-//    @Override
-//    protected void setupSessionFactory(LocalSessionFactoryBean factoryBean) {
-//        super.setupSessionFactory(factoryBean);
-//        factoryBean.setNamingStrategy(new OracleNamingStrategy());
-//    }
 }

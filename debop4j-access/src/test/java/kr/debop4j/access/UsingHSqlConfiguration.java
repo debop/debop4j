@@ -12,7 +12,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 import java.util.Properties;
 
 /**
- * kr.debop4j.access.UsingHSqlConfiguration
+ * HSql 메모리 DB를 사용하는 Hibernate 환경 설정입니다.
  * User: sunghyouk.bae@gmail.com
  * Date: 13. 3. 7.
  */
@@ -41,10 +41,4 @@ public class UsingHSqlConfiguration extends HSqlConfigBase {
 
         return props;
     }
-
-//    @Override
-//    protected void setupSessionFactory(LocalSessionFactoryBean factoryBean) {
-//        super.setupSessionFactory(factoryBean);
-//        factoryBean.setNamingStrategy(new OracleNamingStrategy());
-//    }
 }

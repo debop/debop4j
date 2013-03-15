@@ -6,22 +6,12 @@
         <artifactId>debop4j</artifactId>
         <groupId>debop4j</groupId>
         <version>1.0-SNAPSHOT</version>
+        <relativePath>../pom.xml</relativePath>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>debop4j-data</artifactId>
     <packaging>jar</packaging>
-
-    <properties>
-        <springframework.data.version>1.0.0.RELEASE</springframework.data.version>
-        <hibernate.version>4.1.9.Final</hibernate.version>
-        <hibernate.validator.version>4.3.1.Final</hibernate.validator.version>
-        <tomcat.jdbc.version>7.0.37</tomcat.jdbc.version>
-        <twitter4j.version>3.0.3</twitter4j.version>
-        <bigmemory.version>3.7.1</bigmemory.version>
-        <ehcache.core.version>2.6.5</ehcache.core.version>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    </properties>
 
     <dependencies>
         <dependency>
@@ -139,7 +129,7 @@
         <dependency>
             <groupId>net.sf.ehcache</groupId>
             <artifactId>ehcache-core</artifactId>
-            <version>${ehcache.core.version}</version>
+            <version>${ehcache.version}</version>
             <exclusions>
                 <exclusion>
                     <artifactId>slf4j-api</artifactId>
