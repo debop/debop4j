@@ -83,6 +83,10 @@
                     <artifactId>jboss-logging</artifactId>
                     <groupId>org.jboss.logging</groupId>
                 </exclusion>
+                <exclusion>
+                    <artifactId>javassist</artifactId>
+                    <groupId>org.javassist</groupId>
+                </exclusion>
             </exclusions>
         </dependency>
         <dependency>
@@ -97,6 +101,10 @@
                 <exclusion>
                     <artifactId>jboss-logging</artifactId>
                     <groupId>org.jboss.logging</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>javassist</artifactId>
+                    <groupId>org.javassist</groupId>
                 </exclusion>
             </exclusions>
         </dependency>

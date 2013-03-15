@@ -178,7 +178,6 @@
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <version>0.11.6</version>
-            <scope>provided</scope>
         </dependency>
 
         <dependency>
@@ -191,11 +190,51 @@
             <artifactId>spring-context-support</artifactId>
             <version>${springframework.version}</version>
         </dependency>
+
         <dependency>
             <groupId>com.googlecode.ehcache-spring-annotations</groupId>
             <artifactId>ehcache-spring-annotations</artifactId>
             <version>${ehcache.spring.annotations}</version>
+            <exclusions>
+                <exclusion>
+                    <artifactId>guava</artifactId>
+                    <groupId>com.google.guava</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>org.ehcache</artifactId>
+                    <groupId>ehcache-core</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>slf4j-api</artifactId>
+                    <groupId>org.slf4j</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>spring-aop</artifactId>
+                    <groupId>org.springframework</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>spring-beans</artifactId>
+                    <groupId>org.springframework</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>spring-context</artifactId>
+                    <groupId>org.springframework</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>spring-core</artifactId>
+                    <groupId>org.springframework</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>spring-expression</artifactId>
+                    <groupId>org.springframework</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>ehcache-core</artifactId>
+                    <groupId>net.sf.ehcache</groupId>
+                </exclusion>
+            </exclusions>
         </dependency>
+
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-tx</artifactId>
@@ -244,6 +283,16 @@
             <artifactId>dbunit</artifactId>
             <version>2.4.9</version>
             <scope>test</scope>
+            <exclusions>
+                <exclusion>
+                    <artifactId>slf4j-api</artifactId>
+                    <groupId>org.slf4j</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>junit</artifactId>
+                    <groupId>junit</groupId>
+                </exclusion>
+            </exclusions>
         </dependency>
     </dependencies>
 
@@ -257,11 +306,6 @@
             <id>spring-release-data</id>
             <name>Spring RELEASE Repository</name>
             <url>http://repo.springsource.org/libs-release</url>
-        </repository>
-        <repository>
-            <id>bonecp-repo</id>
-            <name>BoneCP Repository</name>
-            <url>http://jolbox.com/bonecp/downloads/maven</url>
         </repository>
         <repository>
             <id>jboss-maven2-release-repository</id>

@@ -98,6 +98,10 @@
                     <artifactId>jboss-logging</artifactId>
                     <groupId>org.jboss.logging</groupId>
                 </exclusion>
+                <exclusion>
+                    <artifactId>javassist</artifactId>
+                    <groupId>org.javassist</groupId>
+                </exclusion>
             </exclusions>
         </dependency>
         <dependency>
@@ -112,6 +116,10 @@
                 <exclusion>
                     <artifactId>jboss-logging</artifactId>
                     <groupId>org.jboss.logging</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>javassist</artifactId>
+                    <groupId>org.javassist</groupId>
                 </exclusion>
             </exclusions>
         </dependency>
@@ -139,6 +147,16 @@
             <artifactId>hibernate-testing</artifactId>
             <version>${hibernate.version}</version>
             <scope>test</scope>
+            <exclusions>
+                <exclusion>
+                    <artifactId>jboss-logging</artifactId>
+                    <groupId>org.jboss.logging</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>junit</artifactId>
+                    <groupId>junit</groupId>
+                </exclusion>
+            </exclusions>
         </dependency>
 
         <dependency>
@@ -200,6 +218,10 @@
                     <artifactId>lucene-core</artifactId>
                     <groupId>org.apache.lucene</groupId>
                 </exclusion>
+                <exclusion>
+                    <artifactId>hibernate-core</artifactId>
+                    <groupId>org.hibernate</groupId>
+                </exclusion>
             </exclusions>
         </dependency>
 
@@ -234,6 +256,14 @@
                     <artifactId>hibernate-search-engine</artifactId>
                     <groupId>org.hibernate</groupId>
                 </exclusion>
+                <exclusion>
+                    <artifactId>hibernate-core</artifactId>
+                    <groupId>org.hibernate</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>hibernate-entitymanager</artifactId>
+                    <groupId>org.hibernate</groupId>
+                </exclusion>
             </exclusions>
         </dependency>
 
@@ -246,12 +276,30 @@
                     <artifactId>ehcache-core</artifactId>
                     <groupId>net.sf.ehcache</groupId>
                 </exclusion>
+                <exclusion>
+                    <artifactId>hibernate-entitymanager</artifactId>
+                    <groupId>org.hibernate</groupId>
+                </exclusion>
             </exclusions>
         </dependency>
         <dependency>
             <groupId>org.hibernate.ogm</groupId>
             <artifactId>hibernate-ogm-mongodb</artifactId>
             <version>${hibernate.ogm.mongo.version}</version>
+            <exclusions>
+                <exclusion>
+                    <artifactId>hibernate-ogm-core</artifactId>
+                    <groupId>org.hibernate.ogm</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>mongo-java-driver</artifactId>
+                    <groupId>org.mongodb</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>hibernate-entitymanager</artifactId>
+                    <groupId>org.hibernate</groupId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>org.mongodb</groupId>
@@ -305,7 +353,6 @@
             <version>1.4</version>
             <scope>test</scope>
         </dependency>
-
 
         <dependency>
             <groupId>org.hsqldb</groupId>
