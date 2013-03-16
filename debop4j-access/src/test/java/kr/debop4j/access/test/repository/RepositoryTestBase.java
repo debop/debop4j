@@ -1,10 +1,10 @@
-package kr.debop4j.access.repository;
+package kr.debop4j.access.test.repository;
 
-import kr.debop4j.access.AccessTestBase;
+import kr.debop4j.access.test.AccessTestBase;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * kr.debop4j.access.repository.RepositoryTestBase
+ * kr.debop4j.access.test.repository.RepositoryTestBase
  * User: sunghyouk.bae@gmail.com
  * Date: 13. 3. 12.
  */

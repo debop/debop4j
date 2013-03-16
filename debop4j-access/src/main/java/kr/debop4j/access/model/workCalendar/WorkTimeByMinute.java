@@ -55,7 +55,7 @@ public class WorkTimeByMinute extends WorkTimeByTimeBase {
     @Override
     protected Objects.ToStringHelper buildStringHelper() {
         return super.buildStringHelper()
-                    .add("id", id)
-                    .add("workHour", getWorkMinute());
+                .add("id", id)
+                .add("workHour", getWorkMinute());
     }
 }

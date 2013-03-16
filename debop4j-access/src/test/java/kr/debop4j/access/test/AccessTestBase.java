@@ -1,5 +1,6 @@
-package kr.debop4j.access;
+package kr.debop4j.access.test;
 
+import kr.debop4j.access.AccessContext;
 import kr.debop4j.core.spring.Springs;
 import kr.debop4j.data.hibernate.forTesting.DatabaseTestFixtureBase;
 import kr.debop4j.data.hibernate.repository.IHibernateRepository;

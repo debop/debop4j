@@ -1,7 +1,7 @@
-package kr.debop4j.access.setup;
+package kr.debop4j.access.test.setup;
 
-import kr.debop4j.access.AppConfig;
 import kr.debop4j.access.repository.organization.CompanyRepository;
+import kr.debop4j.access.test.AppConfig;
 import kr.debop4j.core.spring.Springs;
 import kr.debop4j.data.hibernate.forTesting.DatabaseTestFixtureBase;
 import lombok.extern.slf4j.Slf4j;
@@ -11,7 +11,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 /**
- * kr.debop4j.access.setup.SpringConfigTest
+ * kr.debop4j.access.test.setup.SpringConfigTest
  * User: sunghyouk.bae@gmail.com
  * Date: 13. 3. 12.
  */

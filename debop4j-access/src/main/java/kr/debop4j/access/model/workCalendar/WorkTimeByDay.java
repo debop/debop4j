@@ -57,8 +57,8 @@ public class WorkTimeByDay extends WorkTimeByTimeBase {
     @Override
     protected Objects.ToStringHelper buildStringHelper() {
         return super.buildStringHelper()
-                    .add("id", id)
-                    .add("dayOfWeek", dayOfWeek)
-                    .add("workDay", getWorkDay());
+                .add("id", id)
+                .add("dayOfWeek", dayOfWeek)
+                .add("workDay", getWorkDay());
     }
 }

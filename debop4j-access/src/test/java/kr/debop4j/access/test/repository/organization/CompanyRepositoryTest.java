@@ -1,8 +1,9 @@
-package kr.debop4j.access.repository.organization;
+package kr.debop4j.access.test.repository.organization;
 
 import com.google.common.collect.Iterables;
 import kr.debop4j.access.model.organization.Company;
-import kr.debop4j.access.repository.RepositoryTestBase;
+import kr.debop4j.access.repository.organization.CompanyRepository;
+import kr.debop4j.access.test.repository.RepositoryTestBase;
 import kr.debop4j.core.spring.Springs;
 import kr.debop4j.core.tools.StringTool;
 import kr.debop4j.data.hibernate.unitofwork.UnitOfWorks;
@@ -14,7 +15,7 @@ import org.junit.Test;
 import java.util.Locale;
 
 /**
- * kr.debop4j.access.repository.organization.CompanyRepositoryTest
+ * kr.debop4j.access.test.repository.organization.CompanyRepositoryTest
  * User: sunghyouk.bae@gmail.com
  * Date: 13. 3. 12.
  */
@@ -89,7 +90,7 @@ public class CompanyRepositoryTest extends RepositoryTestBase {
         Assert.assertEquals(2, loaded.getLocaleMap().size());
 
         for (Company.CompanyLocale companyLocale : loaded.getLocaleMap().values()) {
-            log.debug("CompanyLocale=[{}]", companyLocale);
+            CompanyRepositoryTest.log.debug("CompanyLocale=[{}]", companyLocale);
         }
 
         getRepository().delete(loaded);

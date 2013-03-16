@@ -1,4 +1,4 @@
-package kr.debop4j.access;
+package kr.debop4j.access.test;
 
 import com.google.common.collect.Lists;
 import lombok.Getter;
@@ -6,7 +6,7 @@ import lombok.Getter;
 import java.util.List;
 
 /**
- * kr.debop4j.access.SampleData
+ * kr.debop4j.access.test.SampleData
  * User: sunghyouk.bae@gmail.com
  * Date: 13. 3. 14 오전 10:47
  */
