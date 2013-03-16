@@ -59,9 +59,6 @@ public abstract class HibernateConfigBase {
 
     protected DataSource buildEmbeddedDataSource() {
         return JdbcTool.getEmbeddedHsqlDataSource();
-//        EmbeddedDatabaseFactoryBean bean = new EmbeddedDatabaseFactoryBean();
-//        bean.afterPropertiesSet();
-//        return bean.getObject();
     }
 
     @Bean(destroyMethod = "close")
@@ -115,20 +112,10 @@ public abstract class HibernateConfigBase {
     public MultiInterceptor hibernateInterceptor() {
         MultiInterceptor interceptor = new MultiInterceptor();
 
-        interceptor.getInterceptors().add(statuefulEntityInterceptor());
-        interceptor.getInterceptors().add(updateTimestampedInterceptor());
+        interceptor.getInterceptors().add(new StatefulEntityInterceptor());
+        interceptor.getInterceptors().add(new UpdateTimestampedInterceptor());
 
         return interceptor;
-    }
-
-    @Bean
-    public StatefulEntityInterceptor statuefulEntityInterceptor() {
-        return new StatefulEntityInterceptor();
-    }
-
-    @Bean
-    public UpdateTimestampedInterceptor updateTimestampedInterceptor() {
-        return new UpdateTimestampedInterceptor();
     }
 
     @Bean

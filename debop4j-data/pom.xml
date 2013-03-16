@@ -178,6 +178,12 @@
             <version>${tomcat.jdbc.version}</version>
         </dependency>
 
+        <dependency>
+            <groupId>com.jolbox</groupId>
+            <artifactId>bonecp</artifactId>
+            <version>0.7.1.RELEASE</version>
+        </dependency>
+
         <!-- dbcp는 테스트용으로 사용합니다. BoneCP가 불안할 때 dbcp를 사용하세요 -->
         <dependency>
             <groupId>commons-dbcp</groupId>
