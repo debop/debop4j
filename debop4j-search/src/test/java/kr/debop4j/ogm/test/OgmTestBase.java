@@ -31,11 +31,13 @@ public abstract class OgmTestBase {
 
     @BeforeClass
     public static void beforeClass() {
+        Springs.reset();
         Springs.initByAnnotatedClasses(AppConfig.class);
     }
 
     @AfterClass
     public static void afterClass() {
+        Springs.reset();
     }
 
     @Before

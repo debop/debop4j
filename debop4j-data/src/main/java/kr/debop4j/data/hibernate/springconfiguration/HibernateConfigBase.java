@@ -15,7 +15,6 @@ import org.hibernate.ConnectionReleaseMode;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Environment;
 import org.springframework.context.annotation.Bean;
-import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseFactoryBean;
 import org.springframework.orm.hibernate4.HibernateTransactionManager;
 import org.springframework.orm.hibernate4.LocalSessionFactoryBean;
 
@@ -59,9 +58,10 @@ public abstract class HibernateConfigBase {
     }
 
     protected DataSource buildEmbeddedDataSource() {
-        EmbeddedDatabaseFactoryBean bean = new EmbeddedDatabaseFactoryBean();
-        bean.afterPropertiesSet();
-        return bean.getObject();
+        return JdbcTool.getEmbeddedHsqlDataSource();
+//        EmbeddedDatabaseFactoryBean bean = new EmbeddedDatabaseFactoryBean();
+//        bean.afterPropertiesSet();
+//        return bean.getObject();
     }
 
     @Bean(destroyMethod = "close")

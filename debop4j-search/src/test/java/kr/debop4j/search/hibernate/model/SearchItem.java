@@ -23,6 +23,8 @@ import javax.persistence.*;
 @Setter
 public class SearchItem extends AnnotatedEntityBase {
 
+    private static final long serialVersionUID = -4795821070108007345L;
+
     @Id
     @GeneratedValue
     @Column(name = "SEARCH_ITEM_ID")

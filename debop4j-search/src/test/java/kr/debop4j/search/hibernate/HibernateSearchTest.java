@@ -1,9 +1,7 @@
 package kr.debop4j.search.hibernate;
 
 import kr.debop4j.core.spring.Springs;
-import kr.debop4j.search.AppConfig;
 import kr.debop4j.search.hibernate.model.SearchItem;
-import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.queryParser.MultiFieldQueryParser;
@@ -28,21 +26,19 @@ import java.util.List;
  */
 @Slf4j
 public class HibernateSearchTest {
+
     @BeforeClass
     public static void beforeClass() {
-        if (Springs.isNotInitialized())
-            Springs.initByAnnotatedClasses(AppConfig.class);
+        Springs.reset();
+        Springs.initByAnnotatedClasses(kr.debop4j.search.AppConfig.class);
     }
-
-    @Getter(lazy = true)
-    private final SessionFactory sessionFactory = Springs.getFirstBeanByType(SessionFactory.class);
 
     private Session session;
     private FullTextSession fullTextSession;
 
     @Before
     public void before() {
-        session = getSessionFactory().openSession();
+        session = Springs.getBean(SessionFactory.class).openSession();
         fullTextSession = Search.getFullTextSession(session);
     }
 
@@ -56,6 +52,7 @@ public class HibernateSearchTest {
             "UnitOfWorkInterceptor 는 사용자 요청이 있으면 Start 하고, 요청 작업이 완료되면 Close 하도록 합니다. 이는 Hibernate 를 이용하여 Unit Of Work 패턴을 구현하여, 하나의 요청 중에 모든 작업을 하나의 Transaction으로 묶을 수 있고, 웹 개발자에게는 Unit Of Work 자체를 사용하기만 하면 되고, 실제 Lifecycle 은 Spring MVC 에서 관리하도록 하기 위해서입니다.";
 
     @Test
+    @SuppressWarnings("unchecked")
     public void firstSearch() {
 
         SearchItem item = new SearchItem();
@@ -75,11 +72,15 @@ public class HibernateSearchTest {
         //QueryParser parser = new QueryParser(Version.LUCENE_36, "title", new StandardAnalyzer(Version.LUCENE_36));
         try {
             Query luceneQuery = parser.parse("description:Hibernate");
-            List<SearchItem> founds = (List<SearchItem>) fullTextSession.createFullTextQuery(luceneQuery, SearchItem.class).list();
+            List<SearchItem> founds =
+                    (List<SearchItem>) fullTextSession
+                            .createFullTextQuery(luceneQuery,
+                                                 kr.debop4j.search.hibernate.model.SearchItem.class)
+                            .list();
             for (SearchItem loaded : founds)
                 System.out.println("Title: " + loaded.getTitle());
         } catch (ParseException e) {
-            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+            log.error("예외가 발생했습니다.", e);
         }
     }
 }
