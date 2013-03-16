@@ -41,6 +41,9 @@ public class HibernateConfigTest {
         Session session = sessionFactory.getCurrentSession();
         Query query = session.createQuery("from Account a where a.id=:id").setLong("id", 1L);
         Account a = (Account) query.uniqueResult();
+        Assert.assertNotNull(a);
         a.setName("foo");
+        session.saveOrUpdate(a);
+        session.flush();
     }
 }

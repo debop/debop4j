@@ -16,5 +16,5 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @Import({kr.debop4j.data.DatabaseConfig.class})
 public class AppConfig {
 
-
+    // 추가해야 할 것
 }

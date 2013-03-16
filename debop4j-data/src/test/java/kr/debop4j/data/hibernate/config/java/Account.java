@@ -22,7 +22,7 @@ public class Account extends AnnotatedEntityBase {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Setter(AccessLevel.PROTECTED)
+    @Setter(AccessLevel.PRIVATE)
     private long id;
 
     private double cashBalance;
