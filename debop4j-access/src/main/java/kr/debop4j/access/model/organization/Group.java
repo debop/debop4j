@@ -3,7 +3,7 @@ package kr.debop4j.access.model.organization;
 import com.google.common.base.Objects;
 import com.google.common.collect.Sets;
 import kr.debop4j.access.model.AccessEntityBase;
-import kr.debop4j.access.model.ICodeBaseEntity;
+import kr.debop4j.access.model.IActor;
 import kr.debop4j.core.Guard;
 import kr.debop4j.core.tools.HashTool;
 import lombok.AccessLevel;
@@ -36,7 +36,7 @@ import java.util.Set;
 @DynamicUpdate
 @Getter
 @Setter
-public class Group extends AccessEntityBase implements ICodeBaseEntity {
+public class Group extends AccessEntityBase implements IActor {
 
     private static final long serialVersionUID = 514703125940494102L;
 

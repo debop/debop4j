@@ -20,6 +20,8 @@ import java.util.Set;
 public abstract class AnnotatedLocaleEntityBase<TLocaleValue extends ILocaleValue>
         extends AnnotatedEntityBase implements ILocaleEntity<TLocaleValue> {
 
+    private static final long serialVersionUID = -8011956015193946896L;
+
     abstract public Map<Locale, TLocaleValue> getLocaleMap();
 
     @Transient

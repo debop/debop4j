@@ -2,6 +2,7 @@ package kr.debop4j.access.model.product;
 
 import com.google.common.base.Objects;
 import kr.debop4j.access.model.AccessEntityBase;
+import kr.debop4j.access.model.IActor;
 import kr.debop4j.access.model.organization.Company;
 import kr.debop4j.access.model.organization.Department;
 import kr.debop4j.access.model.organization.Employee;
@@ -34,7 +35,7 @@ import javax.persistence.*;
 @DynamicUpdate
 @Getter
 @Setter
-public class User extends AccessEntityBase {
+public class User extends AccessEntityBase implements IActor {
 
     private static final long serialVersionUID = 7743783792450069754L;
 
@@ -100,6 +101,16 @@ public class User extends AccessEntityBase {
 
     @Column(length = 255)
     private String confirmAnswer;
+
+    @Transient
+    public String getCode() {
+        return username;
+    }
+
+    @Transient
+    public String getName() {
+        return nickname;
+    }
 
     @Override
     public int hashCode() {

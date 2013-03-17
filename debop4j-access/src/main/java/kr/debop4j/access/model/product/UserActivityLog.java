@@ -31,17 +31,18 @@ public class UserActivityLog extends AnnotatedEntityBase {
 
     public UserActivityLog() {}
 
-    public UserActivityLog(String activityKind, Product product, User user) {
+    public UserActivityLog(String activityKind, User user) {
 
         this.activityKind = activityKind;
         this.activityTime = new Date();
 
-        if (product != null) {
-            this.productCode = product.getCode();
-            this.productName = product.getName();
-        }
         if (user != null) {
             this.username = user.getUsername();
+
+            if (user.getProduct() != null) {
+                this.productCode = user.getProduct().getCode();
+                this.productName = user.getProduct().getName();
+            }
             Employee emp = user.getEmployee();
             if (emp != null) {
                 this.employeeCode = emp.getCode();

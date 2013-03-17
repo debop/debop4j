@@ -3,7 +3,7 @@ package kr.debop4j.access.model.organization;
 import com.google.common.base.Objects;
 import com.google.common.collect.Maps;
 import kr.debop4j.access.model.AccessLocaledEntityBase;
-import kr.debop4j.access.model.ICodeBaseEntity;
+import kr.debop4j.access.model.IActor;
 import kr.debop4j.core.Guard;
 import kr.debop4j.core.tools.HashTool;
 import kr.debop4j.data.model.ILocaleValue;
@@ -35,7 +35,7 @@ import java.util.Map;
 @DynamicUpdate
 @Getter
 @Setter
-public class Company extends AccessLocaledEntityBase<Company.CompanyLocale> implements ICodeBaseEntity {
+public class Company extends AccessLocaledEntityBase<Company.CompanyLocale> implements IActor {
 
     private static final long serialVersionUID = -7337020664879632947L;
 

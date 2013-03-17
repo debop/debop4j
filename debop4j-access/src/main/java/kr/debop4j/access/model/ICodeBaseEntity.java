@@ -13,6 +13,4 @@ public interface ICodeBaseEntity {
      * @return
      */
     String getCode();
-
-    void setCode(String code);
 }

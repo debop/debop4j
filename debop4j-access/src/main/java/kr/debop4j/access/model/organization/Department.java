@@ -2,7 +2,7 @@ package kr.debop4j.access.model.organization;
 
 import com.google.common.base.Objects;
 import com.google.common.collect.Sets;
-import kr.debop4j.access.model.ICodeBaseEntity;
+import kr.debop4j.access.model.IActor;
 import kr.debop4j.core.Guard;
 import kr.debop4j.core.tools.HashTool;
 import kr.debop4j.data.model.AnnotatedTreeEntityBase;
@@ -34,8 +34,7 @@ import java.util.Set;
 @DynamicUpdate
 @Getter
 @Setter
-public class Department extends AnnotatedTreeEntityBase<Department>
-        implements ICodeBaseEntity, IUpdateTimestampedEntity {
+public class Department extends AnnotatedTreeEntityBase<Department> implements IActor, IUpdateTimestampedEntity {
 
     private static final long serialVersionUID = 512869366829603899L;
 

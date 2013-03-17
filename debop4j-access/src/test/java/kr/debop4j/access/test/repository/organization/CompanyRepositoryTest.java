@@ -72,7 +72,7 @@ public class CompanyRepositoryTest extends RepositoryTestBase {
     }
 
     @Test
-    public void localeTest() {
+    public void localeTest() throws Exception {
         Company company = createCompany();
 
         company.addLocaleValue(Locale.KOREA,
