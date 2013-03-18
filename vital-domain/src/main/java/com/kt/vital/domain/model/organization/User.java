@@ -33,6 +33,7 @@ public class User extends VitalEntityBase {
 
         this.username = username;
         this.passwd = passwd;
+        this.enabled = true;
     }
 
     @Id

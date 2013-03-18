@@ -17,8 +17,6 @@ import javax.persistence.PostPersist;
 @DynamicUpdate
 public abstract class AnnotatedEntityBase extends StatefulEntityBase {
 
-    private static final long serialVersionUID = -9112420541378011322L;
-
     @PostPersist
     public final void postPersist() {
         onPersist();

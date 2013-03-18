@@ -32,6 +32,7 @@ public class Authority extends VitalEntityBase {
 
         this.name = name;
         this.description = description;
+        this.enabled = true;
     }
 
     @Id

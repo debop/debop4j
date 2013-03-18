@@ -10,8 +10,6 @@ import kr.debop4j.core.ValueObjectBase;
  */
 public abstract class StatefulEntityBase extends ValueObjectBase implements IStatefulEntity {
 
-    private static final long serialVersionUID = -2050040672948447046L;
-
     private boolean persisted = false;
 
     @Override
@@ -37,6 +35,6 @@ public abstract class StatefulEntityBase extends ValueObjectBase implements ISta
     @Override
     protected Objects.ToStringHelper buildStringHelper() {
         return super.buildStringHelper()
-                .add("persisted", persisted);
+                    .add("persisted", persisted);
     }
 }

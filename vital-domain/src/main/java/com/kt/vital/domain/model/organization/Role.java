@@ -2,6 +2,7 @@ package com.kt.vital.domain.model.organization;
 
 import com.google.common.base.Objects;
 import com.kt.vital.domain.model.VitalEntityBase;
+import kr.debop4j.core.Guard;
 import kr.debop4j.core.tools.HashTool;
 import lombok.Getter;
 import lombok.Setter;
@@ -24,6 +25,16 @@ import javax.persistence.*;
 @Setter
 public class Role extends VitalEntityBase {
 
+    protected Role() {}
+
+    public Role(String code, String name) {
+        Guard.shouldNotBeEmpty(code, "code");
+        Guard.shouldNotBeEmpty(name, "name");
+
+        this.code = code;
+        this.name = name;
+    }
+
 
     @Id
     @GeneratedValue
@@ -39,8 +50,8 @@ public class Role extends VitalEntityBase {
     @Index(name = "ix_role_code")
     private String name;
 
-    @Column(name = "RoleCaption", nullable = false, length = 500)
-    private String caption;
+    @Column(name = "RoleDesc", nullable = false, length = 1024)
+    private String description;
 
 
     @Override
@@ -56,6 +67,6 @@ public class Role extends VitalEntityBase {
                     .add("id", id)
                     .add("code", code)
                     .add("name", name)
-                    .add("caption", caption);
+                    .add("description", description);
     }
 }
