@@ -1,16 +1,18 @@
-package com.kt.vital.domain.model.organization;
+package com.kt.vital.domain.model;
 
 import com.google.common.base.Objects;
-import com.kt.vital.domain.model.VitalEntityBase;
+import com.google.common.collect.Sets;
 import kr.debop4j.core.Guard;
 import kr.debop4j.core.tools.HashTool;
 import lombok.Getter;
 import lombok.Setter;
-import org.hibernate.annotations.DynamicInsert;
-import org.hibernate.annotations.DynamicUpdate;
-import org.hibernate.annotations.Index;
+import org.hibernate.annotations.*;
 
+import javax.persistence.CascadeType;
 import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.Table;
+import java.util.Set;
 
 /**
  * 시스템을 사용하는 사람들에 대한 역할을 표현합니다. - 관리자, 일반 사용자 등
@@ -45,13 +47,19 @@ public class Role extends VitalEntityBase {
     @Index(name = "ix_role_code")
     private String code;
 
-
     @Column(name = "RoleName", nullable = false, length = 50)
     @Index(name = "ix_role_code")
     private String name;
 
     @Column(name = "RoleDesc", nullable = false, length = 1024)
     private String description;
+
+    @ManyToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER)
+    @Fetch(FetchMode.SELECT)
+    @JoinTable(name = "RoleAuthority",
+               joinColumns = {@JoinColumn(name = "RoleId")},
+               inverseJoinColumns = {@JoinColumn(name = "AuthId")})
+    private Set<Authority> authorities = Sets.newHashSet();
 
 
     @Override
@@ -64,9 +72,9 @@ public class Role extends VitalEntityBase {
     @Override
     protected Objects.ToStringHelper buildStringHelper() {
         return super.buildStringHelper()
-                    .add("id", id)
-                    .add("code", code)
-                    .add("name", name)
-                    .add("description", description);
+                .add("id", id)
+                .add("code", code)
+                .add("name", name)
+                .add("description", description);
     }
 }

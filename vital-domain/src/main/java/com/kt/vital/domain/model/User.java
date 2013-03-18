@@ -1,7 +1,6 @@
-package com.kt.vital.domain.model.organization;
+package com.kt.vital.domain.model;
 
 import com.google.common.base.Objects;
-import com.kt.vital.domain.model.VitalEntityBase;
 import kr.debop4j.core.Guard;
 import kr.debop4j.core.tools.HashTool;
 import lombok.Getter;
@@ -11,14 +10,15 @@ import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.Index;
 
 import javax.persistence.*;
+import java.util.Date;
 
 /**
- * com.kt.vital.domain.model.organization.User
+ * 사용자 정보
  * User: sunghyouk.bae@gmail.com
  * Date: 13. 3. 18 오후 3:58
  */
 @Entity
-@Table(name = "User")
+@Table(name = "Users")
 @DynamicInsert
 @DynamicUpdate
 @Getter
@@ -38,7 +38,7 @@ public class User extends VitalEntityBase {
 
     @Id
     @GeneratedValue
-    @Column(name = "UserId", nullable = false)
+    @Column(name = "UserId")
     private Long id;
 
     /**
@@ -84,7 +84,7 @@ public class User extends VitalEntityBase {
     private String mobile;
 
     @Temporal(TemporalType.TIMESTAMP)
-    private String enabledTime;
+    private Date enabledTime;
 
     @Override
     public int hashCode() {
@@ -96,10 +96,10 @@ public class User extends VitalEntityBase {
     @Override
     protected Objects.ToStringHelper buildStringHelper() {
         return super.buildStringHelper()
-                    .add("id", id)
-                    .add("username", username)
-                    .add("name", name)
-                    .add("email", email)
-                    .add("phone", phone);
+                .add("id", id)
+                .add("username", username)
+                .add("name", name)
+                .add("email", email)
+                .add("phone", phone);
     }
 }

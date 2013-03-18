@@ -1,4 +1,4 @@
-package com.kt.vital.domain.model.organization;
+package com.kt.vital.domain.model;
 
 import com.google.common.base.Objects;
 import com.google.common.collect.Sets;
@@ -95,8 +95,8 @@ public class Department extends AnnotatedTreeEntityBase<Department> implements I
     @Override
     protected Objects.ToStringHelper buildStringHelper() {
         return super.buildStringHelper()
-                    .add("id", id)
-                    .add("code", code)
-                    .add("name", name);
+                .add("id", id)
+                .add("code", code)
+                .add("name", name);
     }
 }

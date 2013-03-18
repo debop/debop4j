@@ -1,9 +1,6 @@
-package com.kt.vital.domain.model.history;
+package com.kt.vital.domain.model;
 
 import com.google.common.base.Objects;
-import com.kt.vital.domain.model.ActionType;
-import com.kt.vital.domain.model.VitalEntityBase;
-import com.kt.vital.domain.model.organization.User;
 import kr.debop4j.core.Guard;
 import kr.debop4j.core.tools.HashTool;
 import lombok.Getter;
@@ -15,17 +12,19 @@ import javax.persistence.*;
 import java.util.Date;
 
 /**
- * com.kt.vital.domain.model.history.UserHistory
+ * com.kt.vital.domain.model.UserHistory
  * User: sunghyouk.bae@gmail.com
  * Date: 13. 3. 18 오후 4:53
  */
 @Entity
-@Table(name = "ExportHistory")
+@Table(name = "UserHistory")
 @DynamicInsert
 @DynamicUpdate
 @Getter
 @Setter
 public class UserHistory extends VitalEntityBase {
+
+    private static final long serialVersionUID = 2845660115811984905L;
 
     protected UserHistory() { }
 
@@ -107,11 +106,11 @@ public class UserHistory extends VitalEntityBase {
     @Override
     protected Objects.ToStringHelper buildStringHelper() {
         return super.buildStringHelper()
-                    .add("id", id)
-                    .add("departmentCode", departmentCode)
-                    .add("username", username)
-                    .add("actionType", actionType)
-                    .add("actionTime", actionTime)
-                    .add("clientAddress", clientAddress);
+                .add("id", id)
+                .add("departmentCode", departmentCode)
+                .add("username", username)
+                .add("actionType", actionType)
+                .add("actionTime", actionTime)
+                .add("clientAddress", clientAddress);
     }
 }

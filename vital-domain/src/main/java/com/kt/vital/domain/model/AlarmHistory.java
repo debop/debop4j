@@ -1,14 +1,12 @@
-package com.kt.vital.domain.model.system;
+package com.kt.vital.domain.model;
 
 import com.google.common.base.Objects;
-import com.kt.vital.domain.model.VitalEntityBase;
 import kr.debop4j.core.Guard;
 import kr.debop4j.core.tools.HashTool;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
-import org.joda.time.DateTime;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -87,7 +85,7 @@ public class AlarmHistory extends VitalEntityBase {
      * 알람 확인 시간
      */
     @Temporal(TemporalType.TIMESTAMP)
-    private DateTime alarmTakenTime;
+    private Date alarmTakenTime;
 
     @Override
     public int hashCode() {
@@ -99,9 +97,9 @@ public class AlarmHistory extends VitalEntityBase {
     @Override
     protected Objects.ToStringHelper buildStringHelper() {
         return super.buildStringHelper()
-                    .add("id", id)
-                    .add("username", username)
-                    .add("alarmType", alarmType)
-                    .add("levelType", levelType);
+                .add("id", id)
+                .add("username", username)
+                .add("alarmType", alarmType)
+                .add("levelType", levelType);
     }
 }

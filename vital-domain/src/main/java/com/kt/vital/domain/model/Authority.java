@@ -1,7 +1,6 @@
-package com.kt.vital.domain.model.organization;
+package com.kt.vital.domain.model;
 
 import com.google.common.base.Objects;
-import com.kt.vital.domain.model.VitalEntityBase;
 import kr.debop4j.core.Guard;
 import kr.debop4j.core.tools.HashTool;
 import lombok.Getter;
@@ -66,9 +65,9 @@ public class Authority extends VitalEntityBase {
     @Override
     protected Objects.ToStringHelper buildStringHelper() {
         return super.buildStringHelper()
-                    .add("id", id)
-                    .add("name", name)
-                    .add("enabled", enabled)
-                    .add("desc", description);
+                .add("id", id)
+                .add("name", name)
+                .add("enabled", enabled)
+                .add("desc", description);
     }
 }

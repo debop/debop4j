@@ -1,7 +1,7 @@
-package com.kt.vital.domain.model.system;
+package com.kt.vital.domain.model;
 
 /**
- * com.kt.vital.domain.model.system.AlarmType
+ * com.kt.vital.domain.model.AlarmType
  * User: sunghyouk.bae@gmail.com
  * Date: 13. 3. 18 오후 5:21
  */
