@@ -21,6 +21,7 @@
         <module>debop4j-web</module>
         <module>debop4j-web-example</module>
         <module>debop4j-graph</module>
+        <module>vital-domain</module>
     </modules>
 
     <properties>
