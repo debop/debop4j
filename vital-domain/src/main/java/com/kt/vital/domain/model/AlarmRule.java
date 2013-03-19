@@ -5,6 +5,7 @@ import kr.debop4j.core.Guard;
 import kr.debop4j.core.tools.HashTool;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.Index;
@@ -18,6 +19,7 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name = "AlarmRule")
+@org.hibernate.annotations.Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 @DynamicInsert
 @DynamicUpdate
 @Getter
@@ -89,11 +91,11 @@ public class AlarmRule extends VitalEntityBase {
     @Override
     protected Objects.ToStringHelper buildStringHelper() {
         return super.buildStringHelper()
-                .add("id", id)
-                .add("username", user.getUsername())
-                .add("enabled", enabled)
-                .add("alarmType", alarmType)
-                .add("frequencyGroup", frequencyGroup)
-                .add("levelType", levelType);
+                    .add("id", id)
+                    .add("username", user.getUsername())
+                    .add("enabled", enabled)
+                    .add("alarmType", alarmType)
+                    .add("frequencyGroup", frequencyGroup)
+                    .add("levelType", levelType);
     }
 }

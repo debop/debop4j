@@ -6,6 +6,7 @@ import kr.debop4j.core.Guard;
 import kr.debop4j.core.tools.HashTool;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.*;
 
 import javax.persistence.CascadeType;
@@ -21,11 +22,14 @@ import java.util.Set;
  */
 @Entity
 @Table(name = "Role")
+@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 @DynamicInsert
 @DynamicUpdate
 @Getter
 @Setter
 public class Role extends VitalEntityBase {
+
+    private static final long serialVersionUID = -6008160718626429047L;
 
     protected Role() {}
 
@@ -51,6 +55,8 @@ public class Role extends VitalEntityBase {
     @Index(name = "ix_role_code")
     private String name;
 
+    private Boolean enabled;
+
     @Column(name = "RoleDesc", nullable = false, length = 1024)
     private String description;
 
@@ -72,9 +78,10 @@ public class Role extends VitalEntityBase {
     @Override
     protected Objects.ToStringHelper buildStringHelper() {
         return super.buildStringHelper()
-                .add("id", id)
-                .add("code", code)
-                .add("name", name)
-                .add("description", description);
+                    .add("id", id)
+                    .add("code", code)
+                    .add("name", name)
+                    .add("enabled", enabled)
+                    .add("description", description);
     }
 }

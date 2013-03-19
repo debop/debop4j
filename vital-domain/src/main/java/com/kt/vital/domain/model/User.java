@@ -5,6 +5,7 @@ import kr.debop4j.core.Guard;
 import kr.debop4j.core.tools.HashTool;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.Index;
@@ -13,17 +14,20 @@ import javax.persistence.*;
 import java.util.Date;
 
 /**
- * 사용자 정보
+ * Vital 시스템 사용자 정보 (VoC 담당 직원 정보는 {@link Employee} 입니다)
  * User: sunghyouk.bae@gmail.com
  * Date: 13. 3. 18 오후 3:58
  */
 @Entity
 @Table(name = "Users")
+@org.hibernate.annotations.Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 @DynamicInsert
 @DynamicUpdate
 @Getter
 @Setter
 public class User extends VitalEntityBase {
+
+    private static final long serialVersionUID = -4012904720900704159L;
 
     protected User() {}
 
@@ -58,7 +62,7 @@ public class User extends VitalEntityBase {
     @JoinColumn(name = "RoleId")
     private Role role;
 
-    @ManyToOne(cascade = {CascadeType.PERSIST})
+    @ManyToOne(cascade = {CascadeType.PERSIST}, fetch = FetchType.LAZY)
     @JoinColumn(name = "DeptId")
     private Department department;
 
@@ -96,10 +100,10 @@ public class User extends VitalEntityBase {
     @Override
     protected Objects.ToStringHelper buildStringHelper() {
         return super.buildStringHelper()
-                .add("id", id)
-                .add("username", username)
-                .add("name", name)
-                .add("email", email)
-                .add("phone", phone);
+                    .add("id", id)
+                    .add("username", username)
+                    .add("name", name)
+                    .add("email", email)
+                    .add("phone", phone);
     }
 }

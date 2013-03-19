@@ -12,27 +12,27 @@ import javax.persistence.*;
 import java.util.Date;
 
 /**
- * com.kt.vital.domain.model.UserHistory
+ * com.kt.vital.domain.model.UserActionHistory
  * User: sunghyouk.bae@gmail.com
  * Date: 13. 3. 18 오후 4:53
  */
 @Entity
-@Table(name = "UserHistory")
+@Table(name = "UserActionHistory")
 @DynamicInsert
 @DynamicUpdate
 @Getter
 @Setter
-public class UserHistory extends VitalEntityBase {
+public class UserActionHistory extends VitalEntityBase {
 
     private static final long serialVersionUID = 2845660115811984905L;
 
-    protected UserHistory() { }
+    protected UserActionHistory() { }
 
-    public UserHistory(User user, ActionType actionType, String sessionId) {
+    public UserActionHistory(User user, ActionType actionType, String sessionId) {
         this(user, actionType, sessionId, null);
     }
 
-    public UserHistory(User user, ActionType actionType, String sessionId, String clientAddress) {
+    public UserActionHistory(User user, ActionType actionType, String sessionId, String clientAddress) {
         Guard.shouldNotBeNull(user, "user");
 
         this.user = user;
@@ -41,7 +41,7 @@ public class UserHistory extends VitalEntityBase {
             this.departmentCode = user.getDepartment().getCode();
 
         this.actionType = actionType;
-        this.actionTime = actionTime;
+        this.actionTime = new Date();
 
         this.sessionId = sessionId;
         this.clientAddress = clientAddress;
@@ -56,26 +56,29 @@ public class UserHistory extends VitalEntityBase {
     private Long id;
 
     /**
-     *
-     */
-    @Column(nullable = false, length = 100)
-    private String sessionId;
-
-    /**
      * 로그인 사용자 아이디
      */
-    @Column(nullable = false, length = 50)
+    @Column(name = "Username", nullable = false, length = 50)
     private String username;
 
+    /**
+     * 사용자 정보
+     */
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "userId")
+    @JoinColumn(name = "UserId")
     private User user;
 
     /**
      * 직원의 소속 부서 (안 넣어도 된다)
      */
-    @Column(length = 50)
+    @Column(name = "DepartmentCode", length = 50)
     private String departmentCode;
+
+    /**
+     * 세션 Id
+     */
+    @Column(name = "SessionId", length = 100)
+    private String sessionId;
 
     /**
      * 사용자의 IP Address
@@ -87,13 +90,13 @@ public class UserHistory extends VitalEntityBase {
      * 사용자의 Action 종류 (로그인, 로그아웃, 검색, Export 등)
      */
     @Enumerated(EnumType.STRING)
-    @Column(name = "actionType", nullable = false, length = 128)
+    @Column(name = "ActionType", nullable = false, length = 128)
     private ActionType actionType = ActionType.Nothing;
     /**
      * 로그인한 시각
      */
     @Temporal(TemporalType.TIMESTAMP)
-    @Column(nullable = false)
+    @Column(name = "ActionTime")
     private Date actionTime;
 
     @Override
@@ -106,11 +109,11 @@ public class UserHistory extends VitalEntityBase {
     @Override
     protected Objects.ToStringHelper buildStringHelper() {
         return super.buildStringHelper()
-                .add("id", id)
-                .add("departmentCode", departmentCode)
-                .add("username", username)
-                .add("actionType", actionType)
-                .add("actionTime", actionTime)
-                .add("clientAddress", clientAddress);
+                    .add("id", id)
+                    .add("departmentCode", departmentCode)
+                    .add("username", username)
+                    .add("actionType", actionType)
+                    .add("actionTime", actionTime)
+                    .add("clientAddress", clientAddress);
     }
 }

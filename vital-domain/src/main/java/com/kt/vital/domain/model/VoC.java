@@ -4,6 +4,7 @@ import com.google.common.base.Objects;
 import kr.debop4j.core.tools.HashTool;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.Index;
@@ -18,6 +19,7 @@ import java.util.Date;
  */
 @Entity
 @Table(name = "VoC")
+@org.hibernate.annotations.Cache(usage = CacheConcurrencyStrategy.READ_ONLY)
 @DynamicInsert
 @DynamicUpdate
 @Getter
@@ -52,8 +54,8 @@ public class VoC extends VitalEntityBase {
     @Override
     protected Objects.ToStringHelper buildStringHelper() {
         return super.buildStringHelper()
-                .add("id", id)
-                .add("no", no)
-                .add("createDate", createTime);
+                    .add("id", id)
+                    .add("no", no)
+                    .add("createDate", createTime);
     }
 }

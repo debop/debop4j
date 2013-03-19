@@ -25,6 +25,11 @@ import java.util.Set;
  */
 @Entity
 @Table(name = "Department")
+@org.hibernate.annotations.Table(appliesTo = "Department",
+                                 indexes = {@org.hibernate.annotations.Index(name = "ix_department",
+                                                                             columnNames = {
+                                                                                     "CompanyName",
+                                                                                     "DepartmentCode"})})
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 @DynamicInsert
 @DynamicUpdate
@@ -36,14 +41,16 @@ public class Department extends AnnotatedTreeEntityBase<Department> implements I
 
     protected Department() {}
 
-    public Department(String departmentCode) {
-        this(departmentCode, departmentCode);
+    public Department(String companyName, String departmentCode) {
+        this(companyName, departmentCode, departmentCode);
     }
 
-    public Department(String departmentCode, String departmentName) {
+    public Department(String companyName, String departmentCode, String departmentName) {
+        Guard.shouldNotBeEmpty(companyName, "companyName");
         Guard.shouldNotBeEmpty(departmentCode, "departmentCode");
         Guard.shouldNotBeEmpty(departmentName, "departmentName");
 
+        this.companyName = companyName;
         this.code = departmentCode;
         this.name = departmentName;
     }
@@ -53,8 +60,10 @@ public class Department extends AnnotatedTreeEntityBase<Department> implements I
     @Column(name = "DepartmentId")
     private Long id;
 
+    @Column(name = "CompanyName", nullable = false, length = 64)
+    private String companyName;
+
     @Column(name = "DepartmentCode", nullable = false, length = 64)
-    @Index(name = "ix_department_code")
     private String code;
 
     @Column(name = "DepartmentName", nullable = false, length = 128)
@@ -95,8 +104,8 @@ public class Department extends AnnotatedTreeEntityBase<Department> implements I
     @Override
     protected Objects.ToStringHelper buildStringHelper() {
         return super.buildStringHelper()
-                .add("id", id)
-                .add("code", code)
-                .add("name", name);
+                    .add("id", id)
+                    .add("code", code)
+                    .add("name", name);
     }
 }

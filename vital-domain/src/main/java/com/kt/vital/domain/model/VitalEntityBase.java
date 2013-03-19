@@ -21,6 +21,8 @@ import java.util.Date;
 @Setter
 public abstract class VitalEntityBase extends AnnotatedEntityBase implements IUpdateTimestampedEntity {
 
+    private static final long serialVersionUID = 8685979366878442016L;
+
     @Temporal(TemporalType.TIMESTAMP)
     private Date updateTimestamp;
 

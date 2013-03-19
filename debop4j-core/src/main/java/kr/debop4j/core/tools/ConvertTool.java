@@ -6,7 +6,7 @@ import java.util.Date;
 
 
 /**
- * pudding.pudding.commons.core.tools.ConvertTool
+ * pudding.pudding.commons.core.tool.ConvertTool
  * User: sunghyouk.bae@gmail.com
  * Date: 12. 9. 26.
  */

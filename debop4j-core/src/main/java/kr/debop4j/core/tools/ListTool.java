@@ -7,7 +7,7 @@ import java.util.Collections;
 import java.util.Comparator;
 
 /**
- * kr.debop4j.core.tools.ListTool
+ * kr.debop4j.core.tool.ListTool
  * User: sunghyouk.bae@gmail.com
  * Date: 12. 12. 23.
  */

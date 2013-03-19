@@ -5,7 +5,7 @@ import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * kr.debop4j.core.tools.JClass
+ * kr.debop4j.core.tool.JClass
  * User: sunghyouk.bae@gmail.com
  * Date: 13. 1. 20.
  */

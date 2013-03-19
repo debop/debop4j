@@ -23,6 +23,8 @@ import java.util.Date;
 @Setter
 public class ExportHistory extends VitalEntityBase {
 
+    private static final long serialVersionUID = -5935426118042101053L;
+
     protected ExportHistory() {}
 
     public ExportHistory(String username, String departmentCode, String keyword) {
@@ -85,10 +87,10 @@ public class ExportHistory extends VitalEntityBase {
     @Override
     protected Objects.ToStringHelper buildStringHelper() {
         return super.buildStringHelper()
-                .add("id", id)
-                .add("departmentCode", departmentCode)
-                .add("username", username)
-                .add("clientAddress", clientAddress)
-                .add("exportTime", exportTime);
+                    .add("id", id)
+                    .add("departmentCode", departmentCode)
+                    .add("username", username)
+                    .add("clientAddress", clientAddress)
+                    .add("exportTime", exportTime);
     }
 }
