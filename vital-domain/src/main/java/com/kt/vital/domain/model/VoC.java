@@ -60,6 +60,7 @@ public class Voc extends AnnotatedEntityBase {
     @OneToMany(mappedBy = "voc", fetch = FetchType.LAZY, cascade = {CascadeType.ALL})
     @Fetch(FetchMode.SUBSELECT)
     @LazyCollection(LazyCollectionOption.EXTRA)
+    @OrderColumn(name = "AttrName")
     private Set<VocAttribute> attrs = Sets.newHashSet();
 
     public void addAttribute(String attrName, String attrValue) {

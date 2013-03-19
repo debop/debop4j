@@ -1,0 +1,28 @@
+VoC Data
+==================================
+
+컬럼명                 설명              데이터 예               상세 설명
+ROW_ID              구분자 ID           1-DZVY9X9              VoC RowID
+SR_CREATED_DT       SR 생성일자         2013/01/29 11:00:59
+CUST_CON_PH_NUM     고객 연락처 번호     +8201055550000(000)0000-0000  핸드폰/집
+
+ATTRIB_03           장애지역우편번호     X
+
+ATTRIB_37           업무유형(대)         N00000
+ATTRIB_36           업무유형(중)         N00200
+ATTRIB_35           업무유형(소)         N00201
+
+ACT_CLOSE_DT        SR 완료일시         2013/01/29 11:12:54
+SR_CREATED_HR       SR 생성시간         11                      SR 처리 시간을 시간단위로 표현
+
+SR_STAT_ID          SR 상태               완료|접수|이관
+SR_CREATED_BY       SR 생성자 ROW_ID       1-CZH1BR1
+OWNER_EMP_ID        SR 오너 ROW_ID        1-CZH1BR1
+
+
+
+
+
+
+
+

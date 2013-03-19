@@ -11,7 +11,7 @@ import org.hibernate.annotations.DynamicUpdate;
 import javax.persistence.*;
 
 /**
- * VoC 의 특성을 나타내는 코드들입니다.
+ * VoC의 특성을 나타내는 코드들입니다. (업무유형,
  * User: sunghyouk.bae@gmail.com
  * Date: 13. 3. 19 오후 3:09
  */
