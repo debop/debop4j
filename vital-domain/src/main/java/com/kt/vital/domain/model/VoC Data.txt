@@ -16,8 +16,13 @@ ACT_CLOSE_DT        SR 완료일시         2013/01/29 11:12:54
 SR_CREATED_HR       SR 생성시간         11                      SR 처리 시간을 시간단위로 표현
 
 SR_STAT_ID          SR 상태               완료|접수|이관
+
 SR_CREATED_BY       SR 생성자 ROW_ID       1-CZH1BR1
+SR_CREATED_BY_LOGIN SR 생성자 로그인 ID   6822372                 실제 사용자 로그인 ID
+
 OWNER_EMP_ID        SR 오너 ROW_ID        1-CZH1BR1
+OWNER_EMP_ID_LOGIN  SR 오너 로그인 ID    6822372                 실제 사용자 로그인 ID
+
 
 
 

@@ -27,7 +27,7 @@ public class VocAttribute extends AnnotatedEntityBase {
 
     protected VocAttribute() {}
 
-    public VocAttribute(Voc voc, String attrName, String attrValue) {
+    public VocAttribute(VoiceOfCustomer voc, String attrName, String attrValue) {
         this.name = attrName;
         this.value = value;
         this.setVoc(voc);
@@ -40,7 +40,7 @@ public class VocAttribute extends AnnotatedEntityBase {
 
     @ManyToOne
     @JoinColumn(name = "VocId", nullable = false, updatable = false)
-    private Voc voc;
+    private VoiceOfCustomer voc;
 
     @Column(name = "AttrName", nullable = false, length = 256, updatable = false)
     private String name;

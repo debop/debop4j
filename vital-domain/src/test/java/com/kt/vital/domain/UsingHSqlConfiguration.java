@@ -1,6 +1,6 @@
 package com.kt.vital.domain;
 
-import com.kt.vital.domain.model.Voc;
+import com.kt.vital.domain.model.VoiceOfCustomer;
 import kr.debop4j.data.hibernate.springconfiguration.HSqlConfigBase;
 import org.hibernate.cache.ehcache.SingletonEhCacheRegionFactory;
 import org.hibernate.cfg.Environment;
@@ -21,7 +21,7 @@ public class UsingHSqlConfiguration extends HSqlConfigBase {
     @Override
     protected String[] getMappedPackageNames() {
         return new String[]{
-                Voc.class.getPackage().getName()
+                VoiceOfCustomer.class.getPackage().getName()
         };
     }
 

@@ -14,7 +14,7 @@ import javax.persistence.*;
 import java.util.Date;
 
 /**
- * Vital 시스템 사용자 정보 (Voc 담당 직원 정보는 {@link Employee} 입니다)
+ * Vital 시스템 사용자 정보 (VoiceOfCustomer 담당 직원 정보는 {@link Employee} 입니다)
  * User: sunghyouk.bae@gmail.com
  * Date: 13. 3. 18 오후 3:58
  */

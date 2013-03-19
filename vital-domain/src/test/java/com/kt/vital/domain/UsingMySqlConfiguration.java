@@ -1,6 +1,6 @@
 package com.kt.vital.domain;
 
-import com.kt.vital.domain.model.Voc;
+import com.kt.vital.domain.model.VoiceOfCustomer;
 import kr.debop4j.data.hibernate.springconfiguration.MySqlConfigBase;
 import org.hibernate.cache.ehcache.SingletonEhCacheRegionFactory;
 import org.hibernate.cfg.Environment;
@@ -26,7 +26,7 @@ public class UsingMySqlConfiguration extends MySqlConfigBase {
     @Override
     protected String[] getMappedPackageNames() {
         return new String[]{
-                Voc.class.getPackage().getName()
+                VoiceOfCustomer.class.getPackage().getName()
         };
     }
 

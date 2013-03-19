@@ -11,7 +11,7 @@ import javax.persistence.*;
 import java.util.Date;
 
 /**
- * N분마다 Genesis로부터 Voc 정보를 얻어 Vital에 Import 를 수행한 이력
+ * N분마다 Genesis로부터 VoiceOfCustomer 정보를 얻어 Vital에 Import 를 수행한 이력
  * User: sunghyouk.bae@gmail.com
  * Date: 13. 3. 19 오후 2:44
  */
