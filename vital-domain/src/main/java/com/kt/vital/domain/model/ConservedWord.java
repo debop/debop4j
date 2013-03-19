@@ -19,19 +19,19 @@ import java.util.Date;
  * Date: 13. 3. 19 오후 12:58
  */
 @Entity
-@Table(name = "ProhibitedWord")
+@Table(name = "ConservedWord")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 @DynamicInsert
 @DynamicUpdate
 @Getter
 @Setter
-public class ProhibitedWord extends VitalEntityBase {
+public class ConservedWord extends VitalEntityBase {
 
     private static final long serialVersionUID = 8147413421593793669L;
 
-    protected ProhibitedWord() {}
+    protected ConservedWord() {}
 
-    public ProhibitedWord(String word) {
+    public ConservedWord(String word) {
         Guard.shouldNotBeEmpty(word, "word");
 
         this.word = word;

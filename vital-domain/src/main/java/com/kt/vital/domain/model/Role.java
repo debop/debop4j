@@ -9,8 +9,8 @@ import lombok.Setter;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.*;
 
-import javax.persistence.CascadeType;
 import javax.persistence.*;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 import java.util.Set;
@@ -39,8 +39,8 @@ public class Role extends VitalEntityBase {
 
         this.code = code;
         this.name = name;
+        this.enabled = true;
     }
-
 
     @Id
     @GeneratedValue
@@ -55,18 +55,21 @@ public class Role extends VitalEntityBase {
     @Index(name = "ix_role_code")
     private String name;
 
+    @Basic
     private Boolean enabled;
 
     @Column(name = "RoleDesc", nullable = false, length = 1024)
     private String description;
 
+    /**
+     * 현재 Role이 가지는 권한 정보
+     */
     @ManyToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER)
     @Fetch(FetchMode.SELECT)
     @JoinTable(name = "RoleAuthority",
                joinColumns = {@JoinColumn(name = "RoleId")},
                inverseJoinColumns = {@JoinColumn(name = "AuthId")})
     private Set<Authority> authorities = Sets.newHashSet();
-
 
     @Override
     public int hashCode() {
