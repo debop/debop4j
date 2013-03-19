@@ -1,20 +1,20 @@
 package com.kt.vital.domain.repository;
 
-import com.kt.vital.domain.model.VoC;
+import com.kt.vital.domain.model.Voc;
 import kr.debop4j.data.hibernate.repository.HibernateRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
 
 /**
- * com.kt.vital.domain.repository.VoCRepository
+ * {@link com.kt.vital.domain.model.Voc} 의 Repository
  * User: sunghyouk.bae@gmail.com
  * Date: 13. 3. 18.
  */
 @Repository
 @Slf4j
-public class VoCRepository extends HibernateRepository<VoC> {
+public class VoCRepository extends HibernateRepository<Voc> {
 
     public VoCRepository() {
-        super(VoC.class);
+        super(Voc.class);
     }
 }

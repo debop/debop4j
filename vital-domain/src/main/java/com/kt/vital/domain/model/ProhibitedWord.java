@@ -14,7 +14,7 @@ import javax.persistence.Table;
 import java.util.Date;
 
 /**
- * VoC 메모내용에서 변환되지 말아야 할 예약어 (메모 내용을 볼때, 민감한 정보를 * 로 변한하는데, 변환하지 말아야할 단어를 등록해 놓으면, 대체하지 않는다)
+ * Voc 메모내용에서 변환되지 말아야 할 예약어 (메모 내용을 볼때, 민감한 정보를 * 로 변한하는데, 변환하지 말아야할 단어를 등록해 놓으면, 대체하지 않는다)
  * User: sunghyouk.bae@gmail.com
  * Date: 13. 3. 19 오후 12:58
  */

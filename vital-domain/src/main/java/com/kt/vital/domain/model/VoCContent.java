@@ -2,6 +2,7 @@ package com.kt.vital.domain.model;
 
 import com.google.common.base.Objects;
 import kr.debop4j.core.tools.HashTool;
+import kr.debop4j.data.model.AnnotatedEntityBase;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
@@ -12,24 +13,24 @@ import org.hibernate.annotations.Index;
 import javax.persistence.*;
 
 /**
- * com.kt.vital.domain.model.VoCContent
+ * com.kt.vital.domain.model.VocContent
  * User: sunghyouk.bae@gmail.com
  * Date: 13. 3. 18.
  */
 @Entity
-@Table(name = "VoCContent")
+@Table(name = "VocContent")
 @org.hibernate.annotations.Cache(usage = CacheConcurrencyStrategy.READ_ONLY)
 @DynamicInsert
 @DynamicUpdate
 @Getter
 @Setter
-public class VoCContent extends VitalEntityBase {
+public class VocContent extends AnnotatedEntityBase {
 
     private static final long serialVersionUID = -1834701471286782887L;
 
-    protected VoCContent() {}
+    protected VocContent() {}
 
-    public VoCContent(VoC voc, String memo) {
+    public VocContent(Voc voc, String memo) {
         this.voc = voc;
         this.memo = memo;
 
@@ -44,7 +45,7 @@ public class VoCContent extends VitalEntityBase {
     @OneToOne
     @JoinColumn(name = "VoCId")
     @Index(name = "ix_voccontent_vocid")
-    private VoC voc;
+    private Voc voc;
 
     @Column(name = "menu", length = 4000)
     private String memo;

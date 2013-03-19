@@ -22,7 +22,9 @@ import java.util.Date;
 @DynamicUpdate
 @Getter
 @Setter
-public class AlarmHistory extends VitalEntityBase {
+public class AlarmHistory extends VitalHistoryEntityBase {
+
+    private static final long serialVersionUID = 3263493982600804083L;
 
     protected AlarmHistory() {}
 
@@ -35,10 +37,6 @@ public class AlarmHistory extends VitalEntityBase {
         this.alarmType = alarmType;
         this.levelType = levelType;
     }
-
-    @Id
-    @GeneratedValue
-    private Long id;
 
     /**
      * 알람 수신 사용자
@@ -90,16 +88,15 @@ public class AlarmHistory extends VitalEntityBase {
     @Override
     public int hashCode() {
         if (isPersisted())
-            return HashTool.compute(id);
+            return HashTool.compute(getId());
         return HashTool.compute(username, alarmType, levelType);
     }
 
     @Override
     protected Objects.ToStringHelper buildStringHelper() {
         return super.buildStringHelper()
-                .add("id", id)
-                .add("username", username)
-                .add("alarmType", alarmType)
-                .add("levelType", levelType);
+                    .add("username", username)
+                    .add("alarmType", alarmType)
+                    .add("levelType", levelType);
     }
 }

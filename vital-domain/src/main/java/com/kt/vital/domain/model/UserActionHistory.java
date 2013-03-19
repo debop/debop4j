@@ -22,7 +22,7 @@ import java.util.Date;
 @DynamicUpdate
 @Getter
 @Setter
-public class UserActionHistory extends VitalEntityBase {
+public class UserActionHistory extends VitalHistoryEntityBase {
 
     private static final long serialVersionUID = 2845660115811984905L;
 
@@ -46,14 +46,6 @@ public class UserActionHistory extends VitalEntityBase {
         this.sessionId = sessionId;
         this.clientAddress = clientAddress;
     }
-
-    /**
-     * History Id
-     */
-    @Id
-    @GeneratedValue
-    @Column(name = "HistoryId")
-    private Long id;
 
     /**
      * 로그인 사용자 아이디
@@ -102,14 +94,13 @@ public class UserActionHistory extends VitalEntityBase {
     @Override
     public int hashCode() {
         if (isPersisted())
-            return HashTool.compute(id);
+            return HashTool.compute(getId());
         return HashTool.compute(username, actionType, actionTime);
     }
 
     @Override
     protected Objects.ToStringHelper buildStringHelper() {
         return super.buildStringHelper()
-                    .add("id", id)
                     .add("departmentCode", departmentCode)
                     .add("username", username)
                     .add("actionType", actionType)

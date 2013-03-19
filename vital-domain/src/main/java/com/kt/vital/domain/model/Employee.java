@@ -13,7 +13,7 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 
 /**
- * VoC 담당 직원 (KT 또는 협력업체 직원)
+ * Voc 담당 직원 (KT 또는 협력업체 직원)
  * User: sunghyouk.bae@gmail.com
  * Date: 13. 3. 19 오후 12:17
  */

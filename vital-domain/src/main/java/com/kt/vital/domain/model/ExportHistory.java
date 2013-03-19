@@ -21,7 +21,7 @@ import java.util.Date;
 @DynamicUpdate
 @Getter
 @Setter
-public class ExportHistory extends VitalEntityBase {
+public class ExportHistory extends VitalHistoryEntityBase {
 
     private static final long serialVersionUID = -5935426118042101053L;
 
@@ -38,14 +38,6 @@ public class ExportHistory extends VitalEntityBase {
         this.clientAddress = clientAddress;
         this.exportTime = new Date();
     }
-
-    /**
-     * History Id
-     */
-    @Id
-    @GeneratedValue
-    @Column(name = "HistoryId")
-    private Long id;
 
     /**
      * SR 리포트를 EXPORT한 사용자
@@ -80,14 +72,13 @@ public class ExportHistory extends VitalEntityBase {
     @Override
     public int hashCode() {
         if (isPersisted())
-            return HashTool.compute(id);
+            return HashTool.compute(getId());
         return HashTool.compute(username, exportTime);
     }
 
     @Override
     protected Objects.ToStringHelper buildStringHelper() {
         return super.buildStringHelper()
-                    .add("id", id)
                     .add("departmentCode", departmentCode)
                     .add("username", username)
                     .add("clientAddress", clientAddress)
