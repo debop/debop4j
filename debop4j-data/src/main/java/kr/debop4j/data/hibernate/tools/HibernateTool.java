@@ -60,6 +60,7 @@ public class HibernateTool {
         return getHibernateDaoFactory().getOrCreateHibernateRepository(entityClass);
     }
 
+    @SuppressWarnings("unchecked")
     public static void registerEventListener(SessionFactory sessionFactory, Object listener, EventType... eventTypes) {
         Guard.shouldNotBeNull(sessionFactory, "sessionFactory");
         Guard.shouldNotBeNull(listener, "listener");
@@ -74,7 +75,9 @@ public class HibernateTool {
                         .getService(EventListenerRegistry.class);
 
         for (EventType eventType : eventTypes) {
-            registry.getEventListenerGroup(eventType).appendListener(listener);
+            try {
+                registry.getEventListenerGroup(eventType).appendListener(listener);
+            } catch (Exception ignored) {}
         }
 
     }

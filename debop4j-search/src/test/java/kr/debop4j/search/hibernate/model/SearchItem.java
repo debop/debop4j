@@ -10,6 +10,7 @@ import org.hibernate.search.annotations.Indexed;
 import org.hibernate.search.annotations.Store;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 /**
  * kr.debop4j.search.hibernate.model.SearchItem
@@ -32,6 +33,7 @@ public class SearchItem extends AnnotatedEntityBase {
     @Setter(AccessLevel.PROTECTED)
     private Long id;
 
+    @NotNull
     @Column(name = "SEARCH_ITEM_TITLE")
     @Field(store = Store.YES)                                              // indexing with tokenization
     private String title;

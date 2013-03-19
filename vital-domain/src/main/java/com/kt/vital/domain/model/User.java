@@ -9,8 +9,10 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.Index;
+import org.hibernate.validator.constraints.Email;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 /**
@@ -48,10 +50,12 @@ public class User extends VitalEntityBase {
     /**
      * 시스템 사용자 명 (로그인 id)
      */
+    @NotNull
     @Column(nullable = false, length = 50)
     @Index(name = "ix_user_username")
     private String username;
 
+    @NotNull
     @Column(nullable = false, length = 50)
     private String passwd;
 
@@ -78,6 +82,7 @@ public class User extends VitalEntityBase {
     /**
      * 사용자 email
      */
+    @Email
     @Column(length = 100)
     private String email;
 

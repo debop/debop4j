@@ -4,12 +4,15 @@ import kr.debop4j.data.hibernate.interceptor.MultiInterceptor;
 import kr.debop4j.data.hibernate.interceptor.StatefulEntityInterceptor;
 import kr.debop4j.data.hibernate.interceptor.UpdateTimestampedInterceptor;
 import kr.debop4j.data.hibernate.repository.HibernateRepositoryFactory;
+import kr.debop4j.data.hibernate.tools.HibernateTool;
 import kr.debop4j.data.hibernate.unitofwork.UnitOfWorkFactory;
 import kr.debop4j.data.jdbc.JdbcTool;
 import lombok.extern.slf4j.Slf4j;
 import org.hibernate.ConnectionReleaseMode;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Environment;
+import org.hibernate.cfg.beanvalidation.BeanValidationEventListener;
+import org.hibernate.event.spi.EventType;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.orm.hibernate4.HibernateTransactionManager;
@@ -51,6 +54,10 @@ public class AppConfig {
         props.put("hibernate.search.default.directory_provider", "filesystem");
         props.put("hibernate.search.default.indexBase", "lucene/indexes");
 
+        // Validator
+        props.put("javax.persistence.validation.group.pre-persist", "javax.validation.groups.Default");
+        props.put("javax.persistence.validation.group.pre-update", "javax.validation.groups.Default");
+
         return props;
     }
 
@@ -85,6 +92,12 @@ public class AppConfig {
 //                                                new UpdateTimestampedEventListener(),
 //                                                EventType.PRE_INSERT, EventType.PRE_UPDATE);
 
+
+            // validator용 listener 추가
+            HibernateTool.registerEventListener(sessionFactory,
+                                                beanValidationEventListener(),
+                                                EventType.PRE_INSERT, EventType.PRE_UPDATE, EventType.PRE_DELETE);
+
             if (log.isInfoEnabled())
                 log.info("SessionFactory Bean을 생성했습니다!!!");
 
@@ -93,6 +106,11 @@ public class AppConfig {
         } catch (IOException e) {
             throw new RuntimeException("SessionFactory 빌드에 실패했습니다.", e);
         }
+    }
+
+    @Bean
+    public BeanValidationEventListener beanValidationEventListener() {
+        return new BeanValidationEventListener();
     }
 
     @Bean

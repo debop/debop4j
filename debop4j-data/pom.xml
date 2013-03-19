@@ -162,7 +162,6 @@
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-validator</artifactId>
             <version>${hibernate.validator.version}</version>
-            <scope>test</scope>
             <exclusions>
                 <exclusion>
                     <artifactId>jboss-logging</artifactId>
