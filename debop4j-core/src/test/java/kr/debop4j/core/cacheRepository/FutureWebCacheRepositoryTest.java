@@ -2,6 +2,7 @@ package kr.debop4j.core.cacherepository;
 
 import com.carrotsearch.junitbenchmarks.BenchmarkRule;
 import kr.debop4j.core.Stopwatch;
+import kr.debop4j.core.cache.FutureWebCacheRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Rule;
 import org.junit.Test;
