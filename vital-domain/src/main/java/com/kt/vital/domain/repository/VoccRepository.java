@@ -12,9 +12,9 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 @Slf4j
-public class VoCRepository extends HibernateRepository<Voc> {
+public class VoccRepository extends HibernateRepository<Voc> {
 
-    public VoCRepository() {
+    public VoccRepository() {
         super(Voc.class);
     }
 }
