@@ -65,8 +65,8 @@ public class ConservedWord extends VitalEntityBase {
     @Override
     protected Objects.ToStringHelper buildStringHelper() {
         return super.buildStringHelper()
-                    .add("id", id)
-                    .add("word", word)
-                    .add("enabled", enabled);
+                .add("id", id)
+                .add("word", word)
+                .add("enabled", enabled);
     }
 }

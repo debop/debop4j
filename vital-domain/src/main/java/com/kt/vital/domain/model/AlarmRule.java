@@ -91,11 +91,11 @@ public class AlarmRule extends VitalEntityBase {
     @Override
     protected Objects.ToStringHelper buildStringHelper() {
         return super.buildStringHelper()
-                    .add("id", id)
-                    .add("username", user.getUsername())
-                    .add("enabled", enabled)
-                    .add("alarmType", alarmType)
-                    .add("frequencyGroup", frequencyGroup)
-                    .add("levelType", levelType);
+                .add("id", id)
+                .add("username", user.getUsername())
+                .add("enabled", enabled)
+                .add("alarmType", alarmType)
+                .add("frequencyGroup", frequencyGroup)
+                .add("levelType", levelType);
     }
 }

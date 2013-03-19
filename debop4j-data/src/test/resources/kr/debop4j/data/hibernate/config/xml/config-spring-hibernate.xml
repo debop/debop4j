@@ -15,9 +15,9 @@
             </list>
         </property>
         <!--<property name="packagesToScan">-->
-            <!--<list>-->
-                <!--<value>kr.debop4j.data.hibernate.config.xml</value>-->
-            <!--</list>-->
+        <!--<list>-->
+        <!--<value>kr.debop4j.data.hibernate.config.xml</value>-->
+        <!--</list>-->
         <!--</property>-->
         <property name="hibernateProperties">
             <value>

@@ -95,8 +95,8 @@ public class AlarmHistory extends VitalHistoryEntityBase {
     @Override
     protected Objects.ToStringHelper buildStringHelper() {
         return super.buildStringHelper()
-                    .add("username", username)
-                    .add("alarmType", alarmType)
-                    .add("levelType", levelType);
+                .add("username", username)
+                .add("alarmType", alarmType)
+                .add("levelType", levelType);
     }
 }

@@ -35,6 +35,6 @@ public abstract class StatefulEntityBase extends ValueObjectBase implements ISta
     @Override
     protected Objects.ToStringHelper buildStringHelper() {
         return super.buildStringHelper()
-                    .add("persisted", persisted);
+                .add("persisted", persisted);
     }
 }

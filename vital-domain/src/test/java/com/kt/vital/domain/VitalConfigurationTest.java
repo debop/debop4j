@@ -1,6 +1,6 @@
 package com.kt.vital.domain;
 
-import com.kt.vital.domain.repository.VoCRepository;
+import com.kt.vital.domain.repository.VocRepository;
 import kr.debop4j.core.spring.Springs;
 import kr.debop4j.data.hibernate.forTesting.DatabaseTestFixtureBase;
 import lombok.extern.slf4j.Slf4j;
@@ -30,7 +30,7 @@ public class VitalConfigurationTest extends DatabaseTestFixtureBase {
 
     @Test
     public void repositoryExists() {
-        VoCRepository repository = Springs.getBean(VoCRepository.class);
+        VocRepository repository = Springs.getBean(VocRepository.class);
         Assert.assertNotNull(repository);
     }
 }

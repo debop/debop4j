@@ -34,6 +34,6 @@ public abstract class VitalEntityBase extends AnnotatedEntityBase implements IUp
     @Override
     protected Objects.ToStringHelper buildStringHelper() {
         return super.buildStringHelper()
-                    .add("updateTimestamp", updateTimestamp);
+                .add("updateTimestamp", updateTimestamp);
     }
 }

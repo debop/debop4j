@@ -81,10 +81,10 @@ public class Role extends VitalEntityBase {
     @Override
     protected Objects.ToStringHelper buildStringHelper() {
         return super.buildStringHelper()
-                    .add("id", id)
-                    .add("code", code)
-                    .add("name", name)
-                    .add("enabled", enabled)
-                    .add("description", description);
+                .add("id", id)
+                .add("code", code)
+                .add("name", name)
+                .add("enabled", enabled)
+                .add("description", description);
     }
 }

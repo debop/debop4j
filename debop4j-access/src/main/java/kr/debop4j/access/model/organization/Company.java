@@ -107,11 +107,11 @@ public class Company extends AccessLocaledEntityBase<Company.CompanyLocale> impl
     @Override
     protected Objects.ToStringHelper buildStringHelper() {
         return super.buildStringHelper()
-                    .add("id", id)
-                    .add("code", code)
-                    .add("name", name)
-                    .add("active", active)
-                    .add("description", description);
+                .add("id", id)
+                .add("code", code)
+                .add("name", name)
+                .add("active", active)
+                .add("description", description);
     }
 
     @Data

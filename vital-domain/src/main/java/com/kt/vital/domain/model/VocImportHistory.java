@@ -27,10 +27,10 @@ public class VocImportHistory extends VitalHistoryEntityBase {
 
     protected VocImportHistory() {}
 
-    public VocImportHistory(Date importTime, Long vocCount, Long elapsedTime) {
+    public VocImportHistory(Date importTime, Long importCount, Long workTime) {
         this.importTime = importTime;
-        this.vocCount = vocCount;
-        this.elapsedTime = elapsedTime;
+        this.importCount = importCount;
+        this.workTime = workTime;
     }
 
     @Id
@@ -38,28 +38,51 @@ public class VocImportHistory extends VitalHistoryEntityBase {
     @Column(name = "HistoryId")
     private Long id;
 
+    /**
+     * Import 작업 시작 시각
+     */
     @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "ImportTime")
     private Date importTime;
 
-    @Column(name = "VocCount")
-    private Long vocCount;
+    /**
+     * Import 한 VoC의 갯수
+     */
+    @Column(name = "ImportCount")
+    private Long importCount;
 
-    @Column(name = "ElapsedTime")
-    private Long elapsedTime;
+    /**
+     * Import 작업 시간
+     */
+    @Column(name = "WorkTime")
+    private Long workTime;
+
+    /**
+     * Import 작업 성공 여부
+     */
+    @Basic
+    private Boolean isSuccess;
+
+    /**
+     * 작엽 설명
+     */
+    @Column(name = "Description", length = 1024)
+    private String description;
 
     @Override
     public int hashCode() {
         if (isPersisted())
             HashTool.compute(id);
-        return HashTool.compute(vocCount, vocCount, elapsedTime);
+        return HashTool.compute(importCount, importCount, workTime);
     }
 
     @Override
     protected Objects.ToStringHelper buildStringHelper() {
         return super.buildStringHelper()
-                    .add("id", id)
-                    .add("importTime", importTime)
-                    .add("vocCount", vocCount)
-                    .add("elapsedTime", elapsedTime);
+                .add("id", id)
+                .add("importTime", importTime)
+                .add("importCount", importCount)
+                .add("workTime", workTime)
+                .add("isSuccess", isSuccess);
     }
 }

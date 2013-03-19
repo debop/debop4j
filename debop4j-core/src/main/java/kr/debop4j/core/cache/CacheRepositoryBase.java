@@ -95,7 +95,7 @@ public abstract class CacheRepositoryBase implements ICacheRepository {
     @Override
     public String toString() {
         return Objects.toStringHelper(this)
-                      .add("expiry", expiry)
-                      .toString();
+                .add("expiry", expiry)
+                .toString();
     }
 }

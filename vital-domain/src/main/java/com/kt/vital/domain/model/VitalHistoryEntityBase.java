@@ -43,7 +43,7 @@ public abstract class VitalHistoryEntityBase extends AnnotatedEntityBase {
     @Override
     protected Objects.ToStringHelper buildStringHelper() {
         return super.buildStringHelper()
-                    .add("id", id)
-                    .add("createdTime", createdTime);
+                .add("id", id)
+                .add("createdTime", createdTime);
     }
 }

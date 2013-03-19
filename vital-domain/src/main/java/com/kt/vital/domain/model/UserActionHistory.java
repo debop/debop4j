@@ -101,10 +101,10 @@ public class UserActionHistory extends VitalHistoryEntityBase {
     @Override
     protected Objects.ToStringHelper buildStringHelper() {
         return super.buildStringHelper()
-                    .add("departmentCode", departmentCode)
-                    .add("username", username)
-                    .add("actionType", actionType)
-                    .add("actionTime", actionTime)
-                    .add("clientAddress", clientAddress);
+                .add("departmentCode", departmentCode)
+                .add("username", username)
+                .add("actionType", actionType)
+                .add("actionTime", actionTime)
+                .add("clientAddress", clientAddress);
     }
 }

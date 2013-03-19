@@ -58,8 +58,8 @@ public class VocAttribute extends AnnotatedEntityBase {
     @Override
     protected Objects.ToStringHelper buildStringHelper() {
         return super.buildStringHelper()
-                    .add("id", id)
-                    .add("name", name)
-                    .add("value", value);
+                .add("id", id)
+                .add("name", name)
+                .add("value", value);
     }
 }

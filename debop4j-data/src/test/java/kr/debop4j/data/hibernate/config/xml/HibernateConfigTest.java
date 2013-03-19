@@ -17,7 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
  * Date: 13. 2. 19.
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations= "config-spring-hibernate.xml")
+@ContextConfiguration(locations = "config-spring-hibernate.xml")
 public class HibernateConfigTest {
 
     @Autowired
@@ -29,7 +29,7 @@ public class HibernateConfigTest {
         Session session = sessionFactory.openSession();
 
         Query query = session.createQuery("from Account a where a.id=:id").setLong("id", 1L);
-        Account a= (Account)query.uniqueResult();
+        Account a = (Account) query.uniqueResult();
         session.close();
         Assert.assertEquals(a.getCashBalance(), 500.0, 1.0e-8);
     }
@@ -39,7 +39,7 @@ public class HibernateConfigTest {
     public void updateAccount() {
         Session session = sessionFactory.getCurrentSession();
         Query query = session.createQuery("from Account a where a.id=:id").setLong("id", 1L);
-        Account a= (Account)query.uniqueResult();
+        Account a = (Account) query.uniqueResult();
         a.setName("foo");
     }
 }

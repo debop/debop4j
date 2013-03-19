@@ -71,8 +71,8 @@ public class Employee extends VitalEntityBase {
     @Override
     protected Objects.ToStringHelper buildStringHelper() {
         return super.buildStringHelper()
-                    .add("id", id)
-                    .add("srLoginId", loginId)
-                    .add("name", name);
+                .add("id", id)
+                .add("srLoginId", loginId)
+                .add("name", name);
     }
 }

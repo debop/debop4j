@@ -100,10 +100,10 @@ public class User extends VitalEntityBase {
     @Override
     protected Objects.ToStringHelper buildStringHelper() {
         return super.buildStringHelper()
-                    .add("id", id)
-                    .add("username", username)
-                    .add("name", name)
-                    .add("email", email)
-                    .add("phone", phone);
+                .add("id", id)
+                .add("username", username)
+                .add("name", name)
+                .add("email", email)
+                .add("phone", phone);
     }
 }

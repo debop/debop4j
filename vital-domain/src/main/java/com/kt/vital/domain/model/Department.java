@@ -104,8 +104,8 @@ public class Department extends AnnotatedTreeEntityBase<Department> implements I
     @Override
     protected Objects.ToStringHelper buildStringHelper() {
         return super.buildStringHelper()
-                    .add("id", id)
-                    .add("code", code)
-                    .add("name", name);
+                .add("id", id)
+                .add("code", code)
+                .add("name", name);
     }
 }

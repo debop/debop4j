@@ -118,8 +118,8 @@ public class Voc extends AnnotatedEntityBase {
     @Override
     protected Objects.ToStringHelper buildStringHelper() {
         return super.buildStringHelper()
-                    .add("id", id)
-                    .add("no", rowId)
-                    .add("createDate", createdTime);
+                .add("id", id)
+                .add("no", rowId)
+                .add("createDate", createdTime);
     }
 }

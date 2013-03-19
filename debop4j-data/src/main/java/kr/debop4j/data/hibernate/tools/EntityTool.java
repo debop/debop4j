@@ -139,8 +139,8 @@ public class EntityTool {
     DetachedCriteria GetDescendentsCriteria(T entity, Session session, Class<T> entityClass) {
         return
                 DetachedCriteria.forClass(entityClass)
-                                .createAlias(PROPERTY_ANCESTORS, "ans")
-                                .add(Restrictions.eq("ans.id", entity.getId()));
+                        .createAlias(PROPERTY_ANCESTORS, "ans")
+                        .add(Restrictions.eq("ans.id", entity.getId()));
     }
 
     public static <T extends IHierarchyEntity<T> & IEntity<TId>, TId extends Serializable>
