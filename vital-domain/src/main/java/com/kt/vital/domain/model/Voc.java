@@ -18,14 +18,14 @@ import java.util.Map;
 import java.util.Set;
 
 /**
- * com.kt.vital.domain.model.VoiceOfCustomer
+ * com.kt.vital.domain.model.Voc
  * User: sunghyouk.bae@gmail.com
  * Date: 13. 3. 18.
  */
 @Entity
-@Table(name = "VoiceOfCustomer")
+@Table(name = "Voc")
 @org.hibernate.annotations.Cache(usage = CacheConcurrencyStrategy.READ_ONLY)
-@org.hibernate.annotations.Table(appliesTo = "VoiceOfCustomer",
+@org.hibernate.annotations.Table(appliesTo = "Voc",
                                  indexes = {@org.hibernate.annotations.Index(name = "ix_voc",
                                                                              columnNames = {
                                                                                      "rowId",
@@ -34,7 +34,7 @@ import java.util.Set;
 @DynamicUpdate
 @Getter
 @Setter
-public class VoiceOfCustomer extends AnnotatedEntityBase {
+public class Voc extends AnnotatedEntityBase {
 
     private static final long serialVersionUID = 4096548425145872600L;
 
@@ -55,7 +55,7 @@ public class VoiceOfCustomer extends AnnotatedEntityBase {
     @OneToOne(mappedBy = "voc", fetch = FetchType.LAZY, cascade = {CascadeType.ALL})
     @Fetch(FetchMode.SELECT)
     @LazyCollection(LazyCollectionOption.EXTRA)
-    private VocMemo content;
+    private VocContent content;
 
     @OneToMany(mappedBy = "voc", fetch = FetchType.LAZY, cascade = {CascadeType.ALL})
     @Fetch(FetchMode.SUBSELECT)
