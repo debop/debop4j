@@ -46,9 +46,9 @@
 
         <tomcat.jdbc.version>7.0.37</tomcat.jdbc.version>
         <twitter4j.version>3.0.3</twitter4j.version>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
-        <basedir>/User/debop/work/java/debop4j/debop4j-search</basedir>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <!--<basedir>/User/debop/work/java/debop4j/debop4j-search</basedir>-->
     </properties>
 
     <distributionManagement>
