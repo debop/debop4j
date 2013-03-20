@@ -44,7 +44,7 @@ public class Voc extends AnnotatedEntityBase {
     @Column(name = "VocId")
     private Long id;
 
-    @Column(name = "rowId", nullable = false, length = 24)
+    @Column(name = "RowId", nullable = false, length = 24)
     private String rowId;
 
     @Temporal(TemporalType.TIMESTAMP)
@@ -56,17 +56,17 @@ public class Voc extends AnnotatedEntityBase {
     @Column(nullable = false, length = 64)
     private String ownerId;
 
-
-    /**
-     * 메모 내용
-     */
+    // TODO: 현재는 join 방식인데, lazy fetching 이 안되면, one-to-one으로 변환해야 한다.
     @Embedded
     @AttributeOverrides(
             {
-                    @AttributeOverride(name = "customerId", column = @Column(name = "CustomerId", length = 128, table = "VocMemo")),
-                    @AttributeOverride(name = "body", column = @Column(name = "Body", length = 4000, table = "VocMemo"))
+                    @AttributeOverride(name = "customerId",
+                                       column = @Column(name = "CustomerId", length = 128, table = "VocMemo")),
+                    @AttributeOverride(name = "body",
+                                       column = @Column(name = "Body", length = 2000, table = "VocMemo"))
             })
     @Fetch(FetchMode.SELECT)
+    @Basic(fetch = FetchType.LAZY)
     private VocMemo memo = new VocMemo();
 
     /**
@@ -133,8 +133,8 @@ public class Voc extends AnnotatedEntityBase {
     @Override
     protected Objects.ToStringHelper buildStringHelper() {
         return super.buildStringHelper()
-                    .add("id", id)
-                    .add("no", rowId)
-                    .add("createDate", createdTime);
+                .add("id", id)
+                .add("no", rowId)
+                .add("createDate", createdTime);
     }
 }

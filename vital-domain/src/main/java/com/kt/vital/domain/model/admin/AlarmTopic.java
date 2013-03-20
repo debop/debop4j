@@ -1,5 +1,10 @@
 package com.kt.vital.domain.model.admin;
 
+import lombok.Getter;
+import lombok.Setter;
+import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.DynamicUpdate;
+
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 
@@ -10,6 +15,10 @@ import javax.persistence.Entity;
  */
 @Entity
 @DiscriminatorValue("Alarm")
+@DynamicInsert
+@DynamicUpdate
+@Getter
+@Setter
 public class AlarmTopic extends TopicBase {
 
     private static final long serialVersionUID = 2080638127858678530L;

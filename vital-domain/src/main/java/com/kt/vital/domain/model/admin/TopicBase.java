@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
+import org.hibernate.annotations.Index;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
@@ -18,7 +19,10 @@ import java.util.Date;
  * Date: 13. 3. 20 오전 11:27
  */
 @Entity
-@Table(name = "")
+@Table(name = "Topic")
+@org.hibernate.annotations.Table(appliesTo = "Topic",
+                                 indexes = {@Index(name = "ix_topic_name",
+                                                   columnNames = {"TopicKind", "TopicName"})})
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "TopicKind", discriminatorType = DiscriminatorType.STRING, length = 31)
 @DiscriminatorValue("TopicBase")
@@ -65,9 +69,9 @@ public abstract class TopicBase extends VitalEntityBase {
     @Override
     protected Objects.ToStringHelper buildStringHelper() {
         return super.buildStringHelper()
-                    .add("id", id)
-                    .add("name", name)
-                    .add("enabled", enabled)
-                    .add("createdTime", createdTime);
+                .add("id", id)
+                .add("name", name)
+                .add("enabled", enabled)
+                .add("createdTime", createdTime);
     }
 }

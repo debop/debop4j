@@ -6,7 +6,6 @@ import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.validator.constraints.NotEmpty;
 
-import javax.persistence.Column;
 import javax.persistence.Embeddable;
 
 /**
@@ -30,13 +29,12 @@ public class VocMemo extends ValueObjectBase {
     /**
      * 상담 메모
      */
-    @NotEmpty
-    @Column(name = "body", length = 2000)
     private String body;
 
     @Override
     protected Objects.ToStringHelper buildStringHelper() {
         return super.buildStringHelper()
-                    .add("body", body);
+                .add("customerNo", customerNo)
+                .add("body", body);
     }
 }
