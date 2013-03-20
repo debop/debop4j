@@ -1,6 +1,9 @@
-package com.kt.vital.domain.model;
+package com.kt.vital.domain.model.admin;
 
 import com.google.common.base.Objects;
+import com.kt.vital.domain.model.ActionType;
+import com.kt.vital.domain.model.User;
+import com.kt.vital.domain.model.VitalHistoryEntityBase;
 import kr.debop4j.core.Guard;
 import kr.debop4j.core.tools.HashTool;
 import lombok.Getter;
@@ -12,7 +15,7 @@ import javax.persistence.*;
 import java.util.Date;
 
 /**
- * com.kt.vital.domain.model.UserActionHistory
+ * com.kt.vital.domain.model.admin.UserActionHistory
  * User: sunghyouk.bae@gmail.com
  * Date: 13. 3. 18 오후 4:53
  */
@@ -101,10 +104,10 @@ public class UserActionHistory extends VitalHistoryEntityBase {
     @Override
     protected Objects.ToStringHelper buildStringHelper() {
         return super.buildStringHelper()
-                .add("departmentCode", departmentCode)
-                .add("username", username)
-                .add("actionType", actionType)
-                .add("actionTime", actionTime)
-                .add("clientAddress", clientAddress);
+                    .add("departmentCode", departmentCode)
+                    .add("username", username)
+                    .add("actionType", actionType)
+                    .add("actionTime", actionTime)
+                    .add("clientAddress", clientAddress);
     }
 }

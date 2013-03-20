@@ -1,6 +1,7 @@
-package com.kt.vital.domain.model;
+package com.kt.vital.domain.model.admin;
 
 import com.google.common.base.Objects;
+import com.kt.vital.domain.model.VitalHistoryEntityBase;
 import kr.debop4j.core.tools.HashTool;
 import lombok.Getter;
 import lombok.Setter;
@@ -79,9 +80,9 @@ public class ExportHistory extends VitalHistoryEntityBase {
     @Override
     protected Objects.ToStringHelper buildStringHelper() {
         return super.buildStringHelper()
-                .add("departmentCode", departmentCode)
-                .add("username", username)
-                .add("clientAddress", clientAddress)
-                .add("exportTime", exportTime);
+                    .add("departmentCode", departmentCode)
+                    .add("username", username)
+                    .add("clientAddress", clientAddress)
+                    .add("exportTime", exportTime);
     }
 }

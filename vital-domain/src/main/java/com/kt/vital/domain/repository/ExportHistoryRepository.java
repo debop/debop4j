@@ -1,6 +1,6 @@
 package com.kt.vital.domain.repository;
 
-import com.kt.vital.domain.model.ExportHistory;
+import com.kt.vital.domain.model.admin.ExportHistory;
 import kr.debop4j.data.hibernate.repository.HibernateRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;

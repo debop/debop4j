@@ -1,6 +1,7 @@
-package com.kt.vital.domain.model;
+package com.kt.vital.domain.model.admin;
 
 import com.google.common.base.Objects;
+import com.kt.vital.domain.model.VitalHistoryEntityBase;
 import kr.debop4j.core.tools.HashTool;
 import lombok.Getter;
 import lombok.Setter;
@@ -79,10 +80,10 @@ public class VocImportHistory extends VitalHistoryEntityBase {
     @Override
     protected Objects.ToStringHelper buildStringHelper() {
         return super.buildStringHelper()
-                .add("id", id)
-                .add("importTime", importTime)
-                .add("importCount", importCount)
-                .add("workTime", workTime)
-                .add("isSuccess", isSuccess);
+                    .add("id", id)
+                    .add("importTime", importTime)
+                    .add("importCount", importCount)
+                    .add("workTime", workTime)
+                    .add("isSuccess", isSuccess);
     }
 }

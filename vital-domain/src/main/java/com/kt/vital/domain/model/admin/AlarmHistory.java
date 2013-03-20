@@ -1,6 +1,8 @@
-package com.kt.vital.domain.model;
+package com.kt.vital.domain.model.admin;
 
 import com.google.common.base.Objects;
+import com.kt.vital.domain.model.AlarmType;
+import com.kt.vital.domain.model.VitalHistoryEntityBase;
 import kr.debop4j.core.Guard;
 import kr.debop4j.core.tools.HashTool;
 import lombok.Getter;
@@ -95,8 +97,8 @@ public class AlarmHistory extends VitalHistoryEntityBase {
     @Override
     protected Objects.ToStringHelper buildStringHelper() {
         return super.buildStringHelper()
-                .add("username", username)
-                .add("alarmType", alarmType)
-                .add("levelType", levelType);
+                    .add("username", username)
+                    .add("alarmType", alarmType)
+                    .add("levelType", levelType);
     }
 }

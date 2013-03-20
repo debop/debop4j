@@ -9,8 +9,8 @@ import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.*;
 
-import javax.persistence.CascadeType;
 import javax.persistence.*;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 import java.util.Date;
@@ -24,9 +24,10 @@ import java.util.Set;
  */
 @Entity
 @Table(name = "Voc")
-@org.hibernate.annotations.Cache(usage = CacheConcurrencyStrategy.READ_ONLY)
+@SecondaryTable(name = "VocMemo", pkJoinColumns = {@PrimaryKeyJoinColumn(name = "VocId")})
+@org.hibernate.annotations.Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 @org.hibernate.annotations.Table(appliesTo = "Voc",
-                                 indexes = {@org.hibernate.annotations.Index(name = "ix_voc",
+                                 indexes = {@org.hibernate.annotations.Index(name = "ix_voc_creator",
                                                                              columnNames = {
                                                                                      "rowId",
                                                                                      "creatorId"})})
@@ -52,13 +53,27 @@ public class Voc extends AnnotatedEntityBase {
     @Column(nullable = false, length = 64)
     private String creatorId;
 
-    @OneToOne(mappedBy = "voc", fetch = FetchType.LAZY, cascade = {CascadeType.ALL})
-    @Fetch(FetchMode.SELECT)
-    @LazyCollection(LazyCollectionOption.EXTRA)
-    private VocContent content;
+    @Column(nullable = false, length = 64)
+    private String ownerId;
 
+
+    /**
+     * 메모 내용
+     */
+    @Embedded
+    @AttributeOverrides(
+            {
+                    @AttributeOverride(name = "customerId", column = @Column(name = "CustomerId", length = 128, table = "VocMemo")),
+                    @AttributeOverride(name = "body", column = @Column(name = "Body", length = 4000, table = "VocMemo"))
+            })
+    @Fetch(FetchMode.SELECT)
+    private VocMemo memo = new VocMemo();
+
+    /**
+     * VoC 특성들
+     */
     @OneToMany(mappedBy = "voc", fetch = FetchType.LAZY, cascade = {CascadeType.ALL})
-    @Fetch(FetchMode.SUBSELECT)
+    @Fetch(FetchMode.SELECT)
     @LazyCollection(LazyCollectionOption.EXTRA)
     @OrderColumn(name = "AttrName")
     private Set<VocAttribute> attrs = Sets.newHashSet();
@@ -118,8 +133,8 @@ public class Voc extends AnnotatedEntityBase {
     @Override
     protected Objects.ToStringHelper buildStringHelper() {
         return super.buildStringHelper()
-                .add("id", id)
-                .add("no", rowId)
-                .add("createDate", createdTime);
+                    .add("id", id)
+                    .add("no", rowId)
+                    .add("createDate", createdTime);
     }
 }

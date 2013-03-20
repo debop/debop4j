@@ -1,6 +1,7 @@
 package com.kt.vital.domain;
 
 import com.kt.vital.domain.model.Voc;
+import com.kt.vital.domain.model.admin.TopicBase;
 import kr.debop4j.data.hibernate.springconfiguration.PostgreSqlConfigBase;
 import kr.debop4j.data.hibernate.tools.HibernateTool;
 import org.hibernate.SessionFactory;
@@ -31,7 +32,8 @@ public class UsingPostgreSqlConfiguration extends PostgreSqlConfigBase {
     @Override
     protected String[] getMappedPackageNames() {
         return new String[]{
-                Voc.class.getPackage().getName()
+                Voc.class.getPackage().getName(),
+                TopicBase.class.getPackage().getName(),
         };
     }
 

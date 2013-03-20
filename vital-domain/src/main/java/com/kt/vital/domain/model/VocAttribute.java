@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
+import org.hibernate.annotations.Index;
 
 import javax.persistence.*;
 
@@ -16,7 +17,10 @@ import javax.persistence.*;
  * Date: 13. 3. 19 오후 3:09
  */
 @Entity
-@Table(name = "VocAttribute")
+@Table(name = "VocAttr")
+@org.hibernate.annotations.Table(appliesTo = "VocAttr",
+                                 indexes = {@Index(name = "IX_VocAttr_Name",
+                                                   columnNames = {"VocId", "AttrName"})})
 @DynamicInsert
 @DynamicUpdate
 @Getter
@@ -35,11 +39,11 @@ public class VocAttribute extends AnnotatedEntityBase {
 
     @Id
     @GeneratedValue
-    @Column(name = "VocAttrId")
+    @Column(name = "AttrId")
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "VocId", nullable = false, updatable = false)
+    @JoinColumn(name = "VocId")
     private Voc voc;
 
     @Column(name = "AttrName", nullable = false, length = 256, updatable = false)
@@ -58,8 +62,8 @@ public class VocAttribute extends AnnotatedEntityBase {
     @Override
     protected Objects.ToStringHelper buildStringHelper() {
         return super.buildStringHelper()
-                .add("id", id)
-                .add("name", name)
-                .add("value", value);
+                    .add("id", id)
+                    .add("name", name)
+                    .add("value", value);
     }
 }
