@@ -1,6 +1,7 @@
 package com.kt.vital.domain;
 
 import com.kt.vital.domain.repository.VocRepository;
+import com.kt.vital.domain.service.VoCService;
 import kr.debop4j.core.spring.Springs;
 import kr.debop4j.data.hibernate.forTesting.DatabaseTestFixtureBase;
 import lombok.extern.slf4j.Slf4j;
@@ -8,6 +9,7 @@ import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  * Vital 시스템 환경 설정 테스트
@@ -16,6 +18,9 @@ import org.junit.Test;
  */
 @Slf4j
 public class VitalConfigurationTest extends DatabaseTestFixtureBase {
+
+    @Autowired
+    private VocRepository vocRepository;
 
     @BeforeClass
     public static void beforeClass() {
@@ -32,5 +37,12 @@ public class VitalConfigurationTest extends DatabaseTestFixtureBase {
     public void repositoryExists() {
         VocRepository repository = Springs.getBean(VocRepository.class);
         Assert.assertNotNull(repository);
+    }
+
+    @Test
+    public void repositoryScaned() {
+        VoCService service = Springs.getBean(VoCService.class);
+        Assert.assertNotNull(service);
+        Assert.assertNotNull(service.getVocRepository());
     }
 }
