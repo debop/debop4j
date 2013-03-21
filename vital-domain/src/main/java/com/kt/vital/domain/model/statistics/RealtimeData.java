@@ -18,32 +18,32 @@ import java.util.Set;
  * Date: 13. 3. 21 오후 12:01
  */
 @Entity
-@Table(name = "RealtimeSnapshot")
+@Table(name = "RealtimeData")
 @DynamicInsert
 @DynamicUpdate
 @Getter
 @Setter
-public class RealtimeSnapshot extends StatisticEntityBase {
+public class RealtimeData extends StatisticEntityBase {
 
     private static final long serialVersionUID = 7631944375999540754L;
 
-    public RealtimeSnapshot() {
+    public RealtimeData() {
         this(new Date());
     }
 
-    public RealtimeSnapshot(Date createdTime) {
+    public RealtimeData(Date createdTime) {
         this.createdTime = new DateTime(createdTime);
     }
 
     @Id
     @GeneratedValue
-    @Column(name = "SnapshotId")
+    @Column(name = "DataId")
     private Long id;
 
     /**
      * Shapshot name
      */
-    @Column(name = "SnapshotName", nullable = false, length = 255)
+    @Column(name = "DataName", nullable = false, length = 255)
     private String name;
 
     /**
@@ -66,13 +66,13 @@ public class RealtimeSnapshot extends StatisticEntityBase {
     /**
      * 실시간 측정 값들
      */
-    @CollectionTable(name = "RealTimeSnapshotData", joinColumns = @JoinColumn(name = "SnapshotId"))
-    @ElementCollection(targetClass = StatisticData.class, fetch = FetchType.EAGER)
-    @OrderColumn(name = "DataName")
-    private Set<StatisticData> data = Sets.newHashSet();
+    @CollectionTable(name = "RealtimeItem", joinColumns = @JoinColumn(name = "DataId"))
+    @ElementCollection(targetClass = RealtimeItem.class, fetch = FetchType.EAGER)
+    @OrderColumn(name = "ItemName")
+    private Set<RealtimeItem> items = Sets.newHashSet();
 
-    public StatisticData getDataByName(String valueName) {
-        for (StatisticData sv : data) {
+    public RealtimeItem getDataByName(String valueName) {
+        for (RealtimeItem sv : items) {
             if (sv.getName().equals(name))
                 return sv;
         }

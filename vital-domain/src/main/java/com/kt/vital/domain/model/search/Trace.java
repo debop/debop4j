@@ -6,4 +6,6 @@ package com.kt.vital.domain.model.search;
  * Date: 13. 3. 21 오후 12:00
  */
 public class Trace {
+
+    // TODO: 구현 필요함
 }

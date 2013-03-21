@@ -15,7 +15,7 @@ import org.joda.time.DateTime;
 import javax.persistence.*;
 
 /**
- * 토픽
+ * 토픽을 표현하는 엔티티의 기본 클래스
  * User: sunghyouk.bae@gmail.com
  * Date: 13. 3. 20 오전 11:27
  */

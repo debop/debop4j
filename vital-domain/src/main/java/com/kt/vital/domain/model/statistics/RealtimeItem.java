@@ -3,6 +3,7 @@ package com.kt.vital.domain.model.statistics;
 import com.google.common.base.Objects;
 import kr.debop4j.core.ValueObjectBase;
 import kr.debop4j.core.tools.HashTool;
+import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.DynamicInsert;
@@ -24,18 +25,18 @@ import javax.persistence.Transient;
 @DynamicUpdate
 @Getter
 @Setter
-public class StatisticData extends ValueObjectBase {
+public class RealtimeItem extends ValueObjectBase {
 
     private static final long serialVersionUID = 2211422186112407893L;
 
-    protected StatisticData() {}
+    protected RealtimeItem() {}
 
-    public StatisticData(String name, double value) {
+    public RealtimeItem(String name, double value) {
         this.name = name;
         this.value = value;
     }
 
-    public StatisticData(String name, double value, String unit) {
+    public RealtimeItem(String name, double value, String unit) {
         this(name, value);
         this.unit = unit;
     }
@@ -44,22 +45,24 @@ public class StatisticData extends ValueObjectBase {
      * 통계 데이터 명
      */
     @NotEmpty
-    @Column(name = "DataName", length = 128)
+    @Column(name = "ItemName", length = 128)
     private String name;
 
     /**
      * 통계 데이터 값
      */
     @Basic
-    @Column(name = "DataValue")
+    @Column(name = "ItemValue")
     public double value = 0.0;
 
     /**
      * 통계 데이터 단위
      */
-    @Column(name = "DataUnit", length = 128)
+    @Column(name = "ItemUnit", length = 128)
     public String unit;
 
+    @Getter(AccessLevel.PROTECTED)
+    @Setter(AccessLevel.PRIVATE)
     @Transient
     private Integer hash;
 
