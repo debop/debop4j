@@ -27,6 +27,8 @@ public class DateTimeRange extends ValueObjectBase {
     public static final DateTime MinPeriodTime = new DateTime(MinMillis);
     public static final DateTime MaxPeriodTime = new DateTime(MaxMillis);
 
+    private static final long serialVersionUID = 3120213434581635267L;
+
     private DateTime start;
     private DateTime end;
     //private boolean readonly;

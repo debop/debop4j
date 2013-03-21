@@ -1,13 +1,14 @@
 package kr.debop4j.access.model;
 
+import com.google.common.base.Objects;
 import kr.debop4j.data.model.AnnotatedEntityBase;
 import kr.debop4j.data.model.IUpdateTimestampedEntity;
 import lombok.Getter;
+import org.hibernate.annotations.Type;
+import org.joda.time.DateTime;
 
-import javax.persistence.Column;
 import javax.persistence.MappedSuperclass;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 import java.util.Date;
 
 /**
@@ -20,12 +21,25 @@ public abstract class AccessEntityBase extends AnnotatedEntityBase implements IU
 
     private static final long serialVersionUID = -7640693368412411167L;
 
+    @Type(type = "org.joda.time.contrib.hibernate.PersistentDateTime")
     @Getter
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "updateTimestamp")
-    private Date updateTimestamp;
+    private DateTime updatedTime;
 
-    public void updateUpdateTimestamp() {
-        updateTimestamp = new Date();
+    @Transient
+    @Override
+    public Date getUpdateTimestamp() {
+        return updatedTime.toDate();
     }
+
+    @Override
+    public void updateUpdateTimestamp() {
+        updatedTime = DateTime.now();
+    }
+
+    @Override
+    protected Objects.ToStringHelper buildStringHelper() {
+        return super.buildStringHelper()
+                .add("updatedTime", updatedTime);
+    }
+
 }

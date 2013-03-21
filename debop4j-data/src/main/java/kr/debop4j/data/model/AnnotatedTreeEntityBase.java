@@ -25,6 +25,8 @@ import java.util.Set;
 @Setter
 public class AnnotatedTreeEntityBase<T extends ITreeEntity<T>> extends AnnotatedEntityBase implements ITreeEntity<T> {
 
+    private static final long serialVersionUID = 7865247655329371282L;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ParentId")
     private T parent;
