@@ -37,28 +37,31 @@ public class Employee extends VitalEntityBase {
 
     @Id
     @GeneratedValue
-    @Column(name = "EmployeeId")
+    @Column(name = "EmpId")
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "DepartmentId")
+    @JoinColumn(name = "DeptId")
     private Department department;
 
     /**
      * SR 로그인 ID
      */
     @Index(name = "ix_employee_login")
+    @Column(name = "LoginId", length = 128)
     private String loginId;
 
     /**
      * 직원 명
      */
+    @Column(name = "EmpName", length = 128)
     @Index(name = "ix_employee_login")
     private String name;
 
     /**
      * 설명
      */
+    @Column(name = "EmpDesc", length = 2000)
     private String description;
 
     @Override

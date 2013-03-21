@@ -22,7 +22,7 @@ import javax.persistence.*;
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @Table(name = "Topic")
-@org.hibernate.annotations.Table(appliesTo = "Topic",
+@org.hibernate.annotations.Table(appliesTo = "TOPIC",
                                  indexes = {@Index(name = "ix_topic_name",
                                                    columnNames = {"TopicKind", "TopicName"})})
 @DiscriminatorColumn(name = "TopicKind", discriminatorType = DiscriminatorType.STRING, length = 31)

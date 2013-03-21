@@ -16,28 +16,29 @@ import javax.persistence.Embeddable;
 import javax.persistence.Transient;
 
 /**
- * 통계 데이타 하나의 값
- * User: sunghyouk.bae@gmail.com
- * Date: 13. 3. 21 오후 12:08
+ * 스냅샷 한 데이타 하나의 값
+ *
+ * @author sunghyouk.bae@gmail.com
+ *         Date: 13. 3. 21 오후 12:08
  */
 @Embeddable
 @DynamicInsert
 @DynamicUpdate
 @Getter
 @Setter
-public class RealtimeItem extends ValueObjectBase {
+public class SnapshotItem extends ValueObjectBase {
 
     private static final long serialVersionUID = 2211422186112407893L;
 
-    protected RealtimeItem() {}
+    protected SnapshotItem() {}
 
-    public RealtimeItem(String name, double value) {
-        this.name = name;
-        this.value = value;
+    public SnapshotItem(String name, double value) {
+        this(name, value, "");
     }
 
-    public RealtimeItem(String name, double value, String unit) {
-        this(name, value);
+    public SnapshotItem(String name, double value, String unit) {
+        this.name = name;
+        this.value = value;
         this.unit = unit;
     }
 

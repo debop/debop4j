@@ -21,7 +21,7 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name = "WorkLog")
-@org.hibernate.annotations.Table(appliesTo = "WorkLog",
+@org.hibernate.annotations.Table(appliesTo = "WORK_LOG",
                                  indexes = {@Index(name = "ix_worklog_time",
                                                    columnNames = {"LogKind", "StartTime", "EndTime"})})
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
@@ -48,12 +48,14 @@ public abstract class WorkLogBase extends VitalLogEntityBase {
      * 작업 시작 시각
      */
     @Type(type = "org.joda.time.contrib.hibernate.PersistentDateTime")
+    @Column(name = "StartTime")
     private DateTime startTime;
 
     /**
      * 작업 완료 시각
      */
     @Type(type = "org.joda.time.contrib.hibernate.PersistentDateTime")
+    @Column(name = "EndTime")
     private DateTime endTime;
 
     /**
@@ -71,7 +73,7 @@ public abstract class WorkLogBase extends VitalLogEntityBase {
     /**
      * 작업 시 예외가 있는 경우 stackTrace 정보를 저장한다.
      */
-    @Column(name = "STACK_TRACE", length = 4000)
+    @Column(name = "StackTrace", length = 4000)
     private String stackTrace;
 
     /**

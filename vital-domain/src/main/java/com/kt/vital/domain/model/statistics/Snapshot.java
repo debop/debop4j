@@ -10,42 +10,41 @@ import org.hibernate.annotations.Type;
 import org.joda.time.DateTime;
 
 import javax.persistence.*;
-import java.util.Date;
 import java.util.Set;
 
 /**
- * 실시간 통계 데이터의 스냅샷 정보 - 주기적인 측정 값을 저장한다.
- * User: sunghyouk.bae@gmail.com
- * Date: 13. 3. 21 오후 12:01
+ * 측정 데이터의 스냅샷 정보 - 주기적으로 여러 측정값을 측정했을 시에 저장하기 좋게 한다.
+ *
+ * @author sunghyouk.bae@gmail.com
  */
 @Entity
-@Table(name = "RealtimeData")
-@org.hibernate.annotations.Cache(region = "Vital.Stats", usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+@Table(name = "Snapshot")
+@org.hibernate.annotations.Cache(region = "Vital.Stats", usage = CacheConcurrencyStrategy.READ_WRITE)
 @DynamicInsert
 @DynamicUpdate
 @Getter
 @Setter
-public class RealtimeData extends StatisticEntityBase {
+public class Snapshot extends StatisticEntityBase {
 
     private static final long serialVersionUID = 7631944375999540754L;
 
-    public RealtimeData() {
-        this(new Date());
+    public Snapshot() {
+        this(DateTime.now());
     }
 
-    public RealtimeData(Date createdTime) {
-        this.createdTime = new DateTime(createdTime);
+    public Snapshot(DateTime snapshotTime) {
+        this.snapshotTime = snapshotTime;
     }
 
     @Id
     @GeneratedValue
-    @Column(name = "DataId")
+    @Column(name = "SnapshotId")
     private Long id;
 
     /**
      * Shapshot name
      */
-    @Column(name = "DataName", nullable = false, length = 255)
+    @Column(name = "SnapshotName", nullable = false, length = 255)
     private String name;
 
     /**
@@ -53,28 +52,29 @@ public class RealtimeData extends StatisticEntityBase {
      */
     // @Temporal(TemporalType.TIMESTAMP)
     @Type(type = "org.joda.time.contrib.hibernate.PersistentDateTime")
-    private DateTime createdTime;
+    @Column(name = "SnapshotTime")
+    private DateTime snapshotTime;
 
     /**
      * Snapshot 생성 일자 (Time part 는 제외)
      *
-     * @return
+     * @return 스냅샷을 한 시각
      */
     @Transient
     private DateTime getCreatedDate() {
-        return createdTime.withTimeAtStartOfDay();
+        return snapshotTime.withTimeAtStartOfDay();
     }
 
     /**
      * 실시간 측정 값들
      */
-    @CollectionTable(name = "RealtimeItem", joinColumns = @JoinColumn(name = "DataId"))
-    @ElementCollection(targetClass = RealtimeItem.class, fetch = FetchType.EAGER)
+    @CollectionTable(name = "SnapshotItem", joinColumns = @JoinColumn(name = "SnapshotId"))
+    @ElementCollection(targetClass = SnapshotItem.class, fetch = FetchType.EAGER)
     @OrderColumn(name = "ItemName")
-    private Set<RealtimeItem> items = Sets.newHashSet();
+    private Set<SnapshotItem> items = Sets.newHashSet();
 
-    public RealtimeItem getDataByName(String valueName) {
-        for (RealtimeItem sv : items) {
+    public SnapshotItem getDataByName(String valueName) {
+        for (SnapshotItem sv : items) {
             if (sv.getName().equals(name))
                 return sv;
         }

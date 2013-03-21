@@ -26,11 +26,11 @@ import java.util.Set;
  */
 @Entity
 @Table(name = "Department")
-@org.hibernate.annotations.Table(appliesTo = "Department",
+@org.hibernate.annotations.Table(appliesTo = "DEPARTMENT",
                                  indexes = {@org.hibernate.annotations.Index(name = "ix_department",
                                                                              columnNames = {
                                                                                      "CompanyName",
-                                                                                     "DepartmentCode"})})
+                                                                                     "DeptCode"})})
 @org.hibernate.annotations.Cache(region = "Vital.Common", usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 @DynamicInsert
 @DynamicUpdate
@@ -58,25 +58,25 @@ public class Department extends AnnotatedTreeEntityBase<Department> implements I
 
     @Id
     @GeneratedValue
-    @Column(name = "DepartmentId")
+    @Column(name = "DeptId")
     private Long id;
 
     @Column(name = "CompanyName", nullable = false, length = 64)
     private String companyName;
 
-    @Column(name = "DepartmentCode", nullable = false, length = 64)
+    @Column(name = "DeptCode", nullable = false, length = 64)
     private String code;
 
-    @Column(name = "DepartmentName", nullable = false, length = 128)
+    @Column(name = "DeptName", nullable = false, length = 128)
     private String name;
 
-    @Column(name = "DepartmentEName", length = 128)
+    @Column(name = "DeptEname", length = 128)
     private String enam;
 
     @Column(name = "IsActive")
     private Boolean active;
 
-    @Column(name = "DepartmentDesc", length = 4000)
+    @Column(name = "DeptDesc", length = 4000)
     private String description;
 
     @Column(name = "ExAttr", length = 4000)

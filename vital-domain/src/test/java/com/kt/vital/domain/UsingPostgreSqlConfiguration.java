@@ -4,10 +4,10 @@ import com.kt.vital.domain.model.Voc;
 import com.kt.vital.domain.model.admin.TopicBase;
 import kr.debop4j.data.hibernate.springconfiguration.PostgreSqlConfigBase;
 import kr.debop4j.data.hibernate.tools.HibernateTool;
+import kr.debop4j.data.hibernate.tools.OracleNamingStrategy;
 import org.hibernate.SessionFactory;
 import org.hibernate.cache.ehcache.SingletonEhCacheRegionFactory;
 import org.hibernate.cfg.Environment;
-import org.hibernate.cfg.ImprovedNamingStrategy;
 import org.hibernate.cfg.NamingStrategy;
 import org.hibernate.cfg.beanvalidation.BeanValidationEventListener;
 import org.hibernate.event.spi.EventType;
@@ -42,13 +42,13 @@ public class UsingPostgreSqlConfiguration extends PostgreSqlConfigBase {
 
     @Override
     protected void setupSessionFactory(LocalSessionFactoryBean factoryBean) {
-        // factoryBean.setNamingStrategy(namingStrategy());
+        factoryBean.setNamingStrategy(namingStrategy());
     }
 
     @Bean
     NamingStrategy namingStrategy() {
-        // return new OracleNamingStrategy();
-        return new ImprovedNamingStrategy();
+        return new OracleNamingStrategy();
+        // return ImprovedNamingStrategy.INSTANCE;
     }
 
     @Override
