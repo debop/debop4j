@@ -6,7 +6,6 @@ import kr.debop4j.core.Guard;
 import kr.debop4j.core.tools.HashTool;
 import lombok.Getter;
 import lombok.Setter;
-import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
@@ -20,7 +19,7 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name = "GroupMember")
-@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+@org.hibernate.annotations.Cache(region = "Organization", usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 @org.hibernate.annotations.Table(appliesTo = "GroupMember",
                                  indexes = @org.hibernate.annotations.Index(name = "ix_groupMember",
                                                                             columnNames = {

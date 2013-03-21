@@ -6,6 +6,7 @@ import kr.debop4j.core.Guard;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -16,6 +17,7 @@ import java.util.Date;
  * Date: 13. 3. 11.
  */
 @MappedSuperclass
+@org.hibernate.annotations.Cache(region = "Calendar", usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 @Getter
 @Setter
 public abstract class WorkTimeByTimeBase extends AccessEntityBase implements IWorkTimeByTime {

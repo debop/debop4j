@@ -56,8 +56,8 @@ public class UsingHSqlConfiguration extends HSqlConfigBase {
         // secondary cache
         props.put(Environment.USE_SECOND_LEVEL_CACHE, true);
         props.put(Environment.USE_QUERY_CACHE, true);
-        props.put(Environment.CACHE_REGION_PREFIX, "debop4j-access");
         props.put(Environment.CACHE_REGION_FACTORY, SingletonEhCacheRegionFactory.class.getName());
+        props.put(Environment.CACHE_REGION_PREFIX, "");
         props.put(Environment.CACHE_PROVIDER_CONFIG, "classpath:ehcache.xml");
 
         // Validator

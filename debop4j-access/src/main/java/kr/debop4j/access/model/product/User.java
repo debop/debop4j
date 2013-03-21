@@ -23,7 +23,6 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name = "`User`")
-@org.hibernate.annotations.Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 @org.hibernate.annotations.Table(appliesTo = "`User`",
                                  indexes = @org.hibernate.annotations.Index(name = "ix_user",
                                                                             columnNames = {
@@ -31,6 +30,7 @@ import javax.persistence.*;
                                                                                     "CompanyId",
                                                                                     "UserName",
                                                                                     "Password"}))
+@org.hibernate.annotations.Cache(region = "Product", usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 @DynamicInsert
 @DynamicUpdate
 @Getter

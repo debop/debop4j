@@ -6,7 +6,6 @@ import kr.debop4j.core.tools.HashTool;
 import kr.debop4j.core.tools.StringTool;
 import lombok.Getter;
 import lombok.Setter;
-import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.*;
 import org.hibernate.validator.constraints.NotEmpty;
 
@@ -23,7 +22,7 @@ import java.util.Set;
  */
 @Entity
 @Table
-@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+@org.hibernate.annotations.Cache(region = "Vital.Common", usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 @DynamicInsert
 @DynamicUpdate
 @Getter
@@ -134,8 +133,8 @@ public class MasterCode extends VitalEntityBase {
     @Override
     protected Objects.ToStringHelper buildStringHelper() {
         return super.buildStringHelper()
-                    .add("id", id)
-                    .add("name", name)
-                    .add("value", value);
+                .add("id", id)
+                .add("name", name)
+                .add("value", value);
     }
 }

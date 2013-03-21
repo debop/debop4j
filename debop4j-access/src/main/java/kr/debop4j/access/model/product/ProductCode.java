@@ -22,10 +22,10 @@ import java.util.Set;
  */
 @Entity
 @Table(name = "ProductCode")
+@org.hibernate.annotations.Cache(region = "Product", usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 @org.hibernate.annotations.Table(appliesTo = "ProductCode",
                                  indexes = @org.hibernate.annotations.Index(name = "ix_product_code",
                                                                             columnNames = {"ProductId", "CodeValue"}))
-@org.hibernate.annotations.Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 @DynamicInsert
 @DynamicUpdate
 @Getter

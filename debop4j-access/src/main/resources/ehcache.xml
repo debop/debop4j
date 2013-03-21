@@ -13,7 +13,7 @@
             statistics="false"
             />
 
-    <cache name="Vital.Common"
+    <cache name="Calendar"
            eternal="true"
            overflowToDisk="true"
            maxEntriesLocalDisk="1000000000"
@@ -21,7 +21,15 @@
            statistics="false"
             />
 
-    <cache name="Vital.Voc"
+    <cache name="Organization"
+           eternal="true"
+           overflowToDisk="true"
+           maxEntriesLocalDisk="1000000000"
+           memoryStoreEvictionPolicy="LRU"
+           statistics="false"
+            />
+
+    <cache name="Product"
            eternal="true"
            overflowToDisk="true"
            maxEntriesLocalDisk="1000000000"

@@ -1,31 +1,30 @@
-package com.kt.vital.domain;
+package kr.debop4j.access.test;
 
-import com.kt.vital.domain.model.Voc;
-import com.kt.vital.domain.model.admin.TopicBase;
-import kr.debop4j.data.hibernate.springconfiguration.PostgreSqlConfigBase;
+import kr.debop4j.access.model.calendar.WorkCalendar;
+import kr.debop4j.access.model.organization.Company;
+import kr.debop4j.access.model.organization.CompanyCode;
+import kr.debop4j.access.model.product.Product;
+import kr.debop4j.data.hibernate.springconfiguration.MySqlConfigBase;
 import kr.debop4j.data.hibernate.tools.HibernateTool;
 import org.hibernate.SessionFactory;
 import org.hibernate.cache.ehcache.SingletonEhCacheRegionFactory;
 import org.hibernate.cfg.Environment;
-import org.hibernate.cfg.ImprovedNamingStrategy;
-import org.hibernate.cfg.NamingStrategy;
 import org.hibernate.cfg.beanvalidation.BeanValidationEventListener;
 import org.hibernate.event.spi.EventType;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.orm.hibernate4.LocalSessionFactoryBean;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import java.util.Properties;
 
 /**
- * PostgreSQL DB를 사용하는 Hibernate 환경설정입니다.
+ * com.kt.vital.domain.UsingMySqlConfiguration
  * User: sunghyouk.bae@gmail.com
- * Date: 13. 3. 7.
+ * Date: 13. 3. 18.
  */
 @Configuration
 @EnableTransactionManagement
-public class UsingPostgreSqlConfiguration extends PostgreSqlConfigBase {
+public class UsingMySqlConfiguration extends MySqlConfigBase {
 
     @Override
     public String getDatabaseName() {
@@ -35,23 +34,14 @@ public class UsingPostgreSqlConfiguration extends PostgreSqlConfigBase {
     @Override
     protected String[] getMappedPackageNames() {
         return new String[]{
-                Voc.class.getPackage().getName(),
-                TopicBase.class.getPackage().getName(),
+                CompanyCode.class.getPackage().getName(),
+                Company.class.getPackage().getName(),
+                Product.class.getPackage().getName(),
+                WorkCalendar.class.getPackage().getName(),
         };
     }
 
-    @Override
-    protected void setupSessionFactory(LocalSessionFactoryBean factoryBean) {
-        // factoryBean.setNamingStrategy(namingStrategy());
-    }
 
-    @Bean
-    NamingStrategy namingStrategy() {
-        // return new OracleNamingStrategy();
-        return new ImprovedNamingStrategy();
-    }
-
-    @Override
     @Bean
     public SessionFactory sessionFactory() {
         SessionFactory sessionFactory = super.sessionFactory();
@@ -69,13 +59,10 @@ public class UsingPostgreSqlConfiguration extends PostgreSqlConfigBase {
         return new BeanValidationEventListener();
     }
 
-
     @Override
     public Properties hibernateProperties() {
         Properties props = super.hibernateProperties();
 
-        // Second Level
-        //
         props.put(Environment.USE_SECOND_LEVEL_CACHE, true);
         props.put(Environment.USE_QUERY_CACHE, true);
         props.put(Environment.CACHE_REGION_FACTORY, SingletonEhCacheRegionFactory.class.getName());

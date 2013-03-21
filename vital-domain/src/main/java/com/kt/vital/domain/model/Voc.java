@@ -22,12 +22,12 @@ import java.util.Map;
 @Entity
 @Table(name = "Voc")
 @SecondaryTable(name = "VocMemo", pkJoinColumns = {@PrimaryKeyJoinColumn(name = "VocId")})
-@org.hibernate.annotations.Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 @org.hibernate.annotations.Table(appliesTo = "Voc",
                                  indexes = {@org.hibernate.annotations.Index(name = "ix_voc_creator",
                                                                              columnNames = {
                                                                                      "rowId",
                                                                                      "creatorId"})})
+@org.hibernate.annotations.Cache(region = "Vital.Voc", usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 @DynamicInsert
 @DynamicUpdate
 @Getter

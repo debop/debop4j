@@ -5,7 +5,6 @@ import kr.debop4j.core.Guard;
 import kr.debop4j.core.tools.HashTool;
 import lombok.Getter;
 import lombok.Setter;
-import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.*;
 import org.joda.time.DateTime;
 
@@ -20,7 +19,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "ConservedWord")
-@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+@org.hibernate.annotations.Cache(region = "Vital.Common", usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 @DynamicInsert
 @DynamicUpdate
 @Getter

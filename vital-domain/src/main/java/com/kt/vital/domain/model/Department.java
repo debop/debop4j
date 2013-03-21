@@ -8,7 +8,6 @@ import kr.debop4j.data.model.AnnotatedTreeEntityBase;
 import kr.debop4j.data.model.IUpdateTimestampedEntity;
 import lombok.Getter;
 import lombok.Setter;
-import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.*;
 import org.joda.time.DateTime;
 
@@ -32,7 +31,7 @@ import java.util.Set;
                                                                              columnNames = {
                                                                                      "CompanyName",
                                                                                      "DepartmentCode"})})
-@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+@org.hibernate.annotations.Cache(region = "Vital.Common", usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 @DynamicInsert
 @DynamicUpdate
 @Getter

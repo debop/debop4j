@@ -9,6 +9,7 @@ import lombok.Setter;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
+import org.hibernate.annotations.Index;
 
 import javax.persistence.*;
 
@@ -18,12 +19,13 @@ import javax.persistence.*;
  * Date: 13. 3. 10.
  */
 @Entity
-@org.hibernate.annotations.Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+@Table(name = "UserPreference")
 @org.hibernate.annotations.Table(appliesTo = "UserPreference",
-                                 indexes = @org.hibernate.annotations.Index(name = "ix_userpreference",
-                                                                            columnNames = {
-                                                                                    "UserId",
-                                                                                    "PrefKey"}))
+                                 indexes = @Index(name = "ix_userpreference",
+                                                  columnNames = {
+                                                          "UserId",
+                                                          "PrefKey"}))
+@org.hibernate.annotations.Cache(region = "Product", usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 @DynamicInsert
 @DynamicUpdate
 @Getter

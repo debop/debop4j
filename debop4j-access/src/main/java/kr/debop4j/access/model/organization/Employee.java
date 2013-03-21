@@ -20,7 +20,7 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name = "Employee")
-@org.hibernate.annotations.Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+@org.hibernate.annotations.Cache(region = "Organization", usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 @org.hibernate.annotations.Table(appliesTo = "Employee",
                                  indexes = @org.hibernate.annotations.Index(name = "ix_department_code",
                                                                             columnNames = {

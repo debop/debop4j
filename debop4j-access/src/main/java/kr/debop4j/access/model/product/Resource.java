@@ -20,7 +20,7 @@ import javax.persistence.*;
  * Date: 13. 3. 10.
  */
 @Entity
-@org.hibernate.annotations.Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+@org.hibernate.annotations.Cache(region = "Product", usage = CacheConcurrencyStrategy.READ_WRITE)
 @org.hibernate.annotations.Table(appliesTo = "Resource",
                                  indexes = @org.hibernate.annotations.Index(name = "ix_resource",
                                                                             columnNames = {

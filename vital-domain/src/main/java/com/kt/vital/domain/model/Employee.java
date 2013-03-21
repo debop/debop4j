@@ -5,12 +5,12 @@ import kr.debop4j.core.Guard;
 import kr.debop4j.core.tools.HashTool;
 import lombok.Getter;
 import lombok.Setter;
-import org.hibernate.annotations.Cache;
-import org.hibernate.annotations.*;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
+import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.DynamicUpdate;
+import org.hibernate.annotations.Index;
 
 import javax.persistence.*;
-import javax.persistence.Entity;
-import javax.persistence.Table;
 
 /**
  * Voc 담당 직원 (KT 또는 협력업체 직원)
@@ -19,7 +19,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "Employee")
-@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+@org.hibernate.annotations.Cache(region = "Vital.Common", usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 @DynamicInsert
 @DynamicUpdate
 @Getter
@@ -71,8 +71,8 @@ public class Employee extends VitalEntityBase {
     @Override
     protected Objects.ToStringHelper buildStringHelper() {
         return super.buildStringHelper()
-                    .add("id", id)
-                    .add("loginId", loginId)
-                    .add("name", name);
+                .add("id", id)
+                .add("loginId", loginId)
+                .add("name", name);
     }
 }

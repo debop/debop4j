@@ -26,7 +26,7 @@ import java.util.Set;
  */
 @Entity
 @Table(name = "Department")
-@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+@Cache(region = "Organization", usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 @org.hibernate.annotations.Table(appliesTo = "Department",
                                  indexes = @org.hibernate.annotations.Index(name = "ix_department_code",
                                                                             columnNames = {"CompanyId", "DepartmentCode"}))

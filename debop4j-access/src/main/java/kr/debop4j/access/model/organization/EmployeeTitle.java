@@ -4,6 +4,7 @@ import com.google.common.base.Objects;
 import kr.debop4j.core.tools.HashTool;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 
@@ -16,6 +17,7 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name = "EmpTitle")
+@org.hibernate.annotations.Cache(region = "Organization", usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 @DynamicInsert
 @DynamicUpdate
 @Getter

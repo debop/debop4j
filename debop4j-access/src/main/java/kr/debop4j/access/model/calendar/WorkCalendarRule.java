@@ -23,6 +23,7 @@ import java.util.Set;
  */
 @Entity
 @Table(name = "WorkCalendarRule")
+@org.hibernate.annotations.Cache(region = "Calendar", usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 @DynamicInsert
 @DynamicUpdate
 @Getter

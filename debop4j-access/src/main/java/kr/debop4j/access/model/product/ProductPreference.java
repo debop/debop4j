@@ -5,7 +5,6 @@ import kr.debop4j.access.model.PreferenceBase;
 import kr.debop4j.core.tools.HashTool;
 import lombok.Getter;
 import lombok.Setter;
-import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
@@ -19,7 +18,7 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name = "ProductPreference")
-@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+@org.hibernate.annotations.Cache(region = "Product", usage = CacheConcurrencyStrategy.READ_WRITE)
 @org.hibernate.annotations.Table(appliesTo = "ProductPreference",
                                  indexes = @org.hibernate.annotations.Index(name = "ix_productPreference",
                                                                             columnNames = {

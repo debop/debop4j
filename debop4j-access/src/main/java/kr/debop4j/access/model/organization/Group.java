@@ -25,7 +25,7 @@ import java.util.Set;
  */
 @Entity
 @Table(name = "`Group`")
-@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+@Cache(region = "Organization", usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 @org.hibernate.annotations.Table(appliesTo = "`Group`",
                                  indexes = @org.hibernate.annotations.Index(name = "ix_group_code",
                                                                             columnNames = {

@@ -5,6 +5,7 @@ import kr.debop4j.core.Guard;
 import kr.debop4j.core.tools.HashTool;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.Index;
@@ -17,7 +18,7 @@ import javax.persistence.*;
  * Date: 13. 3. 18 오후 4:21
  */
 @Entity
-@Table(name = "Authority")
+@org.hibernate.annotations.Cache(region = "Vital.Common", usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 @DynamicInsert
 @DynamicUpdate
 @Getter

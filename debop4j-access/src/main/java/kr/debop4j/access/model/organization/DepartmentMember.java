@@ -21,7 +21,7 @@ import java.util.Date;
  */
 @Entity
 @Table(name = "DepartmentMember")
-@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+@Cache(region = "Organization", usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 @org.hibernate.annotations.Table(appliesTo = "DepartmentMember",
                                  indexes = @org.hibernate.annotations.Index(name = "ix_DepartmentMember",
                                                                             columnNames = {"DepartmentId", "EmployeeId"}))

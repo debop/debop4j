@@ -1,7 +1,7 @@
 <ehcache xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:noNamespaceSchemaLocation="http://www.ehcache.org/ehcache.xsd"
          updateCheck="false" monitoring="autodetect" dynamicConfig="false"
-         maxBytesLocalHeap="75%" name="debop4j-access-cache">
+         maxBytesLocalHeap="75%" name="vital-domain-cache">
 
     <diskStore path="java.io.tmpdir"/>
 
@@ -11,4 +11,26 @@
             maxEntriesLocalDisk="1000000000"
             statistics="false"
             />
+
+    <cache name="Calendar"
+           eternal="true"
+           overflowToDisk="true"
+           maxEntriesLocalDisk="1000000000"
+           statistics="false"
+            />
+
+    <cache name="Organization"
+           eternal="true"
+           overflowToDisk="true"
+           maxEntriesLocalDisk="1000000000"
+           statistics="false"
+            />
+
+    <cache name="Product"
+           eternal="true"
+           overflowToDisk="true"
+           maxEntriesLocalDisk="1000000000"
+           statistics="false"
+            />
+
 </ehcache>

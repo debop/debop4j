@@ -3,6 +3,7 @@ package com.kt.vital.domain.model.statistics;
 import com.google.common.collect.Sets;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.Type;
@@ -19,6 +20,7 @@ import java.util.Set;
  */
 @Entity
 @Table(name = "RealtimeData")
+@org.hibernate.annotations.Cache(region = "Vital.Stats", usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 @DynamicInsert
 @DynamicUpdate
 @Getter

@@ -6,6 +6,7 @@ import kr.debop4j.access.model.ICodeBaseEntity;
 import kr.debop4j.core.Guard;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.Index;
 
 import javax.persistence.*;
@@ -20,6 +21,7 @@ import javax.persistence.*;
 // @DynamicInsert
 // @DynamicUpdate
 @MappedSuperclass
+@org.hibernate.annotations.Cache(region = "Organization", usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 @Getter
 @Setter
 public abstract class EmployeeCodeBase extends AccessEntityBase implements ICodeBaseEntity {

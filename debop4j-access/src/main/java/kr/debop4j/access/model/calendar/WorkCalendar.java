@@ -7,6 +7,7 @@ import kr.debop4j.data.model.AnnotatedTreeEntityBase;
 import kr.debop4j.data.model.ITreeEntity;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.Index;
@@ -20,6 +21,7 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name = "WorkCalendar")
+@org.hibernate.annotations.Cache(region = "Calendar", usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 @DynamicInsert
 @DynamicUpdate
 @Getter

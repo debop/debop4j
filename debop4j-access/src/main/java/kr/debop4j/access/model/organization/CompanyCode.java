@@ -8,6 +8,7 @@ import kr.debop4j.core.tools.HashTool;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.*;
 
 import javax.persistence.CascadeType;
@@ -23,6 +24,7 @@ import java.util.Set;
  */
 @Entity
 @Table(name = "CompanyCode")
+@Cache(region = "Organization", usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 @DynamicInsert
 @DynamicUpdate
 @Getter

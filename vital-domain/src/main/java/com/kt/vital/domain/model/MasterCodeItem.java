@@ -4,8 +4,6 @@ import com.google.common.base.Objects;
 import kr.debop4j.core.tools.HashTool;
 import lombok.Getter;
 import lombok.Setter;
-import org.hibernate.annotations.Cache;
-import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.validator.constraints.NotEmpty;
@@ -19,7 +17,6 @@ import javax.persistence.*;
  */
 @Entity
 @Table
-@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 @DynamicInsert
 @DynamicUpdate
 @Getter
@@ -88,8 +85,8 @@ public class MasterCodeItem extends VitalEntityBase {
     @Override
     protected Objects.ToStringHelper buildStringHelper() {
         return super.buildStringHelper()
-                    .add("id", id)
-                    .add("name", name)
-                    .add("value", value);
+                .add("id", id)
+                .add("name", name)
+                .add("value", value);
     }
 }
