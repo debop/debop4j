@@ -7,11 +7,11 @@ import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.*;
+import org.joda.time.DateTime;
 
 import javax.persistence.*;
 import javax.persistence.Entity;
 import javax.persistence.Table;
-import java.util.Date;
 
 /**
  * Voc 메모내용에서 변환되지 말아야 할 예약어 (메모 내용을 볼때, 민감한 정보를 * 로 변한하는데, 변환하지 말아야할 단어를 등록해 놓으면, 대체하지 않는다)
@@ -36,7 +36,7 @@ public class ConservedWord extends VitalEntityBase {
 
         this.word = word;
         this.enabled = true;
-        this.createdTime = new Date();
+        this.createdTime = DateTime.now();
     }
 
     @Id
@@ -52,8 +52,8 @@ public class ConservedWord extends VitalEntityBase {
     @Basic
     private Boolean enabled;
 
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date createdTime;
+    @Type(type = "org.joda.time.contrib.hibernate.PersistentDateTime")
+    private DateTime createdTime;
 
     @Override
     public int hashCode() {

@@ -5,10 +5,10 @@ import kr.debop4j.data.model.AnnotatedEntityBase;
 import kr.debop4j.data.model.IUpdateTimestampedEntity;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.Type;
+import org.joda.time.DateTime;
 
 import javax.persistence.MappedSuperclass;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import java.util.Date;
 
 /**
@@ -23,17 +23,21 @@ public abstract class VitalEntityBase extends AnnotatedEntityBase implements IUp
 
     private static final long serialVersionUID = 8685979366878442016L;
 
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date updateTimestamp;
+    @Type(type = "org.joda.time.contrib.hibernate.PersistentDateTime")
+    private DateTime updatedTime;
+
+    public Date getUpdateTimestamp() {
+        return updatedTime.toDate();
+    }
 
     @Override
     public void updateUpdateTimestamp() {
-        this.updateTimestamp = new Date();
+        this.updatedTime = DateTime.now();
     }
 
     @Override
     protected Objects.ToStringHelper buildStringHelper() {
         return super.buildStringHelper()
-                .add("updateTimestamp", updateTimestamp);
+                .add("updateTimestamp", updatedTime);
     }
 }

@@ -1,6 +1,6 @@
 package com.kt.vital.domain.model.statistics;
 
-import com.kt.vital.domain.model.VitalEntityBase;
+import kr.debop4j.data.model.AnnotatedEntityBase;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.DynamicInsert;
@@ -18,7 +18,7 @@ import javax.persistence.MappedSuperclass;
 @DynamicUpdate
 @Getter
 @Setter
-public class StatisticsDataBase extends VitalEntityBase {
+public class StatisticEntityBase extends AnnotatedEntityBase {
 
     private static final long serialVersionUID = 6567205149886942843L;
 

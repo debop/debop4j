@@ -7,20 +7,16 @@ import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
-import org.hibernate.annotations.Index;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Embeddable;
 
 /**
  * VoC의 특성을 나타내는 코드들입니다. (업무유형,
  * User: sunghyouk.bae@gmail.com
  * Date: 13. 3. 19 오후 3:09
  */
-@Entity
-@Table(name = "VocAttr")
-@org.hibernate.annotations.Table(appliesTo = "VocAttr",
-                                 indexes = {@Index(name = "IX_VocAttr_Name",
-                                                   columnNames = {"VocId", "AttrName"})})
+@Embeddable
 @DynamicInsert
 @DynamicUpdate
 @Getter
@@ -31,20 +27,10 @@ public class VocAttribute extends AnnotatedEntityBase {
 
     protected VocAttribute() {}
 
-    public VocAttribute(Voc voc, String attrName, String attrValue) {
+    public VocAttribute(String attrName, String attrValue) {
         this.name = attrName;
         this.value = value;
-        this.setVoc(voc);
     }
-
-    @Id
-    @GeneratedValue
-    @Column(name = "AttrId")
-    private Long id;
-
-    @ManyToOne
-    @JoinColumn(name = "VocId")
-    private Voc voc;
 
     @Column(name = "AttrName", nullable = false, length = 256, updatable = false)
     private String name;
@@ -54,16 +40,13 @@ public class VocAttribute extends AnnotatedEntityBase {
 
     @Override
     public int hashCode() {
-        if (isPersisted())
-            HashTool.compute(id);
-        return HashTool.compute(voc, name);
+        return HashTool.compute(name);
     }
 
     @Override
     protected Objects.ToStringHelper buildStringHelper() {
         return super.buildStringHelper()
-                    .add("id", id)
-                    .add("name", name)
-                    .add("value", value);
+                .add("name", name)
+                .add("value", value);
     }
 }

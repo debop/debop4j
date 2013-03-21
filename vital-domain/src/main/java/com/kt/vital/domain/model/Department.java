@@ -10,10 +10,12 @@ import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.*;
+import org.joda.time.DateTime;
 
 import javax.persistence.CascadeType;
 import javax.persistence.*;
 import javax.persistence.Entity;
+import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import java.util.Date;
 import java.util.Set;
@@ -81,17 +83,22 @@ public class Department extends AnnotatedTreeEntityBase<Department> implements I
     @Column(name = "ExAttr", length = 4000)
     private String exAttr;
 
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date updateTimestamp;
-
     @OneToMany(mappedBy = "department", cascade = {CascadeType.ALL})
     @LazyCollection(value = LazyCollectionOption.EXTRA)
     @Fetch(FetchMode.SELECT)
+    @OrderBy(value = "name")
     private Set<Employee> employees = Sets.newHashSet();
+
+    @Type(type = "org.joda.time.contrib.hibernate.PersistentDateTime")
+    private DateTime updatedTime;
+
+    public Date getUpdateTimestamp() {
+        return updatedTime.toDate();
+    }
 
     @Override
     public void updateUpdateTimestamp() {
-        updateTimestamp = new Date();
+        updatedTime = DateTime.now();
     }
 
     @Override
@@ -104,8 +111,8 @@ public class Department extends AnnotatedTreeEntityBase<Department> implements I
     @Override
     protected Objects.ToStringHelper buildStringHelper() {
         return super.buildStringHelper()
-                    .add("id", id)
-                    .add("code", code)
-                    .add("name", name);
+                .add("id", id)
+                .add("code", code)
+                .add("name", name);
     }
 }

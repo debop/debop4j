@@ -8,10 +8,11 @@ import lombok.Setter;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.Index;
+import org.hibernate.annotations.Type;
 import org.hibernate.validator.constraints.NotEmpty;
+import org.joda.time.DateTime;
 
 import javax.persistence.*;
-import java.util.Date;
 
 /**
  * 토픽
@@ -19,13 +20,13 @@ import java.util.Date;
  * Date: 13. 3. 20 오전 11:27
  */
 @Entity
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @Table(name = "Topic")
 @org.hibernate.annotations.Table(appliesTo = "Topic",
                                  indexes = {@Index(name = "ix_topic_name",
                                                    columnNames = {"TopicKind", "TopicName"})})
-@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "TopicKind", discriminatorType = DiscriminatorType.STRING, length = 31)
-@DiscriminatorValue("TopicBase")
+@DiscriminatorValue("topic")
 @DynamicInsert
 @DynamicUpdate
 @Getter
@@ -34,13 +35,9 @@ public abstract class TopicBase extends VitalEntityBase {
 
     private static final long serialVersionUID = -7243194330033348977L;
 
-    protected TopicBase() {
-        this.enabled = true;
-        this.createdTime = new Date();
-    }
+    protected TopicBase() { }
 
     protected TopicBase(String topicName) {
-        this();
         this.name = topicName;
     }
 
@@ -54,10 +51,10 @@ public abstract class TopicBase extends VitalEntityBase {
     private String name;
 
     @Basic
-    private Boolean enabled;
+    private Boolean enabled = true;
 
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date createdTime;
+    @Type(type = "org.joda.time.contrib.hibernate.PersistentDateTime")
+    private DateTime createdTime = DateTime.now();
 
     @Override
     public int hashCode() {

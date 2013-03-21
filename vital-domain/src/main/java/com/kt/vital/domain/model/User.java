@@ -5,15 +5,15 @@ import kr.debop4j.core.Guard;
 import kr.debop4j.core.tools.HashTool;
 import lombok.Getter;
 import lombok.Setter;
-import org.hibernate.annotations.CacheConcurrencyStrategy;
-import org.hibernate.annotations.DynamicInsert;
-import org.hibernate.annotations.DynamicUpdate;
-import org.hibernate.annotations.Index;
+import org.hibernate.annotations.*;
 import org.hibernate.validator.constraints.Email;
+import org.joda.time.DateTime;
 
 import javax.persistence.*;
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
-import java.util.Date;
 
 /**
  * Vital 시스템 사용자 정보 (Voc 담당 직원 정보는 {@link Employee} 입니다)
@@ -92,8 +92,8 @@ public class User extends VitalEntityBase {
     @Column(length = 50)
     private String mobile;
 
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date enabledTime;
+    @Type(type = "org.joda.time.contrib.hibernate.PersistentDateTime")
+    private DateTime enabledTime;
 
     @Override
     public int hashCode() {
@@ -105,10 +105,10 @@ public class User extends VitalEntityBase {
     @Override
     protected Objects.ToStringHelper buildStringHelper() {
         return super.buildStringHelper()
-                    .add("id", id)
-                    .add("username", username)
-                    .add("name", name)
-                    .add("email", email)
-                    .add("phone", phone);
+                .add("id", id)
+                .add("username", username)
+                .add("name", name)
+                .add("email", email)
+                .add("phone", phone);
     }
 }
