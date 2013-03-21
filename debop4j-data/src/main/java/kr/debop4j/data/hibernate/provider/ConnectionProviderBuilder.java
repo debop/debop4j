@@ -13,6 +13,7 @@ import java.util.Properties;
  * User: sunghyouk.bae@gmail.com
  * Date: 12. 12. 16.
  */
+@Deprecated
 @Slf4j
 public class ConnectionProviderBuilder {
 

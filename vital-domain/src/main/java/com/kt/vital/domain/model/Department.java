@@ -87,7 +87,7 @@ public class Department extends AnnotatedTreeEntityBase<Department> implements I
     @OneToMany(mappedBy = "department", cascade = {CascadeType.ALL})
     @LazyCollection(value = LazyCollectionOption.EXTRA)
     @Fetch(FetchMode.SELECT)
-    private Set<User> members = Sets.newHashSet();
+    private Set<Employee> employees = Sets.newHashSet();
 
     @Override
     public void updateUpdateTimestamp() {
@@ -104,8 +104,8 @@ public class Department extends AnnotatedTreeEntityBase<Department> implements I
     @Override
     protected Objects.ToStringHelper buildStringHelper() {
         return super.buildStringHelper()
-                .add("id", id)
-                .add("code", code)
-                .add("name", name);
+                    .add("id", id)
+                    .add("code", code)
+                    .add("name", name);
     }
 }

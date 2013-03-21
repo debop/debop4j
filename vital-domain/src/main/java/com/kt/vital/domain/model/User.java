@@ -66,9 +66,9 @@ public class User extends VitalEntityBase {
     @JoinColumn(name = "RoleId")
     private Role role;
 
-    @ManyToOne(cascade = {CascadeType.PERSIST}, fetch = FetchType.LAZY)
-    @JoinColumn(name = "DeptId")
-    private Department department;
+    @ManyToOne(cascade = {CascadeType.PERSIST})
+    @JoinColumn(name = "EmployeeId")
+    private Employee employee;
 
     @Basic
     private Boolean enabled;
@@ -105,10 +105,10 @@ public class User extends VitalEntityBase {
     @Override
     protected Objects.ToStringHelper buildStringHelper() {
         return super.buildStringHelper()
-                .add("id", id)
-                .add("username", username)
-                .add("name", name)
-                .add("email", email)
-                .add("phone", phone);
+                    .add("id", id)
+                    .add("username", username)
+                    .add("name", name)
+                    .add("email", email)
+                    .add("phone", phone);
     }
 }
