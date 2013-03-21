@@ -51,6 +51,7 @@ public class UsingPostgreSqlConfiguration extends PostgreSqlConfigBase {
         return new ImprovedNamingStrategy();
     }
 
+    @Override
     @Bean
     public SessionFactory sessionFactory() {
         SessionFactory sessionFactory = super.sessionFactory();

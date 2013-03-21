@@ -27,7 +27,8 @@ public class UnitOfWorkTestContext extends UnitOfWorkTestContextBase {
             UnitOfWorks.closeUnitOfWorkFactory();
         }
 
-        resetSpringContext();
+        // 이건 필요 없다.
+        // resetSpringContext();
 
         Springs.init(getSpringContext());
         IUnitOfWorkFactory factory = Springs.getBean(IUnitOfWorkFactory.class);

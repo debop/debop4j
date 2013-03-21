@@ -9,7 +9,6 @@ import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  * Vital 시스템 환경 설정 테스트
@@ -18,9 +17,6 @@ import org.springframework.beans.factory.annotation.Autowired;
  */
 @Slf4j
 public class VitalConfigurationTest extends DatabaseTestFixtureBase {
-
-    @Autowired
-    private VocRepository vocRepository;
 
     @BeforeClass
     public static void beforeClass() {
