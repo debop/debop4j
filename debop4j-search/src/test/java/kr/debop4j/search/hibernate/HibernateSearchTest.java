@@ -3,7 +3,7 @@ package kr.debop4j.search.hibernate;
 import kr.debop4j.core.spring.Springs;
 import kr.debop4j.search.hibernate.model.SearchItem;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.lucene.analysis.standard.StandardAnalyzer;
+import org.apache.lucene.analysis.cjk.CJKAnalyzer;
 import org.apache.lucene.queryParser.MultiFieldQueryParser;
 import org.apache.lucene.queryParser.ParseException;
 import org.apache.lucene.queryParser.QueryParser;
@@ -65,20 +65,19 @@ public class HibernateSearchTest {
         fullTextSession.flush();
         fullTextSession.clear();
 
-
         QueryParser parser = new MultiFieldQueryParser(Version.LUCENE_36,
                                                        new String[]{"title", "description"},
-                                                       new StandardAnalyzer(Version.LUCENE_36));
+                                                       new CJKAnalyzer(Version.LUCENE_36));
         //QueryParser parser = new QueryParser(Version.LUCENE_36, "title", new StandardAnalyzer(Version.LUCENE_36));
         try {
-            Query luceneQuery = parser.parse("description:Hibernate");
+            Query luceneQuery = parser.parse("description:어플리");
             List<SearchItem> founds =
                     (List<SearchItem>) fullTextSession
-                            .createFullTextQuery(luceneQuery,
-                                                 kr.debop4j.search.hibernate.model.SearchItem.class)
+                            .createFullTextQuery(luceneQuery, SearchItem.class)
                             .list();
+
             for (SearchItem loaded : founds)
-                System.out.println("Title: " + loaded.getTitle());
+                System.out.printf("Id=%d; Title: %s\n", loaded.getId(), loaded.getTitle());
         } catch (ParseException e) {
             log.error("예외가 발생했습니다.", e);
         }

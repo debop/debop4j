@@ -21,7 +21,6 @@
         <module>debop4j-web</module>
         <module>debop4j-web-example</module>
         <module>debop4j-graph</module>
-        <module>vital-domain</module>
     </modules>
 
     <properties>
@@ -311,7 +310,7 @@
         <repository>
             <id>spring-releases</id>
             <name>Spring Maven RELEASE Repository</name>
-            <url>http://maven.springframework.org</url>
+            <url>http://maven.springframework.org/release</url>
         </repository>
         <repository>
             <id>spring-release-data</id>
