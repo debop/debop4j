@@ -43,9 +43,8 @@ public class ConservedWord extends VitalEntityBase {
     @Column(name = "WordId")
     private Long id;
 
-    @Column(name = "word", nullable = false, length = 1024)
-    @NaturalId
-    @Index(name = "ix_prohibit_word")
+    @Column(name = "Word", nullable = false, length = 128)
+    @Index(name = "ix_conserved_word")
     private String word;
 
     @Basic
@@ -64,8 +63,8 @@ public class ConservedWord extends VitalEntityBase {
     @Override
     protected Objects.ToStringHelper buildStringHelper() {
         return super.buildStringHelper()
-                .add("id", id)
-                .add("word", word)
-                .add("enabled", enabled);
+                    .add("id", id)
+                    .add("word", word)
+                    .add("enabled", enabled);
     }
 }

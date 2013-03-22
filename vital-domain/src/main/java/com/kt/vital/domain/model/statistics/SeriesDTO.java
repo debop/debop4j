@@ -17,20 +17,20 @@ import java.util.Map;
  */
 @Getter
 @Setter
-public class SeriesDto extends ValueObjectBase {
+public class SeriesDTO extends ValueObjectBase {
 
     private static final long serialVersionUID = -6701926683055241418L;
 
-    public SeriesDto() {}
+    public SeriesDTO() {}
 
-    public SeriesDto(List<Snapshot> dataList) {
+    public SeriesDTO(List<Snapshot> dataList) {
         buildSeries(dataList);
     }
 
     /**
      * 리얼타임으로 측정한 값들을 종류별로
      */
-    private Map<String, List<SeriesItemDto>> series = Maps.newHashMap();
+    private Map<String, List<SeriesItemDTO>> series = Maps.newHashMap();
 
     /**
      * Normalized 된 엔티티 값을 도표를 그리기 쉽게 Measure 로 표현한다.
@@ -43,7 +43,7 @@ public class SeriesDto extends ValueObjectBase {
         series.clear();
         for (Snapshot data : dataList) {
             for (SnapshotItem item : data.getItems()) {
-                series.put(item.getName(), new ArrayList<SeriesItemDto>());
+                series.put(item.getName(), new ArrayList<SeriesItemDTO>());
             }
         }
 
@@ -51,7 +51,7 @@ public class SeriesDto extends ValueObjectBase {
         for (Snapshot data : dataList) {
             DateTime snapshotTime = data.getSnapshotTime();
             for (SnapshotItem item : data.getItems()) {
-                series.get(item.getName()).add(new SeriesItemDto(snapshotTime, item.getValue()));
+                series.get(item.getName()).add(new SeriesItemDTO(snapshotTime, item.getValue()));
             }
         }
     }

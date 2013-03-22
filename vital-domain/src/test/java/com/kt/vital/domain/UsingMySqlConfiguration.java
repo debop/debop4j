@@ -2,21 +2,27 @@ package com.kt.vital.domain;
 
 import com.kt.vital.domain.model.Voc;
 import com.kt.vital.domain.model.admin.TopicBase;
+import com.kt.vital.domain.model.history.WorkLogBase;
+import com.kt.vital.domain.model.search.RankingWord;
+import com.kt.vital.domain.model.statistics.Measure;
 import kr.debop4j.data.hibernate.springconfiguration.MySqlConfigBase;
 import kr.debop4j.data.hibernate.tools.HibernateTool;
+import kr.debop4j.data.hibernate.tools.OracleNamingStrategy;
 import org.hibernate.SessionFactory;
 import org.hibernate.cache.ehcache.SingletonEhCacheRegionFactory;
 import org.hibernate.cfg.Environment;
+import org.hibernate.cfg.NamingStrategy;
 import org.hibernate.cfg.beanvalidation.BeanValidationEventListener;
 import org.hibernate.event.spi.EventType;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.orm.hibernate4.LocalSessionFactoryBean;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import java.util.Properties;
 
 /**
- * com.kt.vital.domain.UsingMySqlConfiguration
+ * MySQL DB를 사용하는 Hibernate 환경설정입니다.
  * User: sunghyouk.bae@gmail.com
  * Date: 13. 3. 18.
  */
@@ -34,9 +40,21 @@ public class UsingMySqlConfiguration extends MySqlConfigBase {
         return new String[]{
                 Voc.class.getPackage().getName(),
                 TopicBase.class.getPackage().getName(),
+                WorkLogBase.class.getPackage().getName(),
+                RankingWord.class.getPackage().getName(),
+                Measure.class.getPackage().getName(),
         };
     }
 
+    @Override
+    protected void setupSessionFactory(LocalSessionFactoryBean factoryBean) {
+        factoryBean.setNamingStrategy(namingStrategy());
+    }
+
+    @Bean
+    NamingStrategy namingStrategy() {
+        return new OracleNamingStrategy();
+    }
 
     @Bean
     public SessionFactory sessionFactory() {

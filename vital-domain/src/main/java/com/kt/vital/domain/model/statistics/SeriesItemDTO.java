@@ -12,11 +12,11 @@ import java.io.Serializable;
  */
 @Getter
 @Setter
-public class SeriesItemDto implements Serializable {
+public class SeriesItemDTO implements Serializable {
 
     private static final long serialVersionUID = -4022356634960283305L;
 
-    public SeriesItemDto(Comparable x, Comparable y) {
+    public SeriesItemDTO(Comparable x, Comparable y) {
         this.x = x;
         this.y = y;
     }

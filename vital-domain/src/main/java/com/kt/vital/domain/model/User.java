@@ -66,6 +66,9 @@ public class User extends VitalEntityBase {
     @JoinColumn(name = "RoleId")
     private Role role;
 
+    /**
+     * 사용자의 실제 직원 정보
+     */
     @ManyToOne(cascade = {CascadeType.PERSIST})
     @JoinColumn(name = "EmployeeId")
     private Employee employee;
@@ -105,10 +108,10 @@ public class User extends VitalEntityBase {
     @Override
     protected Objects.ToStringHelper buildStringHelper() {
         return super.buildStringHelper()
-                .add("id", id)
-                .add("username", username)
-                .add("name", name)
-                .add("email", email)
-                .add("phone", phone);
+                    .add("id", id)
+                    .add("username", username)
+                    .add("name", name)
+                    .add("email", email)
+                    .add("phone", phone);
     }
 }

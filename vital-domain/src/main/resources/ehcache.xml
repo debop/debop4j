@@ -13,13 +13,13 @@
             statistics="false"
             />
 
-    <cache name="org.hibernate.cache.UpdateTimestampsCache"
+    <cache name="org.hibernate.cache.spi.UpdateTimestampsCachee"
            eternal="true"
            overflowToDisk="true"
            statistics="false"
             />
 
-    <cache name="org.hibernate.cache.StandardQueryCache"
+    <cache name="org.hibernate.cache.internal.StandardQueryCache"
            eternal="false"
            timeToIdleSeconds="120"
            timeToLiveSeconds="120"
@@ -39,6 +39,14 @@
             />
 
     <cache name="Vital.Voc"
+           eternal="true"
+           overflowToDisk="true"
+           maxEntriesLocalDisk="1000000000"
+           memoryStoreEvictionPolicy="LRU"
+           statistics="false"
+            />
+
+    <cache name="Vital.Stats"
            eternal="true"
            overflowToDisk="true"
            maxEntriesLocalDisk="1000000000"

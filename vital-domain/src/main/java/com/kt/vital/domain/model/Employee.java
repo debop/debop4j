@@ -47,16 +47,23 @@ public class Employee extends VitalEntityBase {
     /**
      * SR 로그인 ID
      */
-    @Index(name = "ix_employee_login")
-    @Column(name = "LoginId", length = 128)
+    @Column(name = "LoginId", length = 50)
+    @Index(name = "ix_employee")
     private String loginId;
 
     /**
      * 직원 명
      */
-    @Column(name = "EmpName", length = 128)
-    @Index(name = "ix_employee_login")
+    @Column(name = "EmpName", length = 50)
+    @Index(name = "ix_employee")
     private String name;
+
+    /**
+     * 직원 사번
+     */
+    @Column(name = "EmpNo", length = 50)
+    @Index(name = "ix_employee_empNo")
+    private String empNo;
 
     /**
      * 설명
@@ -74,8 +81,8 @@ public class Employee extends VitalEntityBase {
     @Override
     protected Objects.ToStringHelper buildStringHelper() {
         return super.buildStringHelper()
-                .add("id", id)
-                .add("loginId", loginId)
-                .add("name", name);
+                    .add("id", id)
+                    .add("loginId", loginId)
+                    .add("name", name);
     }
 }

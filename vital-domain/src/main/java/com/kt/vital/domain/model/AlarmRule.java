@@ -26,6 +26,8 @@ import javax.persistence.*;
 @Setter
 public class AlarmRule extends VitalEntityBase {
 
+    private static final long serialVersionUID = 5184780356677545656L;
+
     protected AlarmRule() {}
 
     public AlarmRule(User user, AlarmType alarmType, String frequencyGroup, String levelType) {
@@ -91,11 +93,11 @@ public class AlarmRule extends VitalEntityBase {
     @Override
     protected Objects.ToStringHelper buildStringHelper() {
         return super.buildStringHelper()
-                .add("id", id)
-                .add("username", user.getUsername())
-                .add("enabled", enabled)
-                .add("alarmType", alarmType)
-                .add("frequencyGroup", frequencyGroup)
-                .add("levelType", levelType);
+                    .add("id", id)
+                    .add("username", user.getUsername())
+                    .add("enabled", enabled)
+                    .add("alarmType", alarmType)
+                    .add("frequencyGroup", frequencyGroup)
+                    .add("levelType", levelType);
     }
 }

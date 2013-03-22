@@ -2,9 +2,7 @@ package com.kt.vital.domain.model.history;
 
 import com.google.common.base.Objects;
 import com.kt.vital.domain.model.ActionType;
-import com.kt.vital.domain.model.User;
 import com.kt.vital.domain.model.VitalLogEntityBase;
-import kr.debop4j.core.Guard;
 import kr.debop4j.core.tools.HashTool;
 import lombok.Getter;
 import lombok.Setter;
@@ -32,18 +30,13 @@ public class UserActionLog extends VitalLogEntityBase {
 
     protected UserActionLog() { }
 
-    public UserActionLog(User user, ActionType actionType, String sessionId) {
-        this(user, actionType, sessionId, null);
+    public UserActionLog(String username, ActionType actionType, String sessionId) {
+        this(username, actionType, sessionId, null);
     }
 
-    public UserActionLog(User user, ActionType actionType, String sessionId, String clientAddress) {
-        Guard.shouldNotBeNull(user, "user");
+    public UserActionLog(String username, ActionType actionType, String sessionId, String clientAddress) {
 
-        this.user = user;
-        this.username = user.getUsername();
-        if (user.getEmployee() != null && user.getEmployee().getDepartment() != null)
-            this.departmentCode = user.getEmployee().getDepartment().getCode();
-
+        this.username = username;
         this.actionType = actionType;
 
         this.sessionId = sessionId;
@@ -57,17 +50,28 @@ public class UserActionLog extends VitalLogEntityBase {
     private String username;
 
     /**
-     * 사용자 정보
+     * 직원 사번
      */
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "UserId")
-    private User user;
+    @Column(name = "EmpNo", length = 50)
+    private String empNo;
 
     /**
-     * 직원의 소속 부서 (안 넣어도 된다)
+     * 직원 명
      */
-    @Column(name = "DepartmentCode", length = 50)
-    private String departmentCode;
+    @Column(name = "EmpName", length = 50)
+    private String empName;
+
+    /**
+     * 직원의 소속 부서
+     */
+    @Column(name = "DeptCode", length = 50)
+    private String deptCode;
+
+    /**
+     * 직원 소속 부서 명
+     */
+    @Column(name = "DeptName", length = 50)
+    private String deptName;
 
     /**
      * 세션 Id
@@ -104,10 +108,9 @@ public class UserActionLog extends VitalLogEntityBase {
     @Override
     protected Objects.ToStringHelper buildStringHelper() {
         return super.buildStringHelper()
-                .add("departmentCode", departmentCode)
-                .add("username", username)
-                .add("actionType", actionType)
-                .add("actionTime", actionTime)
-                .add("clientAddress", clientAddress);
+                    .add("username", username)
+                    .add("actionType", actionType)
+                    .add("actionTime", actionTime)
+                    .add("clientAddress", clientAddress);
     }
 }

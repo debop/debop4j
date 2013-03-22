@@ -1,6 +1,5 @@
 package kr.debop4j.search;
 
-import kr.debop4j.data.hibernate.interceptor.MultiInterceptor;
 import kr.debop4j.data.hibernate.interceptor.StatefulEntityInterceptor;
 import kr.debop4j.data.hibernate.interceptor.UpdateTimestampedInterceptor;
 import kr.debop4j.data.hibernate.repository.HibernateRepositoryFactory;
@@ -51,8 +50,19 @@ public class AppConfig {
         props.put(Environment.STATEMENT_BATCH_SIZE, "50");
 
         // hibernate-search 환경설정
+        props.put("hibernate.search.default.indexmanager", "near-real-time");
         props.put("hibernate.search.default.directory_provider", "filesystem");
         props.put("hibernate.search.default.indexBase", "lucene/indexes");
+
+        // hibernate-search performance settings
+        props.put("hibernate.search.default.indexwriter.max_buffered_doc", "true");
+        props.put("hibernate.search.default.indexwriter.max_merge_docs", "100");
+        props.put("hibernate.search.default.indexwriter.merge_factor", "20");
+        props.put("hibernate.search.default.indexwriter.term_index_interval", "default");
+        props.put("hibernate.search.default.indexwriter.ram_buffer_size", "1024");
+
+        //
+        props.put("hibernate.search.default.exclusive_index_use", "true");
 
         // Validator
         props.put("javax.persistence.validation.group.pre-persist", "javax.validation.groups.Default");
@@ -119,13 +129,15 @@ public class AppConfig {
     }
 
     @Bean
-    public MultiInterceptor hibernateInterceptor() {
-        MultiInterceptor interceptor = new MultiInterceptor();
+    public org.hibernate.Interceptor hibernateInterceptor() {
 
-        interceptor.getInterceptors().add(statuefulEntityInterceptor());
-        interceptor.getInterceptors().add(updateTimestampedInterceptor());
-
-        return interceptor;
+        return statuefulEntityInterceptor();
+//        MultiInterceptor interceptor = new MultiInterceptor();
+//
+//        interceptor.getInterceptors().add(statuefulEntityInterceptor());
+//        interceptor.getInterceptors().add(updateTimestampedInterceptor());
+//
+//        return interceptor;
     }
 
     @Bean

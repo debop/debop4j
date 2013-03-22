@@ -12,7 +12,12 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
  */
 @Configuration
 @EnableTransactionManagement
-@ComponentScan({"com.kt.vital.domain.repository", "com.kt.vital.domain..service"})
+@ComponentScan(
+        {
+                "com.kt.vital.domain.repository",
+                "com.kt.vital.domain..service"
+        }
+)
 @Import({UsingPostgreSqlConfiguration.class})
 // @Import({UsingMySqlConfiguration.class})
 // @Import({UsingHSqlConfiguration.class})
