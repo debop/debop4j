@@ -15,7 +15,7 @@ import javax.persistence.*;
  *         13. 3. 23. 오후 10:08
  */
 @Entity
-@Table(name = "OneToOne_Biography")
+@Table
 @Getter
 @Setter
 public class OneToOne_Biography extends AnnotatedEntityBase {

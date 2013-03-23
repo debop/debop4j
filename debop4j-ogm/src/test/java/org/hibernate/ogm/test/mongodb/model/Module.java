@@ -6,6 +6,8 @@ import kr.debop4j.data.model.AnnotatedEntityBase;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Index;
 
@@ -20,6 +22,8 @@ import javax.persistence.Id;
  *         13. 3. 23. 오후 2:21
  */
 @Entity
+@DynamicInsert
+@DynamicUpdate
 @Getter
 @Setter
 public class Module extends AnnotatedEntityBase {

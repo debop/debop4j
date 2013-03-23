@@ -2,6 +2,7 @@ package org.hibernate.ogm.test.mongodb;
 
 import kr.debop4j.ogm.spring.cfg.mongodb.MongoDBConfigBase;
 import lombok.extern.slf4j.Slf4j;
+import org.hibernate.ogm.test.mongodb.model.Module;
 import org.hibernate.ogm.test.mongodb.model.Project;
 import org.springframework.context.annotation.Configuration;
 
@@ -24,6 +25,14 @@ public class MongoDBConfiguration extends MongoDBConfigBase {
     protected String[] getMappedPackageNames() {
         return new String[]{
                 Project.class.getPackage().getName(),
+        };
+    }
+
+    @Override
+    protected Class[] getMappedEntities() {
+        return new Class[]{
+                Module.class,
+                Project.class
         };
     }
 }

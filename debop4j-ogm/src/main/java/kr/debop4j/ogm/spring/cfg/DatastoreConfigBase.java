@@ -28,33 +28,47 @@ import java.util.Properties;
 @Slf4j
 public abstract class DatastoreConfigBase {
 
+    /**
+     * DataStoreProvider 를 제공합니다.
+     */
+    @Bean
+    public DatastoreProvider datastoreProvider() {
+        return (DatastoreProvider) getService(DatastoreProvider.class);
+    }
+
+    /**
+     * {@link GridDialect} 를 제공합니다.
+     */
     @Bean
     public GridDialect gridDialect() {
         return ((DatastoreServices) getService(DatastoreServices.class)).getGridDialect();
     }
 
+    /**
+     * Hibernate SessionFactory 를 제공합니다.
+     */
     @Bean
     public SessionFactory sessionFactory() {
         if (log.isInfoEnabled())
-            log.info("hiberante-ogm용 SessionFactory를 생성합니다...");
+            log.info("hiberante-ogm 용 SessionFactory를 생성합니다...");
 
         OgmConfiguration cfg = new OgmConfiguration();
 
-        for (String pkg : getMappedPackageNames())
-            cfg.addPackage(pkg);
+        for (String pkgName : getMappedPackageNames()) {
+            cfg.addPackage(pkgName);
+        }
+
+        for (Class annoatatedClass : getMappedEntities()) {
+            cfg.addAnnotatedClass(annoatatedClass);
+        }
 
         cfg.setInterceptor(hibernateInterceptor());
         cfg.setProperties(getHibernateOgmProperties());
 
         if (log.isInfoEnabled())
-            log.info("hiberante-ogm용 SessionFactory를 생성했습니다!!!");
+            log.info("hiberante-ogm 용 SessionFactory를 생성했습니다!!!");
 
         return cfg.buildSessionFactory();
-    }
-
-    @Bean
-    public DatastoreProvider datastoreProviderService() {
-        return (DatastoreProvider) getService(DatastoreProvider.class);
     }
 
     @Bean
@@ -85,6 +99,10 @@ public abstract class DatastoreConfigBase {
         return new String[0];
     }
 
+    protected Class[] getMappedEntities() {
+        return new Class[0];
+    }
+
 
     protected Properties getHibernateProperties() {
         Properties props = new Properties();
@@ -98,7 +116,6 @@ public abstract class DatastoreConfigBase {
     protected Properties getHibernateOgmProperties() {
         return getHibernateProperties();
     }
-
 
     protected org.hibernate.service.Service getService(Class<? extends Service> serviceImpl) {
         SessionFactoryImplementor sessionFactory = sfi();

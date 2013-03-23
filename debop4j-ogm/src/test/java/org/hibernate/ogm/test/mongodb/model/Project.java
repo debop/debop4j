@@ -28,7 +28,8 @@ public class Project extends AnnotatedEntityBase {
     protected Project() {}
 
     public Project(String id, String name) {
-
+        this.id = id;
+        this.name = name;
     }
 
     @Id
