@@ -4,6 +4,7 @@ import kr.debop4j.core.spring.Springs;
 import kr.debop4j.search.hibernate.model.SearchItem;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.lucene.analysis.cjk.CJKAnalyzer;
+import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.queryParser.MultiFieldQueryParser;
 import org.apache.lucene.queryParser.ParseException;
 import org.apache.lucene.queryParser.QueryParser;
@@ -13,6 +14,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.search.FullTextSession;
 import org.hibernate.search.Search;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -53,7 +55,7 @@ public class HibernateSearchTest {
 
     @Test
     @SuppressWarnings("unchecked")
-    public void firstSearch() {
+    public void firstSearch() throws InterruptedException {
 
         SearchItem item = new SearchItem();
         item.setTitle("Spring MVC 전후 처리기 작성하기");
@@ -65,9 +67,12 @@ public class HibernateSearchTest {
         fullTextSession.flush();
         fullTextSession.clear();
 
+        Thread.sleep(100);
+
         QueryParser parser = new MultiFieldQueryParser(Version.LUCENE_36,
                                                        new String[]{"title", "description"},
                                                        new CJKAnalyzer(Version.LUCENE_36));
+        new StandardAnalyzer(Version.LUCENE_36);
         //QueryParser parser = new QueryParser(Version.LUCENE_36, "title", new StandardAnalyzer(Version.LUCENE_36));
         try {
             Query luceneQuery = parser.parse("description:어플리");
@@ -76,6 +81,7 @@ public class HibernateSearchTest {
                             .createFullTextQuery(luceneQuery, SearchItem.class)
                             .list();
 
+            Assert.assertTrue(founds.size() > 0);
             for (SearchItem loaded : founds)
                 System.out.printf("Id=%d; Title: %s\n", loaded.getId(), loaded.getTitle());
         } catch (ParseException e) {

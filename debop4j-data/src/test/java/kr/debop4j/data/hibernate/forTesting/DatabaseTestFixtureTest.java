@@ -39,12 +39,12 @@ public class DatabaseTestFixtureTest extends DatabaseTestFixtureBase {
         verifyCanCreateUseAndDisposeUnitOfWork();
     }
 
-    @Test
-    public void canCreateUnitOfWorkContextForDerby() {
-        verifyCanCreateUnitOfWorkContextFor(DerbyConfig.class);
-        verifyCanCreateUseAndDisposeSession();
-        verifyCanCreateUseAndDisposeUnitOfWork();
-    }
+//    @Test
+//    public void canCreateUnitOfWorkContextForDerby() {
+//        verifyCanCreateUnitOfWorkContextFor(DerbyConfig.class);
+//        verifyCanCreateUseAndDisposeSession();
+//        verifyCanCreateUseAndDisposeUnitOfWork();
+//    }
 
     @Test
     @Ignore("MySQL을 설치하세요")

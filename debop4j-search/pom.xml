@@ -74,7 +74,6 @@
             </exclusions>
         </dependency>
 
-
         <dependency>
             <groupId>org.jboss.logging</groupId>
             <artifactId>jboss-logging</artifactId>
@@ -237,6 +236,12 @@
             <scope>test</scope>
         </dependency>
 
+        <!-- 한글 형태소 분석기 for Lucene -->
+        <dependency>
+            <groupId>com.tistory.devyongsik</groupId>
+            <artifactId>luceneKoreanAnalyzer</artifactId>
+            <version>0.5-SNAPSHOT</version>
+        </dependency>
 
         <dependency>
             <groupId>org.hibernate</groupId>

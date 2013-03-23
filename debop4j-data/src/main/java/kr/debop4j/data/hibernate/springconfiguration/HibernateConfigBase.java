@@ -104,7 +104,7 @@ public abstract class HibernateConfigBase {
     }
 
     @Bean
-    public HibernateTransactionManager transactionManager() {
+    public HibernateTransactionManager hibernateTransactionManager() {
         return new HibernateTransactionManager(sessionFactory());
     }
 
