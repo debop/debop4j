@@ -8,8 +8,6 @@ import com.mongodb.DBObject;
 import kr.debop4j.core.spring.Springs;
 import kr.debop4j.data.hibernate.unitofwork.UnitOfWorks;
 import kr.debop4j.ogm.tools.mongodb.MongoTool;
-import org.hibernate.Session;
-import org.hibernate.Transaction;
 import org.hibernate.ogm.datastore.mongodb.impl.MongoDBDatastoreProvider;
 import org.hibernate.ogm.datastore.spi.Association;
 import org.hibernate.ogm.datastore.spi.AssociationContext;
@@ -80,17 +78,14 @@ public class LoadSelectedColumnsCollectionTest extends MongoDBTestBase {
 
     @Test
     public void testLoadSelectedAssociationColumns() {
-        Session session = UnitOfWorks.getCurrentSession();
-        final Transaction transaction = session.getTransaction();
-        transaction.begin();
 
         Module mongodb = new Module();
         mongodb.setName("MongoDB");
-        session.persist(mongodb);
+        UnitOfWorks.getCurrentSession().persist(mongodb);
 
         Module infinispan = new Module();
         infinispan.setName("Infinispan");
-        session.persist(infinispan);
+        UnitOfWorks.getCurrentSession().persist(infinispan);
 
         List<Module> modules = new ArrayList<Module>();
         modules.add(mongodb);
@@ -99,8 +94,8 @@ public class LoadSelectedColumnsCollectionTest extends MongoDBTestBase {
         Project hibernateOGM = new Project("projectID", "HibernateOGM");
         hibernateOGM.setModules(modules);
 
-        session.persist(hibernateOGM);
-        transaction.commit();
+        UnitOfWorks.getCurrentSession().persist(hibernateOGM);
+        UnitOfWorks.getCurrent().transactionalFlush();
 
         this.addExtraColumn();
         GridDialect gridDialect = Springs.getBean(GridDialect.class);  //this.getGridDialect();
@@ -119,10 +114,10 @@ public class LoadSelectedColumnsCollectionTest extends MongoDBTestBase {
         final DBObject assocObject = associationSnapshot.getDBObject();
         this.checkLoading(assocObject);
 
-        session.delete(mongodb);
-        session.delete(infinispan);
-        session.delete(hibernateOGM);
-        session.close();
+        UnitOfWorks.getCurrentSession().delete(mongodb);
+        UnitOfWorks.getCurrentSession().delete(infinispan);
+        UnitOfWorks.getCurrentSession().delete(hibernateOGM);
+        UnitOfWorks.getCurrentSession().flush();
     }
 
     /**
@@ -143,7 +138,7 @@ public class LoadSelectedColumnsCollectionTest extends MongoDBTestBase {
 
     protected void checkLoading(DBObject associationObject) {
         /*
-		* The only column (except _id) that needs to be retrieved is "rows"
+        * The only column (except _id) that needs to be retrieved is "rows"
 		* So we should have 2 columns
 		*/
         final Set<?> retrievedColumns = associationObject.keySet();
