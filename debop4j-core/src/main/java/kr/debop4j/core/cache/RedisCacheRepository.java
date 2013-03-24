@@ -31,13 +31,13 @@ public class RedisCacheRepository extends CacheRepositoryBase {
 
     public synchronized Jedis getJedis() {
         if (!jedis.isConnected()) {
-            if (RedisCacheRepository.log.isDebugEnabled())
-                RedisCacheRepository.log.debug("Redis 서버에 연결합니다...");
+            if (log.isDebugEnabled())
+                log.debug("Redis 서버에 연결합니다...");
 
             jedis.connect();
 
-            if (RedisCacheRepository.log.isDebugEnabled())
-                RedisCacheRepository.log.debug("Redis 서버에 연결했습니다. redis=" + jedis.info());
+            if (log.isDebugEnabled())
+                log.debug("Redis 서버에 연결했습니다. redis=" + jedis.info());
         }
         return this.jedis;
     }
@@ -50,8 +50,8 @@ public class RedisCacheRepository extends CacheRepositoryBase {
      */
     @Override
     public Object get(final String key) {
-        if (RedisCacheRepository.log.isDebugEnabled())
-            RedisCacheRepository.log.debug("캐시 항목을 읽어 옵니다. key=" + key);
+        if (log.isDebugEnabled())
+            log.debug("캐시 항목을 읽어 옵니다. key=" + key);
 
         shouldNotBeWhiteSpace(key, "key");
 
@@ -71,9 +71,9 @@ public class RedisCacheRepository extends CacheRepositoryBase {
      */
     @Override
     public void set(final String key, final Object value, final long validFor) {
-        if (RedisCacheRepository.log.isDebugEnabled())
-            RedisCacheRepository.log.debug(format("캐시 항목을 저장합니다. key=[%s], value=[%s], validFor=[%d] min",
-                                                  key, value, validFor));
+        if (log.isDebugEnabled())
+            log.debug(format("캐시 항목을 저장합니다. key=[%s], value=[%s], validFor=[%d] min",
+                             key, value, validFor));
 
         shouldNotBeWhiteSpace(key, "key");
 
@@ -82,8 +82,8 @@ public class RedisCacheRepository extends CacheRepositoryBase {
         long expirySec = (validFor > 0) ? validFor : getExpiry();
 
         if (expirySec > 0) {
-            if (RedisCacheRepository.log.isDebugEnabled())
-                RedisCacheRepository.log.debug("캐시 항목에 유효 시간을 설정했습니다. expiry (min) = " + expirySec);
+            if (log.isDebugEnabled())
+                log.debug("캐시 항목에 유효 시간을 설정했습니다. expiry (min) = " + expirySec);
 
             getJedis().expire(key, (int) (expirySec * 60));
         }
@@ -138,8 +138,8 @@ public class RedisCacheRepository extends CacheRepositoryBase {
      */
     @Override
     public void clear() {
-        if (RedisCacheRepository.log.isDebugEnabled())
-            RedisCacheRepository.log.debug("모든 캐시 항목을 삭제합니다...");
+        if (log.isDebugEnabled())
+            log.debug("모든 캐시 항목을 삭제합니다...");
         getJedis().flushAll();
     }
 }

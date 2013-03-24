@@ -24,8 +24,8 @@ public class EhCacheRepository extends CacheRepositoryBase {
     private final Ehcache ehcache;
 
     public EhCacheRepository(Ehcache ehcache) {
-        if (EhCacheRepository.log.isDebugEnabled())
-            EhCacheRepository.log.debug("EhCacheRepository 인스턴스를 생성합니다. ehcache=[{}]", ehcache);
+        if (log.isDebugEnabled())
+            log.debug("EhCacheRepository 인스턴스를 생성합니다. ehcache=[{}]", ehcache);
         this.ehcache = shouldNotBeNull(ehcache, "ehcache");
     }
 

@@ -8,6 +8,7 @@ import kr.debop4j.core.tools.ArrayTool;
 import kr.debop4j.core.tools.HashTool;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.Date;
 import java.util.List;
@@ -17,6 +18,7 @@ import java.util.List;
  * User: sunghyouk.bae@gmail.com
  * Date: 12. 12. 5.
  */
+@Slf4j
 @Getter
 @Setter
 public class User extends ValueObjectBase implements Comparable<User> {
@@ -117,6 +119,9 @@ public class User extends ValueObjectBase implements Comparable<User> {
 
         for (int i = 0; i < favoriteMovieSize; i++)
             user.getFavoriteMovies().add("Favorite Movie Number-" + i);
+
+        if (log.isDebugEnabled())
+            log.debug("Create User...");
 
         return user;
     }

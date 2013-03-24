@@ -27,8 +27,8 @@ public class FutureWebCacheRepository extends CacheRepositoryBase {
     private final LoadingCache<String, String> cache;
 
     public FutureWebCacheRepository() {
-        if (FutureWebCacheRepository.log.isDebugEnabled())
-            FutureWebCacheRepository.log.debug("FutureWebCacheRepository 인스턴스를 생성합니다.");
+        if (log.isDebugEnabled())
+            log.debug("FutureWebCacheRepository 인스턴스를 생성합니다.");
 
         cache = CacheBuilder.newBuilder().weakValues().build(getCacheLoader());
     }
@@ -78,8 +78,8 @@ public class FutureWebCacheRepository extends CacheRepositoryBase {
             @Override
             public String load(String key) throws Exception {
 
-                if (FutureWebCacheRepository.log.isDebugEnabled())
-                    FutureWebCacheRepository.log.debug("URI=[{}] 의 웹 컨텐츠를 비동기 방식으로 다운로드 받아 캐시합니다.", key);
+                if (log.isDebugEnabled())
+                    log.debug("URI=[{}] 의 웹 컨텐츠를 비동기 방식으로 다운로드 받아 캐시합니다.", key);
 
                 String responseStr = "";
                 HttpAsyncClient httpClient = new DefaultHttpAsyncClient();
@@ -91,9 +91,9 @@ public class FutureWebCacheRepository extends CacheRepositoryBase {
                     HttpResponse response = future.get();
                     responseStr = EntityUtils.toString(response.getEntity(), Charsets.UTF_8.toString());
 
-                    if (FutureWebCacheRepository.log.isDebugEnabled())
-                        FutureWebCacheRepository.log.debug("URI=[{}]로부터 웹 컨텐츠를 다운로드 받았습니다. responseStr=[{}]",
-                                                           key, StringTool.ellipsisChar(responseStr, 255));
+                    if (log.isDebugEnabled())
+                        log.debug("URI=[{}]로부터 웹 컨텐츠를 다운로드 받았습니다. responseStr=[{}]",
+                                  key, StringTool.ellipsisChar(responseStr, 255));
                 } finally {
                     httpClient.shutdown();
                 }

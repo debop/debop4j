@@ -24,7 +24,7 @@ public class AutoStopwatch implements AutoCloseable {
     @Override
     public void close() {
         try {
-            stopwatch.end();
+            stopwatch.stop();
         } catch (Exception ignored) {
         }
     }

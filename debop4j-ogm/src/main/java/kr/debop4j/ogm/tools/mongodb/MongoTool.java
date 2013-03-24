@@ -29,6 +29,13 @@ public class MongoTool {
     @Autowired
     DatastoreProvider datastoreProvider;
 
+    public MongoTool() {}
+
+    public MongoTool(GridDialect gridDialect, DatastoreProvider datastoreProvider) {
+        this.gridDialect = gridDialect;
+        this.datastoreProvider = datastoreProvider;
+    }
+
 
     public Tuple getTuple(String collectionName, String id, List<String> selectedColumns) {
         EntityKey key = new EntityKey(collectionName,

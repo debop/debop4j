@@ -60,7 +60,7 @@ public class Stopwatch {
         startTime = System.nanoTime();
     }
 
-    public double end() throws IllegalStateException {
+    public double stop() throws IllegalStateException {
         if (startTime == 0)
             throw new IllegalStateException("call start() method at first.");
 

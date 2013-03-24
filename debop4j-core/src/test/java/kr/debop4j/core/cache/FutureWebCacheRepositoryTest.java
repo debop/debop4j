@@ -1,8 +1,7 @@
-package kr.debop4j.core.cacherepository;
+package kr.debop4j.core.cache;
 
 import com.carrotsearch.junitbenchmarks.BenchmarkRule;
 import kr.debop4j.core.Stopwatch;
-import kr.debop4j.core.cache.FutureWebCacheRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Rule;
 import org.junit.Test;
@@ -33,12 +32,12 @@ public class FutureWebCacheRepositoryTest {
         for (String url : urls) {
             stopwatch.start();
             repository.get(url);
-            stopwatch.end();
+            stopwatch.stop();
             log.debug("First: " + stopwatch.toString());
 
             stopwatch.start();
             repository.get(url);
-            stopwatch.end();
+            stopwatch.stop();
             log.debug("Second: " + stopwatch.toString());
         }
     }
