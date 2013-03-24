@@ -1,6 +1,6 @@
 package kr.debop4j.ogm.spring.cfg.ehcache;
 
-import kr.debop4j.ogm.spring.cfg.DatastoreConfigBase;
+import kr.debop4j.ogm.spring.cfg.GridDatastoreConfigBase;
 import net.sf.ehcache.CacheManager;
 import org.hibernate.ogm.datastore.ehcache.impl.EhcacheDatastoreProvider;
 import org.hibernate.ogm.datastore.spi.DatastoreProvider;
@@ -18,7 +18,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
  */
 @Configuration
 @EnableTransactionManagement
-public abstract class EhcacheConfigBase extends DatastoreConfigBase {
+public abstract class EhcacheConfigBase extends GridDatastoreConfigBase {
 
     @Override
     @Bean

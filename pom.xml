@@ -18,10 +18,10 @@
         <module>debop4j-data</module>
         <module>debop4j-search</module>
         <module>debop4j-access</module>
+        <module>debop4j-ogm</module>
+        <module>debop4j-graph</module>
         <module>debop4j-web</module>
         <module>debop4j-web-example</module>
-        <module>debop4j-graph</module>
-        <module>debop4j-ogm</module>
     </modules>
 
     <properties>

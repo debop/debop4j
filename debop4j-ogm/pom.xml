@@ -15,6 +15,7 @@
 
     <properties>
         <jbossjta.version>4.16.6.Final</jbossjta.version>
+        <spring.data.mongo.version>1.1.1.RELEASE</spring.data.mongo.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
@@ -129,11 +130,7 @@
                 </exclusion>
             </exclusions>
         </dependency>
-        <dependency>
-            <groupId>org.mongodb</groupId>
-            <artifactId>mongo-java-driver</artifactId>
-            <version>${mongo.driver.version}</version>
-        </dependency>
+
         <dependency>
             <groupId>org.hibernate.jpql</groupId>
             <artifactId>hibernate-jpql-parser</artifactId>
@@ -170,6 +167,19 @@
             <groupId>org.jboss.jbossts</groupId>
             <artifactId>jbossjta</artifactId>
             <version>${jbossjta.version}</version>
+        </dependency>
+
+        <!-- MongoDB -->
+        <dependency>
+            <groupId>org.mongodb</groupId>
+            <artifactId>mongo-java-driver</artifactId>
+            <version>${mongo.driver.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.data</groupId>
+            <artifactId>spring-data-mongodb</artifactId>
+            <version>${spring.data.mongo.version}</version>
         </dependency>
 
         <!-- for Testing -->

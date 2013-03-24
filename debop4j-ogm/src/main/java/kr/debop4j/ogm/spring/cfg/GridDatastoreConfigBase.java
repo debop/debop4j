@@ -26,7 +26,7 @@ import java.util.Properties;
  */
 @Configuration
 @Slf4j
-public abstract class DatastoreConfigBase {
+public abstract class GridDatastoreConfigBase {
 
     /**
      * DataStoreProvider 를 제공합니다.
