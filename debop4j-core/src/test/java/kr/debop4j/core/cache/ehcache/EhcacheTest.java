@@ -25,18 +25,8 @@ public class EhcacheTest {
 
     @Autowired
     EhCacheCacheManager cacheManager;
-
     @Autowired
     UserRepository userRepository;
-
-    @Test
-    public void componentConfigurationTest() {
-        Assert.assertNotNull(cacheManager);
-        Cache cache = cacheManager.getCache("user");
-        Assert.assertNotNull(cache);
-
-        Assert.assertNotNull(userRepository);
-    }
 
     @Test
     public void getUserFromCache() {
@@ -52,5 +42,14 @@ public class EhcacheTest {
         sw.stop();
 
         Assert.assertEquals(user1, user2);
+    }
+
+    @Test
+    public void componentConfigurationTest() {
+        Assert.assertNotNull(cacheManager);
+        Cache cache = cacheManager.getCache("user");
+        Assert.assertNotNull(cache);
+
+        Assert.assertNotNull(userRepository);
     }
 }
