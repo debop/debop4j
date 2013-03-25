@@ -1,4 +1,4 @@
-package kr.debop4j.core.cache.memcached;
+package kr.debop4j.core.cache.couchbase;
 
 import kr.debop4j.core.Stopwatch;
 import kr.debop4j.core.User;
@@ -12,20 +12,30 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 /**
- * kr.debop4j.core.cache.memcached.MemcachedCacheTest
- * User: sunghyouk.bae@gmail.com
- * Date: 13. 3. 25 오후 1:28
+ * kr.debop4j.core.cache.couchbase.CouchbaseCacheTest
+ *
+ * @author sunghyouk.bae@gmail.com
+ *         13. 3. 25 오후 5:36
  */
 @Slf4j
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = {MemcachedCacheConfiguration.class})
-public class MemcachedCacheTest {
+@ContextConfiguration(classes = {CouchbaseCacheConfiguration.class})
+public class CouchbaseCacheTest {
 
     @Autowired
-    MemcachedCacheManager cacheManager;
+    CouchbaseCacheManager cacheManager;
 
     @Autowired
     UserRepository userRepository;
+
+    @Test
+    public void clearTest() {
+        Assert.assertNotNull(cacheManager);
+        Cache cache = cacheManager.getCache("user");
+        Assert.assertNotNull(cache);
+
+        // cache.clear();
+    }
 
     @Test
     public void getUserFromCache() {

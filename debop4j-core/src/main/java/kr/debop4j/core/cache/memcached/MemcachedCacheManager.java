@@ -12,8 +12,9 @@ import java.util.Collection;
 
 /**
  * kr.debop4j.core.cache.memcached.MemcachedCacheManager
- * User: sunghyouk.bae@gmail.com
- * Date: 13. 3. 25 오전 11:42
+ *
+ * @author sunghyouk.bae@gmail.com
+ *         Date: 13. 3. 25 오전 11:42
  */
 @Slf4j
 public class MemcachedCacheManager extends AbstractTransactionSupportingCacheManager {

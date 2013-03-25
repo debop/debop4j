@@ -11,8 +11,9 @@ import org.springframework.cache.support.SimpleValueWrapper;
 
 /**
  * Memcached를 캐시 저장소로 사용하는 Cache
- * User: sunghyouk.bae@gmail.com
- * Date: 13. 3. 25 오전 11:42
+ *
+ * @author sunghyouk.bae@gmail.com
+ *         Date: 13. 3. 25 오전 11:42
  */
 @Slf4j
 public class MemcachedCache implements Cache {

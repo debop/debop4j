@@ -23,7 +23,7 @@ import javax.annotation.PostConstruct;
 @EnableCaching
 @ComponentScan(basePackageClasses = {UserRepository.class})
 @Slf4j
-public class MemcachedConfiguration {
+public class MemcachedCacheConfiguration {
 
     @Bean
     public Transcoder<Object> transcoder() {

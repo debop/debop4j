@@ -1,4 +1,4 @@
-package kr.debop4j.core.cache.memcached;
+package kr.debop4j.core.cache.mongodb;
 
 import kr.debop4j.core.User;
 import lombok.extern.slf4j.Slf4j;
@@ -13,7 +13,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 @Slf4j
 public class UserRepository {
-
     @Cacheable(value = "user", key = "#id")
     public User getUser(String id) {
         return getUser(id, 1000);

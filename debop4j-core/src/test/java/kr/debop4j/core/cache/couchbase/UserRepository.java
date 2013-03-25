@@ -1,4 +1,4 @@
-package kr.debop4j.core.cache.memcached;
+package kr.debop4j.core.cache.couchbase;
 
 import kr.debop4j.core.User;
 import lombok.extern.slf4j.Slf4j;
@@ -7,8 +7,9 @@ import org.springframework.stereotype.Repository;
 
 /**
  * User 정보를 관리하는 Repository - 캐시 테스트를 위한 Repository입니다.
- * User: sunghyouk.bae@gmail.com
- * Date: 13. 3. 25 오후 1:25
+ *
+ * @author sunghyouk.bae@gmail.com
+ *         13. 3. 25 오후 5:36
  */
 @Repository
 @Slf4j

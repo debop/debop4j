@@ -15,8 +15,9 @@ import static kr.debop4j.core.Guard.shouldNotBeWhiteSpace;
 
 /**
  * Memcached 를 캐시로 사용하는 Repository입니다.
- * User: sunghyouk.bae@gmail.com
- * Date: 12. 9. 12.
+ *
+ * @author sunghyouk.bae@gmail.com
+ *         Date: 12. 9. 12.
  */
 @Slf4j
 public class MemcachedRepository extends CacheRepositoryBase {

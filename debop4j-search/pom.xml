@@ -311,11 +311,7 @@
                 </exclusion>
             </exclusions>
         </dependency>
-        <dependency>
-            <groupId>org.mongodb</groupId>
-            <artifactId>mongo-java-driver</artifactId>
-            <version>${mongo.driver.version}</version>
-        </dependency>
+
         <dependency>
             <groupId>org.hibernate.jpql</groupId>
             <artifactId>hibernate-jpql-parser</artifactId>
@@ -343,10 +339,18 @@
                 </exclusion>
             </exclusions>
         </dependency>
+
         <dependency>
             <groupId>org.antlr</groupId>
             <artifactId>antlr</artifactId>
             <version>3.5</version>
+        </dependency>
+
+        <!-- MongoDB -->
+        <dependency>
+            <groupId>org.mongodb</groupId>
+            <artifactId>mongo-java-driver</artifactId>
+            <version>${mongo.driver.version}</version>
         </dependency>
 
         <!-- tomcat connection pool 성능이 좋다. -->
