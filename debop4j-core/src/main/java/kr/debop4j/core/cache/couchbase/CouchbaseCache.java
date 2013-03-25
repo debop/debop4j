@@ -25,24 +25,29 @@ public class CouchbaseCache implements org.springframework.cache.Cache {
 
     @Getter
     @Setter
-    private int expireTime = 600_000; // msec
+    private int expireMillis = 0; // msec (0 is persist forever)
 
-    public CouchbaseCache(String name, CouchbaseClient client) {
+    public CouchbaseCache(String name, CouchbaseClient client, int expireMillis) {
         Guard.shouldNotBeNull(name, "name");
         Guard.shouldNotBeNull(client, "client");
 
         this.name = name;
         this.nativeCache = client;
+        this.expireMillis = expireMillis;
 
         if (log.isDebugEnabled())
             log.debug("CouchbaseCache 를 생성합니다. name=[{}], nativeCache=[{}]", name, nativeCache);
+    }
+
+    private String getKey(Object key) {
+        return name + "|+|" + key;
     }
 
     @Override
     public ValueWrapper get(Object key) {
         Guard.shouldNotBeNull(key, "key");
 
-        Object result = nativeCache.get(key.toString());
+        Object result = nativeCache.get(getKey(key));
 
         SimpleValueWrapper wrapper = null;
         if (result != null)
@@ -54,19 +59,8 @@ public class CouchbaseCache implements org.springframework.cache.Cache {
     @Override
     public void put(Object key, Object value) {
         Guard.shouldNotBeNull(key, "key");
-        if (!(key instanceof String)) {
-            log.error("Invalid key type: " + key.getClass());
-            return;
-        }
 
-        OperationFuture<Boolean> setOp = null;
-//        ValueWrapper cached = get(key);
-//        if (cached == null)
-//            setOp = nativeCache.add((String) key, expireTime, value);
-//        else
-//            setOp = nativeCache.replace((String) key, expireTime, value);
-
-        setOp = nativeCache.set(key.toString(), expireTime, value);
+        OperationFuture<Boolean> setOp = nativeCache.set(getKey(key), expireMillis, value);
 
         if (setOp.getStatus().isSuccess()) {
             if (log.isDebugEnabled())

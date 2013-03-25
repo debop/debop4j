@@ -22,11 +22,8 @@ public class MemcachedCacheManager extends AbstractTransactionSupportingCacheMan
     @Getter
     private MemcachedCache memcachedCache;
 
-    //protected MemcachedCacheManager() {}
-
     public MemcachedCacheManager(MemcachedClient memcachedClient) {
-        Guard.shouldNotBeNull(memcachedClient, "memcachedClient");
-        memcachedCache = new MemcachedCache(memcachedClient);
+        this(memcachedClient, 24 * 60 * 60);
     }
 
     public MemcachedCacheManager(MemcachedClient memcachedClient, int expireSeconds) {

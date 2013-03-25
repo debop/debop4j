@@ -18,8 +18,6 @@ import org.springframework.cache.support.SimpleValueWrapper;
 @Slf4j
 public class MemcachedCache implements Cache {
 
-    public static final int EXP_TIME = 100000;
-
     @Getter
     private String name = "default";
     @Getter
@@ -28,10 +26,8 @@ public class MemcachedCache implements Cache {
     @Getter
     private int expireSeconds;
 
-    // protected MemcachedCache() {}
-
     public MemcachedCache(MemcachedClient client) {
-        this(client, EXP_TIME);
+        this(client, 26 * 60 * 60);
     }
 
     public MemcachedCache(MemcachedClient client, int expireSeconds) {

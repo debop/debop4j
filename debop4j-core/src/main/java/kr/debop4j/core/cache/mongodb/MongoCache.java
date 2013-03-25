@@ -81,9 +81,6 @@ public class MongoCache implements Cache {
             mongoTemplate.upsert(new Query(Criteria.where("key").is(key)),
                                  Update.update("value", value),
                                  name);
-//        if (result.getLastError().isEmpty())
-//            if (log.isDebugEnabled())
-//                log.debug("캐시에 값을 저장했습니다. key=[{}], value=[{}]", key, value);
     }
 
     @Override

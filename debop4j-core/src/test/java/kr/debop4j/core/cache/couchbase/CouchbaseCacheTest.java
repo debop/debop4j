@@ -34,7 +34,7 @@ public class CouchbaseCacheTest {
         Cache cache = cacheManager.getCache("user");
         Assert.assertNotNull(cache);
 
-        // cache.clear();
+        //cache.clear();
     }
 
     @Test

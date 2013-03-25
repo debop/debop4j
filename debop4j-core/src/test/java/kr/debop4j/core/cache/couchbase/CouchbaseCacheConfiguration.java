@@ -1,5 +1,6 @@
 package kr.debop4j.core.cache.couchbase;
 
+import com.couchbase.client.CouchbaseClient;
 import com.google.common.collect.Lists;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cache.annotation.EnableCaching;
@@ -30,7 +31,12 @@ public class CouchbaseCacheConfiguration {
     }
 
     @Bean
+    public CouchbaseClient couchbaseClient() throws IOException {
+        return new CouchbaseClient(couchbaseList(), "default", "");
+    }
+
+    @Bean
     public CouchbaseCacheManager couchbaseCacheManager() throws IOException {
-        return new CouchbaseCacheManager(couchbaseList(), "");
+        return new CouchbaseCacheManager(couchbaseClient());
     }
 }
