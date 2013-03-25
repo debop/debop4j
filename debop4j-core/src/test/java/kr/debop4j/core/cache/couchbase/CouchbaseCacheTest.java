@@ -12,7 +12,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 /**
- * kr.debop4j.core.cache.couchbase.CouchbaseCacheTest
+ * Couchbase Cache 테스트
  *
  * @author sunghyouk.bae@gmail.com
  *         13. 3. 25 오후 5:36

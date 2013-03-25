@@ -12,8 +12,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 
-import javax.annotation.PostConstruct;
-
 /**
  * kr.debop4j.core.cache.memcached.MemcachedConfiguration
  * User: sunghyouk.bae@gmail.com
@@ -60,11 +58,5 @@ public class MemcachedCacheConfiguration {
     public MemcachedCacheManager memcachedCacheManager() {
         int timeoutInSeconds = 300;
         return new MemcachedCacheManager(memcachedClient(), timeoutInSeconds);
-    }
-
-
-    @PostConstruct
-    public void postConstruct() {
-        log.info("Cache Created");
     }
 }
