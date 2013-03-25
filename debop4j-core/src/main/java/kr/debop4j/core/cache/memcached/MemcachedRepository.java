@@ -1,5 +1,6 @@
-package kr.debop4j.core.cache;
+package kr.debop4j.core.cache.memcached;
 
+import kr.debop4j.core.cache.CacheRepositoryBase;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
@@ -24,8 +25,7 @@ public class MemcachedRepository extends CacheRepositoryBase {
     @Setter
     private MemcachedClient client;
 
-    public MemcachedRepository() {
-    }
+    public MemcachedRepository() { }
 
     public MemcachedRepository(MemcachedClient client) {
         this.client = shouldNotBeNull(client, "client");
@@ -94,8 +94,8 @@ public class MemcachedRepository extends CacheRepositoryBase {
      */
     @Override
     public void clear() {
-        if (MemcachedRepository.log.isDebugEnabled())
-            MemcachedRepository.log.debug("모든 캐시 항목을 제거합니다.");
+        if (log.isDebugEnabled())
+            log.debug("모든 캐시 항목을 제거합니다.");
         client.flush();
     }
 }

@@ -1,4 +1,4 @@
-package kr.debop4j.core.cache;
+package kr.debop4j.core.cache.couchbase;
 
 import com.couchbase.client.CouchbaseClient;
 import com.google.common.collect.Lists;
@@ -29,6 +29,8 @@ public class CouchbaseCache implements org.springframework.cache.Cache {
     private CouchbaseClient nativeCache = null;
 
     public CouchbaseCache(String name) {
+        if (CouchbaseCache.log.isDebugEnabled())
+            CouchbaseCache.log.debug("CouchbaseCache 를 생성합니다. name=[{}]", name);
         this.name = name;
         init();
     }
@@ -38,7 +40,7 @@ public class CouchbaseCache implements org.springframework.cache.Cache {
             List<URI> uris = Lists.newLinkedList();
             uris.add(new URI("http://127.0.0.1:8091/pools"));
         } catch (Exception e) {
-            log.error("Couchbase 서버에 연결하는데 실패했습니다.", e);
+            CouchbaseCache.log.error("Couchbase 서버에 연결하는데 실패했습니다.", e);
         }
     }
 
@@ -50,7 +52,7 @@ public class CouchbaseCache implements org.springframework.cache.Cache {
         if (key instanceof String) {
             result = nativeCache.get((String) key);
         } else {
-            log.error("Invalid key type: " + key.getClass());
+            CouchbaseCache.log.error("Invalid key type: " + key.getClass());
         }
         SimpleValueWrapper wrapper = null;
         if (result != null)
@@ -62,7 +64,7 @@ public class CouchbaseCache implements org.springframework.cache.Cache {
     public void put(Object key, Object value) {
         Guard.shouldNotBeNull(key, "key");
         if (!(key instanceof String)) {
-            log.error("Invalid key type: " + key.getClass());
+            CouchbaseCache.log.error("Invalid key type: " + key.getClass());
             return;
         }
 
@@ -73,11 +75,11 @@ public class CouchbaseCache implements org.springframework.cache.Cache {
         else
             setOp = nativeCache.replace((String) key, EXP_TIME, value);
 
-        if (log.isInfoEnabled()) {
+        if (CouchbaseCache.log.isInfoEnabled()) {
             if (setOp.getStatus().isSuccess()) {
-                log.info("객체를 캐시 키[{}]로 저장했습니다.", key);
+                CouchbaseCache.log.info("객체를 캐시 키[{}]로 저장했습니다.", key);
             } else {
-                log.info("객체를 캐시 키[{}]로 저장하는데 실패했습니다. operation=[{}]", key, setOp);
+                CouchbaseCache.log.info("객체를 캐시 키[{}]로 저장하는데 실패했습니다. operation=[{}]", key, setOp);
             }
         }
     }
