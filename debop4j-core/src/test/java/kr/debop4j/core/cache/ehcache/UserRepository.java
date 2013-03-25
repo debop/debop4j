@@ -34,8 +34,8 @@ public class UserRepository {
         for (int i = 0; i < favoriteMovieSize; i++)
             user.getFavoriteMovies().add("Favorite Movie Number-" + i);
 
-        if (UserRepository.log.isDebugEnabled())
-            UserRepository.log.debug("Create User...");
+        if (log.isDebugEnabled())
+            log.debug("Create User...");
 
         return user;
     }

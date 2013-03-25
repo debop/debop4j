@@ -20,17 +20,24 @@ public class MemcachedCache implements Cache {
     public static final int EXP_TIME = 100000;
 
     @Getter
-    private String name;
+    private String name = "default";
     @Getter
     private MemcachedClient nativeCache = null;
 
-    protected MemcachedCache() {}
+    @Getter
+    private int expireSeconds;
+
+    // protected MemcachedCache() {}
 
     public MemcachedCache(MemcachedClient client) {
+        this(client, EXP_TIME);
+    }
+
+    public MemcachedCache(MemcachedClient client, int expireSeconds) {
         Guard.shouldNotBeNull(client, "client");
 
-        this.name = "Memcached";
         this.nativeCache = client;
+        this.expireSeconds = expireSeconds;
         if (log.isDebugEnabled())
             log.debug("MemcachedCache를 생성했습니다");
     }
@@ -58,12 +65,7 @@ public class MemcachedCache implements Cache {
         }
 
         OperationFuture<Boolean> setOp = null;
-//        ValueWrapper cached = get(key);
-//        if (cached == null)
-//            setOp = nativeCache.add(key.toString(), EXP_TIME, value);
-//        else
-//            setOp = nativeCache.replace(key.toString(), EXP_TIME, value);
-        setOp = nativeCache.set(key.toString(), EXP_TIME, value);
+        setOp = nativeCache.set(key.toString(), expireSeconds, value);
 
         if (log.isInfoEnabled()) {
             if (setOp.getStatus().isSuccess()) {

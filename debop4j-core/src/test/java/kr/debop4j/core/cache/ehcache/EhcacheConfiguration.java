@@ -37,6 +37,6 @@ public class EhcacheConfiguration {
 
     @PostConstruct
     public void postConstruct() {
-        EhcacheConfiguration.log.info("Cache Created");
+        log.info("Cache Created");
     }
 }

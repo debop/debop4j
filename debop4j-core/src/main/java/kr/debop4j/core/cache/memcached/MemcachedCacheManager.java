@@ -2,6 +2,7 @@ package kr.debop4j.core.cache.memcached;
 
 import com.google.common.collect.Sets;
 import kr.debop4j.core.Guard;
+import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import net.spy.memcached.MemcachedClient;
 import org.springframework.cache.Cache;
@@ -17,15 +18,19 @@ import java.util.Collection;
 @Slf4j
 public class MemcachedCacheManager extends AbstractTransactionSupportingCacheManager {
 
-    public static final String DEFAULT_CACHE = "default";
-
+    @Getter
     private MemcachedCache memcachedCache;
 
-    protected MemcachedCacheManager() {}
+    //protected MemcachedCacheManager() {}
 
     public MemcachedCacheManager(MemcachedClient memcachedClient) {
         Guard.shouldNotBeNull(memcachedClient, "memcachedClient");
         memcachedCache = new MemcachedCache(memcachedClient);
+    }
+
+    public MemcachedCacheManager(MemcachedClient memcachedClient, int expireSeconds) {
+        Guard.shouldNotBeNull(memcachedClient, "memcachedClient");
+        memcachedCache = new MemcachedCache(memcachedClient, expireSeconds);
     }
 
     @Override
