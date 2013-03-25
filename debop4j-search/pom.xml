@@ -227,6 +227,16 @@
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-search-analyzers</artifactId>
             <version>${hibernate.search.version}</version>
+            <exclusions>
+                <exclusion>
+                    <artifactId>slf4j-api</artifactId>
+                    <groupId>org.slf4j</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>guava</artifactId>
+                    <groupId>com.google.guava</groupId>
+                </exclusion>
+            </exclusions>
         </dependency>
 
         <dependency>
@@ -366,6 +376,12 @@
             <artifactId>commons-dbcp</artifactId>
             <version>1.4</version>
             <scope>test</scope>
+            <exclusions>
+                <exclusion>
+                    <artifactId>commons-pool</artifactId>
+                    <groupId>commons-pool</groupId>
+                </exclusion>
+            </exclusions>
         </dependency>
 
         <dependency>
@@ -435,6 +451,10 @@
                 <exclusion>
                     <artifactId>spring-web</artifactId>
                     <groupId>org.springframework</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>jackson-mapper-asl</artifactId>
+                    <groupId>org.codehaus.jackson</groupId>
                 </exclusion>
             </exclusions>
         </dependency>
