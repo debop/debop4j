@@ -9,6 +9,8 @@ import org.springframework.data.redis.connection.RedisConnection;
 import org.springframework.data.redis.core.RedisCallback;
 import org.springframework.data.redis.core.RedisTemplate;
 
+import java.util.concurrent.TimeUnit;
+
 /**
  * Redis 를 저장소로 사용하는 Cache
  *
@@ -73,7 +75,9 @@ public class RedisCache implements Cache {
         if (log.isDebugEnabled())
             log.debug("캐시에 값을 저장합니다. key=[{}], value=[{}]", key, value);
 
-        redisTemplate.opsForValue().set(getKey(key), value, expireSeconds);
+        redisTemplate.opsForValue().set(getKey(key), value);
+        if (expireSeconds > 0)
+            redisTemplate.expire(getKey(key), expireSeconds, TimeUnit.SECONDS);
     }
 
     @Override
@@ -96,6 +100,7 @@ public class RedisCache implements Cache {
         if (log.isDebugEnabled())
             log.debug("모든 캐시를 삭제합니다...");
         try {
+            redisTemplate.multi();
             redisTemplate.execute(new RedisCallback() {
                 @Override
                 public Object doInRedis(RedisConnection connection) throws DataAccessException {
