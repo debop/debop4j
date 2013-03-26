@@ -63,7 +63,7 @@ public class EmployeeAttribute extends AnnotatedEntityBase {
     @Override
     protected Objects.ToStringHelper buildStringHelper() {
         return super.buildStringHelper()
-                    .add("signImageUrl", signImageUrl)
-                    .add("faceImageUrl", faceImageUrl);
+                .add("signImageUrl", signImageUrl)
+                .add("faceImageUrl", faceImageUrl);
     }
 }
