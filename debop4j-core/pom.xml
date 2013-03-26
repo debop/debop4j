@@ -55,6 +55,14 @@
                     <artifactId>commons-pool</artifactId>
                     <groupId>commons-pool</groupId>
                 </exclusion>
+                <exclusion>
+                    <artifactId>commons-pool</artifactId>
+                    <groupId>commons-pool</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>commons-pool</artifactId>
+                    <groupId>commons-pool</groupId>
+                </exclusion>
             </exclusions>
         </dependency>
 
@@ -79,11 +87,6 @@
         </dependency>
 
         <!-- MongoDB for Cache -->
-        <dependency>
-            <groupId>org.mongodb</groupId>
-            <artifactId>mongo-java-driver</artifactId>
-            <version>${mongo.driver.version}</version>
-        </dependency>
 
         <dependency>
             <groupId>org.springframework.data</groupId>
@@ -101,10 +104,6 @@
                 <exclusion>
                     <artifactId>spring-core</artifactId>
                     <groupId>org.springframework</groupId>
-                </exclusion>
-                <exclusion>
-                    <artifactId>mongo-java-driver</artifactId>
-                    <groupId>org.mongodb</groupId>
                 </exclusion>
                 <exclusion>
                     <artifactId>slf4j-api</artifactId>
@@ -144,16 +143,28 @@
 
         <!-- Redis for Cache -->
         <dependency>
+            <groupId>redis.clients</groupId>
+            <artifactId>jedis</artifactId>
+            <version>2.1.0</version>
+            <exclusions>
+                <exclusion>
+                    <artifactId>commons-pool</artifactId>
+                    <groupId>commons-pool</groupId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+        <dependency>
             <groupId>org.springframework.data</groupId>
             <artifactId>spring-data-redis</artifactId>
             <version>${spring.data.redis.version}</version>
             <exclusions>
                 <exclusion>
-                    <artifactId>spring-tx</artifactId>
+                    <artifactId>spring-context-support</artifactId>
                     <groupId>org.springframework</groupId>
                 </exclusion>
                 <exclusion>
-                    <artifactId>spring-context-support</artifactId>
+                    <artifactId>spring-tx</artifactId>
                     <groupId>org.springframework</groupId>
                 </exclusion>
                 <exclusion>
@@ -167,17 +178,14 @@
             </exclusions>
         </dependency>
 
-        <dependency>
-            <groupId>org.codehaus.jackson</groupId>
-            <artifactId>jackson-core-asl</artifactId>
-            <version>1.9.12</version>
-        </dependency>
+        <!--<dependency>-->
+        <!--<groupId>org.codehaus.jackson</groupId>-->
+        <!--<artifactId>jackson-mapper-asl</artifactId>-->
+        <!--<version>1.9.12</version>-->
+        <!--</dependency>-->
 
-        <dependency>
-            <groupId>org.codehaus.jackson</groupId>
-            <artifactId>jackson-mapper-asl</artifactId>
-            <version>1.9.12</version>
-        </dependency>
+
+        <!-- Jackson JSON Serializer -->
 
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>

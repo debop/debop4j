@@ -32,6 +32,6 @@ public class MongoCacheConfiguration extends AbstractMongoConfiguration {
 
     @Bean
     public MongoCacheManager mongoCacheManager() throws Exception {
-        return new MongoCacheManager(mongoTemplate());
+        return new MongoCacheManager(super.mongoTemplate(), 300);
     }
 }
