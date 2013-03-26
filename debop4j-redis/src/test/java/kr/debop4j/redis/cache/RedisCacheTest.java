@@ -1,7 +1,6 @@
-package kr.debop4j.core.cache.redis;
+package kr.debop4j.redis.cache;
 
-import kr.debop4j.core.Stopwatch;
-import kr.debop4j.core.User;
+import kr.debop4j.redis.User;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Assert;
 import org.junit.Test;
@@ -40,15 +39,8 @@ public class RedisCacheTest {
     @Test
     public void getUserFromCache() {
 
-        Stopwatch sw = new Stopwatch("initial User");
-        sw.start();
         User user1 = userRepository.getUser("debop", 100);
-        sw.stop();
-
-        sw = new Stopwatch("from Cache");
-        sw.start();
         User user2 = userRepository.getUser("debop", 100);
-        sw.stop();
 
         Assert.assertEquals(user1.getUsername(), user2.getUsername());
     }

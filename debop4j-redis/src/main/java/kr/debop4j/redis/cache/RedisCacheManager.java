@@ -1,7 +1,6 @@
-package kr.debop4j.core.cache.redis;
+package kr.debop4j.redis.cache;
 
 import com.google.common.collect.Lists;
-import kr.debop4j.core.Guard;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cache.Cache;
 import org.springframework.cache.transaction.AbstractTransactionSupportingCacheManager;
@@ -26,7 +25,7 @@ public class RedisCacheManager extends AbstractTransactionSupportingCacheManager
     }
 
     public RedisCacheManager(RedisTemplate redisTemplate, int expireSeconds) {
-        Guard.shouldNotBeNull(redisTemplate, "redisTemplate");
+        assert redisTemplate != null;
         this.redisTemplate = redisTemplate;
         this.expireSeconds = expireSeconds;
     }

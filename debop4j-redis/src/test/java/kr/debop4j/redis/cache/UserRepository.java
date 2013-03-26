@@ -1,6 +1,6 @@
-package kr.debop4j.core.cache.redis;
+package kr.debop4j.redis.cache;
 
-import kr.debop4j.core.User;
+import kr.debop4j.redis.User;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Repository;

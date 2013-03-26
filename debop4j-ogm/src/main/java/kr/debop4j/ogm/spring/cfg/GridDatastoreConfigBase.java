@@ -56,10 +56,14 @@ public abstract class GridDatastoreConfigBase {
 
         for (String pkgName : getMappedPackageNames()) {
             cfg.addPackage(pkgName);
+            if (log.isDebugEnabled())
+                log.debug("Package 를 추가합니다. package=[{}]", pkgName);
         }
 
         for (Class annoatatedClass : getMappedEntities()) {
             cfg.addAnnotatedClass(annoatatedClass);
+            if (log.isDebugEnabled())
+                log.debug("Package 를 추가합니다. annotatedClass=[{}]", annoatatedClass.getName());
         }
 
         cfg.setInterceptor(hibernateInterceptor());
@@ -103,7 +107,9 @@ public abstract class GridDatastoreConfigBase {
         return new Class[0];
     }
 
-
+    /**
+     * hibernate 용 속성을 설정합니다.
+     */
     protected Properties getHibernateProperties() {
         Properties props = new Properties();
 
@@ -113,11 +119,20 @@ public abstract class GridDatastoreConfigBase {
         return props;
     }
 
+    /**
+     * hibernate-ogm 용 속성을 설정합니다.
+     */
     protected Properties getHibernateOgmProperties() {
         return getHibernateProperties();
     }
 
+    /**
+     * hibernate {@link ServiceRegistryImplementor}로부터 해당 서비스를 로드합니다.
+     */
     protected org.hibernate.service.Service getService(Class<? extends Service> serviceImpl) {
+        if (log.isDebugEnabled())
+            log.debug("Service 를 로드합니다. serviceImpl=[{}]", serviceImpl.getName());
+
         SessionFactoryImplementor sessionFactory = sfi();
         ServiceRegistryImplementor serviceRegistry = sessionFactory.getServiceRegistry();
         return serviceRegistry.getService(serviceImpl);

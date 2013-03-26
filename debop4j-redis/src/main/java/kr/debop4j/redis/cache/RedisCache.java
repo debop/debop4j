@@ -1,6 +1,5 @@
-package kr.debop4j.core.cache.redis;
+package kr.debop4j.redis.cache;
 
-import kr.debop4j.core.Guard;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cache.Cache;
@@ -30,8 +29,7 @@ public class RedisCache implements Cache {
     }
 
     public RedisCache(String name, RedisTemplate redisTemplate, int expireSeconds) {
-        Guard.shouldNotBeEmpty(name, "name");
-        Guard.shouldNotBeNull(redisTemplate, "redisTemplate");
+        assert redisTemplate != null;
 
         this.name = name;
         this.redisTemplate = redisTemplate;
@@ -51,7 +49,8 @@ public class RedisCache implements Cache {
 
     @Override
     public ValueWrapper get(Object key) {
-        Guard.shouldNotBeNull(key, "key");
+        assert key != null;
+
         if (log.isDebugEnabled())
             log.debug("캐시 키[{}] 값을 구합니다...", key);
 
@@ -69,7 +68,7 @@ public class RedisCache implements Cache {
     @Override
     @SuppressWarnings("unchecked")
     public void put(Object key, Object value) {
-        Guard.shouldNotBeNull(key, "key");
+        assert key != null;
 
         if (log.isDebugEnabled())
             log.debug("캐시에 값을 저장합니다. key=[{}], value=[{}]", key, value);
@@ -80,7 +79,7 @@ public class RedisCache implements Cache {
     @Override
     @SuppressWarnings("unchecked")
     public void evict(Object key) {
-        Guard.shouldNotBeNull(key, "key");
+        assert key != null;
         if (log.isDebugEnabled())
             log.debug("지정한 키[{}]의 캐시를 삭제합니다...", key);
 

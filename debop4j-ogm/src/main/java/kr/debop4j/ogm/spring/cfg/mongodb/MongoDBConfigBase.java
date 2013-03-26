@@ -19,7 +19,8 @@ import java.util.Properties;
 @Slf4j
 public abstract class MongoDBConfigBase extends GridDatastoreConfigBase {
 
-    public static final String MONGODB_DATASTORE_PROVIDER = "org.hibernate.ogm.datastore.mongodb.impl.MongoDBDatastoreProvider";
+    public static final String MONGODB_DATASTORE_PROVIDER =
+            "org.hibernate.ogm.datastore.mongodb.impl.MongoDBDatastoreProvider";
 
     protected Properties getHibernateOgmProperties() {
         Properties props = getHibernateProperties();

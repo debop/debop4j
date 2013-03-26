@@ -1,4 +1,4 @@
-package kr.debop4j.core.cache.redis;
+package kr.debop4j.redis.cache;
 
 import org.junit.Assert;
 import org.junit.Test;
