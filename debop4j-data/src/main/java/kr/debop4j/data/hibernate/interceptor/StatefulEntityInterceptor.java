@@ -42,7 +42,7 @@ public class StatefulEntityInterceptor extends EmptyInterceptor {
      */
     public boolean onSave(Object entity, Serializable id, Object[] state, String[] propertyNames, Type[] types) {
         if (entity instanceof IStatefulEntity) {
-            ((IStatefulEntity) entity).onLoad();
+            ((IStatefulEntity) entity).onSave();
         }
         return false;
     }

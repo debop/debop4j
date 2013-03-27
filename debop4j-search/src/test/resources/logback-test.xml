@@ -9,8 +9,9 @@
         </encoder>
     </appender>
 
+    <!--
     <appender name="file" class="ch.qos.logback.core.FileAppender">
-        <file>logs/kr.kth.commons.log.txt</file>
+        <file>logs/kr.debop4j.search.log.txt</file>
         <append>true</append>
         <encoder>
             <pattern>%d{HH:mm:ss.SSS} %-5level [%thread] %logger{16}.%method : %msg%n</pattern>
@@ -18,7 +19,7 @@
             <charset>UTF-8</charset>
         </encoder>
     </appender>
-
+    -->
     <root level="DEBUG">
         <appender-ref ref="console"/>
     </root>

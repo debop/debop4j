@@ -13,7 +13,7 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 
 /**
- * kr.debop4j.core.cache.memcached.MemcachedConfiguration
+ * Memcached 를 캐시 저장소로 사용하는 Spring 환경설정입니다.
  * User: sunghyouk.bae@gmail.com
  * Date: 13. 3. 25 오후 1:26
  */
@@ -42,7 +42,7 @@ public class MemcachedCacheConfiguration {
             bean.setServers("localhost:11211"); // servers="host1:11211,host2:11211";
             bean.setProtocol(ConnectionFactoryBuilder.Protocol.BINARY);
             bean.setTranscoder(transcoder());
-            bean.setOpTimeout(1000);  // 1000 msec
+            bean.setOpTimeout(1000);  // msec 단위, 1초
 
             bean.setHashAlg(DefaultHashAlgorithm.KETAMA_HASH);
             bean.setLocatorType(ConnectionFactoryBuilder.Locator.CONSISTENT);
@@ -56,6 +56,7 @@ public class MemcachedCacheConfiguration {
 
     @Bean
     public MemcachedCacheManager memcachedCacheManager() {
+        // 캐시 유효 시간 : 300 seconds
         int timeoutInSeconds = 300;
         return new MemcachedCacheManager(memcachedClient(), timeoutInSeconds);
     }

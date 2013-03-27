@@ -7,6 +7,9 @@ import kr.debop4j.data.hibernate.tools.HibernateTool;
 import kr.debop4j.data.hibernate.unitofwork.UnitOfWorkFactory;
 import kr.debop4j.data.jdbc.JdbcTool;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.lucene.analysis.Analyzer;
+import org.apache.lucene.analysis.cjk.CJKAnalyzer;
+import org.apache.lucene.util.Version;
 import org.hibernate.ConnectionReleaseMode;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Environment;
@@ -130,14 +133,7 @@ public class AppConfig {
 
     @Bean
     public org.hibernate.Interceptor hibernateInterceptor() {
-
         return statuefulEntityInterceptor();
-//        MultiInterceptor interceptor = new MultiInterceptor();
-//
-//        interceptor.getInterceptors().add(statuefulEntityInterceptor());
-//        interceptor.getInterceptors().add(updateTimestampedInterceptor());
-//
-//        return interceptor;
     }
 
     @Bean
@@ -163,5 +159,10 @@ public class AppConfig {
     @Bean
     public HibernateRepositoryFactory hibernateRepositoryFactory() {
         return new HibernateRepositoryFactory();
+    }
+
+    @Bean
+    public Analyzer luceneAnalyzer() {
+        return new CJKAnalyzer(Version.LUCENE_36);
     }
 }

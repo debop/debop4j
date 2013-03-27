@@ -4,7 +4,6 @@ import kr.debop4j.core.spring.Springs;
 import kr.debop4j.search.hibernate.model.SearchItem;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.lucene.analysis.cjk.CJKAnalyzer;
-import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.queryParser.MultiFieldQueryParser;
 import org.apache.lucene.queryParser.ParseException;
 import org.apache.lucene.queryParser.QueryParser;
@@ -19,6 +18,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -31,7 +31,6 @@ public class HibernateSearchTest {
 
     @BeforeClass
     public static void beforeClass() {
-        Springs.reset();
         Springs.initByAnnotatedClasses(kr.debop4j.search.AppConfig.class);
     }
 
@@ -55,32 +54,35 @@ public class HibernateSearchTest {
 
     @Test
     @SuppressWarnings("unchecked")
-    public void firstSearch() throws InterruptedException {
+    public void firstSearch() throws InterruptedException, IOException {
 
-        SearchItem item = new SearchItem();
-        item.setTitle("Spring MVC 전후 처리기 작성하기");
-        item.setDescription(str);
-        item.setEan("USD");
-        item.setImageURL("http://debop.blogspot.com");
+        for (int i = 0; i < 100; i++) {
+            SearchItem item = new SearchItem();
+            item.setTitle("Spring MVC 전후 처리기 작성하기" + i);
+            item.setDescription(str);
+            item.setEan("USD");
+            item.setImageURL("http://debop.blogspot.com/id=" + i);
 
-        fullTextSession.save(item);
+            fullTextSession.save(item);
+        }
         fullTextSession.flush();
         fullTextSession.clear();
 
-        Thread.sleep(100);
+        Thread.sleep(500);
 
         QueryParser parser = new MultiFieldQueryParser(Version.LUCENE_36,
                                                        new String[]{"title", "description"},
                                                        new CJKAnalyzer(Version.LUCENE_36));
-        new StandardAnalyzer(Version.LUCENE_36);
+        //new KoreanAnalyzer(Version.LUCENE_36));
         //QueryParser parser = new QueryParser(Version.LUCENE_36, "title", new StandardAnalyzer(Version.LUCENE_36));
         try {
-            Query luceneQuery = parser.parse("description:어플리");
+            Query luceneQuery = parser.parse("description:어플리케이션");
             List<SearchItem> founds =
                     (List<SearchItem>) fullTextSession
                             .createFullTextQuery(luceneQuery, SearchItem.class)
                             .list();
 
+            Assert.assertNotNull(founds);
             Assert.assertTrue(founds.size() > 0);
             for (SearchItem loaded : founds)
                 System.out.printf("Id=%d; Title: %s\n", loaded.getId(), loaded.getTitle());

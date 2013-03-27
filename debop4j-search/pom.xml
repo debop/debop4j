@@ -15,6 +15,7 @@
     <url>http://maven.apache.org</url>
 
     <dependencies>
+
         <!-- 로컬 파일 링크 -->
         <dependency>
             <groupId>org.snu.ids</groupId>
@@ -22,6 +23,15 @@
             <version>1.0</version>
             <scope>system</scope>
             <systemPath>${basedir}/lib/org.snu.ids.ha.jar</systemPath>
+        </dependency>
+
+        <!-- 한글 형태소 분석기 for Lucene -->
+        <dependency>
+            <groupId>org.apache.lucene</groupId>
+            <artifactId>org.apache.lucene.analysis.kr</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${basedir}/lib/koreananalyzer-3x-120223.jar</systemPath>
         </dependency>
 
         <dependency>
@@ -246,13 +256,6 @@
             <scope>test</scope>
         </dependency>
 
-        <!-- 한글 형태소 분석기 for Lucene -->
-        <dependency>
-            <groupId>com.tistory.devyongsik</groupId>
-            <artifactId>luceneKoreanAnalyzer</artifactId>
-            <version>0.5-SNAPSHOT</version>
-        </dependency>
-
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-validator</artifactId>
@@ -361,6 +364,13 @@
             <groupId>org.mongodb</groupId>
             <artifactId>mongo-java-driver</artifactId>
             <version>${mongo.driver.version}</version>
+        </dependency>
+
+        <!-- Apache Thrift -->
+        <dependency>
+            <groupId>org.apache.thrift</groupId>
+            <artifactId>libthrift</artifactId>
+            <version>0.9.0</version>
         </dependency>
 
         <!-- tomcat connection pool 성능이 좋다. -->

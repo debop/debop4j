@@ -86,9 +86,9 @@ public class Example {
         try {
             MorphemeAnalyzer ma = new MorphemeAnalyzer();
             ma.createLogger(null);
+
             Timer timer = new Timer();
             timer.start();
-
             List<MExpression> ret = ma.analyze(str);
             timer.stop();
             timer.printMsg("Time");
