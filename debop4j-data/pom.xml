@@ -17,7 +17,7 @@
         <dependency>
             <groupId>debop4j</groupId>
             <artifactId>debop4j-core</artifactId>
-            <version>1.0-SNAPSHOT</version>
+            <version>${debop4j.version}</version>
         </dependency>
 
         <dependency>
