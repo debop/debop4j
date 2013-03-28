@@ -8,15 +8,14 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>debop4j-nosql-redis</artifactId>
+    <artifactId>debop4j-nosql-mongodb</artifactId>
     <packaging>jar</packaging>
 
-    <name>debop4j-nosql-redis</name>
+    <name>debop4j-nosql-mongodb</name>
     <url>http://maven.apache.org</url>
 
     <properties>
-        <jedis.version>2.1.0</jedis.version>
-        <spring.data.redis.version>1.0.3.RELEASE</spring.data.redis.version>
+        <spring.data.mongo.version>1.1.1.RELEASE</spring.data.mongo.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
@@ -28,30 +27,23 @@
             <version>${debop4j.version}</version>
         </dependency>
 
-        <!-- Redis for Cache -->
-        <dependency>
-            <groupId>redis.clients</groupId>
-            <artifactId>jedis</artifactId>
-            <version>${jedis.version}</version>
-            <exclusions>
-                <exclusion>
-                    <artifactId>commons-pool</artifactId>
-                    <groupId>commons-pool</groupId>
-                </exclusion>
-            </exclusions>
-        </dependency>
+        <!-- MongoDB for Cache -->
 
         <dependency>
             <groupId>org.springframework.data</groupId>
-            <artifactId>spring-data-redis</artifactId>
-            <version>${spring.data.redis.version}</version>
+            <artifactId>spring-data-mongodb</artifactId>
+            <version>${spring.data.mongo.version}</version>
             <exclusions>
                 <exclusion>
-                    <artifactId>spring-context-support</artifactId>
+                    <artifactId>spring-tx</artifactId>
                     <groupId>org.springframework</groupId>
                 </exclusion>
                 <exclusion>
-                    <artifactId>spring-tx</artifactId>
+                    <artifactId>spring-context</artifactId>
+                    <groupId>org.springframework</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>spring-core</artifactId>
                     <groupId>org.springframework</groupId>
                 </exclusion>
                 <exclusion>
@@ -59,16 +51,14 @@
                     <groupId>org.slf4j</groupId>
                 </exclusion>
                 <exclusion>
-                    <artifactId>spring-core</artifactId>
+                    <artifactId>spring-beans</artifactId>
+                    <groupId>org.springframework</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>spring-expression</artifactId>
                     <groupId>org.springframework</groupId>
                 </exclusion>
             </exclusions>
         </dependency>
-
-        <!--<dependency>-->
-        <!--<groupId>org.codehaus.jackson</groupId>-->
-        <!--<artifactId>jackson-mapper-asl</artifactId>-->
-        <!--<version>1.9.12</version>-->
-        <!--</dependency>-->
     </dependencies>
 </project>

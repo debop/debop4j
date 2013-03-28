@@ -1,4 +1,4 @@
-package kr.debop4j.core.cache.mongodb;
+package kr.debop4j.nosql.mongodb.cache;
 
 import com.mongodb.Mongo;
 import lombok.extern.slf4j.Slf4j;
@@ -21,7 +21,7 @@ public class MongoCacheConfiguration extends AbstractMongoConfiguration {
 
     @Override
     protected String getDatabaseName() {
-        return "debop4j_core_cache";
+        return "debop4j_nosql_mongodb";
     }
 
     @Override

@@ -1,4 +1,4 @@
-package kr.debop4j.core.cache.mongodb;
+package kr.debop4j.nosql.mongodb.cache;
 
 import kr.debop4j.core.Guard;
 import lombok.Getter;

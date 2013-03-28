@@ -8,7 +8,6 @@ import kr.debop4j.core.Function1;
 import kr.debop4j.core.collection.NumberRange;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
-import net.sf.ehcache.util.NamedThreadFactory;
 
 import java.util.List;
 import java.util.Map;

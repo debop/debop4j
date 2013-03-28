@@ -1,18 +1,20 @@
-package kr.debop4j.core.cache.mongodb;
+package kr.debop4j.nosql.ehcache.cache;
 
-import kr.debop4j.core.User;
+import kr.debop4j.nosql.ehcache.User;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Repository;
 
 /**
- * User 정보를 관리하는 Repository - 캐시 테스트를 위한 Repository입니다.
- * User: sunghyouk.bae@gmail.com
- * Date: 13. 3. 25 오후 1:25
+ * kr.debop4j.core.cache.ehcache.UserRepository
+ *
+ * @author sunghyouk.bae@gmail.com
+ *         13. 3. 24. 오후 10:19
  */
 @Repository
 @Slf4j
 public class UserRepository {
+
     @Cacheable(value = "user", key = "#id")
     public User getUser(String id) {
         return getUser(id, 1000);

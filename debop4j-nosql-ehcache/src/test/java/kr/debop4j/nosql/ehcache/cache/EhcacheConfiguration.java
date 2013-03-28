@@ -1,4 +1,4 @@
-package kr.debop4j.core.cache.ehcache;
+package kr.debop4j.nosql.ehcache.cache;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cache.annotation.EnableCaching;
