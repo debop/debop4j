@@ -100,7 +100,7 @@ public class RedisCache implements Cache {
         if (log.isDebugEnabled())
             log.debug("모든 캐시를 삭제합니다...");
         try {
-            redisTemplate.multi();
+            // redisTemplate.multi();
             redisTemplate.execute(new RedisCallback() {
                 @Override
                 public Object doInRedis(RedisConnection connection) throws DataAccessException {
