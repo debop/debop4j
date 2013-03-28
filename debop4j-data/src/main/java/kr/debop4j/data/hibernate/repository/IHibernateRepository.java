@@ -21,6 +21,8 @@ public interface IHibernateRepository<E extends IStatefulEntity> {
 
     Class<E> getEntityClass();
 
+    void flush();
+
     E load(Serializable id);
 
     E load(Serializable id, LockOptions lockOptions);

@@ -15,6 +15,7 @@
     <url>http://maven.apache.org</url>
 
     <properties>
+        <jbossjta.version>4.16.6.Final</jbossjta.version>
         <spring.data.mongo.version>1.1.1.RELEASE</spring.data.mongo.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
@@ -26,6 +27,19 @@
             <artifactId>debop4j-core</artifactId>
             <version>${debop4j.version}</version>
         </dependency>
+
+        <dependency>
+            <groupId>debop4j</groupId>
+            <artifactId>debop4j-data</artifactId>
+            <version>${debop4j.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>debop4j</groupId>
+            <artifactId>debop4j-ogm</artifactId>
+            <version>${debop4j.version}</version>
+        </dependency>
+
 
         <!-- MongoDB for Cache -->
 
@@ -56,6 +70,44 @@
                 </exclusion>
                 <exclusion>
                     <artifactId>spring-expression</artifactId>
+                    <groupId>org.springframework</groupId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+
+        <!-- for Testing -->
+        <dependency>
+            <groupId>org.twitter4j</groupId>
+            <artifactId>twitter4j-core</artifactId>
+            <version>${twitter4j.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.twitter4j</groupId>
+            <artifactId>twitter4j-stream</artifactId>
+            <version>${twitter4j.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.twitter4j</groupId>
+            <artifactId>twitter4j-async</artifactId>
+            <version>${twitter4j.version}</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.social</groupId>
+            <artifactId>spring-social-twitter</artifactId>
+            <version>1.0.3.RELEASE</version>
+            <scope>test</scope>
+            <exclusions>
+                <exclusion>
+                    <artifactId>spring-core</artifactId>
+                    <groupId>org.springframework</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>spring-web</artifactId>
                     <groupId>org.springframework</groupId>
                 </exclusion>
             </exclusions>

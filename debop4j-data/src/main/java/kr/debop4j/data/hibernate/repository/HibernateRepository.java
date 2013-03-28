@@ -49,6 +49,10 @@ public class HibernateRepository<E extends IStatefulEntity> implements IHibernat
         return UnitOfWorks.getCurrentSession();
     }
 
+    public void flush() {
+        getSession().flush();
+    }
+
     @Override
     public E load(Serializable id) {
         return (E) getSession().load(entityClass, id);
@@ -347,7 +351,7 @@ public class HibernateRepository<E extends IStatefulEntity> implements IHibernat
 
     protected long count(Criteria criteria) {
         Object count = criteria.setProjection(Projections.rowCount())
-                .uniqueResult();
+                               .uniqueResult();
         return ((Number) count).longValue();
     }
 
@@ -373,8 +377,8 @@ public class HibernateRepository<E extends IStatefulEntity> implements IHibernat
     protected final long count(Query query, HibernateParameter... parameters) {
         // TODO: 테스트가 필요합니다!!!
         Object count = query.setResultTransformer(Criteria.PROJECTION)
-                .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
-                .uniqueResult();
+                            .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
+                            .uniqueResult();
 
         return ((Number) count).longValue();
     }

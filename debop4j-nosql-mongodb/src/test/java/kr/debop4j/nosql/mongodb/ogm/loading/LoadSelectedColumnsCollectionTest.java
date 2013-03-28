@@ -1,4 +1,4 @@
-package org.hibernate.ogm.test.mongodb.loading;
+package kr.debop4j.nosql.mongodb.ogm.loading;
 
 import com.google.common.collect.Lists;
 import com.mongodb.BasicDBObject;
@@ -7,6 +7,9 @@ import com.mongodb.DBCollection;
 import com.mongodb.DBObject;
 import kr.debop4j.core.spring.Springs;
 import kr.debop4j.data.hibernate.unitofwork.UnitOfWorks;
+import kr.debop4j.nosql.mongodb.ogm.OgmMongoDbTestBase;
+import kr.debop4j.nosql.mongodb.ogm.model.Module;
+import kr.debop4j.nosql.mongodb.ogm.model.Project;
 import kr.debop4j.ogm.tools.mongodb.MongoTool;
 import lombok.extern.slf4j.Slf4j;
 import org.hibernate.ogm.datastore.mongodb.impl.MongoDBDatastoreProvider;
@@ -20,9 +23,6 @@ import org.hibernate.ogm.dialect.mongodb.MongoDBDialect;
 import org.hibernate.ogm.grid.AssociationKey;
 import org.hibernate.ogm.grid.AssociationKind;
 import org.hibernate.ogm.grid.EntityKey;
-import org.hibernate.ogm.test.mongodb.MongoDBTestBase;
-import org.hibernate.ogm.test.mongodb.model.Module;
-import org.hibernate.ogm.test.mongodb.model.Project;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -40,7 +40,7 @@ import static org.fest.assertions.Assertions.assertThat;
  *         13. 3. 23. 오후 5:43
  */
 @Slf4j
-public class LoadSelectedColumnsCollectionTest extends MongoDBTestBase {
+public class LoadSelectedColumnsCollectionTest extends OgmMongoDbTestBase {
 
     @Test
     public void loadSelectedColumns() {

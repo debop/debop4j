@@ -96,7 +96,7 @@ public abstract class GridDatastoreConfigBase {
     }
 
     protected String getDatabaseName() {
-        return "debop4j_ogm_test";
+        return "debop4j_ogm";
     }
 
     protected String[] getMappedPackageNames() {
