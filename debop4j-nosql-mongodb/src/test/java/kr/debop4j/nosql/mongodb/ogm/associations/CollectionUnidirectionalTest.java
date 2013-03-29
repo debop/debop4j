@@ -1,6 +1,6 @@
 package kr.debop4j.nosql.mongodb.ogm.associations;
 
-import kr.debop4j.nosql.mongodb.ogm.MongoDbGridDatastoreTestBase;
+import kr.debop4j.nosql.mongodb.ogm.MongoGridDatastoreTestBase;
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -10,7 +10,7 @@ import lombok.extern.slf4j.Slf4j;
  * @since 13. 3. 28
  */
 @Slf4j
-public class CollectionUnidirectionalTest extends MongoDbGridDatastoreTestBase {
+public class CollectionUnidirectionalTest extends MongoGridDatastoreTestBase {
 
     public void unidirectionalCollectionTest() throws Exception {
 

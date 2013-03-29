@@ -8,12 +8,12 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 
 /**
- * kr.debop4j.nosql.mongodb.ogm.MongoDbGridDatastoreTestBase
+ * kr.debop4j.nosql.mongodb.ogm.MongoGridDatastoreTestBase
  *
  * @author sunghyouk.bae@gmail.com
  * @since 13. 3. 28
  */
-public abstract class MongoDbGridDatastoreTestBase {
+public abstract class MongoGridDatastoreTestBase {
 
     @BeforeClass
     public static void beforeClass() {
