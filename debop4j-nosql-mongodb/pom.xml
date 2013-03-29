@@ -36,7 +36,7 @@
 
         <dependency>
             <groupId>debop4j</groupId>
-            <artifactId>debop4j-ogm</artifactId>
+            <artifactId>debop4j-data-ogm</artifactId>
             <version>${debop4j.version}</version>
         </dependency>
 
@@ -71,6 +71,26 @@
                 <exclusion>
                     <artifactId>spring-expression</artifactId>
                     <groupId>org.springframework</groupId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+        <dependency>
+            <groupId>org.hibernate.ogm</groupId>
+            <artifactId>hibernate-ogm-mongodb</artifactId>
+            <version>${hibernate.ogm.mongo.version}</version>
+            <exclusions>
+                <exclusion>
+                    <artifactId>hibernate-ogm-core</artifactId>
+                    <groupId>org.hibernate.ogm</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>mongo-java-driver</artifactId>
+                    <groupId>org.mongodb</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>hibernate-entitymanager</artifactId>
+                    <groupId>org.hibernate</groupId>
                 </exclusion>
             </exclusions>
         </dependency>

@@ -7,7 +7,7 @@ import com.mongodb.DBCollection;
 import com.mongodb.DBObject;
 import kr.debop4j.core.spring.Springs;
 import kr.debop4j.data.hibernate.unitofwork.UnitOfWorks;
-import kr.debop4j.nosql.mongodb.ogm.OgmMongoDbTestBase;
+import kr.debop4j.nosql.mongodb.ogm.MongoDbGridDatastoreTestBase;
 import kr.debop4j.nosql.mongodb.ogm.model.Module;
 import kr.debop4j.nosql.mongodb.ogm.model.Project;
 import kr.debop4j.ogm.tools.mongodb.MongoTool;
@@ -40,7 +40,7 @@ import static org.fest.assertions.Assertions.assertThat;
  *         13. 3. 23. 오후 5:43
  */
 @Slf4j
-public class LoadSelectedColumnsCollectionTest extends OgmMongoDbTestBase {
+public class LoadSelectedColumnsCollectionTest extends MongoDbGridDatastoreTestBase {
 
     @Test
     public void loadSelectedColumns() {

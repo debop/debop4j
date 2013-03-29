@@ -1,4 +1,4 @@
-package kr.debop4j.nosql.tools;
+package kr.debop4j.nosql.mongodb.tools;
 
 import lombok.Getter;
 import lombok.Setter;

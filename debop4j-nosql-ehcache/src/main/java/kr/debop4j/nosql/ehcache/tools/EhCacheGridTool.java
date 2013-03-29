@@ -1,4 +1,4 @@
-package kr.debop4j.ogm.tools.ehcache;
+package kr.debop4j.nosql.ehcache.tools;
 
 import lombok.extern.slf4j.Slf4j;
 import net.sf.ehcache.Cache;
@@ -10,16 +10,20 @@ import org.springframework.beans.factory.annotation.Autowired;
 import java.util.Map;
 
 /**
- * kr.debop4j.ogm.tools.ehcache.EhcacheTool
+ * kr.debop4j.nosql.ehcache.tools.EhCacheGridTool
  *
  * @author sunghyouk.bae@gmail.com
- *         13. 3. 23. 오후 10:56
+ * @since 13. 3. 29
  */
 @Slf4j
-public class EhcacheTool {
+public class EhCacheGridTool {
+
+    private CacheManager cacheManager;
 
     @Autowired
-    CacheManager cacheManager;
+    public EhCacheGridTool(CacheManager cacheManager) {
+        this.cacheManager = cacheManager;
+    }
 
     public Cache getAssociationCache() {
         return cacheManager.getCache(DefaultDatastoreNames.ASSOCIATION_STORE);

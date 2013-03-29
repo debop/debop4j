@@ -2,7 +2,7 @@ package kr.debop4j.nosql.mongodb.ogm.loading;
 
 import kr.debop4j.core.spring.Springs;
 import kr.debop4j.data.hibernate.unitofwork.UnitOfWorks;
-import kr.debop4j.nosql.mongodb.ogm.OgmMongoDbConfiguration;
+import kr.debop4j.nosql.mongodb.ogm.MongoGridDatastoreConfiguration;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -42,7 +42,7 @@ public class LoadSelectedColumnsInEntityTest extends LoadSelectedColumnsCollecti
  * TODO: IN_ENTITY 방식은 아직 에러가 있는 것 같다.
  */
 @Configuration
-class InEntityConfiguration extends OgmMongoDbConfiguration {
+class InEntityConfiguration extends MongoGridDatastoreConfiguration {
 
 //    @Override
 //    protected AssociationStorage getAssociationStorage() {

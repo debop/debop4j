@@ -2,7 +2,7 @@ package kr.debop4j.nosql.mongodb.ogm.loading;
 
 import kr.debop4j.core.spring.Springs;
 import kr.debop4j.data.hibernate.unitofwork.UnitOfWorks;
-import kr.debop4j.nosql.mongodb.ogm.OgmMongoDbConfiguration;
+import kr.debop4j.nosql.mongodb.ogm.MongoGridDatastoreConfiguration;
 import lombok.extern.slf4j.Slf4j;
 import org.hibernate.ogm.datastore.mongodb.AssociationStorage;
 import org.junit.After;
@@ -42,7 +42,7 @@ public class LoadSelectedColumnsGlobalTest extends LoadSelectedColumnsCollection
 }
 
 @Configuration
-class GlobalCollectionConfiguration extends OgmMongoDbConfiguration {
+class GlobalCollectionConfiguration extends MongoGridDatastoreConfiguration {
 
     @Override
     protected AssociationStorage getAssociationStorage() {

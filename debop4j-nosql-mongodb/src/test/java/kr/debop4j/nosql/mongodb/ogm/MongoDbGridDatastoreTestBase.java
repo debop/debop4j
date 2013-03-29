@@ -8,16 +8,16 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 
 /**
- * kr.debop4j.nosql.mongodb.ogm.OgmMongoDbTestBase
+ * kr.debop4j.nosql.mongodb.ogm.MongoDbGridDatastoreTestBase
  *
  * @author sunghyouk.bae@gmail.com
  * @since 13. 3. 28
  */
-public abstract class OgmMongoDbTestBase {
+public abstract class MongoDbGridDatastoreTestBase {
 
     @BeforeClass
     public static void beforeClass() {
-        Springs.initByAnnotatedClasses(OgmMongoDbConfiguration.class);
+        Springs.initByAnnotatedClasses(MongoGridDatastoreConfiguration.class);
     }
 
     @AfterClass

@@ -38,7 +38,7 @@ public class UsingHSqlConfiguration extends HSqlConfigBase {
     public Properties hibernateProperties() {
         Properties props = super.hibernateProperties();
 
-        props.put(Environment.USE_SECOND_LEVEL_CACHE, true);
+        props.put(Environment.USE_SECOND_LEVEL_CACHE, "true");
         props.put(Environment.USE_QUERY_CACHE, true);
         props.put(Environment.CACHE_REGION_FACTORY, SingletonEhCacheRegionFactory.class.getName());
         props.put(Environment.CACHE_REGION_PREFIX, "");

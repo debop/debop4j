@@ -1,8 +1,8 @@
 package kr.debop4j.nosql.mongodb.ogm;
 
+import kr.debop4j.data.ogm.spring.cfg.GridDatastoreConfigBase;
 import kr.debop4j.nosql.mongodb.ogm.model.Module;
 import kr.debop4j.nosql.mongodb.ogm.model.Project;
-import kr.debop4j.ogm.spring.cfg.mongodb.MongoDBConfigBase;
 import kr.debop4j.ogm.tools.mongodb.MongoTool;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
@@ -19,7 +19,7 @@ import org.springframework.context.annotation.Configuration;
 @ComponentScan({"kr.debop4j.ogm.spring.cfg",
                        "kr.debop4j.ogm.tools.mongodb"})
 @Slf4j
-public class OgmMongoDbConfiguration extends MongoDBConfigBase {
+public class MongoGridDatastoreConfiguration extends GridDatastoreConfigBase {
 
     @Bean
     public MongoTool mongoTool() {
