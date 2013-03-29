@@ -21,7 +21,7 @@ public class FutureWebCacheRepositoryTest {
     private static final String[] urls = new String[]{
             "http://www.daum.net",
             "http://www.naver.com",
-            "http://www.kthcorp.com/"
+            "http://www.nate.com"
     };
 
     @Test
