@@ -23,12 +23,12 @@
         <module>debop4j-web</module>
         <module>debop4j-web-example</module>
 
-        <!--<module>debop4j-nosql-couchbase</module>-->
-        <module>debop4j-nosql-ehcache</module>
-        <module>debop4j-nosql-memcached</module>
-        <module>debop4j-nosql-mongodb</module>
-        <module>debop4j-nosql-neo4j</module>
-        <module>debop4j-nosql-redis</module>
+        <module>debop4j-data-couchbase</module>
+        <module>debop4j-data-ehcache</module>
+        <module>debop4j-data-memcached</module>
+        <module>debop4j-data-mongodb</module>
+        <module>debop4j-data-neo4j</module>
+        <module>debop4j-data-redis</module>
 
     </modules>
 

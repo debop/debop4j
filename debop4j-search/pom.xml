@@ -198,6 +198,7 @@
             <version>1.3</version>
         </dependency>
 
+        <!-- Hibernate-Search -->
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-search</artifactId>
@@ -253,7 +254,6 @@
             <groupId>org.apache.lucene</groupId>
             <artifactId>lucene-core</artifactId>
             <version>${lucene.version}</version>
-            <scope>test</scope>
         </dependency>
 
         <dependency>
