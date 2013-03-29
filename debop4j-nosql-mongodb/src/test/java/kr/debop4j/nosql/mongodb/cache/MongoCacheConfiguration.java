@@ -21,7 +21,7 @@ public class MongoCacheConfiguration extends AbstractMongoConfiguration {
 
     @Override
     protected String getDatabaseName() {
-        return "debop4j_cache";
+        return "debop4j_nosql";
     }
 
     @Override

@@ -19,6 +19,7 @@ public class LoadSelectedColumnsInEntityTest extends LoadSelectedColumnsCollecti
 
     @BeforeClass
     public static void beforeClass() {
+        Springs.reset();
         Springs.initByAnnotatedClasses(InEntityConfiguration.class);
     }
 

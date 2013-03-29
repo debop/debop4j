@@ -35,6 +35,7 @@ public class Project extends AnnotatedEntityBase {
     @Id
     private String id;
 
+    @Column(name = "ProjectName", nullable = false, length = 128)
     private String name;
 
     @OneToMany(cascade = {CascadeType.PERSIST})

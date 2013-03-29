@@ -81,6 +81,12 @@ public class LoadSelectedColumnsCollectionTest extends MongoGridDatastoreTestBas
     @Test
     public void testLoadSelectedAssociationColumns() {
 
+        Project loaded = (Project) UnitOfWorks.getCurrentSession().get(Project.class, "projectID");
+        if (loaded != null) {
+            UnitOfWorks.getCurrentSession().delete(loaded);
+            UnitOfWorks.getCurrentSession().flush();
+        }
+
         Module mongodb = new Module();
         mongodb.setName("MongoDB");
         UnitOfWorks.getCurrentSession().persist(mongodb);

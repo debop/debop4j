@@ -28,7 +28,7 @@ public class MongoGridDatastoreConfiguration extends MongoGridDatastoreConfigBas
 
     @Override
     protected String getDatabaseName() {
-        return "debop4j_nosql_ogm";
+        return "debop4j_nosql";
     }
 
     @Override
@@ -39,8 +39,8 @@ public class MongoGridDatastoreConfiguration extends MongoGridDatastoreConfigBas
     }
 
     @Override
-    protected Class[] getMappedEntities() {
-        return new Class[]{
+    protected Class<?>[] getMappedEntities() {
+        return new Class<?>[]{
                 Module.class,
                 Project.class
         };

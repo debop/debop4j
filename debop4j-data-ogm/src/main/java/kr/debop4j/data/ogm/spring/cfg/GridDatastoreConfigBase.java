@@ -13,7 +13,6 @@ import org.hibernate.ogm.datastore.spi.DatastoreProvider;
 import org.hibernate.ogm.dialect.GridDialect;
 import org.hibernate.service.spi.ServiceRegistryImplementor;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 
 import java.util.Properties;
 
@@ -23,9 +22,8 @@ import java.util.Properties;
  * @author sunghyouk.bae@gmail.com
  * @since 13. 3. 29
  */
-@Configuration
 @Slf4j
-public class GridDatastoreConfigBase {
+public abstract class GridDatastoreConfigBase {
     /**
      * DataStoreProvider 를 제공합니다.
      */
@@ -55,13 +53,13 @@ public class GridDatastoreConfigBase {
         for (String pkgName : getMappedPackageNames()) {
             cfg.addPackage(pkgName);
             if (log.isDebugEnabled())
-                log.debug("Package 를 추가합니다. package=[{}]", pkgName);
+                log.debug("Package를 추가합니다. package=[{}]", pkgName);
         }
 
         for (Class annoatatedClass : getMappedEntities()) {
             cfg.addAnnotatedClass(annoatatedClass);
             if (log.isDebugEnabled())
-                log.debug("Package 를 추가합니다. annotatedClass=[{}]", annoatatedClass.getName());
+                log.debug("AnnotatedEntity를 추가합니다. annotatedClass=[{}]", annoatatedClass.getName());
         }
 
         cfg.setInterceptor(hibernateInterceptor());
@@ -93,16 +91,14 @@ public class GridDatastoreConfigBase {
         return new HibernateRepositoryFactory();
     }
 
-    protected String getDatabaseName() {
-        return "debop4j_ogm";
-    }
+    abstract protected String getDatabaseName();
 
     protected String[] getMappedPackageNames() {
         return new String[0];
     }
 
-    protected Class[] getMappedEntities() {
-        return new Class[0];
+    protected Class<?>[] getMappedEntities() {
+        return new Class<?>[0];
     }
 
     /**

@@ -22,6 +22,7 @@ public class LoadSelectedColumnsGlobalTest extends LoadSelectedColumnsCollection
 
     @BeforeClass
     public static void beforeClass() {
+        Springs.reset();
         Springs.initByAnnotatedClasses(GlobalCollectionConfiguration.class);
     }
 
@@ -42,6 +43,7 @@ public class LoadSelectedColumnsGlobalTest extends LoadSelectedColumnsCollection
 }
 
 @Configuration
+@Slf4j
 class GlobalCollectionConfiguration extends MongoGridDatastoreConfiguration {
 
     @Override
