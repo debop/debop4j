@@ -6,7 +6,7 @@ import org.hibernate.ogm.grid.EntityKey;
 import java.util.Map;
 
 /**
- * kr.debop4j.data.ogm.test.utils.TestableGridDialect
+ * TestableGridDialect
  *
  * @author sunghyouk.bae@gmail.com
  *         13. 3. 29. 오후 4:41

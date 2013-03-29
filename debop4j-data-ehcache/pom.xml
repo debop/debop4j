@@ -35,6 +35,14 @@
             <version>${debop4j.version}</version>
         </dependency>
 
+        <dependency>
+            <groupId>debop4j</groupId>
+            <artifactId>debop4j-data-ogm</artifactId>
+            <version>${debop4j.version}</version>
+            <type>test-jar</type>
+            <scope>test</scope>
+        </dependency>
+
         <!-- Ehcache for Cache -->
         <dependency>
             <groupId>net.sf.ehcache</groupId>

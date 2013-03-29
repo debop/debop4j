@@ -17,26 +17,29 @@
         <module>debop4j-core</module>
         <module>debop4j-data</module>
         <module>debop4j-data-ogm</module>
+
+        <module>debop4j-data-ehcache</module>
+        <module>debop4j-data-redis</module>
+        <module>debop4j-data-mongodb</module>
+
         <module>debop4j-search</module>
         <module>debop4j-access</module>
         <module>debop4j-graph</module>
         <module>debop4j-web</module>
         <module>debop4j-web-example</module>
 
-        <module>debop4j-data-couchbase</module>
-        <module>debop4j-data-ehcache</module>
+        <!--
         <module>debop4j-data-memcached</module>
-        <module>debop4j-data-mongodb</module>
+        <module>debop4j-data-couchbase</module>
         <module>debop4j-data-neo4j</module>
-        <module>debop4j-data-redis</module>
-
+        -->
     </modules>
 
     <properties>
         <debop4j.version>1.0-SNAPSHOT</debop4j.version>
 
-        <slf4j.version>1.7.2</slf4j.version>
-        <logback.version>1.0.9</logback.version>
+        <slf4j.version>1.7.3</slf4j.version>
+        <logback.version>1.0.10</logback.version>
         <google.guava.version>14.0.1</google.guava.version>
 
         <springframework.version>3.2.2.RELEASE</springframework.version>
@@ -267,6 +270,13 @@
         </dependency>
 
         <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava-testlib</artifactId>
+            <version>${google.guava.version}</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
             <groupId>org.dbunit</groupId>
             <artifactId>dbunit</artifactId>
             <version>2.4.9</version>
@@ -337,6 +347,18 @@
                     <target>1.7</target>
                     <encoding>UTF-8</encoding>
                 </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>test-jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
 
         </plugins>

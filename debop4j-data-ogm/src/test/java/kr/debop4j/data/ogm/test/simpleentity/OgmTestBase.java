@@ -4,6 +4,7 @@ import kr.debop4j.data.ogm.test.utils.GridDialectType;
 import kr.debop4j.data.ogm.test.utils.SkipByGridDialect;
 import kr.debop4j.data.ogm.test.utils.TestHelper;
 import lombok.extern.slf4j.Slf4j;
+import org.fest.assertions.Assertions;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -27,11 +28,8 @@ import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.util.Map;
 
-import static kr.debop4j.data.ogm.test.utils.TestHelper.*;
-import static org.fest.assertions.Assertions.assertThat;
-
 /**
- * kr.debop4j.data.ogm.test.simpleentity.OgmTestBase
+ * OgmTestBase
  *
  * @author sunghyouk.bae@gmail.com
  *         13. 3. 29. 오후 4:22
@@ -40,7 +38,7 @@ import static org.fest.assertions.Assertions.assertThat;
 public abstract class OgmTestBase extends junit.framework.TestCase {
 
     static {
-
+        TestHelper.initializeHelpers();
     }
 
     protected SessionFactory sessions;
@@ -277,7 +275,7 @@ public abstract class OgmTestBase extends junit.framework.TestCase {
     }
 
     protected void runSchemaDrop() {
-        dropSchemaAndDatabase(session);
+        TestHelper.dropSchemaAndDatabase(session);
     }
 
     protected void buildConfiguration() throws Exception {
@@ -334,7 +332,7 @@ public abstract class OgmTestBase extends junit.framework.TestCase {
     private void closeSessionFactory() {
         if (sessions != null) {
             if (!sessions.isClosed()) {
-                dropSchemaAndDatabase(sessions);
+                TestHelper.dropSchemaAndDatabase(sessions);
                 sessions.close();
                 sessions = null;
             } else {
@@ -362,7 +360,7 @@ public abstract class OgmTestBase extends junit.framework.TestCase {
     }
 
     public void checkCleanCache() {
-        assertThat(assertNumberOfEntities(0, sessions)).as("Entity cache should be empty").isTrue();
-        assertThat(assertNumberOfAssociations(0, sessions)).as("Association cache should be empty").isTrue();
+        Assertions.assertThat(TestHelper.assertNumberOfEntities(0, sessions)).as("Entity cache should be empty").isTrue();
+        Assertions.assertThat(TestHelper.assertNumberOfAssociations(0, sessions)).as("Association cache should be empty").isTrue();
     }
 }

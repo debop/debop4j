@@ -1,13 +1,13 @@
 package kr.debop4j.data.ogm.test.utils;
 
 /**
- * kr.debop4j.data.ogm.test.utils.GridDialectType
+ * GridDialectType
  *
  * @author sunghyouk.bae@gmail.com
  *         13. 3. 29. 오후 4:39
  */
 public enum GridDialectType {
-    HASHMAP("org.hibernate.ogm.test.utils.HashMapTestHelper") {
+    HASHMAP("org.hibernate.ogm.HashMapTestHelper") {
         @Override
         public Class<?> loadTestableGridDialectClass() {
             return null; //this one is special, we want it only as fallback when all others fail

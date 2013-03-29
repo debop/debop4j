@@ -4,8 +4,9 @@ import java.io.Serializable;
 
 /**
  * kr.debop4j.graph.IEdge
- * User: sunghyouk.bae@gmail.com
- * Date: 13. 3. 14.
+ *
+ * @author sunghyouk.bae@gmail.com
+ * @since 13. 3. 14.
  */
 public interface IEdge extends Serializable {
 
