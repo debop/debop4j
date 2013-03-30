@@ -1,7 +1,6 @@
 package kr.debop4j.data.couchbase.cache;
 
 import com.couchbase.client.CouchbaseClient;
-import kr.debop4j.core.Guard;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
@@ -28,9 +27,6 @@ public class CouchbaseCache implements org.springframework.cache.Cache {
     private int expireMillis = 0; // msec (0 is persist forever)
 
     public CouchbaseCache(String name, CouchbaseClient client, int expireMillis) {
-        Guard.shouldNotBeNull(name, "name");
-        Guard.shouldNotBeNull(client, "client");
-
         this.name = name;
         this.nativeCache = client;
         this.expireMillis = expireMillis;
@@ -45,7 +41,7 @@ public class CouchbaseCache implements org.springframework.cache.Cache {
 
     @Override
     public ValueWrapper get(Object key) {
-        Guard.shouldNotBeNull(key, "key");
+        assert key != null;
 
         Object result = nativeCache.get(getKey(key));
 
@@ -58,7 +54,7 @@ public class CouchbaseCache implements org.springframework.cache.Cache {
 
     @Override
     public void put(Object key, Object value) {
-        Guard.shouldNotBeNull(key, "key");
+        assert key != null;
 
         OperationFuture<Boolean> setOp = nativeCache.set(getKey(key), expireMillis, value);
 
@@ -73,7 +69,7 @@ public class CouchbaseCache implements org.springframework.cache.Cache {
 
     @Override
     public void evict(Object key) {
-        Guard.shouldNotBeNull(key, "key");
+        assert key != null;
         if (log.isDebugEnabled())
             log.debug("delete cache item... key=[{}]", key);
         nativeCache.delete(key.toString());

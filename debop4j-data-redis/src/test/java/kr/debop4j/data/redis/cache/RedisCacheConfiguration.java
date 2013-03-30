@@ -1,10 +1,13 @@
 package kr.debop4j.data.redis.cache;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.core.env.Environment;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
@@ -23,20 +26,36 @@ import java.nio.charset.Charset;
 @Configuration
 @EnableCaching
 @ComponentScan(basePackageClasses = UserRepository.class)
-// @PropertySource("classpath:redis.properties")
+@PropertySource("classpath:/redis.properties")
 public class RedisCacheConfiguration {
 
     @Autowired
     Environment env;
 
+    @Value("${redis.host}")
+    private String redisHostName;
+    @Value("${redis.port}")
+    private int redisPort;
+    @Value("${redis.usePool}")
+    private boolean redisUsePool;
+
+    // @PropertySource, @Value를 사용하려면 PropertySourcesPlaceholderConfigurer를 정의해줘야 한다.
+    @Bean
+    public static PropertySourcesPlaceholderConfigurer placeholderConfigurer() {
+        return new PropertySourcesPlaceholderConfigurer();
+    }
+
     @Bean
     public JedisShardInfo jedisShardInfo() {
-        return new JedisShardInfo("localhost");
+        JedisShardInfo shardInfo = new JedisShardInfo(redisHostName, redisPort);
+        return shardInfo;
     }
 
     @Bean
     public RedisConnectionFactory redisConnectionFactory() {
-        return new JedisConnectionFactory(jedisShardInfo());
+        JedisConnectionFactory factory = new JedisConnectionFactory(jedisShardInfo());
+        factory.setUsePool(redisUsePool);
+        return factory;
     }
 
     @Bean

@@ -48,9 +48,11 @@ public class MongoCache implements Cache {
 
     @Override
     public ValueWrapper get(Object key) {
-        Guard.shouldNotBeNull(key, "key");
+        assert key != null;
 
-        CacheItem item = mongoTemplate.findOne(new Query(Criteria.where("key").is(key)), CacheItem.class, name);
+        CacheItem item = mongoTemplate.findOne(new Query(Criteria.where("key").is(key)),
+                                               CacheItem.class,
+                                               name);
 
         Object result = null;
         if (item != null) {
@@ -67,7 +69,7 @@ public class MongoCache implements Cache {
 
     @Override
     public void put(Object key, Object value) {
-        Guard.shouldNotBeNull(key, "key");
+        assert key != null;
 
         if (!mongoTemplate.collectionExists(name))
             mongoTemplate.createCollection(name);
@@ -85,7 +87,7 @@ public class MongoCache implements Cache {
 
     @Override
     public void evict(Object key) {
-        Guard.shouldNotBeNull(key, "key");
+        assert key != null;
         mongoTemplate.remove(new Query(Criteria.where("key").is(key)), name);
     }
 

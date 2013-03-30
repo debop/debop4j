@@ -2,7 +2,6 @@ package kr.debop4j.data.couchbase.cache;
 
 import com.couchbase.client.CouchbaseClient;
 import com.google.common.collect.Lists;
-import kr.debop4j.core.Guard;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
@@ -31,7 +30,7 @@ public class CouchbaseCacheManager extends AbstractTransactionSupportingCacheMan
     }
 
     public CouchbaseCacheManager(CouchbaseClient couchbaseClient, int expireMillis) {
-        Guard.shouldNotBeNull(couchbaseClient, "couchbaseClient");
+        assert couchbaseClient != null;
 
         this.couchbaseClient = couchbaseClient;
         this.expireMillis = expireMillis;

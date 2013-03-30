@@ -1,6 +1,5 @@
 package kr.debop4j.data.memcached;
 
-import kr.debop4j.core.Guard;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import net.spy.memcached.MemcachedClient;
@@ -31,7 +30,7 @@ public class MemcachedCache implements Cache {
     }
 
     public MemcachedCache(MemcachedClient client, int expireSeconds) {
-        Guard.shouldNotBeNull(client, "client");
+        assert client != null;
 
         this.nativeCache = client;
         this.expireSeconds = expireSeconds;
@@ -41,7 +40,7 @@ public class MemcachedCache implements Cache {
 
     @Override
     public ValueWrapper get(Object key) {
-        Guard.shouldNotBeNull(key, "key");
+        assert key != null;
 
         GetFuture<Object> result = nativeCache.asyncGet(key.toString());
 
@@ -55,11 +54,7 @@ public class MemcachedCache implements Cache {
 
     @Override
     public void put(Object key, Object value) {
-        Guard.shouldNotBeNull(key, "key");
-        if (!(key instanceof String)) {
-            log.error("Invalid key type: " + key.getClass());
-            return;
-        }
+        assert key != null;
 
         OperationFuture<Boolean> setOp = null;
         setOp = nativeCache.set(key.toString(), expireSeconds, value);

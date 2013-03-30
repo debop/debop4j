@@ -21,6 +21,7 @@ public class RedisTemplateTest {
 
     public RedisConnectionFactory redisConnectionFactory() {
         JedisConnectionFactory factory = new JedisConnectionFactory(jedisShardInfo());
+        factory.setUsePool(true);
         return factory;
     }
 
