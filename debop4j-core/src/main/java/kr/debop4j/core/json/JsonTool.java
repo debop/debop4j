@@ -17,7 +17,7 @@ public class JsonTool {
     synchronized static IJsonSerializer getDefaultSerializer() {
         if (serializer == null) {
             // IJsonSerializer 를 검색하고, 없다면 GsonSerializer 를 등록하고 반환한다.
-            serializer = Springs.getOrRegisterBean(IJsonSerializer.class, GsonSerializer.class);
+            serializer = Springs.getOrRegisterBean(IJsonSerializer.class, JacksonSerializer.class);
         }
         return serializer;
     }
