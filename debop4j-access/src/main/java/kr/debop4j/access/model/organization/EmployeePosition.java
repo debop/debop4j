@@ -7,6 +7,7 @@ import lombok.Setter;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
+import org.hibernate.annotations.Index;
 
 import javax.persistence.*;
 
@@ -18,6 +19,9 @@ import javax.persistence.*;
 @Entity
 @Table(name = "EmpPosition")
 @org.hibernate.annotations.Cache(region = "Organization", usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+@org.hibernate.annotations.Table(appliesTo = "EmpPosition",
+                                 indexes = { @Index(name = "ix_emp_position",
+                                                    columnNames = { "CompanyId", "CodeValue", "CodeName" }) })
 @DynamicInsert
 @DynamicUpdate
 @Getter

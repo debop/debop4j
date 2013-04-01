@@ -132,13 +132,11 @@
             <groupId>joda-time</groupId>
             <artifactId>joda-time</artifactId>
             <version>${joda.time.version}</version>
-            <optional>true</optional>
         </dependency>
         <dependency>
             <groupId>org.joda</groupId>
             <artifactId>joda-convert</artifactId>
             <version>1.2</version>
-            <optional>true</optional>
         </dependency>
     </dependencies>
 

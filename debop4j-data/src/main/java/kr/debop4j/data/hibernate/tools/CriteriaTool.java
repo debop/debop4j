@@ -101,8 +101,8 @@ public final class CriteriaTool {
     /**
      * 지정한 범위 값이 두 속성 값 구간과 겹치는지를 알아보기 위한 질의어
      */
-    public static Criterion getIsOverlapCriterion(String loPropertyName,
-                                                  String hiPropertyName,
+    public static Criterion getIsOverlapCriterion(final String loPropertyName,
+                                                  final String hiPropertyName,
                                                   Object lo,
                                                   Object hi) {
         return getIsOverlapCriterion(loPropertyName, hiPropertyName, lo, hi, true, true);
@@ -156,7 +156,7 @@ public final class CriteriaTool {
     /**
      * value가 null 이 아니면, 속성값과 eq 이거나 null 인 경우 모두 구한다. value가 null 인 경우는 isNull 로 만든다.
      */
-    public static Criterion getEqIncludeNull(String propertyName, Object value) {
+    public static Criterion getEqIncludeNull(final String propertyName, Object value) {
         if (value != null)
             return disjunction()
                     .add(eq(propertyName, value))
@@ -168,12 +168,13 @@ public final class CriteriaTool {
     /**
      * value 가 null 이면 isnull 을 null 이 아니면 eq 질의를 수행합니다.
      */
-    public static Criterion getEqOrNull(String propertyName, Object value) {
-        return (value == null) ? isNull(propertyName)
+    public static Criterion getEqOrNull(final String propertyName, Object value) {
+        return (value == null)
+                ? isNull(propertyName)
                 : eq(propertyName, value);
     }
 
-    public static Criterion getInsensitiveLikeIncludeNull(String propertyName, String value) {
+    public static Criterion getInsensitiveLikeIncludeNull(final String propertyName, String value) {
         return getInsensitiveLikeIncludeNull(propertyName, value, MatchMode.START);
     }
 

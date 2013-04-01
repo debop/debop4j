@@ -7,7 +7,6 @@ import kr.debop4j.core.Guard;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
-import org.hibernate.annotations.Index;
 
 import javax.persistence.*;
 
@@ -47,15 +46,12 @@ public abstract class EmployeeCodeBase extends AccessEntityBase implements ICode
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "CompanyId")
-    @Index(name = "ix_employeecode")
     private Company company;
 
     @Column(name = "CodeValue", nullable = false, length = 128)
-    @Index(name = "ix_employeecode")
     private String code;
 
     @Column(name = "CodeName", nullable = false, length = 256)
-    @Index(name = "ix_employeecode")
     private String name;
 
     @Column(name = "ViewOrder")
