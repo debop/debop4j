@@ -1,4 +1,4 @@
-package kr.debop4j.data.hibernate.springmvc;
+package kr.debop4j.web.data;
 
 import kr.debop4j.data.hibernate.unitofwork.UnitOfWorks;
 import lombok.extern.slf4j.Slf4j;

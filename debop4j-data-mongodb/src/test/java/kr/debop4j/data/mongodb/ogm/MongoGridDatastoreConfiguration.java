@@ -28,7 +28,7 @@ public class MongoGridDatastoreConfiguration extends MongoGridDatastoreConfigBas
 
     @Override
     protected String getDatabaseName() {
-        return "debop4j_nosql";
+        return "debop4j_data";
     }
 
     @Override
