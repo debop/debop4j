@@ -36,9 +36,9 @@ import static org.fest.assertions.Assertions.assertThat;
 @Slf4j
 public abstract class OgmTestBase {
 
-    static {
-        TestHelper.initializeHelpers();
-    }
+//    static {
+//        TestHelper.initializeHelpers();
+//    }
 
     @BeforeClass
     public static void beforeClass() {
@@ -72,15 +72,6 @@ public abstract class OgmTestBase {
 
     protected static Configuration cfg;
     private static Class<?> lastTestClass;
-
-//    @Before
-//    public void setup() throws Exception {
-//        if (cfg == null || lastTestClass != getClass()) {
-//            buildConfiguration();
-//            lastTestClass = getClass();
-//        }
-//    }
-
 
     protected String[] getXmlFiles() {
         return new String[] { };
