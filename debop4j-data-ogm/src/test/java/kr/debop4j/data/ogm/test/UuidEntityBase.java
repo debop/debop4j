@@ -12,7 +12,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
 /**
- * kr.debop4j.data.ogm.test.UuidEntityBase
+ * 엔티티의 Identifier의 수형이 UUID 인 엔티티입니다.
  *
  * @author sunghyouk.bae@gmail.com
  * @since 13. 3. 31. 오전 2:19
@@ -37,6 +37,6 @@ public class UuidEntityBase extends AnnotatedEntityBase {
     @Override
     protected Objects.ToStringHelper buildStringHelper() {
         return super.buildStringHelper()
-                .add("id", id);
+                    .add("id", id);
     }
 }

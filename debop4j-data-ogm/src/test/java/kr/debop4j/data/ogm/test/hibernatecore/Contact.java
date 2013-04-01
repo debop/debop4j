@@ -1,4 +1,4 @@
-package kr.debop4j.data.ogm.test.simpleentity;
+package kr.debop4j.data.ogm.test.hibernatecore;
 
 import kr.debop4j.data.ogm.test.UuidEntityBase;
 import lombok.Getter;
@@ -7,7 +7,7 @@ import lombok.Setter;
 import javax.persistence.Entity;
 
 /**
- * kr.debop4j.data.ogm.test.simpleentity.Helicopter
+ * kr.debop4j.data.ogm.test.hibernatecore.Contact
  *
  * @author sunghyouk.bae@gmail.com
  * @since 13. 4. 1
@@ -15,9 +15,8 @@ import javax.persistence.Entity;
 @Entity
 @Getter
 @Setter
-public class Helicopter extends UuidEntityBase {
-
-    private static final long serialVersionUID = -858241709367877857L;
+public class Contact extends UuidEntityBase {
 
     private String name;
+
 }

@@ -16,15 +16,13 @@ import org.hibernate.search.FullTextSession;
 import org.hibernate.search.Search;
 import org.hibernate.search.SearchFactory;
 import org.hibernate.search.engine.spi.SearchFactoryImplementor;
-import org.hibernate.testing.FailureExpected;
 import org.junit.After;
 import org.junit.Before;
+import org.junit.BeforeClass;
 
 import java.io.InputStream;
 import java.lang.annotation.Annotation;
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.lang.reflect.Modifier;
 import java.util.Map;
 
 import static org.fest.assertions.Assertions.assertThat;
@@ -36,10 +34,37 @@ import static org.fest.assertions.Assertions.assertThat;
  *         13. 3. 29. 오후 4:22
  */
 @Slf4j
-public abstract class OgmTestBase extends junit.framework.TestCase {
+public abstract class OgmTestBase {
 
     static {
         TestHelper.initializeHelpers();
+    }
+
+    @BeforeClass
+    public static void beforeClass() {
+        TestHelper.initializeHelpers();
+    }
+
+    @Before
+    public void before() throws Exception {
+        doBefore();
+    }
+
+    @After
+    public void after() throws Exception {
+        doAfter();
+    }
+
+    public void doBefore() throws Exception {
+        if (cfg == null || lastTestClass != getClass()) {
+            buildConfiguration();
+            lastTestClass = getClass();
+        }
+    }
+
+    public void doAfter() throws Exception {
+        handleUnclosedResources();
+        closeResources();
     }
 
     protected SessionFactory sessions;
@@ -48,17 +73,17 @@ public abstract class OgmTestBase extends junit.framework.TestCase {
     protected static Configuration cfg;
     private static Class<?> lastTestClass;
 
-    @Before
-    public void setup() throws Exception {
-        if (cfg == null || lastTestClass != getClass()) {
-            buildConfiguration();
-            lastTestClass = getClass();
-        }
-    }
+//    @Before
+//    public void setup() throws Exception {
+//        if (cfg == null || lastTestClass != getClass()) {
+//            buildConfiguration();
+//            lastTestClass = getClass();
+//        }
+//    }
 
 
     protected String[] getXmlFiles() {
-        return new String[]{};
+        return new String[] { };
     }
 
     protected static void setCfg(Configuration cfg) {
@@ -72,11 +97,6 @@ public abstract class OgmTestBase extends junit.framework.TestCase {
     protected void configure(Configuration cfg) {
     }
 
-    @After
-    public void after() throws Exception {
-        handleUnclosedResources();
-        closeResources();
-    }
 
     protected abstract Class<?>[] getAnnotatedClasses();
 
@@ -85,7 +105,7 @@ public abstract class OgmTestBase extends junit.framework.TestCase {
     }
 
     protected String[] getAnnotatedPackages() {
-        return new String[]{};
+        return new String[] { };
     }
 
     protected SearchFactoryImplementor getSearchFactoryImpl() {
@@ -161,79 +181,79 @@ public abstract class OgmTestBase extends junit.framework.TestCase {
         }
     }
 
-    @Override
-    protected void runTest() throws Throwable {
-        Method runMethod = findTestMethod();
-        FailureExpected failureExpected = locateAnnotation(FailureExpected.class, runMethod);
-        try {
-            super.runTest();
-            if (failureExpected != null) {
-                throw new FailureExpectedTestPassedException();
-            }
-        } catch (FailureExpectedTestPassedException t) {
-            closeResources();
-            throw t;
-        } catch (Throwable t) {
-            if (t instanceof InvocationTargetException) {
-                t = ((InvocationTargetException) t).getTargetException();
-            }
-            if (t instanceof IllegalAccessException) {
-                t.fillInStackTrace();
-            }
-            closeResources();
-            if (failureExpected != null) {
-                StringBuilder builder = new StringBuilder();
-                if (StringHelper.isNotEmpty(failureExpected.message())) {
-                    builder.append(failureExpected.message());
-                } else {
-                    builder.append("ignoring @FailureExpected test");
-                }
-                builder.append(" (")
-                        .append(failureExpected.jiraKey())
-                        .append(")");
-                OgmTestBase.log.warn(builder.toString(), t);
-            } else {
-                throw t;
-            }
-        }
-    }
-
-    @Override
-    public void runBare() throws Throwable {
-        Method runMethod = findTestMethod();
-
-        final Skip skip = determineSkipByGridDialect(runMethod);
-        if (skip != null) {
-            reportSkip(skip);
-            return;
-        }
-
-        setUp();
-        try {
-            runTest();
-        } finally {
-            tearDown();
-        }
-    }
+//    @Override
+//    protected void runTest() throws Throwable {
+//        Method runMethod = findTestMethod();
+//        FailureExpected failureExpected = locateAnnotation(FailureExpected.class, runMethod);
+//        try {
+//            super.runTest();
+//            if (failureExpected != null) {
+//                throw new FailureExpectedTestPassedException();
+//            }
+//        } catch (FailureExpectedTestPassedException t) {
+//            closeResources();
+//            throw t;
+//        } catch (Throwable t) {
+//            if (t instanceof InvocationTargetException) {
+//                t = ((InvocationTargetException) t).getTargetException();
+//            }
+//            if (t instanceof IllegalAccessException) {
+//                t.fillInStackTrace();
+//            }
+//            closeResources();
+//            if (failureExpected != null) {
+//                StringBuilder builder = new StringBuilder();
+//                if (StringHelper.isNotEmpty(failureExpected.message())) {
+//                    builder.append(failureExpected.message());
+//                } else {
+//                    builder.append("ignoring @FailureExpected test");
+//                }
+//                builder.append(" (")
+//                       .append(failureExpected.jiraKey())
+//                       .append(")");
+//                OgmTestBase.log.warn(builder.toString(), t);
+//            } else {
+//                throw t;
+//            }
+//        }
+//    }
+//
+//    @Override
+//    public void runBare() throws Throwable {
+//        Method runMethod = findTestMethod();
+//
+//        final Skip skip = determineSkipByGridDialect(runMethod);
+//        if (skip != null) {
+//            reportSkip(skip);
+//            return;
+//        }
+//
+//        setUp();
+//        try {
+//            runTest();
+//        } finally {
+//            tearDown();
+//        }
+//    }
 
     public String fullTestName() {
-        return this.getClass().getName() + "#" + this.getName();
+        return this.getClass().getName(); // + "#" + this.getName();
     }
-
-    private Method findTestMethod() {
-        String fName = getName();
-        assertNotNull(fName);
-        Method runMethod = null;
-        try {
-            runMethod = getClass().getMethod(fName);
-        } catch (NoSuchMethodException e) {
-            fail("Method \"" + fName + "\" not found");
-        }
-        if (!Modifier.isPublic(runMethod.getModifiers())) {
-            fail("Method \"" + fName + "\" should be public");
-        }
-        return runMethod;
-    }
+//
+//    private Method findTestMethod() {
+//        String fName = getName();
+//        assertNotNull(fName);
+//        Method runMethod = null;
+//        try {
+//            runMethod = getClass().getMethod(fName);
+//        } catch (NoSuchMethodException e) {
+//            fail("Method \"" + fName + "\" not found");
+//        }
+//        if (!Modifier.isPublic(runMethod.getModifiers())) {
+//            fail("Method \"" + fName + "\" should be public");
+//        }
+//        return runMethod;
+//    }
 
     private static class FailureExpectedTestPassedException extends Exception {
         public FailureExpectedTestPassedException() {
@@ -291,6 +311,7 @@ public abstract class OgmTestBase extends junit.framework.TestCase {
             for (Map.Entry<String, String> entry : TestHelper.getEnvironmentProperties().entrySet()) {
                 cfg.setProperty(entry.getKey(), entry.getValue());
             }
+            // cfg.setProperty(MassIndexerFactoryIntegrator.MASS_INDEXER_FACTORY_CLASSNAME, OgmMassIndexerFactory.class.getName());
 
             configure(cfg);
             if (recreateSchema()) {
@@ -323,7 +344,8 @@ public abstract class OgmTestBase extends junit.framework.TestCase {
             }
             session.close();
             session = null;
-            fail("unclosed session");
+            // fail("unclosed session");
+            // Assert.fail("unclosed session");
         } else {
             session = null;
         }

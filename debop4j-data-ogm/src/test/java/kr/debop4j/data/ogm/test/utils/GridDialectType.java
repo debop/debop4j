@@ -7,6 +7,7 @@ package kr.debop4j.data.ogm.test.utils;
  *         13. 3. 29. 오후 4:39
  */
 public enum GridDialectType {
+
     HASHMAP("org.hibernate.ogm.HashMapTestHelper") {
         @Override
         public Class<?> loadTestableGridDialectClass() {
@@ -42,7 +43,9 @@ public enum GridDialectType {
                 return type;
             }
         }
-        throw new IllegalArgumentException(class1 +
-                                                   " is not one of the TestableGridDialect implementation known to " + GridDialectType.class);
+        throw new IllegalArgumentException(
+                class1
+                        + " is not one of the TestableGridDialect implementation known to "
+                        + GridDialectType.class);
     }
 }

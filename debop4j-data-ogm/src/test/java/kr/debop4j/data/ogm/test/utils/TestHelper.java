@@ -39,12 +39,12 @@ public class TestHelper {
             if (classForName != null) {
                 try {
                     TestableGridDialect attempt = (TestableGridDialect) classForName.newInstance();
-                    TestHelper.log.debug("Using TestGridDialect [{}]", classForName);
+                    log.debug("Using TestGridDialect [{}]", classForName);
                     return attempt;
                 } catch (Exception e) {
                     //but other errors are not expected:
-                    TestHelper.log.error("Could not load TestGridDialect by name from [{}]", gridType);
-                    TestHelper.log.error("", e);
+                    log.error("Could not load TestGridDialect by name from [{}]", gridType);
+                    log.error("", e);
                 }
             }
         }

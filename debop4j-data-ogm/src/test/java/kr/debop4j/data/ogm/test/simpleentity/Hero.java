@@ -1,13 +1,14 @@
 package kr.debop4j.data.ogm.test.simpleentity;
 
-import kr.debop4j.data.ogm.test.UuidEntityBase;
+import kr.debop4j.data.model.AnnotatedEntityBase;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.Entity;
+import javax.persistence.Id;
 
 /**
- * kr.debop4j.data.ogm.test.simpleentity.Helicopter
+ * kr.debop4j.data.ogm.test.simpleentity.Hero
  *
  * @author sunghyouk.bae@gmail.com
  * @since 13. 4. 1
@@ -15,9 +16,10 @@ import javax.persistence.Entity;
 @Entity
 @Getter
 @Setter
-public class Helicopter extends UuidEntityBase {
+public class Hero extends AnnotatedEntityBase {
 
-    private static final long serialVersionUID = -858241709367877857L;
-
+    @Id
     private String name;
 }
+
+
