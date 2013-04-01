@@ -17,7 +17,7 @@ import java.util.List;
 import static org.fest.assertions.Assertions.assertThat;
 
 /**
- * kr.debop4j.data.ogm.test.queries.SimpleQueriesTest
+ * kr.debop4j.data.ogm.test.queries.EhCacheSimpleQueriesTest
  *
  * @author sunghyouk.bae@gmail.com
  * @since 13. 4. 1

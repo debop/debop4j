@@ -20,9 +20,7 @@ import org.hibernate.ogm.datastore.spi.Tuple;
 import org.hibernate.ogm.dialect.GridDialect;
 import org.hibernate.ogm.dialect.mongodb.MongoDBAssociationSnapshot;
 import org.hibernate.ogm.dialect.mongodb.MongoDBDialect;
-import org.hibernate.ogm.grid.AssociationKey;
-import org.hibernate.ogm.grid.AssociationKind;
-import org.hibernate.ogm.grid.EntityKey;
+import org.hibernate.ogm.grid.*;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -106,16 +104,16 @@ public class LoadSelectedColumnsCollectionTest extends MongoGridDatastoreTestBas
         UnitOfWorks.getCurrent().transactionalFlush();
 
         this.addExtraColumn();
-        GridDialect gridDialect = Springs.getBean(GridDialect.class);  //this.getGridDialect();
+        GridDialect gridDialect = Springs.getBean(GridDialect.class);
+        AssociationKeyMetadata metadata = new AssociationKeyMetadata("Project_Module", new String[]{ "Project_id" });
+        metadata.setRowKeyColumnNames(new String[]{ "Project_id", "module_id" });
         AssociationKey associationKey = new AssociationKey(
-                "Project_Module",
-                new String[]{"Project_id"},
-                new Object[]{"projectID"}
+                metadata,
+                new Object[]{ "projectID" }
         );
         associationKey.setAssociationKind(AssociationKind.ASSOCIATION);
         associationKey.setCollectionRole("modules");
-        associationKey.setOwnerEntityKey(new EntityKey("Project", new String[]{"id"}, new String[]{"projectID"}));
-        associationKey.setRowKeyColumnNames(new String[]{"Project_id", "module_id"});
+        associationKey.setOwnerEntityKey(new EntityKey(new EntityKeyMetadata("Project", new String[]{ "id" }), new String[]{ "projectID" }));
         AssociationContext associationContext = new AssociationContext(Arrays.asList(associationKey.getRowKeyColumnNames()));
         final Association association = gridDialect.getAssociation(associationKey, associationContext);
         final MongoDBAssociationSnapshot associationSnapshot = (MongoDBAssociationSnapshot) association.getSnapshot();

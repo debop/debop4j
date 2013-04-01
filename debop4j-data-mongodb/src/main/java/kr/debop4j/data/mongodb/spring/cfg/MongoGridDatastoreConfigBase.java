@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.hibernate.ogm.datastore.mongodb.AssociationStorage;
 import org.hibernate.ogm.datastore.mongodb.Environment;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 
 import javax.transaction.TransactionManager;
 import java.util.Properties;
@@ -15,6 +16,7 @@ import java.util.Properties;
  * @author sunghyouk.bae@gmail.com
  * @since 13. 3. 29
  */
+@Configuration
 @Slf4j
 public abstract class MongoGridDatastoreConfigBase extends GridDatastoreConfigBase {
     public static final String MONGODB_DATASTORE_PROVIDER =

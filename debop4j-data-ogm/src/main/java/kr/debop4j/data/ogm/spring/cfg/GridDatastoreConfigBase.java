@@ -13,6 +13,7 @@ import org.hibernate.ogm.datastore.spi.DatastoreProvider;
 import org.hibernate.ogm.dialect.GridDialect;
 import org.hibernate.service.spi.ServiceRegistryImplementor;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 
 import java.util.Properties;
 
@@ -22,6 +23,7 @@ import java.util.Properties;
  * @author sunghyouk.bae@gmail.com
  * @since 13. 3. 29
  */
+@Configuration
 @Slf4j
 public abstract class GridDatastoreConfigBase {
     /**

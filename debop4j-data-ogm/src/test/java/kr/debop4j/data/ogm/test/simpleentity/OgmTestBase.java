@@ -74,7 +74,7 @@ public abstract class OgmTestBase {
     private static Class<?> lastTestClass;
 
     protected String[] getXmlFiles() {
-        return new String[] { };
+        return new String[]{ };
     }
 
     protected static void setCfg(Configuration cfg) {
@@ -96,12 +96,12 @@ public abstract class OgmTestBase {
     }
 
     protected String[] getAnnotatedPackages() {
-        return new String[] { };
+        return new String[]{ };
     }
 
     protected SearchFactoryImplementor getSearchFactoryImpl() {
-        if (OgmTestBase.log.isDebugEnabled())
-            OgmTestBase.log.debug("SearchFactoryImplementor 를 생성합니다.");
+        if (log.isDebugEnabled())
+            log.debug("SearchFactoryImplementor 를 생성합니다.");
 
         FullTextSession fts = Search.getFullTextSession(openSession());
         fts.close();

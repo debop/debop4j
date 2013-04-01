@@ -37,6 +37,66 @@
             <version>${debop4j.version}</version>
         </dependency>
 
+        <dependency>
+            <groupId>debop4j</groupId>
+            <artifactId>debop4j-data-ogm</artifactId>
+            <version>${debop4j.version}</version>
+            <type>test-jar</type>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.hibernate.ogm</groupId>
+            <artifactId>hibernate-ogm-core</artifactId>
+            <version>${hibernate.ogm.version}</version>
+            <exclusions>
+                <exclusion>
+                    <artifactId>hibernate-search-engine</artifactId>
+                    <groupId>org.hibernate</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>hibernate-core</artifactId>
+                    <groupId>org.hibernate</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>hibernate-entitymanager</artifactId>
+                    <groupId>org.hibernate</groupId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-search-orm</artifactId>
+            <version>${hibernate.search.version}</version>
+            <exclusions>
+                <exclusion>
+                    <artifactId>hibernate-core</artifactId>
+                    <groupId>org.hibernate</groupId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-search-engine</artifactId>
+            <version>${hibernate.search.version}</version>
+            <exclusions>
+                <exclusion>
+                    <artifactId>jboss-logging</artifactId>
+                    <groupId>org.jboss.logging</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>slf4j-api</artifactId>
+                    <groupId>org.slf4j</groupId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+        <dependency>
+            <groupId>org.jboss.jbossts</groupId>
+            <artifactId>jbossjta</artifactId>
+            <version>${jbossjta.version}</version>
+        </dependency>
 
         <!-- MongoDB for Cache -->
 
@@ -69,6 +129,10 @@
                     <artifactId>spring-expression</artifactId>
                     <groupId>org.springframework</groupId>
                 </exclusion>
+                <exclusion>
+                    <artifactId>mongo-java-driver</artifactId>
+                    <groupId>org.mongodb</groupId>
+                </exclusion>
             </exclusions>
         </dependency>
 
@@ -78,14 +142,6 @@
             <version>${hibernate.ogm.mongo.version}</version>
             <exclusions>
                 <exclusion>
-                    <artifactId>hibernate-ogm-core</artifactId>
-                    <groupId>org.hibernate.ogm</groupId>
-                </exclusion>
-                <exclusion>
-                    <artifactId>mongo-java-driver</artifactId>
-                    <groupId>org.mongodb</groupId>
-                </exclusion>
-                <exclusion>
                     <artifactId>hibernate-entitymanager</artifactId>
                     <groupId>org.hibernate</groupId>
                 </exclusion>
@@ -94,6 +150,7 @@
 
 
         <!-- for Testing -->
+
         <dependency>
             <groupId>org.twitter4j</groupId>
             <artifactId>twitter4j-core</artifactId>

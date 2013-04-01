@@ -10,6 +10,7 @@ import org.hibernate.ogm.datastore.spi.TupleContext;
 import org.hibernate.ogm.dialect.GridDialect;
 import org.hibernate.ogm.dialect.mongodb.MongoDBDialect;
 import org.hibernate.ogm.grid.EntityKey;
+import org.hibernate.ogm.grid.EntityKeyMetadata;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
@@ -25,8 +26,12 @@ import java.util.List;
 @Setter
 public class MongoTool {
 
+    @Autowired
     GridDialect gridDialect;
+    @Autowired
     DatastoreProvider datastoreProvider;
+
+    public MongoTool() {}
 
     @Autowired
     public MongoTool(GridDialect gridDialect, DatastoreProvider datastoreProvider) {
@@ -36,9 +41,9 @@ public class MongoTool {
 
 
     public Tuple getTuple(String collectionName, String id, List<String> selectedColumns) {
-        EntityKey key = new EntityKey(collectionName,
-                                      new String[]{MongoDBDialect.ID_FIELDNAME},
-                                      new Object[]{id});
+        EntityKey key = new EntityKey(new EntityKeyMetadata(collectionName,
+                                                            new String[]{ MongoDBDialect.ID_FIELDNAME }),
+                                      new Object[]{ id });
         TupleContext tupleContext = new TupleContext(selectedColumns);
         return gridDialect.getTuple(key, tupleContext);
     }

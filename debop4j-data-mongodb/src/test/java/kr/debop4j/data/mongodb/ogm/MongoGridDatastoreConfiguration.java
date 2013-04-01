@@ -5,6 +5,8 @@ import kr.debop4j.data.mongodb.ogm.model.Project;
 import kr.debop4j.data.mongodb.spring.cfg.MongoGridDatastoreConfigBase;
 import kr.debop4j.data.mongodb.tools.MongoTool;
 import lombok.extern.slf4j.Slf4j;
+import org.hibernate.ogm.datastore.spi.DatastoreProvider;
+import org.hibernate.ogm.dialect.GridDialect;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -16,14 +18,17 @@ import org.springframework.context.annotation.Configuration;
  * @since 13. 3. 28
  */
 @Configuration
-@ComponentScan({"kr.debop4j.data.mongodb.spring.cfg",
-                       "kr.debop4j.data.mongodb.tools"})
+@ComponentScan({ "kr.debop4j.data.mongodb.spring.cfg",
+                       "kr.debop4j.data.mongodb.tools" })
 @Slf4j
 public class MongoGridDatastoreConfiguration extends MongoGridDatastoreConfigBase {
 
     @Bean
     public MongoTool mongoTool() {
-        return new MongoTool(gridDialect(), datastoreProvider());
+        GridDialect dialect = gridDialect();
+        DatastoreProvider provider = datastoreProvider();
+
+        return new MongoTool(dialect, provider);
     }
 
     @Override

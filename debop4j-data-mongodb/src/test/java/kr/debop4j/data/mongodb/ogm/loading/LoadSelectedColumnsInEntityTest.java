@@ -1,13 +1,25 @@
 package kr.debop4j.data.mongodb.ogm.loading;
 
+import com.mongodb.BasicDBObject;
+import com.mongodb.DB;
+import com.mongodb.DBCollection;
+import com.mongodb.DBObject;
 import kr.debop4j.core.spring.Springs;
 import kr.debop4j.data.hibernate.unitofwork.UnitOfWorks;
 import kr.debop4j.data.mongodb.ogm.MongoGridDatastoreConfiguration;
+import org.hibernate.ogm.datastore.mongodb.AssociationStorage;
+import org.hibernate.ogm.datastore.mongodb.impl.MongoDBDatastoreProvider;
+import org.hibernate.ogm.datastore.spi.DatastoreProvider;
+import org.hibernate.ogm.dialect.mongodb.MongoDBDialect;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.springframework.context.annotation.Configuration;
+
+import java.util.Set;
+
+import static org.fest.assertions.Assertions.assertThat;
 
 /**
  * kr.debop4j.data.mongodb.ogm.loading.LoadSelectedColumnsInEntityTest
@@ -37,6 +49,29 @@ public class LoadSelectedColumnsInEntityTest extends LoadSelectedColumnsCollecti
     public void after() {
         UnitOfWorks.stop();
     }
+
+    @Override
+    protected void addExtraColumn() {
+        MongoDBDatastoreProvider provider = (MongoDBDatastoreProvider) Springs.getBean(DatastoreProvider.class);// (MongoDBDatastoreProvider) super.getService( DatastoreProvider.class );
+        DB database = provider.getDatabase();
+        DBCollection collection = database.getCollection("Project");
+
+        BasicDBObject query = new BasicDBObject(1);
+        query.put("_id", "projectID");
+
+        BasicDBObject updater = new BasicDBObject(1);
+        updater.put("$push", new BasicDBObject("extraColumn", 1));
+        collection.update(query, updater);
+    }
+
+    protected void checkLoading(DBObject associationObject) {
+        /*
+		 * The only column (except _id) that needs to be retrieved is "modules"
+		 * So we should have 2 columns
+		 */
+        final Set<?> retrievedColumns = associationObject.keySet();
+        assertThat(retrievedColumns).hasSize(2).containsOnly(MongoDBDialect.ID_FIELDNAME, "modules");
+    }
 }
 
 /**
@@ -45,8 +80,8 @@ public class LoadSelectedColumnsInEntityTest extends LoadSelectedColumnsCollecti
 @Configuration
 class InEntityConfiguration extends MongoGridDatastoreConfiguration {
 
-//    @Override
-//    protected AssociationStorage getAssociationStorage() {
-//        return AssociationStorage.IN_ENTITY;
-//    }
+    @Override
+    protected AssociationStorage getAssociationStorage() {
+        return AssociationStorage.IN_ENTITY;
+    }
 }
