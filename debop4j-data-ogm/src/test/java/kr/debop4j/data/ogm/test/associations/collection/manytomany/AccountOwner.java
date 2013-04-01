@@ -2,13 +2,14 @@ package kr.debop4j.data.ogm.test.associations.collection.manytomany;
 
 import com.google.common.collect.Sets;
 import kr.debop4j.core.tools.HashTool;
-import kr.debop4j.data.model.AnnotatedEntityBase;
+import kr.debop4j.data.ogm.test.UuidEntityBase;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.Cascade;
-import org.hibernate.annotations.GenericGenerator;
 
-import javax.persistence.*;
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.ManyToMany;
 import java.util.Set;
 
 /**
@@ -20,12 +21,7 @@ import java.util.Set;
 @Entity
 @Getter
 @Setter
-public class AccountOwner extends AnnotatedEntityBase {
-
-    @Id
-    @GeneratedValue(generator = "uuid")
-    @GenericGenerator(name = "uuid", strategy = "uuid2")
-    private String id;
+public class AccountOwner extends UuidEntityBase {
 
     private String SSN;
 
@@ -35,8 +31,8 @@ public class AccountOwner extends AnnotatedEntityBase {
 
     @Override
     public int hashCode() {
-        if (isPersisted())
-            return HashTool.compute(id);
+        if (getId() != null)
+            return super.hashCode();
         return HashTool.compute(SSN);
     }
 }

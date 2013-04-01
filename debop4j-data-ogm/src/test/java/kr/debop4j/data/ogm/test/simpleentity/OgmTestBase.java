@@ -4,7 +4,6 @@ import kr.debop4j.data.ogm.test.utils.GridDialectType;
 import kr.debop4j.data.ogm.test.utils.SkipByGridDialect;
 import kr.debop4j.data.ogm.test.utils.TestHelper;
 import lombok.extern.slf4j.Slf4j;
-import org.fest.assertions.Assertions;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -27,6 +26,8 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.util.Map;
+
+import static org.fest.assertions.Assertions.assertThat;
 
 /**
  * OgmTestBase
@@ -360,7 +361,12 @@ public abstract class OgmTestBase extends junit.framework.TestCase {
     }
 
     public void checkCleanCache() {
-        Assertions.assertThat(TestHelper.assertNumberOfEntities(0, sessions)).as("Entity cache should be empty").isTrue();
-        Assertions.assertThat(TestHelper.assertNumberOfAssociations(0, sessions)).as("Association cache should be empty").isTrue();
+        assertThat(TestHelper.assertNumberOfEntities(0, sessions))
+                .as("Entity cache should be empty")
+                .isTrue();
+
+        assertThat(TestHelper.assertNumberOfAssociations(0, sessions))
+                .as("Association cache should be empty")
+                .isTrue();
     }
 }
