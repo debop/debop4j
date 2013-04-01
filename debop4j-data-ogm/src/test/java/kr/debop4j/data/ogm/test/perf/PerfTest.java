@@ -67,7 +67,7 @@ public class PerfTest extends OgmTestBase {
             save200BlogsAndCommit(session, nbrOfAuthors);
         }
 
-        int nbrOfBlogEntries = 350000;
+        int nbrOfBlogEntries = 35000; // 350000;
         System.out.printf("Warm up period done\nSaving %s Blog entries\n", nbrOfBlogEntries);
         long start = System.nanoTime();
 
@@ -124,12 +124,12 @@ public class PerfTest extends OgmTestBase {
         System.out.printf("Warming up\n");
         Session session = openSession();
 
-        int nbrOfAuthors = 50000;
+        int nbrOfAuthors = 5000; // 50000;
         for (int j = 0; j < nbrOfAuthors / 200; j++) {
             save200AuthorsAndCommit(session, 200);
         }
 
-        int nbrOfBlogEntries = 350000;
+        int nbrOfBlogEntries = 35000; //350000;
         System.out.printf("Warm up period done\nSaving %s Blog entries\n", nbrOfBlogEntries);
         long start = System.nanoTime();
 
@@ -139,7 +139,7 @@ public class PerfTest extends OgmTestBase {
 
         System.out.printf("Writing %s took %sms ie %sns/entry\n", nbrOfBlogEntries, (System.nanoTime() - start) / 1000000, (System.nanoTime() - start) / (nbrOfBlogEntries));
 
-        int nbr_of_reads = 100000;
+        int nbr_of_reads = 10000; // 100000;
         start = System.nanoTime();
         for (int i = 0; i < nbr_of_reads; i++) {
             int primaryKey = rand.nextInt(nbrOfBlogEntries - 1) + 1; //start from 1
@@ -159,7 +159,7 @@ public class PerfTest extends OgmTestBase {
     public void simpleEntityInserts() throws Exception {
         Session session = openSession();
 
-        int authors = 2000000;
+        int authors = 20000; //2000000;
         System.out.printf("Warming up\n");
         for (int j = 0; j < 200; j++) {
             save200AuthorsAndCommit(session, 200);
@@ -175,7 +175,7 @@ public class PerfTest extends OgmTestBase {
         session.close();
 
         session = openSession();
-        int nbr_of_reads = 100000;
+        int nbr_of_reads = 1000; //100000;
         start = System.nanoTime();
         for (int i = 0; i < nbr_of_reads; i++) {
             int primaryKey = rand.nextInt(authors - 1) + 1; //start from 1
