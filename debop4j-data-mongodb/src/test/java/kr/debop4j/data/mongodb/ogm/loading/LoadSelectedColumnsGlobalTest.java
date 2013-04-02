@@ -1,15 +1,10 @@
 package kr.debop4j.data.mongodb.ogm.loading;
 
-import com.mongodb.BasicDBObject;
-import com.mongodb.DB;
-import com.mongodb.DBCollection;
 import kr.debop4j.core.spring.Springs;
 import kr.debop4j.data.hibernate.unitofwork.UnitOfWorks;
 import kr.debop4j.data.mongodb.ogm.MongoGridDatastoreConfiguration;
 import lombok.extern.slf4j.Slf4j;
 import org.hibernate.ogm.datastore.mongodb.AssociationStorage;
-import org.hibernate.ogm.datastore.mongodb.impl.MongoDBDatastoreProvider;
-import org.hibernate.ogm.datastore.spi.DatastoreProvider;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -50,23 +45,23 @@ public class LoadSelectedColumnsGlobalTest extends LoadSelectedColumnsCollection
      * To be sure the datastoreProvider retrieves only the columns we want,
      * an extra column is manually added to the association document
      */
-    @Override
-    protected void addExtraColumn() {
-        MongoDBDatastoreProvider provider = (MongoDBDatastoreProvider) Springs.getBean(DatastoreProvider.class); //super.getService( DatastoreProvider.class );
-        DB database = provider.getDatabase();
-        DBCollection collection = database.getCollection("Associations");
-
-        final BasicDBObject idObject = new BasicDBObject(2);
-        idObject.append("Project_id", "projectID");
-        idObject.append("table", "Project_Module");
-
-        BasicDBObject query = new BasicDBObject(1);
-        query.put("_id", idObject);
-
-        BasicDBObject updater = new BasicDBObject(1);
-        updater.put("$push", new BasicDBObject("extraColumn", 1));
-        collection.update(query, updater);
-    }
+//    @Override
+//    protected void addExtraColumn() {
+//        MongoDBDatastoreProvider provider = (MongoDBDatastoreProvider) Springs.getBean(DatastoreProvider.class); //super.getService( DatastoreProvider.class );
+//        DB database = provider.getDatabase();
+//        DBCollection collection = database.getCollection("Associations");
+//
+//        final BasicDBObject idObject = new BasicDBObject(2);
+//        idObject.append("Project_id", "projectID");
+//        idObject.append("table", "Project_Module");
+//
+//        BasicDBObject query = new BasicDBObject(1);
+//        query.put("_id", idObject);
+//
+//        BasicDBObject updater = new BasicDBObject(1);
+//        updater.put("$push", new BasicDBObject("extraColumn", 1));
+//        collection.update(query, updater);
+//    }
 }
 
 @Configuration
