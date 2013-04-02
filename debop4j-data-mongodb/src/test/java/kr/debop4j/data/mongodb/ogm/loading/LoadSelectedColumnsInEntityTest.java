@@ -66,7 +66,7 @@ public class LoadSelectedColumnsInEntityTest extends LoadSelectedColumnsCollecti
 
     protected void checkLoading(DBObject associationObject) {
         /*
-		 * The only column (except _id) that needs to be retrieved is "modules"
+         * The only column (except _id) that needs to be retrieved is "modules"
 		 * So we should have 2 columns
 		 */
         final Set<?> retrievedColumns = associationObject.keySet();
@@ -82,6 +82,7 @@ class InEntityConfiguration extends MongoGridDatastoreConfiguration {
 
     @Override
     protected AssociationStorage getAssociationStorage() {
-        return AssociationStorage.IN_ENTITY;
+        return AssociationStorage.COLLECTION;
+        //return AssociationStorage.IN_ENTITY;
     }
 }

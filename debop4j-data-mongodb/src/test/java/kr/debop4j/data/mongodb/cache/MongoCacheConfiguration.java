@@ -15,13 +15,13 @@ import org.springframework.data.mongodb.config.AbstractMongoConfiguration;
  */
 @Configuration
 @EnableCaching
-@ComponentScan(basePackageClasses = {UserRepository.class})
+@ComponentScan(basePackageClasses = { UserRepository.class })
 @Slf4j
 public class MongoCacheConfiguration extends AbstractMongoConfiguration {
 
     @Override
     protected String getDatabaseName() {
-        return "debop4j_nosql";
+        return "debop4j_data";
     }
 
     @Override

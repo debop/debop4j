@@ -7,6 +7,7 @@ import kr.debop4j.core.spring.Springs;
 import kr.debop4j.data.hibernate.unitofwork.UnitOfWorks;
 import kr.debop4j.data.mongodb.ogm.MongoGridDatastoreConfiguration;
 import lombok.extern.slf4j.Slf4j;
+import org.hibernate.ogm.datastore.mongodb.AssociationStorage;
 import org.hibernate.ogm.datastore.mongodb.impl.MongoDBDatastoreProvider;
 import org.hibernate.ogm.datastore.spi.DatastoreProvider;
 import org.junit.After;
@@ -72,8 +73,9 @@ public class LoadSelectedColumnsGlobalTest extends LoadSelectedColumnsCollection
 @Slf4j
 class GlobalCollectionConfiguration extends MongoGridDatastoreConfiguration {
 
-//    @Override
-//    protected AssociationStorage getAssociationStorage() {
-//        return AssociationStorage.GLOBAL_COLLECTION;
-//    }
+    @Override
+    protected AssociationStorage getAssociationStorage() {
+        return AssociationStorage.COLLECTION;
+        //return AssociationStorage.GLOBAL_COLLECTION;
+    }
 }
