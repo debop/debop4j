@@ -5,21 +5,27 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 /**
- * Beer
+ * kr.debop4j.data.ogm.test.associations.manytoone.Member
  *
  * @author sunghyouk.bae@gmail.com
- *         13. 3. 29. 오후 9:08
+ * @since 13. 4. 2. 오후 12:01
  */
 @Entity
 @Getter
 @Setter
-public class Beer extends UuidEntityBase {
+public class Member extends UuidEntityBase {
+
+    protected Member() {}
+
+    public Member(String name) {
+        this.name = name;
+    }
+
+    private String name;
 
     @ManyToOne
-    @JoinColumn(insertable = false, updatable = false, name = "brewery_id")
-    private Brewery brewery;
+    private Jug memberOf;
 }

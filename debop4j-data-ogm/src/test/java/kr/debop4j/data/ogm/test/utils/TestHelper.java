@@ -1,11 +1,12 @@
 package kr.debop4j.data.ogm.test.utils;
 
 import com.arjuna.ats.arjuna.coordinator.TxControl;
-import lombok.extern.slf4j.Slf4j;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.ejb.HibernateEntityManagerFactory;
 import org.hibernate.ogm.grid.EntityKey;
+import org.hibernate.ogm.util.impl.Log;
+import org.hibernate.ogm.util.impl.LoggerFactory;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -19,9 +20,8 @@ import java.util.Map;
  * @author sunghyouk.bae@gmail.com
  *         13. 3. 29. 오후 4:42
  */
-@Slf4j
 public class TestHelper {
-    //private static final Log log = LoggerFactory.make();
+    private static final Log log = LoggerFactory.make();
     private static final TestableGridDialect helper = createStoreSpecificHelper();
 
     static {
@@ -39,12 +39,11 @@ public class TestHelper {
             if (classForName != null) {
                 try {
                     TestableGridDialect attempt = (TestableGridDialect) classForName.newInstance();
-                    log.debug("Using TestGridDialect [{}]", classForName);
+                    log.debugf("Using TestGridDialect %s", classForName);
                     return attempt;
                 } catch (Exception e) {
                     //but other errors are not expected:
-                    log.error("Could not load TestGridDialect by name from [{}]", gridType);
-                    log.error("", e);
+                    log.errorf(e, "Could not load TestGridDialect by name from %s", gridType);
                 }
             }
         }
@@ -97,7 +96,7 @@ public class TestHelper {
             try {
                 helper.dropSchemaAndDatabase(sessionFactory);
             } catch (Exception e) {
-                TestHelper.log.warn("Exception while dropping schema and database in test", e);
+                log.warn("Exception while dropping schema and database in test", e);
             }
         }
     }

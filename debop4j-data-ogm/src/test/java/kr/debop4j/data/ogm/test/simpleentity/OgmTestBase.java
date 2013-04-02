@@ -297,16 +297,16 @@ public abstract class OgmTestBase {
 
             //Other configurations
             // by default use the new id generator scheme...
-            cfg.setProperty(Configuration.USE_NEW_ID_GENERATOR_MAPPINGS, "true");
+            getCfg().setProperty(Configuration.USE_NEW_ID_GENERATOR_MAPPINGS, "true");
 
             for (Map.Entry<String, String> entry : TestHelper.getEnvironmentProperties().entrySet()) {
-                cfg.setProperty(entry.getKey(), entry.getValue());
+                getCfg().setProperty(entry.getKey(), entry.getValue());
             }
-            // cfg.setProperty(MassIndexerFactoryIntegrator.MASS_INDEXER_FACTORY_CLASSNAME, OgmMassIndexerFactory.class.getName());
 
             configure(cfg);
+
             if (recreateSchema()) {
-                cfg.setProperty(Environment.HBM2DDL_AUTO, "none");
+                getCfg().setProperty(Environment.HBM2DDL_AUTO, "none");
             }
             for (String aPackage : getAnnotatedPackages()) {
                 getCfg().addPackage(aPackage);
@@ -318,6 +318,10 @@ public abstract class OgmTestBase {
                 InputStream is = Thread.currentThread().getContextClassLoader().getResourceAsStream(xmlFile);
                 getCfg().addInputStream(is);
             }
+
+            // TODO: hibernate-search-orm 4.3.0 SNAPSHOT 에 있습니다.
+//            getCfg().setProperty(MassIndexerFactoryIntegrator.MASS_INDEXER_FACTORY_CLASSNAME,
+//                                 OgmMassIndexerFactory.class.getName());
 
             setSessions(getCfg().buildSessionFactory( /* new TestInterceptor() */));
         } catch (Exception e) {

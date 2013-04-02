@@ -166,7 +166,6 @@
             <artifactId>joda-convert</artifactId>
             <version>1.2</version>
         </dependency>
-
         <dependency>
             <groupId>joda-time</groupId>
             <artifactId>joda-time-hibernate</artifactId>

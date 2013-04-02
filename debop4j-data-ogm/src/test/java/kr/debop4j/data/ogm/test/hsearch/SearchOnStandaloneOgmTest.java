@@ -28,11 +28,21 @@ public class SearchOnStandaloneOgmTest extends OgmTestBase {
     protected void configure(Configuration cfg) {
         super.configure(cfg);
         cfg.setProperty("hibernate.search.default.directory_provider", "ram");
+
+        // hibernate-search 환경설정
+        cfg.setProperty("hibernate.search.default.indexmanager", "near-real-time");
+
+        // hibernate-search performance settings
+        cfg.setProperty("hibernate.search.default.indexwriter.max_buffered_doc", "true");
+        cfg.setProperty("hibernate.search.default.indexwriter.max_merge_docs", "100");
+        cfg.setProperty("hibernate.search.default.indexwriter.merge_factor", "20");
+        cfg.setProperty("hibernate.search.default.indexwriter.term_index_interval", "default");
+        cfg.setProperty("hibernate.search.default.indexwriter.ram_buffer_size", "1024");
     }
 
     @Override
     protected Class<?>[] getAnnotatedClasses() {
-        return new Class<?>[] { Insurance.class };
+        return new Class<?>[]{ Insurance.class };
     }
 
     @Test
@@ -41,9 +51,12 @@ public class SearchOnStandaloneOgmTest extends OgmTestBase {
         final FullTextSession fts = Search.getFullTextSession(session);
         Transaction transaction = fts.beginTransaction();
 
-        final Insurance insurance = new Insurance();
-        insurance.setName("Macif");
-        fts.persist(insurance);
+        int itemCount = 10000;
+        for (int i = 0; i < itemCount; i++) {
+            Insurance insurance = new Insurance();
+            insurance.setName("Macif");
+            fts.persist(insurance);
+        }
 
         transaction.commit();
         fts.clear();
@@ -51,15 +64,15 @@ public class SearchOnStandaloneOgmTest extends OgmTestBase {
         transaction = fts.beginTransaction();
         final QueryBuilder b =
                 fts.getSearchFactory()
-                   .buildQueryBuilder()
-                   .forEntity(Insurance.class)
-                   .get();
+                        .buildQueryBuilder()
+                        .forEntity(Insurance.class)
+                        .get();
         final Query lq = b.keyword().onField("name").matching("Macif").createQuery();
         final FullTextQuery ftq = fts.createFullTextQuery(lq, Insurance.class);
         ftq.initializeObjectsWith(ObjectLookupMethod.SKIP, DatabaseRetrievalMethod.FIND_BY_ID);
         final List<Insurance> results = ftq.list();
 
-        Assertions.assertThat(results).hasSize(1);
+        Assertions.assertThat(results).hasSize(itemCount);
         for (Insurance o : results)
             fts.delete(o);
 

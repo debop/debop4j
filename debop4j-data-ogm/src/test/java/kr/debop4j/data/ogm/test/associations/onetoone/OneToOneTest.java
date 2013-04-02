@@ -20,6 +20,7 @@ public class OneToOneTest extends OgmTestBase {
 
     @Test
     public void unidirectionalManyToOne() throws Exception {
+
         final Session session = openSession();
         Transaction transaction = session.beginTransaction();
         Horse horse = new Horse();
@@ -74,6 +75,7 @@ public class OneToOneTest extends OgmTestBase {
 
     @Test
     public void bidirectionalManyToOne() throws Exception {
+
         final Session session = openSession();
         Transaction transaction = session.beginTransaction();
         Husband husband = new Husband();
@@ -128,7 +130,7 @@ public class OneToOneTest extends OgmTestBase {
 
     @Override
     protected Class<?>[] getAnnotatedClasses() {
-        return new Class<?>[] {
+        return new Class<?>[]{
                 Horse.class,
                 Cavalier.class,
                 Vehicle.class,

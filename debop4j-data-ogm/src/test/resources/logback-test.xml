@@ -9,6 +9,8 @@
         </encoder>
     </appender>
 
+    <logger name="org.hibernate.ogm" level="DEBUG"/>
+
     <root level="DEBUG">
         <appender-ref ref="console"/>
     </root>
