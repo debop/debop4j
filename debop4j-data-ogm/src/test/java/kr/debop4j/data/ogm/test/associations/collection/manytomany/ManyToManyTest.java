@@ -6,6 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.junit.Assert;
+import org.junit.Test;
 
 import static org.fest.assertions.Assertions.assertThat;
 
@@ -18,13 +19,15 @@ import static org.fest.assertions.Assertions.assertThat;
 @Slf4j
 public class ManyToManyTest extends OgmTestBase {
 
-    public void testMappings() {
+    @Test
+    public void mappingTest() {
         Session session = openSession();
         Assert.assertNotNull(session);
         session.close();
     }
 
-    public void testManyToMany() {
+    @Test
+    public void manyToManyTest() {
         Session session = openSession();
         Transaction tx = session.beginTransaction();
 

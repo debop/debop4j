@@ -25,8 +25,8 @@ public class AccountOwner extends UuidEntityBase {
 
     private String SSN;
 
-    @ManyToMany(cascade = {CascadeType.PERSIST})
-    @Cascade(org.hibernate.annotations.CascadeType.SAVE_UPDATE)
+    @ManyToMany(cascade = { CascadeType.ALL })
+    @Cascade(org.hibernate.annotations.CascadeType.ALL)
     public Set<BankAccount> bankAccounts = Sets.newHashSet();
 
     @Override

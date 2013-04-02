@@ -7,9 +7,9 @@ import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
 
-import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.MappedSuperclass;
 
 /**
  * 엔티티의 Identifier의 수형이 UUID 인 엔티티입니다.
@@ -17,10 +17,10 @@ import javax.persistence.Id;
  * @author sunghyouk.bae@gmail.com
  * @since 13. 3. 31. 오전 2:19
  */
-@Entity
+@MappedSuperclass
 @Getter
 @Setter
-public class UuidEntityBase extends AnnotatedEntityBase {
+public abstract class UuidEntityBase extends AnnotatedEntityBase {
     private static final long serialVersionUID = 7507710661157374715L;
 
     @Id
@@ -37,6 +37,6 @@ public class UuidEntityBase extends AnnotatedEntityBase {
     @Override
     protected Objects.ToStringHelper buildStringHelper() {
         return super.buildStringHelper()
-                    .add("id", id);
+                .add("id", id);
     }
 }
