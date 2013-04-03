@@ -7,7 +7,7 @@
     <groupId>debop4j</groupId>
     <artifactId>debop4j-parent</artifactId>
     <packaging>pom</packaging>
-    <version>1.0-SNAPSHOT</version>
+    <version>0.1.0-SNAPSHOT</version>
 
     <scm>
         <url>https://github.com/debop/debop4j</url>
@@ -19,19 +19,21 @@
         <module>debop4j-data-ogm</module>
 
         <module>debop4j-data-ehcache</module>
-        <module>debop4j-data-memcached</module>
         <module>debop4j-data-mongodb</module>
         <module>debop4j-data-redis</module>
 
         <module>debop4j-search</module>
+        <!--
         <module>debop4j-access</module>
         <module>debop4j-graph</module>
         <module>debop4j-web</module>
         <module>debop4j-web-example</module>
+        -->
         <!--
         <module>debop4j-experiments</module>
         -->
         <!--
+
         <module>debop4j-data-couchbase</module>
         <module>debop4j-data-neo4j</module>
         -->
@@ -40,7 +42,7 @@
     <properties>
         <jdk.version>1.7</jdk.version>
 
-        <debop4j.version>1.0-SNAPSHOT</debop4j.version>
+        <debop4j.version>0.1.0-SNAPSHOT</debop4j.version>
 
         <slf4j.version>1.7.3</slf4j.version>
         <logback.version>1.0.10</logback.version>

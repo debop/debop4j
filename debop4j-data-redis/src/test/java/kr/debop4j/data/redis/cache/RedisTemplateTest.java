@@ -29,7 +29,7 @@ public class RedisTemplateTest {
     public void redisTemplateTest() {
         StringRedisTemplate template = new StringRedisTemplate(redisConnectionFactory());
 
-        String key = "debop";
+        String key = "debop-template";
         String email = "sunghyouk.bae@gmail.com";
 
         template.opsForValue().setIfAbsent(key, email);

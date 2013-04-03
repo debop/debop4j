@@ -9,6 +9,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.core.env.Environment;
+import org.springframework.data.redis.cache.RedisCacheManager;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -69,11 +70,12 @@ public class RedisCacheConfiguration {
         template.setConnectionFactory(redisConnectionFactory());
         template.setKeySerializer(stringRedisSerializer());
         template.setHashKeySerializer(stringRedisSerializer());
+        template.afterPropertiesSet();
         return template;
     }
 
     @Bean
     public RedisCacheManager redisCacheManager() {
-        return new RedisCacheManager(redisTemplate(), 300);
+        return new RedisCacheManager(redisTemplate());
     }
 }

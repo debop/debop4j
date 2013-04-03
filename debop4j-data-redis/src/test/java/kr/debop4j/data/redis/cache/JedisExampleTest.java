@@ -19,7 +19,7 @@ public class JedisExampleTest {
         jedis.connect();
         Assert.assertTrue(jedis.isConnected());
 
-        String key = "debop";
+        String key = "debop-emial";
         String email = "sunghyouk.bae@gmail.com";
 
         if (jedis.exists(key))
