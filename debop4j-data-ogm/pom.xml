@@ -160,6 +160,7 @@
                 </exclusion>
             </exclusions>
         </dependency>
+
         <!-- hibernate-ogm 을 쓸 때 필수 요소 -->
         <dependency>
             <groupId>org.antlr</groupId>
@@ -209,7 +210,6 @@
                     <groupId>org.slf4j</groupId>
                 </exclusion>
             </exclusions>
-            <optional>true</optional>
         </dependency>
         <dependency>
             <groupId>org.hibernate</groupId>
@@ -239,7 +239,6 @@
                     <groupId>org.hibernate</groupId>
                 </exclusion>
             </exclusions>
-            <optional>true</optional>
         </dependency>
         <dependency>
             <groupId>org.hibernate</groupId>
@@ -255,7 +254,6 @@
                     <groupId>org.jboss.logging</groupId>
                 </exclusion>
             </exclusions>
-            <optional>true</optional>
         </dependency>
 
         <dependency>

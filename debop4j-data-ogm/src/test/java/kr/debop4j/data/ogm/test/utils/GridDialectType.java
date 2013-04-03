@@ -8,7 +8,7 @@ package kr.debop4j.data.ogm.test.utils;
  */
 public enum GridDialectType {
 
-    HASHMAP("org.hibernate.ogm.HashMapTestHelper") {
+    HASHMAP("kr.debop4j.data.ogm.test.utils.HashMapTestHelper") {
         @Override
         public Class<?> loadTestableGridDialectClass() {
             return null; //this one is special, we want it only as fallback when all others fail
@@ -17,9 +17,21 @@ public enum GridDialectType {
 
     INFINISPAN("org.hibernate.ogm.test.utils.InfinispanTestHelper"),
 
-    EHCACHE("org.hibernate.ogm.test.utils.EhcacheTestHelper"),
+    EHCACHE("kr.debop4j.data.ehcache.ogm.test.utils.EhcacheTestHelper"),
 
-    MONGODB("org.hibernate.ogm.test.utils.MongoDBTestHelper");
+    MONGODB("kr.debop4j.data.mongodb.ogm.test.utils.MongoDBTestHelper");
+
+//    HASHMAP( "org.hibernate.ogm.test.utils.HashMapTestHelper" ) {
+//        @Override public Class<?> loadTestableGridDialectClass() {
+//            return null; //this one is special, we want it only as fallback when all others fail
+//        }
+//    },
+//
+//    INFINISPAN( "org.hibernate.ogm.test.utils.InfinispanTestHelper" ),
+//
+//    EHCACHE( "org.hibernate.ogm.test.utils.EhcacheTestHelper" ),
+//
+//    MONGODB( "org.hibernate.ogm.test.utils.MongoDBTestHelper" );
 
     private final String testHelperClassName;
 
@@ -43,9 +55,7 @@ public enum GridDialectType {
                 return type;
             }
         }
-        throw new IllegalArgumentException(
-                class1
-                        + " is not one of the TestableGridDialect implementation known to "
-                        + GridDialectType.class);
+        throw new IllegalArgumentException(class1 +
+                                                   " is not one of the TestableGridDialect implementation known to " + GridDialectType.class);
     }
 }

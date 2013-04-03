@@ -57,6 +57,7 @@
         <hibernate.ogm.version>4.0.0-SNAPSHOT</hibernate.ogm.version>
         <hibernate.ogm.mongo.version>4.0.0-SNAPSHOT</hibernate.ogm.mongo.version>
 
+        <javassist.version>3.17.1-GA</javassist.version>
         <lucene.version>3.6.2</lucene.version>
 
         <jackson.version>2.0.6</jackson.version>
