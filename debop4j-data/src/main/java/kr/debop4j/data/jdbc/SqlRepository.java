@@ -1,6 +1,7 @@
 package kr.debop4j.data.jdbc;
 
-import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcDaoSupport;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
@@ -12,8 +13,10 @@ import java.util.List;
  * User: sunghyouk.bae@gmail.com
  * Date: 12. 11. 25.
  */
-@Slf4j
 public class SqlRepository extends NamedParameterJdbcDaoSupport {
+
+    private Logger log = LoggerFactory.getLogger(SqlRepository.class);
+    private boolean isTraceEnabled = log.isTraceEnabled();
 
     /**
      * 쿼리문을 실행합니다.
@@ -23,8 +26,8 @@ public class SqlRepository extends NamedParameterJdbcDaoSupport {
      * @return 영향을 받은 레코드 수
      */
     public int update(String sql, SqlParameterSource paramSource) {
-        if (log.isDebugEnabled())
-            log.debug("execute sql=[{}], parameters=[{}]", sql, paramSource);
+        if (isTraceEnabled)
+            log.trace("update sql=[{}], parameters=[{}]", sql, paramSource);
 
         return getNamedParameterJdbcTemplate().update(sql, paramSource);
     }
@@ -39,6 +42,9 @@ public class SqlRepository extends NamedParameterJdbcDaoSupport {
      * @return 엔티티의 컬렉션
      */
     public <E> List<E> query(String sql, SqlParameterSource paramSource, RowMapper<E> rowMapper) {
+        if (isTraceEnabled)
+            log.trace("query sql=[{}], paramSource=[{}]", sql, paramSource);
+
         return getNamedParameterJdbcTemplate().query(sql, paramSource, rowMapper);
     }
 }

@@ -2,8 +2,8 @@ package kr.debop4j.data.jdbc;
 
 import com.jolbox.bonecp.BoneCPDataSource;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.tomcat.jdbc.pool.DataSource;
-import org.apache.tomcat.jdbc.pool.PoolProperties;
+
+import javax.sql.DataSource;
 
 /**
  * Jdbc 관련 Utility class
@@ -48,12 +48,12 @@ public class JdbcTool {
     /**
      * DataSource 를 빌드합니다.
      */
-    public static javax.sql.DataSource getTomcatDataSource(String driverClass, String url, String username, String passwd) {
+    public static DataSource getTomcatDataSource(String driverClass, String url, String username, String passwd) {
         if (log.isDebugEnabled())
             log.debug("build Tomcat pool DataSource... driverClass=[{}], url=[{}], username=[{}], passwd=[{}]",
                       driverClass, url, username, passwd);
 
-        PoolProperties p = new PoolProperties();
+        org.apache.tomcat.jdbc.pool.PoolProperties p = new org.apache.tomcat.jdbc.pool.PoolProperties();
         p.setUrl(url);
         p.setDriverClassName(driverClass);
         p.setUsername(username);
@@ -73,14 +73,24 @@ public class JdbcTool {
         p.setMinEvictableIdleTimeMillis(30000);
         p.setMinIdle(10);
 
-        DataSource ds = new DataSource(p);
+        DataSource ds = new org.apache.tomcat.jdbc.pool.DataSource(p);
         return ds;
     }
 
     /**
      * 테스트에 사용하기 위해 메모리를 사용하는 HSql DB 에 대한 DataSource 를 반환합니다.
      */
-    public static javax.sql.DataSource getEmbeddedHsqlDataSource() {
-        return getDataSource("org.hsqldb.jdbcDriver", "jdbc:hsqldb:mem:test", "sa", "");
+    public static DataSource getEmbeddedHsqlDataSource() {
+        return getDataSource("org.hsqldb.jdbcDriver",
+                             "jdbc:hsqldb:mem:test;MVCC=TRUE",
+                             "sa",
+                             "");
+    }
+
+    public static DataSource getEmbeddedH2DataSource() {
+        return getDataSource("org.h2.Driver",
+                             "jdbc:h2:mem:test;DB_CLOSE_DELAY=-1;MVCC=TRUE",
+                             "sa",
+                             "");
     }
 }
