@@ -1,11 +1,11 @@
-package kr.debop4j.core;
+package kr.debop4j.core.pool;
 
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.pool.PoolableObjectFactory;
 import org.apache.commons.pool.impl.GenericObjectPool;
 
 /**
- * Generic Pool (Jedis 의 JedisPool 를 참고하여 만들었음)
+ * Apache common pool의 Generic Pool (Jedis 의 JedisPool 를 참고하여 만들었음)
  *
  * @author sunghyouk.bae@gmail.com
  * @since 13. 4. 8. 오전 12:41
@@ -21,18 +21,35 @@ public abstract class AbstractPool<T> implements AutoCloseable {
         pool = new GenericObjectPool<T>(factory, poolConfig);
     }
 
+    /**
+     * 풀에서 리소스를 얻습니다.
+     *
+     * @return
+     */
     @SuppressWarnings("unchecked")
     public T getResource() {
         if (log.isDebugEnabled())
             log.debug("Pool에서 resource 를 얻습니다...");
         try {
-            return (T) pool.borrowObject();
+
+            T result = (T) pool.borrowObject();
+
+            if (log.isDebugEnabled())
+                log.debug("Pool에서 resource 를 얻었습니다. resource=[{}]", result);
+
+            return result;
+
         } catch (Exception e) {
             log.error("Pool에서 리소스를 획득하는데 실패했습니다.", e);
             throw new RuntimeException(e);
         }
     }
 
+    /**
+     * 재사용을 위해 풀에 리소스를 반환합니다.
+     *
+     * @param resource
+     */
     public void returnResource(final T resource) {
         returnResourceObject(resource);
     }
@@ -49,6 +66,11 @@ public abstract class AbstractPool<T> implements AutoCloseable {
         }
     }
 
+    /**
+     * 재사용할 수 없는 리소스는 폐기하도록 합니다.
+     *
+     * @param resource
+     */
     public void returnBrokenResource(final T resource) {
         returnBrokenResourceObject(resource);
     }
@@ -63,14 +85,17 @@ public abstract class AbstractPool<T> implements AutoCloseable {
         }
     }
 
+    /**
+     * 풀을 제거합니다. 내부의 남아있는 모든 리소스를 제거합니다.
+     */
     public void destroy() {
         if (log.isDebugEnabled())
-            log.debug("Pool 을 제거합니다...");
+            log.debug("Pool을 제거합니다...");
         try {
             pool.close();
             pool = null;
         } catch (Exception e) {
-            log.error("pool 을 제거하는데 실패했습니다.", e);
+            log.error("pool을 제거하는데 실패했습니다.", e);
             throw new RuntimeException(e);
         }
         if (log.isDebugEnabled())
