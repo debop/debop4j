@@ -12,13 +12,13 @@ import org.junit.rules.MethodRule;
 import java.util.Properties;
 
 /**
- * kr.debop4j.core.pool.PollTest
+ * kr.debop4j.core.pool.PoolTest
  *
  * @author sunghyouk.bae@gmail.com
  * @since 13. 4. 8. 오전 10:21
  */
 @Slf4j
-public class PollTest {
+public class PoolTest {
 
     public Properties newProperties() {
         Properties props = new Properties();
@@ -64,21 +64,25 @@ public class PollTest {
         final Pool pool = new Pool(new PoolConfig(), props);
         final String name = props.getProperty("pool.name");
 
-        TestTool.runTasks(100, new Action1<Integer>() {
-            @Override
-            public void perform(Integer i) {
-                PoolObject po = pool.getResource();
-                Assert.assertNotNull(po);
-                Assert.assertTrue(po.getIsActive());
-                Assert.assertEquals(name, po.getName());
+        try {
+            TestTool.runTasks(100, new Action1<Integer>() {
+                @Override
+                public void perform(Integer i) {
+                    PoolObject po = pool.getResource();
+                    Assert.assertNotNull(po);
+                    Assert.assertTrue(po.getIsActive());
+                    Assert.assertEquals(name, po.getName());
 
-                if (i % 5 == 0) {
-                    po.setName("NewValue-" + i.toString());
-                    pool.returnBrokenResource(po);
-                } else {
-                    pool.returnResource(po);
+                    if (i % 5 == 0) {
+                        po.setName("NewValue-" + i.toString());
+                        pool.returnBrokenResource(po);
+                    } else {
+                        pool.returnResource(po);
+                    }
                 }
-            }
-        });
+            });
+        } finally {
+            pool.destroy();
+        }
     }
 }

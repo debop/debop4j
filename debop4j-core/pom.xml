@@ -142,6 +142,13 @@
             <artifactId>joda-convert</artifactId>
             <version>1.2</version>
         </dependency>
+
+        <dependency>
+            <groupId>org.jodd</groupId>
+            <artifactId>jodd-props</artifactId>
+            <version>${jodd.version}</version>
+        </dependency>
+
     </dependencies>
 
 </project>

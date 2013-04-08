@@ -68,6 +68,8 @@
         <modelmapper.version>0.5.5</modelmapper.version>
         <joda.time.version>2.2</joda.time.version>
 
+        <jodd.version>3.4.2</jodd.version>
+
         <httpclient.version>4.2.3</httpclient.version>
         <io.netty.version>3.6.3.Final</io.netty.version>
 

@@ -16,7 +16,6 @@
 
     <properties>
         <hibernate-jpql-parser.version>1.0.0.Alpha1</hibernate-jpql-parser.version>
-        <jbossjta.version>4.16.6.Final</jbossjta.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
@@ -172,7 +171,6 @@
             <artifactId>jbossjta</artifactId>
             <version>${jbossjta.version}</version>
         </dependency>
-
         <dependency>
             <groupId>org.jboss.spec.javax.transaction</groupId>
             <artifactId>jboss-transaction-api_1.1_spec</artifactId>
