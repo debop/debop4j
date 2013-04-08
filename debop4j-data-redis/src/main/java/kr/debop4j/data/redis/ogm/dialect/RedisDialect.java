@@ -20,7 +20,7 @@ import org.hibernate.persister.entity.Lockable;
 import org.hibernate.type.Type;
 
 /**
- * kr.debop4j.data.redis.ogm.dialect.RedisDialect
+ * hibernate-ogm Dialect for Redis
  *
  * @author sunghyouk.bae@gmail.com
  * @since 13. 4. 2. 오전 12:08
@@ -28,10 +28,13 @@ import org.hibernate.type.Type;
 @Slf4j
 public class RedisDialect implements GridDialect {
 
+    private static final long serialVersionUID = -6077148445844776975L;
+
     private final RedisDatastoreProvider provider;
 
     public RedisDialect(RedisDatastoreProvider provider) {
         this.provider = provider;
+
         if (log.isInfoEnabled())
             log.info("RedisDialect를 생성했습니다.");
     }

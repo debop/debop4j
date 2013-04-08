@@ -7,7 +7,7 @@ import org.hibernate.service.spi.Startable;
 import org.hibernate.service.spi.Stoppable;
 
 /**
- * kr.debop4j.data.redis.ogm.datastore.redis.impl.RedisDatastoreProvider
+ * hibernate-ogm DatastoreProvider for Redis
  *
  * @author sunghyouk.bae@gmail.com
  * @since 13. 4. 2. 오전 12:06
