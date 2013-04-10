@@ -7,7 +7,7 @@ import lombok.Setter;
 import javax.persistence.Entity;
 
 /**
- * kr.debop4j.data.ogm.test.associations.collection.types.Child
+ * kr.debop4j.data.ogm.test.associations.collection.type.Child
  *
  * @author sunghyouk.bae@gmail.com
  * @since 13. 4. 2. 오전 11:12

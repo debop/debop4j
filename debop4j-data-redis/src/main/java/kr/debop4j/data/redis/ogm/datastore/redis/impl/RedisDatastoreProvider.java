@@ -7,15 +7,15 @@ import org.hibernate.service.spi.Startable;
 import org.hibernate.service.spi.Stoppable;
 
 /**
- * hibernate-ogm DatastoreProvider for Redis
+ * RedisDatastoreProvider
  *
  * @author sunghyouk.bae@gmail.com
- * @since 13. 4. 2. 오전 12:06
+ * @since 13. 4. 10. 오후 10:07
  */
 @Slf4j
 public class RedisDatastoreProvider implements DatastoreProvider, Startable, Stoppable {
 
-    private static final long serialVersionUID = 7563680529865220115L;
+    private static final long serialVersionUID = -3778876656425461633L;
 
     @Override
     public Class<? extends GridDialect> getDefaultDialect() {

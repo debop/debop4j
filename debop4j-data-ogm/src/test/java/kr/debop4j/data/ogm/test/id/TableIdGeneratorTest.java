@@ -1,6 +1,7 @@
 package kr.debop4j.data.ogm.test.id;
 
 import kr.debop4j.data.ogm.test.simpleentity.OgmTestBase;
+import lombok.extern.slf4j.Slf4j;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.junit.Ignore;
@@ -14,6 +15,7 @@ import static org.fest.assertions.Assertions.assertThat;
  * @author sunghyouk.bae@gmail.com
  * @since 13. 4. 2. 오후 5:05
  */
+@Slf4j
 @Ignore("JTA 에서만 제대로 작동한다.")
 public class TableIdGeneratorTest extends OgmTestBase {
     @Override

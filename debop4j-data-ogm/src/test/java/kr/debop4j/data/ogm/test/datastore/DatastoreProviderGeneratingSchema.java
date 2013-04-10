@@ -123,7 +123,7 @@ public class DatastoreProviderGeneratingSchema implements DatastoreProvider, Sta
 
         @Override
         public GridType overrideType(Type type) {
-            // No types to override
+            // No type to override
             return null;
         }
 

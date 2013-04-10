@@ -13,7 +13,7 @@ import java.util.Map;
 import java.util.Set;
 
 /**
- * kr.debop4j.data.ogm.test.associations.collection.types.User
+ * kr.debop4j.data.ogm.test.associations.collection.type.User
  *
  * @author sunghyouk.bae@gmail.com
  * @since 13. 4. 2. 오전 11:16

@@ -22,7 +22,7 @@ import java.util.HashMap;
 @Slf4j
 public class EhcacheDialectTest {
 
-    private static final int LOOPS = 2500;
+    private static final int LOOPS = 250;
     private static final int THREADS = 10;
 
     private EhcacheDialect dialect;
@@ -37,11 +37,15 @@ public class EhcacheDialectTest {
 
     @Test
     public void isThreadSafe() throws InterruptedException {
+
         final RowKey test = new RowKey("test", null, null);
-        Thread[] threads = new Thread[THREADS];
-        Parallels.run(10, new Action1<Integer>() {
+        //Thread[] threads = new Thread[THREADS];
+
+        Parallels.run(THREADS, new Action1<Integer>() {
             @Override
             public void perform(Integer arg) {
+                if (log.isTraceEnabled())
+                    log.trace("perform [{}]", arg);
                 final IdentifierGeneratorHelper.BigIntegerHolder value =
                         new IdentifierGeneratorHelper.BigIntegerHolder();
                 for (int i = 0; i < LOOPS; i++) {

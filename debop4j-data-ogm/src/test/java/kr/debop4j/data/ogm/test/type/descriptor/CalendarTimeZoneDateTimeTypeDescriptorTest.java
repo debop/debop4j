@@ -1,5 +1,7 @@
 package kr.debop4j.data.ogm.test.type.descriptor;
 
+import lombok.extern.slf4j.Slf4j;
+import org.hibernate.ogm.type.descriptor.CalendarTimeZoneDateTimeTypeDescriptor;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
@@ -14,6 +16,7 @@ import static org.fest.assertions.Assertions.assertThat;
  * @author sunghyouk.bae@gmail.com
  * @since 13. 4. 2. 오후 5:13
  */
+@Slf4j
 @RunWith(value = Parameterized.class)
 public class CalendarTimeZoneDateTimeTypeDescriptorTest {
 
@@ -53,7 +56,10 @@ public class CalendarTimeZoneDateTimeTypeDescriptorTest {
 
     @Test
     public void testCalendarTimeZoneDateTimeObjects() {
-        org.hibernate.ogm.type.descriptor.CalendarTimeZoneDateTimeTypeDescriptor calendarTimeZoneDateTimeTypeDescriptor = new org.hibernate.ogm.type.descriptor.CalendarTimeZoneDateTimeTypeDescriptor();
-        assertThat(calendarTimeZoneDateTimeTypeDescriptor.areEqual(one, another)).isEqualTo(exceptedEquality);
+        CalendarTimeZoneDateTimeTypeDescriptor calendarTimeZoneDateTimeTypeDescriptor =
+                new CalendarTimeZoneDateTimeTypeDescriptor();
+
+        assertThat(calendarTimeZoneDateTimeTypeDescriptor.areEqual(one, another))
+                .isEqualTo(exceptedEquality);
     }
 }

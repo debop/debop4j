@@ -204,18 +204,11 @@
             <artifactId>jboss-transaction-api_1.1_spec</artifactId>
         </dependency>
 
-
         <!-- Redis for Cache -->
         <dependency>
             <groupId>redis.clients</groupId>
             <artifactId>jedis</artifactId>
         </dependency>
-
-        <dependency>
-            <groupId>org.springframework.data</groupId>
-            <artifactId>spring-data-redis</artifactId>
-        </dependency>
-
 
         <!-- Test -->
         <dependency>

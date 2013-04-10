@@ -10,7 +10,7 @@ import org.junit.Test;
 import static org.fest.assertions.Assertions.assertThat;
 
 /**
- * kr.debop4j.data.ogm.test.associations.collection.types.ListAndMapTest
+ * kr.debop4j.data.ogm.test.associations.collection.type.ListAndMapTest
  *
  * @author sunghyouk.bae@gmail.com
  * @since 13. 4. 2. 오전 11:18

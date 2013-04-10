@@ -21,6 +21,7 @@ import java.util.Map;
  *         13. 3. 29. 오후 4:42
  */
 public class TestHelper {
+
     private static final Log log = LoggerFactory.make();
     private static final TestableGridDialect helper = createStoreSpecificHelper();
 

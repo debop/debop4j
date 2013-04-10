@@ -19,7 +19,9 @@ public enum GridDialectType {
 
     EHCACHE("kr.debop4j.data.ehcache.ogm.test.utils.EhcacheTestHelper"),
 
-    MONGODB("kr.debop4j.data.mongodb.ogm.test.utils.MongoDBTestHelper");
+    MONGODB("kr.debop4j.data.mongodb.ogm.test.utils.MongoDBTestHelper"),
+
+    REDIS("kr.debop4j.data.redis.ogm.test.utils.RedisTestHelper");
 
 //    HASHMAP( "org.hibernate.ogm.test.utils.HashMapTestHelper" ) {
 //        @Override public Class<?> loadTestableGridDialectClass() {
@@ -55,7 +57,6 @@ public enum GridDialectType {
                 return type;
             }
         }
-        throw new IllegalArgumentException(class1 +
-                                                   " is not one of the TestableGridDialect implementation known to " + GridDialectType.class);
+        throw new IllegalArgumentException(class1 + " is not one of the TestableGridDialect implementation known to " + GridDialectType.class);
     }
 }

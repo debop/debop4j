@@ -42,25 +42,25 @@
         <dependency>
             <groupId>debop4j</groupId>
             <artifactId>debop4j-core</artifactId>
-            <version>${project.parent.version}</version>
+            <version>${project.version}</version>
         </dependency>
 
         <dependency>
             <groupId>debop4j</groupId>
             <artifactId>debop4j-data</artifactId>
-            <version>${project.parent.version}</version>
+            <version>${project.version}</version>
         </dependency>
 
         <dependency>
             <groupId>debop4j</groupId>
             <artifactId>debop4j-data-ogm</artifactId>
-            <version>${project.parent.version}</version>
+            <version>${project.version}</version>
         </dependency>
 
         <dependency>
             <groupId>debop4j</groupId>
             <artifactId>debop4j-data-ogm</artifactId>
-            <version>${project.parent.version}</version>
+            <version>${project.version}</version>
             <type>test-jar</type>
             <scope>test</scope>
         </dependency>
@@ -126,12 +126,6 @@
             <groupId>org.hibernate.ogm</groupId>
             <artifactId>hibernate-ogm-core</artifactId>
         </dependency>
-
-        <dependency>
-            <groupId>org.hibernate.ogm</groupId>
-            <artifactId>hibernate-ogm-ehcache</artifactId>
-        </dependency>
-
         <dependency>
             <groupId>org.hibernate.jpql</groupId>
             <artifactId>hibernate-jpql-parser</artifactId>
@@ -150,7 +144,6 @@
             <groupId>org.jboss.spec.javax.transaction</groupId>
             <artifactId>jboss-transaction-api_1.1_spec</artifactId>
         </dependency>
-
 
         <!-- Hibernate-Search -->
         <dependency>
@@ -172,10 +165,6 @@
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-search-orm</artifactId>
         </dependency>
-        <dependency>
-            <groupId>org.hibernate</groupId>
-            <artifactId>hibernate-search-infinispan</artifactId>
-        </dependency>
 
         <dependency>
             <groupId>org.apache.lucene</groupId>
@@ -187,14 +176,11 @@
             <artifactId>hibernate-validator</artifactId>
         </dependency>
 
-
-        <!-- MongoDB Driver -->
+        <!-- MongoDB -->
         <dependency>
             <groupId>org.mongodb</groupId>
             <artifactId>mongo-java-driver</artifactId>
         </dependency>
-
-        <!-- MongoDB for Cache -->
 
         <dependency>
             <groupId>org.springframework.data</groupId>

@@ -1,6 +1,7 @@
 package kr.debop4j.data.ehcache.ogm.test.utils;
 
 import kr.debop4j.data.ogm.test.utils.TestableGridDialect;
+import lombok.extern.slf4j.Slf4j;
 import net.sf.ehcache.Cache;
 import org.hibernate.SessionFactory;
 import org.hibernate.engine.spi.SessionFactoryImplementor;
@@ -19,6 +20,7 @@ import static org.hibernate.ogm.datastore.spi.DefaultDatastoreNames.ENTITY_STORE
  * @author sunghyouk.bae@gmail.com
  * @since 13. 3. 29. 오후 10:03
  */
+@Slf4j
 public class EhcacheTestHelper implements TestableGridDialect {
     @Override
     public boolean assertNumberOfEntities(int numberOfEntities, SessionFactory sessionFactory) {
@@ -31,8 +33,9 @@ public class EhcacheTestHelper implements TestableGridDialect {
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     public Map<String, Object> extractEntityTuple(SessionFactory sessionFactory, EntityKey key) {
-        return (Map) getEntityCache(sessionFactory).get(key).getValue();
+        return (Map<String, Object>) getEntityCache(sessionFactory).get(key).getObjectValue();
     }
 
     private static Cache getEntityCache(SessionFactory sessionFactory) {
@@ -57,8 +60,6 @@ public class EhcacheTestHelper implements TestableGridDialect {
     /**
      * TODO - EHCache _is_ transactional. Turn this on. We could turn on XA or Local.
      * Local will be faster. We will pick this up from the cache config.
-     *
-     * @return
      */
     @Override
     public boolean backendSupportsTransactions() {

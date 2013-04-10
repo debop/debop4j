@@ -203,6 +203,7 @@
 
         <hibernate.ogm.version>4.0.0-SNAPSHOT</hibernate.ogm.version>
         <hibernate.ogm.mongo.version>4.0.0-SNAPSHOT</hibernate.ogm.mongo.version>
+
         <hibernate-jpql-parser.version>1.0.0.Alpha1</hibernate-jpql-parser.version>
         <antlr.version>3.5</antlr.version>
         <jboss.transaction.api.spec.version>1.0.1.Final</jboss.transaction.api.spec.version>

@@ -68,7 +68,7 @@
     <!-- (Must be unique across all Arjuna instances.) -->
     <entry key="CoreEnvironmentBean.nodeIdentifier">1</entry>
 
-    <!-- Which Xid types to recover -->
+    <!-- Which Xid type to recover -->
     <entry key="JTAEnvironmentBean.xaRecoveryNodes">1</entry>
 
     <entry key="JTAEnvironmentBean.xaResourceOrphanFilterClassNames">
