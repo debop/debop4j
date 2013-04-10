@@ -3,7 +3,7 @@
     <parent>
         <artifactId>debop4j-parent</artifactId>
         <groupId>debop4j</groupId>
-        <version>0.1.0-SNAPSHOT</version>
+        <version>0.2.0-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
     <modelVersion>4.0.0</modelVersion>
@@ -19,136 +19,190 @@
     </properties>
 
     <dependencies>
-
+        <!-- Apache Commons -->
         <dependency>
             <groupId>commons-codec</groupId>
             <artifactId>commons-codec</artifactId>
-            <version>1.6</version>
         </dependency>
         <dependency>
             <groupId>commons-io</groupId>
             <artifactId>commons-io</artifactId>
-            <version>2.1</version>
         </dependency>
-
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-compress</artifactId>
-            <version>1.4.1</version>
-            <optional>true</optional>
-        </dependency>
-
-        <dependency>
-            <groupId>org.apache.httpcomponents</groupId>
-            <artifactId>httpclient</artifactId>
-            <version>${httpclient.version}</version>
-            <exclusions>
-                <exclusion>
-                    <artifactId>httpcore</artifactId>
-                    <groupId>org.apache.httpcomponents</groupId>
-                </exclusion>
-            </exclusions>
-            <optional>true</optional>
         </dependency>
         <dependency>
-            <groupId>org.apache.httpcomponents</groupId>
-            <artifactId>httpcore</artifactId>
-            <version>${httpclient.version}</version>
-            <optional>true</optional>
+            <groupId>commons-pool</groupId>
+            <artifactId>commons-pool</artifactId>
         </dependency>
         <dependency>
             <groupId>commons-validator</groupId>
             <artifactId>commons-validator</artifactId>
-            <version>1.4.0</version>
-            <optional>true</optional>
         </dependency>
 
+        <!-- Http Components -->
+        <dependency>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpcore</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpcore-nio</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpclient</artifactId>
+        </dependency>
         <dependency>
             <groupId>org.apache.httpcomponents</groupId>
             <artifactId>httpasyncclient</artifactId>
-            <version>4.0-beta3</version>
-            <optional>true</optional>
-            <exclusions>
-                <exclusion>
-                    <artifactId>httpcore</artifactId>
-                    <groupId>org.apache.httpcomponents</groupId>
-                </exclusion>
-                <exclusion>
-                    <artifactId>httpclient</artifactId>
-                    <groupId>org.apache.httpcomponents</groupId>
-                </exclusion>
-            </exclusions>
         </dependency>
 
+        <!-- JSR -->
         <dependency>
-            <groupId>org.ow2.asm</groupId>
-            <artifactId>asm</artifactId>
-            <version>4.1</version>
-            <optional>true</optional>
+            <groupId>javax.inject</groupId>
+            <artifactId>javax.inject</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>javax.transaction</groupId>
+            <artifactId>jta</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.google.code.findbugs</groupId>
+            <artifactId>jsr305</artifactId>
         </dependency>
 
+        <!-- Guava -->
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava-testlib</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <!-- GSON -->
         <dependency>
             <groupId>com.google.code.gson</groupId>
             <artifactId>gson</artifactId>
-            <version>2.2.2</version>
-            <optional>true</optional>
         </dependency>
 
+        <!-- ASM -->
+        <dependency>
+            <groupId>org.ow2.asm</groupId>
+            <artifactId>asm</artifactId>
+        </dependency>
+
+        <!-- Model Mapper -->
         <dependency>
             <groupId>org.modelmapper</groupId>
             <artifactId>modelmapper</artifactId>
-            <version>${modelmapper.version}</version>
-            <optional>true</optional>
         </dependency>
-
 
         <!-- 암호화 -->
         <dependency>
             <groupId>org.jasypt</groupId>
             <artifactId>jasypt</artifactId>
-            <version>1.9.0</version>
-            <optional>true</optional>
         </dependency>
 
         <!-- Jackson JSON Serializer -->
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-core</artifactId>
-            <version>${jackson.version}</version>
         </dependency>
-
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
-            <version>${jackson.version}</version>
         </dependency>
 
+        <!-- Lambda J -->
         <dependency>
             <groupId>com.googlecode.lambdaj</groupId>
             <artifactId>lambdaj</artifactId>
-            <version>2.3.3</version>
-            <optional>true</optional>
         </dependency>
-
 
         <!-- joda-time -->
         <dependency>
             <groupId>joda-time</groupId>
             <artifactId>joda-time</artifactId>
-            <version>${joda.time.version}</version>
         </dependency>
         <dependency>
             <groupId>org.joda</groupId>
             <artifactId>joda-convert</artifactId>
-            <version>1.2</version>
         </dependency>
 
+        <!-- Jodd -->
         <dependency>
             <groupId>org.jodd</groupId>
             <artifactId>jodd-props</artifactId>
-            <version>${jodd.version}</version>
         </dependency>
 
+        <!-- Logging -->
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-core</artifactId>
+        </dependency>
+
+        <!-- project lombok -->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+        </dependency>
+
+        <!-- Spring framework -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context-support</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-expression</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-tx</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-test</artifactId>
+        </dependency>
+
+        <!-- Test -->
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.easytesting</groupId>
+            <artifactId>fest-assert</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.hamcrest</groupId>
+            <artifactId>hamcrest-all</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.carrotsearch</groupId>
+            <artifactId>junit-benchmarks</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-all</artifactId>
+        </dependency>
     </dependencies>
 
 </project>

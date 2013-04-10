@@ -5,16 +5,13 @@
     <parent>
         <artifactId>debop4j-parent</artifactId>
         <groupId>debop4j</groupId>
-        <version>0.1.0-SNAPSHOT</version>
+        <version>0.2.0-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>debop4j-data</artifactId>
     <packaging>jar</packaging>
-    <properties>
-        <jboss.logging.version>3.1.3.GA</jboss.logging.version>
-    </properties>
 
     <dependencies>
         <dependency>
@@ -23,302 +20,296 @@
             <version>${debop4j.version}</version>
         </dependency>
 
+        <!-- Apache Commons -->
         <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-jdbc</artifactId>
-            <version>${springframework.version}</version>
+            <groupId>commons-codec</groupId>
+            <artifactId>commons-codec</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-orm</artifactId>
-            <version>${springframework.version}</version>
+            <groupId>commons-io</groupId>
+            <artifactId>commons-io</artifactId>
         </dependency>
-
         <dependency>
-            <groupId>org.springframework.data</groupId>
-            <artifactId>spring-data-jdbc-core</artifactId>
-            <version>${springframework.data.version}</version>
-            <exclusions>
-                <exclusion>
-                    <artifactId>spring-jdbc</artifactId>
-                    <groupId>org.springframework</groupId>
-                </exclusion>
-                <exclusion>
-                    <artifactId>spring-tx</artifactId>
-                    <groupId>org.springframework</groupId>
-                </exclusion>
-                <exclusion>
-                    <artifactId>spring-context</artifactId>
-                    <groupId>org.springframework</groupId>
-                </exclusion>
-                <exclusion>
-                    <artifactId>spring-core</artifactId>
-                    <groupId>org.springframework</groupId>
-                </exclusion>
-                <exclusion>
-                    <artifactId>spring-beans</artifactId>
-                    <groupId>org.springframework</groupId>
-                </exclusion>
-            </exclusions>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-compress</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>commons-pool</groupId>
+            <artifactId>commons-pool</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>commons-validator</groupId>
+            <artifactId>commons-validator</artifactId>
         </dependency>
 
+        <!-- Http Components -->
         <dependency>
-            <groupId>org.jboss.logging</groupId>
-            <artifactId>jboss-logging</artifactId>
-            <version>${jboss.logging.version}</version>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpcore</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpcore-nio</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpclient</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpasyncclient</artifactId>
         </dependency>
 
-        <!-- Hibernate -->
+        <!-- JSR -->
         <dependency>
-            <groupId>org.hibernate</groupId>
-            <artifactId>hibernate-core</artifactId>
-            <version>${hibernate.version}</version>
-            <exclusions>
-                <exclusion>
-                    <artifactId>commons-collections</artifactId>
-                    <groupId>commons-collections</groupId>
-                </exclusion>
-                <exclusion>
-                    <artifactId>slf4j-api</artifactId>
-                    <groupId>org.slf4j</groupId>
-                </exclusion>
-                <exclusion>
-                    <artifactId>jboss-logging</artifactId>
-                    <groupId>org.jboss.logging</groupId>
-                </exclusion>
-                <exclusion>
-                    <artifactId>javassist</artifactId>
-                    <groupId>org.javassist</groupId>
-                </exclusion>
-            </exclusions>
+            <groupId>javax.inject</groupId>
+            <artifactId>javax.inject</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.hibernate</groupId>
-            <artifactId>hibernate-entitymanager</artifactId>
-            <version>${hibernate.version}</version>
-            <exclusions>
-                <exclusion>
-                    <artifactId>slf4j-api</artifactId>
-                    <groupId>org.slf4j</groupId>
-                </exclusion>
-                <exclusion>
-                    <artifactId>jboss-logging</artifactId>
-                    <groupId>org.jboss.logging</groupId>
-                </exclusion>
-                <exclusion>
-                    <artifactId>javassist</artifactId>
-                    <groupId>org.javassist</groupId>
-                </exclusion>
-            </exclusions>
+            <groupId>javax.transaction</groupId>
+            <artifactId>jta</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.hibernate</groupId>
-            <artifactId>hibernate-ehcache</artifactId>
-            <version>${hibernate.version}</version>
-            <optional>true</optional>
-            <exclusions>
-                <exclusion>
-                    <artifactId>ehcache-core</artifactId>
-                    <groupId>net.sf.ehcache</groupId>
-                </exclusion>
-                <exclusion>
-                    <artifactId>slf4j-api</artifactId>
-                    <groupId>org.slf4j</groupId>
-                </exclusion>
-                <exclusion>
-                    <artifactId>jboss-logging</artifactId>
-                    <groupId>org.jboss.logging</groupId>
-                </exclusion>
-            </exclusions>
+            <groupId>com.google.code.findbugs</groupId>
+            <artifactId>jsr305</artifactId>
         </dependency>
 
+        <!-- Guava -->
         <dependency>
-            <groupId>org.hibernate</groupId>
-            <artifactId>hibernate-infinispan</artifactId>
-            <version>${hibernate.version}</version>
-            <exclusions>
-                <exclusion>
-                    <artifactId>jboss-logging</artifactId>
-                    <groupId>org.jboss.logging</groupId>
-                </exclusion>
-            </exclusions>
-            <optional>true</optional>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava-testlib</artifactId>
+            <scope>test</scope>
         </dependency>
 
-
+        <!-- GSON -->
         <dependency>
-            <groupId>org.javassist</groupId>
-            <artifactId>javassist</artifactId>
-            <version>${javassist.version}</version>
+            <groupId>com.google.code.gson</groupId>
+            <artifactId>gson</artifactId>
         </dependency>
 
+        <!-- ASM -->
         <dependency>
-            <groupId>net.sf.ehcache</groupId>
-            <artifactId>ehcache-core</artifactId>
-            <version>${ehcache.version}</version>
-            <optional>true</optional>
-            <exclusions>
-                <exclusion>
-                    <artifactId>slf4j-api</artifactId>
-                    <groupId>org.slf4j</groupId>
-                </exclusion>
-            </exclusions>
+            <groupId>org.ow2.asm</groupId>
+            <artifactId>asm</artifactId>
         </dependency>
 
+        <!-- Model Mapper -->
         <dependency>
-            <groupId>javax.servlet</groupId>
-            <artifactId>javax.servlet-api</artifactId>
-            <version>3.0.1</version>
+            <groupId>org.modelmapper</groupId>
+            <artifactId>modelmapper</artifactId>
+        </dependency>
+
+        <!-- 암호화 -->
+        <dependency>
+            <groupId>org.jasypt</groupId>
+            <artifactId>jasypt</artifactId>
+        </dependency>
+
+        <!-- Jackson JSON Serializer -->
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+        </dependency>
+
+        <!-- Lambda J -->
+        <dependency>
+            <groupId>com.googlecode.lambdaj</groupId>
+            <artifactId>lambdaj</artifactId>
         </dependency>
 
         <!-- joda-time -->
         <dependency>
             <groupId>joda-time</groupId>
             <artifactId>joda-time</artifactId>
-            <version>${joda.time.version}</version>
         </dependency>
         <dependency>
             <groupId>org.joda</groupId>
             <artifactId>joda-convert</artifactId>
-            <version>1.2</version>
         </dependency>
         <dependency>
             <groupId>joda-time</groupId>
             <artifactId>joda-time-hibernate</artifactId>
-            <version>1.3</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.hibernate</groupId>
-            <artifactId>hibernate-validator</artifactId>
-            <version>${hibernate.validator.version}</version>
-            <exclusions>
-                <exclusion>
-                    <artifactId>jboss-logging</artifactId>
-                    <groupId>org.jboss.logging</groupId>
-                </exclusion>
-            </exclusions>
         </dependency>
 
         <!-- Jodd -->
         <dependency>
             <groupId>org.jodd</groupId>
-            <artifactId>jodd-jtx</artifactId>
-            <version>${jodd.version}</version>
+            <artifactId>jodd-props</artifactId>
+        </dependency>
+
+        <!-- Logging -->
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-core</artifactId>
+        </dependency>
+
+        <!-- project lombok -->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+        </dependency>
+
+        <!-- Spring framework -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context-support</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-expression</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-tx</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-jdbc</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-orm</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-test</artifactId>
+        </dependency>
+
+        <!-- Hibernate -->
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-entitymanager</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-ehcache</artifactId>
         </dependency>
 
         <dependency>
-            <groupId>org.jodd</groupId>
-            <artifactId>jodd-db</artifactId>
-            <version>${jodd.version}</version>
+            <groupId>org.javassist</groupId>
+            <artifactId>javassist</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>net.sf.ehcache</groupId>
+            <artifactId>ehcache-core</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>javax.inject</groupId>
+            <artifactId>javax.inject</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>javax.transaction</groupId>
+            <artifactId>jta</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.google.code.findbugs</groupId>
+            <artifactId>jsr305</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>javax.servlet-api</artifactId>
         </dependency>
 
         <!-- tomcat connection pool 성능이 좋다. -->
         <dependency>
             <groupId>org.apache.tomcat</groupId>
             <artifactId>tomcat-jdbc</artifactId>
-            <version>${tomcat.jdbc.version}</version>
         </dependency>
 
         <dependency>
             <groupId>com.jolbox</groupId>
             <artifactId>bonecp</artifactId>
-            <version>0.7.1.RELEASE</version>
-            <exclusions>
-                <exclusion>
-                    <artifactId>guava</artifactId>
-                    <groupId>com.google.guava</groupId>
-                </exclusion>
-                <exclusion>
-                    <artifactId>slf4j-api</artifactId>
-                    <groupId>org.slf4j</groupId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-
-        <!-- dbcp는 테스트용으로 사용합니다. BoneCP가 불안할 때 dbcp를 사용하세요 -->
-        <dependency>
-            <groupId>commons-dbcp</groupId>
-            <artifactId>commons-dbcp</artifactId>
-            <version>1.4</version>
-            <scope>test</scope>
-            <exclusions>
-                <exclusion>
-                    <artifactId>commons-pool</artifactId>
-                    <groupId>commons-pool</groupId>
-                </exclusion>
-            </exclusions>
         </dependency>
 
         <dependency>
             <groupId>org.hsqldb</groupId>
             <artifactId>hsqldb</artifactId>
-            <version>2.2.9</version>
-            <scope>test</scope>
         </dependency>
 
         <dependency>
             <groupId>postgresql</groupId>
             <artifactId>postgresql</artifactId>
-            <version>9.1-901-1.jdbc4</version>
-            <scope>test</scope>
         </dependency>
 
         <dependency>
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>
-            <version>1.3.170</version>
-            <scope>test</scope>
         </dependency>
 
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
-            <version>5.1.23</version>
-            <scope>test</scope>
         </dependency>
 
         <dependency>
             <groupId>org.apache.derby</groupId>
             <artifactId>derby</artifactId>
-            <version>10.9.1.0</version>
-            <scope>test</scope>
         </dependency>
 
         <dependency>
             <groupId>org.twitter4j</groupId>
             <artifactId>twitter4j-core</artifactId>
-            <version>${twitter4j.version}</version>
-            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.twitter4j</groupId>
             <artifactId>twitter4j-stream</artifactId>
-            <version>${twitter4j.version}</version>
-            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.twitter4j</groupId>
             <artifactId>twitter4j-async</artifactId>
-            <version>${twitter4j.version}</version>
-            <scope>test</scope>
         </dependency>
 
         <dependency>
             <groupId>org.springframework.social</groupId>
             <artifactId>spring-social-twitter</artifactId>
-            <version>1.0.3.RELEASE</version>
-            <scope>test</scope>
-            <exclusions>
-                <exclusion>
-                    <artifactId>spring-core</artifactId>
-                    <groupId>org.springframework</groupId>
-                </exclusion>
-                <exclusion>
-                    <artifactId>spring-web</artifactId>
-                    <groupId>org.springframework</groupId>
-                </exclusion>
-            </exclusions>
+        </dependency>
+
+        <!-- Test -->
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.easytesting</groupId>
+            <artifactId>fest-assert</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.hamcrest</groupId>
+            <artifactId>hamcrest-all</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.carrotsearch</groupId>
+            <artifactId>junit-benchmarks</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-all</artifactId>
         </dependency>
     </dependencies>
 </project>

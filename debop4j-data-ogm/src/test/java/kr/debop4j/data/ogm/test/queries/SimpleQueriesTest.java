@@ -54,8 +54,7 @@ public class SimpleQueriesTest {
         thrown.expect(HibernateException.class);
         thrown.expectMessage("OGM000024");
         try {
-            assertQuery(session, 4, session.createQuery(
-                    "from Object")); //Illegal query
+            assertQuery(session, 4, session.createQuery("from Object")); //Illegal query
         } finally {
             session.close();
         }

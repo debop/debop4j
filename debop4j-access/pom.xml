@@ -3,7 +3,7 @@
     <parent>
         <groupId>debop4j</groupId>
         <artifactId>debop4j-parent</artifactId>
-        <version>0.1.0-SNAPSHOT</version>
+        <version>0.2.0-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
     <modelVersion>4.0.0</modelVersion>
@@ -29,69 +29,197 @@
             <artifactId>debop4j-data</artifactId>
             <version>${debop4j.version}</version>
         </dependency>
+        <dependency>
+            <groupId>debop4j</groupId>
+            <artifactId>debop4j-data-ogm</artifactId>
+            <version>${debop4j.version}</version>
+        </dependency>
+
+        <!-- Guava -->
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava-testlib</artifactId>
+        </dependency>
+
+        <!-- GSON -->
+        <dependency>
+            <groupId>com.google.code.gson</groupId>
+            <artifactId>gson</artifactId>
+        </dependency>
+
+        <!-- ASM -->
+        <dependency>
+            <groupId>org.ow2.asm</groupId>
+            <artifactId>asm</artifactId>
+        </dependency>
+
+        <!-- Model Mapper -->
+        <dependency>
+            <groupId>org.modelmapper</groupId>
+            <artifactId>modelmapper</artifactId>
+        </dependency>
+
+        <!-- 암호화 -->
+        <dependency>
+            <groupId>org.jasypt</groupId>
+            <artifactId>jasypt</artifactId>
+        </dependency>
+
+        <!-- Jackson JSON Serializer -->
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+        </dependency>
+
+        <!-- joda-time -->
+        <dependency>
+            <groupId>joda-time</groupId>
+            <artifactId>joda-time</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.joda</groupId>
+            <artifactId>joda-convert</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>joda-time</groupId>
+            <artifactId>joda-time-hibernate</artifactId>
+        </dependency>
+
+        <!-- Jodd -->
+        <dependency>
+            <groupId>org.jodd</groupId>
+            <artifactId>jodd-props</artifactId>
+        </dependency>
+
+        <!-- Logging -->
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-core</artifactId>
+        </dependency>
+
+        <!-- project lombok -->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+        </dependency>
+
+        <!-- Spring framework -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context-support</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-expression</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-tx</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-jdbc</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-orm</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-test</artifactId>
+        </dependency>
+
+        <!-- Hibernate -->
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-entitymanager</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-ehcache</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.jboss.logging</groupId>
+            <artifactId>jboss-logging</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-testing</artifactId>
+        </dependency>
+
+        <!-- Hibernate-Validator -->
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-validator</artifactId>
+        </dependency>
 
         <!-- ehcache -->
         <dependency>
             <groupId>net.sf.ehcache</groupId>
             <artifactId>ehcache-core</artifactId>
-            <version>${ehcache.version}</version>
-            <optional>true</optional>
-            <exclusions>
-                <exclusion>
-                    <artifactId>slf4j-api</artifactId>
-                    <groupId>org.slf4j</groupId>
-                </exclusion>
-            </exclusions>
         </dependency>
 
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-ehcache</artifactId>
-            <version>${hibernate.version}</version>
-            <optional>true</optional>
-            <exclusions>
-                <exclusion>
-                    <artifactId>ehcache-core</artifactId>
-                    <groupId>net.sf.ehcache</groupId>
-                </exclusion>
-                <exclusion>
-                    <artifactId>slf4j-api</artifactId>
-                    <groupId>org.slf4j</groupId>
-                </exclusion>
-                <exclusion>
-                    <artifactId>jboss-logging</artifactId>
-                    <groupId>org.jboss.logging</groupId>
-                </exclusion>
-            </exclusions>
         </dependency>
 
-        <!-- dbcp는 테스트용으로 사용합니다. BoneCP가 불안할 때 dbcp를 사용하세요 -->
-        <dependency>
-            <groupId>commons-dbcp</groupId>
-            <artifactId>commons-dbcp</artifactId>
-            <version>1.4</version>
-            <scope>test</scope>
-            <exclusions>
-                <exclusion>
-                    <artifactId>commons-pool</artifactId>
-                    <groupId>commons-pool</groupId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-
+        <!-- Database Driver -->
 
         <dependency>
             <groupId>org.hsqldb</groupId>
             <artifactId>hsqldb</artifactId>
-            <version>2.2.9</version>
-            <scope>test</scope>
         </dependency>
-
         <dependency>
             <groupId>postgresql</groupId>
             <artifactId>postgresql</artifactId>
-            <version>9.1-901-1.jdbc4</version>
-            <scope>test</scope>
+        </dependency>
+
+
+        <!-- Test -->
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.easytesting</groupId>
+            <artifactId>fest-assert</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.hamcrest</groupId>
+            <artifactId>hamcrest-all</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.carrotsearch</groupId>
+            <artifactId>junit-benchmarks</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-all</artifactId>
         </dependency>
 
     </dependencies>

@@ -3,7 +3,7 @@
     <parent>
         <artifactId>debop4j-parent</artifactId>
         <groupId>debop4j</groupId>
-        <version>0.1.0-SNAPSHOT</version>
+        <version>0.2.0-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
     <modelVersion>4.0.0</modelVersion>
@@ -15,44 +15,92 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-surefire-plugin</artifactId>
-                <configuration>
-                    <forkMode>once</forkMode>
-                    <skipExec>false</skipExec>
-                </configuration>
-            </plugin>
-        </plugins>
-    </build>
-
     <dependencies>
 
         <dependency>
             <groupId>debop4j</groupId>
             <artifactId>debop4j-core</artifactId>
-            <version>${debop4j.version}</version>
+            <version>${project.version}</version>
         </dependency>
 
         <dependency>
             <groupId>debop4j</groupId>
             <artifactId>debop4j-data</artifactId>
-            <version>${debop4j.version}</version>
+            <version>${project.version}</version>
         </dependency>
 
         <dependency>
             <groupId>debop4j</groupId>
             <artifactId>debop4j-data-ogm</artifactId>
-            <version>${debop4j.version}</version>
+            <version>${project.version}</version>
         </dependency>
 
         <dependency>
             <groupId>debop4j</groupId>
             <artifactId>debop4j-data-ogm</artifactId>
-            <version>${debop4j.version}</version>
+            <version>${project.version}</version>
             <type>test-jar</type>
+            <scope>test</scope>
+        </dependency>
+
+        <!-- Guava -->
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava-testlib</artifactId>
+        </dependency>
+
+        <!-- Logging -->
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-core</artifactId>
+        </dependency>
+
+        <!-- project lombok -->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+        </dependency>
+
+        <!-- Spring framework -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context-support</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-expression</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-tx</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-jdbc</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-orm</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-test</artifactId>
             <scope>test</scope>
         </dependency>
 
@@ -60,154 +108,160 @@
         <dependency>
             <groupId>net.sf.ehcache</groupId>
             <artifactId>ehcache-core</artifactId>
-            <version>${ehcache.version}</version>
-            <exclusions>
-                <exclusion>
-                    <artifactId>slf4j-api</artifactId>
-                    <groupId>org.slf4j</groupId>
-                </exclusion>
-            </exclusions>
         </dependency>
 
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-ehcache</artifactId>
-            <version>${hibernate.version}</version>
-            <optional>true</optional>
-            <exclusions>
-                <exclusion>
-                    <artifactId>ehcache-core</artifactId>
-                    <groupId>net.sf.ehcache</groupId>
-                </exclusion>
-                <exclusion>
-                    <artifactId>slf4j-api</artifactId>
-                    <groupId>org.slf4j</groupId>
-                </exclusion>
-                <exclusion>
-                    <artifactId>jboss-logging</artifactId>
-                    <groupId>org.jboss.logging</groupId>
-                </exclusion>
-            </exclusions>
         </dependency>
 
         <!-- Hibernate -->
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-core</artifactId>
-            <version>${hibernate.version}</version>
-            <exclusions>
-                <exclusion>
-                    <artifactId>commons-collections</artifactId>
-                    <groupId>commons-collections</groupId>
-                </exclusion>
-                <exclusion>
-                    <artifactId>slf4j-api</artifactId>
-                    <groupId>org.slf4j</groupId>
-                </exclusion>
-                <exclusion>
-                    <artifactId>jboss-logging</artifactId>
-                    <groupId>org.jboss.logging</groupId>
-                </exclusion>
-                <exclusion>
-                    <artifactId>javassist</artifactId>
-                    <groupId>org.javassist</groupId>
-                </exclusion>
-            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-entitymanager</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-ehcache</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.jboss.logging</groupId>
+            <artifactId>jboss-logging</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-testing</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <!-- Hibernate-Search -->
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-search-analyzers</artifactId>
+            <version>${hibernate.search.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-search-engine</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-search-engine</artifactId>
+            <type>test-jar</type>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-search-orm</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-search-infinispan</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.lucene</groupId>
+            <artifactId>lucene-core</artifactId>
         </dependency>
 
         <dependency>
             <groupId>org.hibernate</groupId>
-            <artifactId>hibernate-entitymanager</artifactId>
-            <version>${hibernate.version}</version>
-            <exclusions>
-                <exclusion>
-                    <artifactId>slf4j-api</artifactId>
-                    <groupId>org.slf4j</groupId>
-                </exclusion>
-                <exclusion>
-                    <artifactId>jboss-logging</artifactId>
-                    <groupId>org.jboss.logging</groupId>
-                </exclusion>
-                <exclusion>
-                    <artifactId>javassist</artifactId>
-                    <groupId>org.javassist</groupId>
-                </exclusion>
-            </exclusions>
+            <artifactId>hibernate-validator</artifactId>
         </dependency>
 
         <!-- Hibernate-OGM -->
         <dependency>
             <groupId>org.hibernate.ogm</groupId>
             <artifactId>hibernate-ogm-core</artifactId>
-            <version>${hibernate.ogm.version}</version>
-            <exclusions>
-                <exclusion>
-                    <artifactId>hibernate-search-engine</artifactId>
-                    <groupId>org.hibernate</groupId>
-                </exclusion>
-                <exclusion>
-                    <artifactId>hibernate-core</artifactId>
-                    <groupId>org.hibernate</groupId>
-                </exclusion>
-                <exclusion>
-                    <artifactId>hibernate-entitymanager</artifactId>
-                    <groupId>org.hibernate</groupId>
-                </exclusion>
-            </exclusions>
         </dependency>
 
         <dependency>
             <groupId>org.hibernate.ogm</groupId>
             <artifactId>hibernate-ogm-ehcache</artifactId>
-            <version>${hibernate.ogm.version}</version>
-            <exclusions>
-                <exclusion>
-                    <artifactId>ehcache-core</artifactId>
-                    <groupId>net.sf.ehcache</groupId>
-                </exclusion>
-                <exclusion>
-                    <artifactId>hibernate-entitymanager</artifactId>
-                    <groupId>org.hibernate</groupId>
-                </exclusion>
-            </exclusions>
+        </dependency>
+
+        <dependency>
+            <groupId>org.hibernate.jpql</groupId>
+            <artifactId>hibernate-jpql-parser</artifactId>
+        </dependency>
+
+        <!-- hibernate-ogm 을 쓸 때 필수 요소 -->
+        <dependency>
+            <groupId>org.antlr</groupId>
+            <artifactId>antlr</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.jboss.jbossts</groupId>
+            <artifactId>jbossjta</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.jboss.spec.javax.transaction</groupId>
+            <artifactId>jboss-transaction-api_1.1_spec</artifactId>
         </dependency>
 
 
-        <!-- for Testing -->
+        <!-- Twitter4J -->
         <dependency>
             <groupId>org.twitter4j</groupId>
             <artifactId>twitter4j-core</artifactId>
-            <version>${twitter4j.version}</version>
-            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.twitter4j</groupId>
             <artifactId>twitter4j-stream</artifactId>
-            <version>${twitter4j.version}</version>
-            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.twitter4j</groupId>
             <artifactId>twitter4j-async</artifactId>
-            <version>${twitter4j.version}</version>
-            <scope>test</scope>
         </dependency>
 
         <dependency>
             <groupId>org.springframework.social</groupId>
             <artifactId>spring-social-twitter</artifactId>
-            <version>1.0.3.RELEASE</version>
-            <scope>test</scope>
-            <exclusions>
-                <exclusion>
-                    <artifactId>spring-core</artifactId>
-                    <groupId>org.springframework</groupId>
-                </exclusion>
-                <exclusion>
-                    <artifactId>spring-web</artifactId>
-                    <groupId>org.springframework</groupId>
-                </exclusion>
-            </exclusions>
+        </dependency>
+
+        <!-- Twitter4J -->
+        <dependency>
+            <groupId>org.twitter4j</groupId>
+            <artifactId>twitter4j-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.twitter4j</groupId>
+            <artifactId>twitter4j-stream</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.twitter4j</groupId>
+            <artifactId>twitter4j-async</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.social</groupId>
+            <artifactId>spring-social-twitter</artifactId>
+        </dependency>
+
+        <!-- Test -->
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.easytesting</groupId>
+            <artifactId>fest-assert</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.hamcrest</groupId>
+            <artifactId>hamcrest-all</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.carrotsearch</groupId>
+            <artifactId>junit-benchmarks</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-all</artifactId>
         </dependency>
 
     </dependencies>

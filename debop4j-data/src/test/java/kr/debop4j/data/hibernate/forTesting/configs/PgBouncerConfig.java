@@ -1,6 +1,6 @@
 package kr.debop4j.data.hibernate.forTesting.configs;
 
-import org.apache.commons.dbcp.BasicDataSource;
+import kr.debop4j.data.jdbc.JdbcTool;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
@@ -18,19 +18,21 @@ public class PgBouncerConfig extends PostgreSqlConfig {
 
     @Bean(destroyMethod = "close")
     public DataSource dataSource() {
-//        return buildDataSource("org.postgresql.Driver",
-//                               "jdbc:postgresql://localhost:6432/" + getDatabaseName() + "?prepareThreshold=0",
-//                               "root",
-//                               "root");
 
         // NOTE: pgBouncer 로 연결 시 꼭 prepareThreshold=0 를 추가해야 합니다.
         //
-        BasicDataSource ds = new BasicDataSource();
-        ds.setDriverClassName("org.postgresql.Driver");
-        ds.setUrl("jdbc:postgresql://localhost:6432/" + getDatabaseName() + "?prepareThreshold=0");
-        ds.setUsername("root");
-        ds.setPassword("root");
+        return
+                JdbcTool.getTomcatDataSource("org.postgresql.Driver",
+                                             "jdbc:postgresql://localhost:6432/" + getDatabaseName() + "?prepareThreshold=0",
+                                             "root",
+                                             "root");
 
-        return ds;
+//        BasicDataSource ds = new BasicDataSource();
+//        ds.setDriverClassName("org.postgresql.Driver");
+//        ds.setUrl("jdbc:postgresql://localhost:6432/" + getDatabaseName() + "?prepareThreshold=0");
+//        ds.setUsername("root");
+//        ds.setPassword("root");
+//
+//        return ds;
     }
 }

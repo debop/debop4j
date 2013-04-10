@@ -3,7 +3,7 @@
     <parent>
         <groupId>debop4j</groupId>
         <artifactId>debop4j-parent</artifactId>
-        <version>0.1.0-SNAPSHOT</version>
+        <version>0.2.0-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
     <modelVersion>4.0.0</modelVersion>
@@ -44,7 +44,6 @@
             <artifactId>debop4j-core</artifactId>
             <version>${debop4j.version}</version>
         </dependency>
-
         <dependency>
             <groupId>debop4j</groupId>
             <artifactId>debop4j-data</artifactId>
@@ -65,100 +64,179 @@
             <scope>test</scope>
         </dependency>
 
+        <!-- Guava -->
         <dependency>
-            <groupId>org.hibernate.ogm</groupId>
-            <artifactId>hibernate-ogm-core</artifactId>
-            <version>${hibernate.ogm.version}</version>
-            <exclusions>
-                <exclusion>
-                    <artifactId>hibernate-search-engine</artifactId>
-                    <groupId>org.hibernate</groupId>
-                </exclusion>
-                <exclusion>
-                    <artifactId>hibernate-core</artifactId>
-                    <groupId>org.hibernate</groupId>
-                </exclusion>
-                <exclusion>
-                    <artifactId>hibernate-entitymanager</artifactId>
-                    <groupId>org.hibernate</groupId>
-                </exclusion>
-            </exclusions>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava-testlib</artifactId>
         </dependency>
 
+        <!-- Logging -->
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>${slf4j.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+            <version>${logback.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-core</artifactId>
+            <version>${logback.version}</version>
+        </dependency>
+
+        <!-- project lombok -->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>${lombok.version}</version>
+        </dependency>
+
+        <!-- Spring framework -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context-support</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-expression</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-tx</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-jdbc</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-orm</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <!-- Hibernate -->
         <dependency>
             <groupId>org.hibernate</groupId>
-            <artifactId>hibernate-search-orm</artifactId>
+            <artifactId>hibernate-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-entitymanager</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-testing</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <!-- Hibernate-Search -->
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-search-analyzers</artifactId>
             <version>${hibernate.search.version}</version>
-            <exclusions>
-                <exclusion>
-                    <artifactId>hibernate-core</artifactId>
-                    <groupId>org.hibernate</groupId>
-                </exclusion>
-            </exclusions>
         </dependency>
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-search-engine</artifactId>
-            <version>${hibernate.search.version}</version>
-            <exclusions>
-                <exclusion>
-                    <artifactId>jboss-logging</artifactId>
-                    <groupId>org.jboss.logging</groupId>
-                </exclusion>
-                <exclusion>
-                    <artifactId>slf4j-api</artifactId>
-                    <groupId>org.slf4j</groupId>
-                </exclusion>
-            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-search-engine</artifactId>
+            <type>test-jar</type>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-search-orm</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-search-infinispan</artifactId>
         </dependency>
 
         <dependency>
+            <groupId>org.apache.lucene</groupId>
+            <artifactId>lucene-core</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-validator</artifactId>
+        </dependency>
+
+        <!-- Hibernate-OGM -->
+        <dependency>
+            <groupId>org.hibernate.ogm</groupId>
+            <artifactId>hibernate-ogm-core</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.hibernate.jpql</groupId>
+            <artifactId>hibernate-jpql-parser</artifactId>
+        </dependency>
+
+        <!-- hibernate-ogm 을 쓸 때 필수 요소 -->
+        <dependency>
+            <groupId>org.antlr</groupId>
+            <artifactId>antlr</artifactId>
+        </dependency>
+        <dependency>
             <groupId>org.jboss.jbossts</groupId>
             <artifactId>jbossjta</artifactId>
-            <version>${jbossjta.version}</version>
         </dependency>
+        <dependency>
+            <groupId>org.jboss.spec.javax.transaction</groupId>
+            <artifactId>jboss-transaction-api_1.1_spec</artifactId>
+        </dependency>
+
 
         <!-- Redis for Cache -->
         <dependency>
             <groupId>redis.clients</groupId>
             <artifactId>jedis</artifactId>
-            <version>${jedis.version}</version>
-            <exclusions>
-                <exclusion>
-                    <artifactId>commons-pool</artifactId>
-                    <groupId>commons-pool</groupId>
-                </exclusion>
-            </exclusions>
         </dependency>
 
         <dependency>
             <groupId>org.springframework.data</groupId>
             <artifactId>spring-data-redis</artifactId>
-            <version>${spring.data.redis.version}</version>
-            <exclusions>
-                <exclusion>
-                    <artifactId>spring-context-support</artifactId>
-                    <groupId>org.springframework</groupId>
-                </exclusion>
-                <exclusion>
-                    <artifactId>spring-tx</artifactId>
-                    <groupId>org.springframework</groupId>
-                </exclusion>
-                <exclusion>
-                    <artifactId>slf4j-api</artifactId>
-                    <groupId>org.slf4j</groupId>
-                </exclusion>
-                <exclusion>
-                    <artifactId>spring-core</artifactId>
-                    <groupId>org.springframework</groupId>
-                </exclusion>
-            </exclusions>
         </dependency>
 
-        <!--<dependency>-->
-        <!--<groupId>org.codehaus.jackson</groupId>-->
-        <!--<artifactId>jackson-mapper-asl</artifactId>-->
-        <!--<version>1.9.12</version>-->
-        <!--</dependency>-->
+
+        <!-- Test -->
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.easytesting</groupId>
+            <artifactId>fest-assert</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.hamcrest</groupId>
+            <artifactId>hamcrest-all</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.carrotsearch</groupId>
+            <artifactId>junit-benchmarks</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-all</artifactId>
+        </dependency>
     </dependencies>
 </project>

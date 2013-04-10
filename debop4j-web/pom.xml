@@ -5,9 +5,8 @@
     <parent>
         <artifactId>debop4j-parent</artifactId>
         <groupId>debop4j</groupId>
-        <version>0.1.0-SNAPSHOT</version>
+        <version>0.2.0-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
-
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
@@ -17,103 +16,117 @@
         <dependency>
             <groupId>debop4j</groupId>
             <artifactId>debop4j-core</artifactId>
-            <version>${debop4j.version}</version>
+            <version>${project.parent.version}</version>
         </dependency>
         <dependency>
             <groupId>debop4j</groupId>
             <artifactId>debop4j-data</artifactId>
-            <version>${debop4j.version}</version>
+            <version>${project.parent.version}</version>
         </dependency>
 
         <dependency>
             <groupId>org.apache.httpcomponents</groupId>
             <artifactId>httpclient</artifactId>
-            <version>${httpclient.version}</version>
-            <exclusions>
-                <exclusion>
-                    <artifactId>httpcore</artifactId>
-                    <groupId>org.apache.httpcomponents</groupId>
-                </exclusion>
-            </exclusions>
         </dependency>
         <dependency>
             <groupId>org.apache.httpcomponents</groupId>
             <artifactId>httpcore</artifactId>
-            <version>${httpclient.version}</version>
         </dependency>
 
         <dependency>
             <groupId>javax.servlet</groupId>
             <artifactId>javax.servlet-api</artifactId>
-            <version>3.0.1</version>
-            <scope>provided</scope>
         </dependency>
+
+        <!-- Servlet -->
         <dependency>
             <groupId>javax</groupId>
             <artifactId>javaee-api</artifactId>
-            <version>6.0</version>
-            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>javax.servlet</groupId>
             <artifactId>jstl</artifactId>
-            <version>1.2</version>
         </dependency>
         <dependency>
             <groupId>taglibs</groupId>
             <artifactId>standard</artifactId>
-            <version>1.1.2</version>
         </dependency>
 
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-web</artifactId>
-            <version>${springframework.version}</version>
-            <optional>true</optional>
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-webmvc</artifactId>
-            <version>${springframework.version}</version>
-            <optional>true</optional>
         </dependency>
 
         <dependency>
             <groupId>org.apache.httpcomponents</groupId>
             <artifactId>httpasyncclient</artifactId>
-            <version>4.0-beta3</version>
-            <exclusions>
-                <exclusion>
-                    <artifactId>httpcore</artifactId>
-                    <groupId>org.apache.httpcomponents</groupId>
-                </exclusion>
-                <exclusion>
-                    <artifactId>httpclient</artifactId>
-                    <groupId>org.apache.httpcomponents</groupId>
-                </exclusion>
-            </exclusions>
         </dependency>
 
         <dependency>
             <groupId>com.ning</groupId>
             <artifactId>async-http-client</artifactId>
-            <version>1.7.5</version>
-            <exclusions>
-                <exclusion>
-                    <artifactId>slf4j-api</artifactId>
-                    <groupId>org.slf4j</groupId>
-                </exclusion>
-                <exclusion>
-                    <artifactId>netty</artifactId>
-                    <groupId>io.netty</groupId>
-                </exclusion>
-            </exclusions>
         </dependency>
 
         <dependency>
             <groupId>io.netty</groupId>
             <artifactId>netty</artifactId>
-            <version>${io.netty.version}</version>
+        </dependency>
+
+        <!-- Guava -->
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava-testlib</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <!-- Logging -->
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-core</artifactId>
+        </dependency>
+
+        <!-- project lombok -->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+        </dependency>
+
+        <!-- Test -->
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.easytesting</groupId>
+            <artifactId>fest-assert</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.hamcrest</groupId>
+            <artifactId>hamcrest-all</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.carrotsearch</groupId>
+            <artifactId>junit-benchmarks</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-all</artifactId>
         </dependency>
     </dependencies>
 </project>

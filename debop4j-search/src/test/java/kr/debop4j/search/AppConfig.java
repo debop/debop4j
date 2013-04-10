@@ -44,6 +44,8 @@ public class AppConfig {
 
         Properties props = new Properties();
 
+        props.put(Environment.DIALECT, "org.hibernate.dialect.HSQLDialect");
+
         props.put(Environment.FORMAT_SQL, "true");
         props.put(Environment.HBM2DDL_AUTO, "create"); // create | spawn | spawn-drop | update | validate
         props.put(Environment.SHOW_SQL, "true");
