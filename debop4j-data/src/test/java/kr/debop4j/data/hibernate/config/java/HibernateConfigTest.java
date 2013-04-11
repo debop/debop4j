@@ -16,8 +16,9 @@ import org.springframework.transaction.annotation.Transactional;
  * User: sunghyouk.bae@gmail.com
  * Date: 13. 2. 19.
  */
+@SuppressWarnings("JpaQlInspection")
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = {HibernateConfig.class})
+@ContextConfiguration(classes = { HibernateConfig.class })
 public class HibernateConfigTest {
 
     @Autowired
