@@ -6,7 +6,7 @@
         </Console>
     </appenders>
     <loggers>
-        <logger name="kr.debop4j.search" level="trace"/>
+        <logger name="kr.debop4j.experiments" level="trace"/>
         <root level="info">
             <appender-ref ref="Console"/>
         </root>

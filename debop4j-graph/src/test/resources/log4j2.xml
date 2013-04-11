@@ -6,9 +6,7 @@
         </Console>
     </appenders>
     <loggers>
-        <logger name="kr.debop4j" level="debug">
-            <appender-ref ref="Console"/>
-        </logger>
+        <logger name="kr.debop4j.graph" level="trace"/>
         <root level="info">
             <appender-ref ref="Console"/>
         </root>
