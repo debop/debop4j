@@ -133,6 +133,7 @@ public class MongoDBTestHelper implements TestableGridDialect {
     public void dropSchemaAndDatabase(SessionFactory sessionFactory) {
         MongoDBDatastoreProvider provider = getProvider(sessionFactory);
         try {
+            log.info("MongoDB의 provider를 얻어 database를 삭제합니다...");
             provider.getDatabase().dropDatabase();
         } catch (MongoException ex) {
             throw log.unableToDropDatabase(ex, provider.getDatabase().getName());

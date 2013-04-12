@@ -18,6 +18,7 @@ public class CollectionUnidirectionalCollectionTest extends CollectionUnidirecti
     @Override
     protected void configure(Configuration cfg) {
         super.configure(cfg);
-        cfg.setProperty(Environment.MONGODB_ASSOCIATIONS_STORE, AssociationStorage.COLLECTION.name());
+        cfg.setProperty(Environment.MONGODB_ASSOCIATIONS_STORE,
+                        AssociationStorage.COLLECTION.name());
     }
 }

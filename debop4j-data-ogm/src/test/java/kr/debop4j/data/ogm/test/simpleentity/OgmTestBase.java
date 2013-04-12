@@ -348,6 +348,7 @@ public abstract class OgmTestBase {
     }
 
     private void closeSessionFactory() {
+        log.info("SessionFactory를 close 합니다.");
         if (sessions != null) {
             if (!sessions.isClosed()) {
                 TestHelper.dropSchemaAndDatabase(sessions);
