@@ -113,11 +113,6 @@
         <!-- Hibernate-Search -->
         <dependency>
             <groupId>org.hibernate</groupId>
-            <artifactId>hibernate-search-analyzers</artifactId>
-            <version>${hibernate.search.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.hibernate</groupId>
             <artifactId>hibernate-search-engine</artifactId>
         </dependency>
         <dependency>

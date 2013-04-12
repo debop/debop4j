@@ -1,12 +1,10 @@
 package kr.debop4j.data.ogm.test.id;
 
-import kr.debop4j.data.ogm.test.simpleentity.OgmTestBase;
+import kr.debop4j.data.ogm.test.utils.jpa.JpaTestBase;
 import lombok.extern.slf4j.Slf4j;
-import org.hibernate.Session;
-import org.hibernate.Transaction;
-import org.junit.Assert;
-import org.junit.Ignore;
 import org.junit.Test;
+
+import javax.persistence.EntityManager;
 
 import static org.fest.assertions.Assertions.assertThat;
 
@@ -17,10 +15,10 @@ import static org.fest.assertions.Assertions.assertThat;
  * @since 13. 4. 2. 오후 4:43
  */
 @Slf4j
-@Ignore("JTA 에서만 제대로 작동한다.")
-public class SequenceIdGeneratorTest extends OgmTestBase {
+public class SequenceIdGeneratorTest extends JpaTestBase {
+
     @Override
-    protected Class<?>[] getAnnotatedClasses() {
+    public Class<?>[] getEntities() {
         return new Class<?>[]{ Song.class, Actor.class };
     }
 
@@ -31,68 +29,62 @@ public class SequenceIdGeneratorTest extends OgmTestBase {
         Actor firstActor = new Actor();
         Actor secondActor = new Actor();
 
-        final Session session = openSession();
-        Transaction tx = session.beginTransaction();
-
+        getTransactionManager().begin();
+        final EntityManager em = getFactory().createEntityManager();
         boolean operationSuccessfull = false;
         try {
             firstSong.setSinger("Charlotte Church");
             firstSong.setTitle("Ave Maria");
-            session.persist(firstSong);
+            em.persist(firstSong);
 
             secondSong.setSinger("Charlotte Church");
             secondSong.setTitle("Flower Duet");
-            session.persist(secondSong);
+            em.persist(secondSong);
 
             firstActor.setName("Russell Crowe");
             firstActor.setBestMovieTitle("Gladiator");
-            session.persist(firstActor);
+            em.persist(firstActor);
 
             secondActor.setName("Johnny Depp");
             secondActor.setBestMovieTitle("Pirates of the Caribbean");
-            session.persist(secondActor);
+            em.persist(secondActor);
             operationSuccessfull = true;
-
-            tx.commit();
-        } catch (Exception e) {
-            log.error("예외 발생", e);
-            tx.rollback();
-            Assert.fail(e.getMessage());
+        } finally {
+            commitOrRollback(operationSuccessfull);
         }
-        session.clear();
+        em.clear();
 
-        tx = session.beginTransaction();
+        getTransactionManager().begin();
+        operationSuccessfull = false;
         try {
-            firstSong = (Song) session.get(Song.class, firstSong.getId());
+            firstSong = em.find(Song.class, firstSong.getId());
             assertThat(firstSong).isNotNull();
             assertThat(firstSong.getId()).isEqualTo(Song.INITIAL_VALUE);
             assertThat(firstSong.getTitle()).isEqualTo("Ave Maria");
-            session.delete(firstSong);
+            em.remove(firstSong);
 
-            secondSong = (Song) session.get(Song.class, secondSong.getId());
+            secondSong = em.find(Song.class, secondSong.getId());
             assertThat(secondSong).isNotNull();
             assertThat(secondSong.getId()).isEqualTo(Song.INITIAL_VALUE + 1);
             assertThat(secondSong.getTitle()).isEqualTo("Flower Duet");
-            session.delete(secondSong);
+            em.remove(secondSong);
 
-            firstActor = (Actor) session.get(Actor.class, firstActor.getId());
+            firstActor = em.find(Actor.class, firstActor.getId());
             assertThat(firstActor).isNotNull();
             assertThat(firstActor.getId()).isEqualTo(Actor.INITIAL_VALUE);
             assertThat(firstActor.getName()).isEqualTo("Russell Crowe");
-            session.delete(firstActor);
+            em.remove(firstActor);
 
-            secondActor = (Actor) session.get(Actor.class, secondActor.getId());
+            secondActor = em.find(Actor.class, secondActor.getId());
             assertThat(secondActor).isNotNull();
             assertThat(secondActor.getId()).isEqualTo(Actor.INITIAL_VALUE + 1);
             assertThat(secondActor.getName()).isEqualTo("Johnny Depp");
-            session.delete(secondActor);
-
-            tx.commit();
-        } catch (Exception e) {
-            log.error("예외 발생", e);
-            tx.rollback();
-            Assert.fail(e.getMessage());
+            em.remove(secondActor);
+            operationSuccessfull = true;
+        } finally {
+            commitOrRollback(operationSuccessfull);
         }
-        session.close();
+
+        em.close();
     }
 }

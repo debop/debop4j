@@ -1,10 +1,10 @@
 package kr.debop4j.data.ogm.test.id;
 
-import kr.debop4j.data.ogm.test.simpleentity.OgmTestBase;
+import kr.debop4j.data.ogm.test.utils.jpa.JpaTestBase;
 import lombok.extern.slf4j.Slf4j;
-import org.hibernate.Session;
-import org.hibernate.Transaction;
 import org.junit.Test;
+
+import javax.persistence.EntityManager;
 
 import static org.fest.assertions.Assertions.assertThat;
 
@@ -15,50 +15,48 @@ import static org.fest.assertions.Assertions.assertThat;
  * @since 13. 4. 2. 오후 2:31
  */
 @Slf4j
-public class AutoIdGeneratorTest extends OgmTestBase {
+public class AutoIdGeneratorTest extends JpaTestBase {
 
     @Override
-    protected Class<?>[] getAnnotatedClasses() {
+    public Class<?>[] getEntities() {
         return new Class<?>[]{ DistributedRevisionControl.class };
     }
 
     @Test
     public void autoIdentifierGenerator() throws Exception {
 
-        DistributedRevisionControl git = new DistributedRevisionControl("git");
-        DistributedRevisionControl bzr = new DistributedRevisionControl("bzr");
-
-        final Session session = openSession();
-        Transaction tx = session.beginTransaction();
-
+        DistributedRevisionControl git = new DistributedRevisionControl();
+        DistributedRevisionControl bzr = new DistributedRevisionControl();
+        getTransactionManager().begin();
+        final EntityManager em = getFactory().createEntityManager();
+        boolean operationSuccessfull = false;
         try {
-            session.persist(git);
-            session.persist(bzr);
-            tx.commit();
+            git.setName("Git");
+            em.persist(git);
 
-        } catch (Exception ignored) {
-            tx.rollback();
+            bzr.setName("Bazaar");
+            em.persist(bzr);
+            operationSuccessfull = true;
+        } finally {
+            commitOrRollback(operationSuccessfull);
         }
-        session.clear();
 
-        tx = session.beginTransaction();
+        em.clear();
+        getTransactionManager().begin();
+        operationSuccessfull = false;
         try {
-            DistributedRevisionControl dvcs = (DistributedRevisionControl) session.get(DistributedRevisionControl.class, git.getId());
+            DistributedRevisionControl dvcs = em.find(DistributedRevisionControl.class, git.getId());
             assertThat(dvcs).isNotNull();
             assertThat(dvcs.getId()).isEqualTo(1);
-            session.delete(dvcs);
+            em.remove(dvcs);
 
-            dvcs = (DistributedRevisionControl) session.get(DistributedRevisionControl.class, git.getId());
+            dvcs = em.find(DistributedRevisionControl.class, bzr.getId());
             assertThat(dvcs).isNotNull();
             assertThat(dvcs.getId()).isEqualTo(2);
-            session.delete(dvcs);
-
-            tx.commit();
-        } catch (Exception ignored) {
-            tx.rollback();
+            operationSuccessfull = true;
+        } finally {
+            commitOrRollback(operationSuccessfull);
         }
-
-
-        session.close();
+        em.close();
     }
 }

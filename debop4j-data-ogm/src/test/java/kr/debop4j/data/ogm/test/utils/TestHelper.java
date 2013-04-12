@@ -95,6 +95,8 @@ public class TestHelper {
         //if the factory is closed, we don't have access to the service registry
         if (sessionFactory != null && !sessionFactory.isClosed()) {
             try {
+                if (log.isInfoEnabled())
+                    log.info("데이터베이스 데이터와 스키마를 삭제합니다...");
                 helper.dropSchemaAndDatabase(sessionFactory);
             } catch (Exception e) {
                 log.warn("Exception while dropping schema and database in test", e);

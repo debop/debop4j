@@ -45,8 +45,8 @@ public class UsingHSqlConfiguration extends HSqlConfigBase {
         props.put(Environment.CACHE_PROVIDER_CONFIG, "classpath:ehcache.xml");
 
         // Validator
-        props.put("javax.persistence.validation.group.pre-persist", "javax.validation.groups.Default");
-        props.put("javax.persistence.validation.group.pre-update", "javax.validation.groups.Default");
+        props.put("javax.persistencexml.validation.group.pre-persist", "javax.validation.groups.Default");
+        props.put("javax.persistencexml.validation.group.pre-update", "javax.validation.groups.Default");
 
         return props;
     }

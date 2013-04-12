@@ -74,6 +74,7 @@
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-testing</artifactId>
+            <scope>test</scope>
         </dependency>
 
         <!-- Hibernate-OGM -->
@@ -81,6 +82,12 @@
             <groupId>org.hibernate.ogm</groupId>
             <artifactId>hibernate-ogm-core</artifactId>
         </dependency>
+
+        <dependency>
+            <groupId>org.hibernate.ogm</groupId>
+            <artifactId>hibernate-ogm-mongodb</artifactId>
+        </dependency>
+
         <dependency>
             <groupId>org.hibernate.jpql</groupId>
             <artifactId>hibernate-jpql-parser</artifactId>
@@ -101,11 +108,6 @@
         </dependency>
 
         <!-- Hibernate-Search -->
-        <dependency>
-            <groupId>org.hibernate</groupId>
-            <artifactId>hibernate-search-analyzers</artifactId>
-            <version>${hibernate.search.version}</version>
-        </dependency>
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-search-engine</artifactId>
@@ -152,10 +154,6 @@
             </exclusions>
         </dependency>
 
-        <dependency>
-            <groupId>org.hibernate.ogm</groupId>
-            <artifactId>hibernate-ogm-mongodb</artifactId>
-        </dependency>
 
     </dependencies>
 </project>

@@ -1,13 +1,10 @@
 package kr.debop4j.data.ogm.test.id;
 
-import kr.debop4j.data.ogm.test.simpleentity.OgmTestBase;
+import kr.debop4j.data.ogm.test.utils.jpa.JpaTestBase;
 import lombok.extern.slf4j.Slf4j;
-import org.hibernate.Session;
-import org.hibernate.Transaction;
-import org.junit.Assert;
-import org.junit.Ignore;
 import org.junit.Test;
 
+import javax.persistence.EntityManager;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,11 +17,15 @@ import static org.fest.assertions.Assertions.assertThat;
  * @since 13. 4. 2. 오후 3:40
  */
 @Slf4j
-@Ignore("JTA 에서만 제대로 작동한다.")
-public class CompositeIdTest extends OgmTestBase {
+public class CompositeIdTest extends JpaTestBase {
+
     @Override
-    protected Class<?>[] getAnnotatedClasses() {
-        return new Class<?>[]{ News.class, NewsID.class, Label.class };
+    public Class<?>[] getEntities() {
+        return new Class<?>[]{
+                News.class,
+                NewsID.class,
+                Label.class
+        };
     }
 
     @Test
@@ -61,70 +62,58 @@ public class CompositeIdTest extends OgmTestBase {
         final List<Label> newsCountJugLabels = new ArrayList<Label>();
         newsCountJugLabels.add(statJugLabel);
 
+
         News newsAboutJUG = new News(newsAboutJugID, contentAboutJUG, newsAboutJugLabels);
         News newsOGM = new News(newsOgmID, contentOGM, newsOgmLabels);
         News newsCountJUG = new News(newsCountJugID, contentCountJUG, newsCountJugLabels);
 
-        final Session session = openSession();
-        Transaction tx = session.beginTransaction();
+        boolean operationSuccessful = false;
+        getTransactionManager().begin();
+        final EntityManager em = getFactory().createEntityManager();
 
         try {
-            session.persist(newsOGM);
-            session.persist(newsAboutJUG);
-            session.persist(newsCountJUG);
-
-            tx.commit();
-        } catch (Exception e) {
-            log.error("예외 발생!!!", e);
-            try {
-                tx.rollback();
-            } catch (Exception inner) {
-                log.error("rollback 에러", inner);
-            }
-            Assert.fail("예외가 발생하여 rollback 했습니다.");
+            em.persist(newsOGM);
+            em.persist(newsAboutJUG);
+            em.persist(newsCountJUG);
+            operationSuccessful = true;
+        } finally {
+            commitOrRollback(operationSuccessful);
         }
-        session.clear();
-        tx = session.beginTransaction();
+        em.clear();
+        getTransactionManager().begin();
+        operationSuccessful = false;
         try {
-            News news = (News) session.get(News.class, newsOgmID);
+            News news = em.find(News.class, newsOgmID);
             assertThat(news).isNotNull();
             assertThat(news.getContent()).isEqualTo(contentOGM);
             assertThat(news.getNewsId().getAuthor()).isEqualTo(author);
             assertThat(news.getNewsId().getTitle()).isEqualTo(titleOGM);
             assertThat(news.getLabels().size()).isEqualTo(newsOgmLabels.size());
-            session.delete(news);
-            assertThat(session.get(News.class, newsOgmID)).isNull();
+            em.remove(news);
+            assertThat(em.find(News.class, newsOgmID)).isNull();
 
-            session.clear();
-            news = (News) session.get(News.class, newsAboutJugID);
+            em.clear();
+            news = em.find(News.class, newsAboutJugID);
             assertThat(news).isNotNull();
             assertThat(news.getContent()).isEqualTo(contentAboutJUG);
             assertThat(news.getNewsId().getAuthor()).isEqualTo(author);
             assertThat(news.getNewsId().getTitle()).isEqualTo(titleAboutJUG);
             assertThat(news.getLabels().size()).isEqualTo(newsAboutJugLabels.size());
-            session.delete(news);
-            assertThat(session.get(News.class, newsAboutJugID)).isNull();
+            em.remove(news);
+            assertThat(em.find(News.class, newsAboutJugID)).isNull();
 
-            session.clear();
-            news = (News) session.get(News.class, newsCountJugID);
+            em.clear();
+            news = em.find(News.class, newsCountJugID);
             assertThat(news).isNotNull();
             assertThat(news.getContent()).isEqualTo(contentCountJUG);
             assertThat(news.getNewsId().getAuthor()).isEqualTo(author);
             assertThat(news.getNewsId().getTitle()).isEqualTo(titleCountJUG);
             assertThat(news.getLabels().size()).isEqualTo(newsCountJugLabels.size());
-            session.delete(news);
-            assertThat(session.get(News.class, newsCountJugID)).isNull();
-
-            tx.commit();
-        } catch (Exception e) {
-            log.error("예외 발생!!!", e);
-            try {
-                tx.rollback();
-            } catch (Exception inner) {
-                log.error("rollback 에러", inner);
-            }
-            Assert.fail("예외가 발생하여 rollback 했습니다.");
+            em.remove(news);
+            assertThat(em.find(News.class, newsCountJugID)).isNull();
+        } finally {
+            commitOrRollback(operationSuccessful);
         }
-        session.close();
+        em.close();
     }
 }

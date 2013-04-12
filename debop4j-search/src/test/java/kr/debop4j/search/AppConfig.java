@@ -70,8 +70,8 @@ public class AppConfig {
         props.put("hibernate.search.default.exclusive_index_use", "true");
 
         // Validator
-        props.put("javax.persistence.validation.group.pre-persist", "javax.validation.groups.Default");
-        props.put("javax.persistence.validation.group.pre-update", "javax.validation.groups.Default");
+        props.put("javax.persistencexml.validation.group.pre-persist", "javax.validation.groups.Default");
+        props.put("javax.persistencexml.validation.group.pre-update", "javax.validation.groups.Default");
 
         return props;
     }

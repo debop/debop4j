@@ -205,8 +205,10 @@
         <spring.data.mongo.version>1.1.1.RELEASE</spring.data.mongo.version>
 
         <hibernate.version>4.2.0.Final</hibernate.version>
-        <hibernate.search.version>4.2.0.Final</hibernate.search.version>
         <hibernate.validator.version>4.3.1.Final</hibernate.validator.version>
+
+        <hibernate.search.version>4.2.0.Final</hibernate.search.version>
+        <!--<hibernate.search.version>4.3.0-SNAPSHOT</hibernate.search.version>-->
 
         <hibernate.ogm.version>4.0.0-SNAPSHOT</hibernate.ogm.version>
         <hibernate.ogm.mongo.version>4.0.0-SNAPSHOT</hibernate.ogm.mongo.version>
@@ -214,12 +216,11 @@
         <hibernate-jpql-parser.version>1.0.0.Alpha1</hibernate-jpql-parser.version>
         <antlr.version>3.5</antlr.version>
         <jboss.transaction.api.spec.version>1.0.1.Final</jboss.transaction.api.spec.version>
-
         <javassist.version>3.17.1-GA</javassist.version>
-        <lucene.version>3.6.2</lucene.version>
-
         <jbossjta.version>4.16.6.Final</jbossjta.version>
         <jboss.logging.version>3.1.3.GA</jboss.logging.version>
+
+        <lucene.version>3.6.2</lucene.version>
 
         <io.netty.version>3.6.3.Final</io.netty.version>
 
@@ -238,6 +239,8 @@
         <fest.assert.version>1.4</fest.assert.version>
         <junit.benchmarks.version>0.4.0</junit.benchmarks.version>
         <mockito.version>1.9.0</mockito.version>
+
+        <shrinkwrapVersion>1.1.1</shrinkwrapVersion>
 
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <!--<basedir>/User/debop/work/java/debop4j/debop4j-search</basedir>-->
@@ -563,12 +566,45 @@
                 <version>${springframework.version}</version>
             </dependency>
 
-
             <!-- Spring Data -->
             <dependency>
                 <groupId>org.springframework.data</groupId>
                 <artifactId>spring-data-jdbc-core</artifactId>
                 <version>${springframework.data.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.springframework.data</groupId>
+                <artifactId>spring-data-mongodb</artifactId>
+                <version>${spring.data.mongo.version}</version>
+            </dependency>
+
+            <!-- Hibernate 필수 요소들 -->
+            <dependency>
+                <groupId>org.antlr</groupId>
+                <artifactId>antlr</artifactId>
+                <version>${antlr.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.jboss.jbossts</groupId>
+                <artifactId>jbossjta</artifactId>
+                <version>${jbossjta.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.javassist</groupId>
+                <artifactId>javassist</artifactId>
+                <version>${javassist.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.jboss.spec.javax.transaction</groupId>
+                <artifactId>jboss-transaction-api_1.1_spec</artifactId>
+                <version>${jboss.transaction.api.spec.version}</version>
+            </dependency>
+            <!-- JPA -->
+            <dependency>
+                <groupId>org.hibernate.javax.persistence</groupId>
+                <artifactId>hibernate-jpa-2.0-api</artifactId>
+                <version>1.0.1.Final</version>
             </dependency>
 
             <!-- Hibernate -->
@@ -610,11 +646,6 @@
             <!-- Hibernate-Search -->
             <dependency>
                 <groupId>org.hibernate</groupId>
-                <artifactId>hibernate-search-analyzers</artifactId>
-                <version>${hibernate.search.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.hibernate</groupId>
                 <artifactId>hibernate-search-engine</artifactId>
                 <version>${hibernate.search.version}</version>
             </dependency>
@@ -648,42 +679,20 @@
                 <artifactId>hibernate-ogm-core</artifactId>
                 <version>${hibernate.ogm.version}</version>
             </dependency>
-
             <dependency>
                 <groupId>org.hibernate.ogm</groupId>
                 <artifactId>hibernate-ogm-ehcache</artifactId>
                 <version>${hibernate.ogm.version}</version>
             </dependency>
-
+            <dependency>
+                <groupId>org.hibernate.ogm</groupId>
+                <artifactId>hibernate-ogm-mongodb</artifactId>
+                <version>${hibernate.ogm.mongo.version}</version>
+            </dependency>
             <dependency>
                 <groupId>org.hibernate.jpql</groupId>
                 <artifactId>hibernate-jpql-parser</artifactId>
                 <version>${hibernate-jpql-parser.version}</version>
-            </dependency>
-
-
-            <!-- hibernate-ogm 을 쓸 때 필수 요소 -->
-            <dependency>
-                <groupId>org.antlr</groupId>
-                <artifactId>antlr</artifactId>
-                <version>${antlr.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.jboss.jbossts</groupId>
-                <artifactId>jbossjta</artifactId>
-                <version>${jbossjta.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.jboss.spec.javax.transaction</groupId>
-                <artifactId>jboss-transaction-api_1.1_spec</artifactId>
-                <version>${jboss.transaction.api.spec.version}</version>
-            </dependency>
-
-            <!-- javassist -->
-            <dependency>
-                <groupId>org.javassist</groupId>
-                <artifactId>javassist</artifactId>
-                <version>${javassist.version}</version>
             </dependency>
 
             <!-- Couchbase -->
@@ -700,17 +709,6 @@
                 <version>${mongo.driver.version}</version>
             </dependency>
 
-            <dependency>
-                <groupId>org.springframework.data</groupId>
-                <artifactId>spring-data-mongodb</artifactId>
-                <version>${spring.data.mongo.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>org.hibernate.ogm</groupId>
-                <artifactId>hibernate-ogm-mongodb</artifactId>
-                <version>${hibernate.ogm.mongo.version}</version>
-            </dependency>
 
             <!-- EhCache -->
             <dependency>
@@ -768,7 +766,6 @@
                 <version>1.3.170</version>
                 <scope>test</scope>
             </dependency>
-
 
             <dependency>
                 <groupId>postgresql</groupId>
@@ -863,6 +860,47 @@
                 <groupId>org.mockito</groupId>
                 <artifactId>mockito-all</artifactId>
                 <version>${mockito.version}</version>
+                <scope>test</scope>
+            </dependency>
+
+            <!-- Hibernate Test -->
+            <dependency>
+                <groupId>com.experlog</groupId>
+                <artifactId>xapool</artifactId>
+                <scope>test</scope>
+                <version>1.5.0</version>
+            </dependency>
+            <dependency>
+                <groupId>org.jboss.naming</groupId>
+                <artifactId>jnp-client</artifactId>
+                <scope>test</scope>
+                <version>${jbossNamingVersion}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.jboss.naming</groupId>
+                <artifactId>jnpserver</artifactId>
+                <scope>test</scope>
+                <version>${jbossNamingVersion}</version>
+            </dependency>
+
+
+            <!-- JPA Test -->
+            <dependency>
+                <groupId>org.jboss.shrinkwrap</groupId>
+                <artifactId>shrinkwrap-impl-base</artifactId>
+                <version>${shrinkwrapVersion}</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.jboss.shrinkwrap</groupId>
+                <artifactId>shrinkwrap-api</artifactId>
+                <version>${shrinkwrapVersion}</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.jboss.shrinkwrap</groupId>
+                <artifactId>shrinkwrap-spi</artifactId>
+                <version>${shrinkwrapVersion}</version>
                 <scope>test</scope>
             </dependency>
 
