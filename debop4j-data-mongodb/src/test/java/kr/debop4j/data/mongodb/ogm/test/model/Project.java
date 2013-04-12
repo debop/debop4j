@@ -25,7 +25,7 @@ public class Project extends AnnotatedEntityBase {
 
     private static final long serialVersionUID = -3585255464808037454L;
 
-    protected Project() {}
+    public Project() {}
 
     public Project(String id, String name) {
         this.id = id;

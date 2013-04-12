@@ -31,7 +31,6 @@ public class MongoDBTestHelper implements TestableGridDialect {
     private static final Log log = LoggerFactory.getLogger();
 
     static {
-
         // Read host and port from environment variable
         // Maven's surefire plugin set it to the string 'null'
         String mongoHostName = System.getenv("MONGODB_HOSTNAME");
