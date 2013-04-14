@@ -1,8 +1,10 @@
 package kr.debop4j.data.mongodb.cache;
 
+import com.mongodb.MongoClient;
 import kr.debop4j.core.Stopwatch;
 import kr.debop4j.data.mongodb.User;
 import lombok.extern.slf4j.Slf4j;
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -19,14 +21,22 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
  */
 @Slf4j
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = {MongoCacheConfiguration.class})
+@ContextConfiguration(classes = { MongoCacheConfiguration.class })
 public class MongoCacheTest {
-
     @Autowired
     MongoCacheManager cacheManager;
-
     @Autowired
     UserRepository userRepository;
+    @Autowired
+    MongoClient mongoClient;
+    @Autowired
+    String databaseName;
+
+    @After
+    public void after() {
+        log.info("Drop database. database=[{}]", databaseName);
+        mongoClient.dropDatabase(databaseName);
+    }
 
     @Test
     public void clearTest() {

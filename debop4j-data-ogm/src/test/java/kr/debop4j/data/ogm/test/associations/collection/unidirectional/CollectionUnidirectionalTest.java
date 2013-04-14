@@ -83,7 +83,6 @@ public class CollectionUnidirectionalTest extends OgmTestBase {
 
         assertThat(assertNumberOfEntities(4, sessions)).isTrue();
         assertThat(assertNumberOfAssociations(1, sessions)).isTrue();
-
         session.clear();
 
         transaction = session.beginTransaction();

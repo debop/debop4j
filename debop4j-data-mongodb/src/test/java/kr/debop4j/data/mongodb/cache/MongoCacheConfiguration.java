@@ -1,6 +1,7 @@
 package kr.debop4j.data.mongodb.cache;
 
 import com.mongodb.Mongo;
+import com.mongodb.MongoClient;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Bean;
@@ -21,13 +22,22 @@ public class MongoCacheConfiguration extends AbstractMongoConfiguration {
 
     @Override
     protected String getDatabaseName() {
-        return "debop4j_data";
+        return "debop4j_cache";
+    }
+
+    @Bean(name = "databaseName")
+    protected String databaseName() {
+        return getDatabaseName();
     }
 
     @Override
-    @Bean
     public Mongo mongo() throws Exception {
-        return new Mongo("localhost");
+        return mongoClient();
+    }
+
+    @Bean
+    public MongoClient mongoClient() throws Exception {
+        return new MongoClient("localhost");
     }
 
     @Bean
