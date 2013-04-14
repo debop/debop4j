@@ -34,6 +34,7 @@
             <systemPath>${basedir}/lib/koreananalyzer-3x-120223.jar</systemPath>
         </dependency>
 
+        <!-- debop4j -->
         <dependency>
             <groupId>debop4j</groupId>
             <artifactId>debop4j-core</artifactId>
@@ -42,6 +43,16 @@
         <dependency>
             <groupId>debop4j</groupId>
             <artifactId>debop4j-data</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>debop4j</groupId>
+            <artifactId>debop4j-data-ogm</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>debop4j</groupId>
+            <artifactId>debop4j-data-mongodb</artifactId>
             <version>${project.version}</version>
         </dependency>
 

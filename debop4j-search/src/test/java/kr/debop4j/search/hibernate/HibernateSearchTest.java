@@ -18,7 +18,6 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import java.io.IOException;
 import java.util.List;
 
 /**
@@ -54,7 +53,7 @@ public class HibernateSearchTest {
 
     @Test
     @SuppressWarnings("unchecked")
-    public void firstSearch() throws InterruptedException, IOException {
+    public void firstSearch() throws Exception {
 
         for (int i = 0; i < 100; i++) {
             SearchItem item = new SearchItem();
@@ -71,7 +70,7 @@ public class HibernateSearchTest {
         Thread.sleep(500);
 
         QueryParser parser = new MultiFieldQueryParser(Version.LUCENE_36,
-                                                       new String[]{"title", "description"},
+                                                       new String[]{ "title", "description" },
                                                        new CJKAnalyzer(Version.LUCENE_36));
         //new KoreanAnalyzer(Version.LUCENE_36));
         //QueryParser parser = new QueryParser(Version.LUCENE_36, "title", new StandardAnalyzer(Version.LUCENE_36));
@@ -86,8 +85,10 @@ public class HibernateSearchTest {
             Assert.assertTrue(founds.size() > 0);
             for (SearchItem loaded : founds)
                 System.out.printf("Id=%d; Title: %s\n", loaded.getId(), loaded.getTitle());
+
         } catch (ParseException e) {
             log.error("예외가 발생했습니다.", e);
+            throw new RuntimeException(e);
         }
     }
 }
