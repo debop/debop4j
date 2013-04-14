@@ -2,6 +2,7 @@ package kr.debop4j.data.redis.ogm.datastore.redis.impl;
 
 import org.hibernate.ogm.datastore.spi.TupleSnapshot;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
@@ -16,7 +17,7 @@ public class RedisTupleSnapshot implements TupleSnapshot {
     private Map<String, Object> map;
 
     public RedisTupleSnapshot(Map<String, Object> map) {
-        this.map = map;
+        this.map = (map != null) ? map : new HashMap<String, Object>();
     }
 
     @Override

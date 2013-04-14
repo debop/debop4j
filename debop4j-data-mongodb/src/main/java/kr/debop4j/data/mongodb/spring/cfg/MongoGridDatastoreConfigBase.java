@@ -35,10 +35,6 @@ public abstract class MongoGridDatastoreConfigBase extends GridDatastoreConfigBa
         // 엔티티 저장 방식
         props.put(Environment.MONGODB_ASSOCIATIONS_STORE, getAssociationStorage().name());
 
-        // transaction factory
-        props.put("hibernate.transaction.factory_class", "org.hibernate.transaction.JDBCTransactionFactory");
-        props.put("hibernate.current_session_context_class", "thread");
-
         if (log.isDebugEnabled())
             log.debug("hibernate-ogm 환경설정 정보를 지정했습니다. props=\n{}", props.toString());
 

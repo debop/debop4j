@@ -140,7 +140,16 @@ public abstract class GridDatastoreConfigBase {
      * hibernate-ogm 용 속성을 반환합니다.
      */
     protected Properties getHibernateOgmProperties() {
-        return getHibernateProperties();
+        Properties props = getHibernateProperties();
+
+
+        // transaction factory
+        // org.hibernate.engine.transaction.internal.jta.JtaTransactionFactory
+        // org.hibernate.engine.transaction.internal.jdbc.JdbcTransactionFactory
+        props.put("hibernate.transaction.factory_class", "org.hibernate.engine.transaction.internal.jta.JtaTransactionFactory");
+        props.put("hibernate.current_session_context_class", "thread");
+
+        return props;
     }
 
     /**
@@ -149,7 +158,7 @@ public abstract class GridDatastoreConfigBase {
      * @param serviceImpl 서비스 구현체의 타입
      * @return {@link ServiceRegistryImplementor}에 등록된 서비스
      */
-    protected org.hibernate.service.Service getService(Class<? extends org.hibernate.service.Service> serviceImpl) {
+    protected final org.hibernate.service.Service getService(Class<? extends org.hibernate.service.Service> serviceImpl) {
         if (log.isDebugEnabled())
             log.debug("Service 를 로드합니다. serviceImpl=[{}]", serviceImpl.getName());
 
@@ -163,7 +172,7 @@ public abstract class GridDatastoreConfigBase {
      *
      * @return {@link SessionFactoryImplementor} 인스턴스
      */
-    protected SessionFactoryImplementor getSessionFactoryImplementor() {
+    protected final SessionFactoryImplementor getSessionFactoryImplementor() {
         return (SessionFactoryImplementor) sessionFactory();
     }
 }
