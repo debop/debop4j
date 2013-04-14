@@ -11,6 +11,8 @@ import org.hibernate.ogm.cfg.OgmConfiguration;
 import org.hibernate.ogm.datastore.impl.DatastoreServices;
 import org.hibernate.ogm.datastore.spi.DatastoreProvider;
 import org.hibernate.ogm.dialect.GridDialect;
+import org.hibernate.service.ServiceRegistry;
+import org.hibernate.service.ServiceRegistryBuilder;
 import org.hibernate.service.spi.ServiceRegistryImplementor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -43,12 +45,13 @@ public abstract class GridDatastoreConfigBase {
     }
 
     /**
-     * Hibernate SessionFactory 를 제공합니다.
+     * hibernate-ogm용 configuration을 제공합니다.
      */
     @Bean
-    public SessionFactory sessionFactory() {
+    public OgmConfiguration ogmConfiguration() {
+
         if (log.isInfoEnabled())
-            log.info("hiberante-ogm 용 SessionFactory를 생성합니다...");
+            log.info("hibernate-ogm용 configuration을 생성합니다...");
 
         OgmConfiguration cfg = new OgmConfiguration();
 
@@ -68,9 +71,27 @@ public abstract class GridDatastoreConfigBase {
         cfg.setProperties(getHibernateOgmProperties());
 
         if (log.isInfoEnabled())
-            log.info("hiberante-ogm 용 SessionFactory를 생성했습니다!!!");
+            log.info("hibernate-ogm용 configuration을 생성했습니다!!!");
 
-        return cfg.buildSessionFactory();
+        return cfg;
+    }
+
+    /**
+     * Hibernate SessionFactory 를 제공합니다.
+     */
+    @Bean
+    public SessionFactory sessionFactory() {
+        if (log.isInfoEnabled())
+            log.info("hiberante-ogm 용 SessionFactory를 생성합니다...");
+
+        OgmConfiguration cfg = ogmConfiguration();
+        ServiceRegistry serviceRegistry = new ServiceRegistryBuilder().applySettings(cfg.getProperties()).buildServiceRegistry();
+        SessionFactory sessionFactory = cfg.buildSessionFactory(serviceRegistry);
+
+        if (log.isInfoEnabled())
+            log.info("hibernate-ogm용 SessionFactory를 생성했습니다!!!");
+
+        return sessionFactory;
     }
 
     @Bean

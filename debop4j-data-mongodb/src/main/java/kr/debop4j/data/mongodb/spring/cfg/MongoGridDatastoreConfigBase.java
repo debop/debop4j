@@ -4,10 +4,8 @@ import kr.debop4j.data.ogm.spring.cfg.GridDatastoreConfigBase;
 import lombok.extern.slf4j.Slf4j;
 import org.hibernate.ogm.datastore.mongodb.AssociationStorage;
 import org.hibernate.ogm.datastore.mongodb.Environment;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import javax.transaction.TransactionManager;
 import java.util.Properties;
 
 /**
@@ -19,6 +17,7 @@ import java.util.Properties;
 @Configuration
 @Slf4j
 public abstract class MongoGridDatastoreConfigBase extends GridDatastoreConfigBase {
+
     public static final String MONGODB_DATASTORE_PROVIDER =
             "org.hibernate.ogm.datastore.mongodb.impl.MongoDBDatastoreProvider";
 
@@ -30,8 +29,15 @@ public abstract class MongoGridDatastoreConfigBase extends GridDatastoreConfigBa
         props.put(Environment.MONGODB_DATABASE, getDatabaseName());
         props.put(Environment.MONGODB_TIMEOUT, 200);
 
+        props.put(Environment.MONGODB_HOST, "localhost");
+        props.put(Environment.MONGODB_PORT, 27017);
+
         // 엔티티 저장 방식
         props.put(Environment.MONGODB_ASSOCIATIONS_STORE, getAssociationStorage().name());
+
+        // transaction factory
+        props.put("hibernate.transaction.factory_class", "org.hibernate.transaction.JDBCTransactionFactory");
+        props.put("hibernate.current_session_context_class", "thread");
 
         if (log.isDebugEnabled())
             log.debug("hibernate-ogm 환경설정 정보를 지정했습니다. props=\n{}", props.toString());
@@ -40,14 +46,6 @@ public abstract class MongoGridDatastoreConfigBase extends GridDatastoreConfigBa
     }
 
     protected AssociationStorage getAssociationStorage() {
-        return AssociationStorage.COLLECTION;
-    }
-
-    @Bean
-    public javax.transaction.TransactionManager transactionManager() {
-        TransactionManager tm = com.arjuna.ats.jta.TransactionManager.transactionManager();
-        if (log.isDebugEnabled())
-            log.debug("TransactionManager 를 생성합니다. transactionManager=[{}]", tm.getClass().getName());
-        return tm;
+        return AssociationStorage.IN_ENTITY;
     }
 }

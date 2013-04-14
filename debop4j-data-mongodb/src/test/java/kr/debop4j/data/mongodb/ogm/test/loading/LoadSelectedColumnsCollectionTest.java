@@ -23,7 +23,6 @@ import org.hibernate.ogm.dialect.mongodb.MongoDBDialect;
 import org.hibernate.ogm.grid.*;
 import org.hibernate.service.Service;
 import org.hibernate.service.spi.ServiceRegistryImplementor;
-import org.junit.Assert;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -32,6 +31,7 @@ import java.util.List;
 import java.util.Set;
 
 import static org.fest.assertions.Assertions.assertThat;
+import static org.junit.Assert.*;
 
 /**
  * org.hibernate.ogm.test.mongodb.loading.LoadSelectedColumnsCollectionTest
@@ -60,15 +60,15 @@ public class LoadSelectedColumnsCollectionTest extends OgmTestBase {
         selectedColumns.add("name");
         Tuple tuple = this.getTuple(collectionName, "1234", selectedColumns);
 
-        Assert.assertNotNull(tuple);
+        assertNotNull(tuple);
         Set<String> retrievedColumn = tuple.getColumnNames();
 
 		/*
           *The dialect will return all columns (which include _id field) so we have to substract 1 to check if
 		  *the right number of columns has been loaded.
 		 */
-        Assert.assertEquals(selectedColumns.size(), retrievedColumn.size() - 1);
-        Assert.assertTrue(retrievedColumn.containsAll(selectedColumns));
+        assertEquals(selectedColumns.size(), retrievedColumn.size() - 1);
+        assertTrue(retrievedColumn.containsAll(selectedColumns));
 
         collection.remove(water);
     }
@@ -110,6 +110,7 @@ public class LoadSelectedColumnsCollectionTest extends OgmTestBase {
         associationKey.setAssociationKind(AssociationKind.ASSOCIATION);
         associationKey.setCollectionRole("modules");
         associationKey.setOwnerEntityKey(new EntityKey(new EntityKeyMetadata("Project", new String[]{ "id" }), new String[]{ "projectID" }));
+
         AssociationContext associationContext = new AssociationContext(Arrays.asList(associationKey.getRowKeyColumnNames()));
         final Association association = gridDialect.getAssociation(associationKey, associationContext);
         final MongoDBAssociationSnapshot associationSnapshot = (MongoDBAssociationSnapshot) association.getSnapshot();
@@ -141,10 +142,7 @@ public class LoadSelectedColumnsCollectionTest extends OgmTestBase {
     @Override
     protected void configure(Configuration cfg) {
         super.configure(cfg);
-        cfg.setProperty(
-                Environment.MONGODB_ASSOCIATIONS_STORE,
-                AssociationStorage.COLLECTION.name()
-        );
+        cfg.setProperty(Environment.MONGODB_ASSOCIATIONS_STORE, AssociationStorage.COLLECTION.name());
     }
 
     @Override
@@ -172,8 +170,8 @@ public class LoadSelectedColumnsCollectionTest extends OgmTestBase {
     }
 
     protected void checkLoading(DBObject associationObject) {
-		/*
-		* The only column (except _id) that needs to be retrieved is "rows"
+        /*
+        * The only column (except _id) that needs to be retrieved is "rows"
 		* So we should have 2 columns
 		*/
         final Set<?> retrievedColumns = associationObject.keySet();

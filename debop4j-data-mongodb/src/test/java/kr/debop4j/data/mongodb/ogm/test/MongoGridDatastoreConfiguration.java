@@ -1,5 +1,6 @@
 package kr.debop4j.data.mongodb.ogm.test;
 
+import kr.debop4j.data.mongodb.ogm.test.model.LuckyNumberPojo;
 import kr.debop4j.data.mongodb.ogm.test.model.Module;
 import kr.debop4j.data.mongodb.ogm.test.model.Project;
 import kr.debop4j.data.mongodb.spring.cfg.MongoGridDatastoreConfigBase;
@@ -47,7 +48,8 @@ public class MongoGridDatastoreConfiguration extends MongoGridDatastoreConfigBas
     protected Class<?>[] getMappedEntities() {
         return new Class<?>[]{
                 Module.class,
-                Project.class
+                Project.class,
+                LuckyNumberPojo.class
         };
     }
 }
