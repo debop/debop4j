@@ -32,8 +32,8 @@ public class GsonSerializer implements IJsonSerializer {
         if (graph == null)
             return "";
 
-        if (log.isDebugEnabled())
-            log.debug("Json 직렬화를 수행합니다... graph=[{}]", graph);
+        if (log.isTraceEnabled())
+            log.trace("Json 직렬화를 수행합니다... graph=[{}]", graph);
 
         return gson.toJson(graph);
     }
@@ -48,8 +48,8 @@ public class GsonSerializer implements IJsonSerializer {
         if (StringTool.isWhiteSpace(jsonText))
             return Defaults.defaultValue(targetType);
 
-        if (log.isDebugEnabled())
-            log.debug("Json 역직렬화를 수행합니다. jsonText=[{}], targetType=[{}]",
+        if (log.isTraceEnabled())
+            log.trace("Json 역직렬화를 수행합니다. jsonText=[{}], targetType=[{}]",
                       StringTool.ellipsisChar(jsonText, 255), targetType);
 
         return gson.fromJson(jsonText, targetType);

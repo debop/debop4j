@@ -107,6 +107,12 @@
             <artifactId>jackson-databind</artifactId>
         </dependency>
 
+        <!-- fastjson -->
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
+        </dependency>
+
         <!-- Lambda J -->
         <dependency>
             <groupId>com.googlecode.lambdaj</groupId>
