@@ -33,7 +33,7 @@ public interface IHibernateRepository<E extends IStatefulEntity> {
 
     List<E> getIn(Collection ids);
 
-    List<E> getIn(Object[] ids);
+    List<E> getIn(Serializable[] ids);
 
     List<E> getAll();
 

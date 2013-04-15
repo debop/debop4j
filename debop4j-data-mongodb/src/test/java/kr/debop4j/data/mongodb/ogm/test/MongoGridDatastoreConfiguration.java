@@ -3,6 +3,7 @@ package kr.debop4j.data.mongodb.ogm.test;
 import kr.debop4j.data.mongodb.ogm.test.model.LuckyNumberPojo;
 import kr.debop4j.data.mongodb.ogm.test.model.Module;
 import kr.debop4j.data.mongodb.ogm.test.model.Project;
+import kr.debop4j.data.mongodb.ogm.test.model.Twit;
 import kr.debop4j.data.mongodb.spring.cfg.MongoGridDatastoreConfigBase;
 import kr.debop4j.data.mongodb.tools.MongoTool;
 import lombok.extern.slf4j.Slf4j;
@@ -49,7 +50,8 @@ public class MongoGridDatastoreConfiguration extends MongoGridDatastoreConfigBas
         return new Class<?>[]{
                 Module.class,
                 Project.class,
-                LuckyNumberPojo.class
+                LuckyNumberPojo.class,
+                Twit.class
         };
     }
 }

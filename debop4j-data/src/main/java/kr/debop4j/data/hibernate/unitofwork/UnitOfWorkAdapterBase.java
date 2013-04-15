@@ -35,12 +35,16 @@ public abstract class UnitOfWorkAdapterBase implements IUnitOfWorkImplementor {
             // forces a flush of the current IUnitOfWork
             tx = UnitOfWorks.getCurrent().beginTransaction(transactionDefinition);
             tx.commit();
-        } catch (Exception e) {
-            if (log.isErrorEnabled())
-                log.error("Transaction 하에서 flush에 실패했습니다.", e);
 
-            if (tx != null)
-                tx.rollback();
+        } catch (Exception e) {
+            log.error("Transaction 하에서 flush에 실패했습니다.", e);
+
+            if (tx != null) {
+                try {
+                    tx.rollback();
+                } catch (Exception ignored) {}
+            }
+
             throw new RuntimeException(e);
         }
 

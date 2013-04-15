@@ -7,10 +7,9 @@ import kr.debop4j.core.tools.SerializeTool;
 import kr.debop4j.core.tools.StringTool;
 import kr.debop4j.data.hibernate.HibernateParameter;
 import kr.debop4j.data.hibernate.listener.UpdateTimestampedEventListener;
-import kr.debop4j.data.hibernate.repository.HibernateRepositoryFactory;
 import kr.debop4j.data.hibernate.repository.IHibernateRepository;
+import kr.debop4j.data.hibernate.repository.impl.HibernateRepositoryFactory;
 import kr.debop4j.data.model.IStatefulEntity;
-import lombok.extern.slf4j.Slf4j;
 import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -25,6 +24,8 @@ import org.hibernate.internal.CriteriaImpl;
 import org.hibernate.internal.SessionFactoryImpl;
 import org.hibernate.service.ServiceRegistryBuilder;
 import org.hibernate.type.ObjectType;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.Map;
 
@@ -36,17 +37,25 @@ import static kr.debop4j.core.Guard.shouldNotBeNull;
  * JpaUser: sunghyouk.bae@gmail.com
  * Date: 12. 11. 19
  */
-@Slf4j
 public class HibernateTool {
+
+    private static final Logger log = LoggerFactory.getLogger(HibernateTool.class);
+    private static final boolean isTraceEnabled = log.isTraceEnabled();
+    private static final boolean isDebugEnabled = log.isDebugEnabled();
+
 
     private HibernateTool() { }
 
     public static SessionFactory buildSessionFactory(Configuration cfg) {
+        assert cfg != null;
         if (log.isInfoEnabled())
             log.info("SessionFactory를 빌드합니다.");
 
         ServiceRegistryBuilder registryBuilder = new ServiceRegistryBuilder().applySettings(cfg.getProperties());
         SessionFactory factory = cfg.buildSessionFactory(registryBuilder.buildServiceRegistry());
+
+        if (log.isInfoEnabled())
+            log.info("SessionFactory를 빌드했습니다.");
 
         return factory;
     }

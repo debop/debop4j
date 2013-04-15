@@ -37,7 +37,7 @@ public class SessionFactoryRule extends TemporaryFolder {
         // volatile indexes for Hibernate Search (if used)
         cfg.setProperty("hibernate.search.default.directory_provider", "ram");
         // disable warnings about unspecified Lucene version
-        cfg.setProperty("hibernate.search.lucene_version", "LUCENE_35");
+        cfg.setProperty("hibernate.search.lucene_version", "LUCENE_36");
         for (Map.Entry<String, String> entry : TestHelper.getEnvironmentProperties().entrySet()) {
             cfg.setProperty(entry.getKey(), entry.getValue());
         }

@@ -2,7 +2,7 @@ package kr.debop4j.access.repository.product;
 
 import kr.debop4j.access.model.product.Product;
 import kr.debop4j.core.tools.StringTool;
-import kr.debop4j.data.hibernate.repository.HibernateRepository;
+import kr.debop4j.data.hibernate.repository.impl.HibernateRepository;
 import kr.debop4j.data.hibernate.tools.CriteriaTool;
 import lombok.extern.slf4j.Slf4j;
 import org.hibernate.criterion.DetachedCriteria;

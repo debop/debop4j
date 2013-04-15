@@ -1,8 +1,9 @@
 package kr.debop4j.data.ogm.spring.cfg;
 
 import kr.debop4j.data.hibernate.interceptor.StatefulEntityInterceptor;
-import kr.debop4j.data.hibernate.repository.HibernateRepositoryFactory;
+import kr.debop4j.data.hibernate.repository.impl.HibernateRepositoryFactory;
 import kr.debop4j.data.hibernate.unitofwork.UnitOfWorkFactory;
+import kr.debop4j.data.ogm.dao.impl.HibernateOgmDao;
 import lombok.extern.slf4j.Slf4j;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Environment;
@@ -110,6 +111,11 @@ public abstract class GridDatastoreConfigBase {
     }
 
     @Bean
+    public HibernateOgmDao hibernateOgmDao() {
+        return new HibernateOgmDao();
+    }
+
+    @Bean
     public HibernateRepositoryFactory hibernateRepositoryFactory() {
         return new HibernateRepositoryFactory();
     }
@@ -128,6 +134,9 @@ public abstract class GridDatastoreConfigBase {
      * hibernate 용 속성을 설정합니다.
      */
     protected Properties getHibernateProperties() {
+        if (log.isTraceEnabled())
+            log.trace("Hibernate properties 를 설정합니다...");
+
         Properties props = new Properties();
 
         props.put(Environment.USE_NEW_ID_GENERATOR_MAPPINGS, true);
@@ -140,8 +149,27 @@ public abstract class GridDatastoreConfigBase {
      * hibernate-ogm 용 속성을 반환합니다.
      */
     protected Properties getHibernateOgmProperties() {
+
+        if (log.isTraceEnabled())
+            log.trace("hibernate-ogm 용 property를 설정합니다...");
+
         Properties props = getHibernateProperties();
 
+        // hibernate-search 설정 (hibernate-ogm에서는 hibernate criteria를 지원하지 않습니다. hibernate-search를 통해서 criteria를 지원합니다)
+        // see Pro Hibernate and MongoDB pp. 246
+
+        // hibernate-search 환경설정
+        props.put("hibernate.search.default.indexmanager", "near-real-time");
+        props.put("hibernate.search.default.directory_provider", "filesystem");
+        props.put("hibernate.search.default.indexBase", "./lucene/indexes");
+        props.put("hibernate.search.default.locking_strategy", "single");
+        // hibernate-search performance settings
+        props.put("hibernate.search.default.indexwriter.max_buffered_doc", "true");
+        props.put("hibernate.search.default.indexwriter.max_merge_docs", "100");
+        props.put("hibernate.search.default.indexwriter.merge_factor", "20");
+        props.put("hibernate.search.default.indexwriter.term_index_interval", "default");
+        props.put("hibernate.search.default.indexwriter.ram_buffer_size", "1024");
+        props.put("hibernate.search.default.exclusive_index_use", "true");
 
         // transaction factory
         // org.hibernate.engine.transaction.internal.jta.JtaTransactionFactory

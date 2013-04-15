@@ -5,7 +5,9 @@ import kr.debop4j.data.hibernate.forTesting.UnitOfWorkTestContextBase;
 import kr.debop4j.data.hibernate.interceptor.MultiInterceptor;
 import kr.debop4j.data.hibernate.interceptor.StatefulEntityInterceptor;
 import kr.debop4j.data.hibernate.interceptor.UpdateTimestampedInterceptor;
-import kr.debop4j.data.hibernate.repository.HibernateRepositoryFactory;
+import kr.debop4j.data.hibernate.repository.IHibernateDao;
+import kr.debop4j.data.hibernate.repository.impl.HibernateDao;
+import kr.debop4j.data.hibernate.repository.impl.HibernateRepositoryFactory;
 import kr.debop4j.data.hibernate.unitofwork.UnitOfWorkFactory;
 import kr.debop4j.data.jdbc.JdbcTool;
 import lombok.Getter;
@@ -123,6 +125,11 @@ public abstract class HibernateConfigBase {
         UnitOfWorkFactory factory = new UnitOfWorkFactory();
         factory.setSessionFactory(sessionFactory());
         return factory;
+    }
+
+    @Bean
+    public IHibernateDao hibernateDao() {
+        return new HibernateDao(true);
     }
 
     @Bean

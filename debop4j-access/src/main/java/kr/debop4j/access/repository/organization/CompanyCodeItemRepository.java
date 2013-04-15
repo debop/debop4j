@@ -4,7 +4,7 @@ import kr.debop4j.access.model.organization.Company;
 import kr.debop4j.access.model.organization.CompanyCode;
 import kr.debop4j.access.model.organization.CompanyCodeItem;
 import kr.debop4j.core.tools.StringTool;
-import kr.debop4j.data.hibernate.repository.HibernateRepository;
+import kr.debop4j.data.hibernate.repository.impl.HibernateRepository;
 import kr.debop4j.data.hibernate.tools.CriteriaTool;
 import kr.debop4j.data.hibernate.unitofwork.IUnitOfWork;
 import kr.debop4j.data.hibernate.unitofwork.UnitOfWorkNestingOptions;

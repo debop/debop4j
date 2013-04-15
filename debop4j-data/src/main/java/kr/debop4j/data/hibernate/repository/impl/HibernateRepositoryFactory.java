@@ -1,13 +1,15 @@
-package kr.debop4j.data.hibernate.repository;
+package kr.debop4j.data.hibernate.repository.impl;
 
 import kr.debop4j.core.Guard;
 import kr.debop4j.core.spring.Springs;
+import kr.debop4j.data.hibernate.repository.IHibernateRepository;
+import kr.debop4j.data.hibernate.repository.IHibernateRepositoryFactory;
 import kr.debop4j.data.model.IStatefulEntity;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 /**
- * {@link HibernateRepository}를 생성해주는 Factory 입니다. 이것보다는 Spring framework의 @Repository를 사용하는 것이 좋다.
+ * {@link kr.debop4j.data.hibernate.repository.impl.HibernateRepository}를 생성해주는 Factory 입니다. 이것보다는 Spring framework의 @Repository를 사용하는 것이 좋다.
  * User: sunghyouk.bae@gmail.com
  * Date: 12. 11. 27.
  */
@@ -32,8 +34,8 @@ public class HibernateRepositoryFactory implements IHibernateRepositoryFactory {
         } catch (Exception ignored) {}
 
         if (repository == null) {
-            if (log.isDebugEnabled())
-                log.debug("HibernateRepository<{}> 인스턴스를 생성합니다.", entityClass.getName());
+            if (HibernateRepositoryFactory.log.isDebugEnabled())
+                HibernateRepositoryFactory.log.debug("HibernateRepository<{}> 인스턴스를 생성합니다.", entityClass.getName());
 
             repository = new HibernateRepository<E>(entityClass);
             Springs.registerSingletonBean(repositoryKey, repository);

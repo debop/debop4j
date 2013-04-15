@@ -1,4 +1,4 @@
-package kr.debop4j.data.hibernate.repository;
+package kr.debop4j.data.hibernate.repository.impl;
 
 import kr.debop4j.core.Guard;
 import kr.debop4j.core.collection.IPagedList;
@@ -6,6 +6,7 @@ import kr.debop4j.core.collection.SimplePagedList;
 import kr.debop4j.core.tools.ArrayTool;
 import kr.debop4j.core.tools.StringTool;
 import kr.debop4j.data.hibernate.HibernateParameter;
+import kr.debop4j.data.hibernate.repository.IHibernateRepository;
 import kr.debop4j.data.hibernate.tools.CriteriaTool;
 import kr.debop4j.data.hibernate.tools.HibernateTool;
 import kr.debop4j.data.hibernate.unitofwork.UnitOfWorks;
@@ -75,22 +76,21 @@ public class HibernateRepository<E extends IStatefulEntity> implements IHibernat
 
     @Override
     public List<E> getIn(Collection ids) {
-        if (!ArrayTool.isEmpty(ids))
+        if (ArrayTool.isEmpty(ids))
             return new ArrayList<>();
 
         return find(CriteriaTool.addIn(DetachedCriteria.forClass(entityClass), "id", ids));
     }
 
     @Override
-    public List<E> getIn(Object[] ids) {
-        if (!ArrayTool.isEmpty(ids))
+    public List<E> getIn(Serializable[] ids) {
+        if (ArrayTool.isEmpty(ids))
             return new ArrayList<>();
 
         return find(CriteriaTool.addIn(DetachedCriteria.forClass(entityClass), "id", ids));
     }
 
     @Override
-
     public List<E> getAll() {
         return getSession().createQuery("from " + entityName).list();
     }
@@ -156,9 +156,9 @@ public class HibernateRepository<E extends IStatefulEntity> implements IHibernat
     @Override
     public List<E> findByQueryString(String queryString, int firstResult, int maxResults, HibernateParameter... parameters) {
         Guard.shouldNotBeEmpty(queryString, "queryString");
-        if (log.isDebugEnabled())
-            log.debug("쿼리문을 실행합니다. queryString=[{}], pageNo=[{}], pageSize=[{}],parameters=[{}]",
-                      queryString, firstResult, maxResults, StringTool.listToString(parameters));
+        if (HibernateRepository.log.isDebugEnabled())
+            HibernateRepository.log.debug("쿼리문을 실행합니다. queryString=[{}], pageNo=[{}], pageSize=[{}],parameters=[{}]",
+                                          queryString, firstResult, maxResults, StringTool.listToString(parameters));
 
         Query query = getSession().createQuery(queryString);
         return findByQuery(query, firstResult, maxResults, parameters);
@@ -172,9 +172,9 @@ public class HibernateRepository<E extends IStatefulEntity> implements IHibernat
     @Override
     public List<E> findByNamedQuery(String queryName, int firstResult, int maxResults, HibernateParameter... parameters) {
         Guard.shouldNotBeEmpty(queryName, "queryName");
-        if (log.isDebugEnabled())
-            log.debug("NamedQuery를 로드하여 실행합니다. queryName=[{}], pageNo=[{}], pageSize=[{}], parameters=[{}]",
-                      queryName, firstResult, maxResults, StringTool.listToString(parameters));
+        if (HibernateRepository.log.isDebugEnabled())
+            HibernateRepository.log.debug("NamedQuery를 로드하여 실행합니다. queryName=[{}], pageNo=[{}], pageSize=[{}], parameters=[{}]",
+                                          queryName, firstResult, maxResults, StringTool.listToString(parameters));
 
         Query query = getSession().getNamedQuery(queryName);
         return findByQuery(query, firstResult, maxResults, parameters);
@@ -189,7 +189,7 @@ public class HibernateRepository<E extends IStatefulEntity> implements IHibernat
         int firstResult = (pageNo - 1) * pageSize;
         List<E> list = find(criteria, firstResult, pageSize, orders);
 
-        return new SimplePagedList<E>(list, firstResult, pageSize, itemCount);
+        return new SimplePagedList<E>(list, pageNo, pageSize, itemCount);
     }
 
     @Override
@@ -201,7 +201,7 @@ public class HibernateRepository<E extends IStatefulEntity> implements IHibernat
         int firstResult = (pageNo - 1) * pageSize;
         List list = find(dc, firstResult, pageSize, orders);
 
-        return new SimplePagedList(list, firstResult, pageSize, itemCount);
+        return new SimplePagedList(list, pageNo, pageSize, itemCount);
     }
 
     @Override
@@ -212,7 +212,7 @@ public class HibernateRepository<E extends IStatefulEntity> implements IHibernat
         int firstResult = (pageNo - 1) * pageSize;
         List<E> list = findByQuery(query, firstResult, pageSize, parameters);
 
-        return new SimplePagedList<E>(list, firstResult, pageSize, itemCount);
+        return new SimplePagedList<E>(list, pageNo, pageSize, itemCount);
     }
 
     @Override
@@ -252,10 +252,10 @@ public class HibernateRepository<E extends IStatefulEntity> implements IHibernat
 
     @Override
     public E findOneByQueryString(String queryString, HibernateParameter... parameters) {
-        if (log.isDebugEnabled())
-            log.debug("쿼리문을 수행하여 유일한 값을 조회합니다. 없거나 복수개이면 예외가 발생합니다. " +
-                              "queryString=[{}], parameters=[{}]",
-                      queryString, StringTool.listToString(parameters));
+        if (HibernateRepository.log.isDebugEnabled())
+            HibernateRepository.log.debug("쿼리문을 수행하여 유일한 값을 조회합니다. 없거나 복수개이면 예외가 발생합니다. " +
+                                                  "queryString=[{}], parameters=[{}]",
+                                          queryString, StringTool.listToString(parameters));
 
         Query query = getSession().createQuery(queryString);
         return findOneByQuery(query, parameters);
@@ -263,10 +263,10 @@ public class HibernateRepository<E extends IStatefulEntity> implements IHibernat
 
     @Override
     public E findOneByNamedQuery(String queryName, HibernateParameter... parameters) {
-        if (log.isDebugEnabled())
-            log.debug("쿼리문을 수행하여 유일한 값을 조회합니다. 없거나 복수개이면 예외가 발생합니다. " +
-                              "queryName=[{}], parameters=[{}]",
-                      queryName, StringTool.listToString(parameters));
+        if (HibernateRepository.log.isDebugEnabled())
+            HibernateRepository.log.debug("쿼리문을 수행하여 유일한 값을 조회합니다. 없거나 복수개이면 예외가 발생합니다. " +
+                                                  "queryName=[{}], parameters=[{}]",
+                                          queryName, StringTool.listToString(parameters));
 
         Query query = getSession().getNamedQuery(queryName);
         return findOneByQuery(query, parameters);
@@ -302,15 +302,15 @@ public class HibernateRepository<E extends IStatefulEntity> implements IHibernat
 
     @Override
     public E findFirstByQueryString(String queryString, HibernateParameter... parameters) {
-        if (log.isDebugEnabled())
-            log.debug("쿼리문 실행. queryString=[{}], parameters=[{}]", queryString, StringTool.listToString(parameters));
+        if (HibernateRepository.log.isDebugEnabled())
+            HibernateRepository.log.debug("쿼리문 실행. queryString=[{}], parameters=[{}]", queryString, StringTool.listToString(parameters));
         return findFirstByQuery(getSession().createQuery(queryString), parameters);
     }
 
     @Override
     public E findFirstByNamedQuery(String queryName, HibernateParameter... parameters) {
-        if (log.isDebugEnabled())
-            log.debug("쿼리문 실행. queryName=[{}], parameters=[{}]", queryName, StringTool.listToString(parameters));
+        if (HibernateRepository.log.isDebugEnabled())
+            HibernateRepository.log.debug("쿼리문 실행. queryName=[{}], parameters=[{}]", queryName, StringTool.listToString(parameters));
         return findFirstByQuery(getSession().getNamedQuery(queryName), parameters);
     }
 
@@ -351,7 +351,7 @@ public class HibernateRepository<E extends IStatefulEntity> implements IHibernat
 
     protected long count(Criteria criteria) {
         Object count = criteria.setProjection(Projections.rowCount())
-                               .uniqueResult();
+                .uniqueResult();
         return ((Number) count).longValue();
     }
 
@@ -377,40 +377,40 @@ public class HibernateRepository<E extends IStatefulEntity> implements IHibernat
     protected final long count(Query query, HibernateParameter... parameters) {
         // TODO: 테스트가 필요합니다!!!
         Object count = query.setResultTransformer(Criteria.PROJECTION)
-                            .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
-                            .uniqueResult();
+                .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
+                .uniqueResult();
 
         return ((Number) count).longValue();
     }
 
     @Override
     public void merge(E entity) {
-        getSession().merge(entityName, entity);
+        getSession().merge(entity);
     }
 
     @Override
     public void persist(E entity) {
-        getSession().persist(entityName, entity);
+        getSession().persist(entity);
     }
 
     @Override
     public void save(E entity) {
-        getSession().save(entityName, entity);
+        getSession().save(entity);
     }
 
     @Override
     public void saveOrUpdate(E entity) {
-        getSession().saveOrUpdate(entityName, entity);
+        getSession().saveOrUpdate(entity);
     }
 
     @Override
     public void update(E entity) {
-        getSession().saveOrUpdate(entityName, entity);
+        getSession().update(entity);
     }
 
     @Override
     public void delete(E entity) {
-        getSession().delete(entityName, entity);
+        getSession().delete(entity);
     }
 
     @Override
@@ -440,9 +440,9 @@ public class HibernateRepository<E extends IStatefulEntity> implements IHibernat
 
     @Override
     public int executeUpdateByQueryString(String queryString, HibernateParameter... parameters) {
-        if (log.isDebugEnabled())
-            log.debug("Update나 Delete용 쿼리를 수행합니다. queryString=[{}], parameters=[{}]",
-                      queryString, StringTool.listToString(parameters));
+        if (HibernateRepository.log.isDebugEnabled())
+            HibernateRepository.log.debug("Update나 Delete용 쿼리를 수행합니다. queryString=[{}], parameters=[{}]",
+                                          queryString, StringTool.listToString(parameters));
 
         Query query = getSession().createQuery(queryString);
         HibernateTool.setParameters(query, parameters);
@@ -452,9 +452,9 @@ public class HibernateRepository<E extends IStatefulEntity> implements IHibernat
 
     @Override
     public int executeUpdateByNamedQuery(String queryName, HibernateParameter... parameters) {
-        if (log.isDebugEnabled())
-            log.debug("Update나 Delete용 쿼리를 수행합니다. queryName=[{}], parameters=[{}]",
-                      queryName, StringTool.listToString(parameters));
+        if (HibernateRepository.log.isDebugEnabled())
+            HibernateRepository.log.debug("Update나 Delete용 쿼리를 수행합니다. queryName=[{}], parameters=[{}]",
+                                          queryName, StringTool.listToString(parameters));
 
         Query query = getSession().getNamedQuery(queryName);
         HibernateTool.setParameters(query, parameters);

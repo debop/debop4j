@@ -34,7 +34,7 @@
         <module>debop4j-data-ehcache</module>
         <module>debop4j-data-mongodb</module>
         <module>debop4j-data-redis</module>
-        <module>debop4j-data-couchbase</module>
+        <!--<module>debop4j-data-couchbase</module>-->
 
         <module>debop4j-search</module>
 
@@ -42,7 +42,7 @@
         <module>debop4j-graph</module>
         <module>debop4j-web</module>
         <module>debop4j-web-example</module>
-        <module>debop4j-experiments</module>
+        <!--<module>debop4j-experiments</module>-->
 
     </modules>
 
@@ -229,7 +229,7 @@
         <tomcat.jdbc.version>7.0.37</tomcat.jdbc.version>
         <bonecp.version>0.7.1.RELEASE</bonecp.version>
 
-
+        <avro.version>1.7.4</avro.version>
         <twitter4j.version>3.0.3</twitter4j.version>
         <spring.social.twitter.version>1.0.3.RELEASE</spring.social.twitter.version>
 
@@ -826,6 +826,13 @@
                 <groupId>taglibs</groupId>
                 <artifactId>standard</artifactId>
                 <version>${taglibs.standard.version}</version>
+            </dependency>
+
+            <!-- Avro -->
+            <dependency>
+                <groupId>org.apache.avro</groupId>
+                <artifactId>avro</artifactId>
+                <version>${avro.version}</version>
             </dependency>
 
             <!-- Twitter4J -->

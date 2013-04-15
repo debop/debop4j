@@ -141,6 +141,12 @@
             <artifactId>lucene-core</artifactId>
         </dependency>
 
+        <!-- Avro -->
+        <dependency>
+            <groupId>org.apache.avro</groupId>
+            <artifactId>avro</artifactId>
+        </dependency>
+
         <!-- JPA Test -->
         <dependency>
             <groupId>org.jboss.shrinkwrap</groupId>
