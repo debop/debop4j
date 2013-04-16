@@ -15,10 +15,13 @@ import org.hibernate.ogm.dialect.GridDialect;
 import org.hibernate.service.ServiceRegistry;
 import org.hibernate.service.ServiceRegistryBuilder;
 import org.hibernate.service.spi.ServiceRegistryImplementor;
+import org.reflections.Reflections;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import javax.persistence.Entity;
 import java.util.Properties;
+import java.util.Set;
 
 /**
  * hibernate-ogm 의 환경설정을 Spring Configuration으로 구현합니다.
@@ -57,9 +60,17 @@ public abstract class GridDatastoreConfigBase {
         OgmConfiguration cfg = new OgmConfiguration();
 
         for (String pkgName : getMappedPackageNames()) {
-            cfg.addPackage(pkgName);
             if (log.isDebugEnabled())
                 log.debug("Package를 추가합니다. package=[{}]", pkgName);
+
+            final Reflections reflections = new Reflections(pkgName);
+            final Set<Class<?>> classes = reflections.getTypesAnnotatedWith(Entity.class);
+            for (final Class<?> clazz : classes) {
+                if (log.isDebugEnabled())
+                    log.debug("Entity 를 등록합니다. Entity=[{}]", clazz);
+                cfg.addAnnotatedClass(clazz);
+            }
+            // cfg.addPackage(pkgName);
         }
 
         for (Class annoatatedClass : getMappedEntities()) {
@@ -68,6 +79,7 @@ public abstract class GridDatastoreConfigBase {
                 log.debug("AnnotatedEntity를 추가합니다. annotatedClass=[{}]", annoatatedClass.getName());
         }
 
+        log.trace("hibernate용 interceptor릉록합니다., hibernateInterceptor=[{}]", hibernateInterceptor());
         cfg.setInterceptor(hibernateInterceptor());
         cfg.setProperties(getHibernateOgmProperties());
 
@@ -161,7 +173,7 @@ public abstract class GridDatastoreConfigBase {
         // hibernate-search 환경설정
         props.put("hibernate.search.default.indexmanager", "near-real-time");
         props.put("hibernate.search.default.directory_provider", "filesystem");
-        props.put("hibernate.search.default.indexBase", "./lucene/indexes");
+        props.put("hibernate.search.default.indexBase", "lucene/indexes");
         props.put("hibernate.search.default.locking_strategy", "single");
         // hibernate-search performance settings
         props.put("hibernate.search.default.indexwriter.max_buffered_doc", "true");

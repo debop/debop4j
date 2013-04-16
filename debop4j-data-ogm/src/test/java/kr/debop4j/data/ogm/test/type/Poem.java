@@ -1,6 +1,6 @@
 package kr.debop4j.data.ogm.test.type;
 
-import kr.debop4j.data.ogm.test.UuidEntityBase;
+import kr.debop4j.data.ogm.model.UuidEntityBase;
 import lombok.Getter;
 import lombok.Setter;
 

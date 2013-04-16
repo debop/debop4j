@@ -177,6 +177,7 @@
         <fastjson.version>1.1.28</fastjson.version>
 
         <ow2.asm.version>4.1</ow2.asm.version>
+        <reflections.version>0.9.9-RC1</reflections.version>
         <modelmapper.version>0.5.6</modelmapper.version>
 
         <jasypt.version>1.9.0</jasypt.version>
@@ -419,6 +420,13 @@
                 <groupId>org.ow2.asm</groupId>
                 <artifactId>asm</artifactId>
                 <version>${ow2.asm.version}</version>
+            </dependency>
+
+            <!-- Reflections -->
+            <dependency>
+                <groupId>org.reflections</groupId>
+                <artifactId>reflections</artifactId>
+                <version>${reflections.version}</version>
             </dependency>
 
             <!-- Model Mapper -->
@@ -954,6 +962,12 @@
             <groupId>com.google.guava</groupId>
             <artifactId>guava-testlib</artifactId>
             <scope>test</scope>
+        </dependency>
+
+        <!-- Reflections -->
+        <dependency>
+            <groupId>org.reflections</groupId>
+            <artifactId>reflections</artifactId>
         </dependency>
 
         <!-- Logging -->

@@ -2,7 +2,7 @@ package kr.debop4j.data.ogm.test.associations.collection.manytomany;
 
 import com.google.common.collect.Sets;
 import kr.debop4j.core.tools.HashTool;
-import kr.debop4j.data.ogm.test.UuidEntityBase;
+import kr.debop4j.data.ogm.model.UuidEntityBase;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -20,6 +20,8 @@ import java.util.Set;
 @Getter
 @Setter
 public class BankAccount extends UuidEntityBase {
+
+    private static final long serialVersionUID = -1539566575343970309L;
 
     private String accountNumber;
 

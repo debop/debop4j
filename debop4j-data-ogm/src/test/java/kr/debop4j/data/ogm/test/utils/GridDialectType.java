@@ -19,7 +19,7 @@ public enum GridDialectType {
 
     EHCACHE("kr.debop4j.data.ehcache.ogm.test.utils.EhcacheTestHelper"),
 
-    MONGODB("kr.debop4j.data.mongodb.ogm.test.utils.MongoDBTestHelper"),
+    MONGODB("kr.debop4j.data.mongodb.test.utils.MongoDBTestHelper"),
 
     REDIS("kr.debop4j.data.redis.ogm.test.utils.RedisTestHelper");
 

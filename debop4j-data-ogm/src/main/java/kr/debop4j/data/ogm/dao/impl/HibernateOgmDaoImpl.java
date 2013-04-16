@@ -1,9 +1,12 @@
 package kr.debop4j.data.ogm.dao.impl;
 
 import kr.debop4j.core.Local;
+import kr.debop4j.core.tools.StringTool;
+import kr.debop4j.data.hibernate.HibernateParameter;
 import kr.debop4j.data.hibernate.unitofwork.UnitOfWorks;
 import kr.debop4j.data.ogm.dao.HibernateOgmDao;
 import org.apache.lucene.search.Query;
+import org.apache.lucene.search.Sort;
 import org.hibernate.Session;
 import org.hibernate.search.FullTextQuery;
 import org.hibernate.search.FullTextSession;
@@ -37,7 +40,7 @@ public class HibernateOgmDaoImpl implements HibernateOgmDao {
     /**
      * hibernate session을 반환합니다.
      */
-    public Session getSession() {
+    public final Session getSession() {
         return UnitOfWorks.getCurrentSession();
     }
 
@@ -60,11 +63,13 @@ public class HibernateOgmDaoImpl implements HibernateOgmDao {
     /**
      * 지정한 형식에 대한 질의 빌더를 생성합니다.
      */
-    protected final QueryBuilder getQueryBuilder(Class<?> clazz) {
+    public final QueryBuilder getQueryBuilder(Class<?> clazz) {
         return getFullTextSession().getSearchFactory().buildQueryBuilder().forEntity(clazz).get();
     }
 
-    protected final FullTextQuery getFullTextQuery(Query luceneQuery, Class<?>... entities) {
+    public final FullTextQuery getFullTextQuery(Query luceneQuery, Class<?>... entities) {
+        if (isTraceEnabled)
+            log.trace("FullTextQuery를 얻습니다. luceneQuery=[{}], entities=[{}]", luceneQuery, StringTool.listToString(entities));
 
         FullTextQuery ftq = getFullTextSession().createFullTextQuery(luceneQuery, entities);
         // 필수!!! object lookup 및 DB 조회 방법 설정
@@ -73,36 +78,36 @@ public class HibernateOgmDaoImpl implements HibernateOgmDao {
         return ftq;
     }
 
+    public <T> T get(Class<T> clazz, Serializable id) {
+        return (T) getSession().get(clazz, id);
+    }
+
     /**
      * 엔티티 수형에 해당하는 모든 엔티티를 조회합니다.
      */
-    public <T> List<T> findAll(Class<T> clazz) {
+    public final <T> List<T> findAll(Class<T> clazz) {
         return findAll(clazz, null);
     }
 
     /**
      * 엔티티 수형에 해당하는 모든 엔티티를 조회합니다.
      */
-    public <T> List<T> findAll(Class<T> clazz, org.apache.lucene.search.Sort sort) {
-        if (log.isTraceEnabled())
-            log.trace("엔티티 수형 [{}]의 모든 레코드를 조회합니다.", clazz.getName());
-
-        Query luceneQuery = getQueryBuilder(clazz).all().createQuery();
-        FullTextQuery ftq = getFullTextQuery(luceneQuery, clazz);
-
-        if (sort != null)
-            ftq.setSort(sort);
-
-        return (List<T>) ftq.list();
+    public <T> List<T> findAll(Class<T> clazz, Sort luceneSort) {
+        throw new UnsupportedOperationException("HashMap에서는 지원하지 않습니다.");
     }
 
-    public <T> T load(Class<T> clazz, Serializable id) {
-        return (T) getSession().load(clazz, id);
+    public <T> List<T> find(Class<T> clazz, Query luceneQuery, HibernateParameter... parameters) {
+        throw new UnsupportedOperationException("HashMap에서는 지원하지 않습니다.");
     }
 
-    public <T> T get(Class<T> clazz, Serializable id) {
-        return (T) getSession().get(clazz, id);
+    public int count(Class<?> clazz) {
+        throw new UnsupportedOperationException("HashMap에서는 지원하지 않습니다.");
     }
+
+    public int count(Class<?> clazz, Query luceneQuery) {
+        throw new UnsupportedOperationException("HashMap에서는 지원하지 않습니다.");
+    }
+
 
     public void persist(Object entity) {
         getSession().persist(entity);
@@ -133,7 +138,13 @@ public class HibernateOgmDaoImpl implements HibernateOgmDao {
         delete(entity);
     }
 
+    public void deleteAll(Class<?> clazz) {
+        throw new UnsupportedOperationException("검색 작업을 지원하지 않습니다.");
+    }
+
     public <T> void deleteAll(Collection<T> entities) {
+        if (log.isDebugEnabled())
+            log.debug("엔티티 컬렉션을 모두 삭제합니다...");
         Session session = getSession();
         for (T entity : entities) {
             session.delete(entity);
