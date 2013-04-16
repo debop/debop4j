@@ -6,8 +6,6 @@ import kr.debop4j.data.mongodb.spring.cfg.MongoGridDatastoreConfigBase;
 import kr.debop4j.data.mongodb.tools.MongoTool;
 import kr.debop4j.data.ogm.dao.impl.HibernateOgmDaoImpl;
 import lombok.extern.slf4j.Slf4j;
-import org.hibernate.cache.ehcache.SingletonEhCacheRegionFactory;
-import org.hibernate.cfg.Environment;
 import org.hibernate.ogm.datastore.spi.DatastoreProvider;
 import org.hibernate.ogm.dialect.GridDialect;
 import org.springframework.context.annotation.Bean;
@@ -54,11 +52,11 @@ public class MongoGridDatastoreConfiguration extends MongoGridDatastoreConfigBas
 
         // hibernate 2nd cache using EhCache
         //
-        props.put(Environment.USE_SECOND_LEVEL_CACHE, true);
-        props.put(Environment.USE_QUERY_CACHE, true);
-        props.put(Environment.CACHE_REGION_FACTORY, SingletonEhCacheRegionFactory.class.getName());
-        props.put(Environment.CACHE_REGION_PREFIX, "");
-        props.put(Environment.CACHE_PROVIDER_CONFIG, "classpath:ehcache.xml");
+//        props.put(Environment.USE_SECOND_LEVEL_CACHE, true);
+//        props.put(Environment.USE_QUERY_CACHE, true);
+//        props.put(Environment.CACHE_REGION_FACTORY, SingletonEhCacheRegionFactory.class.getName());
+//        props.put(Environment.CACHE_REGION_PREFIX, "");
+//        props.put(Environment.CACHE_PROVIDER_CONFIG, "classpath:ehcache.xml");
 
         return props;
     }

@@ -4,10 +4,10 @@
          maxBytesLocalHeap="75%" name="vital-domain-cache">
 
     <defaultCache
-            eternal="true"
+            eternal="false"
             timeToIdleSeconds="120"
             timeToLiveSeconds="120"
-            overflowToDisk="true"
+            overflowToDisk="false"
             diskPersistent="true"
             diskExpiryThreadIntervalSeconds="120"
             memoryStoreEvictionPolicy="LRU"
@@ -15,7 +15,7 @@
             />
 
     <cache name="org.hibernate.cache.UpdateTimestampsCache"
-           eternal="true"
+           eternal="false"
            overflowToDisk="true"
            statistics="false"
             />
@@ -32,24 +32,24 @@
             />
 
     <cache name="Calendar"
-           eternal="true"
-           overflowToDisk="true"
+           eternal="false"
+           overflowToDisk="false"
            maxEntriesLocalDisk="1000000000"
            memoryStoreEvictionPolicy="LRU"
            statistics="false"
             />
 
     <cache name="Organization"
-           eternal="true"
-           overflowToDisk="true"
+           eternal="false"
+           overflowToDisk="false"
            maxEntriesLocalDisk="1000000000"
            memoryStoreEvictionPolicy="LRU"
            statistics="false"
             />
 
     <cache name="Product"
-           eternal="true"
-           overflowToDisk="true"
+           eternal="false"
+           overflowToDisk="false"
            maxEntriesLocalDisk="1000000000"
            memoryStoreEvictionPolicy="LRU"
            statistics="false"

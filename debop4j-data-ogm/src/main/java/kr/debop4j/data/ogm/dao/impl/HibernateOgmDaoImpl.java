@@ -52,7 +52,7 @@ public class HibernateOgmDaoImpl implements HibernateOgmDao {
 
         if (fts == null || !fts.isConnected()) {
             if (isDebugEnabled)
-                log.debug("현 ThreadContext에 새호운 FullTextSession을 생성합니다...");
+                log.debug("현 ThreadContext에 새로운 FullTextSession을 생성합니다...");
 
             fts = Search.getFullTextSession(getSession());
             Local.put(FULL_TEXT_SESSION_KEY, fts);
@@ -109,31 +109,31 @@ public class HibernateOgmDaoImpl implements HibernateOgmDao {
     }
 
     public void persist(Object entity) {
-        getSession().persist(entity);
+        getFullTextSession().persist(entity);
     }
 
     public Object merge(Object entity) {
-        return getSession().merge(entity);
+        return getFullTextSession().merge(entity);
     }
 
     public Serializable save(Object entity) {
-        return getSession().save(entity);
+        return getFullTextSession().save(entity);
     }
 
     public void saveOrUpdate(Object entity) {
-        getSession().saveOrUpdate(entity);
+        getFullTextSession().saveOrUpdate(entity);
     }
 
     public void update(Object entity) {
-        getSession().update(entity);
+        getFullTextSession().update(entity);
     }
 
     public void delete(Object entity) {
-        getSession().delete(entity);
+        getFullTextSession().delete(entity);
     }
 
     public void deleteById(Class<?> clazz, Serializable id) {
-        Object entity = getSession().load(clazz, id);
+        Object entity = getFullTextSession().load(clazz, id);
         delete(entity);
     }
 
@@ -144,7 +144,7 @@ public class HibernateOgmDaoImpl implements HibernateOgmDao {
     public <T> void deleteAll(Collection<T> entities) {
         if (log.isDebugEnabled())
             log.debug("엔티티 컬렉션을 모두 삭제합니다...");
-        Session session = getSession();
+        Session session = getFullTextSession();
         for (T entity : entities) {
             session.delete(entity);
         }

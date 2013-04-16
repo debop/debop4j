@@ -5,7 +5,6 @@ import com.google.common.collect.Sets;
 import kr.debop4j.data.ogm.model.UuidEntityBase;
 import lombok.Getter;
 import lombok.Setter;
-import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.search.annotations.*;
 
 import javax.persistence.*;
@@ -19,8 +18,7 @@ import java.util.Set;
  * @since 13. 4. 16. 오전 11:34
  */
 @Entity
-@Cacheable
-@org.hibernate.annotations.Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+//@org.hibernate.annotations.Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 @Indexed
 @Getter
 @Setter

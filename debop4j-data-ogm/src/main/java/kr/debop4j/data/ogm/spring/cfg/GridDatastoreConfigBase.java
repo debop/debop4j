@@ -154,11 +154,9 @@ public abstract class GridDatastoreConfigBase {
         props.put(Environment.USE_NEW_ID_GENERATOR_MAPPINGS, true);
         props.put(Environment.HBM2DDL_AUTO, "none");
 
-        // transaction factory
-        // org.hibernate.engine.transaction.internal.jta.JtaTransactionFactory
-        // org.hibernate.engine.transaction.internal.jdbc.JdbcTransactionFactory
-        props.put(Environment.TRANSACTION_STRATEGY, "org.hibernate.engine.transaction.internal.jta.JtaTransactionFactory");
-        props.put(Environment.CURRENT_SESSION_CONTEXT_CLASS, "thread");
+        // Transaction 설정 !!!
+        props.put(Environment.TRANSACTION_STRATEGY, "org.hibernate.transaction.JTATransactionFactory");
+        props.put(Environment.CURRENT_SESSION_CONTEXT_CLASS, "jta");
 
         return props;
     }
