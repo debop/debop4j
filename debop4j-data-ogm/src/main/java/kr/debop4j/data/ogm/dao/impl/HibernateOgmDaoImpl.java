@@ -108,7 +108,6 @@ public class HibernateOgmDaoImpl implements HibernateOgmDao {
         throw new UnsupportedOperationException("HashMap에서는 지원하지 않습니다.");
     }
 
-
     public void persist(Object entity) {
         getSession().persist(entity);
     }

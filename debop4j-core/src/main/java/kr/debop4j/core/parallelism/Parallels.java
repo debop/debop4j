@@ -11,10 +11,7 @@ import lombok.extern.slf4j.Slf4j;
 
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.Callable;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ThreadLocalRandom;
+import java.util.concurrent.*;
 
 import static kr.debop4j.core.Guard.shouldNotBeNull;
 
@@ -57,13 +54,17 @@ public class Parallels {
     public static void run(int fromInclude, int toExclude, int step, final Action1<Integer> action) {
         shouldNotBeNull(action, "action");
 
-        ExecutorService executor = Executors.newFixedThreadPool(getProcessCount());
+        if (log.isDebugEnabled())
+            log.debug("run action... fromInclude=[{}], toExclude=[{}], step=[{}]", fromInclude, toExclude, step);
+
+        final int threadCount = getProcessCount() * 2;
+        ExecutorService executor = Executors.newFixedThreadPool(threadCount);
 
         if (log.isDebugEnabled())
-            log.debug("작업을 병렬로 수행합니다. 작업 스레드 수=[{}]", getProcessCount());
+            log.debug("작업을 병렬로 수행합니다. 작업 스레드 수=[{}]", threadCount);
 
         try {
-            List<NumberRange.IntRange> partitions = NumberRange.partition(fromInclude, toExclude, step, getProcessCount());
+            List<NumberRange.IntRange> partitions = NumberRange.partition(fromInclude, toExclude, step, threadCount);
             List<Callable<Void>> tasks = Lists.newLinkedList();
 
             for (final NumberRange.IntRange partition : partitions) {
@@ -78,7 +79,11 @@ public class Parallels {
                         };
                 tasks.add(task);
             }
-            executor.invokeAll(tasks);
+
+            List<Future<Void>> results = executor.invokeAll(tasks);
+            for (Future<Void> result : results) {
+                result.get();
+            }
 
             if (log.isDebugEnabled())
                 log.debug("모든 작업을 병렬로 수행하였습니다.");
@@ -174,7 +179,10 @@ public class Parallels {
                         };
                 tasks.add(task);
             }
-            executor.invokeAll(tasks);
+            List<Future<Void>> results = executor.invokeAll(tasks);
+            for (Future<Void> result : results) {
+                result.get();
+            }
 
             if (log.isDebugEnabled())
                 log.debug("모든 작업을 병렬로 수행하였습니다. partition count=[{}]", getProcessCount());

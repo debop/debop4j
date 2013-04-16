@@ -8,7 +8,7 @@
     <loggers>
         <logger name="kr.debop4j.data.mongodb" level="trace"/>
         <logger name="twitter4j.internal" level="info"/>
-        <root level="info">
+        <root level="debug">
             <appender-ref ref="Console"/>
         </root>
     </loggers>

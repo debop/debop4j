@@ -31,7 +31,7 @@ public class MongoOgmDaoImpl extends HibernateOgmDaoImpl {
     @Override
     public <T> List<T> findAll(Class<T> clazz, Sort luceneSort) {
         if (log.isTraceEnabled())
-            log.trace("엔티티 수형 [{}]의 모든 레코드를 조회합니다.", clazz);
+            log.trace("엔티티 수형 [{}]의 모든 레코드를 조회합니다...", clazz);
 
         Query luceneQuery = getQueryBuilder(clazz).all().createQuery();
         FullTextQuery ftq = getFullTextQuery(luceneQuery, clazz);
@@ -45,7 +45,7 @@ public class MongoOgmDaoImpl extends HibernateOgmDaoImpl {
     @Override
     public <T> List<T> find(Class<T> clazz, Query luceneQuery, HibernateParameter... parameters) {
         if (isTraceEnabled)
-            log.trace("find... clazz=[{}], luceneQuery=[{}], parameters=[{}]",
+            log.trace("루씬 조회를 수행합니다... clazz=[{}], luceneQuery=[{}], parameters=[{}]",
                       clazz, luceneQuery, StringTool.listToString(parameters));
 
         FullTextQuery ftq = getFullTextQuery(luceneQuery, clazz);

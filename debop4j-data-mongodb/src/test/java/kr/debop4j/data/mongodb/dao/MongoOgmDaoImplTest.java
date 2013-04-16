@@ -13,6 +13,8 @@ import kr.debop4j.data.mongodb.model.Tournament;
 import kr.debop4j.data.ogm.dao.impl.HibernateOgmDaoImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.lucene.search.Query;
+import org.hibernate.search.FullTextSession;
+import org.hibernate.search.Search;
 import org.hibernate.search.query.dsl.QueryBuilder;
 import org.joda.time.DateTime;
 import org.junit.Test;
@@ -33,16 +35,10 @@ import static org.fest.assertions.Assertions.assertThat;
 public class MongoOgmDaoImplTest extends MongoGridDatastoreTestBase {
 
     private static final Random rnd = new Random();
-    private static final Date BIRTH = new DateTime().withDate(1968, 10, 14).toDate();
+    private static final Date BIRTH = DateTime.now().withTimeAtStartOfDay().withDate(1968, 10, 14).toDate();
     private static final int REPEAT_COUNT = 10;
     private static final int PLAYER_COUNT = 1000;
     private static final int TOURNAMENT_COUNT = 16;
-
-    @Test
-    public void setupTest() throws Exception {
-        HibernateOgmDaoImpl dao = Springs.getBean(HibernateOgmDaoImpl.class);
-        assertThat(dao).isNotNull();
-    }
 
     private Player createPlayer() {
         Player player = new Player();
@@ -136,7 +132,7 @@ public class MongoOgmDaoImplTest extends MongoGridDatastoreTestBase {
 
     @Test
     public void searchQueryTest() throws Exception {
-        daoTest(new Action1<HibernateOgmDaoImpl>() {
+        daoInSerial(new Action1<HibernateOgmDaoImpl>() {
             @Override
             public void perform(HibernateOgmDaoImpl dao) {
 
@@ -144,6 +140,7 @@ public class MongoOgmDaoImplTest extends MongoGridDatastoreTestBase {
                 List<Player> loadedPlayers = dao.findAll(Player.class);
                 assertThat(loadedPlayers).isNotNull();
                 assertThat(loadedPlayers.size()).isGreaterThan(0);
+                log.debug("findAll seach result = [{}]", loadedPlayers.size());
 
                 // 일자로 검색 (equal)
                 Query luceneQuery = dao.getQueryBuilder(Player.class)
@@ -153,6 +150,7 @@ public class MongoOgmDaoImplTest extends MongoGridDatastoreTestBase {
                 loadedPlayers = dao.find(Player.class, luceneQuery);
                 assertThat(loadedPlayers).isNotNull();
                 assertThat(loadedPlayers.size()).isGreaterThan(0);
+                log.debug("birth seach result = [{}]", loadedPlayers.size());
 
                 QueryBuilder queryBuilder = dao.getQueryBuilder(Player.class);
 
@@ -169,37 +167,64 @@ public class MongoOgmDaoImplTest extends MongoGridDatastoreTestBase {
                 loadedPlayers = dao.find(Player.class, luceneQuery);
                 assertThat(loadedPlayers).isNotNull();
                 assertThat(loadedPlayers.size()).isGreaterThan(0);
+                log.debug("AND Seach result = [{}]", loadedPlayers.size());
 
                 // RANGE 25 < x <= 28 (excludeLimit)
                 luceneQuery = queryBuilder.range().onField("age").from(25).to(28).excludeLimit().createQuery();
                 loadedPlayers = dao.find(Player.class, luceneQuery);
                 assertThat(loadedPlayers).isNotNull();
                 assertThat(loadedPlayers.size()).isGreaterThan(1);
+                log.debug("range seach result = [{}]", loadedPlayers.size());
                 for (Player player : loadedPlayers)
                     log.debug("Player=[{}]", player);
             }
         });
     }
 
-
-    public void daoTest(Action1<HibernateOgmDaoImpl> action) throws Exception {
+    public void daoInSerial(Action1<HibernateOgmDaoImpl> action) throws Exception {
         final HibernateOgmDaoImpl dao = Springs.getBean(HibernateOgmDaoImpl.class);
 
-        // 병렬로 Player 를 추가합니다.
+        for (int i = 0; i < REPEAT_COUNT; i++) {
+            List<Player> players = createTestPlayers(PLAYER_COUNT);
+            for (Player player : players) {
+                dao.save(player);
+            }
+            UnitOfWorks.getCurrent().flushSession();
+            UnitOfWorks.getCurrent().clearSession();
+
+            log.debug("Player [{}]명을 추가했습니다.", players.size());
+        }
+
+
+        action.perform(dao);
+
+        log.debug("Player 엔티티를 삭제합니다...");
+        List<Player> players = dao.findAll(Player.class);
+        assertThat(players.size()).isGreaterThan(0);
+        dao.deleteAll(players);
+        UnitOfWorks.getCurrent().flushSession();
+        UnitOfWorks.getCurrent().clearSession();
+
+        assertThat(dao.count(Player.class)).isEqualTo(0);
+    }
+
+    public void daoInParallel(Action1<HibernateOgmDaoImpl> action) throws Exception {
+        HibernateOgmDaoImpl dao = Springs.getBean(HibernateOgmDaoImpl.class);
+
+        //TODO: 병렬로 Player 를 추가합니다. - 인덱스가 제대로 만들어지지 않습니다...
         //
         Parallels.run(REPEAT_COUNT, new Action1<Integer>() {
             @Override
             public void perform(Integer arg) {
+                List<Player> players = createTestPlayers(PLAYER_COUNT);
                 IUnitOfWork uow = UnitOfWorks.start(UnitOfWorkNestingOptions.CreateNewOrNestUnitOfWork);
 
-                List<Player> players = createTestPlayers(PLAYER_COUNT);
-
+                FullTextSession fts = Search.getFullTextSession(UnitOfWorks.getCurrentSession());
                 for (Player player : players) {
-                    dao.saveOrUpdate(player);
+                    fts.save(player);
                 }
-                uow.flushSession();
-                uow.clearSession();
-                uow.close();
+                fts.flush();
+                fts.close();
 
                 log.debug("Player [{}]명을 추가했습니다.", players.size());
             }
@@ -207,7 +232,10 @@ public class MongoOgmDaoImplTest extends MongoGridDatastoreTestBase {
 
         action.perform(dao);
 
-        dao.deleteAll(Player.class);
+        log.debug("Player 엔티티를 삭제합니다...");
+        List<Player> players = dao.findAll(Player.class);
+        assertThat(players.size()).isGreaterThan(0);
+        dao.deleteAll(players);
         UnitOfWorks.getCurrent().flushSession();
         UnitOfWorks.getCurrent().clearSession();
 
