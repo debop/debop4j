@@ -132,7 +132,7 @@ public class MongoOgmDaoImplTest extends MongoGridDatastoreTestBase {
 
     @Test
     public void searchQueryTest() throws Exception {
-        daoInSerial(new Action1<HibernateOgmDaoImpl>() {
+        daoInParallel(new Action1<HibernateOgmDaoImpl>() {
             @Override
             public void perform(HibernateOgmDaoImpl dao) {
 
@@ -224,21 +224,29 @@ public class MongoOgmDaoImplTest extends MongoGridDatastoreTestBase {
                     fts.save(player);
                 }
                 fts.flush();
+                /**
+                 * 병렬 작업 시에는 flushToIndexes() 메소드를 호출하여,
+                 * session이 닫히거나 스레드가 중단되기 전에 인덱싱을 마무리하도록 한다.
+                 */
+                fts.flushToIndexes();
                 fts.close();
 
                 log.debug("Player [{}]명을 추가했습니다.", players.size());
             }
         });
 
-        action.perform(dao);
-
-        log.debug("Player 엔티티를 삭제합니다...");
-        List<Player> players = dao.findAll(Player.class);
-        assertThat(players.size()).isGreaterThan(0);
-        dao.deleteAll(players);
-        UnitOfWorks.getCurrent().flushSession();
-        UnitOfWorks.getCurrent().clearSession();
-
+        try {
+            action.perform(dao);
+        } finally {
+            log.debug("Player 엔티티를 삭제합니다...");
+            List<Player> players = dao.findAll(Player.class);
+            assertThat(players.size()).isGreaterThan(0);
+            dao.deleteAll(players);
+            dao.purgeAll(Player.class);
+            dao.purgeAll(Tournament.class);
+            UnitOfWorks.getCurrent().flushSession();
+            UnitOfWorks.getCurrent().clearSession();
+        }
         assertThat(dao.count(Player.class)).isEqualTo(0);
     }
 }
