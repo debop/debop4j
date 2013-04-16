@@ -50,6 +50,7 @@ public class MongoOgmDaoImpl extends HibernateOgmDaoImpl {
 
         FullTextQuery ftq = getFullTextQuery(luceneQuery, clazz);
         HibernateTool.setParameters(ftq, parameters);
+
         return (List<T>) ftq.list();
     }
 

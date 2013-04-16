@@ -154,6 +154,12 @@ public abstract class GridDatastoreConfigBase {
         props.put(Environment.USE_NEW_ID_GENERATOR_MAPPINGS, true);
         props.put(Environment.HBM2DDL_AUTO, "none");
 
+        // transaction factory
+        // org.hibernate.engine.transaction.internal.jta.JtaTransactionFactory
+        // org.hibernate.engine.transaction.internal.jdbc.JdbcTransactionFactory
+        props.put(Environment.TRANSACTION_STRATEGY, "org.hibernate.engine.transaction.internal.jta.JtaTransactionFactory");
+        props.put(Environment.CURRENT_SESSION_CONTEXT_CLASS, "thread");
+
         return props;
     }
 
@@ -182,12 +188,6 @@ public abstract class GridDatastoreConfigBase {
         props.put("hibernate.search.default.indexwriter.term_index_interval", "default");
         props.put("hibernate.search.default.indexwriter.ram_buffer_size", "1024");
         props.put("hibernate.search.default.exclusive_index_use", "true");
-
-        // transaction factory
-        // org.hibernate.engine.transaction.internal.jta.JtaTransactionFactory
-        // org.hibernate.engine.transaction.internal.jdbc.JdbcTransactionFactory
-        props.put("hibernate.transaction.factory_class", "org.hibernate.engine.transaction.internal.jta.JtaTransactionFactory");
-        props.put("hibernate.current_session_context_class", "thread");
 
         return props;
     }

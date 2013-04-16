@@ -1,4 +1,4 @@
-package kr.debop4j.data.mongodb.test.model;
+package kr.debop4j.data.mongodb.model;
 
 import com.google.common.collect.Lists;
 import kr.debop4j.data.model.AnnotatedEntityBase;

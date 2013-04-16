@@ -1,7 +1,7 @@
-package kr.debop4j.data.mongodb.dao.twitter;
+package kr.debop4j.data.mongodb.dao;
 
 import jodd.props.Props;
-import kr.debop4j.data.mongodb.test.model.Twit;
+import kr.debop4j.data.mongodb.model.Twit;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.io.ClassPathResource;
 import twitter4j.*;
@@ -46,8 +46,8 @@ public class Twitters {
         String accessToken = props.getValue("oauth.accessToken");
         String accessTokenSecret = props.getValue("oauth.accessTokenSecret");
 
-        log.debug("key=[{}], secret=[{}], token=[{}], tokenSecret=[{}]",
-                  consumerKey, consumerSecret, accessToken, accessTokenSecret);
+        Twitters.log.debug("key=[{}], secret=[{}], token=[{}], tokenSecret=[{}]",
+                           consumerKey, consumerSecret, accessToken, accessTokenSecret);
 
         cfgBuilder = new ConfigurationBuilder();
         cfgBuilder.setDebugEnabled(true)

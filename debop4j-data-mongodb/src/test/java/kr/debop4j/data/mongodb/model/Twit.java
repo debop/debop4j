@@ -1,4 +1,4 @@
-package kr.debop4j.data.mongodb.test.model;
+package kr.debop4j.data.mongodb.model;
 
 import kr.debop4j.data.model.AnnotatedEntityBase;
 import lombok.Getter;

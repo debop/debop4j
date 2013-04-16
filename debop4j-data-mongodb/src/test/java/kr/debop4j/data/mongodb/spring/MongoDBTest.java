@@ -2,7 +2,7 @@ package kr.debop4j.data.mongodb.spring;
 
 import kr.debop4j.data.hibernate.unitofwork.UnitOfWorks;
 import kr.debop4j.data.mongodb.MongoGridDatastoreTestBase;
-import kr.debop4j.data.mongodb.test.model.LuckyNumberPojo;
+import kr.debop4j.data.mongodb.model.LuckyNumberPojo;
 import org.junit.Test;
 
 import static org.fest.assertions.Assertions.assertThat;

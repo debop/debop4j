@@ -1,4 +1,4 @@
-package kr.debop4j.data.mongodb.test.model;
+package kr.debop4j.data.mongodb.model;
 
 import com.google.common.base.Objects;
 import kr.debop4j.core.tools.HashTool;

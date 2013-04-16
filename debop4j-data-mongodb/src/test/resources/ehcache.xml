@@ -1,21 +1,21 @@
 <ehcache xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:noNamespaceSchemaLocation="http://www.ehcache.org/ehcache.xsd"
          updateCheck="false" monitoring="autodetect" dynamicConfig="false"
-         maxBytesLocalHeap="75%" name="vital-domain-cache">
+         maxBytesLocalHeap="75%" name="debop4j-data">
 
     <defaultCache
-            eternal="true"
+            eternal="false"
             timeToIdleSeconds="120"
             timeToLiveSeconds="120"
-            overflowToDisk="true"
-            diskPersistent="true"
+            overflowToDisk="false"
+            diskPersistent="false"
             diskExpiryThreadIntervalSeconds="120"
             memoryStoreEvictionPolicy="LRU"
             statistics="false"
             />
 
     <cache name="org.hibernate.cache.UpdateTimestampsCache"
-           eternal="true"
+           eternal="false"
            overflowToDisk="true"
            statistics="false"
             />
@@ -24,7 +24,7 @@
            eternal="false"
            timeToIdleSeconds="120"
            timeToLiveSeconds="120"
-           overflowToDisk="true"
+           overflowToDisk="false"
            diskPersistent="false"
            diskExpiryThreadIntervalSeconds="120"
            memoryStoreEvictionPolicy="LRU"

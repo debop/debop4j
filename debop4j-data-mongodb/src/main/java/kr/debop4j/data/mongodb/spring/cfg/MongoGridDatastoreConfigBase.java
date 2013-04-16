@@ -23,7 +23,8 @@ public abstract class MongoGridDatastoreConfigBase extends GridDatastoreConfigBa
 
     @Override
     protected Properties getHibernateOgmProperties() {
-        Properties props = getHibernateProperties();
+
+        Properties props = super.getHibernateOgmProperties();
 
         props.put("hibernate.ogm.datastore.provider", MONGODB_DATASTORE_PROVIDER);
         props.put(Environment.MONGODB_DATABASE, getDatabaseName());

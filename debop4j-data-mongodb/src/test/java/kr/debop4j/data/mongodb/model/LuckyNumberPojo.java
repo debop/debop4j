@@ -1,4 +1,4 @@
-package kr.debop4j.data.mongodb.test.model;
+package kr.debop4j.data.mongodb.model;
 
 import kr.debop4j.data.model.AnnotatedEntityBase;
 import lombok.Getter;
@@ -8,7 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 
 /**
- * kr.debop4j.data.mongodb.test.model.LuckyNumberPojo
+ * kr.debop4j.data.mongodb.model.LuckyNumberPojo
  *
  * @author sunghyouk.bae@gmail.com
  * @since 13. 4. 14. 오후 10:20

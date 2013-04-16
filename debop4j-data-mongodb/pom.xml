@@ -83,6 +83,12 @@
             <scope>test</scope>
         </dependency>
 
+        <!-- Hibernate 2nd cache -->
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-ehcache</artifactId>
+        </dependency>
+
         <!-- Hibernate-OGM -->
         <dependency>
             <groupId>org.hibernate.ogm</groupId>

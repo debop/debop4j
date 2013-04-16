@@ -2,9 +2,14 @@ package kr.debop4j.data.mongodb.dao;
 
 import com.google.common.collect.Lists;
 import kr.debop4j.core.Action1;
+import kr.debop4j.core.parallelism.Parallels;
 import kr.debop4j.core.spring.Springs;
+import kr.debop4j.data.hibernate.unitofwork.IUnitOfWork;
+import kr.debop4j.data.hibernate.unitofwork.UnitOfWorkNestingOptions;
 import kr.debop4j.data.hibernate.unitofwork.UnitOfWorks;
 import kr.debop4j.data.mongodb.MongoGridDatastoreTestBase;
+import kr.debop4j.data.mongodb.model.Player;
+import kr.debop4j.data.mongodb.model.Tournament;
 import kr.debop4j.data.ogm.dao.impl.HibernateOgmDaoImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.lucene.search.Query;
@@ -29,7 +34,8 @@ public class MongoOgmDaoImplTest extends MongoGridDatastoreTestBase {
 
     private static final Random rnd = new Random();
     private static final Date BIRTH = new DateTime().withDate(1968, 10, 14).toDate();
-    private static final int PLAYER_COUNT = 10000;
+    private static final int REPEAT_COUNT = 10;
+    private static final int PLAYER_COUNT = 1000;
     private static final int TOURNAMENT_COUNT = 16;
 
     @Test
@@ -129,37 +135,29 @@ public class MongoOgmDaoImplTest extends MongoGridDatastoreTestBase {
 
 
     @Test
-    public void findAllTest() throws Exception {
+    public void searchQueryTest() throws Exception {
         daoTest(new Action1<HibernateOgmDaoImpl>() {
             @Override
             public void perform(HibernateOgmDaoImpl dao) {
+
+                // findAll
                 List<Player> loadedPlayers = dao.findAll(Player.class);
                 assertThat(loadedPlayers).isNotNull();
                 assertThat(loadedPlayers.size()).isGreaterThan(0);
-            }
-        });
-    }
-
-    @Test
-    public void findByFields() throws Exception {
-        daoTest(new Action1<HibernateOgmDaoImpl>() {
-            @Override
-            public void perform(HibernateOgmDaoImpl dao) {
 
                 // 일자로 검색 (equal)
                 Query luceneQuery = dao.getQueryBuilder(Player.class)
                         .keyword().onField("birth").matching(BIRTH)
                         .createQuery();
 
-                List<Player> loadedPlayers = dao.find(Player.class, luceneQuery);
+                loadedPlayers = dao.find(Player.class, luceneQuery);
                 assertThat(loadedPlayers).isNotNull();
                 assertThat(loadedPlayers.size()).isGreaterThan(0);
-
 
                 QueryBuilder queryBuilder = dao.getQueryBuilder(Player.class);
 
                 // AND 검색 ( name like xxx% and surname = xxx)
-                Query nameQuery = queryBuilder.keyword().onField("name").matching("이름*").createQuery();
+                Query nameQuery = queryBuilder.keyword().wildcard().onField("name").matching("이름*").createQuery();
                 Query surnameQuery = queryBuilder.keyword().onField("surname").matching("배").createQuery();
 
                 luceneQuery = queryBuilder
@@ -185,21 +183,32 @@ public class MongoOgmDaoImplTest extends MongoGridDatastoreTestBase {
 
 
     public void daoTest(Action1<HibernateOgmDaoImpl> action) throws Exception {
-        HibernateOgmDaoImpl dao = Springs.getBean(HibernateOgmDaoImpl.class);
-        List<Player> players = createTestPlayers(PLAYER_COUNT);
+        final HibernateOgmDaoImpl dao = Springs.getBean(HibernateOgmDaoImpl.class);
 
-        for (Player player : players) {
-            dao.saveOrUpdate(player);
-        }
-        UnitOfWorks.getCurrent().transactionalFlush();
-        UnitOfWorks.getCurrent().clearSession();
+        // 병렬로 Player 를 추가합니다.
+        //
+        Parallels.run(REPEAT_COUNT, new Action1<Integer>() {
+            @Override
+            public void perform(Integer arg) {
+                IUnitOfWork uow = UnitOfWorks.start(UnitOfWorkNestingOptions.CreateNewOrNestUnitOfWork);
 
-        assertThat(dao.count(Player.class)).isEqualTo(PLAYER_COUNT);
+                List<Player> players = createTestPlayers(PLAYER_COUNT);
+
+                for (Player player : players) {
+                    dao.saveOrUpdate(player);
+                }
+                uow.flushSession();
+                uow.clearSession();
+                uow.close();
+
+                log.debug("Player [{}]명을 추가했습니다.", players.size());
+            }
+        });
 
         action.perform(dao);
 
         dao.deleteAll(Player.class);
-        UnitOfWorks.getCurrent().transactionalFlush();
+        UnitOfWorks.getCurrent().flushSession();
         UnitOfWorks.getCurrent().clearSession();
 
         assertThat(dao.count(Player.class)).isEqualTo(0);

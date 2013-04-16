@@ -1,10 +1,10 @@
-package kr.debop4j.data.mongodb.dao.twitter;
+package kr.debop4j.data.mongodb.dao;
 
 import jodd.props.Props;
 import kr.debop4j.core.spring.Springs;
 import kr.debop4j.data.hibernate.unitofwork.UnitOfWorks;
 import kr.debop4j.data.mongodb.MongoGridDatastoreTestBase;
-import kr.debop4j.data.mongodb.test.model.Twit;
+import kr.debop4j.data.mongodb.model.Twit;
 import kr.debop4j.data.ogm.dao.impl.HibernateOgmDaoImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.hibernate.Transaction;
@@ -19,7 +19,7 @@ import java.util.List;
 import static org.fest.assertions.Assertions.assertThat;
 
 /**
- * kr.debop4j.data.mongodb.dao.twitter.TimelineTest
+ * kr.debop4j.data.mongodb.dao.TimelineTest
  *
  * @author sunghyouk.bae@gmail.com
  * @since 13. 4. 15. 오후 2:58
@@ -58,7 +58,7 @@ public class TimelineTest extends MongoGridDatastoreTestBase {
         Transaction tx = UnitOfWorks.getCurrentSession().beginTransaction();
         try {
             List<Twit> twits = dao.findAll(Twit.class);
-            log.debug("로드된 Twit 수=[{}]", twits.size());
+            TimelineTest.log.debug("로드된 Twit 수=[{}]", twits.size());
 
             dao.deleteAll(twits);
             tx.commit();

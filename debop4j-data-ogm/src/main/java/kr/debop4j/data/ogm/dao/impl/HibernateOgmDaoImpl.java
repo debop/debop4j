@@ -48,16 +48,16 @@ public class HibernateOgmDaoImpl implements HibernateOgmDao {
      * hibernate-search의 {@link FullTextSession} 을 반환합니다.
      */
     public synchronized FullTextSession getFullTextSession() {
-        FullTextSession fullTextSession = (FullTextSession) Local.get(FULL_TEXT_SESSION_KEY);
+        FullTextSession fts = (FullTextSession) Local.get(FULL_TEXT_SESSION_KEY);
 
-        if (fullTextSession == null) {
+        if (fts == null || !fts.isConnected()) {
             if (isDebugEnabled)
                 log.debug("현 ThreadContext에 새호운 FullTextSession을 생성합니다...");
 
-            fullTextSession = Search.getFullTextSession(getSession());
-            Local.put(FULL_TEXT_SESSION_KEY, fullTextSession);
+            fts = Search.getFullTextSession(getSession());
+            Local.put(FULL_TEXT_SESSION_KEY, fts);
         }
-        return fullTextSession;
+        return fts;
     }
 
     /**
