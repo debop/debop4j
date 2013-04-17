@@ -4,17 +4,15 @@ import com.google.common.collect.Lists;
 import kr.debop4j.core.Action1;
 import kr.debop4j.core.parallelism.Parallels;
 import kr.debop4j.core.spring.Springs;
-import kr.debop4j.data.hibernate.unitofwork.IUnitOfWork;
-import kr.debop4j.data.hibernate.unitofwork.UnitOfWorkNestingOptions;
 import kr.debop4j.data.hibernate.unitofwork.UnitOfWorks;
 import kr.debop4j.data.mongodb.MongoGridDatastoreTestBase;
+import kr.debop4j.data.mongodb.dao.impl.MongoOgmDaoImpl;
 import kr.debop4j.data.mongodb.model.Player;
 import kr.debop4j.data.mongodb.model.Tournament;
 import kr.debop4j.data.ogm.dao.impl.HibernateOgmDaoImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.lucene.search.Query;
-import org.hibernate.search.FullTextSession;
-import org.hibernate.search.Search;
+import org.hibernate.Session;
 import org.hibernate.search.query.dsl.QueryBuilder;
 import org.joda.time.DateTime;
 import org.junit.Test;
@@ -217,19 +215,20 @@ public class MongoOgmDaoImplTest extends MongoGridDatastoreTestBase {
             @Override
             public void perform(Integer arg) {
                 List<Player> players = createTestPlayers(PLAYER_COUNT);
-                IUnitOfWork uow = UnitOfWorks.start(UnitOfWorkNestingOptions.CreateNewOrNestUnitOfWork);
 
-                FullTextSession fts = Search.getFullTextSession(UnitOfWorks.getCurrentSession());
+                Session session = UnitOfWorks.getCurrentSessionFactory().openSession();
+                MongoOgmDaoImpl dao = new MongoOgmDaoImpl(session);
+
                 for (Player player : players) {
-                    fts.save(player);
+                    dao.saveOrUpdate(player);
                 }
-                fts.flush();
+                dao.getFullTextSession().flush();
                 /**
                  * 병렬 작업 시에는 flushToIndexes() 메소드를 호출하여,
-                 * session이 닫히거나 스레드가 중단되기 전에 인덱싱을 마무리하도록 한다.
+                 * session이 닫히거나 스레드가 중단되기 전에 인덱싱을 마무리하도록 한다.f
                  */
-                fts.flushToIndexes();
-                fts.close();
+                dao.flushToIndexes();
+                dao.getSession().close();
 
                 log.debug("Player [{}]명을 추가했습니다.", players.size());
             }

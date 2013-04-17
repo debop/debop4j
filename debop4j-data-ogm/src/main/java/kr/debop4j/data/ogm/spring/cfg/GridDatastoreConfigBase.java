@@ -1,7 +1,6 @@
 package kr.debop4j.data.ogm.spring.cfg;
 
 import kr.debop4j.data.hibernate.interceptor.StatefulEntityInterceptor;
-import kr.debop4j.data.hibernate.repository.impl.HibernateRepositoryFactory;
 import kr.debop4j.data.hibernate.unitofwork.UnitOfWorkFactory;
 import kr.debop4j.data.ogm.dao.impl.HibernateOgmDaoImpl;
 import lombok.extern.slf4j.Slf4j;
@@ -18,6 +17,7 @@ import org.hibernate.service.spi.ServiceRegistryImplementor;
 import org.reflections.Reflections;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Scope;
 
 import javax.persistence.Entity;
 import java.util.Properties;
@@ -123,13 +123,9 @@ public abstract class GridDatastoreConfigBase {
     }
 
     @Bean
+    @Scope("prototype")
     public HibernateOgmDaoImpl hibernateOgmDao() {
         return new HibernateOgmDaoImpl();
-    }
-
-    @Bean
-    public HibernateRepositoryFactory hibernateRepositoryFactory() {
-        return new HibernateRepositoryFactory();
     }
 
     abstract protected String getDatabaseName();
@@ -175,7 +171,7 @@ public abstract class GridDatastoreConfigBase {
         // see Pro Hibernate and MongoDB pp. 246
 
         // hibernate-search 환경설정
-        props.put("hibernate.search.default.indexmanager", "near-real-time");
+        // props.put("hibernate.search.default.indexmanager", "near-real-time");
         props.put("hibernate.search.default.directory_provider", "filesystem");
         props.put("hibernate.search.default.indexBase", "lucene/indexes");
         props.put("hibernate.search.default.locking_strategy", "single");

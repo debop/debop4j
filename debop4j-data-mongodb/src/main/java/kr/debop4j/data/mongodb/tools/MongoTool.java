@@ -39,7 +39,6 @@ public class MongoTool {
         this.datastoreProvider = datastoreProvider;
     }
 
-
     public Tuple getTuple(String collectionName, String id, List<String> selectedColumns) {
         EntityKey key = new EntityKey(new EntityKeyMetadata(collectionName,
                                                             new String[]{ MongoDBDialect.ID_FIELDNAME }),

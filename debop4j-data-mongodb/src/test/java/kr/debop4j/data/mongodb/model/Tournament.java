@@ -4,6 +4,7 @@ import com.google.common.collect.Sets;
 import kr.debop4j.data.ogm.model.UuidEntityBase;
 import lombok.Getter;
 import lombok.Setter;
+import org.apache.lucene.analysis.cjk.CJKAnalyzer;
 import org.hibernate.search.annotations.*;
 
 import javax.persistence.Entity;
@@ -18,10 +19,10 @@ import java.util.Set;
  * @since 13. 4. 16. 오후 5:52
  */
 @Entity
-//@org.hibernate.annotations.Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 @Indexed
 @Getter
 @Setter
+@Analyzer(impl = CJKAnalyzer.class)
 public class Tournament extends UuidEntityBase {
     private static final long serialVersionUID = 3431486937664639007L;
 

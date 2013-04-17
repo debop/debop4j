@@ -2,12 +2,10 @@ package kr.debop4j.data.mongodb.dao;
 
 import jodd.props.Props;
 import kr.debop4j.core.spring.Springs;
-import kr.debop4j.data.hibernate.unitofwork.UnitOfWorks;
 import kr.debop4j.data.mongodb.MongoGridDatastoreTestBase;
 import kr.debop4j.data.mongodb.model.Twit;
 import kr.debop4j.data.ogm.dao.impl.HibernateOgmDaoImpl;
 import lombok.extern.slf4j.Slf4j;
-import org.hibernate.Transaction;
 import org.junit.Test;
 import org.springframework.core.io.ClassPathResource;
 import twitter4j.Paging;
@@ -43,28 +41,34 @@ public class TimelineTest extends MongoGridDatastoreTestBase {
     public void insertAndLoadDelete() throws Exception {
         HibernateOgmDaoImpl dao = Springs.getBean(HibernateOgmDaoImpl.class);
 
-        // 트위터 정보를 받아 저장하기
-        Twitter twitter = Twitters.getTwitter();
-        List<Status> statuses = twitter.getHomeTimeline(new Paging(1, 100));
-        for (Status status : statuses) {
-            Twit twit = Twitters.createTwit(status);
-            dao.saveOrUpdate(twit);
-        }
-        UnitOfWorks.getCurrent().transactionalFlush();
-        UnitOfWorks.getCurrent().clearSession();
-
-        // 저장된 트윗 정보를 전체 로드하여 삭제합니다.
-        //
-        Transaction tx = UnitOfWorks.getCurrentSession().beginTransaction();
         try {
-            List<Twit> twits = dao.findAll(Twit.class);
-            TimelineTest.log.debug("로드된 Twit 수=[{}]", twits.size());
+            // 트위터 정보를 받아 저장하기
+            Twitter twitter = Twitters.getTwitter();
+            List<Status> statuses = twitter.getHomeTimeline(new Paging(1, 100));
 
-            dao.deleteAll(twits);
-            tx.commit();
-        } catch (Exception e) {
-            tx.rollback();
-            throw new RuntimeException(e);
+            if (log.isTraceEnabled())
+                log.trace("Timeline의 새로운 글 수 =[{}]", statuses.size());
+
+            for (Status status : statuses) {
+                Twit twit = Twitters.createTwit(status);
+                dao.saveOrUpdate(twit);
+
+                if (log.isTraceEnabled())
+                    log.trace("Twit을 저장했습니다. [{}]", twit);
+            }
+            dao.getFullTextSession().flush();
+            dao.getFullTextSession().clear();
+
+            List<Twit> twits = dao.findAll(Twit.class);
+            assertThat(twits.size()).isGreaterThan(0);
+            assertThat(dao.count(Twit.class)).isEqualTo(twits.size());
+
+        } finally {
+            dao.deleteAll(Twit.class);
+            dao.getFullTextSession().flush();
+
+            assertThat(dao.count(Twit.class)).isEqualTo(0);
         }
+
     }
 }

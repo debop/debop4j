@@ -37,11 +37,26 @@ public class HibernateOgmDaoImpl implements HibernateOgmDao {
 
     private static final String FULL_TEXT_SESSION_KEY = HibernateOgmDaoImpl.class.getName() + ".FullTextSession";
 
+    private Session session;
+
+    public HibernateOgmDaoImpl() {}
+
+    public HibernateOgmDaoImpl(Session session) {
+        this.session = session;
+    }
+
     /**
      * hibernate session을 반환합니다.
      */
     public final Session getSession() {
-        return UnitOfWorks.getCurrentSession();
+        if (this.session == null)
+            this.session = UnitOfWorks.getCurrentSession();
+        return session;
+    }
+
+    public final void setSession(Session session) {
+        this.session = session;
+        Local.put(FULL_TEXT_SESSION_KEY, Search.getFullTextSession(getSession()));
     }
 
     /**
@@ -85,7 +100,7 @@ public class HibernateOgmDaoImpl implements HibernateOgmDao {
     /**
      * 엔티티 수형에 해당하는 모든 엔티티를 조회합니다.
      */
-    public final <T> List<T> findAll(Class<T> clazz) {
+    public <T> List<T> findAll(Class<T> clazz) {
         return findAll(clazz, null);
     }
 
@@ -100,11 +115,11 @@ public class HibernateOgmDaoImpl implements HibernateOgmDao {
         throw new UnsupportedOperationException("HashMap에서는 지원하지 않습니다.");
     }
 
-    public int count(Class<?> clazz) {
+    public long count(Class<?> clazz) {
         throw new UnsupportedOperationException("HashMap에서는 지원하지 않습니다.");
     }
 
-    public int count(Class<?> clazz, Query luceneQuery) {
+    public long count(Class<?> clazz, Query luceneQuery) {
         throw new UnsupportedOperationException("HashMap에서는 지원하지 않습니다.");
     }
 
@@ -142,8 +157,10 @@ public class HibernateOgmDaoImpl implements HibernateOgmDao {
     }
 
     public <T> void deleteAll(Collection<T> entities) {
-        if (log.isDebugEnabled())
-            log.debug("엔티티 컬렉션을 모두 삭제합니다...");
+        if (entities == null) return;
+        if (log.isTraceEnabled())
+            log.trace("엔티티 컬렉션을 모두 삭제합니다... entity count=[{}]", entities.size());
+
         Session session = getFullTextSession();
         for (T entity : entities) {
             session.delete(entity);
@@ -175,7 +192,7 @@ public class HibernateOgmDaoImpl implements HibernateOgmDao {
      */
     public <T> void purgeAll(Class<T> clazz) {
         if (isDebugEnabled)
-            log.debug("지정된 수형의 모든 엔티티들의 인덱스를 제거합니다. clazz=[{}], id=[{}]", clazz);
+            log.debug("지정된 수형의 모든 엔티티들의 인덱스를 제거합니다. clazz=[{}]", clazz);
         getFullTextSession().purgeAll(clazz);
     }
 
