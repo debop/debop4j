@@ -30,7 +30,7 @@ public class FibonacciTest {
         if (log.isDebugEnabled()) {
             log.debug("Computing Fibonacci number=[{}]", N);
             log.debug("Computed Result=[{}]", result);
-            log.debug(stopwatch.toString());
+            log.debug("Silly Worker=" + stopwatch.toString());
         }
     }
 
@@ -54,8 +54,9 @@ public class FibonacciTest {
 
         stopwatch.stop();
         if (log.isDebugEnabled()) {
+            log.debug("Computing Fibonacci number=[{}]", N);
             log.debug("Computed result=[{}]", result);
-            log.debug(stopwatch.toString());
+            log.debug("ForkJoin Worker=" + stopwatch.toString());
         }
     }
 }

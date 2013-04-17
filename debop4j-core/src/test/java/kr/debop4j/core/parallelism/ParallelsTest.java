@@ -10,6 +10,7 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import java.util.List;
+import java.util.concurrent.Callable;
 
 /**
  * User: sunghyouk.bae@gmail.com
@@ -20,6 +21,25 @@ public class ParallelsTest {
 
     private static final int LowerBound = 0;
     private static final int UpperBound = 99999;
+
+    @Test
+    public void parallelRunnable() {
+        final Runnable runnable =
+                new Runnable() {
+                    @Override
+                    public void run() {
+                        for (int i = LowerBound; i < UpperBound; i++) {
+                            Hero.findRoot(i);
+                        }
+                        if (log.isDebugEnabled())
+                            log.debug("FindRoot({}) returns [{}]", UpperBound, Hero.findRoot(UpperBound));
+                    }
+                };
+
+        @Cleanup
+        AutoStopwatch stopwatch = new AutoStopwatch();
+        Parallels.run(0, 100, runnable);
+    }
 
     @Test
     public void parallelRunAction() {
@@ -57,6 +77,29 @@ public class ParallelsTest {
         @Cleanup
         AutoStopwatch stopwatch = new AutoStopwatch();
         Parallels.runEach(NumberRange.range(0, 100), action1);
+    }
+
+    @Test
+    public void parallelCallable() {
+        final Callable<Double> callable =
+                new Callable<Double>() {
+                    @Override
+                    public Double call() {
+                        for (int i = LowerBound; i < UpperBound; i++) {
+                            Hero.findRoot(i);
+                        }
+                        if (log.isDebugEnabled())
+                            log.debug("FindRoot({}) returns [{}]", UpperBound, Hero.findRoot(UpperBound));
+                        return Hero.findRoot(UpperBound);
+                    }
+                };
+
+        @Cleanup
+        AutoStopwatch stopwatch = new AutoStopwatch();
+        List<Double> results = Parallels.run(0, 100, callable);
+
+        Assert.assertNotNull(results);
+        Assert.assertEquals(100, results.size());
     }
 
     @Test

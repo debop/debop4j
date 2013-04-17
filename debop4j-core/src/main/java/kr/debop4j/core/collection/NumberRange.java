@@ -3,7 +3,8 @@ package kr.debop4j.core.collection;
 import com.google.common.base.Objects;
 import com.google.common.collect.Lists;
 import lombok.Getter;
-import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.Iterator;
 import java.util.List;
@@ -13,8 +14,11 @@ import java.util.List;
  * User: sunghyouk.bae@gmail.com
  * Date: 13. 1. 11
  */
-@Slf4j
 public abstract class NumberRange<T extends Number> implements Iterable<T> {
+
+    private static final Logger log = LoggerFactory.getLogger(NumberRange.class);
+    private static final boolean isTraceEnabled = log.isTraceEnabled();
+    private static final boolean isDebugEnabled = log.isDebugEnabled();
 
     private NumberRange() {}
 
@@ -45,6 +49,9 @@ public abstract class NumberRange<T extends Number> implements Iterable<T> {
     }
 
     public static List<IntRange> partition(IntRange range, int partitionCount) {
+        if (isTraceEnabled)
+            log.trace("partition... range=[{}], partitionCount=[{}]", range, partitionCount);
+
         int rangeSize = range.size();
         int stepSign = range.getStep();
         int step = range.getStep();
@@ -56,17 +63,17 @@ public abstract class NumberRange<T extends Number> implements Iterable<T> {
         int fromInclude = range.fromInclude;
         for (int i = 0; i < partitionCount; i++) {
             int toExclude = fromInclude + (partitionSize + ((remainder > 0) ? 1 : 0)) * stepSign;
-            if (remainder > 0)
-                remainder--;
+            if (remainder > 0) remainder--;
             toExclude = (step > 0)
                     ? Math.min(toExclude, range.getToExclude())
                     : Math.max(toExclude, range.getToExclude());
 
             IntRange partition = range(fromInclude, toExclude, step);
             partitions.add(partition);
-            if (NumberRange.log.isDebugEnabled())
-                NumberRange.log.debug("Partition 추가 = [{}]", partition);
             fromInclude = toExclude;
+
+            if (isTraceEnabled)
+                log.trace("Partition 추가 = [{}]", partition);
         }
         return partitions;
     }
@@ -103,9 +110,9 @@ public abstract class NumberRange<T extends Number> implements Iterable<T> {
 
             LongRange partition = range(fromInclude, toExclude, step);
             partitions.add(partition);
-            if (NumberRange.log.isDebugEnabled())
-                NumberRange.log.debug("Partition 추가 = [{}]", partition);
             fromInclude = toExclude;
+            if (isTraceEnabled)
+                log.trace("Partition 추가 = [{}]", partition);
         }
         return partitions;
     }
@@ -134,6 +141,8 @@ public abstract class NumberRange<T extends Number> implements Iterable<T> {
             this.toExclude = toExclude;
             this.step = step;
             this.current = this.fromInclude;
+            if (isTraceEnabled)
+                log.trace("create IntRange=[{}]", this);
         }
 
         public int size() {
@@ -193,6 +202,8 @@ public abstract class NumberRange<T extends Number> implements Iterable<T> {
             this.toExclude = toExclude;
             this.step = step;
             this.current = this.fromInclude;
+            if (isTraceEnabled)
+                log.trace("create IntRange=[{}]", this);
         }
 
         public Long size() {
