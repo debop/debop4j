@@ -32,24 +32,21 @@
                 <version>${avro.version}</version>
                 <executions>
                     <execution>
+                        <id>schemas</id>
                         <phase>generate-sources</phase>
                         <goals>
                             <goal>schema</goal>
+                            <goal>protocol</goal>
+                            <goal>idl-protocol</goal>
                         </goals>
                         <configuration>
                             <sourceDirectory>${project.basedir}/src/main/avro/</sourceDirectory>
                             <outputDirectory>${project.basedir}/src/main/java/</outputDirectory>
+                            <testSourceDirectory>${project.basedir}/src/test/avro</testSourceDirectory>
+                            <testOutputDirectory>${project.basedir}/src/test/java</testOutputDirectory>
                         </configuration>
                     </execution>
                 </executions>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <configuration>
-                    <source>${jdk.version}</source>
-                    <target>${jdk.version}</target>
-                </configuration>
             </plugin>
         </plugins>
     </build>
@@ -61,6 +58,11 @@
             <groupId>org.apache.avro</groupId>
             <artifactId>avro</artifactId>
         </dependency>
+        <dependency>
+            <groupId>org.apache.avro</groupId>
+            <artifactId>avro-ipc</artifactId>
+        </dependency>
+
 
         <!-- Scala & Akka -->
         <dependency>
