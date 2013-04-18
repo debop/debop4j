@@ -99,31 +99,33 @@ public class SimpleQueriesTest {
         socrates.setId("13");
         socrates.setDescription("There are more than two dimensions over the shadows we see out of the cave");
         socrates.setPosition(1);
-        session.persist(socrates);
+        session.saveOrUpdate(socrates);
 
         Hypothesis peano = new Hypothesis();
         peano.setId("14");
         peano.setDescription("Peano's curve and then Hilbert's space filling curve proof the connection from mono-dimensional to bi-dimensional space");
         peano.setPosition(2);
-        session.persist(peano);
+        session.saveOrUpdate(peano);
 
         Hypothesis sanne = new Hypothesis();
         sanne.setId("15");
         sanne.setDescription("Hilbert's proof of connection to 2 dimensions can be induced to reason on N dimensions");
         sanne.setPosition(3);
-        session.persist(sanne);
+        session.saveOrUpdate(sanne);
 
         Hypothesis shortOne = new Hypothesis();
         shortOne.setId("16");
         shortOne.setDescription("stuff works");
         shortOne.setPosition(4);
-        session.persist(shortOne);
+        session.saveOrUpdate(shortOne);
 
         Helicopter helicopter = new Helicopter();
         helicopter.setName("No creative clue ");
-        session.persist(helicopter);
+        session.saveOrUpdate(helicopter);
 
         transaction.commit();
         session.close();
     }
+
+
 }

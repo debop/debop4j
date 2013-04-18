@@ -4,6 +4,7 @@ import com.mongodb.MongoClient;
 import kr.debop4j.core.spring.Springs;
 import kr.debop4j.data.mongodb.MongoGridDatastoreTestBase;
 import kr.debop4j.data.mongodb.dao.impl.MongoOgmDaoImpl;
+import kr.debop4j.data.ogm.dao.impl.HibernateOgmDaoImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 import org.springframework.data.mongodb.core.MongoTemplate;
@@ -33,7 +34,7 @@ public class SpringConfigurationTest extends MongoGridDatastoreTestBase {
 
     @Test
     public void mongoOgmDaoBean() {
-        MongoOgmDaoImpl mongoOgmDao = Springs.getBean(MongoOgmDaoImpl.class);
+        MongoOgmDaoImpl mongoOgmDao = (MongoOgmDaoImpl) Springs.getBean(HibernateOgmDaoImpl.class);
         assertThat(mongoOgmDao).isNotNull();
         //assertThat(mongoOgmDao.getMongoTemplate()).isNotNull();
     }
