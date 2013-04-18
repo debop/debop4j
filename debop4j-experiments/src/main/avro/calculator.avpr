@@ -1,0 +1,20 @@
+{
+    "namespace": "example.avro.rpc",
+    "protocol": "Calculator",
+
+    "types": [],
+
+    "messages": {
+        "add": {
+                "request":[ { "name": "x", "type": "double"},
+                            { "name": "y", "type": "double"} ],
+                "response":"double"
+            },
+
+          "subtract": {
+                "request":[ { "name": "x", "type": "double"},
+                            { "name": "y", "type": "double"} ],
+                "response":"double"
+          }
+    }
+}

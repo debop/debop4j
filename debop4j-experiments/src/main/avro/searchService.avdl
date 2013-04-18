@@ -1,0 +1,29 @@
+@namespace("example.avro.search")
+protocol SearchService {
+
+    record Entity {
+        string rowId;
+        string @order("ascending") createdAt;
+        string text;
+
+        map<string> attrs;
+    }
+
+    record SearchResult {
+        int pageNo;
+        int pageSize;
+        int pageCount;
+        int totalItemCount;
+        array<Entity> entities;
+    }
+
+    string ping();  // return "PONG"
+
+    int persist(string id, Entity entity);
+
+    int persistAll(array<Entity> entities);
+
+    array<Entity> search(string queryString);
+
+    SearchResult search(string queryString, int pageNo = 1, int pageSize = 10);
+}
