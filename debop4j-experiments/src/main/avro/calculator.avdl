@@ -1,0 +1,8 @@
+@namespace("example.avro.rpc")
+protocol Calculator {
+    // add
+    double add( double x, double y );
+
+    // subtract
+    double subtract( double x, double y );
+}
