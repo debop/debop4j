@@ -182,7 +182,7 @@ public class EntityTool {
                       entityClass.getName(), locale, hql);
 
         IHibernateRepository<T> dao = HibernateTool.getHibernateDao(entityClass);
-        return dao.findByQueryString(hql, new HibernateParameter("key", locale, LocaleType.INSTANCE));
+        return dao.findByHql(hql, new HibernateParameter("key", locale, LocaleType.INSTANCE));
 
     }
 
@@ -198,7 +198,7 @@ public class EntityTool {
                       entityClass.getName(), propertyName, value, hql);
 
         IHibernateRepository<T> dao = HibernateTool.getHibernateDao(entityClass);
-        return dao.findByQueryString(hql, new HibernateParameter(propertyName, value, ObjectType.INSTANCE));
+        return dao.findByHql(hql, new HibernateParameter(propertyName, value, ObjectType.INSTANCE));
     }
 
     // endregion
@@ -220,7 +220,7 @@ public class EntityTool {
             log.debug("엔티티 [{}]의 메타데이타 키 [{}] 를 가지는 엔티티 조회 hql=[{}]", entityClass.getName(), key, hql);
 
         IHibernateRepository<T> dao = HibernateTool.getHibernateDao(entityClass);
-        return dao.findByQueryString(hql, new HibernateParameter("key", key, StringType.INSTANCE));
+        return dao.findByHql(hql, new HibernateParameter("key", key, StringType.INSTANCE));
     }
 
     public static <T extends IMetaEntity> List<T> containsMetaValue(Class<T> entityClass, String value) {
@@ -231,7 +231,7 @@ public class EntityTool {
             log.debug("메타데이타 value[{}]를 가지는 엔티티 조회 hql=[{}]", value, hql);
 
         IHibernateRepository<T> dao = HibernateTool.getHibernateDao(entityClass);
-        return dao.findByQueryString(hql, new HibernateParameter("value", value, StringType.INSTANCE));
+        return dao.findByHql(hql, new HibernateParameter("value", value, StringType.INSTANCE));
     }
 
     // endregion
@@ -326,7 +326,7 @@ public class EntityTool {
         criteria.add(Restrictions.eq("parent", entity));
 
 //		HibernateRepository<T> dao = (HibernateRepository<T>) HbRepositoryFactory.get(entity.getClass());
-//		return dao.existsByCriteria(criteria);
+//		return dao.exists(criteria);
         // TODO: 구현 중
         return null;
     }

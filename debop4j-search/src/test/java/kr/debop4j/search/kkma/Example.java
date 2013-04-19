@@ -112,16 +112,20 @@ public class Example {
         }
     }
 
+    /**
+     * 인덱스 추출 -> 이 걸 이용해서 실시간 키워드 및 연관검색도 가능하다.
+     */
     @Test
     public void keywordTest() {
         KeywordExtractor ke = new KeywordExtractor();
 
-        KeywordList kl = ke.extractKeyword(str, false);
-        for (int i = 0; i < kl.size(); i++) {
-            Keyword kwrd = kl.get(i);
-            System.out.println(kwrd.getString() + "\t" + kwrd.getCnt());
+        final String strToExtrtKwrd = "저는 대학생이구요. 소프트웨어 관련학과 입니다. DB는 수업을 한번 들은 적이 있으며, 수학은 대학에서 통계학, 선형대수학, 이산수학, 대학수학 등을 배웠지만... 자주 사용을 안하다보니 모두 까먹은 상태입니다.";
+        for (int k = 0; k < 10; k++) {
+            KeywordList kl = ke.extractKeyword(strToExtrtKwrd, false);
+            for (int i = 0; i < kl.size(); i++) {
+                Keyword kwrd = kl.get(i);
+                System.out.println(kwrd.getString() + "\t" + kwrd.getCnt());
+            }
         }
-
-        Assert.assertTrue(true);
     }
 }

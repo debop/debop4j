@@ -6,7 +6,10 @@ import kr.debop4j.data.model.IStatefulEntity;
 import org.hibernate.Criteria;
 import org.hibernate.LockOptions;
 import org.hibernate.Query;
-import org.hibernate.criterion.*;
+import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.criterion.Example;
+import org.hibernate.criterion.Order;
+import org.hibernate.criterion.ProjectionList;
 
 import java.io.Serializable;
 import java.util.Collection;
@@ -41,79 +44,84 @@ public interface IHibernateRepository<E extends IStatefulEntity> {
 
     List<E> find(DetachedCriteria dc, int firstResult, int maxResults, Order... orders);
 
-    List<E> findByCriteria(Criterion... criterions);
-
-    List<E> findByCriteria(Criterion[] criterions, int firstResult, int maxResults, Order... orders);
-
     List<E> findByExample(Example example);
 
-    List<E> findByQuery(Query query, HibernateParameter... parameters);
+    List<E> find(Query query, HibernateParameter... parameters);
 
-    List<E> findByQuery(Query query, int firstResult, int maxResults, HibernateParameter... parameters);
+    List<E> find(Query query, int firstResult, int maxResults, HibernateParameter... parameters);
 
-    List<E> findByQueryString(String queryString, HibernateParameter... parameters);
+    List<E> findByHql(String hql, HibernateParameter... parameters);
 
-    List<E> findByQueryString(String queryString, int firstResult, int maxResults, HibernateParameter... parameters);
+    List<E> findByHql(String hql, int firstResult, int maxResults, HibernateParameter... parameters);
 
     List<E> findByNamedQuery(String queryName, HibernateParameter... parameters);
 
     List<E> findByNamedQuery(String queryName, int firstResult, int maxResults, HibernateParameter... parameters);
 
+    List<E> findBySQLString(String sqlString, HibernateParameter... parameters);
+
+    List<E> findBySQLString(String sqlString, int firstResult, int maxResults, HibernateParameter... parameters);
 
     IPagedList<E> getPage(DetachedCriteria dc, int pageNo, int pageSize, Order... orders);
 
-    IPagedList<E> getPageByQuery(Query query, int pageNo, int pageSize, HibernateParameter... parameters);
+    IPagedList<E> getPage(Query query, int pageNo, int pageSize, HibernateParameter... parameters);
 
-    IPagedList<E> getPageByQueryString(String queryString, int pageNo, int pageSize, HibernateParameter... parameters);
+    IPagedList<E> getPageByHql(String hql, int pageNo, int pageSize, HibernateParameter... parameters);
 
     IPagedList<E> getPageByNamedQuery(String queryName, int pageNo, int pageSize, HibernateParameter... parameters);
 
+    IPagedList<E> getPageBySQLString(String sqlString, int pageNo, int pageSize, HibernateParameter... parameters);
 
     E findOne(DetachedCriteria dc);
 
-    E findOneByCriteria(Criterion... criterions);
+    E findOne(Criteria criteria);
 
-    E findOneByQuery(Query query, HibernateParameter... parameters);
+    E findOne(Query query, HibernateParameter... parameters);
 
-    E findOneByQueryString(String queryString, HibernateParameter... parameters);
+    E findOneByHql(String hql, HibernateParameter... parameters);
 
     E findOneByNamedQuery(String queryName, HibernateParameter... parameters);
 
+    E findOneBySQLString(String sqlString, HibernateParameter... parameters);
 
     E findFirst(DetachedCriteria dc);
 
-    E findFirstByCriteria(Criterion... criterions);
+    E findFirst(Criteria criteria);
 
-    E findFirstByQuery(Query query, HibernateParameter... parameters);
+    E findFirst(Query query, HibernateParameter... parameters);
 
-    E findFirstByQueryString(String queryString, HibernateParameter... parameters);
+    E findFirstByHql(String hql, HibernateParameter... parameters);
 
     E findFirstByNamedQuery(String queryName, HibernateParameter... parameters);
+
+    E findFirstBySQLString(String sqlString, HibernateParameter... parameters);
 
     boolean exists();
 
     boolean exists(DetachedCriteria dc);
 
-    boolean existsByCriteria(Criterion... criterions);
+    boolean exists(Criteria criteria);
 
-    boolean existsByQuery(Query query, HibernateParameter... parameters);
+    boolean exists(Query query, HibernateParameter... parameters);
 
-    boolean existsByQueryString(String queryString, HibernateParameter... parameters);
+    boolean existsByHql(String hql, HibernateParameter... parameters);
 
     boolean existsByNamedQuery(String queryName, HibernateParameter... parameters);
+
+    boolean existsBySQLString(String sqlString, HibernateParameter... parameters);
 
     long count();
 
     long count(DetachedCriteria dc);
 
-    long countByCriteria(Criterion... criterions);
+    long count(Criteria criteria);
 
 
-    void merge(E entity);
+    E merge(E entity);
 
     void persist(E entity);
 
-    void save(E entity);
+    Serializable save(E entity);
 
     void saveOrUpdate(E entity);
 
@@ -129,7 +137,7 @@ public interface IHibernateRepository<E extends IStatefulEntity> {
 
     int deleteAllWithoutCascade();
 
-    int executeUpdateByQueryString(String queryString, HibernateParameter... parameters);
+    int executeUpdateByHql(String hql, HibernateParameter... parameters);
 
     int executeUpdateByNamedQuery(String queryName, HibernateParameter... parameters);
 

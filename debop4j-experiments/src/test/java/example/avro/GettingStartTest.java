@@ -84,7 +84,8 @@ public class GettingStartTest {
     @Test
     public void serializationTestWithoutGeneratedCode() throws Exception {
 
-        Schema schema = new Schema.Parser().parse(new File("./debop4j-experiments/src/main/avro/user.avsc"));
+
+        Schema schema = new Schema.Parser().parse(ClassLoader.getSystemResourceAsStream("user.avsc"));
         assertThat(schema).isNotNull();
 
         GenericRecord user1 = new GenericData.Record(schema);

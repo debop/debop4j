@@ -241,14 +241,12 @@
         <shrinkwrapVersion>1.1.1</shrinkwrapVersion>
 
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <!--<basedir>/User/debop/work/java/debop4j/debop4j-search</basedir>-->
     </properties>
 
     <dependencyManagement>
         <dependencies>
 
             <!-- debop4j -->
-
             <dependency>
                 <groupId>debop4j</groupId>
                 <artifactId>debop4j-core</artifactId>
