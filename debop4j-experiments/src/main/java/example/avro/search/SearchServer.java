@@ -45,9 +45,15 @@ public class SearchServer {
             return entities.size();
         }
 
-        @Override
+
         public SearchResult search(CharSequence queryString, int pageNo, int pageSize) throws AvroRemoteException {
-            System.out.printf("\nsearch... queryString=%s, pageNo=%d, pageSize=%d", queryString, pageNo, pageSize);
+            return searchByMethod(queryString, SearchMethod.SIMPLE, pageNo, pageSize);
+        }
+
+        @Override
+        public SearchResult searchByMethod(CharSequence queryString, SearchMethod searchMethod, int pageNo, int pageSize) throws AvroRemoteException {
+            System.out.printf("\nsearch... queryString=%s, searchMethod=%s, pageNo=%d, pageSize=%d",
+                              queryString, searchMethod, pageNo, pageSize);
 
             // 검색된 엔티티들
             List<Entity> entities = Lists.newArrayListWithCapacity(pageSize);
@@ -67,6 +73,7 @@ public class SearchServer {
                     .setEntities(entities)
                     .build();
         }
+
 
     }
 

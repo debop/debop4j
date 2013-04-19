@@ -1,6 +1,12 @@
 @namespace("example.avro.search")
 protocol SearchService {
 
+    enum SearchMethod {
+        SIMPLE,
+        EXACT,
+        FUZZY
+    }
+
     record Entity {
         string rowId;
         string @order("ascending") createdAt;
@@ -14,16 +20,23 @@ protocol SearchService {
         int pageSize;
         int pageCount;
         int totalItemCount;
-        array<Entity> entities;
+        @java_class("java.util.ArrayList") array<Entity> entities;
+    }
+
+    error PersistException {
+        string message;
+        int code = -1;
     }
 
     string ping();  // return "PONG"
 
-    int persist(string id, Entity entity);
+    int persist(string id, Entity entity) throws PersistException;
 
-    int persistAll(array<Entity> entities);
+    int persistAll(array<Entity> entities) throws PersistException;
 
-    array<Entity> search(string queryString);
+    @java_class("java.util.ArrayList") array<Entity> search(string queryString);
 
     SearchResult search(string queryString, int pageNo = 1, int pageSize = 10);
+
+    SearchResult searchByMethod(string queryString, SearchMethod searchMethod, int pageNo = 1, int pageSize = 10);
 }

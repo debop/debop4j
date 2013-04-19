@@ -8,7 +8,7 @@ package example.avro.search;
 @SuppressWarnings("all")
 @org.apache.avro.specific.AvroGenerated
 public class SearchResult extends org.apache.avro.specific.SpecificRecordBase implements org.apache.avro.specific.SpecificRecord {
-    public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"SearchResult\",\"namespace\":\"example.avro.search\",\"fields\":[{\"name\":\"pageNo\",\"type\":\"int\"},{\"name\":\"pageSize\",\"type\":\"int\"},{\"name\":\"pageCount\",\"type\":\"int\"},{\"name\":\"totalItemCount\",\"type\":\"int\"},{\"name\":\"entities\",\"type\":{\"type\":\"array\",\"items\":{\"type\":\"record\",\"name\":\"Entity\",\"fields\":[{\"name\":\"rowId\",\"type\":\"string\"},{\"name\":\"createdAt\",\"type\":\"string\"},{\"name\":\"text\",\"type\":\"string\"},{\"name\":\"attrs\",\"type\":{\"type\":\"map\",\"values\":\"string\"}}]}}}]}");
+    public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"SearchResult\",\"namespace\":\"example.avro.search\",\"fields\":[{\"name\":\"pageNo\",\"type\":\"int\"},{\"name\":\"pageSize\",\"type\":\"int\"},{\"name\":\"pageCount\",\"type\":\"int\"},{\"name\":\"totalItemCount\",\"type\":\"int\"},{\"name\":\"entities\",\"type\":{\"type\":\"array\",\"items\":{\"type\":\"record\",\"name\":\"Entity\",\"fields\":[{\"name\":\"rowId\",\"type\":\"string\"},{\"name\":\"createdAt\",\"type\":\"string\"},{\"name\":\"text\",\"type\":\"string\"},{\"name\":\"attrs\",\"type\":{\"type\":\"map\",\"values\":\"string\"}}]},\"java_class\":\"java.util.ArrayList\"}}]}");
 
     public static org.apache.avro.Schema getClassSchema() { return SCHEMA$; }
 
