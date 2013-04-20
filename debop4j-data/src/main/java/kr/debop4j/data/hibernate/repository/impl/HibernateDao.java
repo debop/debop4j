@@ -108,6 +108,36 @@ public class HibernateDao implements IHibernateDao {
         return find(clazz, dc);
     }
 
+    @Override
+    public ScrollableResults getScroll(DetachedCriteria dc) {
+        return getScroll(dc, ScrollMode.FORWARD_ONLY);
+    }
+
+    @Override
+    public ScrollableResults getScroll(DetachedCriteria dc, ScrollMode scrollMode) {
+        return dc.getExecutableCriteria(getSession()).scroll(scrollMode);
+    }
+
+    @Override
+    public ScrollableResults getScroll(Criteria criteria) {
+        return getScroll(criteria, ScrollMode.FORWARD_ONLY);
+    }
+
+    @Override
+    public ScrollableResults getScroll(Criteria criteria, ScrollMode scrollMode) {
+        return criteria.scroll(scrollMode);
+    }
+
+    @Override
+    public ScrollableResults getScroll(Query query, HibernateParameter... parameters) {
+        return getScroll(query, ScrollMode.FORWARD_ONLY, parameters);
+    }
+
+    @Override
+    public ScrollableResults getScroll(Query query, ScrollMode scrollMode, HibernateParameter... parameters) {
+        return HibernateTool.setParameters(query, parameters).scroll(scrollMode);
+    }
+
     /**
      * 모든 엔티티를 필터링 없이 반환합니다.
      */

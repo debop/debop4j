@@ -3,9 +3,7 @@ package kr.debop4j.data.hibernate.repository;
 import kr.debop4j.core.collection.IPagedList;
 import kr.debop4j.data.hibernate.HibernateParameter;
 import kr.debop4j.data.model.IStatefulEntity;
-import org.hibernate.Criteria;
-import org.hibernate.LockOptions;
-import org.hibernate.Query;
+import org.hibernate.*;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Example;
 import org.hibernate.criterion.Order;
@@ -38,7 +36,37 @@ public interface IHibernateRepository<E extends IStatefulEntity> {
 
     List<E> getIn(Serializable[] ids);
 
+    /**
+     * 대용량 데이터의 경우 Scroll이 가능한 Server Cursor를 반환합니다.
+     */
+    ScrollableResults getScroll(DetachedCriteria dc);
+
+    ScrollableResults getScroll(DetachedCriteria dc, ScrollMode scrollMode);
+
+    ScrollableResults getScroll(Criteria criteria);
+
+    ScrollableResults getScroll(Criteria criteria, ScrollMode scrollMode);
+
+    ScrollableResults getScroll(Query query, HibernateParameter... parameters);
+
+    ScrollableResults getScroll(Query query, ScrollMode scrollMode, HibernateParameter... parameters);
+
+    /**
+     * Use {@link IHibernateRepository#findAll(org.hibernate.criterion.Order...)} instead.
+     */
+    @Deprecated
     List<E> getAll();
+
+    /**
+     * 모든 엔티티를 조회합니다.
+     */
+    List<E> findAll(Order... orders);
+
+    List<E> findAll(int firstResult, int maxResults, Order... orders);
+
+    List<E> find(Criteria criteria, Order... orders);
+
+    List<E> find(Criteria criteria, int firstResult, int maxResults, Order... orders);
 
     List<E> find(DetachedCriteria dc);
 

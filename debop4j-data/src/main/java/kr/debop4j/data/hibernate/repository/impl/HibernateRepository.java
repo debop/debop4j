@@ -12,10 +12,7 @@ import kr.debop4j.data.hibernate.tools.HibernateTool;
 import kr.debop4j.data.hibernate.unitofwork.UnitOfWorks;
 import kr.debop4j.data.model.IStatefulEntity;
 import lombok.Getter;
-import org.hibernate.Criteria;
-import org.hibernate.LockOptions;
-import org.hibernate.Query;
-import org.hibernate.Session;
+import org.hibernate.*;
 import org.hibernate.criterion.*;
 import org.hibernate.transform.Transformers;
 import org.slf4j.Logger;
@@ -111,21 +108,62 @@ public class HibernateRepository<E extends IStatefulEntity> implements IHibernat
     }
 
     @Override
+    public ScrollableResults getScroll(DetachedCriteria dc) {
+        return getScroll(dc, ScrollMode.FORWARD_ONLY);
+    }
+
+    @Override
+    public ScrollableResults getScroll(DetachedCriteria dc, ScrollMode scrollMode) {
+        return dc.getExecutableCriteria(getSession()).scroll(scrollMode);
+    }
+
+    @Override
+    public ScrollableResults getScroll(Criteria criteria) {
+        return getScroll(criteria, ScrollMode.FORWARD_ONLY);
+    }
+
+    @Override
+    public ScrollableResults getScroll(Criteria criteria, ScrollMode scrollMode) {
+        return criteria.scroll(scrollMode);
+    }
+
+    @Override
+    public ScrollableResults getScroll(Query query, HibernateParameter... parameters) {
+        return getScroll(query, ScrollMode.FORWARD_ONLY, parameters);
+    }
+
+    @Override
+    public ScrollableResults getScroll(Query query, ScrollMode scrollMode, HibernateParameter... parameters) {
+        return HibernateTool.setParameters(query, parameters).scroll(scrollMode);
+    }
+
+    @Override
     public List<E> getAll() {
         return getSession().createCriteria(entityClass).setCacheable(cacheable).list();
     }
 
-    protected final List<E> find(Criteria criteria) {
-        return criteria.list();
+    @Override
+    public List<E> findAll(Order... orders) {
+        return find(getSession().createCriteria(entityClass), orders);
     }
 
-    protected final List<E> find(Criteria criteria, int firstResult, int maxResults, Order... orders) {
+    @Override
+    public List<E> findAll(int firstResult, int maxResults, Order... orders) {
+        return find(getSession().createCriteria(entityClass), firstResult, maxResults, orders);
+    }
+
+    @Override
+    public List<E> find(Criteria criteria, Order... orders) {
+        return find(criteria, -1, -1, orders);
+    }
+
+    @Override
+    public List<E> find(Criteria criteria, int firstResult, int maxResults, Order... orders) {
         HibernateTool.setPaging(criteria, firstResult, maxResults);
         if (!ArrayTool.isEmpty(orders))
             HibernateTool.addOrders(criteria, orders);
         return criteria.list();
     }
-
 
     @Override
     public List<E> find(DetachedCriteria dc) {

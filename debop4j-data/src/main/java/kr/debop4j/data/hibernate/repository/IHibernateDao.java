@@ -2,10 +2,7 @@ package kr.debop4j.data.hibernate.repository;
 
 import kr.debop4j.core.collection.IPagedList;
 import kr.debop4j.data.hibernate.HibernateParameter;
-import org.hibernate.Criteria;
-import org.hibernate.LockOptions;
-import org.hibernate.Query;
-import org.hibernate.Session;
+import org.hibernate.*;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Example;
 import org.hibernate.criterion.Order;
@@ -40,6 +37,18 @@ public interface IHibernateDao {
     <T> List<T> getIn(Class<T> clazz, Collection ids);
 
     <T> List<T> getIn(Class<T> clazz, Serializable[] ids);
+
+    ScrollableResults getScroll(DetachedCriteria dc);
+
+    ScrollableResults getScroll(DetachedCriteria dc, ScrollMode scrollMode);
+
+    ScrollableResults getScroll(Criteria criteria);
+
+    ScrollableResults getScroll(Criteria criteria, ScrollMode scrollMode);
+
+    ScrollableResults getScroll(Query query, HibernateParameter... parameters);
+
+    ScrollableResults getScroll(Query query, ScrollMode scrollMode, HibernateParameter... parameters);
 
     /**
      * 모든 엔티티를 필터링 없이 반환합니다.
