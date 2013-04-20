@@ -1,9 +1,27 @@
+/*
+ * Copyright 2011-2013 the original author or authors.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package kr.debop4j.core.io;
 
 import com.google.common.base.Splitter;
 import com.google.common.collect.Lists;
 import kr.debop4j.core.parallelism.AsyncTool;
 import kr.debop4j.core.tools.StringTool;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -31,7 +49,8 @@ import static kr.debop4j.core.tools.StringTool.listToString;
  */
 public class FileTool {
 
-    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(FileTool.class);
+    private static final Logger log = LoggerFactory.getLogger(FileTool.class);
+    private static final boolean isTraceEnabled = log.isTraceEnabled();
     private static final boolean isDebugEnabled = log.isDebugEnabled();
 
     public static final int DEFAULT_BUFFER_SIZE = 4096;
@@ -90,7 +109,12 @@ public class FileTool {
                 });
     }
 
+    /**
+     * 파일을 이동합니다.
+     */
     public static void move(Path src, Path dst) throws IOException {
+        if (isTraceEnabled)
+            log.trace("파일을 이동합니다. src=[{}], dst=[{}]", src, dst);
         Files.move(src,
                    dst,
                    StandardCopyOption.ATOMIC_MOVE,
@@ -99,18 +123,22 @@ public class FileTool {
     }
 
     public static void move(Path src, Path dst, StandardCopyOption... options) throws IOException {
+        if (isTraceEnabled)
+            log.trace("파일을 이동합니다. src=[{}], dst=[{}], options=[{}]", src, dst, StringTool.listToString(options));
         Files.move(src, dst, options);
     }
 
     public static Future<Void> moveAsync(final Path src, final Path dst, final StandardCopyOption... options) {
-        return
-                AsyncTool.startNew(new Callable<Void>() {
-                    @Override
-                    public Void call() throws Exception {
-                        move(src, dst, options);
-                        return null;
-                    }
-                });
+        if (isTraceEnabled)
+            log.trace("비동기 방식으로 파일을 이동합니다. src=[{}], dst=[{}], options=[{}]", src, dst, StringTool.listToString(options));
+
+        return AsyncTool.startNew(new Callable<Void>() {
+            @Override
+            public Void call() throws Exception {
+                move(src, dst, options);
+                return null;
+            }
+        });
     }
 
 
@@ -135,12 +163,14 @@ public class FileTool {
             Files.walkFileTree(directory, new SimpleFileVisitor<Path>() {
                 @Override
                 public FileVisitResult postVisitDirectory(Path dir, IOException exc) throws IOException {
+                    if (isTraceEnabled) log.trace("Directory 삭제 dir=[{}]", dir);
                     Files.delete(dir);
                     return FileVisitResult.CONTINUE;
                 }
 
                 @Override
                 public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
+                    if (isTraceEnabled) log.trace("파일 삭제 file=[{}]", file);
                     Files.delete(file);
                     return FileVisitResult.CONTINUE;
                 }
@@ -149,17 +179,21 @@ public class FileTool {
     }
 
     public static Future<Void> deleteDirectoryAsync(final Path directory, final boolean deep) {
-        return
-                AsyncTool.startNew(new Callable<Void>() {
-                    @Override
-                    public Void call() throws Exception {
-                        deleteDirectory(directory, deep);
-                        return null;
-                    }
-                });
+        if (isTraceEnabled)
+            log.trace("Directory를 삭제합니다. directory=[{}], deep=[{}]", directory, deep);
+
+        return AsyncTool.startNew(new Callable<Void>() {
+            @Override
+            public Void call() throws Exception {
+                deleteDirectory(directory, deep);
+                return null;
+            }
+        });
     }
 
     public static boolean exists(Path path, LinkOption... linkOptions) {
+        if (isTraceEnabled)
+            log.trace("파일 존재를 확인합니다. path=[{}], linkOptions=[{}]", path, listToString(linkOptions));
         return Files.exists(path, linkOptions);
     }
 
@@ -175,37 +209,34 @@ public class FileTool {
 
         if (isDebugEnabled)
             log.debug("비동기 방식으로 파일 정보를 읽어 byte array로 반환합니다. file=[{}], openOptions=[{}]",
-                      path, listToString(openOptions));
+                      path, StringTool.listToString(openOptions));
 
-        return
-                AsyncTool.startNew(new Callable<byte[]>() {
-                    @Override
-                    public byte[] call() throws Exception {
-                        ByteBuffer buffer = ByteBuffer.allocate(DEFAULT_BUFFER_SIZE);
-                        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        return AsyncTool.startNew(new Callable<byte[]>() {
+            @Override
+            public byte[] call() throws Exception {
+                ByteBuffer buffer = ByteBuffer.allocate(DEFAULT_BUFFER_SIZE);
+                ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
 
-                        try (AsynchronousFileChannel fileChannel = AsynchronousFileChannel.open(path, openOptions)) {
-                            boolean completed = false;
-                            do {
-                                Future<Integer> readCountFuture = fileChannel.read(buffer, 0);
-                                int readCount = readCountFuture.get();
-                                completed = readCount == 0;
+                try (AsynchronousFileChannel fileChannel = AsynchronousFileChannel.open(path, openOptions)) {
+                    boolean completed = false;
+                    do {
+                        Future<Integer> readCountFuture = fileChannel.read(buffer, 0);
+                        int readCount = readCountFuture.get();
+                        completed = readCount == 0;
 
-                                if (!completed) {
-                                    outputStream.write(buffer.array(), 0, readCount);
-                                    buffer.clear();
-                                }
-                            } while (!completed);
-
-                        } catch (IOException | InterruptedException | ExecutionException e) {
-                            if (log.isErrorEnabled())
-                                log.error("파일 내용을 읽어오는데 실패했습니다.", e);
-                            throw new RuntimeException(e);
+                        if (!completed) {
+                            outputStream.write(buffer.array(), 0, readCount);
+                            buffer.clear();
                         }
+                    } while (!completed);
 
-                        return outputStream.toByteArray();
-                    }
-                });
+                } catch (IOException | InterruptedException | ExecutionException e) {
+                    log.error("파일 내용을 읽어오는데 실패했습니다.", e);
+                    throw new RuntimeException(e);
+                }
+                return outputStream.toByteArray();
+            }
+        });
     }
 
     public static List<String> readAllLines(Path path) throws IOException {
@@ -213,8 +244,8 @@ public class FileTool {
     }
 
     public static List<String> readAllLines(Path path, Charset cs) throws IOException {
-        if (isDebugEnabled)
-            log.debug("파일 내용을 문자열로 읽어드립니다. path=[{}], charset=[{}]", path, cs);
+        if (isTraceEnabled)
+            log.trace("파일 내용을 문자열로 읽어드립니다. path=[{}], charset=[{}]", path, cs);
         return Files.readAllLines(path, cs);
     }
 
@@ -225,6 +256,9 @@ public class FileTool {
     public static Future<List<String>> readAllLinesAsync(final Path path,
                                                          final Charset cs,
                                                          final OpenOption... openOptions) {
+        if (isTraceEnabled)
+            log.trace("파일 내용을 문자열로 읽어드립니다. path=[{}], charset=[{}], openOption=[{}]", path, cs, listToString(openOptions));
+
         return AsyncTool.startNew(new Callable<List<String>>() {
             @Override
             public List<String> call() throws Exception {
@@ -239,9 +273,8 @@ public class FileTool {
     }
 
     public static void write(Path target, byte[] bytes, OpenOption... openOptions) throws IOException {
-        if (isDebugEnabled)
-            log.debug("파일에 binary 형태의 정보를 씁니다. target=[{}], openOptions=[{}]",
-                      target, listToString(openOptions));
+        if (isTraceEnabled)
+            log.trace("파일에 binary 형태의 정보를 씁니다. target=[{}], openOptions=[{}]", target, listToString(openOptions));
 
         Files.write(target, bytes, openOptions);
     }
@@ -250,8 +283,8 @@ public class FileTool {
                              Iterable<String> lines,
                              Charset cs,
                              OpenOption... openOptions) throws IOException {
-        if (isDebugEnabled)
-            log.debug("파일에 텍스트 정보를 씁니다. target=[{}], lines=[{}], charset=[{}], openOptions=[{}]",
+        if (isTraceEnabled)
+            log.trace("파일에 텍스트 정보를 씁니다. target=[{}], lines=[{}], charset=[{}], openOptions=[{}]",
                       target, listToString(lines), cs, listToString(openOptions));
         Files.write(target, lines, cs, openOptions);
     }
@@ -260,9 +293,8 @@ public class FileTool {
     public static Future<Void> writeAsync(final Path target,
                                           final byte[] bytes,
                                           final OpenOption... openOptions) {
-        if (isDebugEnabled)
-            log.debug("비동기 방식으로 데이터를 파일에 씁니다. target=[{}], openOptions=[{}]",
-                      target, listToString(openOptions));
+        if (isTraceEnabled)
+            log.trace("비동기 방식으로 데이터를 파일에 씁니다. target=[{}], openOptions=[{}]", target, listToString(openOptions));
 
         return AsyncTool.startNew(new Callable<Void>() {
             @Override
