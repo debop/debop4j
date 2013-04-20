@@ -1,6 +1,5 @@
 package kr.debop4j.search.hibernate;
 
-import kr.debop4j.core.Guard;
 import kr.debop4j.data.hibernate.tools.HibernateTool;
 import lombok.extern.slf4j.Slf4j;
 import org.hibernate.SessionFactory;
@@ -20,19 +19,20 @@ public class SearchTool {
 
     /**
      * Hibernate-Search의 FullTextIndexEventListener를 SessionFactory에 등록합니다.
-     *
-     * @param sessionFactory
      */
     public static void registerFullTextIndexEventListener(SessionFactory sessionFactory, FullTextIndexEventListener listener) {
+        assert sessionFactory != null;
+        log.info("sessionFactory에 FullTestIndexEventListener를 등록합니다...");
 
-        Guard.shouldNotBeNull(sessionFactory, "sessionFactory");
-        if (log.isDebugEnabled())
-            log.debug("sessionFactory에 FullTestIndexEventListener를 등록합니다...");
-
-        HibernateTool.registerEventListener(sessionFactory, listener,
-                                            EventType.POST_UPDATE,
-                                            EventType.POST_INSERT,
-                                            EventType.POST_DELETE,
-                                            EventType.FLUSH);
+        try {
+            HibernateTool.registerEventListener(sessionFactory, listener,
+                                                EventType.POST_UPDATE,
+                                                EventType.POST_INSERT,
+                                                EventType.POST_DELETE,
+                                                EventType.FLUSH);
+        } catch (Throwable t) {
+            log.warn("listener를 등록하는데 실패했습니다.", t);
+            throw new RuntimeException(t);
+        }
     }
 }
