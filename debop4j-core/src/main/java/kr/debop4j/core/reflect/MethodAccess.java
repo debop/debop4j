@@ -1,9 +1,26 @@
+/*
+ * Copyright 2011-2013 the original author or authors.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package kr.debop4j.core.reflect;
 
 import com.google.common.collect.Lists;
 import kr.debop4j.core.Guard;
 import kr.debop4j.core.tools.StringTool;
 import lombok.Getter;
+import lombok.extern.slf4j.Slf4j;
 import org.objectweb.asm.*;
 
 import java.lang.reflect.Method;
@@ -19,10 +36,8 @@ import static org.objectweb.asm.Opcodes.*;
  * @author sunghyouk.bae@gmail.com
  * @since 13. 1. 21
  */
+@Slf4j
 abstract public class MethodAccess {
-
-    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(MethodAccess.class);
-    private static final boolean isDebugEnabled = log.isDebugEnabled();
 
     @Getter
     private String[] methodNames;
@@ -32,8 +47,8 @@ abstract public class MethodAccess {
     abstract public Object invoke(Object instance, int methodIndex, Object... args);
 
     public Object invoke(Object instance, String methodName, Object... args) {
-        if (log.isDebugEnabled())
-            log.debug("객체[{}]의 메소드[{}]를 실행합니다. args=[{}]", instance, methodName, StringTool.listToString(args));
+        if (log.isTraceEnabled())
+            log.trace("객체[{}]의 메소드[{}]를 실행합니다. args=[{}]", instance, methodName, StringTool.listToString(args));
         return invoke(instance, getIndex(methodName), args);
     }
 
@@ -86,7 +101,7 @@ abstract public class MethodAccess {
             accessClassName = ReflectConsts.BASE_PACKAGE + "." + accessClassName;
         Class accessClass = null;
 
-        AccessClassLoader loader = AccessClassLoader.get(type);
+        AccessClassLoader loader = AccessClassLoader.create(type);
         synchronized (loader) {
             try {
                 accessClass = loader.loadClass(accessClassName);

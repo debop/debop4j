@@ -1,3 +1,19 @@
+/*
+ * Copyright 2011-2013 the original author or authors.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package kr.debop4j.core.reflect;
 
 import com.google.common.collect.Lists;
@@ -8,7 +24,7 @@ import java.lang.reflect.Method;
 import java.util.List;
 
 /**
- * kr.debop4j.core.reflect.AccessClassLoader
+ * AccessClassLoader
  *
  * @author sunghyouk.bae@gmail.com
  * @since 13. 1. 21
@@ -18,7 +34,12 @@ class AccessClassLoader extends ClassLoader {
 
     private static final List<AccessClassLoader> accessClassLoaders = Lists.newArrayList();
 
-    static AccessClassLoader get(Class type) {
+    /**
+     * AccessClassLoger를 생성합니다.
+     */
+    static AccessClassLoader create(Class type) {
+        if (log.isDebugEnabled())
+            log.debug("AccessClassLoader를 생성합니다. type=[{}]", type);
         ClassLoader parent = type.getClassLoader();
 
         // com.google.common.collect.Iterables 를 사용하여 변경해 보세요.
@@ -51,13 +72,15 @@ class AccessClassLoader extends ClassLoader {
         Guard.shouldNotBeEmpty(name, "name");
         Guard.shouldNotBeNull(bytes, "bytes");
         try {
-            Method method =
-                    ClassLoader.class.getDeclaredMethod("defineClass",
-                                                        new Class[]{ String.class, byte[].class, int.class, int.class });
+            Method method = ClassLoader.class
+                    .getDeclaredMethod("defineClass",
+                                       new Class[]{ String.class, byte[].class, int.class, int.class });
             method.setAccessible(true);
-            return (Class) method.invoke(getParent(), name, bytes, Integer.valueOf(0), Integer.valueOf(bytes.length));
-
-        } catch (Exception ignored) {}
+            return (Class) method.invoke(getParent(), name, bytes, 0, bytes.length);
+        } catch (Exception ignored) {
+            if (log.isDebugEnabled())
+                log.debug("defineClass 메소드를 추출하고, 호출하는데 실패했습니다. 단 무시합니다.", ignored);
+        }
         return defineClass(name, bytes, 0, bytes.length);
     }
 }

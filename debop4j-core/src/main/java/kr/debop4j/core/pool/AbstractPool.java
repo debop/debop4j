@@ -1,3 +1,19 @@
+/*
+ * Copyright 2011-2013 the original author or authors.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package kr.debop4j.core.pool;
 
 import lombok.extern.slf4j.Slf4j;
@@ -23,8 +39,6 @@ public abstract class AbstractPool<T> implements AutoCloseable {
 
     /**
      * 풀에서 리소스를 얻습니다.
-     *
-     * @return
      */
     @SuppressWarnings("unchecked")
     public T getResource() {
@@ -47,8 +61,6 @@ public abstract class AbstractPool<T> implements AutoCloseable {
 
     /**
      * 재사용을 위해 풀에 리소스를 반환합니다.
-     *
-     * @param resource
      */
     public void returnResource(final T resource) {
         returnResourceObject(resource);
@@ -56,8 +68,8 @@ public abstract class AbstractPool<T> implements AutoCloseable {
 
     @SuppressWarnings("unchecked")
     protected void returnResourceObject(final Object resource) {
-        if (log.isDebugEnabled())
-            log.debug("Pool에 resource 를 반환합니다. resource=[{}]", resource);
+        if (log.isTraceEnabled())
+            log.trace("Pool에 resource 를 반환합니다. resource=[{}]", resource);
         try {
             pool.returnObject(resource);
         } catch (Exception e) {
@@ -68,8 +80,6 @@ public abstract class AbstractPool<T> implements AutoCloseable {
 
     /**
      * 재사용할 수 없는 리소스는 폐기하도록 합니다.
-     *
-     * @param resource
      */
     public void returnBrokenResource(final T resource) {
         returnBrokenResourceObject(resource);
@@ -89,8 +99,8 @@ public abstract class AbstractPool<T> implements AutoCloseable {
      * 풀을 제거합니다. 내부의 남아있는 모든 리소스를 제거합니다.
      */
     public void destroy() {
-        if (log.isDebugEnabled())
-            log.debug("Pool을 제거합니다...");
+        if (log.isTraceEnabled())
+            log.trace("Pool을 제거합니다...");
         try {
             pool.close();
             pool = null;
@@ -98,8 +108,8 @@ public abstract class AbstractPool<T> implements AutoCloseable {
             log.error("pool을 제거하는데 실패했습니다.", e);
             throw new RuntimeException(e);
         }
-        if (log.isDebugEnabled())
-            log.debug("Pool을 제거했습니다.");
+        if (log.isTraceEnabled())
+            log.trace("Pool을 제거했습니다.");
     }
 
     public void close() throws Exception {

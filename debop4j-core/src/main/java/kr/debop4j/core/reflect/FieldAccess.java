@@ -1,7 +1,24 @@
+/*
+ * Copyright 2011-2013 the original author or authors.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package kr.debop4j.core.reflect;
 
 import com.google.common.collect.Lists;
 import kr.debop4j.core.Guard;
+import lombok.extern.slf4j.Slf4j;
 import org.objectweb.asm.ClassWriter;
 import org.objectweb.asm.Label;
 import org.objectweb.asm.MethodVisitor;
@@ -14,15 +31,13 @@ import java.util.List;
 import static org.objectweb.asm.Opcodes.*;
 
 /**
- * 객체의 속성에 접근하기 위한 Accessor 입니다. (속성에 대해 get, set을 수행할 수 있습니다)
+ * 객체의 속성에 접근하기 위한 Accessor 입니다. (속성에 대해 create, set을 수행할 수 있습니다)
  *
  * @author sunghyouk.bae@gmail.com
  * @since 13. 1. 21
  */
+@Slf4j
 abstract public class FieldAccess {
-
-    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(FieldAccess.class);
-    private static final boolean isDebugEnabled = log.isDebugEnabled();
 
     private String[] fieldNames;
 
@@ -33,14 +48,14 @@ abstract public class FieldAccess {
     }
 
     public void set(Object instance, String fieldName, Object value) {
-        if (log.isDebugEnabled())
-            log.debug("객체[{}]의 속성[{}]에 값[{}] 을 설정합니다.", instance, fieldName, value);
+        if (log.isTraceEnabled())
+            log.trace("객체[{}]의 속성[{}]에 값[{}] 을 설정합니다.", instance, fieldName, value);
         set(instance, getIndex(fieldName), value);
     }
 
     public Object get(Object instance, String fieldName) {
-        if (log.isDebugEnabled())
-            log.debug("객체[{}]의 속성[{}] 값을 조회합니다.", instance, fieldName);
+        if (log.isTraceEnabled())
+            log.trace("객체[{}]의 속성[{}] 값을 조회합니다.", instance, fieldName);
         return get(instance, getIndex(fieldName));
     }
 
@@ -111,7 +126,7 @@ abstract public class FieldAccess {
         if (accessClassName.startsWith("java.")) accessClassName = ReflectConsts.BASE_PACKAGE + "." + accessClassName;
         Class accessClass = null;
 
-        AccessClassLoader loader = AccessClassLoader.get(type);
+        AccessClassLoader loader = AccessClassLoader.create(type);
         synchronized (loader) {
             try {
                 accessClass = loader.loadClass(accessClassName);
@@ -244,7 +259,7 @@ abstract public class FieldAccess {
 
     static private void insertGetObject(ClassWriter cw, String classNameInternal, List<Field> fields) {
         int maxStack = 6;
-        MethodVisitor mv = cw.visitMethod(ACC_PUBLIC, "get", "(Ljava/lang/Object;I)Ljava/lang/Object;", null, null);
+        MethodVisitor mv = cw.visitMethod(ACC_PUBLIC, "create", "(Ljava/lang/Object;I)Ljava/lang/Object;", null, null);
         mv.visitCode();
         mv.visitVarInsn(ILOAD, 2);
 
@@ -397,8 +412,7 @@ abstract public class FieldAccess {
                 loadValueInstruction = ALOAD;
                 break;
         }
-        MethodVisitor mv = cw.visitMethod(ACC_PUBLIC, setterMethodName, "(Ljava/lang/Object;I" + typeNameInternal + ")V", null,
-                                          null);
+        MethodVisitor mv = cw.visitMethod(ACC_PUBLIC, setterMethodName, "(Ljava/lang/Object;I" + typeNameInternal + ")V", null, null);
         mv.visitCode();
         mv.visitVarInsn(ILOAD, 2);
 
@@ -483,7 +497,7 @@ abstract public class FieldAccess {
                 returnValueInstruction = DRETURN;
                 break;
             default:
-                getterMethodName = "get";
+                getterMethodName = "create";
                 returnValueInstruction = ARETURN;
                 break;
         }

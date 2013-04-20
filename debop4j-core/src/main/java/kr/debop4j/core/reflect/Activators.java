@@ -1,9 +1,26 @@
+/*
+ * Copyright 2011-2013 the original author or authors.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package kr.debop4j.core.reflect;
 
 import com.google.common.collect.Lists;
 import kr.debop4j.core.Guard;
 import kr.debop4j.core.tools.ArrayTool;
 import kr.debop4j.core.tools.StringTool;
+import lombok.extern.slf4j.Slf4j;
 
 import java.lang.reflect.Constructor;
 import java.util.List;
@@ -14,10 +31,8 @@ import java.util.List;
  * @author sunghyouk.bae@gmail.com
  * @since 12. 9. 12
  */
+@Slf4j
 public final class Activators {
-
-    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(Activators.class);
-    private static final boolean isDebugEnabled = log.isDebugEnabled();
 
     private Activators() { }
 
@@ -38,14 +53,13 @@ public final class Activators {
      */
     public static <T> T createInstance(Class<T> clazz) {
         Guard.shouldNotBeNull(clazz, "clazz");
-        if (log.isDebugEnabled())
-            log.debug("수형 [{}] 의 새로운 인스턴스를 생성합니다...", clazz.getName());
+        if (log.isTraceEnabled())
+            log.trace("수형 [{}] 의 새로운 인스턴스를 생성합니다...", clazz.getName());
 
         try {
             return (T) clazz.newInstance();
         } catch (Exception e) {
-            if (log.isWarnEnabled())
-                log.warn(clazz.getName() + " 수형을 생성하는데 실패했습니다.", e);
+            log.warn(clazz.getName() + " 수형을 생성하는데 실패했습니다.", e);
             return null;
         }
     }
@@ -54,9 +68,8 @@ public final class Activators {
     @SuppressWarnings("unchecked")
     public static <T> T createInstance(Class<T> clazz, Object... initArgs) {
         Guard.shouldNotBeNull(clazz, "clazz");
-        if (log.isDebugEnabled())
-            log.debug("[{}] 수형의 객체를 생성합니다. initArgs=[{}]",
-                      clazz.getName(), StringTool.listToString(initArgs));
+        if (log.isTraceEnabled())
+            log.trace("[{}] 수형의 객체를 생성합니다. initArgs=[{}]", clazz.getName(), StringTool.listToString(initArgs));
         if (initArgs == null || initArgs.length == 0)
             return createInstance(clazz);
 
@@ -83,16 +96,15 @@ public final class Activators {
                 }
             }
         } catch (Exception e) {
-            if (log.isErrorEnabled())
-                log.error(clazz.getName() + " 수형을 생성하는데 실패했습니다.", e);
+            log.error(clazz.getName() + " 수형을 생성하는데 실패했습니다.", e);
             throw new RuntimeException(e);
         }
         return null;
     }
 
     public static <T> Constructor<T> getConstructor(Class<T> clazz, Class<?>... parameterTypes) {
-        if (log.isDebugEnabled())
-            log.debug("[{}] 수형의 생성자를 구합니다. parameterTypes=[{}]",
+        if (log.isTraceEnabled())
+            log.trace("[{}] 수형의 생성자를 구합니다. parameterTypes=[{}]",
                       clazz.getName(), StringTool.listToString(parameterTypes));
         try {
             return clazz.getDeclaredConstructor(parameterTypes);

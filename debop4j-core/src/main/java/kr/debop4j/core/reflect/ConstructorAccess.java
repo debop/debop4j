@@ -1,7 +1,24 @@
+/*
+ * Copyright 2011-2013 the original author or authors.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package kr.debop4j.core.reflect;
 
 import kr.debop4j.core.Guard;
 import lombok.Getter;
+import lombok.extern.slf4j.Slf4j;
 import org.objectweb.asm.ClassWriter;
 import org.objectweb.asm.MethodVisitor;
 
@@ -15,10 +32,8 @@ import static org.objectweb.asm.Opcodes.*;
  * @author sunghyouk.bae@gmail.com
  * @since 13. 1. 21
  */
+@Slf4j
 public abstract class ConstructorAccess<T> {
-
-    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ConstructorAccess.class);
-    private static final boolean isDebugEnabled = log.isDebugEnabled();
 
     @Getter
     boolean nonStaticMemberClass;
@@ -39,8 +54,8 @@ public abstract class ConstructorAccess<T> {
     @SuppressWarnings("unchecked")
     static public <T> ConstructorAccess<T> get(Class<T> type) {
         Guard.shouldNotBeNull(type, "type");
-        if (log.isDebugEnabled())
-            log.debug("수형[{}]의 생성자에 대한 접근자를 조회합니다.", type.getName());
+        if (log.isTraceEnabled())
+            log.trace("수형[{}]의 생성자에 대한 접근자를 조회합니다.", type.getName());
 
         Class enclosingType = type.getEnclosingClass();
         boolean isNonStaticMemberClass = enclosingType != null && type.isMemberClass() && !Modifier.isStatic(type.getModifiers());
@@ -51,7 +66,7 @@ public abstract class ConstructorAccess<T> {
             accessClassName = ReflectConsts.BASE_PACKAGE + "." + accessClassName;
 
         Class accessClass = null;
-        AccessClassLoader loader = AccessClassLoader.get(type);
+        AccessClassLoader loader = AccessClassLoader.create(type);
 
         synchronized (loader) {
             try {
@@ -92,8 +107,8 @@ public abstract class ConstructorAccess<T> {
         try {
             ConstructorAccess<T> access = (ConstructorAccess<T>) accessClass.newInstance();
             access.nonStaticMemberClass = isNonStaticMemberClass;
-            if (log.isDebugEnabled())
-                log.debug("기본 생성자에 접근 가능한 ConstructorAccess 를 반환합니다. accessClassName=[{}]", accessClassName);
+            if (log.isTraceEnabled())
+                log.trace("기본 생성자에 접근 가능한 ConstructorAccess 를 반환합니다. accessClassName=[{}]", accessClassName);
             return access;
         } catch (Exception ex) {
             throw new RuntimeException("Error constructing constructor access class: [" + accessClassName + "]", ex);

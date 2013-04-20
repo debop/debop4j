@@ -1,3 +1,19 @@
+/*
+ * Copyright 2011-2013 the original author or authors.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package kr.debop4j.core.spring;
 
 import kr.debop4j.core.AutoCloseableAction;
@@ -81,8 +97,8 @@ public final class Springs {
     }
 
     public static synchronized void init(String... resourceLocations) {
-        if (log.isDebugEnabled())
-            log.debug("Springs Context 를 초기화합니다. resourceLocations=[{}]", StringTool.listToString(resourceLocations));
+        if (log.isInfoEnabled())
+            log.info("Springs Context 를 초기화합니다. resourceLocations=[{}]", StringTool.listToString(resourceLocations));
         init(new GenericXmlApplicationContext(resourceLocations));
     }
 
@@ -150,8 +166,8 @@ public final class Springs {
             if (getLocalContextStack().size() == 0)
                 Local.put(LOCAL_SPRING_CONTEXT, null);
 
-            if (log.isDebugEnabled())
-                log.debug("Local Application Context 를 Reset 했습니다.");
+            if (log.isInfoEnabled())
+                log.info("Local Application Context 를 Reset 했습니다.");
             return;
         }
 
@@ -176,7 +192,6 @@ public final class Springs {
 
     public static synchronized Object getBean(String name) {
         assertInitialized();
-        Guard.shouldNotBeEmpty(name, "name");
         if (log.isDebugEnabled())
             log.debug("ApplicationContext로부터 Bean을 가져옵니다. beanName=[{}]", name);
 
@@ -185,8 +200,6 @@ public final class Springs {
 
     public static synchronized Object getBean(String name, Object... args) {
         assertInitialized();
-        Guard.shouldNotBeEmpty(name, "name");
-
         if (log.isDebugEnabled())
             log.debug("ApplicationContext로부터 Bean을 가져옵니다. beanName=[{}], args=[{}]",
                       name, StringTool.listToString(args));
@@ -196,16 +209,13 @@ public final class Springs {
 
     public static synchronized <T> T getBean(Class<T> beanClass) {
         assertInitialized();
-        Guard.shouldNotBeNull(beanClass, "beanClass");
         if (log.isDebugEnabled())
             log.debug("ApplicationContext로부터 Bean을 가져옵니다. beanClass=[{}]", beanClass.getName());
-
         return getContext().getBean(beanClass);
     }
 
     public static synchronized <T> T getBean(String name, Class<T> beanClass) {
-        Guard.shouldNotBeEmpty(name, "name");
-        Guard.shouldNotBeNull(beanClass, "beanClass");
+        assertInitialized();
         if (log.isDebugEnabled())
             log.debug("ApplicationContext로부터 Bean을 가져옵니다. beanName=[{}], beanClass=[{}]", name, beanClass);
 
@@ -213,9 +223,7 @@ public final class Springs {
     }
 
     public static synchronized <T> String[] getBeanNamesForType(Class<T> beanClass) {
-        Guard.shouldNotBeNull(beanClass, "beanClass");
         return getBeanNamesForType(beanClass, true, true);
-
     }
 
     public static synchronized <T> String[] getBeanNamesForType(Class<T> beanClass,
@@ -266,7 +274,7 @@ public final class Springs {
     public static synchronized <T> Map<String, T> getBeansOfType(Class<T> beanClass,
                                                                  boolean includeNonSingletons,
                                                                  boolean allowEagerInit) {
-        Guard.shouldNotBeNull(beanClass, "beanClass");
+        assert beanClass != null;
         if (log.isDebugEnabled())
             log.debug("해당 수형의 모든 Bean을 조회합니다. beanClass=[{}], includeNonSingletons=[{}], allowEagerInit=[{}]",
                       beanClass.getName(), includeNonSingletons, allowEagerInit);
@@ -325,7 +333,7 @@ public final class Springs {
     }
 
     public static synchronized <T> boolean isRegisteredBean(Class<T> beanClass) {
-        Guard.shouldNotBeNull(beanClass, "beanClass");
+        assert beanClass != null;
         try {
             return (getContext().getBean(beanClass) != null);
         } catch (Exception e) {
@@ -341,16 +349,13 @@ public final class Springs {
                                                         Class<T> beanClass,
                                                         String scope,
                                                         PropertyValue... propertyValues) {
-        Guard.shouldNotBeNull(beanClass, "beanClass");
-
+        assert beanClass != null;
         BeanDefinition definition = new RootBeanDefinition(beanClass);
         definition.setScope(scope);
 
         for (PropertyValue pv : propertyValues) {
             definition.getPropertyValues().addPropertyValue(pv);
         }
-
-
         return registerBean(beanName, definition);
     }
 
@@ -361,8 +366,8 @@ public final class Springs {
         if (isBeanNameInUse(beanName))
             throw new BeanDefinitionValidationException("이미 등록된 Bean입니다. beanName=" + beanName);
 
-        if (log.isDebugEnabled())
-            log.debug("새로운 Bean을 등록합니다. beanName=[{}], beanDefinition=[{}]", beanName, beanDefinition);
+        if (log.isInfoEnabled())
+            log.info("새로운 Bean을 등록합니다. beanName=[{}], beanDefinition=[{}]", beanName, beanDefinition);
 
         try {
             getContext().registerBeanDefinition(beanName, beanDefinition);
@@ -390,7 +395,7 @@ public final class Springs {
     }
 
     public static synchronized <T> boolean registerSingletonBean(Class<T> beanClass, PropertyValue... pvs) {
-        Guard.shouldNotBeNull(beanClass, "beanClass");
+        assert beanClass != null;
         return registerSingletonBean(beanClass.getName(), beanClass, pvs);
     }
 
@@ -399,7 +404,7 @@ public final class Springs {
     }
 
     public static synchronized <T> boolean registerPrototypeBean(Class<T> beanClass, PropertyValue... pvs) {
-        Guard.shouldNotBeNull(beanClass, "beanClass");
+        assert beanClass != null;
         return registerPrototypeBean(beanClass.getName(), beanClass, pvs);
     }
 
@@ -412,14 +417,15 @@ public final class Springs {
 
         if (isBeanNameInUse(beanName)) {
             if (log.isDebugEnabled())
-                log.debug("ApplicationContext에서 name=[{}] 인 Bean을 제거합니다.", beanName);
+                log.debug("ApplicationContext에서 name=[{}]인 Bean을 제거합니다.", beanName);
             getContext().removeBeanDefinition(beanName);
         }
     }
 
     public static synchronized <T> void removeBean(Class<T> beanClass) {
+        assert beanClass != null;
         if (log.isDebugEnabled())
-            log.debug("Bean 형식 [{}] 의 모든 Bean을 ApplicationContext에서 제거합니다.", beanClass.getName());
+            log.debug("Bean 형식 [{}]의 모든 Bean을 ApplicationContext에서 제거합니다.", beanClass.getName());
 
         String[] beanNames = getContext().getBeanNamesForType(beanClass, true, true);
         for (String beanName : beanNames)
@@ -431,8 +437,7 @@ public final class Springs {
         try {
             return getBean(beanName);
         } catch (Exception e) {
-            if (log.isWarnEnabled())
-                log.warn("bean을 찾는데 실패했습니다. null을 반환합니다. beanName=" + beanName, e);
+            log.warn("bean을 찾는데 실패했습니다. null을 반환합니다. beanName=" + beanName, e);
             return null;
         }
     }
@@ -442,8 +447,7 @@ public final class Springs {
         try {
             return getBean(beanName, args);
         } catch (Exception e) {
-            if (log.isWarnEnabled())
-                log.warn("bean을 찾는데 실패했습니다. null을 반환합니다. beanName=" + beanName, e);
+            log.warn("bean을 찾는데 실패했습니다. null을 반환합니다. beanName=" + beanName, e);
             return null;
         }
     }
@@ -453,8 +457,7 @@ public final class Springs {
         try {
             return getBean(beanClass);
         } catch (Exception e) {
-            if (log.isWarnEnabled())
-                log.warn("bean을 찾는데 실패했습니다. null을 반환합니다. beanClass=" + beanClass.getName(), e);
+            log.warn("bean을 찾는데 실패했습니다. null을 반환합니다. beanClass=" + beanClass.getName(), e);
             return null;
         }
     }
@@ -464,8 +467,7 @@ public final class Springs {
         try {
             return getBean(beanName, beanClass);
         } catch (Exception e) {
-            if (log.isWarnEnabled())
-                log.warn("bean을 찾는데 실패했습니다. null을 반환합니다. beanName=" + beanName, e);
+            log.warn("bean을 찾는데 실패했습니다. null을 반환합니다. beanName=" + beanName, e);
             return null;
         }
     }
