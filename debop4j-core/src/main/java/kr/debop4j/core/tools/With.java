@@ -1,9 +1,24 @@
+/*
+ * Copyright 2011-2013 the original author or authors.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package kr.debop4j.core.tools;
 
 import kr.debop4j.core.Action;
 import kr.debop4j.core.Action1;
 import kr.debop4j.core.Function;
-import kr.debop4j.core.Guard;
 import kr.debop4j.core.parallelism.AsyncTool;
 import lombok.extern.slf4j.Slf4j;
 
@@ -34,15 +49,14 @@ public final class With {
     }
 
     public static void tryAction(Action action, Action1<Exception> exceptionAction, Action finallyAction) {
-        Guard.shouldNotBeNull(action, "action");
+        assert action != null;
         try {
             action.perform();
         } catch (Exception e) {
             if (exceptionAction != null) {
                 exceptionAction.perform(e);
             } else {
-                if (log.isWarnEnabled())
-                    log.warn("예외가 발생했지만, 무시합니다^^", e);
+                log.warn("예외가 발생했지만, 무시합니다^^", e);
             }
         } finally {
             if (finallyAction != null)
@@ -63,15 +77,14 @@ public final class With {
     }
 
     public static <T> void tryAction(Action1<T> action, final T arg, Action1<Exception> exceptionAction, Action finallyAction) {
-        Guard.shouldNotBeNull(action, "action");
+        assert action != null;
         try {
             action.perform(arg);
         } catch (Exception e) {
             if (exceptionAction != null) {
                 exceptionAction.perform(e);
             } else {
-                if (log.isWarnEnabled())
-                    log.warn("예외가 발생했지만, 무시합니다^^", e);
+                log.warn("예외가 발생했지만, 무시합니다^^", e);
             }
         } finally {
             if (finallyAction != null)
@@ -91,15 +104,14 @@ public final class With {
                                     Function<R> valueFactory,
                                     Action1<Exception> exceptionAction,
                                     Action finallyAction) {
-        Guard.shouldNotBeNull(func, "func");
+        assert func != null;
         try {
             return func.execute();
         } catch (Exception e) {
             if (exceptionAction != null) {
                 exceptionAction.perform(e);
             } else {
-                if (log.isWarnEnabled())
-                    log.warn("작업 중에 예외가 발생했지만, 무시합니다^^", e);
+                log.warn("작업 중에 예외가 발생했지만, 무시합니다^^", e);
             }
         } finally {
             if (finallyAction != null)
@@ -108,33 +120,61 @@ public final class With {
         return (valueFactory != null) ? valueFactory.execute() : null;
     }
 
-    public static void tryActionAsync(final Action action) {
-        tryActionAsync(action, null, null);
+    public static Future<Void> tryActionAsync(final Action action) {
+        return tryActionAsync(action, null, null);
     }
 
-    public static void tryActionAsync(final Action action, Action1<Exception> exceptionAction, Action finallyAction) {
-
-        Guard.shouldNotBeNull(action, "action");
-        try {
-            Future<Void> future =
-                    AsyncTool.startNew(new Callable<Void>() {
-                        @Override
-                        public Void call() throws Exception {
-                            action.perform();
-                            return null;
-                        }
-                    });
-            future.get();
-        } catch (Exception e) {
-            if (exceptionAction != null) {
-                exceptionAction.perform(e);
-            } else {
-                if (log.isWarnEnabled())
-                    log.warn("작업 중에 예외가 발생했지만 무시합니다^^", e);
+    public static Future<Void> tryActionAsync(final Action action,
+                                              final Action1<Exception> exceptionAction,
+                                              final Action finallyAction) {
+        assert action != null;
+        return AsyncTool.startNew(new Callable<Void>() {
+            @Override
+            public Void call() throws Exception {
+                try {
+                    action.perform();
+                } catch (Exception e) {
+                    if (exceptionAction != null) {
+                        exceptionAction.perform(e);
+                    } else {
+                        log.warn("작업 중에 예외가 발생했지만 무시합니다^^", e);
+                    }
+                } finally {
+                    if (finallyAction != null)
+                        finallyAction.perform();
+                }
+                return null;
             }
-        } finally {
-            if (finallyAction != null)
-                finallyAction.perform();
-        }
+        });
+    }
+
+    public static <R> Future<R> tryFunctionAsync(final Function<R> func) {
+        return tryFunctionAsync(func, null, null, null);
+    }
+
+    public static <R> Future<R> tryFunctionAsync(final Function<R> func,
+                                                 final Function<R> valueFactory,
+                                                 final Action1<Exception> exceptionAction,
+                                                 final Action finallyAction) {
+        assert func != null;
+        return AsyncTool.startNew(new Callable<R>() {
+            @Override
+            public R call() throws Exception {
+                try {
+                    return func.execute();
+                } catch (Exception e) {
+                    if (exceptionAction != null) {
+                        exceptionAction.perform(e);
+                    } else {
+                        log.warn("작업 중에 예외가 발생했지만 무시합니다^^", e);
+                    }
+                } finally {
+                    if (finallyAction != null)
+                        finallyAction.perform();
+                }
+                return (valueFactory != null) ? valueFactory.execute() : null;
+            }
+        });
+
     }
 }

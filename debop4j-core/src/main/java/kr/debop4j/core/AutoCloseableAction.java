@@ -1,3 +1,19 @@
+/*
+ * Copyright 2011-2013 the original author or authors.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package kr.debop4j.core;
 
 import lombok.Getter;
@@ -18,7 +34,7 @@ public class AutoCloseableAction implements AutoCloseable {
     protected boolean closed;
 
     public AutoCloseableAction(final Runnable action) {
-        Guard.shouldNotBeNull(action, "action");
+        assert action != null;
         this.action = action;
         this.closed = false;
     }
@@ -29,18 +45,17 @@ public class AutoCloseableAction implements AutoCloseable {
             return;
 
         try {
-            if (log.isDebugEnabled())
-                log.debug("AutoCloseable의 close 작업을 수행합니다...");
+            if (log.isTraceEnabled())
+                log.trace("AutoCloseable의 close 작업을 수행합니다...");
 
             if (action != null)
                 action.run();
 
-            if (log.isDebugEnabled())
-                log.debug("AutoCloseable의 close 작업을 완료했습니다.");
+            if (log.isTraceEnabled())
+                log.trace("AutoCloseable의 close 작업을 완료했습니다.");
 
         } catch (Exception e) {
-            if (log.isWarnEnabled())
-                log.warn("AutoClosesable의 close 작업에 예외가 발생했습니다. 예외는 무시됩니다.", e);
+            log.warn("AutoClosesable의 close 작업에 예외가 발생했습니다. 예외는 무시됩니다.", e);
         } finally {
             closed = true;
         }
