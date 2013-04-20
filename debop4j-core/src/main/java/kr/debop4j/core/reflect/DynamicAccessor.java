@@ -168,9 +168,8 @@ public class DynamicAccessor<T> {
         try {
             return (T) invoke(instance, methodName, args);
         } catch (Exception ignored) {
-            if (log.isWarnEnabled())
-                log.warn("메소드 실행에 실패했습니다. 기본값을 반환합니다. methodName=[{}], defaultValue=[{}], args=[{}]",
-                         methodName, defaultValue, StringTool.listToString(args));
+            log.warn("메소드 실행에 실패했습니다. 기본값을 반환합니다. methodName=[{}], defaultValue=[{}], args=[{}]",
+                     methodName, defaultValue, StringTool.listToString(args));
             return defaultValue;
         }
     }

@@ -77,8 +77,7 @@ public abstract class CompressorBase implements ICompressor {
                           compressed.length * 100.0 / result.length, compressed.length, result.length);
             return result;
         } catch (IOException e) {
-            if (log.isErrorEnabled())
-                log.error("압축해제 시 예외가 발생했습니다.", e);
+            log.error("압축해제 시 예외가 발생했습니다.", e);
             throw new RuntimeException(e);
         }
     }

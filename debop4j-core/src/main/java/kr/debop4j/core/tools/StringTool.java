@@ -108,8 +108,8 @@ public final class StringTool {
             byte[] bytes = StringUtils.getBytesUsAscii(str.substring(0, Math.min(2, str.length())));
             return isMultiByteString(bytes);
         } catch (Exception e) {
-            if (log.isErrorEnabled())
-                log.error("멀티바이트 문자열인지 확인하는데 실패했습니다. str=" + ellipsisChar(str, 24), e);
+
+            log.error("멀티바이트 문자열인지 확인하는데 실패했습니다. str=" + ellipsisChar(str, 24), e);
             return false;
         }
     }
@@ -192,8 +192,8 @@ public final class StringTool {
         try {
             return Hex.decodeHex(hexString.toCharArray());
         } catch (DecoderException e) {
-            if (log.isErrorEnabled())
-                log.error("16진수로 표현된 문자열을 바이트 배열로 변환하는데 실패했습니다.", e);
+
+            log.error("16진수로 표현된 문자열을 바이트 배열로 변환하는데 실패했습니다.", e);
             throw new RuntimeException(e);
         }
     }
@@ -260,8 +260,8 @@ public final class StringTool {
                     ? getBytesFromHexString(str)
                     : decodeBase64(str);
         } catch (Exception e) {
-            if (log.isErrorEnabled())
-                log.error("문자열로부터 Byte[] 를 얻는데 실패했습니다.", e);
+
+            log.error("문자열로부터 Byte[] 를 얻는데 실패했습니다.", e);
             throw new RuntimeException(e);
         }
     }
@@ -510,8 +510,7 @@ public final class StringTool {
             for (Field field : fields)
                 helper.add(field.getName(), field.get(obj));
         } catch (IllegalAccessException ignored) {
-            if (log.isWarnEnabled())
-                log.warn("필드 정보를 얻는데 실패했습니다.", ignored);
+            log.warn("필드 정보를 얻는데 실패했습니다.", ignored);
         }
         return helper.toString();
     }

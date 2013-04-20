@@ -106,8 +106,7 @@ public final class Springs {
         Guard.shouldNotBeNull(applicationContext, "applicationContext");
 
         if (globalContext != null) {
-            if (log.isWarnEnabled())
-                log.warn("Springs ApplicationContext가 이미 초기화 되었으므로, 무시합니다. reset 후 init 을 호출하세요.");
+            log.warn("Springs ApplicationContext가 이미 초기화 되었으므로, 무시합니다. reset 후 init 을 호출하세요.");
         }
 
         if (log.isInfoEnabled())

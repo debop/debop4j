@@ -191,8 +191,8 @@ public class AsyncTool {
                 results.add(future.get());
             }
         } catch (Exception e) {
-            if (log.isErrorEnabled())
-                log.error("비동기 작업 시 예외가 발생했습니다.", e);
+
+            log.error("비동기 작업 시 예외가 발생했습니다.", e);
             throw new RuntimeException(e);
         }
         return results;
@@ -214,8 +214,8 @@ public class AsyncTool {
                 results.add(task.get(timeout, unit));
             }
         } catch (Exception e) {
-            if (log.isErrorEnabled())
-                log.error("비동기 작업 시 예외가 발생했습니다.", e);
+
+            log.error("비동기 작업 시 예외가 발생했습니다.", e);
             throw new RuntimeException(e);
         }
         return results;

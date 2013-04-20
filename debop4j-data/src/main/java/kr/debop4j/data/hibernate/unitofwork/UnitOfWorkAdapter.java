@@ -125,8 +125,7 @@ public class UnitOfWorkAdapter extends UnitOfWorkAdapterBase {
                 log.debug("UnitOfWorkAdatper 를 close 했습니다!!!");
 
         } catch (Exception e) {
-            if (log.isWarnEnabled())
-                log.warn("UnitOfWorkAdapter close 시에 예외가 발생했습니다. 단 예외를 무시합니다.", e);
+            log.warn("UnitOfWorkAdapter close 시에 예외가 발생했습니다. 단 예외를 무시합니다.", e);
         } finally {
             closed = true;
         }

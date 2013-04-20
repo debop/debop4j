@@ -313,8 +313,7 @@ public class FileTool {
                     return null;
 
                 } catch (IOException | ExecutionException | InterruptedException e) {
-                    if (log.isErrorEnabled())
-                        log.error("비동기 방식으로 파일에 쓰는 동안 예외가 발생했습니다.", e);
+                    log.error("비동기 방식으로 파일에 쓰는 동안 예외가 발생했습니다.", e);
                     throw new RuntimeException(e);
                 }
             }

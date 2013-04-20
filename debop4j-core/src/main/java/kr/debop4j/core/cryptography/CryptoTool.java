@@ -21,8 +21,7 @@ public class CryptoTool {
         try {
             random = SecureRandom.getInstance(RandomNumberGeneration);
         } catch (NoSuchAlgorithmException e) {
-            if (log.isErrorEnabled())
-                log.error("해당 난수 발생 알고리즘을 찾을 수 없습니다. algorithm=" + RandomNumberGeneration);
+            log.error("해당 난수 발생 알고리즘을 찾을 수 없습니다. algorithm=" + RandomNumberGeneration);
             throw new RuntimeException(e);
         }
     }

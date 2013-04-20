@@ -55,8 +55,8 @@ public class JacksonSerializer implements IJsonSerializer {
 
             return mapper.writeValueAsBytes(graph);
         } catch (Exception e) {
-            if (log.isErrorEnabled())
-                log.error("객체를 Json 직렬화하는데 실패했습니다.", e);
+
+            log.error("객체를 Json 직렬화하는데 실패했습니다.", e);
             throw new RuntimeException(e);
         }
     }
@@ -72,8 +72,8 @@ public class JacksonSerializer implements IJsonSerializer {
 
             return mapper.writeValueAsString(graph);
         } catch (Exception e) {
-            if (log.isErrorEnabled())
-                log.error("객체를 Json 직렬화하는데 실패했습니다.", e);
+
+            log.error("객체를 Json 직렬화하는데 실패했습니다.", e);
             throw new RuntimeException(e);
         }
     }
@@ -89,8 +89,8 @@ public class JacksonSerializer implements IJsonSerializer {
 
             return mapper.readValue(jsonText, targetType);
         } catch (Exception e) {
-            if (log.isErrorEnabled())
-                log.error("Json 역직렬화하는데 실패했습니다.", e);
+
+            log.error("Json 역직렬화하는데 실패했습니다.", e);
             throw new RuntimeException(e);
         }
     }
@@ -106,8 +106,8 @@ public class JacksonSerializer implements IJsonSerializer {
 
             return mapper.readValue(bytes, targetType);
         } catch (Exception e) {
-            if (log.isErrorEnabled())
-                log.error("Json 역직렬화하는데 실패했습니다.", e);
+
+            log.error("Json 역직렬화하는데 실패했습니다.", e);
             throw new RuntimeException(e);
         }
     }

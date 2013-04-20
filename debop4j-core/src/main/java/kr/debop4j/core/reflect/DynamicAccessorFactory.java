@@ -58,8 +58,8 @@ public class DynamicAccessorFactory {
         try {
             return (DynamicAccessor<T>) cache.get(targetType);
         } catch (ExecutionException e) {
-            if (log.isErrorEnabled())
-                log.error("DynamicAccessor 를 생성하는데 실패했습니다. targetType=" + targetType.getName(), e);
+
+            log.error("DynamicAccessor 를 생성하는데 실패했습니다. targetType=" + targetType.getName(), e);
             return null;
         }
     }
