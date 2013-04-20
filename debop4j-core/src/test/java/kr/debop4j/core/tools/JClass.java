@@ -6,8 +6,9 @@ import lombok.extern.slf4j.Slf4j;
 
 /**
  * kr.debop4j.core.tool.JClass
- * User: sunghyouk.bae@gmail.com
- * Date: 13. 1. 20.
+ *
+ * @author sunghyouk.bae@gmail.com
+ * @since 13. 1. 20.
  */
 @Slf4j
 @Getter

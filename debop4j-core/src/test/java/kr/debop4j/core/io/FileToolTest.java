@@ -13,8 +13,9 @@ import static org.junit.Assert.*;
 
 /**
  * kr.debop4j.core.io.FileToolTest
- * User: sunghyouk.bae@gmail.com
- * Date: 12. 12. 11.
+ *
+ * @author sunghyouk.bae@gmail.com
+ * @since 12. 12. 11.
  */
 public class FileToolTest {
 

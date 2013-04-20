@@ -12,8 +12,9 @@ import javax.persistence.Embeddable;
 
 /**
  * 메타 정보를 표현하는 클래스입니다.
- * User: sunghyouk.bae@gmail.com
- * Date: 12. 9. 19
+ *
+ * @author sunghyouk.bae@gmail.com
+ * @since 12. 9. 19
  */
 @Embeddable
 @Getter

@@ -2,8 +2,9 @@ package kr.debop4j.data.hibernate.unitofwork;
 
 /**
  * {@link IUnitOfWork} 생성 옵션
- * User: sunghyouk.bae@gmail.com
- * Date: 12. 11. 29.
+ *
+ * @author sunghyouk.bae@gmail.com
+ * @since 12. 11. 29.
  */
 public enum UnitOfWorkNestingOptions {
 

@@ -16,15 +16,16 @@ import java.util.Date;
 
 /**
  * 한 부서의 구성원 정보 (직원의 겸직이 가능하므로, 부서-직원은 many-to-many 관계를 가집입니다)
- * User: sunghyouk.bae@gmail.com
- * Date: 13. 3. 5 오후 4:33
+ *
+ * @author sunghyouk.bae@gmail.com
+ * @since 13. 3. 5 오후 4:33
  */
 @Entity
 @Table(name = "DepartmentMember")
 @Cache(region = "Organization", usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 @org.hibernate.annotations.Table(appliesTo = "DepartmentMember",
                                  indexes = @org.hibernate.annotations.Index(name = "ix_DepartmentMember",
-                                                                            columnNames = {"DepartmentId", "EmployeeId"}))
+                                                                            columnNames = { "DepartmentId", "EmployeeId" }))
 @DynamicInsert
 @DynamicUpdate
 @Getter

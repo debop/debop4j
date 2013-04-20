@@ -10,8 +10,9 @@ import java.io.Serializable;
 
 /**
  * Hibernate 기본 도메인 엔티티의 추상화 클래스입니다.
- * JpaUser: sunghyouk.bae@gmail.com
- * Date: 12. 11. 19
+ * Jpa@author sunghyouk.bae@gmail.com
+ *
+ * @since 12. 11. 19
  */
 @Slf4j
 @MappedSuperclass

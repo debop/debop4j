@@ -13,8 +13,9 @@ import javax.persistence.*;
 
 /**
  * 직책 (보직) 을 나타낸다. (개발본부장, TFT 팀장, 경영지원실장 등)
- * User: sunghyouk.bae@gmail.com
- * Date: 13. 3. 8 오후 5:10
+ *
+ * @author sunghyouk.bae@gmail.com
+ * @since 13. 3. 8 오후 5:10
  */
 @Entity
 @Table(name = "EmpTitle")

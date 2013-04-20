@@ -17,8 +17,9 @@ import java.util.List;
 
 /**
  * kr.debop4j.data.mapping.northwind.model.Customer
- * User: sunghyouk.bae@gmail.com
- * Date: 13. 2. 23.
+ *
+ * @author sunghyouk.bae@gmail.com
+ * @since 13. 2. 23.
  */
 @Entity
 @Table(name = "Customers")
@@ -41,7 +42,7 @@ public class Customer extends AnnotatedEntityBase implements IEntity<String> {
     private String companyName;
     private String contactName;
 
-    @OneToMany(mappedBy = "orderedBy", cascade = {CascadeType.ALL})
+    @OneToMany(mappedBy = "orderedBy", cascade = { CascadeType.ALL })
     @LazyCollection(LazyCollectionOption.EXTRA)
     private List<Order> orders = Lists.newArrayList();
 

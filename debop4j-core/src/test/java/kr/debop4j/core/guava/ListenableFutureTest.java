@@ -17,8 +17,9 @@ import java.util.concurrent.Executors;
 
 /**
  * kr.debop4j.core.guava.ListenableFutureTest
- * User: sunghyouk.bae@gmail.com
- * Date: 13. 1. 23.
+ *
+ * @author sunghyouk.bae@gmail.com
+ * @since 13. 1. 23.
  */
 @Slf4j
 public class ListenableFutureTest {

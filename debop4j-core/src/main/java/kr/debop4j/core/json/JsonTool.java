@@ -6,8 +6,9 @@ import lombok.extern.slf4j.Slf4j;
 
 /**
  * Json 직렬화/역직렬화 등을 지원하는 Utility Class 입니다.
- * User: sunghyouk.bae@gmail.com
- * Date: 12. 12. 5.
+ *
+ * @author sunghyouk.bae@gmail.com
+ * @since 12. 12. 5.
  */
 @Slf4j
 public class JsonTool {

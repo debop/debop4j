@@ -17,8 +17,9 @@ import static kr.debop4j.core.Guard.shouldNotBeNull;
 
 /**
  * 비동기 작업 관련 Utility Class
- * User: sunghyouk.bae@gmail.com
- * Date: 12. 9. 14
+ *
+ * @author sunghyouk.bae@gmail.com
+ * @since 12. 9. 14
  */
 @Slf4j
 public class AsyncTool {

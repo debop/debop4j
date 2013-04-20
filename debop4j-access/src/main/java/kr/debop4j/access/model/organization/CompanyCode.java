@@ -19,8 +19,9 @@ import java.util.Set;
 
 /**
  * 특정 회사에서 사용하는 코드
- * User: sunghyouk.bae@gmail.com
- * Date: 13. 3. 8 오후 1:07
+ *
+ * @author sunghyouk.bae@gmail.com
+ * @since 13. 3. 8 오후 1:07
  */
 @Entity
 @Table(name = "CompanyCode")
@@ -72,7 +73,7 @@ public class CompanyCode extends AccessEntityBase {
     @Column(name = "ExAttr", length = 2000)
     private String exAttr;
 
-    @OneToMany(mappedBy = "code", fetch = FetchType.EAGER, cascade = {CascadeType.ALL})
+    @OneToMany(mappedBy = "code", fetch = FetchType.EAGER, cascade = { CascadeType.ALL })
     @LazyCollection(value = LazyCollectionOption.EXTRA)
     @Fetch(FetchMode.SELECT)
     private Set<CompanyCodeItem> items = Sets.newHashSet();

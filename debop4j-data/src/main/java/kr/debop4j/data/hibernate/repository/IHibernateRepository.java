@@ -15,8 +15,9 @@ import java.util.List;
 
 /**
  * Hibernate 용 Data Access Object Interface 입니다.
- * User: sunghyouk.bae@gmail.com
- * Date: 12. 11. 27.
+ *
+ * @author sunghyouk.bae@gmail.com
+ * @since 12. 11. 27.
  */
 public interface IHibernateRepository<E extends IStatefulEntity> {
 

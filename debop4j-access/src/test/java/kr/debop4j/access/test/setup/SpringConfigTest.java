@@ -12,8 +12,9 @@ import org.junit.Test;
 
 /**
  * kr.debop4j.access.test.setup.SpringConfigTest
- * User: sunghyouk.bae@gmail.com
- * Date: 13. 3. 12.
+ *
+ * @author sunghyouk.bae@gmail.com
+ * @since 13. 3. 12.
  */
 @Slf4j
 public class SpringConfigTest extends DatabaseTestFixtureBase {

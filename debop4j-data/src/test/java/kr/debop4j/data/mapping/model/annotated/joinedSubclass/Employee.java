@@ -11,8 +11,9 @@ import java.util.Set;
 
 /**
  * org.annotated.mapping.domain.model.joinedSubclass.Employee
- * User: sunghyouk.bae@gmail.com
- * Date: 12. 12. 8.
+ *
+ * @author sunghyouk.bae@gmail.com
+ * @since 12. 12. 8.
  */
 @Entity
 @Table(name = "JS_EMPLOYEE")
@@ -31,7 +32,7 @@ public class Employee extends PersonBase {
     @JoinColumn(name = "MANAGER_ID")
     private Employee manager;
 
-    @OneToMany(mappedBy = "manager", cascade = {CascadeType.ALL}, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "manager", cascade = { CascadeType.ALL }, fetch = FetchType.LAZY)
     @LazyCollection(value = LazyCollectionOption.EXTRA)
     private Set<Employee> members = Sets.newHashSet();
 

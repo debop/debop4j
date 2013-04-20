@@ -8,8 +8,9 @@ import java.util.concurrent.Callable;
 
 /**
  * kr.debop4j.core.unitTesting.TestToolTest
- * User: sunghyouk.bae@gmail.com
- * Date: 12. 12. 3.
+ *
+ * @author sunghyouk.bae@gmail.com
+ * @since 12. 12. 3.
  */
 @Slf4j
 public class TestToolTest extends AbstractTest {

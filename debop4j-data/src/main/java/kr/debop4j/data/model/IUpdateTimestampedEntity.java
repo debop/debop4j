@@ -4,8 +4,9 @@ import java.util.Date;
 
 /**
  * 최근 수정일자를 속성으로 가지고 있는 엔티티를 표현하는 인터페이스
- * User: sunghyouk.bae@gmail.com
- * Date: 12. 11. 21.
+ *
+ * @author sunghyouk.bae@gmail.com
+ * @since 12. 11. 21.
  */
 public interface IUpdateTimestampedEntity {
 

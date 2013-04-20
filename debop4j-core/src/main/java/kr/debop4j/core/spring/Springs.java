@@ -24,8 +24,9 @@ import java.util.Stack;
 
 /**
  * Springs Framework 의 Dependency Injection을 담당하는 클래스입니다.
- * User: sunghyouk.bae@gmail.com
- * Date: 12. 11. 23.
+ *
+ * @author sunghyouk.bae@gmail.com
+ * @since 12. 11. 23.
  */
 @Slf4j
 @ThreadSafe

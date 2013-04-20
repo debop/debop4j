@@ -8,8 +8,9 @@ import java.util.concurrent.ForkJoinPool;
 
 /**
  * pudding.pudding.commons.parallelism.forkjoin.FibonacciTest
- * User: sunghyouk.bae@gmail.com
- * Date: 12. 9. 28.
+ *
+ * @author sunghyouk.bae@gmail.com
+ * @since 12. 9. 28.
  */
 @Slf4j
 public class FibonacciTest {

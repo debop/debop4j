@@ -11,8 +11,9 @@ import javax.persistence.Embeddable;
 
 /**
  * 주소를 나타내는 Component
- * User: sunghyouk.bae@gmail.com
- * Date: 13. 3. 1.
+ *
+ * @author sunghyouk.bae@gmail.com
+ * @since 13. 3. 1.
  */
 @Embeddable
 @Getter

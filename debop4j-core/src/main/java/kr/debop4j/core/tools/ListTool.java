@@ -8,8 +8,9 @@ import java.util.Comparator;
 
 /**
  * kr.debop4j.core.tool.ListTool
- * User: sunghyouk.bae@gmail.com
- * Date: 12. 12. 23.
+ *
+ * @author sunghyouk.bae@gmail.com
+ * @since 12. 12. 23.
  */
 public final class ListTool {
 

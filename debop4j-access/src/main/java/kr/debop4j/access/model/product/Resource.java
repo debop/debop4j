@@ -16,8 +16,9 @@ import javax.persistence.*;
 
 /**
  * 프로그램에서 생산한 자원 정보. Actor가 접근 가능한 대상을 말합니다.
- * User: sunghyouk.bae@gmail.com
- * Date: 13. 3. 10.
+ *
+ * @author sunghyouk.bae@gmail.com
+ * @since 13. 3. 10.
  */
 @Entity
 @org.hibernate.annotations.Cache(region = "Product", usage = CacheConcurrencyStrategy.READ_WRITE)
@@ -25,7 +26,7 @@ import javax.persistence.*;
                                  indexes = @org.hibernate.annotations.Index(name = "ix_resource",
                                                                             columnNames = {
                                                                                     "ProductId",
-                                                                                    "ResourceCode"}))
+                                                                                    "ResourceCode" }))
 @DynamicInsert
 @DynamicUpdate
 @Getter

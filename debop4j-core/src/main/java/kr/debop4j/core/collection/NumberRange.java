@@ -11,8 +11,9 @@ import java.util.List;
 
 /**
  * 특정 범위에 해당하는 숫자들을 열거하도록 합니다.
- * User: sunghyouk.bae@gmail.com
- * Date: 13. 1. 11
+ *
+ * @author sunghyouk.bae@gmail.com
+ * @since 13. 1. 11
  */
 public abstract class NumberRange<T extends Number> implements Iterable<T> {
 

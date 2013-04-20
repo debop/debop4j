@@ -13,8 +13,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 /**
  * kr.debop4j.data.hibernate.config.java.HibernateConfigTest
- * User: sunghyouk.bae@gmail.com
- * Date: 13. 2. 19.
+ *
+ * @author sunghyouk.bae@gmail.com
+ * @since 13. 2. 19.
  */
 @SuppressWarnings("JpaQlInspection")
 @RunWith(SpringJUnit4ClassRunner.class)

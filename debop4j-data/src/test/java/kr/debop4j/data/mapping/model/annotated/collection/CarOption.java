@@ -11,8 +11,9 @@ import javax.persistence.Embeddable;
 
 /**
  * org.annotated.mapping.domain.model.collection.CarOption
- * User: sunghyouk.bae@gmail.com
- * Date: 12. 12. 15.
+ *
+ * @author sunghyouk.bae@gmail.com
+ * @since 12. 12. 15.
  */
 @Embeddable
 @Getter

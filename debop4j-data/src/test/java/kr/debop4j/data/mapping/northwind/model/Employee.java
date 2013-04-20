@@ -19,8 +19,9 @@ import java.util.List;
 
 /**
  * kr.debop4j.data.mapping.northwind.model.Employee
- * User: sunghyouk.bae@gmail.com
- * Date: 13. 2. 23.
+ *
+ * @author sunghyouk.bae@gmail.com
+ * @since 13. 2. 23.
  */
 @Entity
 @Table(name = "Employees")
@@ -63,11 +64,11 @@ public class Employee extends AnnotatedEntityBase implements IEntity<Integer> {
     @JoinColumn(name = "reportsTo")
     private Employee reportsTo;
 
-    @OneToMany(mappedBy = "reportsTo", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @OneToMany(mappedBy = "reportsTo", cascade = { CascadeType.PERSIST, CascadeType.MERGE })
     @LazyCollection(LazyCollectionOption.EXTRA)
     private List<Employee> staffMembers = Lists.newArrayList();
 
-    @OneToMany(mappedBy = "seller", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @OneToMany(mappedBy = "seller", cascade = { CascadeType.PERSIST, CascadeType.MERGE })
     @LazyCollection(LazyCollectionOption.EXTRA)
     private List<Order> orders = Lists.newArrayList();
 

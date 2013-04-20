@@ -16,8 +16,9 @@ import static kr.debop4j.core.Guard.shouldNotBeNull;
 
 /**
  * {@link org.modelmapper.ModelMapper} 를 이용하여, 객체간의 정보를 매핑합니다.
- * User: sunghyouk.bae@gmail.com
- * Date: 12. 9. 20.
+ *
+ * @author sunghyouk.bae@gmail.com
+ * @since 12. 9. 20.
  */
 @Slf4j
 public final class MapperTool {

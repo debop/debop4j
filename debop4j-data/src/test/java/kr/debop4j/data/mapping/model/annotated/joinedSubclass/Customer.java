@@ -10,8 +10,9 @@ import javax.persistence.Table;
 
 /**
  * org.annotated.mapping.domain.model.joinedSubclass.Customer
- * User: sunghyouk.bae@gmail.com
- * Date: 12. 12. 8.
+ *
+ * @author sunghyouk.bae@gmail.com
+ * @since 12. 12. 8.
  */
 @Entity
 @Table(name = "JS_CUSTOMER")

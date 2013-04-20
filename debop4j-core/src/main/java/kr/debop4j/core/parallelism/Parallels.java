@@ -18,8 +18,9 @@ import static kr.debop4j.core.Guard.shouldNotBeNull;
 
 /**
  * 대량 데이터에 대한 병렬 실행을 수행할 수 있도록 해주는 Class 입니다.
- * User: sunghyouk.bae@gmail.com
- * Date: 12. 9. 26.
+ *
+ * @author sunghyouk.bae@gmail.com
+ * @since 12. 9. 26.
  */
 @Slf4j
 public class Parallels {

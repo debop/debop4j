@@ -1,3 +1,4 @@
+
 package kr.debop4j.data;
 
 import com.google.common.base.Objects;
@@ -9,8 +10,9 @@ import static kr.debop4j.core.Guard.shouldNotBeEmpty;
 
 /**
  * SQL 실행 문의 인자 정보를 나타내는 {@link INamedParameter} 의 추상클래스입니다.
- * JpaUser: sunghyouk.bae@gmail.com
- * Date: 12. 11. 19
+ * Jpa@author sunghyouk.bae@gmail.com
+ *
+ * @since 12. 11. 19
  */
 @Getter
 @Setter

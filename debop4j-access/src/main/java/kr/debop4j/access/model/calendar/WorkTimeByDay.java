@@ -12,8 +12,9 @@ import java.util.Date;
 
 /**
  * kr.debop4j.access.model.calendar.WorkTimeByDay
- * User: sunghyouk.bae@gmail.com
- * Date: 13. 3. 11.
+ *
+ * @author sunghyouk.bae@gmail.com
+ * @since 13. 3. 11.
  */
 @Entity
 @Table(name = "WorkTimeByDay")

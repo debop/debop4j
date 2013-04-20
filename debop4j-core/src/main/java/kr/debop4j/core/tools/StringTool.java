@@ -22,8 +22,9 @@ import static java.lang.String.format;
 
 /**
  * 문자열 처리를 위한 Utility Class 입니다.
- * User: sunghyouk.bae@gmail.com
- * Date: 12. 9. 12
+ *
+ * @author sunghyouk.bae@gmail.com
+ * @since 12. 9. 12
  */
 @Slf4j
 public final class StringTool {
@@ -32,7 +33,7 @@ public final class StringTool {
      * 멀티바이트 문자열을 바이트 배열로 변환 시에 선두번지에 접두사로 넣는 값입니다.
      * 이 값이 있으면 꼭 UTF-8 으로 변환해야 한다는 뜻입니다.
      */
-    public static final byte[] MULTI_BYTES_PREFIX = new byte[]{(byte) 0xEF, (byte) 0xBB, (byte) 0xBF};
+    public static final byte[] MULTI_BYTES_PREFIX = new byte[]{ (byte) 0xEF, (byte) 0xBB, (byte) 0xBF };
     public static final String TRIMMING_STR = "...";
     public static final String NULL_STR = "NULL";
     public static final String EMPTY_STR = "";

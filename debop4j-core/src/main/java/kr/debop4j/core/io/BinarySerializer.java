@@ -10,8 +10,9 @@ import java.io.ObjectOutputStream;
 
 /**
  * 객체를 메모리 덤프를 통해 직렬화를 수행합니다.
- * User: sunghyouk.bae@gmail.com
- * Date: 12. 10. 4.
+ *
+ * @author sunghyouk.bae@gmail.com
+ * @since 12. 10. 4.
  */
 @Slf4j
 public class BinarySerializer implements ISerializer {

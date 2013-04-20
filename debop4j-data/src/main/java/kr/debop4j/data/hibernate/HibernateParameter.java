@@ -7,8 +7,9 @@ import lombok.Setter;
 
 /**
  * Hibernate용 Parameter 정보를 표현합니다.
- * JpaUser: sunghyouk.bae@gmail.com
- * Date: 12. 11. 19
+ * Jpa@author sunghyouk.bae@gmail.com
+ *
+ * @since 12. 11. 19
  */
 public class HibernateParameter extends NamedParameterBase {
 

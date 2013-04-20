@@ -4,8 +4,9 @@ import org.springframework.transaction.TransactionDefinition;
 
 /**
  * kr.nsoft.data.hibernate.unitofwork.IUnitOfWork
- * User: sunghyouk.bae@gmail.com
- * Date: 12. 11. 27.
+ *
+ * @author sunghyouk.bae@gmail.com
+ * @since 12. 11. 27.
  */
 public interface IUnitOfWork extends AutoCloseable {
 

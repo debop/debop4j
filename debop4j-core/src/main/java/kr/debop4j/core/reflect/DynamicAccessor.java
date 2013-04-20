@@ -9,8 +9,9 @@ import java.util.List;
 
 /**
  * 동적으로 객체의 속성, 메소드에 접근할 수 있는 접근자입니다.
- * User: sunghyouk.bae@gmail.com
- * Date: 13. 1. 21
+ *
+ * @author sunghyouk.bae@gmail.com
+ * @since 13. 1. 21
  */
 @Slf4j
 public class DynamicAccessor<T> {

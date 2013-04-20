@@ -18,8 +18,9 @@ import java.util.Properties;
 
 /**
  * org.annotated.mapping.domain.model.usertypes.StringEnumUserType
- * User: sunghyouk.bae@gmail.com
- * Date: 12. 12. 6.
+ *
+ * @author sunghyouk.bae@gmail.com
+ * @since 12. 12. 6.
  */
 public class StringEnumUserType implements EnhancedUserType, ParameterizedType {
 
@@ -53,7 +54,7 @@ public class StringEnumUserType implements EnhancedUserType, ParameterizedType {
 
     @Override
     public int[] sqlTypes() {
-        return new int[]{StandardBasicTypes.STRING.sqlType()};
+        return new int[]{ StandardBasicTypes.STRING.sqlType() };
     }
 
     @Override

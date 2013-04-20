@@ -7,8 +7,9 @@ import lombok.Setter;
 
 /**
  * 주소 정보
- * JpaUser: sunghyouk.bae@gmail.com
- * Date: 12. 11. 19
+ * Jpa@author sunghyouk.bae@gmail.com
+ *
+ * @since 12. 11. 19
  */
 @Getter
 @Setter

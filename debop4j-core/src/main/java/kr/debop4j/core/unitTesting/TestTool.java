@@ -8,8 +8,9 @@ import java.util.concurrent.*;
 
 /**
  * kr.debop4j.core.unitTesting.TestTool
- * User: sunghyouk.bae@gmail.com
- * Date: 12. 12. 3.
+ *
+ * @author sunghyouk.bae@gmail.com
+ * @since 12. 12. 3.
  */
 public class TestTool {
 

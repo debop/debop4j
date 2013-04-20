@@ -13,8 +13,9 @@ import javax.sql.DataSource;
 
 /**
  * kr.debop4j.data.hibernate.config.java.HibernateConfig
- * User: sunghyouk.bae@gmail.com
- * Date: 13. 2. 19.
+ *
+ * @author sunghyouk.bae@gmail.com
+ * @since 13. 2. 19.
  */
 @Configuration
 @EnableTransactionManagement

@@ -21,15 +21,16 @@ import java.util.Set;
 
 /**
  * 부서 정보를 나타냅니다. (상위부서, 하위부서 등을 표현합니다)
- * User: sunghyouk.bae@gmail.com
- * Date: 13. 3. 1.
+ *
+ * @author sunghyouk.bae@gmail.com
+ * @since 13. 3. 1.
  */
 @Entity
 @Table(name = "Department")
 @Cache(region = "Organization", usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 @org.hibernate.annotations.Table(appliesTo = "Department",
                                  indexes = @org.hibernate.annotations.Index(name = "ix_department_code",
-                                                                            columnNames = {"CompanyId", "DepartmentCode"}))
+                                                                            columnNames = { "CompanyId", "DepartmentCode" }))
 @DynamicInsert
 @DynamicUpdate
 @Getter
@@ -84,7 +85,7 @@ public class Department extends AnnotatedTreeEntityBase<Department> implements I
     @Temporal(TemporalType.TIMESTAMP)
     private Date updateTimestamp;
 
-    @OneToMany(mappedBy = "department", cascade = {CascadeType.ALL})
+    @OneToMany(mappedBy = "department", cascade = { CascadeType.ALL })
     @LazyCollection(value = LazyCollectionOption.EXTRA)
     @Fetch(FetchMode.SELECT)
     private Set<DepartmentMember> members = Sets.newHashSet();

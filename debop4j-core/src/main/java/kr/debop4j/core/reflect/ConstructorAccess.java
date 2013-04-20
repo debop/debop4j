@@ -11,8 +11,9 @@ import static org.objectweb.asm.Opcodes.*;
 
 /**
  * 객체의 생성자에 접근하여, 생성자를 생성할 수 있도록 합니다.
- * User: sunghyouk.bae@gmail.com
- * Date: 13. 1. 21
+ *
+ * @author sunghyouk.bae@gmail.com
+ * @since 13. 1. 21
  */
 public abstract class ConstructorAccess<T> {
 

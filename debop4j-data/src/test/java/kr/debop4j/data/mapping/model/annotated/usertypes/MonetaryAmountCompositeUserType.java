@@ -19,19 +19,20 @@ import java.util.Objects;
 
 /**
  * 금액과 통화 단위 묶음을 하나의 수형으로 취급합니다.
- * User: sunghyouk.bae@gmail.com
- * Date: 12. 12. 6.
+ *
+ * @author sunghyouk.bae@gmail.com
+ * @since 12. 12. 6.
  */
 public class MonetaryAmountCompositeUserType implements CompositeUserType {
 
     @Override
     public String[] getPropertyNames() {
-        return new String[]{"amount", "currency"};
+        return new String[]{ "amount", "currency" };
     }
 
     @Override
     public Type[] getPropertyTypes() {
-        return new Type[]{BigDecimalType.INSTANCE, CurrencyType.INSTANCE};
+        return new Type[]{ BigDecimalType.INSTANCE, CurrencyType.INSTANCE };
     }
 
     @Override

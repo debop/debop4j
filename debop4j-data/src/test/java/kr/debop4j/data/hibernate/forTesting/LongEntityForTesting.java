@@ -14,8 +14,9 @@ import javax.persistence.Version;
 
 /**
  * kr.debop4j.data.hibernate.forTesting.LongEntityForTesting
- * User: sunghyouk.bae@gmail.com
- * Date: 13. 2. 21.
+ *
+ * @author sunghyouk.bae@gmail.com
+ * @since 13. 2. 21.
  */
 @Entity
 @Table(name = "LongEntity_ForTesting")

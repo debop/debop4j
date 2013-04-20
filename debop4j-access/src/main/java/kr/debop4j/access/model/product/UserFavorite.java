@@ -14,8 +14,9 @@ import java.util.Date;
 
 /**
  * 사용자가 즐겨찾기한 컨텐츠 (메뉴)
- * User: sunghyouk.bae@gmail.com
- * Date: 13. 3. 11.
+ *
+ * @author sunghyouk.bae@gmail.com
+ * @since 13. 3. 11.
  */
 @Entity
 @org.hibernate.annotations.Cache(region = "Product", usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)

@@ -11,8 +11,9 @@ import java.util.concurrent.TimeoutException;
 
 /**
  * 시간 제약이 있는 Executor 를 구현했습니다.
- * User: sunghyouk.bae@gmail.com
- * Date: 12. 12. 16.
+ *
+ * @author sunghyouk.bae@gmail.com
+ * @since 12. 12. 16.
  */
 @Slf4j
 public class TimedExecutor {

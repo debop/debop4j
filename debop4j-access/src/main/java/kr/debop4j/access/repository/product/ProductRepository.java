@@ -12,8 +12,9 @@ import java.util.List;
 
 /**
  * {@link Product} 에 대한 Repository 입니다.
- * User: sunghyouk.bae@gmail.com
- * Date: 13. 3. 12.
+ *
+ * @author sunghyouk.bae@gmail.com
+ * @since 13. 3. 12.
  */
 @Repository
 @Slf4j

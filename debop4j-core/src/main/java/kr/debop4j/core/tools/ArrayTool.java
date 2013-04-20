@@ -12,8 +12,9 @@ import java.util.Set;
 
 /**
  * Array 관련 Utility class 입니다.
- * User: sunghyouk.bae@gmail.com
- * Date: 12. 9. 14
+ *
+ * @author sunghyouk.bae@gmail.com
+ * @since 12. 9. 14
  */
 @Slf4j
 public final class ArrayTool {

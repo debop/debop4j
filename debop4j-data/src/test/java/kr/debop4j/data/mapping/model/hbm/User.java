@@ -8,8 +8,9 @@ import lombok.ToString;
 
 /**
  * org.hibernate.mapping.domain.model.JpaUser
- * JpaUser: sunghyouk.bae@gmail.com
- * Date: 12. 11. 19.
+ * Jpa@author sunghyouk.bae@gmail.com
+ *
+ * @since 12. 11. 19.
  */
 @Getter
 @Setter

@@ -26,8 +26,9 @@ import java.util.Properties;
 
 /**
  * hibernate 의 환경설정을 spring framework의 bean 환경설정으로 구현했습니다.
- * User: sunghyouk.bae@gmail.com
- * Date: 13. 2. 21.
+ *
+ * @author sunghyouk.bae@gmail.com
+ * @since 13. 2. 21.
  */
 @Slf4j
 public abstract class HibernateConfigBase {

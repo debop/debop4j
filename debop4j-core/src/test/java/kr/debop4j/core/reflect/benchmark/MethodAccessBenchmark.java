@@ -8,8 +8,9 @@ import java.lang.reflect.Method;
 
 /**
  * kr.debop4j.core.reflect.benchmark.MethodAccessBenchmark
- * User: sunghyouk.bae@gmail.com
- * Date: 13. 1. 21
+ *
+ * @author sunghyouk.bae@gmail.com
+ * @since 13. 1. 21
  */
 @Slf4j
 public class MethodAccessBenchmark extends Benchmark {

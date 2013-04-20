@@ -12,8 +12,9 @@ import java.util.Map;
 
 /**
  * org.annotated.mapping.domain.model.collection.Car
- * User: sunghyouk.bae@gmail.com
- * Date: 12. 12. 15.
+ *
+ * @author sunghyouk.bae@gmail.com
+ * @since 12. 12. 15.
  */
 @Entity
 @Table(name = "`JPA_Car`")

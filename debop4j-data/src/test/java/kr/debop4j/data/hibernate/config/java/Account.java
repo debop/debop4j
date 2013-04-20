@@ -11,8 +11,9 @@ import javax.persistence.*;
 
 /**
  * kr.debop4j.data.hibernate.config.java.Account
- * User: sunghyouk.bae@gmail.com
- * Date: 13. 2. 19.
+ *
+ * @author sunghyouk.bae@gmail.com
+ * @since 13. 2. 19.
  */
 @Entity
 @Table(name = "T_ACCOUNT")

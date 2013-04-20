@@ -7,8 +7,9 @@ import java.util.List;
 
 /**
  * kr.debop4j.core.guava.concurrency.MonitorSample
- * User: sunghyouk.bae@gmail.com
- * Date: 12. 12. 10.
+ *
+ * @author sunghyouk.bae@gmail.com
+ * @since 12. 12. 10.
  */
 public class MonitorSample {
 

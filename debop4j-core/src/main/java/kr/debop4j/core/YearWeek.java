@@ -7,8 +7,9 @@ import lombok.extern.slf4j.Slf4j;
 
 /**
  * 년차 (Week of Year) 를 나타냅니다.
- * User: sunghyouk.bae@gmail.com
- * Date: 12. 9. 12
+ *
+ * @author sunghyouk.bae@gmail.com
+ * @since 12. 9. 12
  */
 @Slf4j
 public class YearWeek extends ValueObjectBase implements IYearWeek, Comparable<YearWeek> {

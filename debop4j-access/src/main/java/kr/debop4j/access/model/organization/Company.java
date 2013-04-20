@@ -22,15 +22,16 @@ import java.util.Map;
 
 /**
  * 회사 정보
- * User: sunghyouk.bae@gmail.com
- * Date: 13. 3. 1.
+ *
+ * @author sunghyouk.bae@gmail.com
+ * @since 13. 3. 1.
  */
 @Entity
 @Table(name = "Company")
 @Cache(region = "Organization", usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 @org.hibernate.annotations.Table(appliesTo = "Company",
                                  indexes = @org.hibernate.annotations.Index(name = "ix_company_code",
-                                                                            columnNames = {"CompanyCode", "CompanyName"}))
+                                                                            columnNames = { "CompanyCode", "CompanyName" }))
 @DynamicInsert
 @DynamicUpdate
 @Getter
@@ -86,10 +87,10 @@ public class Company extends AccessLocaledEntityBase<Company.CompanyLocale> impl
     /**
      * 다국어 지원을 위한 정보
      */
-    @CollectionTable(name = "CompanyLocale", joinColumns = {@JoinColumn(name = "CompanyId")})
+    @CollectionTable(name = "CompanyLocale", joinColumns = { @JoinColumn(name = "CompanyId") })
     @ElementCollection(targetClass = CompanyLocale.class, fetch = FetchType.LAZY)
     @MapKeyClass(Locale.class)
-    @Cascade({org.hibernate.annotations.CascadeType.ALL})
+    @Cascade({ org.hibernate.annotations.CascadeType.ALL })
     @LazyCollection(LazyCollectionOption.EXTRA)
     private Map<Locale, CompanyLocale> localeMap = Maps.newHashMap();
 

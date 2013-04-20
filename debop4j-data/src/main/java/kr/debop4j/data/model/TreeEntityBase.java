@@ -14,8 +14,9 @@ import java.util.Set;
 
 /**
  * 트리 형태의 엔티티의 기본 클래스입니다.
- * User: sunghyouk.bae@gmail.com
- * Date: 12. 9. 15.
+ *
+ * @author sunghyouk.bae@gmail.com
+ * @since 12. 9. 15.
  */
 @MappedSuperclass
 @Getter
@@ -36,7 +37,7 @@ public abstract class TreeEntityBase<T extends ITreeEntity<T>, TId extends Seria
      * {@inheritDoc}
      */
     @Setter(AccessLevel.PROTECTED)
-    @OneToMany(mappedBy = "parent", cascade = {CascadeType.ALL})
+    @OneToMany(mappedBy = "parent", cascade = { CascadeType.ALL })
     @LazyCollection(LazyCollectionOption.EXTRA)
     private Set<T> children = Sets.newLinkedHashSet();
 

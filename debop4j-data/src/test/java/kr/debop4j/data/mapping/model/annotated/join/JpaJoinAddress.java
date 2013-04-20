@@ -10,8 +10,9 @@ import javax.persistence.Embeddable;
 
 /**
  * org.annotated.mapping.domain.model.join.JpaJoinAddress
- * User: sunghyouk.bae@gmail.com
- * Date: 12. 12. 5.
+ *
+ * @author sunghyouk.bae@gmail.com
+ * @since 12. 12. 5.
  */
 @Embeddable
 @Getter

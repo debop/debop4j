@@ -9,8 +9,9 @@ import static org.junit.Assert.assertEquals;
 
 /**
  * kr.debop4j.core.guava.CaseFormatTest
- * User: sunghyouk.bae@gmail.com
- * Date: 13. 1. 22.
+ *
+ * @author sunghyouk.bae@gmail.com
+ * @since 13. 1. 22.
  */
 @Slf4j
 public class CaseFormatTest extends AbstractTest {

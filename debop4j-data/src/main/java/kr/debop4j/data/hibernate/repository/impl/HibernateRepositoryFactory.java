@@ -10,8 +10,9 @@ import org.springframework.stereotype.Component;
 
 /**
  * {@link kr.debop4j.data.hibernate.repository.impl.HibernateRepository}를 생성해주는 Factory 입니다. 이것보다는 Spring framework의 @Repository를 사용하는 것이 좋다.
- * User: sunghyouk.bae@gmail.com
- * Date: 12. 11. 27.
+ *
+ * @author sunghyouk.bae@gmail.com
+ * @since 12. 11. 27.
  */
 @Component
 @Slf4j

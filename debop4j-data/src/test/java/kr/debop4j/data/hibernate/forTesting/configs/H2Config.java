@@ -8,8 +8,9 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 /**
  * H2 DB 를 사용하는 Hibernate Configuration 입니다.
- * User: sunghyouk.bae@gmail.com
- * Date: 13. 2. 22.
+ *
+ * @author sunghyouk.bae@gmail.com
+ * @since 13. 2. 22.
  */
 @Configuration
 @EnableTransactionManagement
@@ -21,6 +22,6 @@ public class H2Config extends H2ConfigBase {
 
     @Override
     protected void setupSessionFactory(LocalSessionFactoryBean factoryBean) {
-        factoryBean.setAnnotatedClasses(new Class[]{LongEntityForTesting.class});
+        factoryBean.setAnnotatedClasses(new Class[]{ LongEntityForTesting.class });
     }
 }

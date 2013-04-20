@@ -2,8 +2,9 @@ package kr.debop4j.core.reflect;
 
 /**
  * Reflection 관련 상수
- * User: sunghyouk.bae@gmail.com
- * Date: 13. 1. 21
+ *
+ * @author sunghyouk.bae@gmail.com
+ * @since 13. 1. 21
  */
 public class ReflectConsts {
 

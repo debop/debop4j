@@ -12,8 +12,9 @@ import java.util.Set;
 
 /**
  * org.hibernate.mapping.domain.model.collection.Item
- * User: sunghyouk.bae@gmail.com
- * Date: 12. 12. 2.
+ *
+ * @author sunghyouk.bae@gmail.com
+ * @since 12. 12. 2.
  */
 @Getter
 @Setter

@@ -9,8 +9,9 @@ import org.junit.rules.MethodRule;
 
 /**
  * kr.debop4j.core.caching.dao.FutureWebCacheRepositoryTest
- * User: sunghyouk.bae@gmail.com
- * Date: 13. 1. 24
+ *
+ * @author sunghyouk.bae@gmail.com
+ * @since 13. 1. 24
  */
 @Slf4j
 public class FutureWebCacheRepositoryTest {

@@ -2,8 +2,9 @@ package kr.debop4j.core;
 
 /**
  * kr.debop4j.core.Executable
- * User: sunghyouk.bae@gmail.com
- * Date: 12. 12. 16.
+ *
+ * @author sunghyouk.bae@gmail.com
+ * @since 12. 12. 16.
  */
 public interface Executable {
 

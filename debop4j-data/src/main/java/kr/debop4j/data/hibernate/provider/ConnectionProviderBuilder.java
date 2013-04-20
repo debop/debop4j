@@ -10,8 +10,9 @@ import java.util.Properties;
 
 /**
  * JDBC connection provider builder with HSQLDB.
- * User: sunghyouk.bae@gmail.com
- * Date: 12. 12. 16.
+ *
+ * @author sunghyouk.bae@gmail.com
+ * @since 12. 12. 16.
  */
 @Deprecated
 @Slf4j

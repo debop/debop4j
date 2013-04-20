@@ -15,8 +15,9 @@ import java.util.List;
 
 /**
  * 테스트용 엔티티입니다.
- * User: sunghyouk.bae@gmail.com
- * Date: 12. 12. 5.
+ *
+ * @author sunghyouk.bae@gmail.com
+ * @since 12. 12. 5.
  */
 @Slf4j
 @Getter

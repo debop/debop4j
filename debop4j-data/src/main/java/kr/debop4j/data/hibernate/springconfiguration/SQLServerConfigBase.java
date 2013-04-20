@@ -8,8 +8,9 @@ import javax.sql.DataSource;
 
 /**
  * kr.debop4j.data.hibernate.springconfiguration.SQLServerConfigBase
- * User: sunghyouk.bae@gmail.com
- * Date: 13. 2. 22.
+ *
+ * @author sunghyouk.bae@gmail.com
+ * @since 13. 2. 22.
  */
 @Configuration
 @EnableTransactionManagement

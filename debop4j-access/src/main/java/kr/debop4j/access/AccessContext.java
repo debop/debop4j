@@ -11,8 +11,9 @@ import org.hibernate.criterion.Restrictions;
 
 /**
  * Access Library에서 제공하는 기본 Context 입니다.
- * User: sunghyouk.bae@gmail.com
- * Date: 13. 3. 10.
+ *
+ * @author sunghyouk.bae@gmail.com
+ * @since 13. 3. 10.
  */
 @Slf4j
 public class AccessContext {

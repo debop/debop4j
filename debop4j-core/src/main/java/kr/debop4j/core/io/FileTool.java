@@ -25,8 +25,9 @@ import static kr.debop4j.core.tools.StringTool.listToString;
 
 /**
  * 파일 관련 Tool
- * User: sunghyouk.bae@gmail.com
- * Date: 12. 12. 11
+ *
+ * @author sunghyouk.bae@gmail.com
+ * @since 12. 12. 11
  */
 public class FileTool {
 

@@ -16,8 +16,9 @@ import javax.persistence.MappedSuperclass;
 
 /**
  * kr.debop4j.access.model.CodeBaseEntity
- * User: sunghyouk.bae@gmail.com
- * Date: 13. 3. 1.
+ *
+ * @author sunghyouk.bae@gmail.com
+ * @since 13. 3. 1.
  */
 @MappedSuperclass
 @DynamicInsert

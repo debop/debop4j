@@ -9,8 +9,9 @@ import java.util.Iterator;
 
 /**
  * {@link IUpdateTimestampedEntity} 를 구현한 엔티티의 updateTimestamp 값을 엔티티 저장 시에 갱신해 주는 Interceptor 입니다.
- * User: sunghyouk.bae@gmail.com
- * Date: 12. 11. 21.
+ *
+ * @author sunghyouk.bae@gmail.com
+ * @since 12. 11. 21.
  */
 public class UpdateTimestampedInterceptor extends EmptyInterceptor {
 

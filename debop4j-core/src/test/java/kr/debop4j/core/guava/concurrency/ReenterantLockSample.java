@@ -8,8 +8,9 @@ import java.util.concurrent.locks.ReentrantLock;
 
 /**
  * kr.debop4j.core.guava.concurrency.ReenterantLockSample
- * User: sunghyouk.bae@gmail.com
- * Date: 12. 12. 10.
+ *
+ * @author sunghyouk.bae@gmail.com
+ * @since 12. 12. 10.
  */
 public class ReenterantLockSample {
 

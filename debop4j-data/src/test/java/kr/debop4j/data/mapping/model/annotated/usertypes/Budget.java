@@ -12,8 +12,9 @@ import javax.persistence.*;
 
 /**
  * org.annotated.mapping.domain.model.usertypes.Budget
- * User: sunghyouk.bae@gmail.com
- * Date: 12. 12. 6.
+ *
+ * @author sunghyouk.bae@gmail.com
+ * @since 12. 12. 6.
  */
 
 @Getter

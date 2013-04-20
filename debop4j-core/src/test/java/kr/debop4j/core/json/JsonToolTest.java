@@ -11,8 +11,9 @@ import static org.junit.Assert.assertEquals;
 
 /**
  * kr.debop4j.core.json.JsonToolTest
- * User: sunghyouk.bae@gmail.com
- * Date: 12. 12. 5.
+ *
+ * @author sunghyouk.bae@gmail.com
+ * @since 12. 12. 5.
  */
 @Slf4j
 public class JsonToolTest extends AbstractTest {

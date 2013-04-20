@@ -7,8 +7,9 @@ import javax.sql.DataSource;
 
 /**
  * Jdbc 관련 Utility class
- * User: sunghyouk.bae@gmail.com
- * Date: 13. 2. 26
+ *
+ * @author sunghyouk.bae@gmail.com
+ * @since 13. 2. 26
  */
 @Slf4j
 public class JdbcTool {

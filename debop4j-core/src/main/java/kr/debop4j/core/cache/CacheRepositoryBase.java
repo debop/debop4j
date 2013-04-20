@@ -5,8 +5,9 @@ import lombok.extern.slf4j.Slf4j;
 
 /**
  * Cache 시스템에 정보를 관리하는 ICacheRepository 의 기본 추상화 클래스입니다.
- * User: sunghyouk.bae@gmail.com
- * Date: 12. 9. 12
+ *
+ * @author sunghyouk.bae@gmail.com
+ * @since 12. 9. 12
  */
 @Slf4j
 public abstract class CacheRepositoryBase implements ICacheRepository {

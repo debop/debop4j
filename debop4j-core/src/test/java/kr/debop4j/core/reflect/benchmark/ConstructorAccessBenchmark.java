@@ -6,8 +6,9 @@ import org.junit.Test;
 
 /**
  * kr.debop4j.core.reflect.benchmark.ConstructorAccessBenchmark
- * User: sunghyouk.bae@gmail.com
- * Date: 13. 1. 21
+ *
+ * @author sunghyouk.bae@gmail.com
+ * @since 13. 1. 21
  */
 @Slf4j
 public class ConstructorAccessBenchmark extends Benchmark {

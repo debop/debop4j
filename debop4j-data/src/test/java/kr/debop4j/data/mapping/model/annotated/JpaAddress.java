@@ -11,8 +11,9 @@ import javax.persistence.Embeddable;
 
 /**
  * org.annotated.mapping.domain.model.JpaAddress
- * JpaUser: sunghyouk.bae@gmail.com
- * Date: 12. 11. 20.
+ * Jpa@author sunghyouk.bae@gmail.com
+ *
+ * @since 12. 11. 20.
  */
 @Getter
 @Setter

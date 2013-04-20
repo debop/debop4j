@@ -18,8 +18,9 @@ import java.util.Set;
 
 /**
  * Working Calendar에서 작업 시간, 예외 시간 등의 룰을 나타냅니다.
- * User: sunghyouk.bae@gmail.com
- * Date: 13. 3. 11.
+ *
+ * @author sunghyouk.bae@gmail.com
+ * @since 13. 3. 11.
  */
 @Entity
 @Table(name = "WorkCalendarRule")
@@ -72,14 +73,14 @@ public class WorkCalendarRule extends AccessEntityBase {
     private String exceptionClassName;
 
     @Type(type = "kr.debop4j.data.hibernate.usertype.TimeRangeUserType")
-    @Columns(columns = {@Column(name = "StartTime"), @Column(name = "EndTime")})
+    @Columns(columns = { @Column(name = "StartTime"), @Column(name = "EndTime") })
     @Setter(AccessLevel.PROTECTED)
     private ITimePeriod rulePeriod = new TimeRange();
 
-    @CollectionTable(name = "WorkCalendarRulePeriod", joinColumns = {@JoinColumn(name = "RuleId")})
+    @CollectionTable(name = "WorkCalendarRulePeriod", joinColumns = { @JoinColumn(name = "RuleId") })
     @ElementCollection(targetClass = ITimePeriod.class, fetch = FetchType.EAGER)
     @Type(type = "kr.debop4j.data.hibernate.usertype.TimeRangeUserType")
-    @Columns(columns = {@Column(name = "StartTime"), @Column(name = "EndTime")})
+    @Columns(columns = { @Column(name = "StartTime"), @Column(name = "EndTime") })
     private final Set<ITimePeriod> rulePeriods = Sets.newHashSet();
 
     private Integer viewOrder;

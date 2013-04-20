@@ -10,8 +10,9 @@ import static org.junit.Assert.assertNotNull;
 
 /**
  * TestCase for {@link BinarySerializer}
- * User: sunghyouk.bae@gmail.com
- * Date: 12. 10. 4.
+ *
+ * @author sunghyouk.bae@gmail.com
+ * @since 12. 10. 4.
  */
 @Slf4j
 public class BinarySerializerTest extends AbstractTest {

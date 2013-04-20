@@ -13,8 +13,9 @@ import javax.annotation.concurrent.ThreadSafe;
 
 /**
  * Unit of Work 패턴을 구현한 Static 클래스입니다.
- * User: sunghyouk.bae@gmail.com
- * Date: 12. 12. 18
+ *
+ * @author sunghyouk.bae@gmail.com
+ * @since 12. 12. 18
  */
 @Slf4j
 @ThreadSafe

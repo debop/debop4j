@@ -11,8 +11,9 @@ import javax.persistence.*;
 
 /**
  * 직원의 부가 정보
- * User: sunghyouk.bae@gmail.com
- * Date: 13. 3. 25 오후 1:14
+ *
+ * @author sunghyouk.bae@gmail.com
+ * @since 13. 3. 25 오후 1:14
  */
 @Entity
 @Table(name = "EmployeeAttr")

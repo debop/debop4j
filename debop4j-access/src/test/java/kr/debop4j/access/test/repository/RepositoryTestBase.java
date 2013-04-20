@@ -5,8 +5,9 @@ import lombok.extern.slf4j.Slf4j;
 
 /**
  * kr.debop4j.access.test.repository.RepositoryTestBase
- * User: sunghyouk.bae@gmail.com
- * Date: 13. 3. 12.
+ *
+ * @author sunghyouk.bae@gmail.com
+ * @since 13. 3. 12.
  */
 @Slf4j
 public class RepositoryTestBase extends AccessTestBase {

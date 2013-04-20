@@ -16,8 +16,9 @@ import java.util.Random;
 
 /**
  * {@link ICompressor} TestCase
- * User: sunghyouk.bae@gmail.com
- * Date: 12. 9. 12
+ *
+ * @author sunghyouk.bae@gmail.com
+ * @since 12. 9. 12
  */
 @Slf4j
 public class CompressorTest extends AbstractTest {

@@ -10,8 +10,9 @@ import java.util.Map;
 
 /**
  * Hibernate 용 IUnitOfWork Factory 클래스입니다.
- * User: sunghyouk.bae@gmail.com
- * Date: 12. 11. 30.
+ *
+ * @author sunghyouk.bae@gmail.com
+ * @since 12. 11. 30.
  */
 @Slf4j
 public class UnitOfWorkFactory implements IUnitOfWorkFactory {

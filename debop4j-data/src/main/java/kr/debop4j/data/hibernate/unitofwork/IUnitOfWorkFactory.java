@@ -7,8 +7,9 @@ import java.util.Map;
 
 /**
  * {@link IUnitOfWork} 를 생성하는 Factory 의 인터페이스 입니다.
- * User: sunghyouk.bae@gmail.com
- * Date: 12. 11. 29.
+ *
+ * @author sunghyouk.bae@gmail.com
+ * @since 12. 11. 29.
  */
 public interface IUnitOfWorkFactory {
 

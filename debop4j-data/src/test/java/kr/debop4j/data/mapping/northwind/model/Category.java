@@ -19,8 +19,9 @@ import java.util.List;
 
 /**
  * kr.debop4j.data.mapping.northwind.model.Category
- * User: sunghyouk.bae@gmail.com
- * Date: 13. 2. 23.
+ *
+ * @author sunghyouk.bae@gmail.com
+ * @since 13. 2. 23.
  */
 @Entity
 @Table(name = "Categories")
@@ -48,7 +49,7 @@ public class Category extends AnnotatedEntityBase implements IEntity<Integer> {
     private byte[] picture;
 
     @Setter(AccessLevel.PROTECTED)
-    @OneToMany(mappedBy = "category", cascade = {CascadeType.ALL}, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "category", cascade = { CascadeType.ALL }, fetch = FetchType.LAZY)
     @LazyCollection(value = LazyCollectionOption.EXTRA)
     private List<Product> products = Lists.newArrayList();
 

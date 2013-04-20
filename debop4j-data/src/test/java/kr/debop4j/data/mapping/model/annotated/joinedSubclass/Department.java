@@ -12,8 +12,9 @@ import java.util.Set;
 
 /**
  * org.annotated.mapping.domain.model.joinedSubclass.Department
- * User: sunghyouk.bae@gmail.com
- * Date: 12. 12. 8.
+ *
+ * @author sunghyouk.bae@gmail.com
+ * @since 12. 12. 8.
  */
 @Entity
 @Table(name = "JS_DEPARTMENT")
@@ -37,7 +38,7 @@ public class Department extends AnnotatedEntityBase {
     @JoinColumn(name = "PARENT_DEPT_ID", nullable = true)
     private Department parent;
 
-    @OneToMany(mappedBy = "parent", cascade = {CascadeType.ALL}, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "parent", cascade = { CascadeType.ALL }, fetch = FetchType.LAZY)
     @LazyCollection(value = LazyCollectionOption.EXTRA)
     private Set<Department> children = Sets.newHashSet();
 

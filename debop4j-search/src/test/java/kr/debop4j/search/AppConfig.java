@@ -27,8 +27,9 @@ import java.util.Properties;
 
 /**
  * hibernate와 hibernate-search를 이용한 검색 라이브러리를 테스트하기 위한 Spring 환경설정 파일입니다.
- * User: sunghyouk.bae@gmail.com
- * Date: 13. 2. 28.
+ *
+ * @author sunghyouk.bae@gmail.com
+ * @since 13. 2. 28.
  */
 @Configuration
 @EnableTransactionManagement

@@ -7,8 +7,9 @@ import java.io.Serializable;
 
 /**
  * 엔티티의 Identifier generator가 assigned 인 경우에 사용합니다.
- * User: sunghyouk.bae@gmail.com
- * Date: 13. 1. 27.
+ *
+ * @author sunghyouk.bae@gmail.com
+ * @since 13. 1. 27.
  */
 @MappedSuperclass
 public class AssignedIdEntityBase<TId extends Serializable> extends EntityBase<TId> implements IAssignedEntity<TId> {

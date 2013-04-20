@@ -13,8 +13,9 @@ import javax.persistence.Table;
 
 /**
  * kr.debop4j.data.mapping.model.annotated.tree.TreeNode
- * User: sunghyouk.bae@gmail.com
- * Date: 13. 2. 23.
+ *
+ * @author sunghyouk.bae@gmail.com
+ * @since 13. 2. 23.
  */
 @Entity
 @Table(name = "A_TREENODE")

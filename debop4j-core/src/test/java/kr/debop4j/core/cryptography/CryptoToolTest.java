@@ -9,8 +9,9 @@ import java.util.Arrays;
 
 /**
  * CrytpTool 테스트
- * User: sunghyouk.bae@gmail.com
- * Date: 12. 9. 14
+ *
+ * @author sunghyouk.bae@gmail.com
+ * @since 12. 9. 14
  */
 @Slf4j
 public class CryptoToolTest extends AbstractTest {

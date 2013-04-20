@@ -15,8 +15,9 @@ import javax.persistence.*;
 
 /**
  * 직원 정보
- * User: sunghyouk.bae@gmail.com
- * Date: 13. 3. 1.
+ *
+ * @author sunghyouk.bae@gmail.com
+ * @since 13. 3. 1.
  */
 @Entity
 @Table(name = "Employee")
@@ -26,7 +27,7 @@ import javax.persistence.*;
                                                                             columnNames = {
                                                                                     "CompanyId",
                                                                                     "EmployeeCode",
-                                                                                    "EmployeeName"}))
+                                                                                    "EmployeeName" }))
 @DynamicInsert
 @DynamicUpdate
 @Getter

@@ -5,8 +5,9 @@ import java.util.List;
 
 /**
  * 스크롤되는 목록을 표현하는 클래스입니다.
- * User: sunghyouk.bae@gmail.com
- * Date: 12. 9. 12
+ *
+ * @author sunghyouk.bae@gmail.com
+ * @since 12. 9. 12
  */
 public class LongScrolledList<E> extends ScrolledListBase<E, Long> {
 

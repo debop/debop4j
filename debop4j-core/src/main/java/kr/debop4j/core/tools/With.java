@@ -12,8 +12,9 @@ import java.util.concurrent.Future;
 
 /**
  * kr.debop4j.core.tool.With
- * User: sunghyouk.bae@gmail.com
- * Date: 12. 11. 30.
+ *
+ * @author sunghyouk.bae@gmail.com
+ * @since 12. 11. 30.
  */
 @Slf4j
 public final class With {

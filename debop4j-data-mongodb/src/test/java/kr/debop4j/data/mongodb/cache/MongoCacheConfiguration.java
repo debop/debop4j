@@ -11,8 +11,9 @@ import org.springframework.data.mongodb.config.AbstractMongoConfiguration;
 
 /**
  * kr.debop4j.core.cache.mongodb.SpringMongoConfiguration
- * User: sunghyouk.bae@gmail.com
- * Date: 13. 3. 25 오후 3:36
+ *
+ * @author sunghyouk.bae@gmail.com
+ * @since 13. 3. 25 오후 3:36
  */
 @Configuration
 @EnableCaching

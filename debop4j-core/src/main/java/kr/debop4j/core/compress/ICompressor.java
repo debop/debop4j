@@ -2,8 +2,9 @@ package kr.debop4j.core.compress;
 
 /**
  * 설명을 추가하세요.
- * User: sunghyouk.bae@gmail.com
- * Date: 12. 9. 12
+ *
+ * @author sunghyouk.bae@gmail.com
+ * @since 12. 9. 12
  */
 public interface ICompressor {
 

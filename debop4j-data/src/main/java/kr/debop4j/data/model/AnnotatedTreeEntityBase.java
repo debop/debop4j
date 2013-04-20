@@ -15,8 +15,9 @@ import java.util.Set;
 
 /**
  * kr.debop4j.data.model.AnnotatedTreeEntityBase
- * User: sunghyouk.bae@gmail.com
- * Date: 13. 3. 7.
+ *
+ * @author sunghyouk.bae@gmail.com
+ * @since 13. 3. 7.
  */
 @MappedSuperclass
 @DynamicInsert
@@ -32,7 +33,7 @@ public class AnnotatedTreeEntityBase<T extends ITreeEntity<T>> extends Annotated
     private T parent;
 
     @Setter(AccessLevel.PROTECTED)
-    @OneToMany(mappedBy = "parent", cascade = {CascadeType.ALL})
+    @OneToMany(mappedBy = "parent", cascade = { CascadeType.ALL })
     @LazyCollection(LazyCollectionOption.EXTRA)
     private Set<T> children = Sets.newLinkedHashSet();
 

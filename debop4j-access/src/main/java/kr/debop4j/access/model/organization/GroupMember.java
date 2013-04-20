@@ -14,8 +14,9 @@ import javax.persistence.*;
 
 /**
  * 그룹의 구성원
- * User: sunghyouk.bae@gmail.com
- * Date: 13. 3. 5 오후 4:26
+ *
+ * @author sunghyouk.bae@gmail.com
+ * @since 13. 3. 5 오후 4:26
  */
 @Entity
 @Table(name = "GroupMember")
@@ -25,7 +26,7 @@ import javax.persistence.*;
                                                                             columnNames = {
                                                                                     "GroupId",
                                                                                     "MemberKind",
-                                                                                    "MemberId"}))
+                                                                                    "MemberId" }))
 @DynamicInsert
 @DynamicUpdate
 @Getter

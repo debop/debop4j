@@ -11,8 +11,9 @@ import java.io.IOException;
 
 /**
  * XZ 알고리즘을 이용한 압축/복원을 수행합니다.
- * User: sunghyouk.bae@gmail.com
- * Date: 12. 9. 12.
+ *
+ * @author sunghyouk.bae@gmail.com
+ * @since 12. 9. 12.
  */
 @Slf4j
 public class XZCompressor extends CompressorBase {

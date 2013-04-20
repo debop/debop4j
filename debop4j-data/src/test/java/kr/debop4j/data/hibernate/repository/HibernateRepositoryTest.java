@@ -22,8 +22,9 @@ import java.util.List;
 
 /**
  * kr.nsoft.data.hibernate.dao.HibernateRepositoryTest
- * User: sunghyouk.bae@gmail.com
- * Date: 12. 11. 26.
+ *
+ * @author sunghyouk.bae@gmail.com
+ * @since 12. 11. 26.
  */
 @Slf4j
 public class HibernateRepositoryTest extends HibernateTestBase {

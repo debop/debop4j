@@ -31,8 +31,9 @@ import java.util.Locale;
 
 /**
  * Hibernate 엔티티 정보를 관리하기 위한 Utility Class 입니다.
- * User: sunghyouk.bae@gmail.com
- * Date: 12. 9. 24
+ *
+ * @author sunghyouk.bae@gmail.com
+ * @since 12. 9. 24
  */
 @Slf4j
 @SuppressWarnings("unchecked")

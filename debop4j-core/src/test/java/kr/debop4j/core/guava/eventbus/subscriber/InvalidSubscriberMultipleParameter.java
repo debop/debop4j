@@ -6,8 +6,9 @@ import kr.debop4j.core.guava.eventbus.events.CreditPurchaseEvent;
 
 /**
  * kr.debop4j.core.guava.eventbus.subscriber.InvalidSubscriberMultipleParameter
- * User: sunghyouk.bae@gmail.com
- * Date: 12. 12. 10.
+ *
+ * @author sunghyouk.bae@gmail.com
+ * @since 12. 12. 10.
  */
 public class InvalidSubscriberMultipleParameter {
 

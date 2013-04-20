@@ -13,8 +13,9 @@ import javax.persistence.*;
 
 /**
  * 직위 정보  (예:사원,대리,과장,차장,부장 등)
- * User: sunghyouk.bae@gmail.com
- * Date: 13. 3. 8 오후 5:05
+ *
+ * @author sunghyouk.bae@gmail.com
+ * @since 13. 3. 8 오후 5:05
  */
 @Entity
 @Table(name = "EmpPosition")

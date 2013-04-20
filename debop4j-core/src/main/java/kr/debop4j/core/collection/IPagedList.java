@@ -5,8 +5,9 @@ import java.util.List;
 
 /**
  * 페이지 처리된 목록을 표현하는 인터페이스
- * User: sunghyouk.bae@gmail.com
- * Date: 12. 9. 12
+ *
+ * @author sunghyouk.bae@gmail.com
+ * @since 12. 9. 12
  */
 public interface IPagedList<E> extends Serializable {
 

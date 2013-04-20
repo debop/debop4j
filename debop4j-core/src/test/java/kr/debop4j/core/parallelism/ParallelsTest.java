@@ -13,8 +13,8 @@ import java.util.List;
 import java.util.concurrent.Callable;
 
 /**
- * User: sunghyouk.bae@gmail.com
- * Date: 13. 1. 11
+ * @author sunghyouk.bae@gmail.com
+ * @since 13. 1. 11
  */
 @Slf4j
 public class ParallelsTest {

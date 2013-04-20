@@ -14,8 +14,9 @@ import java.sql.SQLException;
 
 /**
  * 엔티티의 속성 값을 압축하여 DB에 Hex Decimal 문자열로 저장합니다.
- * User: sunghyouk.bae@gmail.com
- * Date: 12. 9. 18
+ *
+ * @author sunghyouk.bae@gmail.com
+ * @since 12. 9. 18
  */
 @Slf4j
 public abstract class AbstractCompressedStringUserType extends AbstractCompressedUserType {

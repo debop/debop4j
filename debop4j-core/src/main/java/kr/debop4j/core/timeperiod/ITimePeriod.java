@@ -4,8 +4,9 @@ import org.joda.time.DateTime;
 
 /**
  * 시간의 기간을 나타냅니다.
- * User: sunghyouk.bae@gmail.com
- * Date: 13. 3. 11.
+ *
+ * @author sunghyouk.bae@gmail.com
+ * @since 13. 3. 11.
  */
 public interface ITimePeriod {
 

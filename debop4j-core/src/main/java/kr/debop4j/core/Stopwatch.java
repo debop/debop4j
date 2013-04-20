@@ -5,8 +5,9 @@ import lombok.extern.slf4j.Slf4j;
 
 /**
  * 실행 시간을 측정하는 Stopwatch 입니다.
- * User: sunghyouk.bae@gmail.com
- * Date: 12. 9. 12
+ *
+ * @author sunghyouk.bae@gmail.com
+ * @since 12. 9. 12
  */
 @Slf4j
 public class Stopwatch {

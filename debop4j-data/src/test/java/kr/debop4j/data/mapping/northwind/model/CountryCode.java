@@ -2,8 +2,9 @@ package kr.debop4j.data.mapping.northwind.model;
 
 /**
  * kr.debop4j.data.mapping.northwind.model.CountryCode
- * User: sunghyouk.bae@gmail.com
- * Date: 13. 2. 23.
+ *
+ * @author sunghyouk.bae@gmail.com
+ * @since 13. 2. 23.
  */
 public enum CountryCode {
     Australia("Australis"),

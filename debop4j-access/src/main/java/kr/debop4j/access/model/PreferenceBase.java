@@ -11,8 +11,9 @@ import javax.persistence.MappedSuperclass;
 
 /**
  * 설정 정보의 기본 클래스
- * User: sunghyouk.bae@gmail.com
- * Date: 13. 3. 12.
+ *
+ * @author sunghyouk.bae@gmail.com
+ * @since 13. 3. 12.
  */
 @MappedSuperclass
 @Getter

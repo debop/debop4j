@@ -13,8 +13,9 @@ import java.util.Date;
 
 /**
  * debop4j access 모듈의 엔티티들의 기본 클래스입니다.
- * User: sunghyouk.bae@gmail.com
- * Date: 13. 3. 8 오후 1:12
+ *
+ * @author sunghyouk.bae@gmail.com
+ * @since 13. 3. 8 오후 1:12
  */
 @MappedSuperclass
 public abstract class AccessEntityBase extends AnnotatedEntityBase implements IUpdateTimestampedEntity {

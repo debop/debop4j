@@ -6,8 +6,9 @@ import org.springframework.transaction.support.DefaultTransactionDefinition;
 
 /**
  * {@link IUnitOfWorkImplementor} 를 구현한 기본 클래스
- * User: sunghyouk.bae@gmail.com
- * Date: 12. 11. 29.
+ *
+ * @author sunghyouk.bae@gmail.com
+ * @since 12. 11. 29.
  */
 @Slf4j
 public abstract class UnitOfWorkAdapterBase implements IUnitOfWorkImplementor {

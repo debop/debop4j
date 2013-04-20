@@ -13,8 +13,9 @@ import static kr.debop4j.core.Guard.shouldNotBeNull;
 
 /**
  * {@link java.io.InputStream}, {@link java.io.OutputStream} 에 대한 Utility Class 입니다.
- * User: sunghyouk.bae@gmail.com
- * Date: 12. 9. 13
+ *
+ * @author sunghyouk.bae@gmail.com
+ * @since 12. 9. 13
  */
 @Slf4j
 public final class StreamTool {

@@ -9,8 +9,9 @@ import javax.persistence.PostPersist;
 
 /**
  * Annotation 기반의 Hibernate Entity를 표현한 추상 클래스입니다.
- * User: sunghyouk.bae@gmail.com
- * Date: 12. 12. 7.
+ *
+ * @author sunghyouk.bae@gmail.com
+ * @since 12. 12. 7.
  */
 @MappedSuperclass
 @DynamicInsert

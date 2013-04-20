@@ -16,8 +16,9 @@ import javax.persistence.*;
 
 /**
  * 회사의 업무 시간을 표현하는 Working Calendar를 표시합니다.
- * User: sunghyouk.bae@gmail.com
- * Date: 13. 3. 11.
+ *
+ * @author sunghyouk.bae@gmail.com
+ * @since 13. 3. 11.
  */
 @Entity
 @Table(name = "WorkCalendar")

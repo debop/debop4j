@@ -1,8 +1,8 @@
 package kr.debop4j.core;
 
 /**
- * User: sunghyouk.bae@gmail.com
- * Date: 12. 9. 12
+ * @author sunghyouk.bae@gmail.com
+ * @since 12. 9. 12
  */
 public final class SR {
 

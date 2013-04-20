@@ -2,8 +2,9 @@ package kr.debop4j.core;
 
 /**
  * 정렬 방법
- * User: sunghyouk.bae@gmail.com
- * Date: 12. 12. 19.
+ *
+ * @author sunghyouk.bae@gmail.com
+ * @since 12. 12. 19.
  */
 public enum SortDirection {
 

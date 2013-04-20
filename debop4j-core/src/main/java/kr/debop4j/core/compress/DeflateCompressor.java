@@ -11,8 +11,9 @@ import java.util.zip.InflaterInputStream;
 
 /**
  * pudding.pudding.commons.core.compress.DeflateCompressor
- * User: sunghyouk.bae@gmail.com
- * Date: 12. 9. 12.
+ *
+ * @author sunghyouk.bae@gmail.com
+ * @since 12. 9. 12.
  */
 @Slf4j
 public class DeflateCompressor extends CompressorBase {

@@ -14,8 +14,9 @@ import javax.persistence.*;
 
 /**
  * kr.debop4j.access.model.product.ProductCodeItem
- * User: sunghyouk.bae@gmail.com
- * Date: 13. 3. 12.
+ *
+ * @author sunghyouk.bae@gmail.com
+ * @since 13. 3. 12.
  */
 @Entity
 @Table(name = "ProductCodeItem")

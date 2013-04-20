@@ -10,8 +10,9 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  * Spring MVC 에서 servlet 시작과 완료 시에 UnitOfWork를 시작하고, 완료하도록 합니다.
- * User: sunghyouk.bae@gmail.com
- * Date: 13. 2. 15.
+ *
+ * @author sunghyouk.bae@gmail.com
+ * @since 13. 2. 15.
  */
 @Slf4j
 public class UnitOfWorkInterceptor implements HandlerInterceptor {

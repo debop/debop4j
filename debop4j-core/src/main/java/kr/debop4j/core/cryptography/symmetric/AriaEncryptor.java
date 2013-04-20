@@ -4,8 +4,9 @@ package kr.debop4j.core.cryptography.symmetric;
 /**
  * ARIA 알고리즘을 이용한 대칭형 암호화기<br/>
  * 참고 : <a href="http://seed.kisa.or.kr/kor/aria/aria.jsp">ARIA 알고리즘</a>
- * User: sunghyouk.bae@gmail.com
- * Date: 12. 9. 14
+ *
+ * @author sunghyouk.bae@gmail.com
+ * @since 12. 9. 14
  */
 public final class AriaEncryptor extends SymmetricByteEncryptorBase {
 

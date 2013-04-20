@@ -15,8 +15,9 @@ import javax.persistence.MappedSuperclass;
 
 /**
  * Identifier의 수행이 Integer인 엔티티의 기본 클래스입니다.
- * User: sunghyouk.bae@gmail.com
- * Date: 13. 2. 23.
+ *
+ * @author sunghyouk.bae@gmail.com
+ * @since 13. 2. 23.
  */
 @MappedSuperclass
 @DynamicInsert

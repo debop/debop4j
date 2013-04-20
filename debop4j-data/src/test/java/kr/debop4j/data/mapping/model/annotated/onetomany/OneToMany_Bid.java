@@ -12,8 +12,9 @@ import java.sql.Timestamp;
 
 /**
  * org.annotated.mapping.domain.model.onetomany.OneToMany_Bid
- * User: sunghyouk.bae@gmail.com
- * Date: 12. 12. 4.
+ *
+ * @author sunghyouk.bae@gmail.com
+ * @since 12. 12. 4.
  */
 @Entity
 @Table(name = "JPA_ONE_TO_MANY_BID")

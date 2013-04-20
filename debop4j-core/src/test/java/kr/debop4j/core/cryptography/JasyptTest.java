@@ -20,14 +20,15 @@ import static ch.lambdaj.Lambda.sort;
 
 /**
  * jasypt.org 테스트
- * User: sunghyouk.bae@gmail.com
- * Date: 12. 12. 18
+ *
+ * @author sunghyouk.bae@gmail.com
+ * @since 12. 12. 18
  */
 @Slf4j
 public class JasyptTest {
 
     private static final String[] DiageterAlgorithms =
-            new String[]{"MD5", "SHA", "SHA-256", "SHA-384", "SHA-512"};
+            new String[]{ "MD5", "SHA", "SHA-256", "SHA-384", "SHA-512" };
 
     @Test
     public void loadAlgorithms() {
@@ -95,8 +96,8 @@ public class JasyptTest {
     private static final String PLAIN_TEXT = "동해물과 백두산이 마르고 닳도록~ Hello World! 1234567890";
 
     private static final String[] EncryptorAlgorithms =
-            new String[]{"AES", "AESWARP", "ARCFOUR", "BLOWFISH", "DES", "DESEDE", "DESEDEWARP",
-                    "PBEWITHMD5ANDDES", "PBEWITHMD5ANDTRIPLEDES", "PBEWITHSHA1ANDDESEDE", "PBEWITHSHA1ANDRC2_40", "RC2"};
+            new String[]{ "AES", "AESWARP", "ARCFOUR", "BLOWFISH", "DES", "DESEDE", "DESEDEWARP",
+                    "PBEWITHMD5ANDDES", "PBEWITHMD5ANDTRIPLEDES", "PBEWITHSHA1ANDDESEDE", "PBEWITHSHA1ANDRC2_40", "RC2" };
 
     @Test
     public void basicTestEncryptor() {
@@ -114,7 +115,7 @@ public class JasyptTest {
     }
 
     private static final String[] PBEAlgorithms =
-            new String[]{"PBEwithMD5andDES", "PBEwithSHA1andDESEDE", "PBEwithSHA1andRC2_40"};
+            new String[]{ "PBEwithMD5andDES", "PBEwithSHA1andDESEDE", "PBEwithSHA1andRC2_40" };
 
     @Test
     public void standardPBEStringEncryptor() {

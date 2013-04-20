@@ -18,8 +18,9 @@ import static kr.debop4j.core.tools.StringTool.*;
 
 /**
  * 압축 툴
- * User: sunghyouk.bae@gmail.com
- * Date: 12. 9. 13
+ *
+ * @author sunghyouk.bae@gmail.com
+ * @since 12. 9. 13
  */
 public abstract class CompressTool {
 

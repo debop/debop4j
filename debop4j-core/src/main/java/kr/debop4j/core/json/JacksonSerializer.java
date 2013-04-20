@@ -8,8 +8,9 @@ import lombok.Getter;
 
 /**
  * jackson 라이브러리를 이용한 Json Serializer
- * User: sunghyouk.bae@gmail.com
- * Date: 12. 9. 14
+ *
+ * @author sunghyouk.bae@gmail.com
+ * @since 12. 9. 14
  */
 public class JacksonSerializer implements IJsonSerializer {
 

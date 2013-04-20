@@ -8,8 +8,9 @@ import java.lang.reflect.Field;
 
 /**
  * kr.debop4j.core.reflect.benchmark.FieldAccessBenchmark
- * User: sunghyouk.bae@gmail.com
- * Date: 13. 1. 21
+ *
+ * @author sunghyouk.bae@gmail.com
+ * @since 13. 1. 21
  */
 @Slf4j
 public class FieldAccessBenchmark extends Benchmark {

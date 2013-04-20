@@ -6,8 +6,9 @@ import org.joda.time.DateTimeConstants;
 
 /**
  * 날짜 관련 Utility Class
- * User: sunghyouk.bae@gmail.com
- * Date: 13. 1. 27.
+ *
+ * @author sunghyouk.bae@gmail.com
+ * @since 13. 1. 27.
  */
 @Slf4j
 public class DateTool {

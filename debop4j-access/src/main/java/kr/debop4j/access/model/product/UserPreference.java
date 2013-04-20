@@ -15,8 +15,9 @@ import javax.persistence.*;
 
 /**
  * 사용자 환경 설정 정보
- * User: sunghyouk.bae@gmail.com
- * Date: 13. 3. 10.
+ *
+ * @author sunghyouk.bae@gmail.com
+ * @since 13. 3. 10.
  */
 @Entity
 @Table(name = "UserPreference")
@@ -24,7 +25,7 @@ import javax.persistence.*;
                                  indexes = @Index(name = "ix_userpreference",
                                                   columnNames = {
                                                           "UserId",
-                                                          "PrefKey"}))
+                                                          "PrefKey" }))
 @org.hibernate.annotations.Cache(region = "Product", usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 @DynamicInsert
 @DynamicUpdate

@@ -14,8 +14,9 @@ import java.io.Serializable;
 /**
  * JPA 에서 사용할 Repository 입니다.
  * {@ref http://www.baeldung.com/2011/12/13/the-persistencexml-layer-with-spring-3-1-and-annotated/}
- * User: sunghyouk.bae@gmail.com
- * Date: 12. 11. 25.
+ *
+ * @author sunghyouk.bae@gmail.com
+ * @since 12. 11. 25.
  */
 @Repository
 @Slf4j

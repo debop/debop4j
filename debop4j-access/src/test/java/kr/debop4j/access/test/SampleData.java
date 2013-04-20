@@ -7,8 +7,9 @@ import java.util.List;
 
 /**
  * kr.debop4j.access.test.SampleData
- * User: sunghyouk.bae@gmail.com
- * Date: 13. 3. 14 오전 10:47
+ *
+ * @author sunghyouk.bae@gmail.com
+ * @since 13. 3. 14 오전 10:47
  */
 public class SampleData {
 
@@ -56,5 +57,5 @@ public class SampleData {
 
     public static final String ProductCode = "Access";
     @Getter
-    public static final String[] productCodes = new String[]{"Access", "DAISY", "IRIS", "PUDDING.TO", "PUDDING.CAMERA"};
+    public static final String[] productCodes = new String[]{ "Access", "DAISY", "IRIS", "PUDDING.TO", "PUDDING.CAMERA" };
 }

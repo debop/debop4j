@@ -9,8 +9,9 @@ import org.junit.*;
 
 /**
  * 다양한 Database에 대해 hibernate Domain Model을 테스트 할 수 잇도록 합니다.
- * User: sunghyouk.bae@gmail.com
- * Date: 13. 2. 21.
+ *
+ * @author sunghyouk.bae@gmail.com
+ * @since 13. 2. 21.
  */
 @Slf4j
 public class DatabaseTestFixtureTest extends DatabaseTestFixtureBase {

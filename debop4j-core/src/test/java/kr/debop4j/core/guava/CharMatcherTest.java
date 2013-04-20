@@ -8,8 +8,9 @@ import org.junit.Test;
 
 /**
  * kr.debop4j.core.guava.CharMatcherTest
- * User: sunghyouk.bae@gmail.com
- * Date: 13. 1. 22.
+ *
+ * @author sunghyouk.bae@gmail.com
+ * @since 13. 1. 22.
  */
 @Slf4j
 public class CharMatcherTest extends AbstractTest {

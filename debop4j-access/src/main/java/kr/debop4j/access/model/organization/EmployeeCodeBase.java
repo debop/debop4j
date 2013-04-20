@@ -12,8 +12,9 @@ import javax.persistence.*;
 
 /**
  * 직급, 직위, 직책 등 직원과 관련된 코드 정보를 나타내는 추상클래스입니다.
- * User: sunghyouk.bae@gmail.com
- * Date: 13. 3. 8 오후 4:45
+ *
+ * @author sunghyouk.bae@gmail.com
+ * @since 13. 3. 8 오후 4:45
  */
 // @Entity
 // @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)

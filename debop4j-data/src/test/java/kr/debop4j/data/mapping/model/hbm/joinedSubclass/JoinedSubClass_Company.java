@@ -8,8 +8,9 @@ import lombok.Setter;
 
 /**
  * org.hibernate.mapping.domain.model.joinedSubclass.JoinedSubClass_Company.hbm.xml
- * User: sunghyouk.bae@gmail.com
- * Date: 12. 12. 2.
+ *
+ * @author sunghyouk.bae@gmail.com
+ * @since 12. 12. 2.
  */
 public class JoinedSubClass_Company extends EntityBase<Long> {
 

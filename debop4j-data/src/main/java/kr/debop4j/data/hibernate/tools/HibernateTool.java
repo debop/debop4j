@@ -34,8 +34,9 @@ import static kr.debop4j.core.Guard.shouldNotBeNull;
 
 /**
  * Hibernate 관련 Tool
- * JpaUser: sunghyouk.bae@gmail.com
- * Date: 12. 11. 19
+ * Jpa@author sunghyouk.bae@gmail.com
+ *
+ * @since 12. 11. 19
  */
 public class HibernateTool {
 

@@ -4,8 +4,9 @@ import com.google.common.base.Objects;
 
 /**
  * Value Object (Component) 의 최상위 추상화 클래스입니다.
- * JpaUser: sunghyouk.bae@gmail.com
- * Date: 12. 11. 19
+ * Jpa@author sunghyouk.bae@gmail.com
+ *
+ * @since 12. 11. 19
  */
 public abstract class ValueObjectBase implements IValueObject {
 

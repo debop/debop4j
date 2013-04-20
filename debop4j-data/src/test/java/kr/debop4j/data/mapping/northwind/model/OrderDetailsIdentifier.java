@@ -12,8 +12,9 @@ import javax.persistence.ManyToOne;
 
 /**
  * kr.debop4j.data.mapping.northwind.model.OrderDetailsIdentifier
- * User: sunghyouk.bae@gmail.com
- * Date: 13. 2. 23.
+ *
+ * @author sunghyouk.bae@gmail.com
+ * @since 13. 2. 23.
  */
 @Embeddable
 @Getter

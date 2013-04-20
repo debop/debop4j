@@ -15,8 +15,9 @@ import javax.persistence.Table;
 
 /**
  * 제품을 나타냅니다. 제품별로 사용자 관리, 권한 관리를 수행하도록 합니다.
- * User: sunghyouk.bae@gmail.com
- * Date: 13. 3. 10.
+ *
+ * @author sunghyouk.bae@gmail.com
+ * @since 13. 3. 10.
  */
 @Entity
 @Table(name = "Product")

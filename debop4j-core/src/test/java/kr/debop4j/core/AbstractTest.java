@@ -6,8 +6,9 @@ import org.junit.Before;
 
 /**
  * 단위 테스트 클래스의 최상위 추상 클래스
- * User: sunghyouk.bae@gmail.com
- * Date: 12. 9. 12
+ *
+ * @author sunghyouk.bae@gmail.com
+ * @since 12. 9. 12
  */
 @Slf4j
 public abstract class AbstractTest {

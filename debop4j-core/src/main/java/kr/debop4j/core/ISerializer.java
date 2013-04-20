@@ -2,8 +2,9 @@ package kr.debop4j.core;
 
 /**
  * 객체를 직렬화/역직렬화를 수행하는 인터페이스입니다.
- * User: sunghyouk.bae@gmail.com
- * Date: 12. 11. 22.
+ *
+ * @author sunghyouk.bae@gmail.com
+ * @since 12. 11. 22.
  */
 public interface ISerializer {
 

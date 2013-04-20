@@ -15,8 +15,9 @@ import static org.objectweb.asm.Opcodes.*;
 
 /**
  * 객체의 속성에 접근하기 위한 Accessor 입니다. (속성에 대해 get, set을 수행할 수 있습니다)
- * User: sunghyouk.bae@gmail.com
- * Date: 13. 1. 21
+ *
+ * @author sunghyouk.bae@gmail.com
+ * @since 13. 1. 21
  */
 abstract public class FieldAccess {
 

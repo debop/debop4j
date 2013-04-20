@@ -18,8 +18,9 @@ import static kr.debop4j.core.Guard.shouldNotBeWhiteSpace;
 
 /**
  * 설명을 추가하세요.
- * User: sunghyouk.bae@gmail.com
- * Date: 12. 9. 12
+ *
+ * @author sunghyouk.bae@gmail.com
+ * @since 12. 9. 12
  */
 @Slf4j
 @SuppressWarnings("unchecked")

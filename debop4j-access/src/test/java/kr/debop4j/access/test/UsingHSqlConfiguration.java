@@ -18,8 +18,9 @@ import java.util.Properties;
 
 /**
  * HSql 메모리 DB를 사용하는 Hibernate 환경 설정입니다.
- * User: sunghyouk.bae@gmail.com
- * Date: 13. 3. 7.
+ *
+ * @author sunghyouk.bae@gmail.com
+ * @since 13. 3. 7.
  */
 @Configuration
 @EnableTransactionManagement

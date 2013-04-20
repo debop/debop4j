@@ -14,8 +14,9 @@ import java.sql.SQLException;
 
 /**
  * 엔티티의 속성 값을 압축하여 DB에 저장 / 로드하는 Hibernate 사용자 수형의 기본 클래스입니다.
- * User: sunghyouk.bae@gmail.com
- * Date: 12. 9. 18
+ *
+ * @author sunghyouk.bae@gmail.com
+ * @since 12. 9. 18
  */
 public abstract class AbstractCompressedUserType implements UserType {
 
@@ -45,7 +46,7 @@ public abstract class AbstractCompressedUserType implements UserType {
 
     @Override
     public int[] sqlTypes() {
-        return new int[]{BinaryType.INSTANCE.sqlType()};
+        return new int[]{ BinaryType.INSTANCE.sqlType() };
     }
 
     @Override

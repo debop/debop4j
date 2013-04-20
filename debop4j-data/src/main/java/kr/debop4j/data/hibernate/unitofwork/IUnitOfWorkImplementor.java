@@ -4,8 +4,9 @@ import org.hibernate.Session;
 
 /**
  * kr.nsoft.data.hibernate.unitofwork.IUnitOfWorkImplementor
- * User: sunghyouk.bae@gmail.com
- * Date: 12. 11. 29.
+ *
+ * @author sunghyouk.bae@gmail.com
+ * @since 12. 11. 29.
  */
 public interface IUnitOfWorkImplementor extends IUnitOfWork {
 

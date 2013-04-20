@@ -6,8 +6,9 @@ import java.io.IOException;
 
 /**
  * 압축기의 기본 클래스입니다. Template pattern을 이용하여, 압축/복원 전후의 루틴한 작업을 추상 클래스로 뺐습니다.
- * User: sunghyouk.bae@gmail.com
- * Date: 12. 9. 12
+ *
+ * @author sunghyouk.bae@gmail.com
+ * @since 12. 9. 12
  */
 public abstract class CompressorBase implements ICompressor {
 

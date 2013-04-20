@@ -9,8 +9,9 @@ import lombok.extern.slf4j.Slf4j;
 
 /**
  * <a href="http://code.google.com/p/google-gson/">google-gson</a> 을 이용한 json serializer 입니다.
- * User: sunghyouk.bae@gmail.com
- * Date: 12. 9. 14
+ *
+ * @author sunghyouk.bae@gmail.com
+ * @since 12. 9. 14
  */
 @Slf4j
 public class GsonSerializer implements IJsonSerializer {

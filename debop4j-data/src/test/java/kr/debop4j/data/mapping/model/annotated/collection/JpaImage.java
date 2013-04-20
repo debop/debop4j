@@ -11,8 +11,9 @@ import javax.persistence.Embeddable;
 
 /**
  * org.annotated.mapping.domain.model.collection.JpaImage
- * User: sunghyouk.bae@gmail.com
- * Date: 12. 12. 2.
+ *
+ * @author sunghyouk.bae@gmail.com
+ * @since 12. 12. 2.
  */
 @Getter
 @Setter

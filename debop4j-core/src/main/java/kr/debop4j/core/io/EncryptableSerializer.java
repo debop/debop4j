@@ -7,8 +7,9 @@ import kr.debop4j.core.cryptography.symmetric.RC2ByteEncryptor;
 
 /**
  * 객체 직렬화를 수행한 후, 암호화를 수행합니다.
- * User: sunghyouk.bae@gmail.com
- * Date: 12. 12. 17
+ *
+ * @author sunghyouk.bae@gmail.com
+ * @since 12. 12. 17
  */
 public class EncryptableSerializer extends SerializerDecorator {
 

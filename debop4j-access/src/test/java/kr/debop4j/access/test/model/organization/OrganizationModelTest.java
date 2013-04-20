@@ -14,8 +14,9 @@ import java.util.Locale;
 
 /**
  * kr.debop4j.access.test.model.organization.OrganizationModelTest
- * User: sunghyouk.bae@gmail.com
- * Date: 13. 3. 14 오전 11:27
+ *
+ * @author sunghyouk.bae@gmail.com
+ * @since 13. 3. 14 오전 11:27
  */
 @Slf4j
 public class OrganizationModelTest extends AccessTestBase {

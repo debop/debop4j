@@ -13,8 +13,9 @@ import java.util.List;
 
 /**
  * 설명을 추가하세요.
- * User: sunghyouk.bae@gmail.com
- * Date: 12. 12. 18
+ *
+ * @author sunghyouk.bae@gmail.com
+ * @since 12. 12. 18
  */
 @Slf4j
 public class EncryptorTest {

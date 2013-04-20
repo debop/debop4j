@@ -6,8 +6,9 @@ import lombok.Setter;
 
 /**
  * org.hibernate.mapping.domain.model.joinedSubclass.JoinedSubClass_Customer
- * User: sunghyouk.bae@gmail.com
- * Date: 12. 12. 2.
+ *
+ * @author sunghyouk.bae@gmail.com
+ * @since 12. 12. 2.
  */
 public class JoinedSubClass_Customer extends JoinedSubClass_Person {
 

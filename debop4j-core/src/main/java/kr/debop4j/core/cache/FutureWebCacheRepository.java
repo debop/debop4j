@@ -18,8 +18,9 @@ import java.util.concurrent.Future;
 
 /**
  * Google Guava 의 {@link com.google.common.cache.LoadingCache} 를 이용하여, 캐시 값을 구하는 방법을 미리 지정하여, 쉽게 캐시를 운영할 수 있도록 캐시입니다.
- * User: sunghyouk.bae@gmail.com
- * Date: 12. 12. 5.
+ *
+ * @author sunghyouk.bae@gmail.com
+ * @since 12. 12. 5.
  */
 @Slf4j
 public class FutureWebCacheRepository extends CacheRepositoryBase {

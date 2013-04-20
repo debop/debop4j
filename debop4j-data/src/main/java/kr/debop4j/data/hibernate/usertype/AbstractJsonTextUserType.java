@@ -21,8 +21,9 @@ import static kr.debop4j.core.tools.StringTool.ellipsisChar;
 /**
  * 속성 정보를 Json 직렬화를 수행해 저장합니다.
  * 객체의 실제 수형에 대한 정보는 첫번째 컬럼에 저장되고, 두번째 컬럼에 Json 직렬화 문자열이 저장됩니다.
- * User: sunghyouk.bae@gmail.com
- * Date: 12. 9. 18
+ *
+ * @author sunghyouk.bae@gmail.com
+ * @since 12. 9. 18
  */
 @Slf4j
 public abstract class AbstractJsonTextUserType implements CompositeUserType {

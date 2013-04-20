@@ -13,8 +13,9 @@ import javax.persistence.*;
 
 /**
  * 직원 직급 (Grade) 정보 (예: 1급, 2급 등 호봉체계에 사용된다.)
- * User: sunghyouk.bae@gmail.com
- * Date: 13. 3. 8 오후 5:03
+ *
+ * @author sunghyouk.bae@gmail.com
+ * @since 13. 3. 8 오후 5:03
  */
 @Entity
 @Table(name = "EmpGrade")

@@ -9,8 +9,9 @@ import java.util.Properties;
 
 /**
  * HSql 을 DB로 사용하는 Hibernate Configuration
- * User: sunghyouk.bae@gmail.com
- * Date: 13. 2. 21.
+ *
+ * @author sunghyouk.bae@gmail.com
+ * @since 13. 2. 21.
  */
 public abstract class HSqlConfigBase extends HibernateConfigBase {
 

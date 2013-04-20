@@ -10,8 +10,9 @@ import java.util.Properties;
 
 /**
  * kr.debop4j.data.hibernate.springconfiguration.MySqlDbConfiguration
- * User: sunghyouk.bae@gmail.com
- * Date: 13. 2. 21.
+ *
+ * @author sunghyouk.bae@gmail.com
+ * @since 13. 2. 21.
  */
 @Configuration
 @EnableTransactionManagement

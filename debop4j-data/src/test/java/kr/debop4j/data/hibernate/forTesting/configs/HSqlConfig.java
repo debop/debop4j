@@ -8,8 +8,9 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 /**
  * HSql 을 사용하는 Hibernate 환경설정 정보입니다.
- * User: sunghyouk.bae@gmail.com
- * Date: 13. 2. 21.
+ *
+ * @author sunghyouk.bae@gmail.com
+ * @since 13. 2. 21.
  */
 @Configuration
 @EnableTransactionManagement
@@ -24,6 +25,6 @@ public class HSqlConfig extends HSqlConfigBase {
     protected void setupSessionFactory(LocalSessionFactoryBean factoryBean) {
         super.setupSessionFactory(factoryBean);
 
-        factoryBean.setAnnotatedClasses(new Class[]{LongEntityForTesting.class});
+        factoryBean.setAnnotatedClasses(new Class[]{ LongEntityForTesting.class });
     }
 }

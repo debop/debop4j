@@ -12,8 +12,9 @@ import java.sql.Connection;
 
 /**
  * StatelessSession 을 이용하여 작업할 수 있도록 제공하는 클래스입니다.
- * User: sunghyouk.bae@gmail.com
- * Date: 13. 2. 19.
+ *
+ * @author sunghyouk.bae@gmail.com
+ * @since 13. 2. 19.
  */
 @Slf4j
 public class StatelessTool {

@@ -9,8 +9,9 @@ import org.springframework.context.annotation.Configuration;
 
 /**
  * kr.debop4j.core.spring.SpringTestConfig
- * User: sunghyouk.bae@gmail.com
- * Date: 12. 12. 2.
+ *
+ * @author sunghyouk.bae@gmail.com
+ * @since 12. 12. 2.
  */
 @Slf4j
 @Configuration

@@ -13,8 +13,9 @@ import java.util.Set;
 
 /**
  * 지역화정보, 메타정보를 가지는 Tree 구조의 엔티티를 표현합니다.
- * User: sunghyouk.bae@gmail.com
- * Date: 12. 9. 19
+ *
+ * @author sunghyouk.bae@gmail.com
+ * @since 12. 9. 19
  */
 @MappedSuperclass
 public abstract class LocaleMetaTreeEntityBase<T extends IEntity<TId> & ITreeEntity<T>,
@@ -31,7 +32,7 @@ public abstract class LocaleMetaTreeEntityBase<T extends IEntity<TId> & ITreeEnt
     private T parent;
 
     @Getter
-    @OneToMany(mappedBy = "parent", cascade = {CascadeType.ALL})
+    @OneToMany(mappedBy = "parent", cascade = { CascadeType.ALL })
     @LazyCollection(LazyCollectionOption.EXTRA)
     private Set<T> children = Sets.newLinkedHashSet();
 

@@ -18,8 +18,9 @@ import java.sql.SQLException;
 
 /**
  * 문자열을 암호화하여, HexDecimal 형태의 문자열로 변환하여 DB에 저장합니다.
- * User: sunghyouk.bae@gmail.com
- * Date: 12. 9. 18
+ *
+ * @author sunghyouk.bae@gmail.com
+ * @since 12. 9. 18
  */
 public abstract class AbstractSymmetricEncryptStringUserType implements UserType {
 

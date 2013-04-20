@@ -11,8 +11,9 @@ import java.util.zip.GZIPOutputStream;
 
 /**
  * GZip 압축을 수행합니다.
- * User: sunghyouk.bae@gmail.com
- * Date: 12. 9. 12
+ *
+ * @author sunghyouk.bae@gmail.com
+ * @since 12. 9. 12
  */
 @Slf4j
 public class GZipCompressor extends CompressorBase {

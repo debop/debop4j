@@ -9,8 +9,9 @@ import java.util.List;
 
 /**
  * kr.debop4j.core.reflect.AccessClassLoader
- * User: sunghyouk.bae@gmail.com
- * Date: 13. 1. 21
+ *
+ * @author sunghyouk.bae@gmail.com
+ * @since 13. 1. 21
  */
 @Slf4j
 class AccessClassLoader extends ClassLoader {
@@ -52,7 +53,7 @@ class AccessClassLoader extends ClassLoader {
         try {
             Method method =
                     ClassLoader.class.getDeclaredMethod("defineClass",
-                                                        new Class[]{String.class, byte[].class, int.class, int.class});
+                                                        new Class[]{ String.class, byte[].class, int.class, int.class });
             method.setAccessible(true);
             return (Class) method.invoke(getParent(), name, bytes, Integer.valueOf(0), Integer.valueOf(bytes.length));
 

@@ -9,8 +9,9 @@ import java.io.Serializable;
 
 /**
  * 엔티티의 상태 정보를 갱신하는 Interceptor입니다.
- * User: sunghyouk.bae@gmail.com
- * Date: 12. 11. 21.
+ *
+ * @author sunghyouk.bae@gmail.com
+ * @since 12. 11. 21.
  */
 @Slf4j
 public class StatefulEntityInterceptor extends EmptyInterceptor {

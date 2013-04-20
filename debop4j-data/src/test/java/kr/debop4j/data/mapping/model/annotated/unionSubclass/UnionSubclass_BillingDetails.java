@@ -10,8 +10,9 @@ import javax.persistence.*;
 
 /**
  * org.annotated.mapping.domain.model.subclass.UnionSubclass_BillingDetails
- * User: sunghyouk.bae@gmail.com
- * Date: 12. 12. 4.
+ *
+ * @author sunghyouk.bae@gmail.com
+ * @since 12. 12. 4.
  */
 @Entity
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)

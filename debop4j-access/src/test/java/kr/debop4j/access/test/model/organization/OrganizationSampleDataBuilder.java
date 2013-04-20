@@ -11,8 +11,9 @@ import java.util.Locale;
 
 /**
  * kr.debop4j.access.test.model.organization.OrganizationSampleDataBuilder
- * User: sunghyouk.bae@gmail.com
- * Date: 13. 3. 14 오전 10:38
+ *
+ * @author sunghyouk.bae@gmail.com
+ * @since 13. 3. 14 오전 10:38
  */
 @Slf4j
 public class OrganizationSampleDataBuilder extends SampleDataBuilder {

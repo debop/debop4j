@@ -13,8 +13,9 @@ import java.util.List;
 
 /**
  * kr.debop4j.core.tool.MapperToolTest
- * User: sunghyouk.bae@gmail.com
- * Date: 12. 12. 6.
+ *
+ * @author sunghyouk.bae@gmail.com
+ * @since 12. 12. 6.
  */
 public class MapperToolTest extends AbstractTest {
 

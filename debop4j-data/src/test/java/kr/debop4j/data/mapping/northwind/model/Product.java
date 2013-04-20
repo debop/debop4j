@@ -18,8 +18,9 @@ import java.util.Set;
 
 /**
  * kr.debop4j.data.mapping.northwind.model.Product
- * User: sunghyouk.bae@gmail.com
- * Date: 13. 2. 23.
+ *
+ * @author sunghyouk.bae@gmail.com
+ * @since 13. 2. 23.
  */
 @Entity
 @Table(name = "Products")
@@ -54,7 +55,7 @@ public class Product extends AnnotatedEntityBase implements IEntity<Integer> {
     @JoinColumn(name = "categoryId")
     private Category category;
 
-    @OneToMany(mappedBy = "id.product", cascade = {CascadeType.ALL}, orphanRemoval = true)
+    @OneToMany(mappedBy = "id.product", cascade = { CascadeType.ALL }, orphanRemoval = true)
     @LazyCollection(value = LazyCollectionOption.EXTRA)
     private Set<OrderDetails> orderDetails = Sets.newHashSet();
 

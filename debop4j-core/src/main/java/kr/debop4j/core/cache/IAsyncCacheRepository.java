@@ -5,8 +5,9 @@ import java.util.concurrent.Future;
 
 /**
  * 비동기 방식으로 캐시 작업을 수행합니다.
- * User: sunghyouk.bae@gmail.com
- * Date: 12. 9. 12.
+ *
+ * @author sunghyouk.bae@gmail.com
+ * @since 12. 9. 12.
  */
 public interface IAsyncCacheRepository {
 

@@ -5,8 +5,9 @@ import java.util.List;
 
 /**
  * 스크롤되는 목록을 표현하는 인터페이스입니다.
- * User: sunghyouk.bae@gmail.com
- * Date: 12. 9. 12
+ *
+ * @author sunghyouk.bae@gmail.com
+ * @since 12. 9. 12
  */
 public interface IScrolledList<E, N extends Comparable<N>> extends Serializable {
 

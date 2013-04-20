@@ -4,8 +4,9 @@ import kr.debop4j.core.ISerializer;
 
 /**
  * JSON 포맷으로 직렬화 / 역직렬화를 수행합니다.
- * User: sunghyouk.bae@gmail.com
- * Date: 12. 9. 14
+ *
+ * @author sunghyouk.bae@gmail.com
+ * @since 12. 9. 14
  */
 public interface IJsonSerializer extends ISerializer {
 

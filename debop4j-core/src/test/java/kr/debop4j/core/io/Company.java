@@ -12,8 +12,9 @@ import java.util.List;
 
 /**
  * pudding.pudding.commons.core.io.Company
- * User: sunghyouk.bae@gmail.com
- * Date: 12. 10. 4.
+ *
+ * @author sunghyouk.bae@gmail.com
+ * @since 12. 10. 4.
  */
 @Getter
 @Setter

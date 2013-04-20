@@ -5,8 +5,9 @@ import kr.debop4j.core.ISerializer;
 
 /**
  * {@link ISerializer} 를 데코레이터 패턴으로, 여러가지 작업을 수행할 수 있도록 합니다.
- * User: sunghyouk.bae@gmail.com
- * Date: 12. 12. 17
+ *
+ * @author sunghyouk.bae@gmail.com
+ * @since 12. 12. 17
  */
 public abstract class SerializerDecorator implements ISerializer {
 

@@ -13,8 +13,9 @@ import javax.persistence.*;
 
 /**
  * 제품의 설정 정보
- * User: sunghyouk.bae@gmail.com
- * Date: 13. 3. 12.
+ *
+ * @author sunghyouk.bae@gmail.com
+ * @since 13. 3. 12.
  */
 @Entity
 @Table(name = "ProductPreference")
@@ -23,7 +24,7 @@ import javax.persistence.*;
                                  indexes = @org.hibernate.annotations.Index(name = "ix_productPreference",
                                                                             columnNames = {
                                                                                     "ProductId",
-                                                                                    "PrefKey"}))
+                                                                                    "PrefKey" }))
 @DynamicInsert
 @DynamicUpdate
 @Getter

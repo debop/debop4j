@@ -10,8 +10,9 @@ import static kr.debop4j.core.Guard.shouldNotBeNull;
 
 /**
  * Thread Context 별로 격리된 저장소를 제공합니다.
- * User: sunghyouk.bae@gmail.com
- * Date: 12. 9. 12
+ *
+ * @author sunghyouk.bae@gmail.com
+ * @since 12. 9. 12
  */
 @Slf4j
 public class Local {

@@ -16,8 +16,9 @@ import static kr.debop4j.core.Guard.shouldNotBeWhiteSpace;
 
 /**
  * {@link java.util.concurrent.ConcurrentHashMap}을 캐시 저장소로 사용하는 비동기 캐시 저장소입니다.
- * User: sunghyouk.bae@gmail.com
- * Date: 12. 9. 12
+ *
+ * @author sunghyouk.bae@gmail.com
+ * @since 12. 9. 12
  */
 @Slf4j
 @SuppressWarnings("unchecked")

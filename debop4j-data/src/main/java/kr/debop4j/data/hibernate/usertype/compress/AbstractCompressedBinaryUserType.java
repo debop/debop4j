@@ -12,8 +12,9 @@ import java.sql.SQLException;
 
 /**
  * 데이터를 압축하여, Blob 컬럼에 저장합니다.
- * User: sunghyouk.bae@gmail.com
- * Date: 12. 9. 18
+ *
+ * @author sunghyouk.bae@gmail.com
+ * @since 12. 9. 18
  */
 @Slf4j
 public abstract class AbstractCompressedBinaryUserType extends AbstractCompressedUserType {

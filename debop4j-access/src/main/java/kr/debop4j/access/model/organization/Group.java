@@ -21,7 +21,8 @@ import java.util.Set;
 /**
  * 가상의 조직을 나타냅니다.
  * User: Administrator
- * Date: 13. 3. 5
+ *
+ * @since 13. 3. 5
  */
 @Entity
 @Table(name = "`Group`")
@@ -31,7 +32,7 @@ import java.util.Set;
                                                                             columnNames = {
                                                                                     "CompanyId",
                                                                                     "GroupCode",
-                                                                                    "GroupName"}))
+                                                                                    "GroupName" }))
 @DynamicInsert
 @DynamicUpdate
 @Getter
@@ -86,7 +87,7 @@ public class Group extends AccessEntityBase implements IActor {
     private String exAttr;
 
 
-    @OneToMany(mappedBy = "group", cascade = {CascadeType.ALL})
+    @OneToMany(mappedBy = "group", cascade = { CascadeType.ALL })
     @LazyCollection(value = LazyCollectionOption.EXTRA)
     @Fetch(FetchMode.SELECT)
     private Set<GroupMember> members = Sets.newHashSet();

@@ -8,8 +8,9 @@ import java.util.Properties;
 
 /**
  * H2 Embedded DB를 사용하는 Hibernate 설정정입니다.
- * User: sunghyouk.bae@gmail.com
- * Date: 13. 2. 21.
+ *
+ * @author sunghyouk.bae@gmail.com
+ * @since 13. 2. 21.
  */
 public abstract class H2ConfigBase extends HibernateConfigBase {
 

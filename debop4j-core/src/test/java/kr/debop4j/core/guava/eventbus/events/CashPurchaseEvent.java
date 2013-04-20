@@ -6,8 +6,9 @@ import lombok.extern.slf4j.Slf4j;
 
 /**
  * kr.debop4j.core.guava.eventbus.events.CashPurchaseEvent
- * User: sunghyouk.bae@gmail.com
- * Date: 12. 12. 10.
+ *
+ * @author sunghyouk.bae@gmail.com
+ * @since 12. 12. 10.
  */
 @Slf4j
 public class CashPurchaseEvent extends PurchaseEvent {

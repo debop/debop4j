@@ -10,8 +10,9 @@ import static kr.debop4j.core.Guard.shouldNotBeNull;
 
 /**
  * 스크롤되는 목록을 표현하는 클래스입니다.
- * User: sunghyouk.bae@gmail.com
- * Date: 12. 9. 13
+ *
+ * @author sunghyouk.bae@gmail.com
+ * @since 12. 9. 13
  */
 @Slf4j
 public abstract class ScrolledListBase<E, N extends Comparable<N>> implements IScrolledList<E, N> {

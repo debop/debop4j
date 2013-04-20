@@ -19,8 +19,9 @@ import java.util.Properties;
 
 /**
  * com.kt.vital.domain.UsingMySqlConfiguration
- * User: sunghyouk.bae@gmail.com
- * Date: 13. 3. 18.
+ *
+ * @author sunghyouk.bae@gmail.com
+ * @since 13. 3. 18.
  */
 @Configuration
 @EnableTransactionManagement

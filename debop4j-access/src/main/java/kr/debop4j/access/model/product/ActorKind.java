@@ -2,8 +2,9 @@ package kr.debop4j.access.model.product;
 
 /**
  * kr.debop4j.access.model.product.ActorKind
- * User: sunghyouk.bae@gmail.com
- * Date: 13. 3. 11.
+ *
+ * @author sunghyouk.bae@gmail.com
+ * @since 13. 3. 11.
  */
 public enum ActorKind {
 

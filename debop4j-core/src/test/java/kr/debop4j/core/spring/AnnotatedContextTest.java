@@ -10,8 +10,9 @@ import static org.junit.Assert.assertTrue;
 
 /**
  * kr.debop4j.core.spring.AnnotatedContextTest
- * User: sunghyouk.bae@gmail.com
- * Date: 12. 12. 2.
+ *
+ * @author sunghyouk.bae@gmail.com
+ * @since 12. 12. 2.
  */
 public class AnnotatedContextTest extends AbstractTest {
 

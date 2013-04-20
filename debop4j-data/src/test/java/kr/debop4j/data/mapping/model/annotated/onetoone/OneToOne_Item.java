@@ -11,8 +11,9 @@ import java.math.BigDecimal;
 
 /**
  * org.annotated.mapping.domain.model.onetoone.OneToOne_Item
- * User: sunghyouk.bae@gmail.com
- * Date: 12. 12. 4.
+ *
+ * @author sunghyouk.bae@gmail.com
+ * @since 12. 12. 4.
  */
 @Entity
 @Table(name = "JPA_ONE_TO_ONE_ITEM")

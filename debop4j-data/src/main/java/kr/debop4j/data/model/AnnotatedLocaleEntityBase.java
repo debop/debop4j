@@ -12,8 +12,9 @@ import java.util.Set;
 
 /**
  * kr.debop4j.data.model.AnnotatedLocaleEntityBase
- * User: sunghyouk.bae@gmail.com
- * Date: 13. 3. 8 오전 11:37
+ *
+ * @author sunghyouk.bae@gmail.com
+ * @since 13. 3. 8 오전 11:37
  */
 @MappedSuperclass
 @Slf4j

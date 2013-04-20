@@ -7,8 +7,9 @@ import java.util.HashMap;
 
 /**
  * kr.debop4j.core.reflect.benchmark.Benchmark
- * User: sunghyouk.bae@gmail.com
- * Date: 13. 1. 21
+ *
+ * @author sunghyouk.bae@gmail.com
+ * @since 13. 1. 21
  */
 @Slf4j
 public class Benchmark {

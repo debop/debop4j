@@ -14,8 +14,9 @@ import java.util.Set;
 
 /**
  * 지역화정보를 가지는 엔티티의 추상화 클래스
- * User: sunghyouk.bae@gmail.com
- * Date: 12. 9. 19
+ *
+ * @author sunghyouk.bae@gmail.com
+ * @since 12. 9. 19
  */
 @Slf4j
 @MappedSuperclass

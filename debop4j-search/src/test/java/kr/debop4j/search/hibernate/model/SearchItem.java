@@ -11,8 +11,9 @@ import javax.validation.constraints.NotNull;
 
 /**
  * kr.debop4j.search.hibernate.model.SearchItem
- * User: sunghyouk.bae@gmail.com
- * Date: 13. 2. 28.
+ *
+ * @author sunghyouk.bae@gmail.com
+ * @since 13. 2. 28.
  */
 @Entity
 @Table(name = "SEARCH_ITEM")

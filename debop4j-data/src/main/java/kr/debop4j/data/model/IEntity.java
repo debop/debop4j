@@ -4,8 +4,9 @@ import java.io.Serializable;
 
 /**
  * 엔티티의 기본 인터페이스입니다.
- * JpaUser: sunghyouk.bae@gmail.com
- * Date: 12. 11. 19
+ * Jpa@author sunghyouk.bae@gmail.com
+ *
+ * @since 12. 11. 19
  */
 public interface IEntity<TId extends Serializable> extends Serializable {
 

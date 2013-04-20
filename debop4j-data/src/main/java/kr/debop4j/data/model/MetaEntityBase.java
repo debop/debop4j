@@ -10,8 +10,9 @@ import java.util.Set;
 
 /**
  * 메타데이터를 제공하는 엔티티의 추상 클래스입니다.
- * User: sunghyouk.bae@gmail.com
- * Date: 12. 9. 19
+ *
+ * @author sunghyouk.bae@gmail.com
+ * @since 12. 9. 19
  */
 @MappedSuperclass
 public abstract class MetaEntityBase<TId extends Serializable> extends EntityBase<TId> implements IMetaEntity {

@@ -12,8 +12,9 @@ import javax.persistence.Enumerated;
 
 /**
  * kr.debop4j.data.mapping.northwind.model.AddressInfo
- * User: sunghyouk.bae@gmail.com
- * Date: 13. 2. 23.
+ *
+ * @author sunghyouk.bae@gmail.com
+ * @since 13. 2. 23.
  */
 @Embeddable
 @Getter

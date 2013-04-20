@@ -11,8 +11,9 @@ import java.io.IOException;
 
 /**
  * pudding.pudding.commons.core.compress.BZip2Compressor
- * User: sunghyouk.bae@gmail.com
- * Date: 12. 9. 12.
+ *
+ * @author sunghyouk.bae@gmail.com
+ * @since 12. 9. 12.
  */
 @Slf4j
 public class BZip2Compressor extends CompressorBase {

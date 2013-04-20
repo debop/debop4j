@@ -4,8 +4,9 @@ import javax.persistence.*;
 
 /**
  * org.annotated.mapping.domain.model.subclass.Subclass_CreditCard
- * User: sunghyouk.bae@gmail.com
- * Date: 12. 12. 4.
+ *
+ * @author sunghyouk.bae@gmail.com
+ * @since 12. 12. 4.
  */
 @Entity
 @DiscriminatorValue("CD")

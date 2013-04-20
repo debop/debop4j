@@ -10,8 +10,9 @@ import java.util.List;
 
 /**
  * 리플렉션을 이용하여, 객체를 생성시키는 Utility Class 입니다.
- * User: sunghyouk.bae@gmail.com
- * Date: 12. 9. 12
+ *
+ * @author sunghyouk.bae@gmail.com
+ * @since 12. 9. 12
  */
 public final class Activators {
 

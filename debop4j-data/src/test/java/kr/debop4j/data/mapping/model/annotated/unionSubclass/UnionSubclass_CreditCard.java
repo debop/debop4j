@@ -12,8 +12,9 @@ import java.util.Date;
 
 /**
  * org.annotated.mapping.domain.model.subclass.UnionSubclass_CreditCard
- * User: sunghyouk.bae@gmail.com
- * Date: 12. 12. 4.
+ *
+ * @author sunghyouk.bae@gmail.com
+ * @since 12. 12. 4.
  */
 @Getter
 @Setter

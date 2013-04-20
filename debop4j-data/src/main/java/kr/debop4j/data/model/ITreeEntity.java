@@ -4,8 +4,9 @@ import java.util.Set;
 
 /**
  * 트리 구조를 가지는 엔티티를 표현하는 인터페이스입니다.
- * User: sunghyouk.bae@gmail.com
- * Date: 12. 9. 13.
+ *
+ * @author sunghyouk.bae@gmail.com
+ * @since 12. 9. 13.
  */
 public interface ITreeEntity<T extends ITreeEntity<T>> extends IStatefulEntity {
 

@@ -5,8 +5,9 @@ import lombok.extern.slf4j.Slf4j;
 
 /**
  * kr.debop4j.core.ExecutableAdapter
- * User: sunghyouk.bae@gmail.com
- * Date: 12. 12. 16.
+ *
+ * @author sunghyouk.bae@gmail.com
+ * @since 12. 12. 16.
  */
 @Slf4j
 public class ExecutableAdapter implements Runnable {

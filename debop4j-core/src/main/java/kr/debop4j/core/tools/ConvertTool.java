@@ -7,8 +7,9 @@ import java.util.Date;
 
 /**
  * pudding.pudding.commons.core.tool.ConvertTool
- * User: sunghyouk.bae@gmail.com
- * Date: 12. 9. 26.
+ *
+ * @author sunghyouk.bae@gmail.com
+ * @since 12. 9. 26.
  */
 @Slf4j
 public class ConvertTool {

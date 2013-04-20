@@ -10,8 +10,9 @@ import javax.persistence.*;
 
 /**
  * org.annotated.mapping.domain.model.onetoone.OneToOne_Address
- * User: sunghyouk.bae@gmail.com
- * Date: 12. 12. 4.
+ *
+ * @author sunghyouk.bae@gmail.com
+ * @since 12. 12. 4.
  */
 @Getter
 @Setter

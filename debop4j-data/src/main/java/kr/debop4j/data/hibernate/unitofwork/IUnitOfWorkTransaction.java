@@ -3,8 +3,9 @@ package kr.debop4j.data.hibernate.unitofwork;
 
 /**
  * kr.nsoft.data.hibernate.unitofwork.IUnitOfWorkTransaction
- * User: sunghyouk.bae@gmail.com
- * Date: 12. 11. 29.
+ *
+ * @author sunghyouk.bae@gmail.com
+ * @since 12. 11. 29.
  */
 public interface IUnitOfWorkTransaction {
 

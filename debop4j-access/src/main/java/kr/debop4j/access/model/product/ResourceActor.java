@@ -17,8 +17,9 @@ import java.util.Set;
 
 /**
  * 리소스에 대한 사용자의 접근 권한을 나타냅니다.
- * User: sunghyouk.bae@gmail.com
- * Date: 13. 3. 11.
+ *
+ * @author sunghyouk.bae@gmail.com
+ * @since 13. 3. 11.
  */
 @Entity
 @Table(name = "ResourceActor")
@@ -28,7 +29,7 @@ import java.util.Set;
                                                                                     "ResourceId",
                                                                                     "CompanyId",
                                                                                     "ActorKind",
-                                                                                    "ActorId"}))
+                                                                                    "ActorId" }))
 @org.hibernate.annotations.Cache(region = "Product", usage = CacheConcurrencyStrategy.READ_WRITE)
 @DynamicInsert
 @DynamicUpdate

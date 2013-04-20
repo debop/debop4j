@@ -18,8 +18,9 @@ import java.util.Date;
 
 /**
  * 메뉴 정보를 나타냅니다.
- * User: sunghyouk.bae@gmail.com
- * Date: 13. 3. 11.
+ *
+ * @author sunghyouk.bae@gmail.com
+ * @since 13. 3. 11.
  */
 @Entity
 @Table(name = "Menu")

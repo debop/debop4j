@@ -2,8 +2,9 @@ package kr.debop4j.core.cache;
 
 /**
  * Cache 시스템에 정보를 관리하는 ICacheRepository 의 인터페이스입니다.
- * User: sunghyouk.bae@gmail.com
- * Date: 12. 9. 12
+ *
+ * @author sunghyouk.bae@gmail.com
+ * @since 12. 9. 12
  */
 public interface ICacheRepository {
 

@@ -12,8 +12,9 @@ import java.util.Set;
 
 /**
  * org.annotated.mapping.domain.model.onetomany.OneToMany_Item
- * User: sunghyouk.bae@gmail.com
- * Date: 12. 12. 4.
+ *
+ * @author sunghyouk.bae@gmail.com
+ * @since 12. 12. 4.
  */
 @Entity
 @Table(name = "JPA_ONE_TO_MANY_ITEM")
@@ -32,7 +33,7 @@ public class OneToMany_Item extends JpaEntityBase {
     @Column(name = "DESCRIPTION")
     private String description;
 
-    @OneToMany(mappedBy = "item", cascade = {CascadeType.ALL}, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "item", cascade = { CascadeType.ALL }, fetch = FetchType.LAZY)
     @LazyCollection(value = LazyCollectionOption.EXTRA)
     private Set<OneToMany_Bid> bids = Sets.newHashSet();
 

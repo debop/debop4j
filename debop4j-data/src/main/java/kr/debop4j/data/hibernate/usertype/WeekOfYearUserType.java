@@ -18,8 +18,9 @@ import java.sql.SQLException;
 /**
  * 주차 (Week of Year)를 표현하는 클래스 {@link YearWeek}를
  * 하나의 속성값으로 처리하기 위한 {@link org.hibernate.usertype.CompositeUserType} 입니다.
- * User: sunghyouk.bae@gmail.com
- * Date: 12. 9. 18
+ *
+ * @author sunghyouk.bae@gmail.com
+ * @since 12. 9. 18
  */
 @Slf4j
 public class WeekOfYearUserType implements CompositeUserType {

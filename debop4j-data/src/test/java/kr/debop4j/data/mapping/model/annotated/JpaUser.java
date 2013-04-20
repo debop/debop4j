@@ -13,8 +13,9 @@ import javax.persistence.*;
 /**
  * org.annotated.mapping.domain.model.JpaUser
  * 참고 : 테이블이나 컬럼명에 예러 표시 날 때 : Inspection 'DataSource ORM Annotations Problem' options
- * JpaUser: sunghyouk.bae@gmail.com
- * Date: 12. 11. 20.
+ * Jpa@author sunghyouk.bae@gmail.com
+ *
+ * @since 12. 11. 20.
  */
 @Entity
 @Table(name = "JPA_USERS")

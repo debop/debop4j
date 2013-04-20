@@ -8,8 +8,9 @@ import java.util.concurrent.ExecutionException;
 
 /**
  * {@link DynamicAccessor} 의 생성자입니다.
- * User: sunghyouk.bae@gmail.com
- * Date: 13. 1. 21
+ *
+ * @author sunghyouk.bae@gmail.com
+ * @since 13. 1. 21
  */
 public class DynamicAccessorFactory {
 

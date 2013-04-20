@@ -10,8 +10,9 @@ import java.util.Properties;
 
 /**
  * PostgreSQL DB를 사용하는 Hibernate 용 환경설정입니다.
- * User: sunghyouk.bae@gmail.com
- * Date: 13. 2. 21.
+ *
+ * @author sunghyouk.bae@gmail.com
+ * @since 13. 2. 21.
  */
 @Configuration
 @EnableTransactionManagement

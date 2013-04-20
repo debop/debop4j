@@ -18,8 +18,9 @@ import javax.persistence.*;
 
 /**
  * 사용자 정보
- * User: sunghyouk.bae@gmail.com
- * Date: 13. 3. 8 오후 5:12
+ *
+ * @author sunghyouk.bae@gmail.com
+ * @since 13. 3. 8 오후 5:12
  */
 @Entity
 @Table(name = "`User`")
@@ -29,7 +30,7 @@ import javax.persistence.*;
                                                                                     "ProductId",
                                                                                     "CompanyId",
                                                                                     "UserName",
-                                                                                    "Password"}))
+                                                                                    "Password" }))
 @org.hibernate.annotations.Cache(region = "Product", usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 @DynamicInsert
 @DynamicUpdate

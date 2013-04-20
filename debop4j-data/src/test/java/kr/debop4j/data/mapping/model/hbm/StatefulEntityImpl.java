@@ -15,8 +15,9 @@ import java.util.Date;
 
 /**
  * JPA 기본 엔티티 예
- * JpaUser: sunghyouk.bae@gmail.com
- * Date: 12. 11. 19
+ * Jpa@author sunghyouk.bae@gmail.com
+ *
+ * @since 12. 11. 19
  */
 @Slf4j
 @Getter

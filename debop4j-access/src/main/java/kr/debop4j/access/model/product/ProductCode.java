@@ -17,15 +17,16 @@ import java.util.Set;
 
 /**
  * 제품에서 사용하는 마스터 코드 정보
- * User: sunghyouk.bae@gmail.com
- * Date: 13. 3. 12.
+ *
+ * @author sunghyouk.bae@gmail.com
+ * @since 13. 3. 12.
  */
 @Entity
 @Table(name = "ProductCode")
 @org.hibernate.annotations.Cache(region = "Product", usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 @org.hibernate.annotations.Table(appliesTo = "ProductCode",
                                  indexes = @org.hibernate.annotations.Index(name = "ix_product_code",
-                                                                            columnNames = {"ProductId", "CodeValue"}))
+                                                                            columnNames = { "ProductId", "CodeValue" }))
 @DynamicInsert
 @DynamicUpdate
 @Getter
@@ -67,7 +68,7 @@ public class ProductCode extends AccessEntityBase {
     @Column(name = "ExAttr", length = 2000)
     private String exAttr;
 
-    @OneToMany(mappedBy = "code", fetch = FetchType.EAGER, cascade = {CascadeType.ALL})
+    @OneToMany(mappedBy = "code", fetch = FetchType.EAGER, cascade = { CascadeType.ALL })
     @LazyCollection(value = LazyCollectionOption.EXTRA)
     @Fetch(FetchMode.SELECT)
     private Set<ProductCodeItem> items = Sets.newHashSet();

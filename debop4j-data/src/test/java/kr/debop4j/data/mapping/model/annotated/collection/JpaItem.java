@@ -15,8 +15,9 @@ import java.util.Set;
 
 /**
  * org.annotated.mapping.domain.model.collection.JpaItem
- * User: sunghyouk.bae@gmail.com
- * Date: 12. 12. 2.
+ *
+ * @author sunghyouk.bae@gmail.com
+ * @since 12. 12. 2.
  */
 @Entity
 @Table(name = "JPA_ITEM")

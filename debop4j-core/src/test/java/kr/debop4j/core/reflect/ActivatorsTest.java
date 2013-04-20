@@ -9,8 +9,9 @@ import org.junit.Test;
 
 /**
  * kr.debop4j.core.reflect.ActivatorsTest
- * User: sunghyouk.bae@gmail.com
- * Date: 13. 1. 20.
+ *
+ * @author sunghyouk.bae@gmail.com
+ * @since 13. 1. 20.
  */
 @Slf4j
 public class ActivatorsTest extends AbstractTest {

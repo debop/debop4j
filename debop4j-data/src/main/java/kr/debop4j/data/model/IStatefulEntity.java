@@ -4,8 +4,9 @@ import kr.debop4j.core.IValueObject;
 
 /**
  * 저장 상태 정보를 가지는 엔티티임을 나타내는 인터페이스입니다.
- * JpaUser: sunghyouk.bae@gmail.com
- * Date: 12. 11. 19
+ * Jpa@author sunghyouk.bae@gmail.com
+ *
+ * @since 12. 11. 19
  */
 public interface IStatefulEntity extends IValueObject {
 

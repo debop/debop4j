@@ -11,8 +11,9 @@ import static kr.debop4j.core.Guard.shouldNotBeNull;
 
 /**
  * {@link IUnitOfWork} 의 가장 기본적인 구현 클래스입니다.
- * User: sunghyouk.bae@gmail.com
- * Date: 12. 11. 29.
+ *
+ * @author sunghyouk.bae@gmail.com
+ * @since 12. 11. 29.
  */
 @Slf4j
 public class UnitOfWorkAdapter extends UnitOfWorkAdapterBase {

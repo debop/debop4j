@@ -13,8 +13,9 @@ import javax.persistence.Table;
 
 /**
  * org.annotated.mapping.domain.model.subclass.UnionSubclass_BankAccount
- * User: sunghyouk.bae@gmail.com
- * Date: 12. 12. 4.
+ *
+ * @author sunghyouk.bae@gmail.com
+ * @since 12. 12. 4.
  */
 @Entity
 @Table(name = "JPA_UNION_SUBCLASS_BANK_ACCOUNT")

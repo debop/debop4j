@@ -8,8 +8,9 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 /**
  * MySQL 을 사용하는 Hibernate 설정 정보입니다.
- * User: sunghyouk.bae@gmail.com
- * Date: 13. 2. 22.
+ *
+ * @author sunghyouk.bae@gmail.com
+ * @since 13. 2. 22.
  */
 @Component
 @EnableTransactionManagement
@@ -21,6 +22,6 @@ public class MySqlConfig extends MySqlConfigBase {
 
     protected void setupSessionFactory(LocalSessionFactoryBean factoryBean) {
         super.setupSessionFactory(factoryBean);
-        factoryBean.setAnnotatedClasses(new Class[]{LongEntityForTesting.class});
+        factoryBean.setAnnotatedClasses(new Class[]{ LongEntityForTesting.class });
     }
 }

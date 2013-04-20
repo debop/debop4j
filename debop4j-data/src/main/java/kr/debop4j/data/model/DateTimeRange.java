@@ -11,8 +11,9 @@ import javax.persistence.Embeddable;
 
 /**
  * kr.nsoft.data.domain.kr.debop4j.data.mapping.model.DateTimeRange
- * User: sunghyouk.bae@gmail.com
- * Date: 13. 1. 22.
+ *
+ * @author sunghyouk.bae@gmail.com
+ * @since 13. 1. 22.
  */
 @Embeddable
 @Getter

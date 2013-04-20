@@ -22,8 +22,9 @@ import java.util.List;
 
 /**
  * kr.debop4j.search.hibernate.HibernateSearchTest
- * User: sunghyouk.bae@gmail.com
- * Date: 13. 2. 28.
+ *
+ * @author sunghyouk.bae@gmail.com
+ * @since 13. 2. 28.
  */
 @Slf4j
 public class HibernateSearchTest {

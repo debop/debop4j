@@ -6,8 +6,9 @@ import org.hibernate.Transaction;
 
 /**
  * IUnitOfWork 에서 사용할 Transaction
- * User: sunghyouk.bae@gmail.com
- * Date: 12. 11. 29.
+ *
+ * @author sunghyouk.bae@gmail.com
+ * @since 12. 11. 29.
  */
 @Slf4j
 public class UnitOfWorkTransactionAdapter implements IUnitOfWorkTransaction {

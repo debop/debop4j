@@ -13,8 +13,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 /**
  * kr.debop4j.data.hibernate.config.xml.HibernateConfigTest
- * User: sunghyouk.bae@gmail.com
- * Date: 13. 2. 19.
+ *
+ * @author sunghyouk.bae@gmail.com
+ * @since 13. 2. 19.
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = "config-spring-hibernate.xml")

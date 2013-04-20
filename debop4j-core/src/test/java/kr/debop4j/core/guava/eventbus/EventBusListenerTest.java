@@ -13,8 +13,9 @@ import static org.junit.Assert.*;
 /**
  * Guava 의 EventBus 를 이용하여 Publisher - Subscriber 패턴을 구현합니다.
  * 인터페이스가 필요 없고, Annotation만을 사용하므로 상당히 자유롭고 편합니다.
- * User: sunghyouk.bae@gmail.com
- * Date: 12. 12. 11
+ *
+ * @author sunghyouk.bae@gmail.com
+ * @since 12. 12. 11
  */
 @Slf4j
 public class EventBusListenerTest {

@@ -13,8 +13,9 @@ import java.util.Date;
 
 /**
  * 다국어를 지원하는 Entity를 나타냅니다.
- * User: sunghyouk.bae@gmail.com
- * Date: 13. 3. 8 오후 3:46
+ *
+ * @author sunghyouk.bae@gmail.com
+ * @since 13. 3. 8 오후 3:46
  */
 @MappedSuperclass
 public abstract class AccessLocaledEntityBase<TLocaleValue extends ILocaleValue>

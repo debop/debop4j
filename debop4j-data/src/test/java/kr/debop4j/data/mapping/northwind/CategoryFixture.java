@@ -11,8 +11,9 @@ import java.util.List;
 
 /**
  * kr.debop4j.data.mapping.northwind.CategoryFixture
- * User: sunghyouk.bae@gmail.com
- * Date: 13. 2. 23.
+ *
+ * @author sunghyouk.bae@gmail.com
+ * @since 13. 2. 23.
  */
 @Slf4j
 public class CategoryFixture extends NorthwindDbTestFixtureBase {

@@ -4,8 +4,9 @@ import java.io.Serializable;
 
 /**
  * Assignable Id 를 가지는 엔티티의 인터페이스입니다.
- * User: sunghyouk.bae@gmail.com
- * Date: 13. 1. 27.
+ *
+ * @author sunghyouk.bae@gmail.com
+ * @since 13. 1. 27.
  */
 public interface IAssignedEntity<TId extends Serializable> {
 

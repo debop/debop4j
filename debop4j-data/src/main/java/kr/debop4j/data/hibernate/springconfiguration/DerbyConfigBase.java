@@ -8,8 +8,9 @@ import java.util.Properties;
 
 /**
  * Derby Embedded DB 에 대한 Hibernate 관련 Configuration 입니다.
- * User: sunghyouk.bae@gmail.com
- * Date: 13. 2. 22.
+ *
+ * @author sunghyouk.bae@gmail.com
+ * @since 13. 2. 22.
  */
 public abstract class DerbyConfigBase extends HibernateConfigBase {
 

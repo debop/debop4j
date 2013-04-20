@@ -7,8 +7,9 @@ import java.security.SecureRandom;
 
 /**
  * 암호화 관련 Helper Class
- * User: sunghyouk.bae@gmail.com
- * Date: 12. 9. 14
+ *
+ * @author sunghyouk.bae@gmail.com
+ * @since 12. 9. 14
  */
 @Slf4j
 public class CryptoTool {

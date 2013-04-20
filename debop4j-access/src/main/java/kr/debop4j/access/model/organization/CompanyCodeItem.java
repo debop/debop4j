@@ -13,8 +13,9 @@ import javax.persistence.*;
 
 /**
  * 특정 회사에서 사용하는 코드 항목
- * User: sunghyouk.bae@gmail.com
- * Date: 13. 3. 8 오후 1:07
+ *
+ * @author sunghyouk.bae@gmail.com
+ * @since 13. 3. 8 오후 1:07
  */
 @Entity
 @Table(name = "CompanyCodeItem")

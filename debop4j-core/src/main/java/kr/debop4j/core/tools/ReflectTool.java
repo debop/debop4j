@@ -10,8 +10,9 @@ import static kr.debop4j.core.Guard.shouldNotBeNull;
 
 /**
  * Reflection 관련 Utility Class 입니다.
- * User: sunghyouk.bae@gmail.com
- * Date: 12. 9. 12
+ *
+ * @author sunghyouk.bae@gmail.com
+ * @since 12. 9. 12
  */
 @Slf4j
 public final class ReflectTool {

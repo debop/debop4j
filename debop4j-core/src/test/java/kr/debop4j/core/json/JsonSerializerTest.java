@@ -13,8 +13,9 @@ import static org.junit.Assert.assertEquals;
 
 /**
  * kr.debop4j.core.json.JsonSerializerTest
- * User: sunghyouk.bae@gmail.com
- * Date: 12. 12. 5.
+ *
+ * @author sunghyouk.bae@gmail.com
+ * @since 12. 12. 5.
  */
 public class JsonSerializerTest extends AbstractTest {
 

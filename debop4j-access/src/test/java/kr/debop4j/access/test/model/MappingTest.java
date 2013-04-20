@@ -7,8 +7,9 @@ import org.junit.Test;
 
 /**
  * kr.debop4j.access.test.model.MappingTest
- * User: sunghyouk.bae@gmail.com
- * Date: 13. 3. 7.
+ *
+ * @author sunghyouk.bae@gmail.com
+ * @since 13. 3. 7.
  */
 @Slf4j
 public class MappingTest extends AccessTestBase {

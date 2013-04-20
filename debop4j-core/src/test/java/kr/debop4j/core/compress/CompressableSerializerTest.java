@@ -11,8 +11,9 @@ import java.util.Map;
 
 /**
  * 압축 관련 테스트
- * User: sunghyouk.bae@gmail.com
- * Date: 12. 12. 17
+ *
+ * @author sunghyouk.bae@gmail.com
+ * @since 12. 12. 17
  */
 @Slf4j
 public class CompressableSerializerTest {

@@ -11,8 +11,9 @@ import static org.junit.Assert.assertEquals;
 
 /**
  * kr.debop4j.core.collection.NumberRangeTest
- * User: sunghyouk.bae@gmail.com
- * Date: 13. 1. 12.
+ *
+ * @author sunghyouk.bae@gmail.com
+ * @since 13. 1. 12.
  */
 @Slf4j
 public class NumberRangeTest {
@@ -64,10 +65,10 @@ public class NumberRangeTest {
 
         List<int[]> expectedList =
                 Lists.newArrayList(
-                        new int[]{0, 26, 1, 26},
-                        new int[]{26, 52, 1, 26},
-                        new int[]{52, 77, 1, 25},
-                        new int[]{77, 102, 1, 25});
+                        new int[]{ 0, 26, 1, 26 },
+                        new int[]{ 26, 52, 1, 26 },
+                        new int[]{ 52, 77, 1, 25 },
+                        new int[]{ 77, 102, 1, 25 });
 
         for (int i = 0; i < partitionCount; i++) {
             NumberRange.IntRange intRange = ranges.get(i);
@@ -94,10 +95,10 @@ public class NumberRangeTest {
 
         List<int[]> expectedList =
                 Lists.newArrayList(
-                        new int[]{102, 76, -1, 26},
-                        new int[]{76, 50, -1, 26},
-                        new int[]{50, 25, -1, 25},
-                        new int[]{25, 0, -1, 25});
+                        new int[]{ 102, 76, -1, 26 },
+                        new int[]{ 76, 50, -1, 26 },
+                        new int[]{ 50, 25, -1, 25 },
+                        new int[]{ 25, 0, -1, 25 });
 
         for (int i = 0; i < partitionCount; i++) {
             NumberRange.IntRange intRange = ranges.get(i);

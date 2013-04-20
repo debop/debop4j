@@ -17,14 +17,15 @@ import java.util.Objects;
 
 /**
  * 미국 달러 기준으로 DB에 저장하고, 로딩 시에는 현 Locale에서 쓰는 통화단위로 변환한 값을 제공한다.
- * User: sunghyouk.bae@gmail.com
- * Date: 12. 12. 6.
+ *
+ * @author sunghyouk.bae@gmail.com
+ * @since 12. 12. 6.
  */
 public class MonetaryAmountUserType implements UserType {
 
     @Override
     public int[] sqlTypes() {
-        return new int[]{StandardBasicTypes.BIG_DECIMAL.sqlType()};
+        return new int[]{ StandardBasicTypes.BIG_DECIMAL.sqlType() };
     }
 
     @Override

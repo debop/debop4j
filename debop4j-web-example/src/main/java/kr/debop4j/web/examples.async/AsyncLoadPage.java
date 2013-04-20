@@ -21,8 +21,9 @@ import java.util.concurrent.Future;
 
 /**
  * examples.async.AsyncLoadPage
- * User: sunghyouk.bae@gmail.com
- * Date: 13. 2. 17.
+ *
+ * @author sunghyouk.bae@gmail.com
+ * @since 13. 2. 17.
  */
 @Slf4j
 @WebServlet(urlPatterns = "/async", asyncSupported = true)
