@@ -50,7 +50,7 @@ public abstract class AbstractCompressedStringUserType extends AbstractCompresse
             byte[] value = BinaryType.INSTANCE.nullSafeGet(resultSet, strings[0], sessionImplementor);
             return decompress(value);
         } catch (Exception ex) {
-            log.error("column=" + strings[0] + " 정보를 읽어 압축 복원하는데 실패했습니다.", ex);
+            log.error("column=[" + strings[0] + "] 정보를 읽어 압축 복원하는데 실패했습니다.", ex);
             throw new HibernateException("압축된 정보를 복원하는데 실패했습니다.", ex);
         }
     }
@@ -66,10 +66,7 @@ public abstract class AbstractCompressedStringUserType extends AbstractCompresse
             byte[] value = compress((String) o);
             BinaryType.INSTANCE.nullSafeSet(preparedStatement, value, i, sessionImplementor);
         } catch (Exception ex) {
-            log
-                    .error(
-                            "Statement=" + preparedStatement + ", index=" + i + " 에 해당하는 값을 압축하는데 실패했습니다.",
-                            ex);
+            log.error("Statement=[" + preparedStatement + "], index=[" + i + "]에 해당하는 값을 압축하는데 실패했습니다.", ex);
             throw new HibernateException("압축된 정보를 복원하는데 실패했습니다.", ex);
         }
     }

@@ -5,9 +5,10 @@ import com.google.common.collect.Lists;
 import kr.debop4j.core.ValueObjectBase;
 import lombok.Getter;
 import lombok.Setter;
-import lombok.extern.slf4j.Slf4j;
 import org.hibernate.EmptyInterceptor;
 import org.hibernate.type.Type;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.Serializable;
 import java.util.Calendar;
@@ -19,18 +20,18 @@ import java.util.List;
  * User: sunghyouk.bae@gmail.com
  * Date: 12. 12. 16.
  */
-@Slf4j
 public class LoggingInterceptor extends EmptyInterceptor {
 
+    private static final Logger log = LoggerFactory.getLogger(LoggingInterceptor.class);
+    private static final boolean isTraceEnabled = log.isTraceEnabled();
     private static final long serialVersionUID = -5900714659767205225L;
 
     private List<Log> logs = Lists.newArrayList();
-    private static final boolean isDebugEnabled = log.isDebugEnabled();
 
     @Override
     public boolean onSave(Object entity, Serializable id, Object[] state, String[] propertyNames, Type[] types) {
         if (!(entity instanceof Log)) {
-            if (isDebugEnabled)
+            if (isTraceEnabled)
                 logs.add(new Log("insert", (String) id, entity.getClass().getName()));
         }
         return false;
@@ -39,7 +40,7 @@ public class LoggingInterceptor extends EmptyInterceptor {
     @Override
     public boolean onFlushDirty(Object entity, Serializable id, Object[] currentState, Object[] previousState, String[] propertyNames, Type[] types) {
         if (!(entity instanceof Log)) {
-            if (isDebugEnabled)
+            if (isTraceEnabled)
                 logs.add(new Log("update", (String) id, entity.getClass().getName()));
         }
         return false;
@@ -49,7 +50,7 @@ public class LoggingInterceptor extends EmptyInterceptor {
     public void postFlush(Iterator entities) {
         // 로그 정보를 기타 DB에 따로 저장할 수 있습니다^^
         //
-        if (isDebugEnabled) {
+        if (isTraceEnabled) {
             for (Log x : logs) {
                 log.debug("[{}]", x);
             }

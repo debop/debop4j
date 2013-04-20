@@ -18,9 +18,10 @@ import java.util.Date;
 import java.util.Objects;
 
 /**
- * kr.debop4j.data.hibernate.usertype.TimeRangeUserType
- * User: sunghyouk.bae@gmail.com
- * Date: 12. 12. 3.
+ * {@link DateTimeRange} 에 대한 Hibernate UserType 입니다.
+ *
+ * @author sunghyouk.bae@gmail.com
+ * @since 12. 12. 3.
  */
 @Slf4j
 public class TimeRangeUserType implements CompositeUserType {
@@ -36,12 +37,12 @@ public class TimeRangeUserType implements CompositeUserType {
 
     @Override
     public String[] getPropertyNames() {
-        return new String[]{"getStart", "getEnd"};
+        return new String[]{ "getStart", "getEnd" };
     }
 
     @Override
     public Type[] getPropertyTypes() {
-        return new Type[]{DateType.INSTANCE, DateType.INSTANCE};
+        return new Type[]{ DateType.INSTANCE, DateType.INSTANCE };
     }
 
     @Override

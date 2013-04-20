@@ -3,10 +3,11 @@ package kr.debop4j.data.hibernate.interceptor;
 import com.google.common.collect.Lists;
 import lombok.Getter;
 import lombok.Setter;
-import lombok.extern.slf4j.Slf4j;
 import org.hibernate.EmptyInterceptor;
 import org.hibernate.Interceptor;
 import org.hibernate.type.Type;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.Serializable;
 import java.util.Iterator;
@@ -18,9 +19,10 @@ import java.util.concurrent.FutureTask;
  * User: sunghyouk.bae@gmail.com
  * Date: 12. 9. 23.
  */
-@Slf4j
 public class MultiInterceptor extends EmptyInterceptor {
 
+    private static final Logger log = LoggerFactory.getLogger(MultiInterceptor.class);
+    private static final boolean isTraceEnabled = log.isTraceEnabled();
     private static final long serialVersionUID = 4354823013240170534L;
 
     @Getter
@@ -43,8 +45,8 @@ public class MultiInterceptor extends EmptyInterceptor {
         if (!isExists())
             return;
 
-        if (log.isDebugEnabled())
-            log.debug("인터셉터의 onDelete메소드를 멀티캐스트로 수행합니다.");
+        if (isTraceEnabled)
+            log.trace("인터셉터의 onDelete메소드를 멀티캐스트로 수행합니다.");
 
         for (final Interceptor interceptor : interceptors) {
             interceptor.onDelete(entity, id, state, propertyNames, types);
@@ -61,8 +63,8 @@ public class MultiInterceptor extends EmptyInterceptor {
         if (!isExists())
             return false;
 
-        if (log.isDebugEnabled())
-            log.debug("인터셉터의 onFlush 메소드를 멀티캐스트로 수행합니다.");
+        if (isTraceEnabled)
+            log.trace("인터셉터의 onFlush 메소드를 멀티캐스트로 수행합니다.");
 
         for (final Interceptor interceptor : interceptors) {
             interceptor.onFlushDirty(entity, id, currentState, previousState, propertyNames, types);
@@ -76,8 +78,8 @@ public class MultiInterceptor extends EmptyInterceptor {
         if (!isExists())
             return false;
 
-        if (log.isDebugEnabled())
-            log.debug("인터셉터의 onLoad 메소드를 멀티캐스트로 수행합니다.");
+        if (isTraceEnabled)
+            log.trace("인터셉터의 onLoad 메소드를 멀티캐스트로 수행합니다.");
 
         for (final Interceptor interceptor : interceptors) {
             interceptor.onLoad(entity, id, state, propertyNames, types);
@@ -91,8 +93,8 @@ public class MultiInterceptor extends EmptyInterceptor {
         if (!isExists())
             return false;
 
-        if (log.isDebugEnabled())
-            log.debug("인터셉터의 onSave 메소드를 멀티캐스트로 수행합니다.");
+        if (isTraceEnabled)
+            log.trace("인터셉터의 onSave 메소드를 멀티캐스트로 수행합니다.");
 
         List<FutureTask<Boolean>> tasks = Lists.newLinkedList();
 
@@ -107,8 +109,8 @@ public class MultiInterceptor extends EmptyInterceptor {
     public void postFlush(Iterator entities) {
         if (!isExists()) return;
 
-        if (log.isDebugEnabled())
-            log.debug("인터셉터의 postFlush 메소드를 멀티캐스트로 수행합니다.");
+        if (isTraceEnabled)
+            log.trace("인터셉터의 postFlush 메소드를 멀티캐스트로 수행합니다.");
 
         List<FutureTask<Void>> tasks = Lists.newLinkedList();
 
@@ -121,8 +123,8 @@ public class MultiInterceptor extends EmptyInterceptor {
     public void preFlush(Iterator entities) {
         if (!isExists()) return;
 
-        if (log.isDebugEnabled())
-            log.debug("인터셉터의 preFlush 메소드를 멀티캐스트로 수행합니다.");
+        if (isTraceEnabled)
+            log.trace("인터셉터의 preFlush 메소드를 멀티캐스트로 수행합니다.");
 
         List<FutureTask<Void>> tasks = Lists.newLinkedList();
 

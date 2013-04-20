@@ -36,12 +36,12 @@ public class WeekOfYearUserType implements CompositeUserType {
 
     @Override
     public String[] getPropertyNames() {
-        return new String[]{"year", "week"};
+        return new String[]{ "year", "week" };
     }
 
     @Override
     public Type[] getPropertyTypes() {
-        return new Type[]{IntegerType.INSTANCE, IntegerType.INSTANCE};
+        return new Type[]{ IntegerType.INSTANCE, IntegerType.INSTANCE };
     }
 
     @Override
@@ -89,8 +89,7 @@ public class WeekOfYearUserType implements CompositeUserType {
     public Object nullSafeGet(ResultSet rs,
                               String[] names,
                               SessionImplementor session,
-                              Object owner) throws HibernateException,
-            SQLException {
+                              Object owner) throws HibernateException, SQLException {
         Integer year = IntegerType.INSTANCE.nullSafeGet(rs, names[0], session);
         Integer week = IntegerType.INSTANCE.nullSafeGet(rs, names[1], session);
         return new YearWeek(year, week);
@@ -100,8 +99,7 @@ public class WeekOfYearUserType implements CompositeUserType {
     public void nullSafeSet(PreparedStatement st,
                             Object value,
                             int index,
-                            SessionImplementor session) throws HibernateException,
-            SQLException {
+                            SessionImplementor session) throws HibernateException, SQLException {
         if (value == null) {
             IntegerType.INSTANCE.nullSafeSet(st, null, index, session);
             IntegerType.INSTANCE.nullSafeSet(st, null, index + 1, session);

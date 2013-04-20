@@ -1,8 +1,9 @@
 package kr.debop4j.data.hibernate.interceptor;
 
 import kr.debop4j.data.model.IUpdateTimestampedEntity;
-import lombok.extern.slf4j.Slf4j;
 import org.hibernate.EmptyInterceptor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.Iterator;
 
@@ -11,15 +12,16 @@ import java.util.Iterator;
  * User: sunghyouk.bae@gmail.com
  * Date: 12. 11. 21.
  */
-@Slf4j
 public class UpdateTimestampedInterceptor extends EmptyInterceptor {
 
+    private static final Logger log = LoggerFactory.getLogger(UpdateTimestampedInterceptor.class);
+    private static final boolean isTraceEnabled = log.isTraceEnabled();
     private static final long serialVersionUID = 7231248402093351095L;
 
     public UpdateTimestampedInterceptor() {
         super();
-        if (log.isDebugEnabled())
-            log.debug("UpdateTimestampedInterceptor 생성");
+        if (isTraceEnabled)
+            log.trace("UpdateTimestampedInterceptor 생성");
     }
 
     public void preFlush(Iterator entities) {
@@ -28,8 +30,8 @@ public class UpdateTimestampedInterceptor extends EmptyInterceptor {
             if (entity instanceof IUpdateTimestampedEntity) {
                 ((IUpdateTimestampedEntity) entity).updateUpdateTimestamp();
 
-                if (log.isDebugEnabled())
-                    log.debug("updateTimestamp 값을 현재 시각으로 갱신했습니다. entity=[{}]", entity);
+                if (isTraceEnabled)
+                    log.trace("updateTimestamp 값을 현재 시각으로 갱신했습니다. entity=[{}]", entity);
             }
         }
     }

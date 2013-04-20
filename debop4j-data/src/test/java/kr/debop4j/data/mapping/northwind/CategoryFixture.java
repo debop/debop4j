@@ -3,6 +3,8 @@ package kr.debop4j.data.mapping.northwind;
 import kr.debop4j.data.hibernate.repository.IHibernateRepository;
 import kr.debop4j.data.mapping.northwind.model.Category;
 import lombok.extern.slf4j.Slf4j;
+import org.hibernate.ScrollableResults;
+import org.hibernate.criterion.DetachedCriteria;
 import org.junit.Test;
 
 import java.util.List;
@@ -21,7 +23,16 @@ public class CategoryFixture extends NorthwindDbTestFixtureBase {
 
     @Test
     public void findAll() {
-        List<Category> categories = getCategoryDao().getAll();
+        List<Category> categories = getCategoryDao().findAll();
         print(categories);
+    }
+
+    @Test
+    public void getSroll() {
+        ScrollableResults scroll = getCategoryDao().getScroll(DetachedCriteria.forClass(Category.class));
+        while (scroll.next()) {
+            log.debug("Category=" + scroll.get(0));
+        }
+        scroll.close();
     }
 }

@@ -27,6 +27,8 @@ import static kr.debop4j.core.tools.StringTool.ellipsisChar;
 @Slf4j
 public abstract class AbstractJsonTextUserType implements CompositeUserType {
 
+    private static final boolean isTraceEnabled = log.isTraceEnabled();
+
     abstract public IJsonSerializer getJsonSerializer();
 
     public JsonTextObject serialize(Object value) {
@@ -46,8 +48,8 @@ public abstract class AbstractJsonTextUserType implements CompositeUserType {
         if (jto == null || jto == JsonTextObject.Empty)
             return null;
 
-        if (log.isDebugEnabled())
-            log.debug("JsonTextObject를 역직렬화 합니다. jto=[{}]", jto);
+        if (isTraceEnabled)
+            log.trace("JsonTextObject를 역직렬화 합니다. jto=[{}]", jto);
 
         try {
             Class clazz = Class.forName(jto.getClassName());
@@ -66,12 +68,12 @@ public abstract class AbstractJsonTextUserType implements CompositeUserType {
 
     @Override
     public String[] getPropertyNames() {
-        return new String[]{"className", "jsonText"};
+        return new String[]{ "className", "jsonText" };
     }
 
     @Override
     public Type[] getPropertyTypes() {
-        return new Type[]{StringType.INSTANCE, StringType.INSTANCE};
+        return new Type[]{ StringType.INSTANCE, StringType.INSTANCE };
     }
 
     @Override
@@ -120,13 +122,12 @@ public abstract class AbstractJsonTextUserType implements CompositeUserType {
     public Object nullSafeGet(ResultSet rs,
                               String[] names,
                               SessionImplementor session,
-                              Object owner) throws HibernateException,
-            SQLException {
+                              Object owner) throws HibernateException, SQLException {
         String className = StringType.INSTANCE.nullSafeGet(rs, names[0], session);
         String jsonText = StringType.INSTANCE.nullSafeGet(rs, names[1], session);
 
-        if (log.isDebugEnabled())
-            log.debug("JsonText 정보를 로드했습니다. className=[{}], jsonText=[{}]",
+        if (isTraceEnabled)
+            log.trace("JsonText 정보를 로드했습니다. className=[{}], jsonText=[{}]",
                       className, ellipsisChar(jsonText, 80));
 
         return deserialize(new JsonTextObject(className, jsonText));
@@ -136,8 +137,7 @@ public abstract class AbstractJsonTextUserType implements CompositeUserType {
     public void nullSafeSet(PreparedStatement st,
                             Object value,
                             int index,
-                            SessionImplementor session) throws HibernateException,
-            SQLException {
+                            SessionImplementor session) throws HibernateException, SQLException {
         if (value == null) {
             StringType.INSTANCE.nullSafeSet(st, null, index, session);
             StringType.INSTANCE.nullSafeSet(st, null, index + 1, session);
@@ -145,8 +145,8 @@ public abstract class AbstractJsonTextUserType implements CompositeUserType {
         } else {
             JsonTextObject jto = serialize(value);
 
-            if (log.isDebugEnabled())
-                log.debug("객체를 Json 정보로 직렬화하여 저장합니다. jto=[{}]", jto.toString());
+            if (isTraceEnabled)
+                log.trace("객체를 Json 정보로 직렬화하여 저장합니다. jto=[{}]", jto.toString());
 
             StringType.INSTANCE.nullSafeSet(st, jto.getClassName(), index, session);
             StringType.INSTANCE.nullSafeSet(st, jto.getJsonText(), index + 1, session);
