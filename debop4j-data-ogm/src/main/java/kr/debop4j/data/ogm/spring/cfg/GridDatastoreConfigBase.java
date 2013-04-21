@@ -1,3 +1,19 @@
+/*
+ * Copyright 2011-2013 the original author or authors.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package kr.debop4j.data.ogm.spring.cfg;
 
 import kr.debop4j.data.hibernate.interceptor.StatefulEntityInterceptor;
@@ -54,20 +70,17 @@ public abstract class GridDatastoreConfigBase {
     @Bean
     public OgmConfiguration ogmConfiguration() {
 
-        if (log.isInfoEnabled())
-            log.info("hibernate-ogm용 configuration을 생성합니다...");
+        log.info("hibernate-ogm용 configuration을 생성합니다...");
 
         OgmConfiguration cfg = new OgmConfiguration();
 
         for (String pkgName : getMappedPackageNames()) {
-            if (log.isDebugEnabled())
-                log.debug("Package를 추가합니다. package=[{}]", pkgName);
+            log.info("Package를 추가합니다. package=[{}]", pkgName);
 
             final Reflections reflections = new Reflections(pkgName);
             final Set<Class<?>> classes = reflections.getTypesAnnotatedWith(Entity.class);
             for (final Class<?> clazz : classes) {
-                if (log.isDebugEnabled())
-                    log.debug("Entity 를 등록합니다. Entity=[{}]", clazz);
+                log.info("Annotated Entity 를 등록합니다. Entity=[{}]", clazz);
                 cfg.addAnnotatedClass(clazz);
             }
             // cfg.addPackage(pkgName);
@@ -75,16 +88,13 @@ public abstract class GridDatastoreConfigBase {
 
         for (Class annoatatedClass : getMappedEntities()) {
             cfg.addAnnotatedClass(annoatatedClass);
-            if (log.isDebugEnabled())
-                log.debug("AnnotatedEntity를 추가합니다. annotatedClass=[{}]", annoatatedClass.getName());
+            log.info("AnnotatedEntity를 추가합니다. annotatedClass=[{}]", annoatatedClass.getName());
         }
-
-        log.trace("hibernate용 interceptor릉록합니다., hibernateInterceptor=[{}]", hibernateInterceptor());
+        log.info("hibernate용 interceptor릉록합니다., hibernateInterceptor=[{}]", hibernateInterceptor());
         cfg.setInterceptor(hibernateInterceptor());
-        cfg.setProperties(getHibernateOgmProperties());
 
-        if (log.isInfoEnabled())
-            log.info("hibernate-ogm용 configuration을 생성했습니다!!!");
+        cfg.setProperties(getHibernateOgmProperties());
+        log.info("hibernate-ogm용 configuration을 생성했습니다!!!");
 
         return cfg;
     }
@@ -94,16 +104,13 @@ public abstract class GridDatastoreConfigBase {
      */
     @Bean
     public SessionFactory sessionFactory() {
-        if (log.isInfoEnabled())
-            log.info("hiberante-ogm 용 SessionFactory를 생성합니다...");
+        log.info("hiberante-ogm 용 SessionFactory를 생성합니다...");
 
         OgmConfiguration cfg = ogmConfiguration();
         ServiceRegistry serviceRegistry = new ServiceRegistryBuilder().applySettings(cfg.getProperties()).buildServiceRegistry();
         SessionFactory sessionFactory = cfg.buildSessionFactory(serviceRegistry);
 
-        if (log.isInfoEnabled())
-            log.info("hibernate-ogm용 SessionFactory를 생성했습니다!!!");
-
+        log.info("hibernate-ogm용 SessionFactory를 생성했습니다!!!");
         return sessionFactory;
     }
 
@@ -114,8 +121,7 @@ public abstract class GridDatastoreConfigBase {
 
     @Bean
     public UnitOfWorkFactory unitOfWorkFactory() {
-        if (log.isInfoEnabled())
-            log.info("UnitOfWorkFactory를 생성합니다...");
+        log.info("UnitOfWorkFactory를 생성합니다...");
 
         UnitOfWorkFactory factory = new UnitOfWorkFactory();
         factory.setSessionFactory(sessionFactory());
@@ -142,8 +148,8 @@ public abstract class GridDatastoreConfigBase {
      * hibernate 용 속성을 설정합니다.
      */
     protected Properties getHibernateProperties() {
-        if (log.isTraceEnabled())
-            log.trace("Hibernate properties 를 설정합니다...");
+        if (log.isDebugEnabled())
+            log.debug("Hibernate properties 를 설정합니다...");
 
         Properties props = new Properties();
 
@@ -161,9 +167,8 @@ public abstract class GridDatastoreConfigBase {
      * hibernate-ogm 용 속성을 반환합니다.
      */
     protected Properties getHibernateOgmProperties() {
-
-        if (log.isTraceEnabled())
-            log.trace("hibernate-ogm 용 property를 설정합니다...");
+        if (log.isDebugEnabled())
+            log.debug("hibernate-ogm 용 property를 설정합니다...");
 
         Properties props = getHibernateProperties();
 
