@@ -38,8 +38,7 @@ public final class StreamTool {
 
     public static final int BUFFER_SIZE = 4096;
 
-    private StreamTool() {
-    }
+    private StreamTool() { }
 
     /**
      * {@link java.io.InputStream} 내용을 읽어, {@link java.io.OutputStream} 에 씁니다.
@@ -70,6 +69,9 @@ public final class StreamTool {
     public static byte[] toByteArray(InputStream inputStream) throws IOException {
         shouldNotBeNull(inputStream, "inputStream");
 
+        if (log.isTraceEnabled())
+            log.trace("InputStream의 내용을 읽어 byte[] 로 반환합니다...");
+
         @Cleanup
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         copy(inputStream, outputStream);
@@ -87,6 +89,9 @@ public final class StreamTool {
     public static OutputStream toOutputStream(byte[] bytes) throws IOException {
         if (bytes == null || bytes.length == 0)
             return new ByteArrayOutputStream();
+
+        if (log.isTraceEnabled())
+            log.trace("OutputStream에 데이터를 씁니다...");
 
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream(bytes.length);
         outputStream.write(bytes);

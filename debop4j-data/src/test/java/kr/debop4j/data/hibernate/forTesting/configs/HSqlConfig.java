@@ -1,7 +1,7 @@
 package kr.debop4j.data.hibernate.forTesting.configs;
 
 import kr.debop4j.data.hibernate.forTesting.LongEntityForTesting;
-import kr.debop4j.data.hibernate.springconfiguration.HSqlConfigBase;
+import kr.debop4j.data.hibernate.spring.HSqlConfigBase;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.orm.hibernate4.LocalSessionFactoryBean;
 import org.springframework.transaction.annotation.EnableTransactionManagement;

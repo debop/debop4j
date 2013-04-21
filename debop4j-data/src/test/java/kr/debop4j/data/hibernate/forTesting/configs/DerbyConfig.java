@@ -1,7 +1,7 @@
 package kr.debop4j.data.hibernate.forTesting.configs;
 
 import kr.debop4j.data.hibernate.forTesting.LongEntityForTesting;
-import kr.debop4j.data.hibernate.springconfiguration.DerbyConfigBase;
+import kr.debop4j.data.hibernate.spring.DerbyConfigBase;
 import org.springframework.orm.hibernate4.LocalSessionFactoryBean;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.EnableTransactionManagement;

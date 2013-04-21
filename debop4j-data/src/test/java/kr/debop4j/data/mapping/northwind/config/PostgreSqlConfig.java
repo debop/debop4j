@@ -1,6 +1,6 @@
 package kr.debop4j.data.mapping.northwind.config;
 
-import kr.debop4j.data.hibernate.springconfiguration.PostgreSqlConfigBase;
+import kr.debop4j.data.hibernate.spring.PostgreSqlConfigBase;
 import org.hibernate.cfg.Environment;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.transaction.annotation.EnableTransactionManagement;

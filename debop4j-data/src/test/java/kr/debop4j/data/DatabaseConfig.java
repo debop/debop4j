@@ -16,7 +16,7 @@
 
 package kr.debop4j.data;
 
-import kr.debop4j.data.hibernate.springconfiguration.HSqlConfigBase;
+import kr.debop4j.data.hibernate.spring.HSqlConfigBase;
 import org.hibernate.cache.ehcache.SingletonEhCacheRegionFactory;
 import org.hibernate.cfg.Environment;
 import org.springframework.context.annotation.Configuration;

@@ -3,7 +3,7 @@ package kr.debop4j.access.test;
 import kr.debop4j.access.model.calendar.WorkCalendar;
 import kr.debop4j.access.model.organization.Company;
 import kr.debop4j.access.model.product.Product;
-import kr.debop4j.data.hibernate.springconfiguration.HSqlConfigBase;
+import kr.debop4j.data.hibernate.spring.HSqlConfigBase;
 import kr.debop4j.data.hibernate.tools.HibernateTool;
 import org.hibernate.SessionFactory;
 import org.hibernate.cache.ehcache.SingletonEhCacheRegionFactory;
