@@ -99,6 +99,7 @@ public class MongoOgmDaoImpl extends HibernateOgmDaoImpl {
     public long count(Class<?> clazz, Query luceneQuery) {
         if (isTraceEnabled)
             log.trace("수형[{}]에 대해 갯수를 구합니다. luceneQuery=[{}]", clazz, luceneQuery);
+
         FullTextQuery ftq = getFullTextQuery(luceneQuery, clazz);
         long count = ftq.getResultSize();
         if (isTraceEnabled)

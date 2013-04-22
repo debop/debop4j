@@ -110,7 +110,8 @@ public class HibernateOgmDaoImpl implements HibernateOgmDao {
 
     public final FullTextQuery getFullTextQuery(Query luceneQuery, Class<?>... entities) {
         if (isTraceEnabled)
-            log.trace("FullTextQuery를 얻습니다. luceneQuery=[{}], entities=[{}]", luceneQuery, StringTool.listToString(entities));
+            log.trace("FullTextQuery를 생성합니다... luceneQuery=[{}], entities=[{}]",
+                      luceneQuery, StringTool.listToString(entities));
 
         FullTextQuery ftq = getFullTextSession().createFullTextQuery(luceneQuery, entities);
         // 필수!!! object lookup 및 DB 조회 방법 설정
