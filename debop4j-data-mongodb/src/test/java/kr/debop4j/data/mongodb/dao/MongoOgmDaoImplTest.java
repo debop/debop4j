@@ -12,7 +12,6 @@ import kr.debop4j.data.mongodb.model.Tournament;
 import kr.debop4j.data.ogm.dao.impl.HibernateOgmDaoImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.lucene.search.Query;
-import org.hibernate.Session;
 import org.hibernate.search.query.dsl.QueryBuilder;
 import org.joda.time.DateTime;
 import org.junit.Test;
@@ -216,8 +215,7 @@ public class MongoOgmDaoImplTest extends MongoGridDatastoreTestBase {
             public void perform(Integer arg) {
                 List<Player> players = createTestPlayers(PLAYER_COUNT);
 
-                Session session = UnitOfWorks.getCurrentSessionFactory().openSession();
-                MongoOgmDaoImpl dao = new MongoOgmDaoImpl(session);
+                MongoOgmDaoImpl dao = new MongoOgmDaoImpl(UnitOfWorks.getCurrentSessionFactory());
 
                 for (Player player : players) {
                     dao.saveOrUpdate(player);
@@ -241,10 +239,9 @@ public class MongoOgmDaoImplTest extends MongoGridDatastoreTestBase {
             List<Player> players = dao.findAll(Player.class);
             assertThat(players.size()).isGreaterThan(0);
             dao.deleteAll(players);
-            dao.purgeAll(Player.class);
-            dao.purgeAll(Tournament.class);
-            UnitOfWorks.getCurrent().flushSession();
-            UnitOfWorks.getCurrent().clearSession();
+            dao.getFullTextSession().flush();
+            dao.flushToIndexes();
+            dao.getFullTextSession().close();
         }
         assertThat(dao.count(Player.class)).isEqualTo(0);
     }

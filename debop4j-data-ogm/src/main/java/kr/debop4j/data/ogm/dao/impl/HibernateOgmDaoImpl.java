@@ -24,6 +24,7 @@ import kr.debop4j.data.ogm.dao.HibernateOgmDao;
 import org.apache.lucene.search.Query;
 import org.apache.lucene.search.Sort;
 import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.hibernate.search.FullTextQuery;
 import org.hibernate.search.FullTextSession;
 import org.hibernate.search.Search;
@@ -51,37 +52,46 @@ public class HibernateOgmDaoImpl implements HibernateOgmDao {
     private static final boolean isTraceEnabled = log.isTraceEnabled();
     private static final boolean isDebugEnabled = log.isDebugEnabled();
 
+    private static final String SESSION_KEY = HibernateOgmDaoImpl.class.getName() + ".Session";
     private static final String FULL_TEXT_SESSION_KEY = HibernateOgmDaoImpl.class.getName() + ".FullTextSession";
 
-    private Session session;
+    private final SessionFactory sessionFactory;
 
-    public HibernateOgmDaoImpl() {}
+    public HibernateOgmDaoImpl() {
+        this(UnitOfWorks.getCurrentSessionFactory());
+    }
+
+    public HibernateOgmDaoImpl(SessionFactory sessionFactory) {
+        assert sessionFactory != null;
+        this.sessionFactory = sessionFactory;
+    }
 
     public HibernateOgmDaoImpl(Session session) {
-        this.session = session;
+        this.sessionFactory = session.getSessionFactory();
+        Local.put(SESSION_KEY, session);
     }
 
     /**
      * hibernate session을 반환합니다.
      */
-    public final Session getSession() {
-        if (this.session == null)
-            this.session = UnitOfWorks.getCurrentSession();
+    public synchronized final Session getSession() {
+        Session session = (Session) Local.get(SESSION_KEY);
+        if (session == null || !session.isOpen()) {
+            if (log.isDebugEnabled())
+                log.debug("현 ThreadContext에 새로운 Session을 엽니다...");
+            session = sessionFactory.openSession();
+            Local.put(SESSION_KEY, session);
+        }
         return session;
-    }
-
-    public final void setSession(Session session) {
-        this.session = session;
-        Local.put(FULL_TEXT_SESSION_KEY, Search.getFullTextSession(getSession()));
     }
 
     /**
      * hibernate-search의 {@link FullTextSession} 을 반환합니다.
      */
-    public synchronized FullTextSession getFullTextSession() {
+    public final synchronized FullTextSession getFullTextSession() {
         FullTextSession fts = (FullTextSession) Local.get(FULL_TEXT_SESSION_KEY);
 
-        if (fts == null || !fts.isConnected()) {
+        if (fts == null || !fts.isOpen()) {
             if (isDebugEnabled)
                 log.debug("현 ThreadContext에 새로운 FullTextSession을 생성합니다...");
 

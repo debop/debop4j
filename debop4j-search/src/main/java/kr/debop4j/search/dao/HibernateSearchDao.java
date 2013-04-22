@@ -16,7 +16,7 @@
 package kr.debop4j.search.dao;
 
 /**
- * hibernate-search 를 이용하여 엔티티를 관리하는 Data Access Object 입니다.
+ * hibernate-search 를 이용하여 엔티티를 관리하는 Data Access Object의 인터페이스입니다.
  *
  * @author sunghyouk.bae@gmail.com
  * @since 13. 4. 20. 오후 10:03

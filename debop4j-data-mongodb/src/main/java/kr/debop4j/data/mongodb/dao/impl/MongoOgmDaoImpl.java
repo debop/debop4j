@@ -23,6 +23,7 @@ import kr.debop4j.data.ogm.dao.impl.HibernateOgmDaoImpl;
 import org.apache.lucene.search.Query;
 import org.apache.lucene.search.Sort;
 import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.hibernate.search.FullTextQuery;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -51,6 +52,10 @@ public class MongoOgmDaoImpl extends HibernateOgmDaoImpl {
 //    @Getter
 //    MongoTemplate mongoTemplate;
     public MongoOgmDaoImpl() {}
+
+    public MongoOgmDaoImpl(SessionFactory sessionFactory) {
+        super(sessionFactory);
+    }
 
     public MongoOgmDaoImpl(Session session) {
         super(session);
