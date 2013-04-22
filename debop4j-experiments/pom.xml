@@ -23,6 +23,13 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
+    <repositories>
+        <repository>
+            <id>sonatype</id>
+            <name>Sonatype Groups</name>
+            <url>https://oss.sonatype.org/content/groups/public/</url>
+        </repository>
+    </repositories>
     <build>
         <plugins>
             <!-- Avro Plugin -->
@@ -52,6 +59,20 @@
     </build>
 
     <dependencies>
+
+        <!-- Jest for ElasticSearch -->
+        <dependency>
+            <groupId>io.searchbox</groupId>
+            <artifactId>jest</artifactId>
+            <version>0.0.3</version>
+        </dependency>
+
+        <!-- ElasticSearch -->
+        <dependency>
+            <groupId>org.elasticsearch</groupId>
+            <artifactId>elasticsearch</artifactId>
+            <version>0.90.0.RC2</version>
+        </dependency>
 
         <!-- Avro -->
         <dependency>
