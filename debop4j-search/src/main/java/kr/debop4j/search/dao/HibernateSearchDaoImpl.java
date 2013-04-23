@@ -16,15 +16,21 @@
 package kr.debop4j.search.dao;
 
 import kr.debop4j.core.Local;
+import kr.debop4j.core.collection.IPagedList;
+import kr.debop4j.core.collection.SimplePagedList;
+import kr.debop4j.data.hibernate.tools.HibernateTool;
 import kr.debop4j.data.hibernate.unitofwork.UnitOfWorks;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.lucene.search.Query;
+import org.apache.lucene.search.Sort;
 import org.hibernate.*;
 import org.hibernate.search.FullTextQuery;
 import org.hibernate.search.FullTextSession;
 import org.hibernate.search.Search;
+import org.hibernate.search.query.DatabaseRetrievalMethod;
+import org.hibernate.search.query.ObjectLookupMethod;
 
 import java.io.Serializable;
 import java.util.List;
@@ -57,11 +63,17 @@ public class HibernateSearchDaoImpl {
         this.sessionFactory = sessionFactory;
     }
 
+    public HibernateSearchDaoImpl(Session session) {
+        this(session.getSessionFactory());
+        Local.put(SESSION_KEY, session);
+    }
+
     public synchronized Session getSession() {
         Session session = (Session) Local.get(SESSION_KEY);
         if (session == null || !session.isOpen()) {
             session = sessionFactory.openSession();
             Local.put(SESSION_KEY, session);
+
             if (log.isDebugEnabled())
                 log.debug("새로운 Session을 open 했습니다.");
         }
@@ -82,11 +94,65 @@ public class HibernateSearchDaoImpl {
         return fts;
     }
 
-    public <T> List<T> find(Query luceneQuery, Class<T> clazz) {
-        FullTextQuery ftq = getFullTextSession().createFullTextQuery(luceneQuery, clazz);
+    public synchronized FullTextQuery createFullTextQuery(Query luceneQuery, Class<?>... classes) {
+        FullTextQuery ftq = getFullTextSession().createFullTextQuery(luceneQuery, classes);
+
+        // hibernate-ogm 에서는 DataRetrievalMethod.FIND_BY_ID 를 사용해야 합니다.
+        //
+        ftq.initializeObjectsWith(ObjectLookupMethod.SKIP, DatabaseRetrievalMethod.QUERY);
+
+        return ftq;
+    }
+
+    public <T> List<T> find(Class<T> clazz, Query luceneQuery, Sort sort) {
+        FullTextQuery ftq = this.createFullTextQuery(luceneQuery, clazz);
+        if (sort != null)
+            ftq.setSort(sort);
 
         return (List<T>) ftq.list();
     }
+
+    public <T> List<T> find(Class<T> clazz, Query luceneQuery, int firstResult, int maxResults, Sort sort) {
+        FullTextQuery ftq = this.createFullTextQuery(luceneQuery, clazz);
+        HibernateTool.setPaging(ftq, firstResult, maxResults);
+        if (sort != null)
+            ftq.setSort(sort);
+        return ftq.list();
+    }
+
+    public <T> IPagedList<T> getPage(Class<T> clazz, Query luceneQuery, int pageNo, int pageSize, Sort sort) {
+        long totalCount = count(clazz, luceneQuery);
+        FullTextQuery ftq = this.createFullTextQuery(luceneQuery, clazz);
+        HibernateTool.setPaging(ftq, (pageNo - 1) * pageSize, pageSize);
+        if (sort != null)
+            ftq.setSort(sort);
+        return new SimplePagedList<T>(ftq.list(), pageNo, pageSize, totalCount);
+    }
+
+    /**
+     * 지정한 쿼리를 수행하여 해당 엔티티의 ID 값만 가져옵니다.
+     */
+    public IPagedList getProjectionPage(Class<?> clazz, Query luceneQuery, int pageNo, int pageSize, Sort sort) {
+        return getProjectionPage(clazz, luceneQuery, new String[]{ FullTextQuery.ID }, pageNo, pageSize, sort);
+    }
+
+    /**
+     * 지정한 쿼리를 수행하여 해당 필드의 값들만 뽑아온다.
+     */
+    public IPagedList getProjectionPage(Class<?> clazz, Query luceneQuery, String[] fields, int pageNo, int pageSize, Sort sort) {
+        FullTextQuery ftq = this.createFullTextQuery(luceneQuery, clazz);
+        HibernateTool.setPaging(ftq, (pageNo - 1) * pageSize, pageSize);
+        ftq.setProjection(fields);
+        if (sort != null)
+            ftq.setSort(sort);
+        return new SimplePagedList(ftq.list(), pageNo, pageSize, count(clazz, luceneQuery));
+    }
+
+    public <T> long count(Class<T> clazz, Query luceneQuery) {
+        FullTextQuery ftq = this.createFullTextQuery(luceneQuery, clazz);
+        return (long) ftq.getResultSize();
+    }
+
 
     /**
      * 해당 엔티티의 인덱스 정보만을 삭제합니다.
