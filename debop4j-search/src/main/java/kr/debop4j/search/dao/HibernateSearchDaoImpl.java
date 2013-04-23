@@ -18,6 +18,7 @@ package kr.debop4j.search.dao;
 import kr.debop4j.core.Local;
 import kr.debop4j.core.collection.IPagedList;
 import kr.debop4j.core.collection.SimplePagedList;
+import kr.debop4j.data.hibernate.repository.impl.HibernateDao;
 import kr.debop4j.data.hibernate.tools.HibernateTool;
 import kr.debop4j.data.hibernate.unitofwork.UnitOfWorks;
 import lombok.Getter;
@@ -26,6 +27,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.lucene.search.Query;
 import org.apache.lucene.search.Sort;
 import org.hibernate.*;
+import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.search.FullTextQuery;
 import org.hibernate.search.FullTextSession;
 import org.hibernate.search.Search;
@@ -43,7 +45,7 @@ import java.util.List;
  */
 @Slf4j
 @SuppressWarnings("unchecked")
-public class HibernateSearchDaoImpl {
+public class HibernateSearchDaoImpl extends HibernateDao {
 
     private static final String SESSION_KEY = "kr.debop4j.search.dao.HibernateSearchDao.Session";
     private static final String FULL_TEXT_SESSION_KEY = "kr.debop4j.search.dao.HibernateSearchDao.FullTextSession";
@@ -148,8 +150,11 @@ public class HibernateSearchDaoImpl {
         return new SimplePagedList(ftq.list(), pageNo, pageSize, count(clazz, luceneQuery));
     }
 
+    public long count(Class<?> clazz) {
+        return count(clazz, DetachedCriteria.forClass(clazz));
+    }
 
-    public <T> long count(Class<T> clazz, Query luceneQuery) {
+    public long count(Class<?> clazz, Query luceneQuery) {
         FullTextQuery ftq = this.createFullTextQuery(luceneQuery, clazz);
         return (long) ftq.getResultSize();
     }
@@ -171,9 +176,6 @@ public class HibernateSearchDaoImpl {
 
     /**
      * 엔티티를 인덱싱합니다.
-     *
-     * @param entity
-     * @param <T>
      */
     public <T> void index(T entity) {
         getFullTextSession().index(entity);

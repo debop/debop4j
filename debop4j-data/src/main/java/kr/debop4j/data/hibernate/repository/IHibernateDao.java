@@ -152,11 +152,13 @@ public interface IHibernateDao {
 
     <T> boolean existsBySQLString(Class<T> clazz, String sqlString, HibernateParameter... parameters);
 
-    <T> long count(Class<T> clazz, Criteria criteria);
+    long count(Class<?> clazz);
 
-    <T> Long count(Class<T> clazz, DetachedCriteria dc);
+    long count(Class<?> clazz, Criteria criteria);
 
-    <T> Long count(Class<T> clazz, Query query, HibernateParameter... parameters);
+    long count(Class<?> clazz, DetachedCriteria dc);
+
+    long count(Class<?> clazz, Query query, HibernateParameter... parameters);
 
     <T> Object merge(T entity);
 

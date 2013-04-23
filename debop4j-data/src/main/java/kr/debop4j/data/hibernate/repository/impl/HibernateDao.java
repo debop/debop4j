@@ -463,24 +463,35 @@ public class HibernateDao implements IHibernateDao {
     }
 
     @Override
-    public <T> long count(Class<T> clazz, Criteria criteria) {
-        Object count = criteria.setProjection(Projections.rowCount());
-        return ((Number) count).longValue();
+    public long count(Class<?> clazz) {
+        return count(clazz, getSession().createCriteria(clazz));
     }
 
     @Override
-    public <T> Long count(Class<T> clazz, DetachedCriteria dc) {
+    public long count(Class<?> clazz, Criteria criteria) {
+        Object count = criteria.setProjection(Projections.rowCount()).uniqueResult();
+        if (isTraceEnabled)
+            log.trace("count=" + count);
+        return (count == null) ? 0 : ((Number) count).longValue();
+    }
+
+    @Override
+    public long count(Class<?> clazz, DetachedCriteria dc) {
         return count(clazz, dc.getExecutableCriteria(getSession()));
     }
 
     @Override
-    public <T> Long count(Class<T> clazz, Query query, HibernateParameter... parameters) {
+    public long count(Class<?> clazz, Query query, HibernateParameter... parameters) {
         assert query != null;
         Object count = HibernateTool.setParameters(query, parameters)
                 .setResultTransformer(Criteria.PROJECTION)
                 .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
                 .uniqueResult();
-        return ((Number) count).longValue();
+
+        if (isTraceEnabled)
+            log.trace("count=" + count);
+
+        return (count == null) ? 0 : ((Number) count).longValue();
     }
 
     @Override

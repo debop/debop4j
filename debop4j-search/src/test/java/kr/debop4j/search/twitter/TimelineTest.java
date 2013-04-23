@@ -1,29 +1,58 @@
-package kr.debop4j.data.mongodb.dao;
+/*
+ * Copyright 2011-2013 the original author or authors.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+package kr.debop4j.search.twitter;
 
 import jodd.props.Props;
-import kr.debop4j.core.spring.Springs;
-import kr.debop4j.data.mongodb.MongoGridDatastoreTestBase;
-import kr.debop4j.data.mongodb.model.Twit;
-import kr.debop4j.data.ogm.dao.impl.HibernateOgmDaoImpl;
+import kr.debop4j.search.AppConfig;
+import kr.debop4j.search.dao.HibernateSearchDaoImpl;
 import lombok.extern.slf4j.Slf4j;
+import org.fest.assertions.Assertions;
+import org.hibernate.SessionFactory;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.context.ApplicationContext;
 import org.springframework.core.io.ClassPathResource;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import twitter4j.Paging;
 import twitter4j.Status;
 import twitter4j.Twitter;
 
+import javax.inject.Inject;
 import java.util.List;
 
 import static org.fest.assertions.Assertions.assertThat;
 
 /**
- * kr.debop4j.data.mongodb.dao.TimelineTest
+ * kr.debop4j.search.twitter.TimelineTest
  *
  * @author sunghyouk.bae@gmail.com
- * @since 13. 4. 15. 오후 2:58
+ * @since 13. 4. 23. 오후 10:53
  */
 @Slf4j
-public class TimelineTest extends MongoGridDatastoreTestBase {
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(classes = { AppConfig.class })
+public class TimelineTest {
+
+    @Inject
+    ApplicationContext appContext;
+
+    @Inject
+    SessionFactory sessionFactory;
 
     @Test
     public void loadProps() throws Exception {
@@ -39,7 +68,7 @@ public class TimelineTest extends MongoGridDatastoreTestBase {
      */
     @Test
     public void insertAndLoadDelete() throws Exception {
-        HibernateOgmDaoImpl dao = Springs.getBean(HibernateOgmDaoImpl.class);
+        HibernateSearchDaoImpl dao = appContext.getBean(HibernateSearchDaoImpl.class);
 
         try {
             // 트위터 정보를 받아 저장하기
@@ -61,7 +90,7 @@ public class TimelineTest extends MongoGridDatastoreTestBase {
 
             List<Twit> twits = dao.findAll(Twit.class);
             assertThat(twits.size()).isGreaterThan(0);
-            assertThat(dao.count(Twit.class)).isEqualTo(twits.size());
+            Assertions.assertThat(dao.count(Twit.class)).isEqualTo(twits.size());
 
         } finally {
             dao.deleteAll(Twit.class);

@@ -62,6 +62,12 @@
             <artifactId>avro</artifactId>
         </dependency>
 
+        <!-- Jodd -->
+        <dependency>
+            <groupId>org.jodd</groupId>
+            <artifactId>jodd-props</artifactId>
+        </dependency>
+
         <!-- Spring framework -->
         <dependency>
             <groupId>org.springframework</groupId>
@@ -225,6 +231,28 @@
         <dependency>
             <groupId>org.hsqldb</groupId>
             <artifactId>hsqldb</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <!-- Twitter4J -->
+        <dependency>
+            <groupId>org.twitter4j</groupId>
+            <artifactId>twitter4j-core</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.twitter4j</groupId>
+            <artifactId>twitter4j-stream</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.twitter4j</groupId>
+            <artifactId>twitter4j-async</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.social</groupId>
+            <artifactId>spring-social-twitter</artifactId>
             <scope>test</scope>
         </dependency>
 

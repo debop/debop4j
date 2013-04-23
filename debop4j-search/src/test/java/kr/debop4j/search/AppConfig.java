@@ -2,10 +2,12 @@ package kr.debop4j.search;
 
 import kr.debop4j.data.hibernate.interceptor.StatefulEntityInterceptor;
 import kr.debop4j.data.hibernate.interceptor.UpdateTimestampedInterceptor;
-import kr.debop4j.data.hibernate.repository.impl.HibernateRepositoryFactory;
 import kr.debop4j.data.hibernate.tools.HibernateTool;
 import kr.debop4j.data.hibernate.unitofwork.UnitOfWorkFactory;
 import kr.debop4j.data.jdbc.JdbcTool;
+import kr.debop4j.search.dao.HibernateSearchDaoImpl;
+import kr.debop4j.search.hibernate.model.SearchItem;
+import kr.debop4j.search.twitter.Twit;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.cjk.CJKAnalyzer;
@@ -17,6 +19,7 @@ import org.hibernate.cfg.beanvalidation.BeanValidationEventListener;
 import org.hibernate.event.spi.EventType;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Scope;
 import org.springframework.orm.hibernate4.HibernateTransactionManager;
 import org.springframework.orm.hibernate4.LocalSessionFactoryBean;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
@@ -81,7 +84,8 @@ public class AppConfig {
     }
 
     private static String[] mappingPackages = new String[]{
-            "kr.debop4j.search.hibernate.model"
+            SearchItem.class.getPackage().getName(),
+            Twit.class.getPackage().getName()
     };
 
     @Bean
@@ -163,12 +167,13 @@ public class AppConfig {
     }
 
     @Bean
-    public HibernateRepositoryFactory hibernateRepositoryFactory() {
-        return new HibernateRepositoryFactory();
+    public Analyzer luceneAnalyzer() {
+        return new CJKAnalyzer(Version.LUCENE_36);
     }
 
     @Bean
-    public Analyzer luceneAnalyzer() {
-        return new CJKAnalyzer(Version.LUCENE_36);
+    @Scope("prototype")
+    public HibernateSearchDaoImpl hibernateSearchDao() {
+        return new HibernateSearchDaoImpl(sessionFactory());
     }
 }
