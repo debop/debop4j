@@ -25,13 +25,13 @@
             <systemPath>${basedir}/lib/org.snu.ids.ha.jar</systemPath>
         </dependency>
 
-        <!-- 한글 형태소 분석기 for Lucene -->
+        <!-- 한글 형태소 분석기 http://cafe.naver.com/korlucene  -->
         <dependency>
             <groupId>org.apache.lucene</groupId>
             <artifactId>org.apache.lucene.analysis.kr</artifactId>
             <version>1.0</version>
             <scope>system</scope>
-            <systemPath>${basedir}/lib/koreananalyzer-3x-120223.jar</systemPath>
+            <systemPath>${basedir}/lib/koreananalyzer.3x-20130409.jar</systemPath>
         </dependency>
 
         <!-- debop4j -->

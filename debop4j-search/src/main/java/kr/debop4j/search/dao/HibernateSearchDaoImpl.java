@@ -148,6 +148,7 @@ public class HibernateSearchDaoImpl {
         return new SimplePagedList(ftq.list(), pageNo, pageSize, count(clazz, luceneQuery));
     }
 
+
     public <T> long count(Class<T> clazz, Query luceneQuery) {
         FullTextQuery ftq = this.createFullTextQuery(luceneQuery, clazz);
         return (long) ftq.getResultSize();

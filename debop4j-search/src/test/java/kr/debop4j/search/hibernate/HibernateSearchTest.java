@@ -1,6 +1,5 @@
 package kr.debop4j.search.hibernate;
 
-import kr.debop4j.core.spring.Springs;
 import kr.debop4j.search.hibernate.model.SearchItem;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.lucene.analysis.cjk.CJKAnalyzer;
@@ -9,13 +8,7 @@ import org.apache.lucene.queryParser.ParseException;
 import org.apache.lucene.queryParser.QueryParser;
 import org.apache.lucene.search.Query;
 import org.apache.lucene.util.Version;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.search.FullTextSession;
-import org.hibernate.search.Search;
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 
 import java.util.List;
@@ -27,21 +20,7 @@ import java.util.List;
  * @since 13. 2. 28.
  */
 @Slf4j
-public class HibernateSearchTest {
-
-    @BeforeClass
-    public static void beforeClass() {
-        Springs.initByAnnotatedClasses(kr.debop4j.search.AppConfig.class);
-    }
-
-    private Session session;
-    private FullTextSession fullTextSession;
-
-    @Before
-    public void before() {
-        session = Springs.getBean(SessionFactory.class).openSession();
-        fullTextSession = Search.getFullTextSession(session);
-    }
+public class HibernateSearchTest extends SearchTestBase {
 
     private static final String str = "ASP.NET 웹 어플리케이션은 어플리케이션 Lifecycle, Page의 Lifecycle 에 상세한 event 를 정의하고 있어, event handler를 정의하면, 여러가지 선처리나 후처리를 수행할 수 있습니다.\n" +
             "Spring MVC 에서는 어떻게 하나 봤더니 Controller 에 Interceptor 를 등록하면 되더군요.\n" +
@@ -63,24 +42,23 @@ public class HibernateSearchTest {
             item.setEan("USD");
             item.setImageURL("http://debop.blogspot.com/id=" + i);
 
-            fullTextSession.save(item);
+            fts.save(item);
         }
-        fullTextSession.flush();
-        fullTextSession.clear();
+        fts.flush();
+        fts.flushToIndexes();
+        fts.clear();
 
         Thread.sleep(500);
 
         QueryParser parser = new MultiFieldQueryParser(Version.LUCENE_36,
                                                        new String[]{ "title", "description" },
                                                        new CJKAnalyzer(Version.LUCENE_36));
-        //new KoreanAnalyzer(Version.LUCENE_36));
+        // new KoreanAnalyzer(Version.LUCENE_36));
         //QueryParser parser = new QueryParser(Version.LUCENE_36, "title", new StandardAnalyzer(Version.LUCENE_36));
         try {
             Query luceneQuery = parser.parse("description:어플리케이션");
             List<SearchItem> founds =
-                    (List<SearchItem>) fullTextSession
-                            .createFullTextQuery(luceneQuery, SearchItem.class)
-                            .list();
+                    (List<SearchItem>) fts.createFullTextQuery(luceneQuery, SearchItem.class).list();
 
             Assert.assertNotNull(founds);
             Assert.assertTrue(founds.size() > 0);
@@ -90,6 +68,10 @@ public class HibernateSearchTest {
         } catch (ParseException e) {
             log.error("예외가 발생했습니다.", e);
             throw new RuntimeException(e);
+        }
+
+        for (Object element : fts.createQuery("from " + SearchItem.class.getName()).list()) {
+            fts.delete(element);
         }
     }
 }

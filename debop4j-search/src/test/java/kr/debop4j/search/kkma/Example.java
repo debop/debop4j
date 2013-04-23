@@ -1,5 +1,7 @@
 package kr.debop4j.search.kkma;
 
+import kr.debop4j.core.AutoStopwatch;
+import kr.debop4j.core.parallelism.Parallels;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Assert;
 import org.junit.Test;
@@ -122,11 +124,33 @@ public class Example {
 
         final String strToExtrtKwrd = "저는 대학생이구요. 소프트웨어 관련학과 입니다. DB는 수업을 한번 들은 적이 있으며, 수학은 대학에서 통계학, 선형대수학, 이산수학, 대학수학 등을 배웠지만... 자주 사용을 안하다보니 모두 까먹은 상태입니다.";
         for (int k = 0; k < 10; k++) {
+            AutoStopwatch stopwatch = new AutoStopwatch();
             KeywordList kl = ke.extractKeyword(strToExtrtKwrd, false);
             for (int i = 0; i < kl.size(); i++) {
-                Keyword kwrd = kl.get(i);
-                System.out.println(kwrd.getString() + "\t" + kwrd.getCnt());
+                Keyword kwd = kl.get(i);
+                log.debug("Keyword=[{}] => [{}]", kwd.getString(), kwd.getCnt());
             }
+            stopwatch.close();
         }
+    }
+
+    @Test
+    public void extractKeywordInParallel() throws Exception {
+        final KeywordExtractor ke = new KeywordExtractor();
+
+        final String strToExtrtKwrd = "저는 대학생이구요. 소프트웨어 관련학과 입니다. DB는 수업을 한번 들은 적이 있으며, 수학은 대학에서 통계학, 선형대수학, 이산수학, 대학수학 등을 배웠지만... 자주 사용을 안하다보니 모두 까먹은 상태입니다.";
+
+        Parallels.run(10, new Runnable() {
+            @Override
+            public void run() {
+                AutoStopwatch stopwatch = new AutoStopwatch();
+                KeywordList kl = ke.extractKeyword(str, false);
+                for (int i = 0; i < kl.size(); i++) {
+                    Keyword kwd = kl.get(i);
+                    log.debug("Keyword=[{}] => [{}]", kwd.getString(), kwd.getCnt());
+                }
+                stopwatch.close();
+            }
+        });
     }
 }

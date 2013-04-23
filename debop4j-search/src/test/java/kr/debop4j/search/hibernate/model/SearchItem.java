@@ -19,7 +19,7 @@ import javax.validation.constraints.NotNull;
 @Table(name = "SEARCH_ITEM")
 @Indexed
 @Analyzer(impl = org.apache.lucene.analysis.cjk.CJKAnalyzer.class)
-// @Analyzer(impl = org.apache.lucene.analysis.kr.KoreanAnalyzer.class)
+//@Analyzer(impl = org.apache.lucene.analysis.kr.KoreanAnalyzer.class)
 @Getter
 @Setter
 public class SearchItem extends AnnotatedEntityBase {
@@ -35,11 +35,11 @@ public class SearchItem extends AnnotatedEntityBase {
 
     @NotNull
     @Column(name = "SEARCH_ITEM_TITLE", length = 255)
-    @Field(store = Store.YES, termVector = TermVector.YES)
+    @Field(termVector = TermVector.YES)
     private String title;
 
     @Column(name = "SEARCH_ITEM_DESC", length = 2000)
-    @Field(store = Store.YES, termVector = TermVector.YES)
+    @Field(termVector = TermVector.YES)
     private String description;
 
     @Column(name = "SEARCH_ITEM_EAN")
