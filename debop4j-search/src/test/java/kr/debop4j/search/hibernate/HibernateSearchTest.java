@@ -35,6 +35,8 @@ public class HibernateSearchTest extends SearchTestBase {
     @SuppressWarnings("unchecked")
     public void firstSearch() throws Exception {
 
+        fts.purgeAll(SearchItem.class);
+
         for (int i = 0; i < 100; i++) {
             SearchItem item = new SearchItem();
             item.setTitle("Spring MVC 전후 처리기 작성하기" + i);
@@ -56,7 +58,7 @@ public class HibernateSearchTest extends SearchTestBase {
         // new KoreanAnalyzer(Version.LUCENE_36));
         //QueryParser parser = new QueryParser(Version.LUCENE_36, "title", new StandardAnalyzer(Version.LUCENE_36));
         try {
-            Query luceneQuery = parser.parse("description:어플리케이션");
+            Query luceneQuery = parser.parse("description:어플리케");
             List<SearchItem> founds =
                     (List<SearchItem>) fts.createFullTextQuery(luceneQuery, SearchItem.class).list();
 

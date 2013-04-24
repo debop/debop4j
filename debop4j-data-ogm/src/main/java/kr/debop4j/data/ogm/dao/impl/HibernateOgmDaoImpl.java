@@ -33,6 +33,7 @@ import org.hibernate.search.query.ObjectLookupMethod;
 import org.hibernate.search.query.dsl.QueryBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Component;
 
 import java.io.Serializable;
 import java.util.Collection;
@@ -45,6 +46,7 @@ import java.util.List;
  * @author sunghyouk.bae@gmail.com
  * @since 13. 4. 15. 오후 5:42
  */
+@Component
 @SuppressWarnings("unchecked")
 public class HibernateOgmDaoImpl implements HibernateOgmDao {
 

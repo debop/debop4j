@@ -28,6 +28,7 @@ import org.hibernate.ogm.dialect.mongodb.MongoDBDialect;
 import org.hibernate.ogm.grid.EntityKey;
 import org.hibernate.ogm.grid.EntityKeyMetadata;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 
@@ -37,6 +38,7 @@ import java.util.List;
  * @author sunghyouk.bae@gmail.com
  * @since 13. 3. 28
  */
+@Component
 @Slf4j
 @Getter
 @Setter

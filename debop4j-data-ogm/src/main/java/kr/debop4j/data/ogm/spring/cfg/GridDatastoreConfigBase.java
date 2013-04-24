@@ -181,6 +181,11 @@ public abstract class GridDatastoreConfigBase {
         props.put("hibernate.search.default.indexBase", "lucene/indexes");
         props.put("hibernate.search.default.locking_strategy", "single");
 
+        // hibernate-search index worker settings
+        props.put("hibernate.search.worker.execution", "async");
+        props.put("hibernate.search.worker.thread_pool.size", "2");
+        props.put("hibernate.search.worker.buffer_queue.max", "100");
+
         // hibernate-search performance settings
         props.put("hibernate.search.default.indexwriter.max_buffered_doc", "true");
         props.put("hibernate.search.default.indexwriter.max_merge_docs", "100");

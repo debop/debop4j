@@ -95,7 +95,6 @@ public class TimelineTest {
         } finally {
             dao.deleteAll(Twit.class);
             dao.getFullTextSession().flush();
-
             assertThat(dao.count(Twit.class)).isEqualTo(0);
         }
     }

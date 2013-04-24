@@ -31,6 +31,7 @@ import org.hibernate.criterion.*;
 import org.hibernate.transform.Transformers;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Repository;
 
 import java.io.Serializable;
 import java.util.Collection;
@@ -42,6 +43,7 @@ import java.util.List;
  * @author sunghyouk.bae@gmail.com
  * @since 13. 4. 15. 오전 10:21
  */
+@Repository
 @SuppressWarnings("unchecked")
 public class HibernateDao implements IHibernateDao {
 

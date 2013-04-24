@@ -65,7 +65,7 @@ public class AppConfig {
 
         // hibernate-search performance settings
         props.put("hibernate.search.worker.execution", "async");
-        props.put("hibernate.search.worker.thread_pool.size", "8");
+        props.put("hibernate.search.worker.thread_pool.size", "2");
         props.put("hibernate.search.worker.buffer_queue.max", "100");
         props.put("hibernate.search.default.indexwriter.max_buffered_doc", "true");
         props.put("hibernate.search.default.indexwriter.max_merge_docs", "100");

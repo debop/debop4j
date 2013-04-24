@@ -27,6 +27,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.search.FullTextQuery;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 
@@ -36,6 +37,7 @@ import java.util.List;
  * @author sunghyouk.bae@gmail.com
  * @since 13. 4. 16. 오전 11:14
  */
+@Component
 @SuppressWarnings("unchecked")
 public class MongoOgmDaoImpl extends HibernateOgmDaoImpl {
 
