@@ -17,8 +17,8 @@
 package kr.debop4j.search.hibernate.sharding;
 
 import kr.debop4j.search.AppConfig;
-import kr.debop4j.search.hibernate.model.Item;
-import kr.debop4j.search.sharding.DistributorShardingStrategy;
+import kr.debop4j.search.hibernate.model.Dvd;
+import org.hibernate.search.store.impl.FSDirectoryProvider;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
@@ -39,17 +39,9 @@ public class ShardingConfig extends AppConfig {
         Properties props = super.hibernateProperties();
 
         // sharding 관련 설정 추가
-        String itemName = "hibernate.search." + Item.class.getName();
-
-        props.put(itemName + ".sharding_strategy_nbr_of_shards", "3");
-        props.put(itemName + ".0.indexName", "Item-Universal");
-        props.put(itemName + ".1.indexName", "Item-Sony");
-        props.put(itemName + ".2.indexName", "Item-Warner");
-
-        props.put(itemName + ".sharding_strategy", DistributorShardingStrategy.class.getName());
-        props.put(itemName + ".sharding_strategy.distributor.1", "0");
-        props.put(itemName + ".sharding_strategy.distributor.2", "1");
-        props.put(itemName + ".sharding_strategy.distributor.3", "2");
+        String dvd = "hibernate.search." + Dvd.class.getName();
+        props.put(dvd + ".sharding_strategy.nbr_of_shards", "2");
+        props.put(dvd + ".directory_provider", FSDirectoryProvider.class.getName());
 
         return props;
     }

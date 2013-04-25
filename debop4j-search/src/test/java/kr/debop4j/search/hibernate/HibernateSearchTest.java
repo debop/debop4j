@@ -2,16 +2,18 @@ package kr.debop4j.search.hibernate;
 
 import kr.debop4j.search.hibernate.model.SearchItem;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.lucene.analysis.cjk.CJKAnalyzer;
+import org.apache.lucene.analysis.kr.KoreanAnalyzer;
+import org.apache.lucene.index.Term;
 import org.apache.lucene.queryParser.MultiFieldQueryParser;
-import org.apache.lucene.queryParser.ParseException;
 import org.apache.lucene.queryParser.QueryParser;
 import org.apache.lucene.search.Query;
+import org.apache.lucene.search.WildcardQuery;
 import org.apache.lucene.util.Version;
-import org.junit.Assert;
 import org.junit.Test;
 
 import java.util.List;
+
+import static org.fest.assertions.Assertions.assertThat;
 
 /**
  * kr.debop4j.search.hibernate.HibernateSearchTest
@@ -54,22 +56,25 @@ public class HibernateSearchTest extends SearchTestBase {
 
         QueryParser parser = new MultiFieldQueryParser(Version.LUCENE_36,
                                                        new String[]{ "title", "description" },
-                                                       new CJKAnalyzer(Version.LUCENE_36));
-        // new KoreanAnalyzer(Version.LUCENE_36));
+                                                       //                                               new CJKAnalyzer(Version.LUCENE_36));
+                                                       new KoreanAnalyzer(Version.LUCENE_36));
         //QueryParser parser = new QueryParser(Version.LUCENE_36, "title", new StandardAnalyzer(Version.LUCENE_36));
         try {
-            Query luceneQuery = parser.parse("description:어플리케");
+            // Query luceneQuery = parser.parse("description:어플");
+
+            Query luceneQuery = new WildcardQuery(new Term("description", "어플*"));
+
             List<SearchItem> founds =
                     (List<SearchItem>) fts.createFullTextQuery(luceneQuery, SearchItem.class).list();
 
-            Assert.assertNotNull(founds);
-            Assert.assertTrue(founds.size() > 0);
+            assertThat(founds).isNotNull();
+            assertThat(founds.size()).isGreaterThan(0);
+
             for (SearchItem loaded : founds)
                 System.out.printf("Id=%d; Title: %s\n", loaded.getId(), loaded.getTitle());
 
-        } catch (ParseException e) {
+        } catch (Exception e) {
             log.error("예외가 발생했습니다.", e);
-            throw new RuntimeException(e);
         }
 
         for (Object element : fts.createQuery("from " + SearchItem.class.getName()).list()) {

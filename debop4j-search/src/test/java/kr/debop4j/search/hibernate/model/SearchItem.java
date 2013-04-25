@@ -18,8 +18,8 @@ import javax.validation.constraints.NotNull;
 @Entity
 @Table(name = "SEARCH_ITEM")
 @Indexed
-@Analyzer(impl = org.apache.lucene.analysis.cjk.CJKAnalyzer.class)
-// @Analyzer(impl = KoreanAnalyzer.class)
+// @Analyzer(impl = org.apache.lucene.analysis.cjk.CJKAnalyzer.class)
+@Analyzer(impl = org.apache.lucene.analysis.kr.KoreanAnalyzer.class)
 @Getter
 @Setter
 public class SearchItem extends AnnotatedEntityBase {

@@ -32,7 +32,7 @@
 
         <!-- 검색 : hibernate-search 를 이용 : listener 도 추가해야 한다.-->
         <property name="hibernate.search.default.directory_provider">filesystem</property>
-        <property name="hibernate.search.default.indexBase">target/lucene/indexes</property>
+        <property name="hibernate.search.default.indexBase">target/.lucene/indexes</property>
 
 
         <!-- one-to-many bidirectional association -->
@@ -55,14 +55,15 @@
         <!-- Annotated Enitity -->
         <mapping class="kr.debop4j.data.mapping.model.hbm.StatefulEntityImpl"/>
 
-        <event type="post-update">
-            <listener class="org.hibernate.search.event.impl.FullTextIndexEventListener"/>
-        </event>
-        <event type="post-insert">
-            <listener class="org.hibernate.search.event.impl.FullTextIndexEventListener"/>
-        </event>
-        <event type="post-delete">
-            <listener class="org.hibernate.search.event.impl.FullTextIndexEventListener"/>
-        </event>
+        <!-- 자동으로 등록되어 할 필요 없다 -->
+        <!--<event type="post-update">-->
+        <!--<listener class="org.hibernate.search.event.impl.FullTextIndexEventListener"/>-->
+        <!--</event>-->
+        <!--<event type="post-insert">-->
+        <!--<listener class="org.hibernate.search.event.impl.FullTextIndexEventListener"/>-->
+        <!--</event>-->
+        <!--<event type="post-delete">-->
+        <!--<listener class="org.hibernate.search.event.impl.FullTextIndexEventListener"/>-->
+        <!--</event>-->
     </session-factory>
 </hibernate-configuration>

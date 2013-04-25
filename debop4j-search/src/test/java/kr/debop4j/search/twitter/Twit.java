@@ -19,7 +19,7 @@ package kr.debop4j.search.twitter;
 import kr.debop4j.data.model.AnnotatedEntityBase;
 import lombok.Getter;
 import lombok.Setter;
-import org.apache.lucene.analysis.cjk.CJKAnalyzer;
+import org.apache.lucene.analysis.kr.KoreanAnalyzer;
 import org.hibernate.search.annotations.*;
 
 import javax.persistence.*;
@@ -35,7 +35,8 @@ import java.util.Date;
 @Indexed
 @Getter
 @Setter
-@Analyzer(impl = CJKAnalyzer.class)
+//@Analyzer(impl = CJKAnalyzer.class)
+@Analyzer(impl = KoreanAnalyzer.class)
 public class Twit extends AnnotatedEntityBase {
 
     private static final long serialVersionUID = -1831686112282898189L;

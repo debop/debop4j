@@ -15,16 +15,6 @@
     <url>http://maven.apache.org</url>
 
     <dependencies>
-
-        <!-- 로컬 파일 링크 -->
-        <dependency>
-            <groupId>org.snu.ids</groupId>
-            <artifactId>org.snu.ids.ha</artifactId>
-            <version>1.0</version>
-            <scope>system</scope>
-            <systemPath>${basedir}/lib/org.snu.ids.ha.jar</systemPath>
-        </dependency>
-
         <!-- debop4j -->
         <dependency>
             <groupId>debop4j</groupId>

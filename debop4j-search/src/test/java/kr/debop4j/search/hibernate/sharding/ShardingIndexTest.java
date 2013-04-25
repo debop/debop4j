@@ -16,8 +16,15 @@
 
 package kr.debop4j.search.hibernate.sharding;
 
+import kr.debop4j.search.hibernate.model.Dvd;
 import lombok.extern.slf4j.Slf4j;
 import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
+import org.hibernate.search.FullTextSession;
+import org.hibernate.search.Search;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.context.ApplicationContext;
 import org.springframework.test.context.ContextConfiguration;
@@ -41,4 +48,45 @@ public class ShardingIndexTest {
 
     @Inject
     SessionFactory sessionFactory;
+    protected FullTextSession fts;
+
+    @Before
+    public void before() {
+        fts = Search.getFullTextSession(sessionFactory.openSession());
+    }
+
+    @After
+    public void after() {
+        if (fts != null) {
+            fts.flush();
+            fts.flushToIndexes();
+
+            fts.close();
+            fts = null;
+        }
+    }
+
+    @Test
+    public void shardingTest() {
+        Transaction tx = fts.beginTransaction();
+
+        Dvd dvd = new Dvd();
+        dvd.setId(1);
+        dvd.setTitle("헬보이");
+        dvd.setDescription("헬보이와 아쿠아맨");
+        fts.persist(dvd);
+
+        dvd = new Dvd();
+        dvd.setId(2);
+        dvd.setTitle("프레데터");
+        dvd.setDescription("프레데터 2");
+        fts.persist(dvd);
+
+        tx.commit();
+        fts.clear();
+
+        for (Object element : fts.createQuery("from " + Dvd.class.getName()).list()) {
+            fts.delete(element);
+        }
+    }
 }

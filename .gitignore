@@ -2,7 +2,7 @@
 *.iml
 .idea
 logs
-lucene
+.lucene
 
 # Package Files #
 # *.jar

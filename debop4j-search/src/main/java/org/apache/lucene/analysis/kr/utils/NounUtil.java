@@ -22,6 +22,7 @@ import org.apache.lucene.analysis.kr.morph.PatternConstants;
 import org.apache.lucene.analysis.kr.morph.WordEntry;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class NounUtil {
@@ -30,19 +31,12 @@ public class NounUtil {
 
     static {
         String[] strs = new String[]{ "등", "들", "상", "간", "뿐", "별" };
-        for (String str : strs) {
-            DNouns.add(str);
-        }
+        Collections.addAll(DNouns, strs);
     }
-
-    ;
 
     /**
      * 어간부가 음/기 로 끝나는 경우
      *
-     * @param o
-     * @param candidates
-     * @return
      * @throws org.apache.lucene.analysis.kr.morph.MorphException
      *
      */
@@ -97,9 +91,6 @@ public class NounUtil {
     /**
      * 용언 + '음/기' + 조사(PTN_VMXMJ)
      *
-     * @param o
-     * @param candidates
-     * @return
      * @throws org.apache.lucene.analysis.kr.morph.MorphException
      *
      */
@@ -316,9 +307,9 @@ public class NounUtil {
      * @param str 복합명사
      * @param pos
      * @param o   분석결과
+     * @return 단위명사 리스트
      * @throws org.apache.lucene.analysis.kr.morph.MorphException
      *
-     * @return 단위명사 리스트
      */
     private static List findNouns(String str, int pos, AnalysisOutput o) throws MorphException {
 

@@ -59,9 +59,10 @@ public class AppConfig {
         props.put(Environment.STATEMENT_BATCH_SIZE, "50");
 
         // hibernate-search 환경설정
+        props.put("hibernate.search.lucene_version", "LUCENE_36");
         props.put("hibernate.search.default.indexmanager", "near-real-time");
         props.put("hibernate.search.default.directory_provider", "filesystem");
-        props.put("hibernate.search.default.indexBase", "./.lucene/indexes");
+        props.put("hibernate.search.default.indexBase", ".lucene/indexes");
 
         // hibernate-search performance settings
         props.put("hibernate.search.worker.execution", "async");
