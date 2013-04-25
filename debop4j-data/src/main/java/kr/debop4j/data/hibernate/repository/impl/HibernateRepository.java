@@ -61,6 +61,8 @@ public class HibernateRepository<E extends IStatefulEntity> implements IHibernat
     private String entityName;
     private boolean cacheable;
 
+    protected HibernateRepository() {}
+
     public HibernateRepository(Class<E> entityClass) {
         this(entityClass, false);
     }
