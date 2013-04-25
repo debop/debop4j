@@ -40,7 +40,7 @@ import java.util.Collection;
 import java.util.Set;
 
 /**
- * kr.debop4j.search.hibernate.SearchTool
+ * Hibernate Search 관련 Utility class s
  *
  * @author sunghyouk.bae@gmail.com
  * @since 13. 2. 28.
@@ -55,7 +55,7 @@ public class SearchTool {
      */
     public static void registerFullTextIndexEventListener(SessionFactory sessionFactory, FullTextIndexEventListener listener) {
         assert sessionFactory != null;
-        log.info("sessionFactory에 FullTestIndexEventListener를 등록합니다...");
+        log.info("sessionFactory에 FullTestIndexEventListener를 등록합니다... listener=[{}]", listener);
 
         try {
             HibernateTool.registerEventListener(sessionFactory, listener,
@@ -64,8 +64,7 @@ public class SearchTool {
                                                 EventType.POST_DELETE,
                                                 EventType.FLUSH);
         } catch (Throwable t) {
-            log.warn("listener를 등록하는데 실패했습니다.", t);
-            throw new RuntimeException(t);
+            log.warn("listener를 등록하는데 실패했습니다. 단 이미 등록된 경우에는 무시해도 됩니다.", t);
         }
     }
 
@@ -143,6 +142,7 @@ public class SearchTool {
     public void indexAllAsParallel(final SessionFactory sessionFactory, final Set<Class> classes, final boolean clear) {
         if (log.isDebugEnabled())
             log.debug("병렬 방식으로 모든 엔티티에 대해 전체 인덱싱을 수행합니다. classes=[{}], clear=[{}]", StringTool.listToString(classes), clear);
+
         Parallels.runEach(classes, new Action1<Class>() {
             @Override
             public void perform(Class clazz) {

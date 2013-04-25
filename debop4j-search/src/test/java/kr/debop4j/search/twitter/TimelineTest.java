@@ -17,7 +17,6 @@
 package kr.debop4j.search.twitter;
 
 import jodd.props.Props;
-import kr.debop4j.search.AppConfig;
 import kr.debop4j.search.dao.HibernateSearchDaoImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.fest.assertions.Assertions;
@@ -45,7 +44,7 @@ import static org.fest.assertions.Assertions.assertThat;
  */
 @Slf4j
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = { AppConfig.class })
+@ContextConfiguration(classes = { TwitterConfig.class })
 public class TimelineTest {
 
     @Inject

@@ -36,6 +36,7 @@ import org.hibernate.search.query.ObjectLookupMethod;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.concurrent.Callable;
 import java.util.concurrent.Future;
 
 /**
@@ -207,6 +208,8 @@ public class HibernateSearchDaoImpl extends HibernateDao {
         if (log.isDebugEnabled())
             log.debug("수형[{}]의 모든 엔티티에 대해 인덱싱을 수행합니다...", clazz);
 
+        clearIndex(clazz);
+
         if (batchSize < BATCH_SIZE)
             batchSize = BATCH_SIZE;
 
@@ -243,10 +246,12 @@ public class HibernateSearchDaoImpl extends HibernateDao {
     public Future<Void> indexAllAsync(final Class<?> clazz, final int batchSize) {
         if (log.isDebugEnabled())
             log.debug("비동기 방식으로 엔티티에 대해 인덱싱을 수행합니다... clazz=[{}], batchSize=[{}]", clazz, batchSize);
-        return AsyncTool.newTask(new Runnable() {
+
+        return AsyncTool.startNew(new Callable<Void>() {
             @Override
-            public void run() {
+            public Void call() {
                 indexAll(clazz, batchSize);
+                return null;
             }
         });
     }
@@ -259,5 +264,20 @@ public class HibernateSearchDaoImpl extends HibernateDao {
         fts.purgeAll(clazz);                        // remove obsolete index
         fts.flushToIndexes();                       // apply purge before optimize
         fts.getSearchFactory().optimize(clazz);     // physically clear space
+    }
+
+    /**
+     * 해당 수형의 인덱스를 최적화합니다.
+     */
+    public void optimize(Class<?> clazz) {
+        if (log.isTraceEnabled())
+            log.trace("지정된 수형의 인덱스를 최적화합니다. clazz=[{}]", clazz);
+        getFullTextSession().getSearchFactory().optimize(clazz);
+    }
+
+    public void optimizeAll() {
+        if (log.isTraceEnabled())
+            log.trace("모든 수형의 인덱스를 최적화합니다.");
+        getFullTextSession().getSearchFactory().optimize();
     }
 }
