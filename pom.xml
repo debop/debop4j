@@ -43,14 +43,13 @@
     <modules>
         <module>debop4j-core</module>
         <module>debop4j-data</module>
-        <module>debop4j-data-ogm</module>
+        <module>debop4j-search</module>
 
+        <module>debop4j-data-ogm</module>
         <module>debop4j-data-ehcache</module>
         <module>debop4j-data-mongodb</module>
         <module>debop4j-data-redis</module>
         <!--<module>debop4j-data-couchbase</module>-->
-
-        <module>debop4j-search</module>
 
         <module>debop4j-access</module>
         <module>debop4j-graph</module>
@@ -272,6 +271,11 @@
             </dependency>
             <dependency>
                 <groupId>debop4j</groupId>
+                <artifactId>debop4j-search</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>debop4j</groupId>
                 <artifactId>debop4j-data-ogm</artifactId>
                 <version>${project.version}</version>
             </dependency>
@@ -285,11 +289,6 @@
             <dependency>
                 <groupId>debop4j</groupId>
                 <artifactId>debop4j-data-mongodb</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>debop4j</groupId>
-                <artifactId>debop4j-search</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>

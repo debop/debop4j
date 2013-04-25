@@ -23,12 +23,14 @@
         <dependency>
             <groupId>debop4j</groupId>
             <artifactId>debop4j-core</artifactId>
-            <version>${project.version}</version>
         </dependency>
         <dependency>
             <groupId>debop4j</groupId>
             <artifactId>debop4j-data</artifactId>
-            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>debop4j</groupId>
+            <artifactId>debop4j-search</artifactId>
         </dependency>
 
         <!-- Spring framework -->
