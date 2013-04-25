@@ -31,7 +31,7 @@ import java.util.List;
 import static org.objectweb.asm.Opcodes.*;
 
 /**
- * 객체의 속성에 접근하기 위한 Accessor 입니다. (속성에 대해 create, set을 수행할 수 있습니다)
+ * 객체의 속성에 접근하기 위한 Accessor 입니다. (속성에 대해 get, set을 수행할 수 있습니다)
  *
  * @author sunghyouk.bae@gmail.com
  * @since 13. 1. 21
@@ -126,7 +126,7 @@ abstract public class FieldAccess {
         if (accessClassName.startsWith("java.")) accessClassName = ReflectConsts.BASE_PACKAGE + "." + accessClassName;
         Class accessClass = null;
 
-        AccessClassLoader loader = AccessClassLoader.create(type);
+        AccessClassLoader loader = AccessClassLoader.get(type);
         synchronized (loader) {
             try {
                 accessClass = loader.loadClass(accessClassName);
@@ -259,7 +259,7 @@ abstract public class FieldAccess {
 
     static private void insertGetObject(ClassWriter cw, String classNameInternal, List<Field> fields) {
         int maxStack = 6;
-        MethodVisitor mv = cw.visitMethod(ACC_PUBLIC, "create", "(Ljava/lang/Object;I)Ljava/lang/Object;", null, null);
+        MethodVisitor mv = cw.visitMethod(ACC_PUBLIC, "get", "(Ljava/lang/Object;I)Ljava/lang/Object;", null, null);
         mv.visitCode();
         mv.visitVarInsn(ILOAD, 2);
 
@@ -497,7 +497,7 @@ abstract public class FieldAccess {
                 returnValueInstruction = DRETURN;
                 break;
             default:
-                getterMethodName = "create";
+                getterMethodName = "get";
                 returnValueInstruction = ARETURN;
                 break;
         }

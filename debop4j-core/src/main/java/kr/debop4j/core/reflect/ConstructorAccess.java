@@ -66,7 +66,7 @@ public abstract class ConstructorAccess<T> {
             accessClassName = ReflectConsts.BASE_PACKAGE + "." + accessClassName;
 
         Class accessClass = null;
-        AccessClassLoader loader = AccessClassLoader.create(type);
+        AccessClassLoader loader = AccessClassLoader.get(type);
 
         synchronized (loader) {
             try {

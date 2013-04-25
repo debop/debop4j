@@ -37,7 +37,7 @@ class AccessClassLoader extends ClassLoader {
     /**
      * AccessClassLoger를 생성합니다.
      */
-    static AccessClassLoader create(Class type) {
+    static AccessClassLoader get(Class type) {
         if (log.isDebugEnabled())
             log.debug("AccessClassLoader를 생성합니다. type=[{}]", type);
         ClassLoader parent = type.getClassLoader();
@@ -76,11 +76,9 @@ class AccessClassLoader extends ClassLoader {
                     .getDeclaredMethod("defineClass",
                                        new Class[]{ String.class, byte[].class, int.class, int.class });
             method.setAccessible(true);
-            return (Class) method.invoke(getParent(), name, bytes, 0, bytes.length);
-        } catch (Exception ignored) {
-            if (log.isDebugEnabled())
-                log.debug("defineClass 메소드를 추출하고, 호출하는데 실패했습니다. 단 무시합니다.", ignored);
-        }
+            // NOTE: 꼭 Integer.valueOf() 를 써야 합니다.
+            return (Class) method.invoke(getParent(), name, bytes, Integer.valueOf(0), Integer.valueOf(bytes.length));
+        } catch (Exception ignored) { }
         return defineClass(name, bytes, 0, bytes.length);
     }
 }

@@ -118,7 +118,7 @@ public class DynamicAccessor<T> {
     public Object getProperty(Object instance, String fieldName) {
         String methodName = (methodNames.contains(fieldName))
                 ? fieldName
-                : "create" + getPropertyName(fieldName);
+                : "get" + getPropertyName(fieldName);
 
         return invoke(instance, methodName);
     }
