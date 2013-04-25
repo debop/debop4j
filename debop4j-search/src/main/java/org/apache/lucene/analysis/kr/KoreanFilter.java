@@ -24,6 +24,7 @@ import org.apache.lucene.analysis.kr.utils.HanjaUtils;
 import org.apache.lucene.analysis.standard.ClassicTokenizer;
 import org.apache.lucene.analysis.tokenattributes.CharTermAttribute;
 import org.apache.lucene.analysis.tokenattributes.OffsetAttribute;
+import org.apache.lucene.analysis.tokenattributes.PositionIncrementAttribute;
 import org.apache.lucene.analysis.tokenattributes.TypeAttribute;
 
 import java.io.IOException;
@@ -31,7 +32,7 @@ import java.util.*;
 
 public class KoreanFilter extends TokenFilter {
 
-    private LinkedList<String> morphQueue;
+    private LinkedList<IndexWord> morphQueue;
 
     private MorphAnalyzer morph;
 
@@ -40,6 +41,8 @@ public class KoreanFilter extends TokenFilter {
     private boolean bigrammable = true;
 
     private boolean hasOrigin = true;
+
+    private boolean originCNoun = true;
 
     private boolean exactMatch = false;
 
@@ -53,18 +56,23 @@ public class KoreanFilter extends TokenFilter {
 
     private int tokStart;
 
+    private int hanStart = 0; // 한글의 시작 위치, 복합명사일경우
+
+    private int chStart = 0;
+
     private CompoundNounAnalyzer cnAnalyzer = new CompoundNounAnalyzer();
 
     private final CharTermAttribute termAtt = addAttribute(CharTermAttribute.class);
-    private final OffsetAttribute offsetAtt = addAttribute(OffsetAttribute.class);
+    private final PositionIncrementAttribute posIncrAtt = addAttribute(PositionIncrementAttribute.class);
     private final TypeAttribute typeAtt = addAttribute(TypeAttribute.class);
+    private final OffsetAttribute offsetAtt = addAttribute(OffsetAttribute.class);
 
     private static final String APOSTROPHE_TYPE = ClassicTokenizer.TOKEN_TYPES[ClassicTokenizer.APOSTROPHE];
     private static final String ACRONYM_TYPE = ClassicTokenizer.TOKEN_TYPES[ClassicTokenizer.ACRONYM];
 
     public KoreanFilter(TokenStream input) {
         super(input);
-        morphQueue = new LinkedList();
+        morphQueue = new LinkedList<IndexWord>();
         morph = new MorphAnalyzer();
         wsAnal = new WordSpaceAnalyzer();
         cnAnalyzer.setExactMach(false);
@@ -89,15 +97,20 @@ public class KoreanFilter extends TokenFilter {
         this.exactMatch = match;
     }
 
+    public KoreanFilter(TokenStream input, boolean bigram, boolean has, boolean match, boolean cnoun) {
+        this(input, bigram, has, match);
+        this.originCNoun = cnoun;
+    }
+
+    @Override
     public final boolean incrementToken() throws IOException {
+
         if (curTermBuffer != null && morphQueue.size() > 0) {
-            setTermBufferByQueue();
+            setTermBufferByQueue(false);
             return true;
         }
 
-        if (!input.incrementToken()) {
-            return false;
-        }
+        if (!input.incrementToken()) return false;
 
         curTermBuffer = termAtt.buffer().clone();
         curTermLength = termAtt.length();
@@ -116,25 +129,34 @@ public class KoreanFilter extends TokenFilter {
             throw new IOException("Korean Filter MorphException\n" + e.getMessage());
         }
 
-        if (morphQueue == null || morphQueue.size() == 0) {
-            return true;
+        if (morphQueue != null && morphQueue.size() > 0) {
+            setTermBufferByQueue(true);
+        } else {
+            return incrementToken();
         }
-
-        setTermBufferByQueue();
 
         return true;
 
     }
 
     /**
-     * queue 에 저장된 값으로 buffer의 값을 복사한다.
+     * queue에 저장된 값으로 buffer의 값을 복사한다.
      */
-    private void setTermBufferByQueue() {
+    private void setTermBufferByQueue(boolean isFirst) {
+
         clearAttributes();
-        String term = morphQueue.removeFirst();
-        int pos = new String(curTermBuffer).indexOf(term);
-        termAtt.copyBuffer(term.toCharArray(), 0, term.length());
-        offsetAtt.setOffset(tokStart + pos, tokStart + pos + term.length());
+
+        IndexWord iw = morphQueue.removeFirst();
+        int pos = iw.getOffset();
+
+        termAtt.copyBuffer(iw.getWord().toCharArray(), 0, iw.getWord().length());
+        offsetAtt.setOffset(tokStart + pos, tokStart + pos + iw.getWord().length());
+
+        if (!isFirst && iw.getOffset() == 0) {
+            posIncrAtt.setPositionIncrement(0);
+//	        posLenAtt.setPositionLength(iw.getWord().length());
+        }
+
     }
 
     /**
@@ -147,13 +169,14 @@ public class KoreanFilter extends TokenFilter {
      *
      */
     private void analysisKorean(String input) throws MorphException {
+
         List<AnalysisOutput> outputs = morph.analyze(input);
         if (outputs.size() == 0) return;
 
-        Map<String, Integer> map = new LinkedHashMap();
-        if (hasOrigin) map.put(input, new Integer(1));
+        Map<String, IndexWord> map = new LinkedHashMap();
+        if (hasOrigin) map.put(input, new IndexWord(input, 0));
 
-        if (outputs.get(0).getScore() == AnalysisOutput.SCORE_CORRECT) {
+        if (outputs.get(0).getScore() >= AnalysisOutput.SCORE_COMPOUNDS) {
             extractKeyword(outputs, map);
         } else {
             try {
@@ -162,7 +185,7 @@ public class KoreanFilter extends TokenFilter {
                 List<AnalysisOutput> results = new ArrayList();
                 if (list.size() > 1) {
                     for (AnalysisOutput o : list) {
-                        if (hasOrigin) map.put(o.getSource(), new Integer(1));
+                        if (hasOrigin) map.put(o.getSource(), new IndexWord(o.getSource(), 0));
                         results.addAll(morph.analyze(o.getSource()));
                     }
                 } else {
@@ -170,41 +193,56 @@ public class KoreanFilter extends TokenFilter {
                 }
 
                 extractKeyword(results, map);
+
             } catch (Exception e) {
                 extractKeyword(outputs, map);
             }
+
         }
 
         Iterator<String> iter = map.keySet().iterator();
 
-        int i = 0;
         while (iter.hasNext()) {
             String text = iter.next();
             if (text.length() <= 1) continue;
-            morphQueue.add(text);
+            morphQueue.add(map.get(text));
         }
 
     }
 
-    private void extractKeyword(List<AnalysisOutput> outputs, Map<String, Integer> map) throws MorphException {
+    private void extractKeyword(List<AnalysisOutput> outputs, Map<String, IndexWord> map) throws MorphException {
+
         for (AnalysisOutput output : outputs) {
 
             if (output.getPos() != PatternConstants.POS_VERB) {
-                map.put(output.getStem(), new Integer(1));
+                if (originCNoun || (!originCNoun && output.getCNounList().size() == 0)) {
+                    map.put(output.getStem(), new IndexWord(output.getStem(), 0));
+                }
 //			}else {
 //				map.put(output.getStem()+"다", new Integer(1));	
             }
+
             if (exactMatch) continue;
 
             if (output.getScore() >= AnalysisOutput.SCORE_COMPOUNDS) {
+
                 List<CompoundEntry> cnouns = output.getCNounList();
+                int start = 0;
+
                 for (int jj = 0; jj < cnouns.size(); jj++) {
+
                     CompoundEntry cnoun = cnouns.get(jj);
-                    if (cnoun.getWord().length() > 1) map.put(cnoun.getWord(), new Integer(0));
-                    if (jj == 0 && cnoun.getWord().length() == 1)
-                        map.put(cnoun.getWord() + cnouns.get(jj + 1).getWord(), new Integer(0));
-                    else if (jj > 1 && cnoun.getWord().length() == 1)
-                        map.put(cnouns.get(jj).getWord() + cnoun.getWord(), new Integer(0));
+
+                    if (cnoun.getWord().length() > 1) map.put(cnoun.getWord(), new IndexWord(cnoun.getWord(), start));
+
+                    if (jj == 0 && cnoun.getWord().length() == 1) {
+                        map.put(cnoun.getWord() + cnouns.get(jj + 1).getWord(), new IndexWord(cnoun.getWord(), start));
+                    } else if (jj > 1 && cnoun.getWord().length() == 1) {
+                        String iw = cnouns.get(jj - 1).getWord() + cnoun.getWord();
+                        map.put(iw, new IndexWord(iw, start - cnouns.get(jj - 1).getWord().length()));
+                    }
+
+                    start += cnoun.getWord().length();
                 }
 
             } else if (bigrammable) {
@@ -215,20 +253,24 @@ public class KoreanFilter extends TokenFilter {
 
     }
 
-    private void addBiagramToMap(String input, Map map) {
+    private void addBiagramToMap(String input, Map<String, IndexWord> map) {
+
         int offset = 0;
         int strlen = input.length();
+
         while (offset < strlen - 1) {
+
             if (isAlphaNumChar(input.charAt(offset))) {
                 String text = findAlphaNumeric(input.substring(offset));
-                map.put(text, new Integer(0));
+                map.put(text, new IndexWord(text, offset));
                 offset += text.length();
             } else {
                 String text = input.substring(offset,
                                               offset + 2 > strlen ? strlen : offset + 2);
-                map.put(text, new Integer(0));
+                map.put(text, new IndexWord(text, offset));
                 offset++;
             }
+
         }
     }
 
@@ -250,7 +292,8 @@ public class KoreanFilter extends TokenFilter {
      *
      */
     private void analysisChinese(String term) throws MorphException {
-        morphQueue.add(term);
+
+        morphQueue.add(new IndexWord(term, 0));
         if (term.length() < 2) return; // 1글자 한자는 색인어로 한글을 추출하지 않는다.
 
         List<StringBuffer> candiList = new ArrayList();
@@ -281,7 +324,7 @@ public class KoreanFilter extends TokenFilter {
         if (candiList.size() < maxCandidate) maxCandidate = candiList.size();
 
         for (int i = 0; i < maxCandidate; i++) {
-            morphQueue.add(candiList.get(i).toString());
+            morphQueue.add(new IndexWord(candiList.get(i).toString(), 0));
         }
 
         Map<String, String> cnounMap = new HashMap();
@@ -291,24 +334,28 @@ public class KoreanFilter extends TokenFilter {
             List<CompoundEntry> results = confirmCNoun(candiList.get(i).toString());
 
             int pos = 0;
+            int offset = 0;
             for (CompoundEntry entry : results) {
                 pos += entry.getWord().length();
                 if (cnounMap.get(entry.getWord()) != null) continue;
 
                 // 한글과 매치되는 한자를 짤라서 큐에 저장한다.
-                morphQueue.add(term.substring(pos - entry.getWord().length(), pos));
+                morphQueue.add(new IndexWord(term.substring(offset, pos), offset));
 
                 cnounMap.put(entry.getWord(), entry.getWord());
 
                 if (entry.getWord().length() < 2) continue; //  한글은 2글자 이상만 저장한다.
 
                 // 분리된 한글을 큐에 저장한다.
-                morphQueue.add(entry.getWord());
+                morphQueue.add(new IndexWord(entry.getWord(), offset));
+
+                offset = pos;
             }
         }
     }
 
     private List confirmCNoun(String input) throws MorphException {
+
         WordEntry cnoun = DictionaryUtil.getCNoun(input);
         if (cnoun != null && cnoun.getFeature(WordEntry.IDX_NOUN) == '2') {
             return cnoun.getCompounds();
@@ -319,6 +366,7 @@ public class KoreanFilter extends TokenFilter {
     }
 
     private void analysisETC(String term) throws MorphException {
+
         final char[] buffer = termAtt.buffer();
         final int bufferLength = termAtt.length();
         final String type = typeAtt.type();
@@ -328,7 +376,7 @@ public class KoreanFilter extends TokenFilter {
                 buffer[bufferLength - 2] == '\'' &&
                 (buffer[bufferLength - 1] == 's' || buffer[bufferLength - 1] == 'S')) {
             // Strip last 2 characters off
-            morphQueue.add(term.substring(0, bufferLength - 2));
+            morphQueue.add(new IndexWord(term.substring(0, bufferLength - 2), 0));
         } else if (type == ACRONYM_TYPE) {      // remove dots
             int upto = 0;
             for (int i = 0; i < bufferLength; i++) {
@@ -336,9 +384,9 @@ public class KoreanFilter extends TokenFilter {
                 if (c != '.')
                     buffer[upto++] = c;
             }
-            morphQueue.add(term.substring(0, upto));
+            morphQueue.add(new IndexWord(term.substring(0, upto), 0));
         } else {
-            morphQueue.add(term);
+            morphQueue.add(new IndexWord(term, 0));
         }
 
     }

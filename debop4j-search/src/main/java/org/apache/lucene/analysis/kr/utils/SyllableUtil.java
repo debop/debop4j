@@ -1,9 +1,12 @@
-/*
- * Copyright 2011-2013 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+package org.apache.lucene.analysis.kr.utils;
+
+/**
+ * Licensed to the Apache Software Foundation (ASF) under one or more
+ * contributor license agreements.  See the NOTICE file distributed with
+ * this work for additional information regarding copyright ownership.
+ * The ASF licenses this file to You under the Apache License, Version 2.0
+ * (the "License"); you may not use this file except in compliance with
+ * the License.  You may obtain a copy of the License at
  *
  *     http://www.apache.org/licenses/LICENSE-2.0
  *
@@ -13,8 +16,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
-package org.apache.lucene.analysis.kr.utils;
 
 import org.apache.lucene.analysis.kr.morph.MorphException;
 
@@ -118,9 +119,7 @@ public class SyllableUtil {
         try {
             Syllables = new ArrayList<char[]>();
 
-            List<String> line = FileUtil.readLines(
-                    KoreanEnv.getInstance().getValue(KoreanEnv.FILE_SYLLABLE_FEATURE),
-                    KoreanEnv.getInstance().getValue(KoreanEnv.ENCODING));
+            List<String> line = FileUtil.readLines(KoreanEnv.getInstance().getValue(KoreanEnv.FILE_SYLLABLE_FEATURE), "UTF-8");
             for (int i = 0; i < line.size(); i++) {
                 if (i != 0)
                     Syllables.add(line.get(i).toCharArray());

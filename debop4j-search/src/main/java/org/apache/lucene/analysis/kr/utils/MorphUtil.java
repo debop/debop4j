@@ -197,7 +197,7 @@ public class MorphUtil {
     public static boolean hasVerbOnly(String input) throws MorphException {
 
         for (int i = input.length() - 1; i >= 0; i--) {
-            char[] feature = org.apache.lucene.analysis.kr.utils.SyllableUtil.getFeature(input.charAt(i));
+            char[] feature = SyllableUtil.getFeature(input.charAt(i));
             if (feature[SyllableUtil.IDX_WDSURF] == '1' && input.length() > i) return true;
         }
         return false;

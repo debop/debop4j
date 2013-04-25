@@ -525,7 +525,8 @@ public class CompoundNounAnalyzer {
      *
      * @param input
      * @return
-     * @throws MorphException
+     * @throws org.apache.lucene.analysis.kr.morph.MorphException
+     *
      */
     private CompoundEntry analyzeSingle(String input) throws MorphException {
 

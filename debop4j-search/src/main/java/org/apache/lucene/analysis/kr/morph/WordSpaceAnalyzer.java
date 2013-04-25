@@ -131,7 +131,8 @@ public class WordSpaceAnalyzer {
      * @param snipt
      * @param js
      * @return
-     * @throws MorphException
+     * @throws org.apache.lucene.analysis.kr.morph.MorphException
+     *
      */
     private List anlysisWithJosa(String snipt, int js) throws MorphException {
 
@@ -182,7 +183,8 @@ public class WordSpaceAnalyzer {
      * @param snipt
      * @param jstart
      * @return
-     * @throws MorphException
+     * @throws org.apache.lucene.analysis.kr.morph.MorphException
+     *
      */
     private int findJosaEnd(String snipt, int jstart) throws MorphException {
 
@@ -394,7 +396,8 @@ public class WordSpaceAnalyzer {
      * @param snipt
      * @param jstart
      * @return
-     * @throws MorphException
+     * @throws org.apache.lucene.analysis.kr.morph.MorphException
+     *
      */
     private int findEomiEnd(String snipt, int estart) throws MorphException {
 
@@ -549,7 +552,8 @@ public class WordSpaceAnalyzer {
      * @param ws  문자열에서 명사를 찾는 시작위치
      * @param es  문자열에서 명사를 찾는 끝 위치
      * @return
-     * @throws MorphException
+     * @throws org.apache.lucene.analysis.kr.morph.MorphException
+     *
      */
     private boolean findNounWithinStr(String str, int ws, int es) throws MorphException {
 

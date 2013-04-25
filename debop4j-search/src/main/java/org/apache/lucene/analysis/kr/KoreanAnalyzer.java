@@ -20,16 +20,17 @@ package org.apache.lucene.analysis.kr;
 import org.apache.lucene.analysis.*;
 import org.apache.lucene.util.Version;
 
-import java.io.*;
+import java.io.IOException;
+import java.io.Reader;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 
 /**
- * Filters {@link org.apache.lucene.analysis.standard.StandardTokenizer} with {@link org.apache.lucene.analysis.standard.StandardFilter}, {@link
+ * Filters {@link StandardTokenizer} with {@link StandardFilter}, {@link
  * org.apache.lucene.analysis.LowerCaseFilter} and {@link org.apache.lucene.analysis.StopFilter}, using a list of English stop words.
  *
- * @version $Id: KoreanAnalyzer.java,v 1.1 2012/02/08 15:00:11 smlee0818 Exp $
+ * @version $Id: KoreanAnalyzer.java,v 1.2 2013/04/07 13:10:27 smlee0818 Exp $
  */
 public class KoreanAnalyzer extends StopwordAnalyzerBase {
 
@@ -54,6 +55,8 @@ public class KoreanAnalyzer extends StopwordAnalyzerBase {
 
     private boolean exactMatch = false;
 
+    private boolean originCNoun = true;
+
     public static final String DIC_ENCODING = "UTF-8";
 
     /**
@@ -64,29 +67,29 @@ public class KoreanAnalyzer extends StopwordAnalyzerBase {
 
 
     static {
-        List stopWords = Arrays.asList(
-                "a", "an", "and", "are", "as", "at", "be", "but", "by",
+        List stopWords = Arrays.asList(new String[]{ "a", "an", "and", "are", "as", "at", "be", "but", "by",
                 "for", "if", "in", "into", "is", "it", "no", "not", "of", "on", "or", "such", "that", "the",
                 "their", "then", "there", "these", "they", "this", "to", "was", "will", "with",
-                "이", "그", "저", "것", "수", "등", "들", "및", "에서", "그리고", "그래서", "또", "또는");
+                "이", "그", "저", "것", "수", "등", "들", "및", "에서", "그리고", "그래서", "또", "또는" }
+        );
 
-        CharArraySet stopSet = new CharArraySet(Version.LUCENE_CURRENT, stopWords.size(), false);
+        CharArraySet stopSet = new CharArraySet(Version.LUCENE_32, stopWords.size(), false);
 
         stopSet.addAll(stopWords);
         STOP_WORDS_SET = CharArraySet.unmodifiableSet(stopSet);
     }
 
     public KoreanAnalyzer() {
-        this(Version.LUCENE_CURRENT, STOP_WORDS_SET);
+        this(Version.LUCENE_32, STOP_WORDS_SET);
     }
 
     /**
      * 검색을 위한 형태소분석
      *
-     * @param exactMatch
+     * @param search
      */
     public KoreanAnalyzer(boolean exactMatch) {
-        this(Version.LUCENE_CURRENT, STOP_WORDS_SET);
+        this(Version.LUCENE_32, STOP_WORDS_SET);
         this.exactMatch = exactMatch;
     }
 
@@ -96,31 +99,33 @@ public class KoreanAnalyzer extends StopwordAnalyzerBase {
 
     /**
      * Builds an analyzer with the stop words from the given file.
+     *
+     * @see org.apache.lucene.analysis.WordlistLoader#getWordSet(java.io.File)
      */
     public KoreanAnalyzer(Version matchVersion) throws IOException {
         this(matchVersion, STOP_WORDS_SET);
     }
 
-    /**
-     * Builds an analyzer with the stop words from the given file.
-     */
-    public KoreanAnalyzer(Version matchVersion, File stopwords) throws IOException {
-        this(matchVersion, WordlistLoader.getWordSet(new InputStreamReader(new FileInputStream(stopwords), DIC_ENCODING), matchVersion));
-    }
-
-    /**
-     * Builds an analyzer with the stop words from the given file.
-     */
-    public KoreanAnalyzer(Version matchVersion, File stopwords, String encoding) throws IOException {
-        this(matchVersion, WordlistLoader.getWordSet(new InputStreamReader(new FileInputStream(stopwords), encoding), matchVersion));
-    }
-
-    /**
-     * Builds an analyzer with the stop words from the given reader.
-     */
-    public KoreanAnalyzer(Version matchVersion, Reader stopwords) throws IOException {
-        this(matchVersion, WordlistLoader.getWordSet(stopwords, matchVersion));
-    }
+//  /** Builds an analyzer with the stop words from the given file.
+//   * @see WordlistLoader#getWordSet(File)
+//   */
+//	public KoreanAnalyzer(Version matchVersion, File stopwords) throws IOException {     
+//        this(matchVersion, WordlistLoader.getWordSet(new InputStreamReader(new FileInputStream(stopwords), DIC_ENCODING)));        
+//	}
+//
+//  /** Builds an analyzer with the stop words from the given file.
+//   * @see WordlistLoader#getWordSet(File)
+//   */
+//	public KoreanAnalyzer(Version matchVersion, File stopwords, String encoding) throws IOException {
+//        this(matchVersion, WordlistLoader.getWordSet(new InputStreamReader(new FileInputStream(stopwords), encoding)));
+//	}
+//		
+//	/** Builds an analyzer with the stop words from the given reader.
+//	 * @see WordlistLoader#getWordSet(Reader)
+//	*/
+//	public KoreanAnalyzer(Version matchVersion, Reader stopwords) throws IOException {
+//	   this(matchVersion, WordlistLoader.getWordSet(stopwords));	    
+//	}
 
     /**
      * Builds an analyzer with the stop words from the given reader.
@@ -134,7 +139,7 @@ public class KoreanAnalyzer extends StopwordAnalyzerBase {
     protected TokenStreamComponents createComponents(String fieldName, Reader reader) {
         final KoreanTokenizer src = new KoreanTokenizer(matchVersion, reader);
         src.setMaxTokenLength(maxTokenLength);
-        src.setReplaceInvalidAcronym(replaceInvalidAcronym);
+        //src.setReplaceInvalidAcronym(replaceInvalidAcronym);
         TokenStream tok = new KoreanFilter(src, bigrammable, hasOrigin, exactMatch);
         tok = new LowerCaseFilter(matchVersion, tok);
         tok = new StopFilter(matchVersion, tok, stopwords);
@@ -166,5 +171,21 @@ public class KoreanAnalyzer extends StopwordAnalyzerBase {
         hasOrigin = has;
     }
 
+    /**
+     * determin whether the original compound noun is returned or not if a input word is analyzed morphically.
+     *
+     * @param has
+     */
+    public void setOriginCNoun(boolean cnoun) {
+        originCNoun = cnoun;
+    }
 
+    /**
+     * determin whether the original compound noun is returned or not if a input word is analyzed morphically.
+     *
+     * @param has
+     */
+    public void setExactMatch(boolean exact) {
+        exactMatch = exact;
+    }
 }

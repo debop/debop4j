@@ -48,7 +48,7 @@ public class FileUtil {
         ClassLoader loader = FileUtil.class.getClassLoader();
         URL url = loader.getResource(filename);
         if (url == null) {
-            url = loader.getSystemResource(filename);
+            url = ClassLoader.getSystemResource(filename);
             if (url == null) {
                 throw new MorphException("Unable to find " + filename);
             }

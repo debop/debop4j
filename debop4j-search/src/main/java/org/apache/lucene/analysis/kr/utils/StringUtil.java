@@ -4920,7 +4920,7 @@ public class StringUtil {
      * @param defaultStr the default String to return
      *                   if the input is empty ("") or <code>null</code>, may be null
      * @return the passed in String, or the default
-     * @see StringUtil#defaultString(String, String)
+     * @see org.apache.lucene.analysis.kr.utils.StringUtil#defaultString(String, String)
      */
     public static String defaultIfEmpty(String str, String defaultStr) {
         return StringUtil.isEmpty(str) ? defaultStr : str;

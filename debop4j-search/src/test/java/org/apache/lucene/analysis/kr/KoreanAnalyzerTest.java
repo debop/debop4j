@@ -43,16 +43,16 @@ public class KoreanAnalyzerTest extends TestCase {
     public void testKoreanTokenizer() throws Exception {
 
         String source = "우리나라라면에서부터 일본라면이 파생되었잖니?";
-        source = "呵呵大笑 가교복합체와 가공액을 포함하였다.";
+//		source = "呵呵大笑 가교복합체와 가공액을 포함하였다.";
+        source = "아딸떡볶이";
 
         long start = System.currentTimeMillis();
 
         KoreanAnalyzer analyzer = new KoreanAnalyzer();
         analyzer.setHasOrigin(false);
         TokenStream stream = analyzer.tokenStream("s", new StringReader(source));
-        TokenStream tok = new KoreanFilter(stream);
 
-        while (tok.incrementToken()) {
+        while (stream.incrementToken()) {
             CharTermAttribute termAttr = stream.getAttribute(CharTermAttribute.class);
             OffsetAttribute offAttr = stream.getAttribute(OffsetAttribute.class);
             PositionIncrementAttribute posAttr = stream.getAttribute(PositionIncrementAttribute.class);

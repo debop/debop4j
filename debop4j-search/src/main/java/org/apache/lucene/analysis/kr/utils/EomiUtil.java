@@ -57,13 +57,13 @@ public class EomiUtil {
 
             if (i != term.length()) {
                 eomi = term.substring(i);
-                efeature = org.apache.lucene.analysis.kr.utils.SyllableUtil.getFeature(eomi.charAt(0));
+                efeature = SyllableUtil.getFeature(eomi.charAt(0));
             } else {
-                efeature = org.apache.lucene.analysis.kr.utils.SyllableUtil.getFeature(stem.charAt(i - 1));
+                efeature = SyllableUtil.getFeature(stem.charAt(i - 1));
                 eomi = "";
             }
 
-            if (org.apache.lucene.analysis.kr.utils.SyllableUtil.isAlpanumeric(stem.charAt(i - 1))) break;
+            if (SyllableUtil.isAlpanumeric(stem.charAt(i - 1))) break;
 
             char[] jasos = MorphUtil.decompose(stem.charAt(i - 1));
 
@@ -108,7 +108,7 @@ public class EomiUtil {
                 else result[0] = stem.substring(0, stem.length() - 1) + end;
                 result[1] = eomi;
 
-            } else if (efeature != null && efeature[org.apache.lucene.analysis.kr.utils.SyllableUtil.IDX_EOMI1] != '0' &&
+            } else if (efeature != null && efeature[SyllableUtil.IDX_EOMI1] != '0' &&
                     DictionaryUtil.existEomi(eomi)) {
                 if (!(((jasos.length == 2 && jasos[0] == 'ㄹ') || (jasos.length == 3 && jasos[2] == 'ㄹ')) && eomi.equals("러"))) { // ㄹ 불규칙은 예외
                     result[0] = stem;
@@ -116,7 +116,7 @@ public class EomiUtil {
                 }
             }
 
-            if (efeature != null && efeature[org.apache.lucene.analysis.kr.utils.SyllableUtil.IDX_EOMI2] == '0') break;
+            if (efeature != null && efeature[SyllableUtil.IDX_EOMI2] == '0') break;
         }
 
         return result;
@@ -571,18 +571,18 @@ public class EomiUtil {
      */
     public static boolean IsNLMBSyl(char ech, char lch) throws MorphException {
 
-        char[] features = org.apache.lucene.analysis.kr.utils.SyllableUtil.getFeature(ech);
+        char[] features = SyllableUtil.getFeature(ech);
 
         switch (lch) {
 
             case 'ㄴ':
-                return (features[org.apache.lucene.analysis.kr.utils.SyllableUtil.IDX_YNPNA] == '1' || features[org.apache.lucene.analysis.kr.utils.SyllableUtil.IDX_YNPLN] == '1');
+                return (features[SyllableUtil.IDX_YNPNA] == '1' || features[SyllableUtil.IDX_YNPLN] == '1');
             case 'ㄹ':
-                return (features[org.apache.lucene.analysis.kr.utils.SyllableUtil.IDX_YNPLA] == '1');
+                return (features[SyllableUtil.IDX_YNPLA] == '1');
             case 'ㅁ':
-                return (features[org.apache.lucene.analysis.kr.utils.SyllableUtil.IDX_YNPMA] == '1');
+                return (features[SyllableUtil.IDX_YNPMA] == '1');
             case 'ㅂ':
-                return (features[org.apache.lucene.analysis.kr.utils.SyllableUtil.IDX_YNPBA] == '1');
+                return (features[SyllableUtil.IDX_YNPBA] == '1');
         }
 
         return false;
@@ -627,7 +627,7 @@ public class EomiUtil {
             strs[1] = "이" + end;
         } else if (chrs[0] != 'ㅇ' &&
                 (chrs[1] == 'ㅏ' || chrs[1] == 'ㅓ' || chrs[1] == 'ㅔ' || chrs[1] == 'ㅐ') &&
-                (chrs.length == 2 || org.apache.lucene.analysis.kr.utils.SyllableUtil.getFeature(estem)[org.apache.lucene.analysis.kr.utils.SyllableUtil.IDX_YNPAH] == '1') &&
+                (chrs.length == 2 || SyllableUtil.getFeature(estem)[SyllableUtil.IDX_YNPAH] == '1') &&
                 (DictionaryUtil.combineAndEomiCheck('어', end) != null)) {
 
             strs[0] = stem;
