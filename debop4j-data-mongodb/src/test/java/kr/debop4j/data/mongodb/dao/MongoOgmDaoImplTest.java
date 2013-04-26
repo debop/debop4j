@@ -79,7 +79,7 @@ public class MongoOgmDaoImplTest extends MongoGridDatastoreTestBase {
 
     @Test
     public void crud() throws Exception {
-        IHibernateOgmDao dao = Springs.getBean(HibernateOgmDao.class);
+        IHibernateOgmDao dao = Springs.getBean(IHibernateOgmDao.class);
         Player player = createPlayer();
 
         dao.saveOrUpdate(player);
@@ -111,7 +111,7 @@ public class MongoOgmDaoImplTest extends MongoGridDatastoreTestBase {
 
     @Test
     public void deleteByIdTest() throws Exception {
-        IHibernateOgmDao dao = Springs.getBean(HibernateOgmDao.class);
+        IHibernateOgmDao dao = Springs.getBean(IHibernateOgmDao.class);
         Player player = createPlayer();
 
         dao.saveOrUpdate(player);
@@ -206,7 +206,7 @@ public class MongoOgmDaoImplTest extends MongoGridDatastoreTestBase {
     }
 
     public void daoInParallel(Action1<IHibernateOgmDao> action) throws Exception {
-        IHibernateOgmDao dao = Springs.getBean(HibernateOgmDao.class);
+        IHibernateOgmDao dao = Springs.getBean(IHibernateOgmDao.class);
 
         //TODO: 병렬로 Player 를 추가합니다. - 인덱스가 제대로 만들어지지 않습니다...
         //

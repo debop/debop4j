@@ -25,7 +25,7 @@ import kr.debop4j.core.tools.ArrayTool;
 import kr.debop4j.core.tools.StringTool;
 import kr.debop4j.data.hibernate.tools.HibernateTool;
 import kr.debop4j.data.hibernate.unitofwork.UnitOfWorks;
-import kr.debop4j.search.hibernate.SearchTool;
+import kr.debop4j.search.tools.SearchTool;
 import org.apache.lucene.search.Query;
 import org.apache.lucene.search.Sort;
 import org.hibernate.*;

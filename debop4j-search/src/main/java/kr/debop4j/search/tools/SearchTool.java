@@ -14,20 +14,27 @@
  * limitations under the License.
  */
 
-package kr.debop4j.search.hibernate;
+package kr.debop4j.search.tools;
 
 import com.google.common.collect.Sets;
 import kr.debop4j.core.Action1;
 import kr.debop4j.core.parallelism.Parallels;
 import kr.debop4j.core.tools.StringTool;
 import kr.debop4j.data.hibernate.tools.HibernateTool;
+import kr.debop4j.search.QueryMethod;
+import kr.debop4j.search.SearchParameter;
+import kr.debop4j.search.SearchRangeParameter;
 import kr.debop4j.search.dao.HibernateSearchDao;
 import kr.debop4j.search.dao.IHibernateSearchDao;
-import lombok.extern.slf4j.Slf4j;
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.SimpleAnalyzer;
+import org.apache.lucene.index.Term;
 import org.apache.lucene.queryParser.ParseException;
 import org.apache.lucene.queryParser.QueryParser;
+import org.apache.lucene.search.FuzzyQuery;
+import org.apache.lucene.search.PrefixQuery;
+import org.apache.lucene.search.TermQuery;
+import org.apache.lucene.search.WildcardQuery;
 import org.apache.lucene.util.Version;
 import org.hibernate.SessionFactory;
 import org.hibernate.event.spi.EventType;
@@ -36,6 +43,9 @@ import org.hibernate.search.FullTextQuery;
 import org.hibernate.search.FullTextSession;
 import org.hibernate.search.annotations.Indexed;
 import org.hibernate.search.event.impl.FullTextIndexEventListener;
+import org.hibernate.search.query.dsl.QueryBuilder;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.Collection;
 import java.util.Set;
@@ -46,8 +56,9 @@ import java.util.Set;
  * @author sunghyouk.bae@gmail.com
  * @since 13. 2. 28.
  */
-@Slf4j
 public class SearchTool {
+
+    private static final Logger log = LoggerFactory.getLogger(SearchTool.class);
 
     private SearchTool() {}
 
@@ -156,5 +167,41 @@ public class SearchTool {
                 searchDao.indexAll(clazz, 100);
             }
         });
+    }
+
+    /**
+     * 루씬 검색용 QueryBuilder 를 생성합니다.
+     */
+    public static QueryBuilder buildLuceneQuery(final Class<?> clazz, final FullTextSession fts, SearchParameter... parameters) {
+        QueryBuilder builder = fts.getSearchFactory().buildQueryBuilder().forEntity(clazz).get();
+
+        for (SearchParameter sp : parameters) {
+            if (log.isTraceEnabled())
+                log.trace("QueryBulider에 다음 parameter를 추가합니다... SearchParameter=[{}]", sp);
+
+            QueryMethod queryMethod = sp.getQueryMethod();
+
+            if (queryMethod == QueryMethod.Term) {
+                builder.keyword().onField(sp.getName()).matching(sp.getValue());
+            } else if (queryMethod == QueryMethod.Phrase) {
+                builder.phrase().onField(sp.getName()).sentence(sp.getValue());
+            } else if (queryMethod == QueryMethod.Wildcard) {
+                final WildcardQuery query = new WildcardQuery(new Term(sp.getName(), sp.getValue()));
+                builder.bool().should(query);
+            } else if (queryMethod == QueryMethod.Prefix) {
+                final PrefixQuery query = new PrefixQuery(new Term(sp.getName(), sp.getValue()));
+                builder.bool().should(query);
+            } else if (queryMethod == QueryMethod.Fuzzy) {
+                final FuzzyQuery query = new FuzzyQuery(new Term(sp.getName(), sp.getValue()));
+                builder.bool().should(query);
+            } else if (queryMethod == QueryMethod.Range) {
+                SearchRangeParameter srp = (SearchRangeParameter) sp;
+                builder.range().onField(sp.getName()).from(srp.getFrom()).to(srp.getTo());
+            } else if (queryMethod == QueryMethod.Boolean) {
+                final TermQuery query = new TermQuery(new Term(sp.getName(), sp.getValue()));
+                builder.bool().should(query);
+            }
+        }
+        return builder;
     }
 }

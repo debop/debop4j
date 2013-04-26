@@ -19,7 +19,6 @@ package kr.debop4j.data.ogm.spring.cfg;
 import kr.debop4j.data.hibernate.interceptor.StatefulEntityInterceptor;
 import kr.debop4j.data.hibernate.unitofwork.UnitOfWorkFactory;
 import kr.debop4j.data.ogm.dao.HibernateOgmDao;
-import kr.debop4j.data.ogm.dao.IHibernateOgmDao;
 import lombok.extern.slf4j.Slf4j;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Environment;
@@ -131,7 +130,7 @@ public abstract class GridDatastoreConfigBase {
 
     @Bean
     @Scope("prototype")
-    public IHibernateOgmDao hibernateOgmDao() {
+    public HibernateOgmDao hibernateOgmDao() {
         return new HibernateOgmDao();
     }
 
@@ -177,10 +176,10 @@ public abstract class GridDatastoreConfigBase {
         // see Pro Hibernate and MongoDB pp. 246
 
         // hibernate-search 환경설정
-        // props.put("hibernate.search.default.indexmanager", "near-real-time");
+        props.put("hibernate.search.default.indexmanager", "near-real-time");
         props.put("hibernate.search.default.directory_provider", "filesystem");
-        props.put("hibernate.search.default.indexBase", ".lucene/indexes");
-        props.put("hibernate.search.default.locking_strategy", "single");
+        props.put("hibernate.search.default.indexBase", ".field/indexes");
+        // props.put("hibernate.search.default.locking_strategy", "single");
 
         // hibernate-search index worker settings
         props.put("hibernate.search.worker.execution", "async");

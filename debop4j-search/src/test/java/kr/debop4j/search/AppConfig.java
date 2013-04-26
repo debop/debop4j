@@ -6,12 +6,11 @@ import kr.debop4j.data.hibernate.tools.HibernateTool;
 import kr.debop4j.data.hibernate.unitofwork.UnitOfWorkFactory;
 import kr.debop4j.data.jdbc.JdbcTool;
 import kr.debop4j.search.dao.HibernateSearchDao;
-import kr.debop4j.search.dao.IHibernateSearchDao;
 import kr.debop4j.search.hibernate.model.SearchItem;
 import kr.debop4j.search.twitter.Twit;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.lucene.analysis.Analyzer;
-import org.apache.lucene.analysis.cjk.CJKAnalyzer;
+import org.apache.lucene.analysis.kr.KoreanAnalyzer;
 import org.apache.lucene.util.Version;
 import org.hibernate.ConnectionReleaseMode;
 import org.hibernate.SessionFactory;
@@ -63,7 +62,7 @@ public class AppConfig {
         props.put("hibernate.search.lucene_version", "LUCENE_36");
         props.put("hibernate.search.default.indexmanager", "near-real-time");
         props.put("hibernate.search.default.directory_provider", "filesystem");
-        props.put("hibernate.search.default.indexBase", ".lucene/indexes");
+        props.put("hibernate.search.default.indexBase", ".field/indexes");
 
         // hibernate-search performance settings
         props.put("hibernate.search.worker.execution", "async");
@@ -77,9 +76,6 @@ public class AppConfig {
 
         //
         props.put("hibernate.search.default.exclusive_index_use", "true");
-
-        // sharding
-
 
         // Validator
         props.put("javax.persistencexml.validation.group.pre-persist", "javax.validation.groups.Default");
@@ -114,13 +110,6 @@ public class AppConfig {
                 log.info("SessionFactory Bean을 생성했습니다!!!");
 
             SessionFactory sessionFactory = factoryBean.getObject();
-
-            // NOTE: hibernate-search에서 직접 등록합니다. 할 필요가 없습니다.
-            // EventListener를 등록한다.
-//            HibernateTool.registerEventListener(sessionFactory,
-//                                                new UpdateTimestampedEventListener(),
-//                                                EventType.PRE_INSERT, EventType.PRE_UPDATE);
-
 
             // validator용 listener 추가
             HibernateTool.registerEventListener(sessionFactory,
@@ -173,13 +162,18 @@ public class AppConfig {
     }
 
     @Bean
+    @Scope("prototype")
     public Analyzer luceneAnalyzer() {
-        return new CJKAnalyzer(Version.LUCENE_36);
+        try {
+            return new KoreanAnalyzer(Version.LUCENE_36);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Bean
     @Scope("prototype")
-    public IHibernateSearchDao hibernateSearchDao() {
+    public HibernateSearchDao hibernateSearchDao() {
         return new HibernateSearchDao(sessionFactory());
     }
 }

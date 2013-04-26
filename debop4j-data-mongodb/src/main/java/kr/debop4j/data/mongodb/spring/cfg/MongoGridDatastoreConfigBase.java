@@ -20,13 +20,13 @@ import com.mongodb.MongoClient;
 import com.mongodb.ServerAddress;
 import kr.debop4j.data.mongodb.dao.MongoOgmDao;
 import kr.debop4j.data.mongodb.tools.MongoTool;
-import kr.debop4j.data.ogm.dao.IHibernateOgmDao;
 import kr.debop4j.data.ogm.spring.cfg.GridDatastoreConfigBase;
 import lombok.extern.slf4j.Slf4j;
 import org.hibernate.ogm.datastore.mongodb.AssociationStorage;
 import org.hibernate.ogm.datastore.mongodb.Environment;
 import org.hibernate.ogm.datastore.spi.DatastoreProvider;
 import org.hibernate.ogm.dialect.GridDialect;
+import org.hibernate.search.store.impl.FSDirectoryProvider;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Scope;
@@ -58,10 +58,19 @@ public abstract class MongoGridDatastoreConfigBase extends GridDatastoreConfigBa
         }
     }
 
+    @Override
+    protected Properties getHibernateProperties() {
+        Properties props = super.getHibernateProperties();
+
+        String defaultPrefix = "hibernate.search.default";
+        props.put(defaultPrefix + ".sharding_strategy.nbr_of_shards", Integer.toString(Runtime.getRuntime().availableProcessors()));
+        props.put(defaultPrefix + ".directory_provider", FSDirectoryProvider.class.getName());
+
+        return props;
+    }
 
     @Override
     protected Properties getHibernateOgmProperties() {
-
         Properties props = super.getHibernateOgmProperties();
 
         props.put("hibernate.ogm.datastore.provider", MONGODB_DATASTORE_PROVIDER);
@@ -87,7 +96,7 @@ public abstract class MongoGridDatastoreConfigBase extends GridDatastoreConfigBa
     @Override
     @Bean
     @Scope("prototype")
-    public IHibernateOgmDao hibernateOgmDao() {
+    public MongoOgmDao hibernateOgmDao() {
         return new MongoOgmDao();
     }
 

@@ -125,7 +125,7 @@
             <artifactId>hibernate-search-orm</artifactId>
         </dependency>
 
-        <!-- lucene -->
+        <!-- field -->
         <dependency>
             <groupId>org.apache.lucene</groupId>
             <artifactId>lucene-core</artifactId>
