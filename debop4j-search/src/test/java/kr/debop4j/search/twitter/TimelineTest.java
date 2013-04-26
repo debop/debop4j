@@ -17,7 +17,7 @@
 package kr.debop4j.search.twitter;
 
 import jodd.props.Props;
-import kr.debop4j.search.dao.HibernateSearchDaoImpl;
+import kr.debop4j.search.dao.HibernateSearchDao;
 import lombok.extern.slf4j.Slf4j;
 import org.fest.assertions.Assertions;
 import org.hibernate.SessionFactory;
@@ -67,7 +67,7 @@ public class TimelineTest {
      */
     @Test
     public void insertAndLoadDelete() throws Exception {
-        HibernateSearchDaoImpl dao = appContext.getBean(HibernateSearchDaoImpl.class);
+        HibernateSearchDao dao = appContext.getBean(HibernateSearchDao.class);
 
         try {
             // 트위터 정보를 받아 저장하기

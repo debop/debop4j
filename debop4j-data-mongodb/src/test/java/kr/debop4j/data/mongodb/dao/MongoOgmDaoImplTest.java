@@ -6,10 +6,10 @@ import kr.debop4j.core.parallelism.Parallels;
 import kr.debop4j.core.spring.Springs;
 import kr.debop4j.data.hibernate.unitofwork.UnitOfWorks;
 import kr.debop4j.data.mongodb.MongoGridDatastoreTestBase;
-import kr.debop4j.data.mongodb.dao.impl.MongoOgmDaoImpl;
 import kr.debop4j.data.mongodb.model.Player;
 import kr.debop4j.data.mongodb.model.Tournament;
-import kr.debop4j.data.ogm.dao.impl.HibernateOgmDaoImpl;
+import kr.debop4j.data.ogm.dao.HibernateOgmDao;
+import kr.debop4j.data.ogm.dao.IHibernateOgmDao;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.lucene.search.Query;
 import org.hibernate.search.query.dsl.QueryBuilder;
@@ -79,7 +79,7 @@ public class MongoOgmDaoImplTest extends MongoGridDatastoreTestBase {
 
     @Test
     public void crud() throws Exception {
-        HibernateOgmDaoImpl dao = Springs.getBean(HibernateOgmDaoImpl.class);
+        IHibernateOgmDao dao = Springs.getBean(HibernateOgmDao.class);
         Player player = createPlayer();
 
         dao.saveOrUpdate(player);
@@ -111,7 +111,7 @@ public class MongoOgmDaoImplTest extends MongoGridDatastoreTestBase {
 
     @Test
     public void deleteByIdTest() throws Exception {
-        HibernateOgmDaoImpl dao = Springs.getBean(HibernateOgmDaoImpl.class);
+        IHibernateOgmDao dao = Springs.getBean(HibernateOgmDao.class);
         Player player = createPlayer();
 
         dao.saveOrUpdate(player);
@@ -129,9 +129,9 @@ public class MongoOgmDaoImplTest extends MongoGridDatastoreTestBase {
 
     @Test
     public void searchQueryTest() throws Exception {
-        daoInParallel(new Action1<HibernateOgmDaoImpl>() {
+        daoInParallel(new Action1<IHibernateOgmDao>() {
             @Override
-            public void perform(HibernateOgmDaoImpl dao) {
+            public void perform(IHibernateOgmDao dao) {
 
                 // findAll
                 List<Player> loadedPlayers = dao.findAll(Player.class);
@@ -168,7 +168,7 @@ public class MongoOgmDaoImplTest extends MongoGridDatastoreTestBase {
 
                 // RANGE 25 < x <= 28 (excludeLimit)
                 luceneQuery = queryBuilder.range().onField("age").from(25).to(28).excludeLimit().createQuery();
-                loadedPlayers = dao.find(Player.class, luceneQuery);
+                loadedPlayers = dao.find(Player.class, luceneQuery, null);
                 assertThat(loadedPlayers).isNotNull();
                 assertThat(loadedPlayers.size()).isGreaterThan(1);
                 log.debug("range seach result = [{}]", loadedPlayers.size());
@@ -178,8 +178,8 @@ public class MongoOgmDaoImplTest extends MongoGridDatastoreTestBase {
         });
     }
 
-    public void daoInSerial(Action1<HibernateOgmDaoImpl> action) throws Exception {
-        final HibernateOgmDaoImpl dao = Springs.getBean(HibernateOgmDaoImpl.class);
+    public void daoInSerial(Action1<IHibernateOgmDao> action) throws Exception {
+        final IHibernateOgmDao dao = Springs.getBean(HibernateOgmDao.class);
 
         for (int i = 0; i < REPEAT_COUNT; i++) {
             List<Player> players = createTestPlayers(PLAYER_COUNT);
@@ -205,8 +205,8 @@ public class MongoOgmDaoImplTest extends MongoGridDatastoreTestBase {
         assertThat(dao.count(Player.class)).isEqualTo(0);
     }
 
-    public void daoInParallel(Action1<HibernateOgmDaoImpl> action) throws Exception {
-        HibernateOgmDaoImpl dao = Springs.getBean(HibernateOgmDaoImpl.class);
+    public void daoInParallel(Action1<IHibernateOgmDao> action) throws Exception {
+        IHibernateOgmDao dao = Springs.getBean(HibernateOgmDao.class);
 
         //TODO: 병렬로 Player 를 추가합니다. - 인덱스가 제대로 만들어지지 않습니다...
         //
@@ -215,7 +215,7 @@ public class MongoOgmDaoImplTest extends MongoGridDatastoreTestBase {
             public void perform(Integer arg) {
                 List<Player> players = createTestPlayers(PLAYER_COUNT);
 
-                MongoOgmDaoImpl dao = new MongoOgmDaoImpl(UnitOfWorks.getCurrentSessionFactory());
+                MongoOgmDao dao = new MongoOgmDao(UnitOfWorks.getCurrentSessionFactory());
 
                 for (Player player : players) {
                     dao.saveOrUpdate(player);

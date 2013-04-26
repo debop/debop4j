@@ -20,7 +20,6 @@ import com.google.common.collect.Lists;
 import kr.debop4j.core.spring.Springs;
 import kr.debop4j.data.hibernate.unitofwork.UnitOfWorks;
 import kr.debop4j.data.ogm.GridDatastoreTestBase;
-import kr.debop4j.data.ogm.dao.impl.HibernateOgmDaoImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 
@@ -30,7 +29,7 @@ import java.util.List;
 import static org.fest.assertions.Assertions.assertThat;
 
 /**
- * {@link HibernateOgmDao} 테스트 코드
+ * {@link IHibernateOgmDao} 테스트 코드
  * 검색 관련 테스트는 debop4j-data-mongodb 를 참고하세요. ( MongoOgmDaoImplTest )
  *
  * @author sunghyouk.bae@gmail.com
@@ -41,7 +40,7 @@ public class HibernateOgmDaoTest extends GridDatastoreTestBase {
 
     @Test
     public void createTest() throws Exception {
-        HibernateOgmDaoImpl dao = Springs.getBean(HibernateOgmDaoImpl.class);
+        IHibernateOgmDao dao = Springs.getBean(HibernateOgmDao.class);
         assertThat(dao).isNotNull();
     }
 
@@ -68,7 +67,7 @@ public class HibernateOgmDaoTest extends GridDatastoreTestBase {
 
     @Test
     public void crud() throws Exception {
-        HibernateOgmDaoImpl dao = Springs.getBean(HibernateOgmDaoImpl.class);
+        IHibernateOgmDao dao = Springs.getBean(HibernateOgmDao.class);
         Player player = createPlayer();
 
         dao.saveOrUpdate(player);
@@ -100,7 +99,7 @@ public class HibernateOgmDaoTest extends GridDatastoreTestBase {
 
     @Test
     public void deleteByIdTest() throws Exception {
-        HibernateOgmDaoImpl dao = Springs.getBean(HibernateOgmDaoImpl.class);
+        IHibernateOgmDao dao = Springs.getBean(HibernateOgmDao.class);
         Player player = createPlayer();
 
         dao.saveOrUpdate(player);

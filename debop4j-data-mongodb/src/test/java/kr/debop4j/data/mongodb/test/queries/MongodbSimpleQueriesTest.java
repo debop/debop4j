@@ -1,6 +1,6 @@
 package kr.debop4j.data.mongodb.test.queries;
 
-import kr.debop4j.data.mongodb.dao.impl.MongoOgmDaoImpl;
+import kr.debop4j.data.mongodb.dao.MongoOgmDao;
 import kr.debop4j.data.ogm.test.queries.Helicopter;
 import kr.debop4j.data.ogm.test.queries.Hypothesis;
 import kr.debop4j.data.ogm.test.queries.SimpleQueriesTest;
@@ -25,7 +25,7 @@ public class MongodbSimpleQueriesTest extends SimpleQueriesTest {
         Transaction transaction = session.beginTransaction();
 
         try {
-            MongoOgmDaoImpl dao = new MongoOgmDaoImpl(session);
+            MongoOgmDao dao = new MongoOgmDao(session);
             dao.deleteAll(Helicopter.class);
             dao.deleteAll(Hypothesis.class);
             transaction.commit();

@@ -157,7 +157,8 @@
                 </executions>
             </plugin>
 
-            <!-- Query DSL apt -->
+            <!-- Query DSL apt : 실제 사용 시에만 풀어주세요 -->
+            <!--
             <plugin>
                 <groupId>com.mysema.maven</groupId>
                 <artifactId>apt-maven-plugin</artifactId>
@@ -174,6 +175,7 @@
                     </execution>
                 </executions>
             </plugin>
+            -->
         </plugins>
     </build>
 

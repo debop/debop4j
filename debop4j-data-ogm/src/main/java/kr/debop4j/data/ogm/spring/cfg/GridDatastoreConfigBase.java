@@ -18,7 +18,8 @@ package kr.debop4j.data.ogm.spring.cfg;
 
 import kr.debop4j.data.hibernate.interceptor.StatefulEntityInterceptor;
 import kr.debop4j.data.hibernate.unitofwork.UnitOfWorkFactory;
-import kr.debop4j.data.ogm.dao.impl.HibernateOgmDaoImpl;
+import kr.debop4j.data.ogm.dao.HibernateOgmDao;
+import kr.debop4j.data.ogm.dao.IHibernateOgmDao;
 import lombok.extern.slf4j.Slf4j;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Environment;
@@ -130,8 +131,8 @@ public abstract class GridDatastoreConfigBase {
 
     @Bean
     @Scope("prototype")
-    public HibernateOgmDaoImpl hibernateOgmDao() {
-        return new HibernateOgmDaoImpl();
+    public IHibernateOgmDao hibernateOgmDao() {
+        return new HibernateOgmDao();
     }
 
     abstract protected String getDatabaseName();

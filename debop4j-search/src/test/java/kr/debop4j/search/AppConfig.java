@@ -5,7 +5,8 @@ import kr.debop4j.data.hibernate.interceptor.UpdateTimestampedInterceptor;
 import kr.debop4j.data.hibernate.tools.HibernateTool;
 import kr.debop4j.data.hibernate.unitofwork.UnitOfWorkFactory;
 import kr.debop4j.data.jdbc.JdbcTool;
-import kr.debop4j.search.dao.HibernateSearchDaoImpl;
+import kr.debop4j.search.dao.HibernateSearchDao;
+import kr.debop4j.search.dao.IHibernateSearchDao;
 import kr.debop4j.search.hibernate.model.SearchItem;
 import kr.debop4j.search.twitter.Twit;
 import lombok.extern.slf4j.Slf4j;
@@ -178,7 +179,7 @@ public class AppConfig {
 
     @Bean
     @Scope("prototype")
-    public HibernateSearchDaoImpl hibernateSearchDao() {
-        return new HibernateSearchDaoImpl(sessionFactory());
+    public IHibernateSearchDao hibernateSearchDao() {
+        return new HibernateSearchDao(sessionFactory());
     }
 }

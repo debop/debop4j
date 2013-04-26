@@ -21,7 +21,8 @@ import kr.debop4j.core.Action1;
 import kr.debop4j.core.parallelism.Parallels;
 import kr.debop4j.core.tools.StringTool;
 import kr.debop4j.data.hibernate.tools.HibernateTool;
-import kr.debop4j.search.dao.HibernateSearchDaoImpl;
+import kr.debop4j.search.dao.HibernateSearchDao;
+import kr.debop4j.search.dao.IHibernateSearchDao;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.SimpleAnalyzer;
@@ -71,7 +72,7 @@ public class SearchTool {
     /**
      * 루씬용 Query를 빌드합니다.
      */
-    public org.apache.lucene.search.Query bulidLuceneQuery(FullTextSession fts, Class<?> clazz, String fieldName, String values) {
+    public static org.apache.lucene.search.Query bulidLuceneQuery(FullTextSession fts, Class<?> clazz, String fieldName, String values) {
         if (log.isTraceEnabled())
             log.trace("루씬 쿼리를 빌드합니다. clazz=[{}], fieldName=[{}], values=[{}]", clazz, fieldName, values);
 
@@ -92,7 +93,7 @@ public class SearchTool {
         return luceneQuery;
     }
 
-    public FullTextQuery createFullTextQuery(FullTextSession fts, org.apache.lucene.search.Query luceneQuery, Class<?> clazz) {
+    public static FullTextQuery createFullTextQuery(FullTextSession fts, org.apache.lucene.search.Query luceneQuery, Class<?> clazz) {
 
         FullTextQuery ftq = fts.createFullTextQuery(luceneQuery, clazz);
 
@@ -101,7 +102,10 @@ public class SearchTool {
         return ftq;
     }
 
-    public Set<Class> getIndexedClasses(SessionFactory sessionFactory) {
+    /**
+     * 인덱싱을 수행할 엔티티 정보를 모두 조회합니다.
+     */
+    public static Set<Class> getIndexedClasses(SessionFactory sessionFactory) {
         if (log.isDebugEnabled())
             log.debug("매핑된 엔티티중에 인덱싱을 수행할 엔티티들을 조회합니다.");
 
@@ -123,11 +127,11 @@ public class SearchTool {
      * 모든 엔티티의 인덱스를 재구성합니다.
      * see {@link SearchTool#getIndexedClasses(org.hibernate.SessionFactory)}
      */
-    public void indexAll(final SessionFactory sessionFactory, final Set<Class> classes, final boolean clear) {
+    public static void indexAll(final SessionFactory sessionFactory, final Set<Class> classes, final boolean clear) {
         if (log.isDebugEnabled())
             log.debug("모든 엔티티에 대해 전체 인덱싱을 수행합니다. classes=[{}], clear=[{}]", StringTool.listToString(classes), clear);
 
-        final HibernateSearchDaoImpl searchDao = new HibernateSearchDaoImpl(sessionFactory);
+        final IHibernateSearchDao searchDao = new HibernateSearchDao(sessionFactory);
         for (Class clazz : classes) {
             if (clear)
                 searchDao.clearIndex(clazz);
@@ -139,14 +143,14 @@ public class SearchTool {
      * 모든 엔티티의 인덱스를 병렬 방식으로 재구성합니다.
      * see {@link SearchTool#getIndexedClasses(org.hibernate.SessionFactory)}
      */
-    public void indexAllAsParallel(final SessionFactory sessionFactory, final Set<Class> classes, final boolean clear) {
+    public static void indexAllAsParallel(final SessionFactory sessionFactory, final Set<Class> classes, final boolean clear) {
         if (log.isDebugEnabled())
             log.debug("병렬 방식으로 모든 엔티티에 대해 전체 인덱싱을 수행합니다. classes=[{}], clear=[{}]", StringTool.listToString(classes), clear);
 
         Parallels.runEach(classes, new Action1<Class>() {
             @Override
             public void perform(Class clazz) {
-                HibernateSearchDaoImpl searchDao = new HibernateSearchDaoImpl(sessionFactory);
+                IHibernateSearchDao searchDao = new HibernateSearchDao(sessionFactory);
                 if (clear)
                     searchDao.clearIndex(clazz);
                 searchDao.indexAll(clazz, 100);

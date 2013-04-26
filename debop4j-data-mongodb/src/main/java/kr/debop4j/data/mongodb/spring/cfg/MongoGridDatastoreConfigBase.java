@@ -18,9 +18,9 @@ package kr.debop4j.data.mongodb.spring.cfg;
 
 import com.mongodb.MongoClient;
 import com.mongodb.ServerAddress;
-import kr.debop4j.data.mongodb.dao.impl.MongoOgmDaoImpl;
+import kr.debop4j.data.mongodb.dao.MongoOgmDao;
 import kr.debop4j.data.mongodb.tools.MongoTool;
-import kr.debop4j.data.ogm.dao.impl.HibernateOgmDaoImpl;
+import kr.debop4j.data.ogm.dao.IHibernateOgmDao;
 import kr.debop4j.data.ogm.spring.cfg.GridDatastoreConfigBase;
 import lombok.extern.slf4j.Slf4j;
 import org.hibernate.ogm.datastore.mongodb.AssociationStorage;
@@ -87,8 +87,8 @@ public abstract class MongoGridDatastoreConfigBase extends GridDatastoreConfigBa
     @Override
     @Bean
     @Scope("prototype")
-    public HibernateOgmDaoImpl hibernateOgmDao() {
-        return new MongoOgmDaoImpl();
+    public IHibernateOgmDao hibernateOgmDao() {
+        return new MongoOgmDao();
     }
 
     @Bean

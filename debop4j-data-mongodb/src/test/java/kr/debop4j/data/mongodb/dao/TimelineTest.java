@@ -4,7 +4,8 @@ import jodd.props.Props;
 import kr.debop4j.core.spring.Springs;
 import kr.debop4j.data.mongodb.MongoGridDatastoreTestBase;
 import kr.debop4j.data.mongodb.model.Twit;
-import kr.debop4j.data.ogm.dao.impl.HibernateOgmDaoImpl;
+import kr.debop4j.data.ogm.dao.HibernateOgmDao;
+import kr.debop4j.data.ogm.dao.IHibernateOgmDao;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 import org.springframework.core.io.ClassPathResource;
@@ -39,7 +40,7 @@ public class TimelineTest extends MongoGridDatastoreTestBase {
      */
     @Test
     public void insertAndLoadDelete() throws Exception {
-        HibernateOgmDaoImpl dao = Springs.getBean(HibernateOgmDaoImpl.class);
+        IHibernateOgmDao dao = Springs.getBean(HibernateOgmDao.class);
 
         try {
             // 트위터 정보를 받아 저장하기

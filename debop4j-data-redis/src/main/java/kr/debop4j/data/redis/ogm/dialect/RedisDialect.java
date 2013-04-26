@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package kr.debop4j.data.redis.ogm.dialect;
 
 import kr.debop4j.data.redis.ogm.datastore.redis.impl.RedisDatastoreProvider;
