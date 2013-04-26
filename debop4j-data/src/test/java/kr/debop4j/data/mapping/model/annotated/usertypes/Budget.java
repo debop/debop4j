@@ -7,6 +7,7 @@ import org.hibernate.annotations.Columns;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.Type;
+import org.joda.time.DateTime;
 
 import javax.persistence.*;
 
@@ -48,4 +49,8 @@ public class Budget extends JpaEntityBase {
     @Enumerated(EnumType.STRING)
     @Column(name = "RATING", nullable = false, length = 128)
     private Rating rating;
+
+
+    @Type(type = "kr.debop4j.data.hibernate.usertype.JodaDateTimeUserType")
+    private DateTime createdAt;
 }

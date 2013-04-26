@@ -18,6 +18,7 @@ package kr.debop4j.data.hibernate.usertype.compress;
 
 import kr.debop4j.core.compress.DeflateCompressor;
 import kr.debop4j.core.compress.ICompressor;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * Deflate 알고리즘 ({@link DeflateCompressor} 으로 문자열 속성 값을 압축하여 Binary로 저장합니다.
@@ -25,9 +26,11 @@ import kr.debop4j.core.compress.ICompressor;
  * @author sunghyouk.bae@gmail.com
  * @since 12. 9. 18
  */
+@Slf4j
 public class DeflateStringUserType extends AbstractCompressedStringUserType {
 
     private static final ICompressor compressor = new DeflateCompressor();
+    private static final long serialVersionUID = -4948364167572373533L;
 
     @Override
     public ICompressor getCompressor() {

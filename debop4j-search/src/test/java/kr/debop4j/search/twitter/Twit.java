@@ -54,7 +54,6 @@ public class Twit extends AnnotatedEntityBase {
     @Field(index = Index.YES, store = Store.COMPRESS, analyze = Analyze.YES)
     private String text;
 
-    // @Type(type = "org.joda.time.contrib.hibernate.PersistentDateTime")
     @DateBridge(resolution = Resolution.SECOND)
     @Temporal(TemporalType.TIMESTAMP)
     @Field(index = Index.YES, store = Store.YES, analyze = Analyze.NO)

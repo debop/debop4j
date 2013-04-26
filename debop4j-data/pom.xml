@@ -87,10 +87,6 @@
             <groupId>org.joda</groupId>
             <artifactId>joda-convert</artifactId>
         </dependency>
-        <dependency>
-            <groupId>joda-time</groupId>
-            <artifactId>joda-time-hibernate</artifactId>
-        </dependency>
 
         <!-- Jodd -->
         <dependency>

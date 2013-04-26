@@ -7,7 +7,7 @@ import org.hibernate.search.FullTextSession;
 import org.junit.Test;
 
 /**
- * kr.debop4j.search.hibernate.field.NonShardsTest
+ * NonShardsTest
  *
  * @author sunghyouk.bae@gmail.com
  * @since 13. 4. 25. 오후 2:26

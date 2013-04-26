@@ -35,6 +35,8 @@ import java.sql.SQLException;
 @Slf4j
 public abstract class AbstractCompressedBinaryUserType extends AbstractCompressedUserType {
 
+    private static final long serialVersionUID = -986318455760560003L;
+
     protected byte[] compress(byte[] value) throws Exception {
         if (ArrayTool.isEmpty(value))
             return null;

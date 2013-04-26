@@ -22,7 +22,7 @@ public abstract class AccessEntityBase extends AnnotatedEntityBase implements IU
 
     private static final long serialVersionUID = -7640693368412411167L;
 
-    @Type(type = "org.joda.time.contrib.hibernate.PersistentDateTime")
+    @Type(type = "kr.debop4j.data.hibernate.usertype.JodaDateTimeUserType")
     @Getter
     private DateTime updatedTime;
 

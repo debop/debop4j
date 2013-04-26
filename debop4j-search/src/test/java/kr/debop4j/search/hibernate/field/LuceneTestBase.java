@@ -12,7 +12,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 /**
- * kr.debop4j.search.hibernate.field.LuceneTestBase
+ * LuceneTestBase
  *
  * @author sunghyouk.bae@gmail.com
  * @since 13. 4. 25. 오후 2:39

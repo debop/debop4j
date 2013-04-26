@@ -75,6 +75,7 @@ public class Bookmark extends AnnotatedEntityBase {
 
     private Long userId;
 
-//    @Type(type = "org.joda.time.contrib.hibernate.PersistentDateTime")
-//    private DateTime jodaTime;
+    // hibernate-search, hibernate-ogm에서는 사용하면 안된다.
+    // @Type(type = "kr.debop4j.data.hibernate.usertype.JodaDateTimeUserType")
+    // private DateTime jodaTime;
 }

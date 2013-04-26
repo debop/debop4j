@@ -18,6 +18,7 @@ package kr.debop4j.data.hibernate.usertype;
 
 import kr.debop4j.core.json.GsonSerializer;
 import kr.debop4j.core.json.IJsonSerializer;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * {@link GsonSerializer} 를 이용하여, 객체를 Json 직렬화하여 저장하는 사용자 타입입니다.
@@ -25,9 +26,11 @@ import kr.debop4j.core.json.IJsonSerializer;
  * @author sunghyouk.bae@gmail.com
  * @since 12. 9. 18
  */
+@Slf4j
 public class GsonTextUserType extends AbstractJsonTextUserType {
 
     private static final IJsonSerializer serializer = new GsonSerializer();
+    private static final long serialVersionUID = 6937365577059208225L;
 
     @Override
     public IJsonSerializer getJsonSerializer() {

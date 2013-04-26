@@ -39,7 +39,9 @@ import java.sql.SQLException;
  * @since 12. 9. 18
  */
 @Slf4j
-public class WeekOfYearUserType implements CompositeUserType {
+public class WeekOfYearUserType implements CompositeUserType, Serializable {
+
+    private static final long serialVersionUID = 1007278892003631396L;
 
     /**
      * 객체를 {@link YearWeek} 로 변환합니다.

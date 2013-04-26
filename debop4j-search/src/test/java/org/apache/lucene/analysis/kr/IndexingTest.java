@@ -31,7 +31,7 @@ public class IndexingTest extends TestCase {
     private Directory directory;
 
     protected void setUp() throws Exception {
-        directory = FSDirectory.open(new File(".field/index"));
+        directory = FSDirectory.open(new File(".lucene/index"));
     }
 
     private IndexWriter getWriter() throws IOException {

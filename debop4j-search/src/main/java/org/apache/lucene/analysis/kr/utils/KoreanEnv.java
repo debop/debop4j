@@ -45,7 +45,7 @@ public class KoreanEnv {
 
     public static final String FILE_CJ = "cj.dic";
 
-    public static final String FILE_KOREAN_PROPERTY = "org/apache/field/analysis/kr/korean.properties";
+    public static final String FILE_KOREAN_PROPERTY = "org/apache/lucene/analysis/kr/korean.properties";
 
     private Properties defaults = null;
 
@@ -81,16 +81,16 @@ public class KoreanEnv {
     private void initDefaultProperties() {
         defaults = new Properties();
 
-        defaults.setProperty(FILE_SYLLABLE_FEATURE, "org/apache/field/analysis/kr/dic/syllable.dic");
-        defaults.setProperty(FILE_DICTIONARY, "org/apache/field/analysis/kr/dic/dictionary.dic");
-        defaults.setProperty(FILE_DICTIONARY, "org/apache/field/analysis/kr/dic/extension.dic");
-        defaults.setProperty(FILE_JOSA, "org/apache/field/analysis/kr/dic/josa.dic");
-        defaults.setProperty(FILE_EOMI, "org/apache/field/analysis/kr/dic/eomi.dic");
-        defaults.setProperty(FILE_PREFIX, "org/apache/field/analysis/kr/dic/prefix.dic");
-        defaults.setProperty(FILE_SUFFIX, "org/apache/field/analysis/kr/dic/suffix.dic");
-        defaults.setProperty(FILE_COMPOUNDS, "org/apache/field/analysis/kr/dic/compounds.dic");
-        defaults.setProperty(FILE_UNCOMPOUNDS, "org/apache/field/analysis/kr/dic/uncompounds.dic");
-        defaults.setProperty(FILE_CJ, "org/apache/field/analysis/kr/dic/cj.dic");
+        defaults.setProperty(FILE_SYLLABLE_FEATURE, "org/apache/lucene/analysis/kr/dic/syllable.dic");
+        defaults.setProperty(FILE_DICTIONARY, "org/apache/lucene/analysis/kr/dic/dictionary.dic");
+        defaults.setProperty(FILE_DICTIONARY, "org/apache/lucene/analysis/kr/dic/extension.dic");
+        defaults.setProperty(FILE_JOSA, "org/apache/lucene/analysis/kr/dic/josa.dic");
+        defaults.setProperty(FILE_EOMI, "org/apache/lucene/analysis/kr/dic/eomi.dic");
+        defaults.setProperty(FILE_PREFIX, "org/apache/lucene/analysis/kr/dic/prefix.dic");
+        defaults.setProperty(FILE_SUFFIX, "org/apache/lucene/analysis/kr/dic/suffix.dic");
+        defaults.setProperty(FILE_COMPOUNDS, "org/apache/lucene/analysis/kr/dic/compounds.dic");
+        defaults.setProperty(FILE_UNCOMPOUNDS, "org/apache/lucene/analysis/kr/dic/uncompounds.dic");
+        defaults.setProperty(FILE_CJ, "org/apache/lucene/analysis/kr/dic/cj.dic");
     }
 
 
@@ -98,8 +98,7 @@ public class KoreanEnv {
      * Given a property file name, load the property file and return an object
      * representing the property values.
      *
-     * @param propertyFile The name of the property file to load.
-     * @param def          Default property values, or <code>null</code> if there are no defaults.
+     * @param def Default property values, or <code>null</code> if there are no defaults.
      * @return The loaded SortedProperties object.
      */
     private Properties loadProperties(Properties def) throws MorphException {

@@ -42,9 +42,10 @@ import static kr.debop4j.core.tools.StringTool.ellipsisChar;
  * @since 12. 9. 18
  */
 @Slf4j
-public abstract class AbstractJsonTextUserType implements CompositeUserType {
+public abstract class AbstractJsonTextUserType implements CompositeUserType, Serializable {
 
     private static final boolean isTraceEnabled = log.isTraceEnabled();
+    private static final long serialVersionUID = -1729578848869460945L;
 
     abstract public IJsonSerializer getJsonSerializer();
 

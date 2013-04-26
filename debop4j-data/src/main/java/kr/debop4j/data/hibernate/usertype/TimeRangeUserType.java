@@ -22,6 +22,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.hibernate.HibernateException;
 import org.hibernate.engine.spi.SessionImplementor;
 import org.hibernate.type.DateType;
+import org.hibernate.type.StandardBasicTypes;
 import org.hibernate.type.Type;
 import org.hibernate.usertype.CompositeUserType;
 import org.joda.time.DateTime;
@@ -40,9 +41,14 @@ import java.util.Objects;
  * @since 12. 12. 3.
  */
 @Slf4j
-public class TimeRangeUserType implements CompositeUserType {
+public class TimeRangeUserType implements CompositeUserType, Serializable {
+
+    private static final long serialVersionUID = 6144414196985871379L;
 
     public static DateTimeRange asDateTimeRange(Object value) {
+        if (log.isTraceEnabled())
+            log.trace("값을 DateTimeRange로 변경합니다. value=[{}]", value);
+
         if (value == null)
             return null;
 
@@ -115,8 +121,8 @@ public class TimeRangeUserType implements CompositeUserType {
     public Object nullSafeGet(ResultSet rs, String[] names, SessionImplementor session, Object owner)
             throws HibernateException, SQLException {
 
-        Date start = (Date) DateType.INSTANCE.nullSafeGet(rs, names[0], session, owner);
-        Date end = (Date) DateType.INSTANCE.nullSafeGet(rs, names[1], session, owner);
+        Date start = (Date) StandardBasicTypes.TIMESTAMP.nullSafeGet(rs, names[0], session, owner);
+        Date end = (Date) StandardBasicTypes.TIMESTAMP.nullSafeGet(rs, names[1], session, owner);
 
         return new DateTimeRange(new DateTime(start), new DateTime(end));
     }
@@ -126,12 +132,12 @@ public class TimeRangeUserType implements CompositeUserType {
             throws HibernateException, SQLException {
 
         if (value == null) {
-            DateType.INSTANCE.nullSafeSet(st, null, index, session);
-            DateType.INSTANCE.nullSafeSet(st, null, index + 1, session);
+            StandardBasicTypes.TIMESTAMP.nullSafeSet(st, null, index, session);
+            StandardBasicTypes.TIMESTAMP.nullSafeSet(st, null, index + 1, session);
         } else {
             DateTimeRange range = asDateTimeRange(value);
-            DateType.INSTANCE.nullSafeSet(st, range.getStart(), index, session);
-            DateType.INSTANCE.nullSafeSet(st, range.getEnd(), index + 1, session);
+            StandardBasicTypes.TIMESTAMP.nullSafeSet(st, range.getStart(), index, session);
+            StandardBasicTypes.TIMESTAMP.nullSafeSet(st, range.getEnd(), index + 1, session);
         }
     }
 

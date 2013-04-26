@@ -135,7 +135,7 @@ public class KoreanTokenizer extends Tokenizer {
     /*
      * (non-Javadoc)
      *
-     * @see org.apache.field.analysis.TokenStream#next()
+     * @see org.apache.lucene.analysis.TokenStream#next()
      */
     @Override
     public final boolean incrementToken() throws IOException {

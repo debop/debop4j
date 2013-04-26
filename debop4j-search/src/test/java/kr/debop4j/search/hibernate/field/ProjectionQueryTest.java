@@ -15,7 +15,7 @@ import org.junit.Test;
 import static org.fest.assertions.Assertions.assertThat;
 
 /**
- * kr.debop4j.search.hibernate.field.ProjectionQueryTest
+ * ProjectionQueryTest
  *
  * @author sunghyouk.bae@gmail.com
  * @since 13. 4. 25. 오후 2:51

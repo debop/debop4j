@@ -18,6 +18,7 @@ package kr.debop4j.data.hibernate.usertype.cryptography;
 
 import kr.debop4j.core.cryptography.symmetric.DESByteEncryptor;
 import kr.debop4j.core.cryptography.symmetric.ISymmetricByteEncryptor;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * DES 알고리즘({@link DESByteEncryptor})을 이용하여 속성 값을 암호화하여 16진수 문자열로 저장합니다.
@@ -25,9 +26,11 @@ import kr.debop4j.core.cryptography.symmetric.ISymmetricByteEncryptor;
  * @author sunghyouk.bae@gmail.com
  * @since 12. 9. 18
  */
+@Slf4j
 public class DESEncryptorUserType extends AbstractSymmetricEncryptStringUserType {
 
     private static final ISymmetricByteEncryptor encryptor = new DESByteEncryptor();
+    private static final long serialVersionUID = -1728294960568840334L;
 
     @Override
     public ISymmetricByteEncryptor getEncryptor() {

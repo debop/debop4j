@@ -5,7 +5,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 /**
- * kr.debop4j.search.hibernate.field.LuceneNativeConfig
+ * Lucene native config
  *
  * @author sunghyouk.bae@gmail.com
  * @since 13. 4. 25. 오후 2:28

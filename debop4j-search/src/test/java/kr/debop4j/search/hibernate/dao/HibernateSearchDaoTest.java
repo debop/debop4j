@@ -18,6 +18,7 @@ package kr.debop4j.search.hibernate.dao;
 
 import kr.debop4j.search.hibernate.SearchTestBase;
 import lombok.extern.slf4j.Slf4j;
+import org.junit.Test;
 
 /**
  * HibernateSearchDaoTest
@@ -27,4 +28,8 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Slf4j
 public class HibernateSearchDaoTest extends SearchTestBase {
+
+    @Test
+    public void findAllTest() throws Exception {
+    }
 }

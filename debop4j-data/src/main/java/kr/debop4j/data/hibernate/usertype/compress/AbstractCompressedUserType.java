@@ -18,6 +18,7 @@ package kr.debop4j.data.hibernate.usertype.compress;
 
 import com.google.common.base.Objects;
 import kr.debop4j.core.compress.ICompressor;
+import lombok.extern.slf4j.Slf4j;
 import org.hibernate.HibernateException;
 import org.hibernate.engine.spi.SessionImplementor;
 import org.hibernate.type.BinaryType;
@@ -34,7 +35,10 @@ import java.sql.SQLException;
  * @author sunghyouk.bae@gmail.com
  * @since 12. 9. 18
  */
-public abstract class AbstractCompressedUserType implements UserType {
+@Slf4j
+public abstract class AbstractCompressedUserType implements UserType, Serializable {
+
+    private static final long serialVersionUID = -3570021248450932340L;
 
     /**
      * 속성 값을 압축/복원하는 {@link ICompressor}의 구현 객체를 반환합니다.
@@ -47,16 +51,14 @@ public abstract class AbstractCompressedUserType implements UserType {
     abstract public Object nullSafeGet(ResultSet resultSet,
                                        String[] strings,
                                        SessionImplementor sessionImplementor,
-                                       Object o) throws
-            HibernateException,
-            SQLException;
+                                       Object o)
+            throws HibernateException, SQLException;
 
     abstract public void nullSafeSet(PreparedStatement preparedStatement,
                                      Object o,
                                      int i,
-                                     SessionImplementor sessionImplementor) throws
-            HibernateException,
-            SQLException;
+                                     SessionImplementor sessionImplementor)
+            throws HibernateException, SQLException;
 
     abstract public boolean isMutable();
 

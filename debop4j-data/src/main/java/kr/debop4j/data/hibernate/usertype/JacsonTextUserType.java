@@ -18,6 +18,7 @@ package kr.debop4j.data.hibernate.usertype;
 
 import kr.debop4j.core.json.IJsonSerializer;
 import kr.debop4j.core.json.JacksonSerializer;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * {@link JacksonSerializer} 를 이용하여, 객체를 Json 직렬화하여 저장하는 사용자 타입입니다.
@@ -25,9 +26,11 @@ import kr.debop4j.core.json.JacksonSerializer;
  * @author sunghyouk.bae@gmail.com
  * @since 12. 9. 18
  */
+@Slf4j
 public class JacsonTextUserType extends AbstractJsonTextUserType {
 
     private static final IJsonSerializer serializer = new JacksonSerializer();
+    private static final long serialVersionUID = 5464839220565412300L;
 
     @Override
     public IJsonSerializer getJsonSerializer() {

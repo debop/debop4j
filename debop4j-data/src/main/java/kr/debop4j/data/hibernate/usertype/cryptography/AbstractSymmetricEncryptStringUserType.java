@@ -38,10 +38,12 @@ import java.sql.SQLException;
  * @author sunghyouk.bae@gmail.com
  * @since 12. 9. 18
  */
-public abstract class AbstractSymmetricEncryptStringUserType implements UserType {
+public abstract class AbstractSymmetricEncryptStringUserType implements UserType, Serializable {
 
     private static final Logger log = LoggerFactory.getLogger(AbstractSymmetricEncryptStringUserType.class);
     private static final boolean isTraceEnabled = log.isTraceEnabled();
+
+    private static final long serialVersionUID = -3643450762631678192L;
 
     abstract public ISymmetricByteEncryptor getEncryptor();
 

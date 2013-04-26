@@ -218,7 +218,6 @@
 
         <joda.time.version>2.2</joda.time.version>
         <joda.convert.version>1.2</joda.convert.version>
-        <joda.time.hibernate.version>1.3</joda.time.hibernate.version>
 
         <jodd.version>3.4.2</jodd.version>
 
@@ -491,11 +490,6 @@
                 <groupId>org.joda</groupId>
                 <artifactId>joda-convert</artifactId>
                 <version>${joda.convert.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>joda-time</groupId>
-                <artifactId>joda-time-hibernate</artifactId>
-                <version>${joda.time.hibernate.version}</version>
             </dependency>
 
             <!-- Jodd -->

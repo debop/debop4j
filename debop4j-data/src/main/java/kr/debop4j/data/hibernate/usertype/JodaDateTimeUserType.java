@@ -13,60 +13,61 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package kr.debop4j.data.hibernate.usertype;
 
+import com.google.common.base.Objects;
 import lombok.extern.slf4j.Slf4j;
 import org.hibernate.HibernateException;
-import org.hibernate.annotations.common.util.ReflectHelper;
 import org.hibernate.engine.spi.SessionImplementor;
 import org.hibernate.type.StandardBasicTypes;
-import org.hibernate.usertype.ParameterizedType;
 import org.hibernate.usertype.UserType;
+import org.joda.time.DateTime;
 
 import java.io.Serializable;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Objects;
-import java.util.Properties;
+import java.util.Date;
 
 /**
- * Enum 값을 문자열로 DB에 저장하고, 로드 시에 Enum 값으로 파싱해서 설정한다.
- * Jpa@author sunghyouk.bae@gmail.com
+ * Joda-Time 의 DateTime 을 위한 Hibernate UserType 입니다. {@link DateTime}
  *
- * @since 12. 11. 19.
+ * @author sunghyouk.bae@gmail.com
+ * @since 13. 4. 26. 오후 6:17
  */
 @Slf4j
-public class StringEnumUserType implements UserType, ParameterizedType, Serializable {
+public class JodaDateTimeUserType implements UserType, Serializable {
 
-    private static final long serialVersionUID = 4135696095152036946L;
-    private Class<Enum> enumClass;
+    private static final long serialVersionUID = -3556921355917963632L;
 
-    @Override
-    @SuppressWarnings("unchecked")
-    public void setParameterValues(Properties parameters) {
-        String enumClassName = parameters.getProperty("enumClassName");
-        try {
-            enumClass = ReflectHelper.classForName(enumClassName);
-        } catch (ClassNotFoundException e) {
-            throw new HibernateException("Enum class not found. enumClassName=" + enumClassName, e);
-        }
+    public static DateTime asDateTime(Object value) {
+        if (log.isTraceEnabled())
+            log.trace("값을 DateTime으로 변환합니다. value=[{}]", value);
+
+        if (value == null)
+            return null;
+        if (value instanceof Long)
+            return new DateTime(value);
+        if (value instanceof Date)
+            return new DateTime(((Date) value).getTime());
+        if (value instanceof DateTime)
+            return (DateTime) value;
+        return null;
     }
 
     @Override
     public int[] sqlTypes() {
-        return new int[]{ StandardBasicTypes.STRING.sqlType() };
+        return new int[]{ StandardBasicTypes.TIMESTAMP.sqlType() };
     }
 
     @Override
     public Class returnedClass() {
-        return enumClass;
+        return DateTime.class;
     }
 
     @Override
     public boolean equals(Object x, Object y) throws HibernateException {
-        return Objects.equals(x, y);
+        return Objects.equal(x, y);
     }
 
     @Override
@@ -77,19 +78,17 @@ public class StringEnumUserType implements UserType, ParameterizedType, Serializ
     @Override
     public Object nullSafeGet(ResultSet rs, String[] names, SessionImplementor session, Object owner)
             throws HibernateException, SQLException {
-
-        String value = rs.getString(names[0]);
-        return rs.wasNull() ? null : Enum.valueOf(enumClass, value);
+        Object value = StandardBasicTypes.TIMESTAMP.nullSafeGet(rs, names[0], session, owner);
+        return asDateTime(value);
     }
 
     @Override
-    public void nullSafeSet(PreparedStatement st, Object value, int index, SessionImplementor session)
-            throws HibernateException, SQLException {
-
-        if (value == null)
-            st.setNull(index, sqlTypes()[0]);
-        else
-            st.setString(index, ((Enum) value).name());
+    public void nullSafeSet(PreparedStatement st, Object value, int index, SessionImplementor session) throws HibernateException, SQLException {
+        if (value == null) {
+            StandardBasicTypes.TIMESTAMP.nullSafeSet(st, null, index, session);
+        } else {
+            StandardBasicTypes.TIMESTAMP.nullSafeSet(st, asDateTime(value).toDate(), index, session);
+        }
     }
 
     @Override
@@ -99,7 +98,7 @@ public class StringEnumUserType implements UserType, ParameterizedType, Serializ
 
     @Override
     public boolean isMutable() {
-        return false;
+        return true;
     }
 
     @Override
@@ -109,11 +108,11 @@ public class StringEnumUserType implements UserType, ParameterizedType, Serializ
 
     @Override
     public Object assemble(Serializable cached, Object owner) throws HibernateException {
-        return cached;
+        return deepCopy(cached);
     }
 
     @Override
     public Object replace(Object original, Object target, Object owner) throws HibernateException {
-        return original;
+        return deepCopy(original);
     }
 }

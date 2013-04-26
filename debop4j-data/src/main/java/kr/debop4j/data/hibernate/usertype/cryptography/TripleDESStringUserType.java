@@ -18,6 +18,7 @@ package kr.debop4j.data.hibernate.usertype.cryptography;
 
 import kr.debop4j.core.cryptography.symmetric.ISymmetricByteEncryptor;
 import kr.debop4j.core.cryptography.symmetric.TripleDESByteEncryptor;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * TripleDES 알고리즘을 이용한 {@link TripleDESByteEncryptor} 를 이용하여, 속성 값을 암호화하여 저장합니다.
@@ -25,9 +26,11 @@ import kr.debop4j.core.cryptography.symmetric.TripleDESByteEncryptor;
  * @author sunghyouk.bae@gmail.com
  * @since 12. 9. 18
  */
+@Slf4j
 public class TripleDESStringUserType extends AbstractSymmetricEncryptStringUserType {
 
     private static final ISymmetricByteEncryptor encryptor = new TripleDESByteEncryptor();
+    private static final long serialVersionUID = 2584675219844345168L;
 
     @Override
     public ISymmetricByteEncryptor getEncryptor() {

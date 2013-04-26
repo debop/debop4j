@@ -18,6 +18,7 @@ package kr.debop4j.data.hibernate.usertype.compress;
 
 import kr.debop4j.core.compress.GZipCompressor;
 import kr.debop4j.core.compress.ICompressor;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * GZip 알고리즘 ({@link GZipCompressor} 으로 이진 데이터 값을 압축하여 Binary로 저장합니다.
@@ -25,9 +26,11 @@ import kr.debop4j.core.compress.ICompressor;
  * @author sunghyouk.bae@gmail.com
  * @since 12. 9. 18
  */
+@Slf4j
 public class GZipBinaryUserType extends AbstractCompressedBinaryUserType {
 
     private static final ICompressor compressor = new GZipCompressor();
+    private static final long serialVersionUID = -5975616952629118969L;
 
     @Override
     public ICompressor getCompressor() {
