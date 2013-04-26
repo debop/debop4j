@@ -123,6 +123,8 @@ import java.util.List;
  * @since 1.0
  */
 public class StringUtil {
+
+
     // Performance testing notes (JDK 1.4, Jul03, scolebourne)
     // Whitespace:
     // Character.isWhitespace() is faster than WHITESPACE.indexOf()
@@ -136,7 +138,7 @@ public class StringUtil {
     // String.charAt(n) is best bet overall
     //
     // Append:
-    // String.concat about twice as fast as StringBuffer.append
+    // String.concat about twice as fast as StringBuilder.append
     // (not sure who tested this)
 
     /**
@@ -2936,7 +2938,7 @@ public class StringUtil {
         }
 
         bufSize *= ((array[startIndex] == null ? 16 : array[startIndex].toString().length()) + 1);
-        StringBuffer buf = new StringBuffer(bufSize);
+        StringBuilder buf = new StringBuilder(bufSize);
 
         for (int i = startIndex; i < endIndex; i++) {
             if (i > startIndex) {
@@ -3025,7 +3027,7 @@ public class StringUtil {
         bufSize *= ((array[startIndex] == null ? 16 : array[startIndex].toString().length())
                 + separator.length());
 
-        StringBuffer buf = new StringBuffer(bufSize);
+        StringBuilder buf = new StringBuilder(bufSize);
 
         for (int i = startIndex; i < endIndex; i++) {
             if (i > startIndex) {
@@ -3067,7 +3069,7 @@ public class StringUtil {
         }
 
         // two or more elements
-        StringBuffer buf = new StringBuffer(256); // Java default is 16, probably too small
+        StringBuilder buf = new StringBuilder(256); // Java default is 16, probably too small
         if (first != null) {
             buf.append(first);
         }
@@ -3111,7 +3113,7 @@ public class StringUtil {
         }
 
         // two or more elements
-        StringBuffer buf = new StringBuffer(256); // Java default is 16, probably too small
+        StringBuilder buf = new StringBuilder(256); // Java default is 16, probably too small
         if (first != null) {
             buf.append(first);
         }
@@ -3503,7 +3505,7 @@ public class StringUtil {
         int increase = replacement.length() - replLength;
         increase = (increase < 0 ? 0 : increase);
         increase *= (max < 0 ? 16 : (max > 64 ? 64 : max));
-        StringBuffer buf = new StringBuffer(text.length() + increase);
+        StringBuilder buf = new StringBuilder(text.length() + increase);
         while (end != -1) {
             buf.append(text.substring(start, end)).append(replacement);
             start = end + replLength;
@@ -3720,7 +3722,7 @@ public class StringUtil {
         // have upper-bound at 20% increase, then let Java take over
         increase = Math.min(increase, text.length() / 5);
 
-        StringBuffer buf = new StringBuffer(text.length() + increase);
+        StringBuilder buf = new StringBuilder(text.length() + increase);
 
         while (textIndex != -1) {
 
@@ -3844,7 +3846,8 @@ public class StringUtil {
         boolean modified = false;
         int replaceCharsLength = replaceChars.length();
         int strLength = str.length();
-        StringBuffer buf = new StringBuffer(strLength);
+
+        StringBuilder buf = new StringBuilder(strLength);
         for (int i = 0; i < strLength; i++) {
             char ch = str.charAt(i);
             int index = searchChars.indexOf(ch);
@@ -3892,7 +3895,7 @@ public class StringUtil {
      *             Method will be removed in Commons Lang 3.0.
      */
     public static String overlayString(String text, String overlay, int start, int end) {
-        return new StringBuffer(start + overlay.length() + text.length() - end + 1)
+        return new StringBuilder(start + overlay.length() + text.length() - end + 1)
                 .append(text.substring(0, start))
                 .append(overlay)
                 .append(text.substring(end))
@@ -3953,7 +3956,7 @@ public class StringUtil {
             start = end;
             end = temp;
         }
-        return new StringBuffer(len + start - end + overlay.length() + 1)
+        return new StringBuilder(len + start - end + overlay.length() + 1)
                 .append(str.substring(0, start))
                 .append(overlay)
                 .append(str.substring(end))
@@ -4018,7 +4021,7 @@ public class StringUtil {
                 }
                 return new String(output2);
             default:
-                StringBuffer buf = new StringBuffer(outputLength);
+                StringBuilder buf = new StringBuilder(outputLength);
                 for (int i = 0; i < repeat; i++) {
                     buf.append(str);
                 }
@@ -4476,7 +4479,7 @@ public class StringUtil {
         if (str == null || (strLen = str.length()) == 0) {
             return str;
         }
-        return new StringBuffer(strLen)
+        return new StringBuilder(strLen)
                 .append(Character.toTitleCase(str.charAt(0)))
                 .append(str.substring(1))
                 .toString();
@@ -4511,7 +4514,6 @@ public class StringUtil {
      *
      * @param str the String to uncapitalize, may be null
      * @return the uncapitalized String, <code>null</code> if null String input
-     * @see WordUtils#uncapitalize(String)
      * @see #capitalize(String)
      * @since 2.0
      */
@@ -4520,7 +4522,7 @@ public class StringUtil {
         if (str == null || (strLen = str.length()) == 0) {
             return str;
         }
-        return new StringBuffer(strLen)
+        return new StringBuilder(strLen)
                 .append(Character.toLowerCase(str.charAt(0)))
                 .append(str.substring(1))
                 .toString();
@@ -4571,7 +4573,7 @@ public class StringUtil {
         if (str == null || (strLen = str.length()) == 0) {
             return str;
         }
-        StringBuffer buffer = new StringBuffer(strLen);
+        StringBuilder buffer = new StringBuilder(strLen);
 
         char ch = 0;
         for (int i = 0; i < strLen; i++) {
@@ -4947,7 +4949,7 @@ public class StringUtil {
         if (str == null) {
             return null;
         }
-        return new StringBuffer(str).reverse().toString();
+        return new StringBuilder(str).reverse().toString();
     }
 
 

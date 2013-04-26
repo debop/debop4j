@@ -137,7 +137,7 @@ public final class JarResources {
      * @param ze a ZipEntry
      */
     private String dumpZipEntry(ZipEntry ze) {
-        StringBuffer sb = new StringBuffer();
+        StringBuilder sb = new StringBuilder();
         if (ze.isDirectory()) {
             sb.append("d ");
         } else {

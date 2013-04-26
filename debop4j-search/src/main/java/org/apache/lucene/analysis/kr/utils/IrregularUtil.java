@@ -245,7 +245,7 @@ public class IrregularUtil {
 
         if (((jasos1.length == 3 && jasos1[2] == 'ㄹ') || jasos1.length == 2) && (ch2 == '러' || ch2 == '라')) {
 
-            StringBuffer sb = new StringBuffer();
+            StringBuilder sb = new StringBuilder();
 
             ch1 = MorphUtil.makeChar(ch1, 0);
             if (start.length() > 2)

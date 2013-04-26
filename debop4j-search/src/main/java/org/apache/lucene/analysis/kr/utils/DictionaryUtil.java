@@ -19,6 +19,8 @@ package org.apache.lucene.analysis.kr.utils;
 import org.apache.lucene.analysis.kr.morph.CompoundEntry;
 import org.apache.lucene.analysis.kr.morph.MorphException;
 import org.apache.lucene.analysis.kr.morph.WordEntry;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -26,7 +28,10 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 
+@SuppressWarnings("unchecked")
 public class DictionaryUtil {
+
+    private static final Logger log = LoggerFactory.getLogger(DictionaryUtil.class);
 
     private static Trie<String, WordEntry> dictionary;
 
@@ -51,16 +56,16 @@ public class DictionaryUtil {
         List<String> strList = null;
         List<String> compounds = null;
         try {
+            log.info("사전을 로드합니다...");
+
             strList = FileUtil.readLines(KoreanEnv.getInstance().getValue(KoreanEnv.FILE_DICTIONARY), "UTF-8");
             strList.addAll(FileUtil.readLines(KoreanEnv.getInstance().getValue(KoreanEnv.FILE_EXTENSION), "UTF-8"));
             compounds = FileUtil.readLines(KoreanEnv.getInstance().getValue(KoreanEnv.FILE_COMPOUNDS), "UTF-8");
-        } catch (IOException e) {
-            new MorphException(e.getMessage(), e);
+
+            log.info("사전을 로드했습니다.");
         } catch (Exception e) {
-            new MorphException(e.getMessage(), e);
+            throw new MorphException(e.getMessage(), e);
         }
-        if (strList == null) throw new MorphException("dictionary is null");
-        ;
 
         for (String str : strList) {
             String[] infos = StringUtil.split(str, ",");

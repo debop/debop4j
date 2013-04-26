@@ -16,10 +16,13 @@
 
 package org.apache.lucene.analysis.kr.morph;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class WordEntry {
+public class WordEntry implements Serializable {
+
+    private static final long serialVersionUID = -5847413036811319308L;
 
     public static final int IDX_NOUN = 0;
     public static final int IDX_VERB = 1;
@@ -42,7 +45,7 @@ public class WordEntry {
      */
     private char[] features;
 
-    private List<CompoundEntry> compounds = new ArrayList();
+    private List<CompoundEntry> compounds = new ArrayList<CompoundEntry>();
 
     public WordEntry() {
 
@@ -90,5 +93,4 @@ public class WordEntry {
     public List<CompoundEntry> getCompounds() {
         return this.compounds;
     }
-
 }

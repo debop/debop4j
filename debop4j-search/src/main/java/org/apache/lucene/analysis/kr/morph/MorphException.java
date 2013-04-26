@@ -18,6 +18,8 @@ package org.apache.lucene.analysis.kr.morph;
 
 public class MorphException extends Exception {
 
+    private static final long serialVersionUID = 7605164221652820591L;
+
     public MorphException() {
         super();
     }

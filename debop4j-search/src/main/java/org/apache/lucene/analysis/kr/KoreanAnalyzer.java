@@ -19,6 +19,8 @@ package org.apache.lucene.analysis.kr;
 
 import org.apache.lucene.analysis.*;
 import org.apache.lucene.util.Version;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.io.Reader;
@@ -27,12 +29,17 @@ import java.util.List;
 import java.util.Set;
 
 /**
- * Filters {@link StandardTokenizer} with {@link StandardFilter}, {@link
- * org.apache.lucene.analysis.LowerCaseFilter} and {@link org.apache.lucene.analysis.StopFilter}, using a list of English stop words.
+ * Filters StandardTokenizer with StandardFilter,
+ * {@link org.apache.lucene.analysis.LowerCaseFilter} and {@link org.apache.lucene.analysis.StopFilter},
+ * using a list of English stop words.
  *
  * @version $Id: KoreanAnalyzer.java,v 1.2 2013/04/07 13:10:27 smlee0818 Exp $
  */
 public class KoreanAnalyzer extends StopwordAnalyzerBase {
+
+    private static final Logger log = LoggerFactory.getLogger(KoreanAnalyzer.class);
+    private static final boolean isTraceEnabled = log.isTraceEnabled();
+    private static final boolean isDebugEnabled = log.isDebugEnabled();
 
     /**
      * Default maximum allowed token length
@@ -45,7 +52,7 @@ public class KoreanAnalyzer extends StopwordAnalyzerBase {
      * Specifies whether deprecated acronyms should be replaced with HOST type.
      * See {@linkplain "https://issues.apache.org/jira/browse/LUCENE-1068"}
      */
-    private final boolean replaceInvalidAcronym;
+    private boolean replaceInvalidAcronym = true;
 
     private Set stopSet;
 
@@ -67,29 +74,27 @@ public class KoreanAnalyzer extends StopwordAnalyzerBase {
 
 
     static {
-        List stopWords = Arrays.asList(new String[]{ "a", "an", "and", "are", "as", "at", "be", "but", "by",
+        List<String> stopWords = Arrays.asList(
+                "a", "an", "and", "are", "as", "at", "be", "but", "by",
                 "for", "if", "in", "into", "is", "it", "no", "not", "of", "on", "or", "such", "that", "the",
                 "their", "then", "there", "these", "they", "this", "to", "was", "will", "with",
-                "이", "그", "저", "것", "수", "등", "들", "및", "에서", "그리고", "그래서", "또", "또는" }
-        );
+                "이", "그", "저", "것", "수", "등", "들", "및", "에서", "그리고", "그래서", "또", "또는");
 
-        CharArraySet stopSet = new CharArraySet(Version.LUCENE_32, stopWords.size(), false);
+        CharArraySet stopSet = new CharArraySet(Version.LUCENE_36, stopWords.size(), false);
 
         stopSet.addAll(stopWords);
         STOP_WORDS_SET = CharArraySet.unmodifiableSet(stopSet);
     }
 
     public KoreanAnalyzer() {
-        this(Version.LUCENE_32, STOP_WORDS_SET);
+        this(Version.LUCENE_36, STOP_WORDS_SET);
     }
 
     /**
      * 검색을 위한 형태소분석
-     *
-     * @param search
      */
     public KoreanAnalyzer(boolean exactMatch) {
-        this(Version.LUCENE_32, STOP_WORDS_SET);
+        this(Version.LUCENE_36, STOP_WORDS_SET);
         this.exactMatch = exactMatch;
     }
 
@@ -99,8 +104,6 @@ public class KoreanAnalyzer extends StopwordAnalyzerBase {
 
     /**
      * Builds an analyzer with the stop words from the given file.
-     *
-     * @see org.apache.lucene.analysis.WordlistLoader#getWordSet(java.io.File)
      */
     public KoreanAnalyzer(Version matchVersion) throws IOException {
         this(matchVersion, STOP_WORDS_SET);
@@ -132,17 +135,22 @@ public class KoreanAnalyzer extends StopwordAnalyzerBase {
      */
     public KoreanAnalyzer(Version matchVersion, Set<?> stopWords) {
         super(matchVersion, stopWords);
-        replaceInvalidAcronym = matchVersion.onOrAfter(Version.LUCENE_24);
+        replaceInvalidAcronym = true; // matchVersion.onOrAfter(Version.LUCENE_36);
     }
 
     @Override
     protected TokenStreamComponents createComponents(String fieldName, Reader reader) {
+        if (isDebugEnabled)
+            log.debug("TokenStreamComponents를 생성합니다. fieldName=[{}]", fieldName);
+
         final KoreanTokenizer src = new KoreanTokenizer(matchVersion, reader);
         src.setMaxTokenLength(maxTokenLength);
         //src.setReplaceInvalidAcronym(replaceInvalidAcronym);
+
         TokenStream tok = new KoreanFilter(src, bigrammable, hasOrigin, exactMatch);
         tok = new LowerCaseFilter(matchVersion, tok);
         tok = new StopFilter(matchVersion, tok, stopwords);
+
         return new TokenStreamComponents(src, tok) {
             @Override
             protected boolean reset(final Reader reader) throws IOException {
@@ -155,8 +163,6 @@ public class KoreanAnalyzer extends StopwordAnalyzerBase {
     /**
      * determine whether the bigram index term is returned or not if a input word is failed to analysis
      * If true is set, the bigram index term is returned. If false is set, the bigram index term is not returned.
-     *
-     * @param is
      */
     public void setBigrammable(boolean is) {
         bigrammable = is;
@@ -164,8 +170,6 @@ public class KoreanAnalyzer extends StopwordAnalyzerBase {
 
     /**
      * determin whether the original term is returned or not if a input word is analyzed morphically.
-     *
-     * @param has
      */
     public void setHasOrigin(boolean has) {
         hasOrigin = has;
@@ -173,8 +177,6 @@ public class KoreanAnalyzer extends StopwordAnalyzerBase {
 
     /**
      * determin whether the original compound noun is returned or not if a input word is analyzed morphically.
-     *
-     * @param has
      */
     public void setOriginCNoun(boolean cnoun) {
         originCNoun = cnoun;
@@ -182,8 +184,6 @@ public class KoreanAnalyzer extends StopwordAnalyzerBase {
 
     /**
      * determin whether the original compound noun is returned or not if a input word is analyzed morphically.
-     *
-     * @param has
      */
     public void setExactMatch(boolean exact) {
         exactMatch = exact;

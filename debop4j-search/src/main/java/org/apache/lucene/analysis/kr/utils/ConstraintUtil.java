@@ -26,6 +26,7 @@ import java.util.Map;
  *
  * @author smlee
  */
+@SuppressWarnings("unchecked")
 public class ConstraintUtil {
 
     private static Map hahes = new HashMap(); // "글로벌화해 ", "민족화해" 처럼 화해와 결합이 가능한 명사
@@ -115,9 +116,6 @@ public class ConstraintUtil {
 
     /**
      * 어미가 ㄴ,ㄹ,ㅁ 으로 끝나는지 조사한다.
-     *
-     * @param eomi
-     * @return
      */
     public static boolean isNLM(String eomi) {
 
@@ -133,46 +131,26 @@ public class ConstraintUtil {
     }
 
     public static boolean isEomiPhrase(int ptn) {
-
-        if (PTN_MLIST.get(ptn) != null) return true;
-
-        return false;
-
+        return PTN_MLIST.get(ptn) != null;
     }
 
     public static boolean isJosaNounPhrase(int ptn) {
-
-        if (PTN_JLIST.get(ptn) != null) return true;
-
-        return false;
-
+        return PTN_JLIST.get(ptn) != null;
     }
 
     public static boolean isJosaAdvPhrase(int ptn) {
-
-        if (PatternConstants.PTN_ADVJ == ptn) return true;
-
-        return false;
-
+        return PatternConstants.PTN_ADVJ == ptn;
     }
 
     public static boolean isAdvPhrase(int ptn) {
-
-        if (PatternConstants.PTN_ADVJ == ptn || PatternConstants.PTN_AID == ptn) return true;
-
-        return false;
-
+        return (PatternConstants.PTN_ADVJ == ptn || PatternConstants.PTN_AID == ptn);
     }
 
     public static boolean isTwoJosa(String josa) {
-
         return (JOSA_TWO.get(josa) != null);
-
     }
 
     public static boolean isThreeJosa(String josa) {
-
         return (JOSA_THREE.get(josa) != null);
-
     }
 }

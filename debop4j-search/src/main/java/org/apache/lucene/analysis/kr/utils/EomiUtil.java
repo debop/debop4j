@@ -23,6 +23,7 @@ import org.apache.lucene.analysis.kr.morph.PatternConstants;
 import java.util.ArrayList;
 import java.util.List;
 
+@SuppressWarnings("unchecked")
 public class EomiUtil {
 
 
@@ -37,8 +38,6 @@ public class EomiUtil {
     /**
      * 가장 길이가 긴 어미를 분리한다.
      *
-     * @param term
-     * @return
      * @throws org.apache.lucene.analysis.kr.morph.MorphException
      *
      */
@@ -125,9 +124,6 @@ public class EomiUtil {
 
     /**
      * 선어말어미를 분석한다.
-     *
-     * @param stem
-     * @return
      */
     public static String[] splitPomi(String stem) throws MorphException {
 
@@ -240,8 +236,6 @@ public class EomiUtil {
     /**
      * 불규칙 용언의 원형을 구한다.
      *
-     * @param output
-     * @return
      * @throws org.apache.lucene.analysis.kr.morph.MorphException
      *
      */
@@ -255,7 +249,7 @@ public class EomiUtil {
         String ending = output.getEomi();
         if (output.getPomi() != null) ending = output.getPomi();
 
-        List<String[]> irrs = new ArrayList();
+        List<String[]> irrs = new ArrayList<String[]>();
 
         irregularStem(irrs, output.getStem(), ending);
         irregularEnding(irrs, output.getStem(), ending);
@@ -281,10 +275,6 @@ public class EomiUtil {
 
     /**
      * 어간만 변하는 경우
-     *
-     * @param results
-     * @param stem
-     * @param ending
      */
     private static void irregularStem(List results, String stem, String ending) {
 
@@ -342,10 +332,6 @@ public class EomiUtil {
 
     /**
      * 어미만 변하는 경우
-     *
-     * @param results
-     * @param stem
-     * @param ending
      */
     private static void irregularEnding(List results, String stem, String ending) {
         if (ending.startsWith("ㅆ")) return;
@@ -380,10 +366,6 @@ public class EomiUtil {
 
     /**
      * 어간과 어미가 모두 변하는 경우
-     *
-     * @param results
-     * @param stem
-     * @param ending
      */
     private static void irregularAO(List results, String stem, String ending) {
 
@@ -540,9 +522,6 @@ public class EomiUtil {
 
     /**
      * '음/기' + '이' + 어미, '에서/부터/에서부터' + '이' + 어미 인지 조사한다.
-     *
-     * @param stem
-     * @return
      */
     public static boolean endsWithEEomi(String stem) {
         int len = stem.length();
@@ -565,10 +544,6 @@ public class EomiUtil {
         results[1] = pomi;
     }
 
-    /**
-     * @param ch
-     * @return
-     */
     public static boolean IsNLMBSyl(char ech, char lch) throws MorphException {
 
         char[] features = SyllableUtil.getFeature(ech);
@@ -597,9 +572,6 @@ public class EomiUtil {
      * 4. 어미 '아/어'가 탈락되는 어절
      * 5. '아/어'의 변이체 분리
      *
-     * @param stem
-     * @param end
-     * @return
      * @throws org.apache.lucene.analysis.kr.morph.MorphException
      *
      */
@@ -639,7 +611,7 @@ public class EomiUtil {
         } else if ((chrs.length == 2) && (chrs[1] == 'ㅘ' || chrs[1] == 'ㅙ' || chrs[1] == 'ㅝ' || chrs[1] == 'ㅕ' || chrs[1] == 'ㅐ' || chrs[1] == 'ㅒ') &&
                 (DictionaryUtil.combineAndEomiCheck('어', end) != null)) {
 
-            StringBuffer sb = new StringBuffer();
+            StringBuilder sb = new StringBuilder();
 
             if (strlen > 1) sb.append(stem.substring(0, strlen - 1));
 

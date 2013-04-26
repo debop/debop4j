@@ -16,16 +16,19 @@
 
 package org.apache.lucene.analysis.kr.morph;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class WSOutput implements Cloneable {
+public class WSOutput implements Cloneable, Serializable {
+
+    private static final long serialVersionUID = 5688830925667373969L;
 
     private int lastStart = 0;
 
     private int lastEnd = 0;
 
-    private List<AnalysisOutput> phrases = new ArrayList();
+    private List<AnalysisOutput> phrases = new ArrayList<AnalysisOutput>();
 
     public WSOutput() {
 
@@ -160,14 +163,9 @@ public class WSOutput implements Cloneable {
     public WSOutput clone() throws CloneNotSupportedException {
 
         WSOutput candidate = (WSOutput) super.clone();
-
         candidate.setLastStart(lastStart);
-
         candidate.setLastEnd(lastEnd);
-
-        List list = new ArrayList();
-        list.addAll(phrases);
-        candidate.setPhrases(list);
+        candidate.setPhrases(new ArrayList<AnalysisOutput>(phrases));
 
         return candidate;
     }

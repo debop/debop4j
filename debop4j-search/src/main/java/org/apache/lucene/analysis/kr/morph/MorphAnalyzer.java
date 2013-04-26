@@ -17,6 +17,8 @@
 package org.apache.lucene.analysis.kr.morph;
 
 import org.apache.lucene.analysis.kr.utils.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -24,6 +26,10 @@ import java.util.HashMap;
 import java.util.List;
 
 public class MorphAnalyzer {
+
+    private static final Logger log = LoggerFactory.getLogger(MorphAnalyzer.class);
+    private static final boolean isTraceEnabled = log.isTraceEnabled();
+    private static final boolean isDebugEnabled = log.isDebugEnabled();
 
     /**
      * starting word of sentence.
@@ -50,7 +56,7 @@ public class MorphAnalyzer {
         cnAnalyzer.setExactMach(is);
     }
 
-    public List analyze(String input) throws MorphException {
+    public List<AnalysisOutput> analyze(String input) throws MorphException {
 
         if (input.endsWith("."))
             return analyze(input.substring(0, input.length() - 1), POS_END);
@@ -58,21 +64,16 @@ public class MorphAnalyzer {
         return analyze(input, POS_MID);
     }
 
-    /**
-     * @param input
-     * @param pos
-     * @return
-     * @throws org.apache.lucene.analysis.kr.morph.MorphException
-     *
-     */
-    public List analyze(String input, int pos) throws MorphException {
+    @SuppressWarnings("unchecked")
+    public List<AnalysisOutput> analyze(String input, int pos) throws MorphException {
 
-        List<AnalysisOutput> candidates = new ArrayList();
+        List<AnalysisOutput> candidates = new ArrayList<AnalysisOutput>();
         boolean isVerbOnly = MorphUtil.hasVerbOnly(input);
 
         analysisByRule(input, candidates);
 
-        if (!isVerbOnly || candidates.size() == 0) addSingleWord(input, candidates);
+        if (!isVerbOnly || candidates.size() == 0)
+            addSingleWord(input, candidates);
 
         Collections.sort(candidates, new AnalysisOutputComparator());
 
@@ -99,13 +100,13 @@ public class MorphAnalyzer {
             Collections.sort(candidates, new AnalysisOutputComparator());
         }
 
-        List<AnalysisOutput> results = new ArrayList();
+        List<AnalysisOutput> results = new ArrayList<AnalysisOutput>();
 
         boolean hasCorrect = false;
         boolean hasCorrectNoun = false;
         boolean correctCnoun = false;
 
-        HashMap stems = new HashMap();
+        HashMap<String, AnalysisOutput> stems = new HashMap<String, AnalysisOutput>();
         AnalysisOutput noun = null;
 
         double ratio = 0;
@@ -159,7 +160,7 @@ public class MorphAnalyzer {
         return results;
     }
 
-    private void analysisByRule(String input, List candidates) throws MorphException {
+    private void analysisByRule(String input, List<AnalysisOutput> candidates) throws MorphException {
 
         boolean josaFlag = true;
         boolean eomiFlag = true;
@@ -191,7 +192,7 @@ public class MorphAnalyzer {
         }
     }
 
-    private void addResults(AnalysisOutput o, List results, HashMap<String, AnalysisOutput> stems) {
+    private void addResults(AnalysisOutput o, List<AnalysisOutput> results, HashMap<String, AnalysisOutput> stems) {
         AnalysisOutput old = stems.get(o.getStem());
         if (old == null || old.getPos() != o.getPos()) {
             results.add(o);
@@ -226,8 +227,8 @@ public class MorphAnalyzer {
             } else if (entry.getFeature(WordEntry.IDX_NOUN) == '2') {
                 candidates.add(0, output);
             }
-
-            if (entry.getFeature(WordEntry.IDX_VERB) != '1') return;
+            if (entry.getFeature(WordEntry.IDX_VERB) != '1')
+                return;
         } else if (candidates.size() == 0 || !NounUtil.endsWith2Josa(word)) {
             output.setScore(AnalysisOutput.SCORE_ANALYSIS);
             candidates.add(0, output);
@@ -240,13 +241,13 @@ public class MorphAnalyzer {
      * 용언 + '음/기' + 조사 (PTN_VMJ)
      * 용언 + '아/어' + 보조용언 + '음/기' + 조사(PTN_VMXMJ)
      *
-     * @param stem
-     * @param end
-     * @param candidates
      * @throws org.apache.lucene.analysis.kr.morph.MorphException
      *
      */
-    public void analysisWithJosa(String stem, String end, List candidates) throws MorphException {
+    public void analysisWithJosa(String stem, String end, List<AnalysisOutput> candidates) throws MorphException {
+
+        if (isTraceEnabled)
+            log.trace("조사를 분석합니다. stem=[{}], end=[{}]", stem, end);
 
         if (stem == null || stem.length() == 0) return;
 
@@ -287,13 +288,11 @@ public class MorphAnalyzer {
      * 4. 돕다 : 용언 + 어미 (PTN_VM) <br>
      * 5. 도움이다 : 용언 + '음/기' + '이' + 어미 (PTN_VMCM) <br>
      * 6. 도와주다 : 용언 + '아/어' + 보조용언 + 어미 (PTN_VMXM) <br>
-     *
-     * @param stem
-     * @param end
-     * @param candidates
-     * @throws CloneNotSupportedException
      */
-    public void analysisWithEomi(String stem, String end, List candidates) throws MorphException {
+    public void analysisWithEomi(String stem, String end, List<AnalysisOutput> candidates) throws MorphException {
+
+        if (isTraceEnabled)
+            log.trace("조사를 분석합니다. stem=[{}], end=[{}]", stem, end);
 
         String[] morphs = EomiUtil.splitEomi(stem, end);
         if (morphs[0] == null) return; // 어미가 사전에 등록되어 있지 않다면....
@@ -366,8 +365,6 @@ public class MorphAnalyzer {
      * 복합명사인지 여부는 단위명사가 모두 사전에 있는지 여부로 판단한다.
      * 단위명사는 2글자 이상 단어에서만 찾는다.
      *
-     * @param o
-     * @return
      * @throws org.apache.lucene.analysis.kr.morph.MorphException
      *
      */

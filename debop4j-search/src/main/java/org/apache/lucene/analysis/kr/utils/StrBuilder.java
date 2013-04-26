@@ -17,6 +17,7 @@
 package org.apache.lucene.analysis.kr.utils;
 
 import java.io.Reader;
+import java.io.Serializable;
 import java.io.Writer;
 import java.util.Collection;
 import java.util.Iterator;
@@ -67,7 +68,7 @@ import java.util.Iterator;
  * @version $Id: StrBuilder.java,v 1.1 2012/02/08 14:56:31 smlee0818 Exp $
  * @since 2.2
  */
-public class StrBuilder implements Cloneable {
+public class StrBuilder implements Cloneable, Serializable {
 
     /**
      * The extra capacity for new builders.
@@ -556,7 +557,7 @@ public class StrBuilder implements Cloneable {
      * @param str the string buffer to append
      * @return this, to enable chaining
      */
-    public StrBuilder append(StringBuffer str) {
+    public StrBuilder append(StringBuilder str) {
         if (str == null) {
             return appendNull();
         }
@@ -579,7 +580,7 @@ public class StrBuilder implements Cloneable {
      * @param length     the length to append, must be valid
      * @return this, to enable chaining
      */
-    public StrBuilder append(StringBuffer str, int startIndex, int length) {
+    public StrBuilder append(StringBuilder str, int startIndex, int length) {
         if (str == null) {
             return appendNull();
         }
@@ -835,7 +836,7 @@ public class StrBuilder implements Cloneable {
      * @return this, to enable chaining
      * @since 2.3
      */
-    public StrBuilder appendln(StringBuffer str, int startIndex, int length) {
+    public StrBuilder appendln(StringBuilder str, int startIndex, int length) {
         return append(str, startIndex, length).appendNewLine();
     }
 
@@ -970,8 +971,8 @@ public class StrBuilder implements Cloneable {
      */
     public StrBuilder appendAll(Object[] array) {
         if (array != null && array.length > 0) {
-            for (int i = 0; i < array.length; i++) {
-                append(array[i]);
+            for (Object anArray : array) {
+                append(anArray);
             }
         }
         return this;

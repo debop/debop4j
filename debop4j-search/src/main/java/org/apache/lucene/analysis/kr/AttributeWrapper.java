@@ -16,19 +16,23 @@
 
 package org.apache.lucene.analysis.kr;
 
+import org.apache.lucene.analysis.tokenattributes.CharTermAttribute;
 import org.apache.lucene.analysis.tokenattributes.OffsetAttribute;
 import org.apache.lucene.analysis.tokenattributes.PositionIncrementAttribute;
-import org.apache.lucene.analysis.tokenattributes.TermAttribute;
 import org.apache.lucene.analysis.tokenattributes.TypeAttribute;
 
-public class AttributeWrapper {
+import java.io.Serializable;
 
-    private TermAttribute termAtt;
+public class AttributeWrapper implements Serializable {
+
+    private static final long serialVersionUID = 4603098749655824935L;
+
+    private CharTermAttribute termAtt;
     private OffsetAttribute offsetAtt;
     private PositionIncrementAttribute posIncrAtt;
     private TypeAttribute typeAtt;
 
-    public AttributeWrapper(TermAttribute term, OffsetAttribute offset,
+    public AttributeWrapper(CharTermAttribute term, OffsetAttribute offset,
                             PositionIncrementAttribute pos, TypeAttribute type) {
         this.termAtt = term;
         this.offsetAtt = offset;
@@ -40,11 +44,11 @@ public class AttributeWrapper {
 
     }
 
-    public TermAttribute getTermAtt() {
+    public CharTermAttribute getTermAtt() {
         return termAtt;
     }
 
-    public void setTermAtt(TermAttribute termAtt) {
+    public void setTermAtt(CharTermAttribute termAtt) {
         this.termAtt = termAtt;
     }
 

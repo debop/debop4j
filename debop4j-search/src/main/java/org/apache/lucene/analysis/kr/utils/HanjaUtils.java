@@ -17,6 +17,8 @@
 package org.apache.lucene.analysis.kr.utils;
 
 import org.apache.lucene.analysis.kr.morph.MorphException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -25,23 +27,29 @@ import java.util.Map;
 
 public class HanjaUtils {
 
+    private static final Logger log = LoggerFactory.getLogger(HanjaUtils.class);
+
     private static Map<String, char[]> mapHanja;
 
     public synchronized static void loadDictionary() throws MorphException {
+        if (log.isDebugEnabled())
+            log.debug("Load Hanja Dictionary...");
         try {
-            List<String> strList = FileUtil.readLines("org/apache/lucene/analysis/kr/dic/mapHanja.dic", "UTF-8");
-            mapHanja = new HashMap();
+            List<String> strList = FileUtil.readLines(KoreanEnv.getInstance().getValue(KoreanEnv.FILE_MAPHANJA), "UTF-8");
+            // FileUtil.readLines("org/apache/lucene/analysis/kr/dic/mapHanja.dic", "UTF-8");
+            mapHanja = new HashMap<String, char[]>();
 
-            for (int i = 0; i < strList.size(); i++) {
-
-                if (strList.get(i).length() < 1 ||
-                        strList.get(i).indexOf(",") == -1) continue;
-
-                String[] hanInfos = StringUtil.split(strList.get(i), ",");
-
-                if (hanInfos.length != 2) continue;
+            for (String str : strList) {
+                if (str.length() < 1 || !str.contains(","))
+                    continue;
+                String[] hanInfos = StringUtil.split(str, ",");
+                if (hanInfos.length != 2)
+                    continue;
 
                 String hanja = StringEscapeUtil.unescapeJava(hanInfos[0]);
+
+                if (log.isTraceEnabled())
+                    log.trace("Hanja 를 추가합니다. hanja=[{}]", hanja);
 
                 mapHanja.put(hanja, hanInfos[1].toCharArray());
             }
@@ -54,8 +62,6 @@ public class HanjaUtils {
      * 한자에 대응하는 한글을 찾아서 반환한다.
      * 하나의 한자는 여러 음으로 읽일 수 있으므로 가능한 모든 음을 한글로 반환한다.
      *
-     * @param hanja
-     * @return
      * @throws org.apache.lucene.analysis.kr.morph.MorphException
      *
      */

@@ -16,12 +16,16 @@
 
 package org.apache.lucene.analysis.kr.morph;
 
+import java.io.Serializable;
+
 /**
  * 복합명사의 개별단어에 대한 정보를 담고있는 클래스
  *
  * @author S.M.Lee
  */
-public class CompoundEntry {
+public class CompoundEntry implements Serializable {
+
+    private static final long serialVersionUID = -8051126625296262519L;
 
     private String word;
 

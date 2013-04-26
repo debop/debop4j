@@ -16,10 +16,13 @@
 
 package org.apache.lucene.analysis.kr.morph;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class WSAOutput {
+public class WSAOutput implements Serializable {
+
+    private static final long serialVersionUID = -2475079839736710312L;
 
     private String source;
 
@@ -30,15 +33,15 @@ public class WSAOutput {
     private int end = 0;
 
     public WSAOutput() {
-        results = new ArrayList();
+        results = new ArrayList<AnalysisOutput>();
     }
 
     public WSAOutput(String src) {
         source = src;
-        results = new ArrayList();
+        results = new ArrayList<AnalysisOutput>();
     }
 
-    public WSAOutput(String src, List list) {
+    public WSAOutput(String src, List<AnalysisOutput> list) {
         source = src;
         results = list;
     }
@@ -55,7 +58,7 @@ public class WSAOutput {
         return results;
     }
 
-    public void setResults(List results) {
+    public void setResults(List<AnalysisOutput> results) {
         this.results = results;
     }
 

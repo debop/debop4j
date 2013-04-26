@@ -45,7 +45,7 @@ public class WordSpaceAnalyzer {
 
         int sgCount = -9;
 
-        Map<Integer, Integer> fCounter = new HashMap();
+        Map<Integer, Integer> fCounter = new HashMap<Integer, Integer>();
 
         for (int i = 0; i < input.length(); i++) {
 
@@ -54,7 +54,7 @@ public class WordSpaceAnalyzer {
             String prefix = i == input.length() - 1 ? "X" : input.substring(wStart, i + 2);
             Iterator iter = DictionaryUtil.findWithPrefix(prefix);
 
-            List<AnalysisOutput> candidates = new ArrayList();
+            List<AnalysisOutput> candidates = new ArrayList<AnalysisOutput>();
 
             WordEntry entry = null;
 
@@ -128,15 +128,12 @@ public class WordSpaceAnalyzer {
     /**
      * 조사로 끝나는 어구를 분석한다.
      *
-     * @param snipt
-     * @param js
-     * @return
      * @throws org.apache.lucene.analysis.kr.morph.MorphException
      *
      */
-    private List anlysisWithJosa(String snipt, int js) throws MorphException {
+    private List<AnalysisOutput> anlysisWithJosa(String snipt, int js) throws MorphException {
 
-        List<AnalysisOutput> candidates = new ArrayList();
+        List<AnalysisOutput> candidates = new ArrayList<AnalysisOutput>();
         if (js < 1) return candidates;
 
         int jend = findJosaEnd(snipt, js);
@@ -159,7 +156,8 @@ public class WordSpaceAnalyzer {
                 morphAnal.analysisWithJosa(stem, josa, candidates);
             }
 
-            if (josaFlag && feature[SyllableUtil.IDX_JOSA2] == '0') josaFlag = false;
+            if (josaFlag && feature[SyllableUtil.IDX_JOSA2] == '0')
+                josaFlag = false;
 
             if (!josaFlag) break;
 
@@ -180,9 +178,6 @@ public class WordSpaceAnalyzer {
      * 조사의 첫음절부터 조사의 2음절이상에 사용될 수 있는 음절을 조사하여
      * 가장 큰 조사를 찾는다.
      *
-     * @param snipt
-     * @param jstart
-     * @return
      * @throws org.apache.lucene.analysis.kr.morph.MorphException
      *
      */
@@ -226,9 +221,6 @@ public class WordSpaceAnalyzer {
 
     /**
      * 향후 계산이나 원 문자열을 보여주기 위해 source string 을 저장한다.
-     *
-     * @param source
-     * @param candidates
      */
     private void fillSourceString(String source, List<AnalysisOutput> candidates) {
 
@@ -240,8 +232,6 @@ public class WordSpaceAnalyzer {
 
     /**
      * 목록의 1번지가 가장 큰 길이를 가진다.
-     *
-     * @param candidates
      */
     private void appendSingleWord(List<AnalysisOutput> candidates) throws MorphException {
 
@@ -288,7 +278,7 @@ public class WordSpaceAnalyzer {
 
     private List anlysisWithEomi(String snipt, int estart) throws MorphException {
 
-        List<AnalysisOutput> candidates = new ArrayList();
+        List<AnalysisOutput> candidates = new ArrayList<AnalysisOutput>();
 
         int eend = findEomiEnd(snipt, estart);
 
@@ -357,8 +347,7 @@ public class WordSpaceAnalyzer {
         return candidates;
     }
 
-    private void anlysisWithEomiDetail(String input, List<AnalysisOutput> candidates)
-            throws MorphException {
+    private void anlysisWithEomiDetail(String input, List<AnalysisOutput> candidates) throws MorphException {
 
         boolean eomiFlag = true;
 
@@ -393,9 +382,6 @@ public class WordSpaceAnalyzer {
      * 어미의 첫음절부터 어미의 1음절이상에 사용될 수 있는 음절을 조사하여
      * 가장 큰 조사를 찾는다.
      *
-     * @param snipt
-     * @param jstart
-     * @return
      * @throws org.apache.lucene.analysis.kr.morph.MorphException
      *
      */
@@ -439,13 +425,8 @@ public class WordSpaceAnalyzer {
 
     /**
      * validation 후 후보가 될 가능성이 높은 최상위 것을 결과에 추가한다.
-     *
-     * @param output
-     * @param candidates
-     * @param stack
      */
-    private int validationAndAppend(WSOutput output, List<AnalysisOutput> candidates, String input)
-            throws MorphException {
+    private int validationAndAppend(WSOutput output, List<AnalysisOutput> candidates, String input) throws MorphException {
 
         if (candidates.size() == 0) return 0;
 
@@ -571,15 +552,13 @@ public class WordSpaceAnalyzer {
 
     private boolean isNounPart(String str, int jstart) throws MorphException {
 
+        //NOTE: 이게 왜 들어가 있지?
         if (true) return false;
 
         for (int i = jstart - 1; i >= 0; i--) {
             if (DictionaryUtil.getWordExceptVerb(str.substring(i, jstart + 1)) != null)
                 return true;
-
         }
-
-
         return false;
 
     }

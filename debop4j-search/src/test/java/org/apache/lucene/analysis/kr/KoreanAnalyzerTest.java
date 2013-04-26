@@ -71,9 +71,9 @@ public class KoreanAnalyzerTest extends TestCase {
 
         long start = System.currentTimeMillis();
 
-        StandardAnalyzer analyzer = new StandardAnalyzer(Version.LUCENE_32);
+        StandardAnalyzer analyzer = new StandardAnalyzer(Version.LUCENE_36);
         TokenStream stream = analyzer.tokenStream("s", new StringReader(source));
-        TokenStream tok = new StandardFilter(Version.LUCENE_32, stream);
+        TokenStream tok = new StandardFilter(Version.LUCENE_36, stream);
 
         while (tok.incrementToken()) {
             CharTermAttribute termAttr = stream.getAttribute(CharTermAttribute.class);

@@ -16,37 +16,31 @@
 
 package org.apache.lucene.analysis.kr.utils;
 
-import org.apache.lucene.analysis.kr.morph.AnalysisOutput;
-import org.apache.lucene.analysis.kr.morph.MorphException;
-import org.apache.lucene.analysis.kr.morph.PatternConstants;
-import org.apache.lucene.analysis.kr.morph.WordEntry;
+import org.apache.lucene.analysis.kr.morph.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class NounUtil {
 
-    private static final List DNouns = new ArrayList();
+    private static final Logger log = LoggerFactory.getLogger(NounUtil.class);
+
+    private static final List<String> DNouns = new ArrayList<String>();
 
     static {
-        String[] strs = new String[]{ "등", "들", "상", "간", "뿐", "별" };
-        for (String str : strs) {
-            DNouns.add(str);
-        }
+        Collections.addAll(DNouns, "등", "들", "상", "간", "뿐", "별");
     }
-
-    ;
 
     /**
      * 어간부가 음/기 로 끝나는 경우
      *
-     * @param o
-     * @param candidates
-     * @return
      * @throws org.apache.lucene.analysis.kr.morph.MorphException
      *
      */
-    public static boolean analysisMJ(AnalysisOutput o, List candidates) throws MorphException {
+    public static boolean analysisMJ(AnalysisOutput o, List<AnalysisOutput> candidates) throws MorphException {
 
         int strlen = o.getStem().length();
 
@@ -91,19 +85,15 @@ public class NounUtil {
         }
 
         return false;
-
     }
 
     /**
      * 용언 + '음/기' + 조사(PTN_VMXMJ)
      *
-     * @param o
-     * @param candidates
-     * @return
      * @throws org.apache.lucene.analysis.kr.morph.MorphException
      *
      */
-    public static boolean analysisVMJ(AnalysisOutput o, List candidates) throws MorphException {
+    public static boolean analysisVMJ(AnalysisOutput o, List<AnalysisOutput> candidates) throws MorphException {
 
         String[] irrs = IrregularUtil.restoreIrregularVerb(o.getStem(), o.getElist().get(0));
         if (irrs != null) {
@@ -125,13 +115,10 @@ public class NounUtil {
     /**
      * 용언 + '아/어' + 보조용언 + '음/기' + 조사(PTN_VMXMJ)
      *
-     * @param o
-     * @param candidates
-     * @return
      * @throws org.apache.lucene.analysis.kr.morph.MorphException
      *
      */
-    public static boolean analysisVMXMJ(AnalysisOutput o, List candidates) throws MorphException {
+    public static boolean analysisVMXMJ(AnalysisOutput o, List<AnalysisOutput> candidates) throws MorphException {
 
         int idxXVerb = VerbUtil.endsWithXVerb(o.getStem());
 
@@ -173,13 +160,10 @@ public class NounUtil {
     /**
      * 체언 + 용언화접미사 + '음/기' + 조사 (PTN_NSMJ)
      *
-     * @param o
-     * @param candidates
-     * @return
      * @throws org.apache.lucene.analysis.kr.morph.MorphException
      *
      */
-    public static boolean analysisNSMJ(AnalysisOutput o, List candidates) throws MorphException {
+    public static boolean analysisNSMJ(AnalysisOutput o, List<AnalysisOutput> candidates) throws MorphException {
 
         int idxVbSfix = VerbUtil.endsWithVerbSuffix(o.getStem());
         if (idxVbSfix == -1) return false;
@@ -206,7 +190,7 @@ public class NounUtil {
         return true;
     }
 
-    public static boolean analysisNSMXMJ(AnalysisOutput o, List candidates) throws MorphException {
+    public static boolean analysisNSMXMJ(AnalysisOutput o, List<AnalysisOutput> candidates) throws MorphException {
 
         int idxVbSfix = VerbUtil.endsWithVerbSuffix(o.getStem());
         if (idxVbSfix == -1) return false;
@@ -316,13 +300,13 @@ public class NounUtil {
      * @param str 복합명사
      * @param pos
      * @param o   분석결과
+     * @return 단위명사 리스트
      * @throws org.apache.lucene.analysis.kr.morph.MorphException
      *
-     * @return 단위명사 리스트
      */
     private static List findNouns(String str, int pos, AnalysisOutput o) throws MorphException {
 
-        List<WordEntry> nList = new ArrayList();
+        List<WordEntry> nList = new ArrayList<WordEntry>();
 
         if (str.length() == 2 && DictionaryUtil.existSuffix(str.substring(0, 1)) && DNouns.contains(str.substring(1))) {
             o.setStem(o.getStem().substring(0, o.getStem().length() - 1));
@@ -370,7 +354,7 @@ public class NounUtil {
             if (cnoun.getFeature(WordEntry.IDX_NOUN) == '2')
                 output.setCNoun(cnoun.getCompounds());
             else
-                output.setCNoun(new ArrayList());
+                output.setCNoun(new ArrayList<CompoundEntry>());
             output.setScore(AnalysisOutput.SCORE_CORRECT);
         }
 
@@ -396,7 +380,9 @@ public class NounUtil {
             if (josaFlag && DictionaryUtil.existJosa(josa)) return true;
 
 
-            if (josaFlag && feature[SyllableUtil.IDX_JOSA2] == '0') josaFlag = false;
+            if (josaFlag && feature[SyllableUtil.IDX_JOSA2] == '0')
+                josaFlag = false;
+
             if (!josaFlag) break;
         }
 

@@ -1,13 +1,14 @@
 package kr.debop4j.search.hibernate;
 
+import kr.debop4j.search.QueryMethod;
+import kr.debop4j.search.SearchParameter;
 import kr.debop4j.search.hibernate.model.SearchItem;
+import kr.debop4j.search.tools.SearchTool;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.lucene.analysis.kr.KoreanAnalyzer;
-import org.apache.lucene.index.Term;
 import org.apache.lucene.queryParser.MultiFieldQueryParser;
 import org.apache.lucene.queryParser.QueryParser;
 import org.apache.lucene.search.Query;
-import org.apache.lucene.search.WildcardQuery;
 import org.apache.lucene.util.Version;
 import org.junit.Test;
 
@@ -52,7 +53,6 @@ public class HibernateSearchTest extends SearchTestBase {
         fts.flushToIndexes();
         fts.clear();
 
-        Thread.sleep(500);
 
         QueryParser parser = new MultiFieldQueryParser(Version.LUCENE_36,
                                                        new String[]{ "title", "description" },
@@ -61,8 +61,9 @@ public class HibernateSearchTest extends SearchTestBase {
         //QueryParser parser = new QueryParser(Version.LUCENE_36, "title", new StandardAnalyzer(Version.LUCENE_36));
         try {
             // Query luceneQuery = parser.parse("description:어플");
-
-            Query luceneQuery = new WildcardQuery(new Term("description", "어플*"));
+            // Query luceneQuery = new WildcardQuery(new Term("description", "어플*"));
+            SearchParameter searchParam = new SearchParameter("description", "app", QueryMethod.Wildcard);
+            Query luceneQuery = SearchTool.buildLuceneQuery(SearchItem.class, fts, searchParam).all().createQuery();
 
             List<SearchItem> founds =
                     (List<SearchItem>) fts.createFullTextQuery(luceneQuery, SearchItem.class).list();

@@ -24,11 +24,17 @@ import org.apache.lucene.analysis.tokenattributes.PositionIncrementAttribute;
 import org.apache.lucene.analysis.tokenattributes.TypeAttribute;
 import org.apache.lucene.util.AttributeSource;
 import org.apache.lucene.util.Version;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.io.Reader;
 
 public class KoreanTokenizer extends Tokenizer {
+
+    private static final Logger log = LoggerFactory.getLogger(KoreanTokenizer.class);
+    private static final boolean isTraceEnabled = log.isTraceEnabled();
+    private static final boolean isDebugEnabled = log.isDebugEnabled();
 
     /**
      * A private instance of the JFlex-constructed scanner
@@ -46,7 +52,6 @@ public class KoreanTokenizer extends Tokenizer {
     public static final int ACRONYM_DEP = 8;
     public static final int KOREAN = 9;
     public static final int CHINESE = 10;
-
 
     /**
      * String token types that correspond to token type int constants
@@ -93,7 +98,7 @@ public class KoreanTokenizer extends Tokenizer {
      *              See http://issues.apache.org/jira/browse/LUCENE-1068
      */
     public KoreanTokenizer(Version matchVersion, Reader input) {
-        super();
+        super(input);
         this.scanner = new KoreanTokenizerImpl(input);
         init(input, matchVersion);
     }
@@ -102,7 +107,7 @@ public class KoreanTokenizer extends Tokenizer {
      * Creates a new StandardTokenizer with a given {@link org.apache.lucene.util.AttributeSource}.
      */
     public KoreanTokenizer(Version matchVersion, AttributeSource source, Reader input) {
-        super(source);
+        super(source, input);
         this.scanner = new KoreanTokenizerImpl(input);
         init(input, matchVersion);
     }
@@ -111,17 +116,13 @@ public class KoreanTokenizer extends Tokenizer {
      * Creates a new StandardTokenizer with a given {@link org.apache.lucene.util.AttributeSource.AttributeFactory}
      */
     public KoreanTokenizer(Version matchVersion, AttributeFactory factory, Reader input) {
-        super(factory);
+        super(factory, input);
         this.scanner = new KoreanTokenizerImpl(input);
         init(input, matchVersion);
     }
 
-    private final void init(Reader input, Version matchVersion) {
-        if (matchVersion.onOrAfter(Version.LUCENE_24)) {
-            replaceInvalidAcronym = true;
-        } else {
-            replaceInvalidAcronym = false;
-        }
+    private void init(Reader input, Version matchVersion) {
+        replaceInvalidAcronym = true;
         this.input = input;
     }
 
@@ -145,6 +146,9 @@ public class KoreanTokenizer extends Tokenizer {
         while (true) {
             int tokenType = scanner.getNextToken();
 
+            if (isTraceEnabled)
+                log.trace("token 증가. tokenType=[{}]", tokenType);
+
             if (tokenType == KoreanTokenizerImpl.YYEOF) {
                 return false;
             }
@@ -155,6 +159,9 @@ public class KoreanTokenizer extends Tokenizer {
                 final int start = scanner.yychar();
                 offsetAtt.setOffset(correctOffset(start), correctOffset(start + termAtt.length()));
                 typeAtt.setType(KoreanTokenizer.TOKEN_TYPES[tokenType]);
+
+                if (isTraceEnabled)
+                    log.trace("토큰 타입=[{}]", KoreanTokenizer.TOKEN_TYPES[tokenType]);
 
                 return true;
             } else
@@ -199,5 +206,4 @@ public class KoreanTokenizer extends Tokenizer {
     public void setReplaceInvalidAcronym(boolean replaceInvalidAcronym) {
         this.replaceInvalidAcronym = replaceInvalidAcronym;
     }
-
 }

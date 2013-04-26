@@ -18,11 +18,9 @@ package org.apache.lucene.analysis.kr.morph;
 
 import java.util.Comparator;
 
-public class AnalysisOutputComparator implements Comparator {
-    public int compare(Object o1, Object o2) {
+public class AnalysisOutputComparator implements Comparator<AnalysisOutput> {
 
-        AnalysisOutput out1 = (AnalysisOutput) o1;
-        AnalysisOutput out2 = (AnalysisOutput) o2;
+    public int compare(AnalysisOutput out1, AnalysisOutput out2) {
 
         int score = out2.getScore() - out1.getScore();
         int pattern = out2.getPatn() - out1.getPatn();

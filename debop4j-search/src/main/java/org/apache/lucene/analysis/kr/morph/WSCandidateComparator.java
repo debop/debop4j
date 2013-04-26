@@ -26,8 +26,8 @@ public class WSCandidateComparator implements Comparator<WSOutput> {
         int end = o2.getLastEnd() - o1.getLastEnd();
         if (end != 0) return end;
 
-        int s1 = o1.getPhrases().size() == 0 ? 999999999 : o1.getPhrases().size();
-        int s2 = o2.getPhrases().size() == 0 ? 999999999 : o2.getPhrases().size();
+        int s1 = o1.getPhrases().size() == 0 ? Integer.MAX_VALUE : o1.getPhrases().size();
+        int s2 = o2.getPhrases().size() == 0 ? Integer.MAX_VALUE : o2.getPhrases().size();
 
         int size = s1 - s2;
         if (size != 0) return size;
@@ -44,12 +44,11 @@ public class WSCandidateComparator implements Comparator<WSOutput> {
 
         if (entries.size() == 0) return 0;
 
-        int sum = 0;
-        for (int i = 0; i < entries.size(); i++) {
-            sum += entries.get(i).getScore();
-        }
+        long sum = 0;
+        for (AnalysisOutput entry : entries)
+            sum += entry.getScore();
 
-        return sum / entries.size();
+        return (int) (sum / entries.size());
     }
 
 }

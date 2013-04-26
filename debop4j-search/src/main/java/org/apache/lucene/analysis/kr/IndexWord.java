@@ -16,20 +16,21 @@
 
 package org.apache.lucene.analysis.kr;
 
+import java.io.Serializable;
+
 /**
  * Index word extracted from a phrase.
  *
  * @author lsm
  */
-public class IndexWord {
+public class IndexWord implements Serializable {
+
+    private static final long serialVersionUID = 28959989857060670L;
 
     private String word;
-
     private int offset = 0;
 
-    public IndexWord() {
-
-    }
+    public IndexWord() { }
 
     public IndexWord(String word, int pos) {
         this.word = word;
@@ -52,5 +53,7 @@ public class IndexWord {
         this.offset = offset;
     }
 
-
+    public String toString() {
+        return String.format("IndexWord# word=[%s], offset=[%d]", word, offset);
+    }
 }

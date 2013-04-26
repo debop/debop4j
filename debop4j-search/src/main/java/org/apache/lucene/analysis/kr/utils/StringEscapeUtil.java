@@ -16,11 +16,16 @@
 
 package org.apache.lucene.analysis.kr.utils;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.IOException;
 import java.io.StringWriter;
 import java.io.Writer;
 
 public class StringEscapeUtil {
+
+    private static final Logger log = LoggerFactory.getLogger(StringEscapeUtil.class);
 
     /**
      * <p>Unescapes any Java literals found in the <code>String</code>.
@@ -61,6 +66,10 @@ public class StringEscapeUtil {
      * @throws java.io.IOException      if error occurs on underlying Writer
      */
     public static void unescapeJava(Writer out, String str) throws IOException {
+
+        if (log.isTraceEnabled())
+            log.trace("java 리터럴 코드를 제거합니다. str=[{}]", str);
+
         if (out == null) {
             throw new IllegalArgumentException("The Writer must not be null");
         }

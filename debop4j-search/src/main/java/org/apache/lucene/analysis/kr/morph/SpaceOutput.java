@@ -30,14 +30,20 @@ public class SpaceOutput {
     private AnalysisOutput output;
 
     // 분석 결과 앞에 있는 미등록어, 사람 이름은 대부분 이런 경우임.
-    private List<AnalysisOutput> nrWords = new ArrayList();
+    private List<AnalysisOutput> nrWords;
 
     // 분석하기 이전의 어절
     private String source;
 
+    public SpaceOutput() {
+        output = null;
+        nrWords = new ArrayList<AnalysisOutput>();
+        source = null;
+    }
+
     public void initialize() {
         output = null;
-        nrWords = new ArrayList();
+        nrWords = new ArrayList<AnalysisOutput>();
         source = null;
     }
 
@@ -55,31 +61,18 @@ public class SpaceOutput {
         this.output = output;
     }
 
-    /**
-     * @return the nrWord
-     */
     public List getNRWords() {
         return nrWords;
     }
 
-    /**
-     * @param nrWord the nrWord to set
-     */
-    public void setNRWords(List words) {
+    public void setNRWords(List<AnalysisOutput> words) {
         this.nrWords = words;
     }
 
-    /**
-     * @param word
-     */
     public void addNRWord(String word) {
         addNRWord(word, AnalysisOutput.SCORE_CORRECT);
     }
 
-    /**
-     * @param word
-     * @param score
-     */
     public void addNRWord(String word, int score) {
         AnalysisOutput output = new AnalysisOutput(word, null, null, PatternConstants.PTN_N, score);
         output.setSource(word);
@@ -87,30 +80,18 @@ public class SpaceOutput {
         this.nrWords.add(0, output);
     }
 
-    /**
-     * @return the source
-     */
     public String getSource() {
         return source;
     }
 
-    /**
-     * @param source the source to set
-     */
     public void setSource(String source) {
         this.source = source;
     }
 
     /**
      * 분석된 전체 단어의 길이를 반환한다.
-     *
-     * @return
      */
     public int getLength() {
-
-        if (this.source == null) return 0;
-
-        return this.source.length();
+        return (this.source == null) ? 0 : this.source.length();
     }
-
 }

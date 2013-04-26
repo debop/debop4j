@@ -47,9 +47,6 @@ public class MorphUtil {
 
     /**
      * 한글 한글자를 초성/중성/종성의 배열로 만들어 반환한다.
-     *
-     * @param c
-     * @return
      */
     public static char[] decompose(char c) {
         char[] result = null;
@@ -102,23 +99,20 @@ public class MorphUtil {
 
     /**
      * 형태소 유형 출력을 위한 문자열을 생성한다.
-     *
-     * @param word
-     * @param type
-     * @return
      */
     public static String buildTypeString(String word, char type) {
-        StringBuffer sb = new StringBuffer();
-        sb.append(word);
-        sb.append("(");
-        sb.append(type);
-        sb.append(")");
-
-        return sb.toString();
+        return word + "(" + type + ")";
+//        StringBuilder sb = new StringBuilder();
+//        sb.append(word);
+//        sb.append("(");
+//        sb.append(type);
+//        sb.append(")");
+//
+//        return sb.toString();
     }
 
 
-    public static void buildPtnVM(AnalysisOutput output, List candidates) throws MorphException {
+    public static void buildPtnVM(AnalysisOutput output, List<AnalysisOutput> candidates) throws MorphException {
 
         String end = output.getEomi();
         if (output.getPomi() != null) end = output.getPomi();
@@ -142,12 +136,10 @@ public class MorphUtil {
     /**
      * 용언 + '음/기' + '이' + 어미, 체언 + '에서/부터/에서부터' + '이' + 어미
      *
-     * @param output
-     * @param candidates
      * @throws org.apache.lucene.analysis.kr.morph.MorphException
      *
      */
-    public static void buildPtnCM(AnalysisOutput output, List candidates) throws MorphException {
+    public static void buildPtnCM(AnalysisOutput output, List<AnalysisOutput> candidates) throws MorphException {
 
         char ch = output.getStem().charAt(output.getStem().length() - 2);
         char[] jasos = MorphUtil.decompose(ch);
@@ -158,7 +150,7 @@ public class MorphUtil {
         }
     }
 
-    private static void buildPtnVMCM(AnalysisOutput output, List candidates) throws MorphException {
+    private static void buildPtnVMCM(AnalysisOutput output, List<AnalysisOutput> candidates) throws MorphException {
         String stem = output.getStem();
 
         output.setPatn(PatternConstants.PTN_VMCM);
@@ -237,12 +229,8 @@ public class MorphUtil {
     /**
      * 용언화접미사가 결합될 수 있는지 여부를 점검한다.
      * 특히 사전에 등록된 되다, 하다형 의 접속이 가능한지를 조사한다.
-     *
-     * @param o
-     * @return
      */
     public static boolean isValidSuffix(WordEntry entry, AnalysisOutput o) {
-
         return true;
     }
 

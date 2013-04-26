@@ -23,7 +23,7 @@ import org.apache.lucene.analysis.kr.morph.PatternConstants;
 public class Utilities {
 
     public static String arrayToString(String[] strs) {
-        StringBuffer sb = new StringBuffer();
+        StringBuilder sb = new StringBuilder();
         for (String str : strs) {
             sb.append(str);
         }
@@ -40,8 +40,7 @@ public class Utilities {
 
     public static String buildOutputString(AnalysisOutput o) {
 
-
-        StringBuffer buff = new StringBuffer();
+        StringBuilder buff = new StringBuilder();
 
         buff.append(MorphUtil.buildTypeString(o.getStem(), o.getPos()));
         if (o.getNsfx() != null)
@@ -135,5 +134,4 @@ public class Utilities {
             return null;
         }
     }
-
 }

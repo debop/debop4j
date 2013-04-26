@@ -55,7 +55,6 @@ public class Tagger {
         if ((pmorphs == null || pmorphs.size() == 0) && (rmorphs == null || rmorphs.size() == 0)) return null;
 
         po = lookupBest(psource, rsource, pmorphs, rmorphs);
-
         po.setSource(psource);
 
         return po;
@@ -67,9 +66,6 @@ public class Tagger {
      * occurrence.dic 에 등록되어 있는 경우만.. 최적을 찾아서 반환한다.
      * 1. 첫번째는 어간으로 시작되는 문법 규칙을 찾는다.
      * 2. 두번째는 표층형으로 시작되는 문법규칙을 찾는다.
-     *
-     * @param morphs
-     * @return
      */
     private AnalysisOutput lookupBest(String psource, String rsource, List<AnalysisOutput> pmorphs, List<AnalysisOutput> rmorphs) throws MorphException {
 
@@ -90,17 +86,12 @@ public class Tagger {
      * 앞 어절에 의해 현재 어절을 결정한다.
      * 앞 어절은 NULL이 아니다.
      *
-     * @param source
-     * @param pmorphs
-     * @param rmorphs
-     * @return
      * @throws org.apache.lucene.analysis.kr.morph.MorphException
      *
      */
     private AnalysisOutput lookupBestByPWord(String rsource, List<AnalysisOutput> rmorphs) throws MorphException {
 
-
-        List<AnalysisOutput> removes = new ArrayList();
+        List<AnalysisOutput> removes = new ArrayList<AnalysisOutput>();
 
         for (AnalysisOutput morph : rmorphs) {
 
@@ -112,7 +103,6 @@ public class Tagger {
             Iterator<String[]> iters = getGR("F" + morph.getStem() + "^S");
             best = selectBest(iters, po.getSource(), rsource, po, morph, true, removes);
             if (best != null) return best;
-
         }
 
         for (AnalysisOutput morph : removes) {
@@ -127,16 +117,12 @@ public class Tagger {
      * 뒷 어절에 의해 현재 어절이 결정된다.
      * 뒷 어절은 NULL이 아니다.
      *
-     * @param source
-     * @param pmorphs
-     * @param rmorphs
-     * @return
      * @throws org.apache.lucene.analysis.kr.morph.MorphException
      *
      */
     private AnalysisOutput lookupBestByRWord(String psource, String rsource, List<AnalysisOutput> pmorphs, List<AnalysisOutput> rmorphs) throws MorphException {
 
-        List<AnalysisOutput> removes = new ArrayList();
+        List<AnalysisOutput> removes = new ArrayList<AnalysisOutput>();
 
         for (AnalysisOutput rmorph : rmorphs) {
 
@@ -161,10 +147,10 @@ public class Tagger {
 
                 iters = getGR("R" + pmorph.getStem() + "^S/");
                 best = selectBest(iters, psource, rsource, pmorph, rmorph, false, removes);
-                if (best != null) return best;
 
+                if (best != null)
+                    return best;
             }
-
         }
 
         for (AnalysisOutput morph : removes) {
@@ -172,11 +158,15 @@ public class Tagger {
         }
 
         return null;
-
     }
 
-    private AnalysisOutput selectBest(Iterator<String[]> iter, String psource, String rsource,
-                                      AnalysisOutput pmorph, AnalysisOutput rmorph, boolean rear, List removes) {
+    private AnalysisOutput selectBest(Iterator<String[]> iter,
+                                      String psource,
+                                      String rsource,
+                                      AnalysisOutput pmorph,
+                                      AnalysisOutput rmorph,
+                                      boolean rear,
+                                      List<AnalysisOutput> removes) {
 
         while (iter.hasNext()) {
 
@@ -195,7 +185,12 @@ public class Tagger {
 
     }
 
-    private boolean checkGrammer(String[] values, String psource, String rsource, AnalysisOutput pmorph, AnalysisOutput rmorph, boolean depFront) {
+    private boolean checkGrammer(String[] values,
+                                 String psource,
+                                 String rsource,
+                                 AnalysisOutput pmorph,
+                                 AnalysisOutput rmorph,
+                                 boolean depFront) {
 
         boolean ok = true;
 
@@ -241,8 +236,9 @@ public class Tagger {
         String text = source;
         if ("S".equals(types[1])) text = morph.getStem();
 
-        for (int i = 0; i < strs.length; i++) {
-            if (strs[i].equals(text)) return true;
+        for (String str : strs) {
+            if (str.equals(text))
+                return true;
         }
 
         return false;
@@ -252,8 +248,9 @@ public class Tagger {
 
         String[] strs = StringUtil.split(value, ",");
 
-        for (int i = 0; i < strs.length; i++) {
-            if (strs[i].equals(rend)) return true;
+        for (String str : strs) {
+            if (str.equals(rend))
+                return true;
         }
 
         return false;
@@ -264,34 +261,31 @@ public class Tagger {
         String[] strs = StringUtil.split(value, ",");
         String strPtn = Integer.toString(ptn);
 
-        for (int i = 0; i < strs.length; i++) {
-
-            if ("E".equals(strs[i]) && ConstraintUtil.isEomiPhrase(ptn))
+        for (String str : strs) {
+            if ("E".equals(str) && ConstraintUtil.isEomiPhrase(ptn))
                 return true;
-            else if ("J".equals(strs[i]) &&
+            else if ("J".equals(str) &&
                     (ConstraintUtil.isJosaNounPhrase(ptn) || ptn == PatternConstants.PTN_N))
                 return true;
-            else if (strs[i].equals(strPtn))
+            else if (str.equals(strPtn))
                 return true;
-
         }
 
         return false;
     }
 
+    @SuppressWarnings("unchecked")
     public static synchronized Iterator<String[]> getGR(String prefix) throws MorphException {
-
         if (occurrences == null) loadTaggerDic();
 
-        return occurrences.getPrefixedBy(prefix);
+        return (Iterator<String[]>) occurrences.getPrefixedBy(prefix);
     }
 
     private static synchronized void loadTaggerDic() throws MorphException {
 
-        occurrences = new Trie(true);
+        occurrences = new Trie<String, String[]>(true);
 
         try {
-
             List<String> strs = FileUtil.readLines(KoreanEnv.getInstance().getValue(tagDicLoc), "UTF-8");
 
             for (String str : strs) {
@@ -308,12 +302,9 @@ public class Tagger {
                 String[] patns = StringUtil.split(syls[1] + "/" + syls[2] + "/" + syls[3], "/");
 
                 occurrences.add(syls[0] + key, patns);
-
             }
-
         } catch (Exception e) {
             throw new MorphException("Fail to read the tagger dictionary.(" + tagDicLoc + ")\n" + e.getMessage());
         }
     }
-
 }

@@ -16,7 +16,11 @@
 
 package org.apache.lucene.analysis.kr.morph;
 
-public class Status {
+import java.io.Serializable;
+
+public class Status implements Serializable {
+
+    private static final long serialVersionUID = 6985621299882118840L;
 
     private int josaMaxStart = 0;
 
@@ -51,6 +55,11 @@ public class Status {
 
     public void setEomiMaxStart(int eomiMaxStart) {
         this.eomiMaxStart = eomiMaxStart;
+    }
+
+    public String toString() {
+        return String.format("Status# josaMaxStart=%d, eomiMaxStart=%d, maxStart=%d",
+                             josaMaxStart, eomiMaxStart, maxStart);
     }
 
 }

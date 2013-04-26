@@ -85,7 +85,7 @@ public class SyllableTest extends TestCase {
         char[] chrs = str.toCharArray();
 
 
-        StringBuffer word = new StringBuffer();
+        StringBuilder word = new StringBuilder();
         for (int ws = 0, es = 1, ee = 0; es < chrs.length; ) {
             char[] f = SyllableUtil.getFeature(chrs[es]);
             if (f[SyllableUtil.IDX_JOSA1] == '1') {

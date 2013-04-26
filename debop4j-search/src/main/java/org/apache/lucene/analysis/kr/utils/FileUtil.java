@@ -17,6 +17,8 @@
 package org.apache.lucene.analysis.kr.utils;
 
 import org.apache.lucene.analysis.kr.morph.MorphException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.*;
 import java.net.URL;
@@ -30,6 +32,7 @@ import java.util.List;
  */
 public class FileUtil {
 
+    private static final Logger log = LoggerFactory.getLogger(FileUtil.class);
 
     /**
      * Given a file name for a file that is located somewhere in the application
@@ -38,10 +41,12 @@ public class FileUtil {
      * @param filename The name of the file (relative to the classpath) that is
      *                 to be retrieved.
      * @return A file object representing the requested filename
-     * @throws Exception Thrown if the classloader can not be found or if
-     *                   the file can not be found in the classpath.
+     * @throws MorphException Thrown if the classloader can not be found or if
+     *                        the file can not be found in the classpath.
      */
     public static File getClassLoaderFile(String filename) throws MorphException {
+        if (log.isDebugEnabled())
+            log.debug("파일을 읽습니다. filename=[{}]", filename);
         // note that this method is used when initializing logging, so it must
         // not attempt to log anything.
         File file = null;
@@ -88,18 +93,20 @@ public class FileUtil {
      * Reads the contents of a file line by line to a List of Strings.
      * The file is always closed.
      *
-     * @param file     the file to read, must not be <code>null</code>
+     * @param fName    the file to read, must not be <code>null</code>
      * @param encoding the encoding to use, <code>null</code> means platform default
      * @return the list of Strings representing each line in the file, never <code>null</code>
      * @throws org.apache.lucene.analysis.kr.morph.MorphException
      *
      * @throws java.io.IOException
-     * @throws Exception
      * @throws java.io.UnsupportedEncodingException
      *                             if the encoding is not supported by the VM
      * @since Commons IO 1.1
      */
-    public static List readLines(String fName, String encoding) throws MorphException, IOException {
+    public static List<String> readLines(String fName, String encoding) throws MorphException, IOException {
+        if (log.isDebugEnabled())
+            log.debug("파일 내용을 읽어드립니다. fName=[{}], encoding=[{}]", fName, encoding);
+
         InputStream in = null;
         try {
 
@@ -141,7 +148,7 @@ public class FileUtil {
             if (file.isDirectory()) {
                 throw new IOException("File '" + file + "' exists but is a directory");
             }
-            if (file.canRead() == false) {
+            if (!file.canRead()) {
                 throw new IOException("File '" + file + "' cannot be read");
             }
         } else {
@@ -166,7 +173,7 @@ public class FileUtil {
      * @throws java.io.IOException  if an I/O error occurs
      * @since Commons IO 1.1
      */
-    public static List readLines(InputStream input) throws IOException {
+    public static List<String> readLines(InputStream input) throws IOException {
         InputStreamReader reader = new InputStreamReader(input);
         return readLines(reader);
     }
@@ -188,7 +195,7 @@ public class FileUtil {
      * @throws java.io.IOException  if an I/O error occurs
      * @since Commons IO 1.1
      */
-    public static List readLines(InputStream input, String encoding) throws IOException {
+    public static List<String> readLines(InputStream input, String encoding) throws IOException {
         if (encoding == null) {
             return readLines(input);
         } else {
@@ -210,9 +217,9 @@ public class FileUtil {
      * @throws java.io.IOException  if an I/O error occurs
      * @since Commons IO 1.1
      */
-    public static List readLines(Reader input) throws IOException {
+    public static List<String> readLines(Reader input) throws IOException {
         BufferedReader reader = new BufferedReader(input);
-        List list = new ArrayList();
+        List<String> list = new ArrayList<String>();
         String line = reader.readLine();
         while (line != null) {
             list.add(line);

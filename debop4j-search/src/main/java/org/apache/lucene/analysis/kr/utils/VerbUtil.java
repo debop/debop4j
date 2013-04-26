@@ -20,6 +20,8 @@ import org.apache.lucene.analysis.kr.morph.AnalysisOutput;
 import org.apache.lucene.analysis.kr.morph.MorphException;
 import org.apache.lucene.analysis.kr.morph.PatternConstants;
 import org.apache.lucene.analysis.kr.morph.WordEntry;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.HashMap;
 import java.util.List;
@@ -27,28 +29,36 @@ import java.util.Map;
 
 public class VerbUtil {
 
-    public static final Map verbSuffix = new HashMap();
+    private static final Logger log = LoggerFactory.getLogger(VerbUtil.class);
+    private static final boolean isTraceEnabled = log.isTraceEnabled();
+    private static final boolean isDebugEnabled = log.isDebugEnabled();
 
-    public static final Map XVerb = new HashMap();
+    public static final Map<String, String> verbSuffix = new HashMap<String, String>();
+
+    public static final Map<String, String> XVerb = new HashMap<String, String>();
 
     static {
-        String[] suffixs = {
-                "이", "하", "되", "내", "나", "스럽", "시키", "있", "없", "같", "당하", "만하", "드리", "받", "짓" };
-        for (int i = 0; i < suffixs.length; i++) verbSuffix.put(suffixs[i], suffixs[i]);
+        String[] suffixs = { "이", "하", "되", "내", "나", "스럽", "시키", "있", "없", "같", "당하", "만하", "드리", "받", "짓" };
+
+        for (String suffix : suffixs)
+            verbSuffix.put(suffix, suffix);
 
         String[] xverbs = { "오", "내", "주", "보", "지", "오르", "올리" };
-        for (int i = 0; i < xverbs.length; i++) XVerb.put(xverbs[i], xverbs[i]);
+
+        for (String xverb : xverbs)
+            XVerb.put(xverb, xverb);
     }
 
     /**
      * 어간이 용언화접미사로 끝나면 index 를 반환한다.  아니면 -1을 반환한다.
-     *
-     * @param result
-     * @return
      */
     public static int endsWithVerbSuffix(String stem) {
+        if (isTraceEnabled)
+            log.trace("용언화접미사의 index를 반환합니다. stem=[{}]", stem);
+
+        if (stem == null || stem.length() < 2) return -1;
+
         int len = stem.length();
-        if (len < 2) return -1;
         int start = 2;
         if (len == 2) start = 1;
         for (int i = start; i > 0; i--) { // suffix 의 가장 긴 글자수가 2이다.
@@ -59,13 +69,14 @@ public class VerbUtil {
 
     /**
      * 어간부에 보조용언 [하,되,오,내,주,지]가 있는지 조사한다.
-     *
-     * @param stem
-     * @return
      */
     public static int endsWithXVerb(String stem) {
+        if (isTraceEnabled)
+            log.trace("보조용언의 index를 반환합니다. stem=[{}]", stem);
+
+        if (stem == null || stem.length() < 2) return -1;
+
         int len = stem.length();
-        if (len < 2) return -1;
         int start = 2;
         if (len == 2) start = 1;
         for (int i = start; i > 0; i--) { //xverbs 의 가장 긴 글자수는 2이다.
@@ -75,9 +86,7 @@ public class VerbUtil {
     }
 
     public static boolean verbSuffix(String stem) {
-
         return verbSuffix.get(stem) != null;
-
     }
 
     public static boolean constraintVerb(String start, String end) {
@@ -85,15 +94,14 @@ public class VerbUtil {
         char[] schs = MorphUtil.decompose(start.charAt(start.length() - 1));
         char[] echs = MorphUtil.decompose(end.charAt(0));
 
-        if (schs.length == 3 && schs[2] == 'ㄹ' && echs[0] == 'ㄹ') return false;
+        return !(schs.length == 3 && schs[2] == 'ㄹ' && echs[0] == 'ㄹ');
 
-        return true;
     }
 
     /**
      * 3. 학교에서이다 : 체언 + '에서/부터/에서부터' + '이' + 어미 (PTN_NJCM) <br>
      */
-    public static boolean ananlysisNJCM(AnalysisOutput o, List candidates) throws MorphException {
+    public static boolean ananlysisNJCM(AnalysisOutput o, List<AnalysisOutput> candidates) throws MorphException {
 
         int strlen = o.getStem().length();
         boolean success = false;
@@ -111,7 +119,7 @@ public class VerbUtil {
         }
         if (!success) return false;
 
-        if (success && DictionaryUtil.getNoun(o.getStem()) != null) {
+        if (DictionaryUtil.getNoun(o.getStem()) != null) {
             o.setScore(AnalysisOutput.SCORE_CORRECT);
 //	   }else {
 //			NounUtil.confirmCNoun(o);
@@ -128,12 +136,11 @@ public class VerbUtil {
      * 어미부와 어간부가 분리된 상태에서 용언화접미사가 결합될 수 있는지 조사한다.
      *
      * @param o          어미부와 어간부가 분리된 결과
-     * @param candidates
-     * @return
+     * @param candidates 결과
      * @throws org.apache.lucene.analysis.kr.morph.MorphException
      *
      */
-    public static boolean ananlysisNSM(AnalysisOutput o, List candidates) throws MorphException {
+    public static boolean ananlysisNSM(AnalysisOutput o, List<AnalysisOutput> candidates) throws MorphException {
 
         if (o.getStem().endsWith("스러우")) o.setStem(o.getStem().substring(0, o.getStem().length() - 3) + "스럽");
         int idxVbSfix = VerbUtil.endsWithVerbSuffix(o.getStem());
@@ -172,7 +179,7 @@ public class VerbUtil {
 
     }
 
-    public static boolean ananlysisNSMXM(AnalysisOutput o, List candidates) throws MorphException {
+    public static boolean ananlysisNSMXM(AnalysisOutput o, List<AnalysisOutput> candidates) throws MorphException {
 
         int idxXVerb = VerbUtil.endsWithXVerb(o.getStem());
         if (idxXVerb == -1) return false;
@@ -208,11 +215,10 @@ public class VerbUtil {
 
         candidates.add(o);
 
-
         return true;
     }
 
-    public static boolean analysisVMCM(AnalysisOutput o, List candidates) throws MorphException {
+    public static boolean analysisVMCM(AnalysisOutput o, List<AnalysisOutput> candidates) throws MorphException {
 
         int strlen = o.getStem().length();
 
@@ -259,13 +265,10 @@ public class VerbUtil {
     /**
      * 6. 도와주다 : 용언 + '아/어' + 보조용언 + 어미 (PTN_VMXM)
      *
-     * @param o
-     * @param candidates
-     * @return
      * @throws org.apache.lucene.analysis.kr.morph.MorphException
      *
      */
-    public static boolean analysisVMXM(AnalysisOutput o, List candidates) throws MorphException {
+    public static boolean analysisVMXM(AnalysisOutput o, List<AnalysisOutput> candidates) throws MorphException {
 
         int idxXVerb = VerbUtil.endsWithXVerb(o.getStem());
 

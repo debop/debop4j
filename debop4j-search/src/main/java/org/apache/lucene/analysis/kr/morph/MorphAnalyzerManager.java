@@ -16,26 +16,34 @@
 
 package org.apache.lucene.analysis.kr.morph;
 
+import lombok.extern.slf4j.Slf4j;
+
 import java.util.List;
 
-
+@Slf4j
 public class MorphAnalyzerManager {
 
     public void analyze(String strs) {
+        if (log.isTraceEnabled())
+            log.trace("analyze strs=[{}]", strs);
+
         MorphAnalyzer analyzer = new MorphAnalyzer();
         String[] tokens = strs.split(" ");
+
         for (String token : tokens) {
             try {
                 List<AnalysisOutput> results = analyzer.analyze(token);
                 for (AnalysisOutput o : results) {
-                    System.out.print(o.toString() + "->");
-                    for (int i = 0; i < o.getCNounList().size(); i++) {
-                        System.out.print(o.getCNounList().get(i) + "/");
+                    if (log.isDebugEnabled()) {
+                        StringBuilder sb = new StringBuilder();
+                        for (int i = 0; i < o.getCNounList().size(); i++) {
+                            sb.append(o.getCNounList().get(i)).append("/");
+                        }
+                        log.debug("[{}]->[{}]/<[{}]>", o, sb.toString(), o.getScore());
                     }
-                    System.out.println("<" + o.getScore() + ">");
                 }
             } catch (MorphException e) {
-                e.printStackTrace();
+                log.error(e.getMessage(), e);
             }
         }
     }
