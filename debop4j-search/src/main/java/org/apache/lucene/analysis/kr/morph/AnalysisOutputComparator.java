@@ -28,14 +28,11 @@ public class AnalysisOutputComparator implements Comparator<AnalysisOutput> {
 
         if (score != 0) return score;
 
-        if (out2.getScore() == AnalysisOutput.SCORE_CORRECT &&
-                out1.getScore() == AnalysisOutput.SCORE_CORRECT) {
+        if (out2.getScore() == AnalysisOutput.SCORE_CORRECT && out1.getScore() == AnalysisOutput.SCORE_CORRECT) {
             pattern = out1.getPatn() == PatternConstants.PTN_N || out1.getPatn() == PatternConstants.PTN_AID ? -1 : pattern;
             pattern = out2.getPatn() == PatternConstants.PTN_N || out2.getPatn() == PatternConstants.PTN_AID ? 1 : pattern;
         }
 
-        if (pattern != 0) return pattern;
-
-        return len;
+        return (pattern != 0) ? pattern : len;
     }
 }

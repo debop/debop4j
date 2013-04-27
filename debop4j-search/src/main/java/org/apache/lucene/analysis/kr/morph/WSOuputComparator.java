@@ -37,7 +37,6 @@ public class WSOuputComparator implements Comparator<AnalysisOutput> {
         int stem = o1.getStem().length() - o2.getStem().length();
         if (stem != 0) return stem;
 
-
         return 0;
     }
 

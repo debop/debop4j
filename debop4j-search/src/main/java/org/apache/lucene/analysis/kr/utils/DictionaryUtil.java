@@ -77,6 +77,27 @@ public class DictionaryUtil {
             throw new MorphException(e);
         }
 
+        log.info("복합명사 사전을 로드합니다...");
+        try {
+            List<String> compounds = FileUtil.readLines(KoreanEnv.getInstance().getValue(KoreanEnv.FILE_COMPOUNDS), "UTF-8");
+            char[] features = "20000000X".toCharArray();
+            int count = 0;
+            for (String compound : compounds) {
+                String[] infos = StringUtil.split(compound, ":");
+                if (infos.length != 2) continue;
+                if (dictionary.get(infos[0].trim()) == null) {
+                    WordEntry entry = new WordEntry(infos[0].trim(), features);
+                    entry.setCompounds(compoundArrayToList(infos[1], StringUtil.split(infos[1], ",")));
+                    dictionary.add(entry.getWord(), entry);
+                    count++;
+                }
+            }
+            log.info("복합명사 사전을 로드했습니다. 단어수=[{}], 등록수=[{}]", compounds.size(), count);
+        } catch (Exception e) {
+            log.error("복합명사 사전을 로드하는데 실패했습니다.", e);
+            throw new MorphException(e);
+        }
+
         log.info("확장 사전을 로드합니다...");
         try {
             List<String> strList = FileUtil.readLines(KoreanEnv.getInstance().getValue(KoreanEnv.FILE_EXTENSION), "UTF-8");
@@ -97,27 +118,6 @@ public class DictionaryUtil {
             log.info("확장 사전을 로드했습니다. 단어수=[{}], 등록수=[{}]", strList.size(), count);
         } catch (Exception e) {
             log.error("확장 사전을 로드하는데 실패했습니다.", e);
-            throw new MorphException(e);
-        }
-
-        log.info("복합명사 사전을 로드합니다...");
-        try {
-            List<String> compounds = FileUtil.readLines(KoreanEnv.getInstance().getValue(KoreanEnv.FILE_COMPOUNDS), "UTF-8");
-            char[] features = "20000000X".toCharArray();
-            int count = 0;
-            for (String compound : compounds) {
-                String[] infos = StringUtil.split(compound, ":");
-                if (infos.length != 2) continue;
-                if (dictionary.get(infos[0].trim()) == null) {
-                    WordEntry entry = new WordEntry(infos[0].trim(), features);
-                    entry.setCompounds(compoundArrayToList(infos[1], StringUtil.split(infos[1], ",")));
-                    dictionary.add(entry.getWord(), entry);
-                    count++;
-                }
-            }
-            log.info("복합명사 사전을 로드했습니다. 단어수=[{}], 등록수=[{}]", compounds.size(), count);
-        } catch (Exception e) {
-            log.error("복합명사 사전을 로드하는데 실패했습니다.", e);
             throw new MorphException(e);
         }
 

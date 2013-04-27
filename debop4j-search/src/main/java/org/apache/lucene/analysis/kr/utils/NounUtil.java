@@ -27,6 +27,8 @@ import java.util.List;
 public class NounUtil {
 
     private static final Logger log = LoggerFactory.getLogger(NounUtil.class);
+    private static final boolean isTraceEnabled = log.isTraceEnabled();
+    private static final boolean isDebugEnabled = log.isDebugEnabled();
 
     private static final List<String> DNouns = new ArrayList<String>();
 
@@ -306,6 +308,9 @@ public class NounUtil {
      */
     private static List findNouns(String str, int pos, AnalysisOutput o) throws MorphException {
 
+        if (isTraceEnabled)
+            log.trace("복합명사에서 단위명사를 분리합니다. str=[{}], pos=[{}]", str, pos);
+
         List<WordEntry> nList = new ArrayList<WordEntry>();
 
         if (str.length() == 2 && DictionaryUtil.existSuffix(str.substring(0, 1)) && DNouns.contains(str.substring(1))) {
@@ -343,7 +348,9 @@ public class NounUtil {
 
         int strlen = output.getStem().length();
         String d = output.getStem().substring(strlen - 1);
-        if (!DNouns.contains(d)) return false;
+
+        if (!DNouns.contains(d))
+            return false;
 
         String s = output.getStem().substring(0, strlen - 1);
         output.setNsfx(d);
@@ -390,9 +397,14 @@ public class NounUtil {
     }
 
     public static double countFoundNouns(AnalysisOutput o) {
+        if (o.getCNounList().size() == 0)
+            return 0.0;
+
         int count = 0;
-        for (int i = 0; i < o.getCNounList().size(); i++) {
-            if (o.getCNounList().get(i).isExist()) count++;
+
+        for (final CompoundEntry entry : o.getCNounList()) {
+            if (entry.isExist())
+                count++;
         }
         return (count * 100) / o.getCNounList().size();
     }

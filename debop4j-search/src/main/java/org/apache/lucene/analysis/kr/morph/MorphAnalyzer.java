@@ -52,20 +52,21 @@ public class MorphAnalyzer {
         cnAnalyzer.setExactMach(false);
     }
 
-    public void setExactCompound(boolean is) {
+    public final void setExactCompound(boolean is) {
         cnAnalyzer.setExactMach(is);
     }
 
-    public List<AnalysisOutput> analyze(String input) throws MorphException {
-
+    public final List<AnalysisOutput> analyze(String input) throws MorphException {
         if (input.endsWith("."))
             return analyze(input.substring(0, input.length() - 1), POS_END);
-
         return analyze(input, POS_MID);
     }
 
     @SuppressWarnings("unchecked")
     public List<AnalysisOutput> analyze(String input, int pos) throws MorphException {
+
+        if (isTraceEnabled)
+            log.trace("analyze input=[{}], pos=[{}]", input, pos);
 
         List<AnalysisOutput> candidates = new ArrayList<AnalysisOutput>();
         boolean isVerbOnly = MorphUtil.hasVerbOnly(input);
@@ -80,20 +81,18 @@ public class MorphAnalyzer {
         // 복합명사 분해여부 결정하여 분해
         boolean changed = false;
         boolean correct = false;
-        for (AnalysisOutput o : candidates) {
 
+        for (AnalysisOutput o : candidates) {
             if (o.getScore() == AnalysisOutput.SCORE_CORRECT) {
                 if (o.getPatn() != PatternConstants.PTN_NJ) correct = true;
                 // "활성화해"가 [활성화(N),하(t),어야(e)] 분석성공하였는데 [활성/화해]분해되는 것을 방지
                 if (o.getPatn() == PatternConstants.PTN_NSM) break;
                 continue;
             }
-
             if (o.getPatn() < PatternConstants.PTN_VM && o.getStem().length() > 2) {
                 if (!(correct && o.getPatn() == PatternConstants.PTN_N)) confirmCNoun(o);
                 if (o.getScore() >= AnalysisOutput.SCORE_COMPOUNDS) changed = true;
             }
-
         }
 
         if (changed) {
@@ -101,7 +100,6 @@ public class MorphAnalyzer {
         }
 
         List<AnalysisOutput> results = new ArrayList<AnalysisOutput>();
-
         boolean hasCorrect = false;
         boolean hasCorrectNoun = false;
         boolean correctCnoun = false;

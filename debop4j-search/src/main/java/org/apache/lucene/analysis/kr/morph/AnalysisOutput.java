@@ -257,5 +257,4 @@ public class AnalysisOutput implements Cloneable {
     public String toString() {
         return Utilities.buildOutputString(this);
     }
-
 }

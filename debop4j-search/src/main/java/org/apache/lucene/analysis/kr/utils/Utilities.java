@@ -23,7 +23,10 @@ import org.apache.lucene.analysis.kr.morph.PatternConstants;
 public class Utilities {
 
     public static String arrayToString(String[] strs) {
-        StringBuilder sb = new StringBuilder();
+        if (strs == null || strs.length == 0)
+            return "";
+
+        StringBuilder sb = new StringBuilder(strs.length);
         for (String str : strs) {
             sb.append(str);
         }

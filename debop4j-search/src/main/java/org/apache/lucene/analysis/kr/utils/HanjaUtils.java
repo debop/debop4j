@@ -32,12 +32,13 @@ public class HanjaUtils {
     private static Map<String, char[]> mapHanja;
 
     public synchronized static void loadDictionary() throws MorphException {
-        if (log.isDebugEnabled())
-            log.debug("Load Hanja Dictionary...");
+        log.info("한자 사전을 로드합니다...");
+
+        mapHanja = new HashMap<String, char[]>();
+
         try {
             List<String> strList = FileUtil.readLines(KoreanEnv.getInstance().getValue(KoreanEnv.FILE_MAPHANJA), "UTF-8");
             // FileUtil.readLines("org/apache/lucene/analysis/kr/dic/mapHanja.dic", "UTF-8");
-            mapHanja = new HashMap<String, char[]>();
 
             for (String str : strList) {
                 if (str.length() < 1 || !str.contains(","))
@@ -47,12 +48,9 @@ public class HanjaUtils {
                     continue;
 
                 String hanja = StringEscapeUtil.unescapeJava(hanInfos[0]);
-
-                if (log.isTraceEnabled())
-                    log.trace("Hanja 를 추가합니다. hanja=[{}]", hanja);
-
                 mapHanja.put(hanja, hanInfos[1].toCharArray());
             }
+            log.info("한자 사전을 로드했습니다. 단어수=[{}], 로드수=[{}]", strList.size(), mapHanja.size());
         } catch (IOException e) {
             throw new MorphException(e);
         }
@@ -66,13 +64,17 @@ public class HanjaUtils {
      *
      */
     public static char[] convertToHangul(char hanja) throws MorphException {
-
         if (mapHanja == null) loadDictionary();
 
 //		if(hanja>0x9FFF||hanja<0x3400) return new char[]{hanja};
 
         char[] result = mapHanja.get(new String(new char[]{ hanja }));
-        if (result == null) return new char[]{ hanja };
+
+        if (result == null)
+            result = new char[]{ hanja };
+
+        if (log.isTraceEnabled())
+            log.trace("한자에 대응하는 한글을 찾아서 변환합니다. hanja=[{}], result=[{}]", hanja, result);
 
         return result;
     }

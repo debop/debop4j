@@ -64,12 +64,15 @@ public class SynonymUtil {
 
         for (String key : synonymMap.keySet()) {
             Set<String> synonyms = synonymMap.get(key);
-            if (key.equals(word)) {
-                return synonyms;
-            } else if (synonyms.contains(word)) {
+            if (key.equals(word) || synonyms.contains(word)) {
+                if (isTraceEnabled)
+                    log.trace("동의어를 찾았습니다. word=[{}], synonyms=[{}]", word, StringUtil.join(synonyms, ","));
                 return synonyms;
             }
         }
+        if (isTraceEnabled)
+            log.trace("동의어가 없습니다.");
+
         return EMPTY_SET;
     }
 
@@ -79,9 +82,9 @@ public class SynonymUtil {
      * @throws MorphException
      */
     private static SetMultimap<String, String> buildSynonymMap() throws MorphException {
+
         final String filename = KoreanEnv.getInstance().getValue(KoreanEnv.FILE_SYNONYM);
-        if (isTraceEnabled)
-            log.trace("동의어 사전에서 동의어 정보를 로드합니다... filename=[{}]", filename);
+        log.info("동의어 사전에서 동의어 정보를 로드합니다... filename=[{}]", filename);
 
         SetMultimap<String, String> mmap = TreeMultimap.create();
         try {
@@ -94,6 +97,7 @@ public class SynonymUtil {
                         log.trace("동의어를 추가합니다. words=[{}]", StringTool.listToString(words));
                 }
             }
+            log.info("동의어 사전을 빌드했습니다. 라인수=[{}], 동의어수=[{}]", lines.size(), mmap.values().size());
         } catch (IOException e) {
             throw new MorphException(e);
         }

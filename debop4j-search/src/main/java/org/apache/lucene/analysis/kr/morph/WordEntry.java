@@ -47,9 +47,7 @@ public class WordEntry implements Serializable {
 
     private List<CompoundEntry> compounds = new ArrayList<CompoundEntry>();
 
-    public WordEntry() {
-
-    }
+    public WordEntry() { }
 
     public WordEntry(String word) {
         this.word = word;
@@ -60,7 +58,7 @@ public class WordEntry implements Serializable {
         this.features = cs;
     }
 
-    public WordEntry(String word, List c) {
+    public WordEntry(String word, List<CompoundEntry> c) {
         this.word = word;
         this.compounds = c;
     }

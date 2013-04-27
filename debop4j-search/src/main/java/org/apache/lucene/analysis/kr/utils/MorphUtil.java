@@ -130,7 +130,6 @@ public class MorphUtil {
                 candidates.add(output);
             }
         }
-
     }
 
     /**
@@ -143,10 +142,9 @@ public class MorphUtil {
 
         char ch = output.getStem().charAt(output.getStem().length() - 2);
         char[] jasos = MorphUtil.decompose(ch);
+
         if (jasos.length == 3 || ch == '기') {
             buildPtnVMCM(output, candidates);
-        } else {
-
         }
     }
 
@@ -233,6 +231,5 @@ public class MorphUtil {
     public static boolean isValidSuffix(WordEntry entry, AnalysisOutput o) {
         return true;
     }
-
 }
 

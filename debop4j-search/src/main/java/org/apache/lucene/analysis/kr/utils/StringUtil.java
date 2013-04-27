@@ -4457,10 +4457,6 @@ public class StringUtil {
     /**
      * <p>Capitalizes a String changing the first letter to title case as
      * per {@link Character#toTitleCase(char)}. No other letters are changed.</p>
-     * <p/>
-     * <p>For a word based algorithm, see {@link WordUtils#capitalize(String)}.
-     * A <code>null</code> input String returns <code>null</code>.</p>
-     * <p/>
      * <pre>
      * StringUtil.capitalize(null)  = null
      * StringUtil.capitalize("")    = ""
@@ -4470,8 +4466,6 @@ public class StringUtil {
      *
      * @param str the String to capitalize, may be null
      * @return the capitalized String, <code>null</code> if null String input
-     * @see WordUtils#capitalize(String)
-     * @see #uncapitalize(String)
      * @since 2.0
      */
     public static String capitalize(String str) {
@@ -4501,9 +4495,6 @@ public class StringUtil {
     /**
      * <p>Uncapitalizes a String changing the first letter to title case as
      * per {@link Character#toLowerCase(char)}. No other letters are changed.</p>
-     * <p/>
-     * <p>For a word based algorithm, see {@link WordUtils#uncapitalize(String)}.
-     * A <code>null</code> input String returns <code>null</code>.</p>
      * <p/>
      * <pre>
      * StringUtil.uncapitalize(null)  = null
@@ -4550,9 +4541,6 @@ public class StringUtil {
      * <li>Title case character converts to Lower case</li>
      * <li>Lower case character converts to Upper case</li>
      * </ul>
-     * <p/>
-     * <p>For a word based algorithm, see {@link WordUtils#swapCase(String)}.
-     * A <code>null</code> input String returns <code>null</code>.</p>
      * <p/>
      * <pre>
      * StringUtil.swapCase(null)                 = null
@@ -4880,7 +4868,6 @@ public class StringUtil {
      * @param str the String to check, may be null
      * @return the passed in String, or the empty String if it
      *         was <code>null</code>
-     * @see ObjectUtils#toString(Object)
      * @see String#valueOf(Object)
      */
     public static String defaultString(String str) {
@@ -4901,7 +4888,6 @@ public class StringUtil {
      * @param defaultStr the default String to return
      *                   if the input is <code>null</code>, may be null
      * @return the passed in String, or the default if it was <code>null</code>
-     * @see ObjectUtils#toString(Object, String)
      * @see String#valueOf(Object)
      */
     public static String defaultString(String str, String defaultStr) {
@@ -5592,7 +5578,6 @@ public class StringUtil {
      *
      * @param obj the Object to <code>toString</code>, may be null
      * @return the passed in Object's toString, or nullStr if <code>null</code> input
-     * @see StringUtils#defaultString(String)
      * @see String#valueOf(Object)
      * @since 2.0
      */

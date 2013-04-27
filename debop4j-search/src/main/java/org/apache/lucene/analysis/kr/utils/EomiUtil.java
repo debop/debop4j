@@ -19,12 +19,16 @@ package org.apache.lucene.analysis.kr.utils;
 import org.apache.lucene.analysis.kr.morph.AnalysisOutput;
 import org.apache.lucene.analysis.kr.morph.MorphException;
 import org.apache.lucene.analysis.kr.morph.PatternConstants;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @SuppressWarnings("unchecked")
 public class EomiUtil {
+
+    private static final Logger log = LoggerFactory.getLogger(EomiUtil.class);
 
     public static final String RESULT_FAIL = "0";
     public static final String RESULT_SUCCESS = "1";
@@ -38,7 +42,10 @@ public class EomiUtil {
      * @throws org.apache.lucene.analysis.kr.morph.MorphException
      *
      */
-    public static String[] longestEomi(String term) throws MorphException {
+    public static String[] longestEomi(final String term) throws MorphException {
+
+        if (log.isTraceEnabled())
+            log.trace("가장 길이가 긴 어미를 분리합니다. term=[{}]", term);
 
         String[] result = new String[2];
         result[0] = term;
@@ -114,14 +121,19 @@ public class EomiUtil {
             if (efeature != null && efeature[SyllableUtil.IDX_EOMI2] == '0') break;
         }
 
-        return result;
+        if (log.isTraceEnabled())
+            log.trace("가장 긴 어미를 분리했습니다. term=[{}], result=[{}]", term, StringUtil.join(result, ","));
 
+        return result;
     }
 
     /**
      * 선어말어미를 분석한다.
      */
     public static String[] splitPomi(String stem) throws MorphException {
+
+        if (log.isTraceEnabled())
+            log.trace("선어말어미를 분석합니다. stem=[{}]", stem);
 
         //	 results[0]:성공(1)/실패(0), results[1]: 어근, results[2]: 선어말어미
         String[] results = new String[2];
@@ -226,6 +238,9 @@ public class EomiUtil {
             setPomiResult(results, stem.substring(0, index), pomi);
         }
 
+        if (log.isTraceEnabled())
+            log.trace("선어말어미를 분석합니다. stem=[{}], result=[{}]", stem, StringUtil.join(results, ","));
+
         return results;
     }
 
@@ -235,9 +250,9 @@ public class EomiUtil {
      * @throws org.apache.lucene.analysis.kr.morph.MorphException
      *
      */
-    public static List irregular(AnalysisOutput output) throws MorphException {
+    public static List<AnalysisOutput> irregular(AnalysisOutput output) throws MorphException {
 
-        List results = new ArrayList();
+        List<AnalysisOutput> results = new ArrayList<AnalysisOutput>();
 
         if (output.getStem() == null || output.getStem().length() == 0)
             return results;
@@ -270,7 +285,7 @@ public class EomiUtil {
     /**
      * 어간만 변하는 경우
      */
-    private static void irregularStem(List results, String stem, String ending) {
+    private static void irregularStem(List<String[]> results, String stem, String ending) {
 
         char feCh = ending.charAt(0);
         char[] fechJaso = MorphUtil.decompose(feCh);
@@ -327,7 +342,7 @@ public class EomiUtil {
     /**
      * 어미만 변하는 경우
      */
-    private static void irregularEnding(List results, String stem, String ending) {
+    private static void irregularEnding(List<String[]> results, String stem, String ending) {
         if (ending.startsWith("ㅆ")) return;
 
         char feCh = ending.charAt(0);
@@ -361,7 +376,7 @@ public class EomiUtil {
     /**
      * 어간과 어미가 모두 변하는 경우
      */
-    private static void irregularAO(List results, String stem, String ending) {
+    private static void irregularAO(List<String[]> results, String stem, String ending) {
 
         char ls = stem.charAt(stem.length() - 1);
         char[] lsJaso = MorphUtil.decompose(ls);
@@ -570,6 +585,9 @@ public class EomiUtil {
      */
     public static String[] splitEomi(String stem, String end) throws MorphException {
 
+        if (log.isTraceEnabled())
+            log.trace("어미를 분리한다. stem=[{}], end=[{}]", stem, end);
+
         String[] strs = new String[2];
         int strlen = stem.length();
         if (strlen == 0) return strs;
@@ -632,6 +650,9 @@ public class EomiUtil {
         } else if (!"".equals(end) && DictionaryUtil.existEomi(end)) {
             strs = new String[]{ stem, end };
         }
+
+        if (log.isTraceEnabled())
+            log.trace("어미를 분리했습니다. stem=[{}], end=[{}], strs=[{}]", stem, end, StringUtil.join(strs, ","));
 
         return strs;
     }

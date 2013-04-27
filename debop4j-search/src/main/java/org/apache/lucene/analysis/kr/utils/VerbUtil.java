@@ -35,7 +35,7 @@ public class VerbUtil {
 
     public static final Map<String, String> verbSuffix = new HashMap<String, String>();
 
-    public static final Map<String, String> XVerb = new HashMap<String, String>();
+    public static final Map<String, String> xVerb = new HashMap<String, String>();
 
     static {
         String[] suffixs = { "이", "하", "되", "내", "나", "스럽", "시키", "있", "없", "같", "당하", "만하", "드리", "받", "짓" };
@@ -46,7 +46,7 @@ public class VerbUtil {
         String[] xverbs = { "오", "내", "주", "보", "지", "오르", "올리" };
 
         for (String xverb : xverbs)
-            XVerb.put(xverb, xverb);
+            xVerb.put(xverb, xverb);
     }
 
     /**
@@ -80,7 +80,8 @@ public class VerbUtil {
         int start = 2;
         if (len == 2) start = 1;
         for (int i = start; i > 0; i--) { //xverbs 의 가장 긴 글자수는 2이다.
-            if (XVerb.get(stem.substring(len - i)) != null) return (len - i);
+            if (xVerb.get(stem.substring(len - i)) != null)
+                return (len - i);
         }
         return -1;
     }
@@ -176,7 +177,6 @@ public class VerbUtil {
         candidates.add(o);
 
         return true;
-
     }
 
     public static boolean ananlysisNSMXM(AnalysisOutput o, List<AnalysisOutput> candidates) throws MorphException {
@@ -247,7 +247,6 @@ public class VerbUtil {
         }
 
         if (success) {
-
             o.addElist("이");
             if (DictionaryUtil.getVerb(o.getStem()) != null) {
                 o.setPos(PatternConstants.POS_VERB);
@@ -288,6 +287,7 @@ public class VerbUtil {
         }
 
         String[] irrs = IrregularUtil.restoreIrregularVerb(stomis[0], stomis[1]);
+
         if (irrs != null) {
             o.setStem(irrs[0]);
             o.addElist(irrs[1]);

@@ -20,6 +20,8 @@ import org.apache.lucene.analysis.kr.utils.DictionaryUtil;
 import org.apache.lucene.analysis.kr.utils.MorphUtil;
 import org.apache.lucene.analysis.kr.utils.SyllableUtil;
 import org.apache.lucene.analysis.kr.utils.VerbUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.*;
 
@@ -27,6 +29,8 @@ import java.util.*;
  * @author smlee
  */
 public class WordSpaceAnalyzer {
+
+    private static final Logger log = LoggerFactory.getLogger(WordSpaceAnalyzer.class);
 
     private MorphAnalyzer morphAnal;
 
@@ -37,7 +41,10 @@ public class WordSpaceAnalyzer {
 
     public List<AnalysisOutput> analyze(String input) throws MorphException {
 
-        List stack = new ArrayList();
+        if (log.isTraceEnabled())
+            log.trace("단어를 분석합니다. input=[{}]", input);
+
+        //List stack = new ArrayList();
         WSOutput output = new WSOutput();
         int wStart = 0;
         int sgCount = -9;
@@ -56,7 +63,6 @@ public class WordSpaceAnalyzer {
 
             if (input.charAt(i) == '있' || input.charAt(i) == '없' || input.charAt(i) == '앞') {
                 addSingleWord(input.substring(wStart, i), candidates);
-
 
                 // 다음 음절이 2음절 이상 단어에 포함되어 있고 마지막 음절이 아니라면   띄워쓰기 위치가 아닐 가능성이 크다.
                 // 부사, 관형사, 감탄사 등 단일어일 가능성인 경우 띄워쓰기가 가능하나,
@@ -129,7 +135,11 @@ public class WordSpaceAnalyzer {
      */
     private List<AnalysisOutput> anlysisWithJosa(String snipt, int js) throws MorphException {
 
+        if (log.isTraceEnabled())
+            log.trace("조사로 끝나는 어구를 분석한다. snipt=[{}], js=[{}]", snipt, js);
+
         List<AnalysisOutput> candidates = new ArrayList<AnalysisOutput>();
+
         if (js < 1) return candidates;
 
         int jend = findJosaEnd(snipt, js);
@@ -209,21 +219,16 @@ public class WordSpaceAnalyzer {
             }
         }
 
-        if (!hasJosa) return -1;
-
-        return jend + 1;
-
+        return (!hasJosa) ? -1 : jend + 1;
     }
 
     /**
      * 향후 계산이나 원 문자열을 보여주기 위해 source string 을 저장한다.
      */
-    private void fillSourceString(String source, List<AnalysisOutput> candidates) {
-
-        for (AnalysisOutput o : candidates) {
+    private void fillSourceString(final String source, List<AnalysisOutput> candidates) {
+        for (final AnalysisOutput o : candidates) {
             o.setSource(source);
         }
-
     }
 
     /**
@@ -234,7 +239,6 @@ public class WordSpaceAnalyzer {
         if (candidates.size() == 0) return;
 
         String source = candidates.get(0).getSource();
-
         WordEntry entry = DictionaryUtil.getWordExceptVerb(source);
 
         if (entry != null) {
@@ -254,7 +258,7 @@ public class WordSpaceAnalyzer {
         }
     }
 
-    private void addSingleWord(String source, List<AnalysisOutput> candidates) throws MorphException {
+    private void addSingleWord(final String source, List<AnalysisOutput> candidates) throws MorphException {
 
         WordEntry entry = DictionaryUtil.getWordExceptVerb(source);
 
@@ -273,6 +277,9 @@ public class WordSpaceAnalyzer {
     }
 
     private List anlysisWithEomi(String snipt, int estart) throws MorphException {
+
+        if (log.isTraceEnabled())
+            log.trace("어미를 분석합니다. snipt=[{}], estart=[{}]", snipt, estart);
 
         List<AnalysisOutput> candidates = new ArrayList<AnalysisOutput>();
 
@@ -293,22 +300,25 @@ public class WordSpaceAnalyzer {
         String pvword = null;
         if (vstart != 0) pvword = snipt.substring(0, vstart);
 
+        List<String> eomiList = new ArrayList<String>();
+        Collections.addAll(eomiList, "ㄴ", "ㄹ", "ㅁ");
+
         while (true) { // ㄹ,ㅁ,ㄴ 이기때문에 어미위치를 뒤로 잡았는데, 용언+어미의 형태가 아니라면.. 어구 끝을 하나 줄인다.
             String input = snipt.substring(vstart, eend);
             anlysisWithEomiDetail(input, candidates);
             if (candidates.size() == 0) break;
-            if (("ㄹ".equals(candidates.get(0).getEomi()) ||
-                    "ㅁ".equals(candidates.get(0).getEomi()) ||
-                    "ㄴ".equals(candidates.get(0).getEomi())) &&
-                    eend > estart + 1 && candidates.get(0).getPatn() != PatternConstants.PTN_VM &&
-                    candidates.get(0).getPatn() != PatternConstants.PTN_NSM
-                    ) {
+
+            AnalysisOutput output = candidates.get(0);
+            String eomi = output.getEomi();
+            boolean isEomi = eomiList.contains(eomi);
+            if (isEomi && eend > estart + 1 && output.getPatn() != PatternConstants.PTN_VM &&
+                    candidates.get(0).getPatn() != PatternConstants.PTN_NSM) {
                 eend--;
-            } else if (pvword != null && candidates.get(0).getPatn() >= PatternConstants.PTN_VM && // 명사 + 용언 어구 중에.. 용언어구로 단어를 이루는 경우는 없다.
-                    candidates.get(0).getPatn() <= PatternConstants.PTN_VMXMJ && DictionaryUtil.getWord(input) != null) {
+            } else if (pvword != null && output.getPatn() >= PatternConstants.PTN_VM && // 명사 + 용언 어구 중에.. 용언어구로 단어를 이루는 경우는 없다.
+                    output.getPatn() <= PatternConstants.PTN_VMXMJ && DictionaryUtil.getWord(input) != null) {
                 candidates.clear();
                 break;
-            } else if (pvword != null && VerbUtil.verbSuffix(candidates.get(0).getStem())
+            } else if (pvword != null && VerbUtil.verbSuffix(output.getStem())
                     && DictionaryUtil.getNoun(pvword) != null) { // 명사 + 용언화 접미사 + 어미 처리
                 candidates.clear();
                 anlysisWithEomiDetail(snipt.substring(0, eend), candidates);
@@ -363,13 +373,18 @@ public class WordSpaceAnalyzer {
 
             feature = SyllableUtil.getFeature(eomi.charAt(0));
 
-            if (eomiFlag) {
-                morphAnal.analysisWithEomi(stem, eomi, candidates);
-            }
+            morphAnal.analysisWithEomi(stem, eomi, candidates);
 
-            if (eomiFlag && feature[SyllableUtil.IDX_EOMI2] == '0') eomiFlag = false;
+            if (feature[SyllableUtil.IDX_EOMI2] == '0')
+                break;
 
-            if (!eomiFlag) break;
+//            if (eomiFlag) {
+//                morphAnal.analysisWithEomi(stem, eomi, candidates);
+//            }
+//
+//            if (eomiFlag && feature[SyllableUtil.IDX_EOMI2] == '0') eomiFlag = false;
+//
+//            if (!eomiFlag) break;
         }
 
     }
@@ -385,7 +400,7 @@ public class WordSpaceAnalyzer {
 
         int jend = 0;
 
-        String tail = null;
+        String tail;
         char[] chr = MorphUtil.decompose(snipt.charAt(estart));
         if (chr.length == 3 && (chr[2] == 'ㄴ')) {
             tail = '은' + snipt.substring(estart + 1);
@@ -414,9 +429,7 @@ public class WordSpaceAnalyzer {
                 break;
             }
         }
-
         return estart + jend + 1;
-
     }
 
     /**
@@ -503,8 +516,9 @@ public class WordSpaceAnalyzer {
     private void analysisCompouns(List<AnalysisOutput> candidates) throws MorphException {
 
         // 복합명사 분해여부 결정하여 분해
-        boolean changed = false;
+        //boolean changed = false;
         boolean correct = false;
+
         for (AnalysisOutput o : candidates) {
 
             if (o.getScore() == AnalysisOutput.SCORE_CORRECT) {
@@ -516,19 +530,17 @@ public class WordSpaceAnalyzer {
 
             if (o.getPatn() <= PatternConstants.PTN_VM && o.getStem().length() > 2) {
                 if (!(correct && o.getPatn() == PatternConstants.PTN_N)) morphAnal.confirmCNoun(o);
-                if (o.getScore() == AnalysisOutput.SCORE_CORRECT) changed = true;
+                //if (o.getScore() == AnalysisOutput.SCORE_CORRECT) changed = true;
             }
         }
-
     }
 
     /**
-     * 문자열에
+     * 문자열에 명사를 찾습니다.
      *
      * @param str 분석하고자 하는 전체 문자열
      * @param ws  문자열에서 명사를 찾는 시작위치
      * @param es  문자열에서 명사를 찾는 끝 위치
-     * @return
      * @throws org.apache.lucene.analysis.kr.morph.MorphException
      *
      */
@@ -548,8 +560,8 @@ public class WordSpaceAnalyzer {
 
     private boolean isNounPart(String str, int jstart) throws MorphException {
 
-        //NOTE: 이게 왜 들어가 있지?
-        if (true) return false;
+        //TODO: 이게 왜 들어가 있지? 이유가 없는 듯
+        // if (true) return false;
 
         for (int i = jstart - 1; i >= 0; i--) {
             if (DictionaryUtil.getWordExceptVerb(str.substring(i, jstart + 1)) != null)
@@ -566,6 +578,5 @@ public class WordSpaceAnalyzer {
             System.out.print(o.toString() + "(" + o.getScore() + ")| ");
         }
         System.out.println("<==");
-
     }
 }

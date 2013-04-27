@@ -25,14 +25,10 @@ public class WSOutput implements Cloneable, Serializable {
     private static final long serialVersionUID = 5688830925667373969L;
 
     private int lastStart = 0;
-
     private int lastEnd = 0;
-
     private List<AnalysisOutput> phrases = new ArrayList<AnalysisOutput>();
 
-    public WSOutput() {
-
-    }
+    public WSOutput() { }
 
     public WSOutput(AnalysisOutput o) {
         addPhrase(o);
@@ -110,13 +106,13 @@ public class WSOutput implements Cloneable, Serializable {
         for (int i = 0; i < cnouns.size() - 1; i++) {
 
             String noun = cnouns.get(i).getWord();
+            String next = cnouns.get(i + 1).getWord();
             boolean isOnechar = false;
 
             // 접두어는 처음 음절에만 온다. 복합명사 분해규칙
             // 처음이 아닌 경우 1글자는 앞 문자와 결합한다.
-            if (cnouns.get(i).getWord().length() == 1 ||
-                    cnouns.get(i + 1).getWord().length() == 1) { // 접두어는 처음 음절에만 온다. 복합명사 분해규칙
-                noun += cnouns.get(i + 1).getWord();
+            if (noun.length() == 1 || next.length() == 1) { // 접두어는 처음 음절에만 온다. 복합명사 분해규칙
+                noun += next;
                 isOnechar = true;
             }
 
@@ -145,7 +141,6 @@ public class WSOutput implements Cloneable, Serializable {
             if (isOnechar) {
                 cnouns.remove(cnouns.get(0));
             }
-
         }
 
         o.setStem(o.getStem().substring(o.getSource().length() - source.length()));
@@ -153,7 +148,6 @@ public class WSOutput implements Cloneable, Serializable {
         if (cnouns.size() == 1) cnouns.remove(0);
 
         this.phrases.add(o);
-
     }
 
     public void setPhrases(List<AnalysisOutput> phrases) {

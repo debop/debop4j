@@ -119,7 +119,8 @@ public class FileUtil {
 
             return readLines(in, encoding);
         } finally {
-            closeQuietly(in);
+            if (in != null)
+                closeQuietly(in);
         }
     }
 
@@ -219,13 +220,13 @@ public class FileUtil {
      */
     public static List<String> readLines(Reader input) throws IOException {
         BufferedReader reader = new BufferedReader(input);
-        List<String> list = new ArrayList<String>();
-        String line = reader.readLine();
-        while (line != null) {
-            list.add(line);
-            line = reader.readLine();
+        List<String> lines = new ArrayList<String>(1000);
+
+        String line = null;
+        while ((line = reader.readLine()) != null) {
+            lines.add(line);
         }
-        return list;
+        return lines;
     }
 
     /**
@@ -241,9 +242,7 @@ public class FileUtil {
             if (input != null) {
                 input.close();
             }
-        } catch (IOException ioe) {
-            // ignore
-        }
+        } catch (IOException ignored) { }
     }
 
 

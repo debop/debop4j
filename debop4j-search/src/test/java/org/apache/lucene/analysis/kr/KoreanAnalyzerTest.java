@@ -82,7 +82,7 @@ public class KoreanAnalyzerTest extends TestCase {
             PositionIncrementAttribute posAttr = stream.getAttribute(PositionIncrementAttribute.class);
             TypeAttribute typeAttr = stream.getAttribute(TypeAttribute.class);
 
-            System.out.println(new String(termAttr.buffer()));
+            System.out.println(new String(termAttr.buffer(), 0, termAttr.length()));
         }
 
         System.out.println((System.currentTimeMillis() - start) + "ms");

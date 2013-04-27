@@ -74,9 +74,7 @@ public class CompoundNounAnalyzer {
             default:
                 analyzeLongText(input, outputs, isFirst);
         }
-
         return outputs;
-
     }
 
     private void analyze3Word(String input, List<CompoundEntry> outputs, boolean isFirst) throws MorphException {
@@ -93,7 +91,6 @@ public class CompoundNounAnalyzer {
         if (entries2 != null && entries2[0].isExist() && entries2[1].isExist()) {
             outputs.addAll(Arrays.asList(entries2));
         }
-
     }
 
     private void analyze4Word(String input, List<CompoundEntry> outputs, boolean isFirst) throws MorphException {
@@ -251,7 +248,6 @@ public class CompoundNounAnalyzer {
         if (!exactMach && entries4 != null && (entries4[0].isExist() || entries4[1].isExist())) {
             outputs.addAll(Arrays.asList(entries4));
         }
-
     }
 
     private void analyzeLongText(String input, List<CompoundEntry> outputs, boolean isFirst) throws MorphException {
@@ -319,15 +315,12 @@ public class CompoundNounAnalyzer {
 
             if (eval == 110) break;
         }
-
         outputs.addAll(results);
-
     }
 
     private int evaluation(List<CompoundEntry> candidates) {
 
         int eval = 10;
-
         int one = 0;
         int exist = 0;
 
@@ -337,30 +330,21 @@ public class CompoundNounAnalyzer {
         }
 
         if (one > 3) return eval;
-
-        eval = eval + (exist * 100) / candidates.size() - (one * 100) / candidates.size();
-
-        return eval;
+        return eval + (exist * 100) / candidates.size() - (one * 100) / candidates.size();
     }
 
     private boolean containWord(String before, String input, int pos) throws MorphException {
-
         String prev = null;
         for (int i = pos; i < input.length(); i++) {
-
             String text = before + input.substring(pos, i + 1);
             if (DictionaryUtil.findWithPrefix(text).hasNext()) {
                 prev = text;
                 continue;
             }
-
             if (prev != null && DictionaryUtil.getNoun(prev) != null) return true;
-
             break;
         }
-
         return false;
-
     }
 
 //	private void analyzeLongText(String input,List outputs, boolean isFirst) throws MorphException {
@@ -542,14 +526,12 @@ public class CompoundNounAnalyzer {
         if (after.length() == 1 && !DictionaryUtil.existSuffix(after)) return false;
 
         if (pos != 1 && before.length() == 1) {
-
             WordEntry entry1 = DictionaryUtil.getUncompound(before + after);
             if (entry1 != null) {
                 List<CompoundEntry> compounds = entry1.getCompounds();
                 if (before.equals(compounds.get(0).getWord()) &&
                         after.equals(compounds.get(1).getWord())) return false;
             }
-
         }
 
         WordEntry entry2 = after.length() == 1 ? null : DictionaryUtil.getUncompound(after);

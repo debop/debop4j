@@ -28,16 +28,11 @@ public class CompoundEntry implements Serializable {
     private static final long serialVersionUID = -8051126625296262519L;
 
     private String word;
-
     private int offset = -1;
-
     private boolean exist = true;
-
     private char pos = PatternConstants.POS_NOUN;
 
-    public CompoundEntry() {
-
-    }
+    public CompoundEntry() { }
 
     public CompoundEntry(String w) {
         this.word = w;

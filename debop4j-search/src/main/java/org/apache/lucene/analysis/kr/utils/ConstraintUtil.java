@@ -29,7 +29,7 @@ import java.util.Map;
 @SuppressWarnings("unchecked")
 public class ConstraintUtil {
 
-    private static Map hahes = new HashMap(); // "글로벌화해 ", "민족화해" 처럼 화해와 결합이 가능한 명사
+    private static Map<String, String> hahes = new HashMap<String, String>(); // "글로벌화해 ", "민족화해" 처럼 화해와 결합이 가능한 명사
 
     static {
         hahes.put("민족", "Y");
@@ -37,7 +37,7 @@ public class ConstraintUtil {
         hahes.put("남북", "Y");
     }
 
-    private static Map eomiPnouns = new HashMap();
+    private static Map<String, String> eomiPnouns = new HashMap<String, String>();
 
     static {
         eomiPnouns.put("ㄴ", "Y");
@@ -45,7 +45,7 @@ public class ConstraintUtil {
         eomiPnouns.put("ㅁ", "Y");
     }
 
-    private static Map PTN_MLIST = new HashMap();
+    private static Map<Integer, Integer> PTN_MLIST = new HashMap<Integer, Integer>();
 
     static {
         PTN_MLIST.put(PatternConstants.PTN_NSM, PatternConstants.PTN_NSM);
@@ -57,7 +57,7 @@ public class ConstraintUtil {
         PTN_MLIST.put(PatternConstants.PTN_NVM, PatternConstants.PTN_NVM);
     }
 
-    private static Map PTN_JLIST = new HashMap();
+    private static Map<Integer, Integer> PTN_JLIST = new HashMap<Integer, Integer>();
 
     static {
         PTN_JLIST.put(PatternConstants.PTN_NJ, PatternConstants.PTN_NJ);
@@ -66,7 +66,7 @@ public class ConstraintUtil {
         PTN_JLIST.put(PatternConstants.PTN_VMXMJ, PatternConstants.PTN_VMXMJ);
     }
 
-    private static Map WORD_GUKS = new HashMap();
+    private static Map<String, String> WORD_GUKS = new HashMap<String, String>();
 
     static {
         WORD_GUKS.put("날것", "Y");
@@ -78,7 +78,7 @@ public class ConstraintUtil {
     }
 
     // 종성이 있는 음절과 연결될 수 없는 조사
-    private static Map JOSA_TWO = new HashMap();
+    private static Map<String, String> JOSA_TWO = new HashMap<String, String>();
 
     static {
         JOSA_TWO.put("가", "Y");
@@ -98,7 +98,7 @@ public class ConstraintUtil {
     }
 
     // 종성이 없는 음절과 연결될 수 없는 조사
-    private static Map JOSA_THREE = new HashMap();
+    private static Map<String, String> JOSA_THREE = new HashMap<String, String>();
 
     static {
         JOSA_THREE.put("과", "Y");
@@ -110,8 +110,7 @@ public class ConstraintUtil {
     }
 
     public static boolean canHaheCompound(String key) {
-        if (hahes.get(key) != null) return true;
-        return false;
+        return hahes.get(key) != null;
     }
 
     /**
@@ -119,8 +118,7 @@ public class ConstraintUtil {
      */
     public static boolean isNLM(String eomi) {
 
-        if (eomi == null || "".equals(eomi)) return false;
-
+        if (eomi == null || eomi.length() == 0) return false;
         if (eomiPnouns.get(eomi) != null) return true;
 
         char[] chrs = MorphUtil.decompose(eomi.charAt(eomi.length() - 1));
