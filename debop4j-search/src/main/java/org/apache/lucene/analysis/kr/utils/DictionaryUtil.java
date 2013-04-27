@@ -46,8 +46,6 @@ public class DictionaryUtil {
 
     private static HashMap<String, String> cjwords;
 
-    private static HashMap<String, String> customs;
-
     /**
      * 사전을 로드한다.
      */
@@ -79,6 +77,29 @@ public class DictionaryUtil {
             throw new MorphException(e);
         }
 
+        log.info("확장 사전을 로드합니다...");
+        try {
+            List<String> strList = FileUtil.readLines(KoreanEnv.getInstance().getValue(KoreanEnv.FILE_EXTENSION), "UTF-8");
+            int count = 0;
+            for (String str : strList) {
+                String[] infos = StringUtil.split(str, ",");
+                if (infos.length != 2) continue;
+                infos[1] = infos[1].trim();
+                if (infos[1].length() == 6)
+                    infos[1] = infos[1].substring(0, 5) + "000" + infos[1].substring(5);
+
+                if (dictionary.get(infos[0].trim()) == null) {
+                    WordEntry entry = new WordEntry(infos[0].trim(), infos[1].trim().toCharArray());
+                    dictionary.add(entry.getWord(), entry);
+                    count++;
+                }
+            }
+            log.info("확장 사전을 로드했습니다. 단어수=[{}], 등록수=[{}]", strList.size(), count);
+        } catch (Exception e) {
+            log.error("확장 사전을 로드하는데 실패했습니다.", e);
+            throw new MorphException(e);
+        }
+
         log.info("복합명사 사전을 로드합니다...");
         try {
             List<String> compounds = FileUtil.readLines(KoreanEnv.getInstance().getValue(KoreanEnv.FILE_COMPOUNDS), "UTF-8");
@@ -103,7 +124,7 @@ public class DictionaryUtil {
         log.info("사용자정의 사전을 로드합니다...");
 
         try {
-            char[] features = "10000000X".toCharArray();
+            char[] features = "100000000X".toCharArray();
             List<String> customs = FileUtil.readLines(KoreanEnv.getInstance().getValue(KoreanEnv.FILE_CUSTOM), "UTF-8");
             int count = 0;
             for (String custom : customs) {
