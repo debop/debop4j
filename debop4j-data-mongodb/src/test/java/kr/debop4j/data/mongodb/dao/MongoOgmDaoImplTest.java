@@ -220,10 +220,10 @@ public class MongoOgmDaoImplTest extends MongoGridDatastoreTestBase {
                 for (Player player : players) {
                     dao.saveOrUpdate(player);
                 }
-                dao.getFullTextSession().flush();
+                dao.getSession().flush();
                 /**
                  * 병렬 작업 시에는 flushToIndexes() 메소드를 호출하여,
-                 * session이 닫히거나 스레드가 중단되기 전에 인덱싱을 마무리하도록 한다.f
+                 * session이 닫히거나 스레드가 중단되기 전에 인덱싱을 마무리하도록 한다.
                  */
                 dao.flushToIndexes();
                 dao.getSession().close();

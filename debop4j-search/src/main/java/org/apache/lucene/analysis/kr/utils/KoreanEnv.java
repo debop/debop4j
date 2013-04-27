@@ -51,6 +51,8 @@ public class KoreanEnv {
 
     public static final String FILE_SYNONYM = "synonym.dic";
 
+    public static final String FILE_CUSTOM = "custom.dic";
+
     public static final String FILE_KOREAN_PROPERTY = "org/apache/lucene/analysis/kr/korean.properties";
 
     private Properties defaults = null;
@@ -101,6 +103,7 @@ public class KoreanEnv {
         defaults.setProperty(FILE_UNCOMPOUNDS, "org/apache/lucene/analysis/kr/dic/uncompounds.dic");
         defaults.setProperty(FILE_CJ, "org/apache/lucene/analysis/kr/dic/cj.dic");
         defaults.setProperty(FILE_SYNONYM, "org/apache/lucene/analysis/kr/dic/synonym.dic");
+        defaults.setProperty(FILE_CUSTOM, "org/apache/lucene/analysis/kr/dic/custom.dic");
     }
 
 

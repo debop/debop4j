@@ -46,6 +46,8 @@ public class DictionaryUtil {
 
     private static HashMap<String, String> cjwords;
 
+    private static HashMap<String, String> customs;
+
     /**
      * 사전을 로드한다.
      */
@@ -53,38 +55,73 @@ public class DictionaryUtil {
         log.info("사전을 로드합니다...");
 
         dictionary = new Trie<String, WordEntry>(true);
-        List<String> strList = null;
-        List<String> compounds = null;
+
+        log.info("표준 사전을 로드합니다...");
+        try {
+            List<String> strList = FileUtil.readLines(KoreanEnv.getInstance().getValue(KoreanEnv.FILE_DICTIONARY), "UTF-8");
+            int count = 0;
+            for (String str : strList) {
+                String[] infos = StringUtil.split(str, ",");
+                if (infos.length != 2) continue;
+                infos[1] = infos[1].trim();
+                if (infos[1].length() == 6)
+                    infos[1] = infos[1].substring(0, 5) + "000" + infos[1].substring(5);
+
+                if (dictionary.get(infos[0].trim()) == null) {
+                    WordEntry entry = new WordEntry(infos[0].trim(), infos[1].trim().toCharArray());
+                    dictionary.add(entry.getWord(), entry);
+                    count++;
+                }
+            }
+            log.info("표준 사전을 로드했습니다. 단어수=[{}], 등록수=[{}]", strList.size(), count);
+        } catch (Exception e) {
+            log.error("표준 사전을 로드하는데 실패했습니다.", e);
+            throw new MorphException(e);
+        }
+
+        log.info("복합명사 사전을 로드합니다...");
+        try {
+            List<String> compounds = FileUtil.readLines(KoreanEnv.getInstance().getValue(KoreanEnv.FILE_COMPOUNDS), "UTF-8");
+            char[] features = "20000000X".toCharArray();
+            int count = 0;
+            for (String compound : compounds) {
+                String[] infos = StringUtil.split(compound, ":");
+                if (infos.length != 2) continue;
+                if (dictionary.get(infos[0].trim()) == null) {
+                    WordEntry entry = new WordEntry(infos[0].trim(), features);
+                    entry.setCompounds(compoundArrayToList(infos[1], StringUtil.split(infos[1], ",")));
+                    dictionary.add(entry.getWord(), entry);
+                    count++;
+                }
+            }
+            log.info("복합명사 사전을 로드했습니다. 단어수=[{}], 등록수=[{}]", compounds.size(), count);
+        } catch (Exception e) {
+            log.error("복합명사 사전을 로드하는데 실패했습니다.", e);
+            throw new MorphException(e);
+        }
+
+        log.info("사용자정의 사전을 로드합니다...");
 
         try {
-            strList = FileUtil.readLines(KoreanEnv.getInstance().getValue(KoreanEnv.FILE_DICTIONARY), "UTF-8");
-            strList.addAll(FileUtil.readLines(KoreanEnv.getInstance().getValue(KoreanEnv.FILE_EXTENSION), "UTF-8"));
-            compounds = FileUtil.readLines(KoreanEnv.getInstance().getValue(KoreanEnv.FILE_COMPOUNDS), "UTF-8");
-
-            log.info("사전을 로드했습니다.");
+            char[] features = "10000000X".toCharArray();
+            List<String> customs = FileUtil.readLines(KoreanEnv.getInstance().getValue(KoreanEnv.FILE_CUSTOM), "UTF-8");
+            int count = 0;
+            for (String custom : customs) {
+                if (custom != null && custom.trim().length() > 0) {
+                    if (dictionary.get(custom.trim()) == null) {
+                        WordEntry entry = new WordEntry(custom.trim(), features);
+                        dictionary.add(entry.getWord(), entry);
+                        count++;
+                    }
+                }
+            }
+            log.info("사용자정의 사전을 로드했습니다. 단어수=[{}], 등록수=[{}]", customs.size(), count);
         } catch (Exception e) {
-            throw new MorphException(e.getMessage(), e);
+            log.error("사용자정의 사전을 로드하는데 실패했습니다.", e);
+            throw new MorphException(e);
         }
 
-        for (String str : strList) {
-            String[] infos = StringUtil.split(str, ",");
-            if (infos.length != 2) continue;
-            infos[1] = infos[1].trim();
-            if (infos[1].length() == 6)
-                infos[1] = infos[1].substring(0, 5) + "000" + infos[1].substring(5);
-
-            WordEntry entry = new WordEntry(infos[0].trim(), infos[1].trim().toCharArray());
-            dictionary.add(entry.getWord(), entry);
-        }
-
-        char[] features = "20000000X".toCharArray();
-        for (String compound : compounds) {
-            String[] infos = StringUtil.split(compound, ":");
-            if (infos.length != 2) continue;
-            WordEntry entry = new WordEntry(infos[0].trim(), features);
-            entry.setCompounds(compoundArrayToList(infos[1], StringUtil.split(infos[1], ",")));
-            dictionary.add(entry.getWord(), entry);
-        }
+        log.info("사전을 로드했습니다.");
     }
 
     public static Iterator findWithPrefix(String prefix) throws MorphException {
