@@ -26,11 +26,8 @@ import java.util.List;
 @SuppressWarnings("unchecked")
 public class EomiUtil {
 
-
     public static final String RESULT_FAIL = "0";
-
     public static final String RESULT_SUCCESS = "1";
-
     public static final String[] verbSuffix = {
             "이", "하", "되", "스럽", "스러우", "시키", "있", "없", "같", "당하", "만하", "드리", "받", "나", "내"
     };
@@ -51,7 +48,6 @@ public class EomiUtil {
         char[] efeature;
 
         for (int i = term.length(); i > 0; i--) {
-
             stem = term.substring(0, i);
 
             if (i != term.length()) {
@@ -66,7 +62,7 @@ public class EomiUtil {
 
             char[] jasos = MorphUtil.decompose(stem.charAt(i - 1));
 
-            if (!"".equals(eomi) && !DictionaryUtil.existEomi(eomi)) {
+            if (!eomi.equals("") && !DictionaryUtil.existEomi(eomi)) {
                 // do not anything.
             } else if (jasos.length > 2 &&
                     (jasos[2] == 'ㄴ' || jasos[2] == 'ㄹ' || jasos[2] == 'ㅁ' || jasos[2] == 'ㅂ') &&
@@ -82,7 +78,7 @@ public class EomiUtil {
             } else if (jasos.length == 2 && (!stem.endsWith("아") && !stem.endsWith("어")) &&
                     (jasos[1] == 'ㅏ' || jasos[1] == 'ㅓ' || jasos[1] == 'ㅔ' || jasos[1] == 'ㅐ') &&
                     (DictionaryUtil.combineAndEomiCheck('어', eomi) != null)) {
-                char[] chs = MorphUtil.decompose(stem.charAt(stem.length() - 1));
+                // char[] chs = MorphUtil.decompose(stem.charAt(stem.length() - 1));
                 result[0] = stem;
                 result[1] = "어" + eomi;
             } else if ((jasos[1] == 'ㅘ' || jasos[1] == 'ㅝ' || jasos[1] == 'ㅕ' || jasos[1] == 'ㅐ' || jasos[1] == 'ㅒ') &&
@@ -268,9 +264,7 @@ public class EomiUtil {
         } catch (CloneNotSupportedException e) {
             throw new MorphException(e.getMessage(), e);
         }
-
         return results;
-
     }
 
     /**
@@ -485,7 +479,6 @@ public class EomiUtil {
                             , makeTesnseEomi("아", ending)
                             , String.valueOf(PatternConstants.IRR_TYPE_HI) });
         }
-
     }
 
     /**
@@ -535,8 +528,8 @@ public class EomiUtil {
             if (index == -1) index = stem.lastIndexOf("에서");
             if (index == -1) index = stem.lastIndexOf("부터");
             if (index == -1) return false;
-            return true;
         }
+        return true;
     }
 
     private static void setPomiResult(String[] results, String stem, String pomi) {

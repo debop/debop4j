@@ -35,16 +35,12 @@ public class WordSpaceAnalyzer {
         morphAnal.setExactCompound(false);
     }
 
-    public List analyze(String input) throws MorphException {
+    public List<AnalysisOutput> analyze(String input) throws MorphException {
 
         List stack = new ArrayList();
-
         WSOutput output = new WSOutput();
-
         int wStart = 0;
-
         int sgCount = -9;
-
         Map<Integer, Integer> fCounter = new HashMap<Integer, Integer>();
 
         for (int i = 0; i < input.length(); i++) {

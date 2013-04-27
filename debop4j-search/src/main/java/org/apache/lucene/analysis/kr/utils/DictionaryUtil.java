@@ -22,7 +22,6 @@ import org.apache.lucene.analysis.kr.morph.WordEntry;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -35,13 +34,13 @@ public class DictionaryUtil {
 
     private static Trie<String, WordEntry> dictionary;
 
-    private static HashMap josas;
+    private static HashMap<String, String> josas;
 
-    private static HashMap eomis;
+    private static HashMap<String, String> eomis;
 
-    private static HashMap prefixs;
+    private static HashMap<String, String> prefixs;
 
-    private static HashMap suffixs;
+    private static HashMap<String, String> suffixs;
 
     private static HashMap<String, WordEntry> uncompounds;
 
@@ -51,13 +50,13 @@ public class DictionaryUtil {
      * 사전을 로드한다.
      */
     public synchronized static void loadDictionary() throws MorphException {
+        log.info("사전을 로드합니다...");
 
         dictionary = new Trie<String, WordEntry>(true);
         List<String> strList = null;
         List<String> compounds = null;
-        try {
-            log.info("사전을 로드합니다...");
 
+        try {
             strList = FileUtil.readLines(KoreanEnv.getInstance().getValue(KoreanEnv.FILE_DICTIONARY), "UTF-8");
             strList.addAll(FileUtil.readLines(KoreanEnv.getInstance().getValue(KoreanEnv.FILE_EXTENSION), "UTF-8"));
             compounds = FileUtil.readLines(KoreanEnv.getInstance().getValue(KoreanEnv.FILE_COMPOUNDS), "UTF-8");
@@ -71,16 +70,18 @@ public class DictionaryUtil {
             String[] infos = StringUtil.split(str, ",");
             if (infos.length != 2) continue;
             infos[1] = infos[1].trim();
-            if (infos[1].length() == 6) infos[1] = infos[1].substring(0, 5) + "000" + infos[1].substring(5);
+            if (infos[1].length() == 6)
+                infos[1] = infos[1].substring(0, 5) + "000" + infos[1].substring(5);
 
             WordEntry entry = new WordEntry(infos[0].trim(), infos[1].trim().toCharArray());
             dictionary.add(entry.getWord(), entry);
         }
 
+        char[] features = "20000000X".toCharArray();
         for (String compound : compounds) {
             String[] infos = StringUtil.split(compound, ":");
             if (infos.length != 2) continue;
-            WordEntry entry = new WordEntry(infos[0].trim(), "20000000X".toCharArray());
+            WordEntry entry = new WordEntry(infos[0].trim(), features);
             entry.setCompounds(compoundArrayToList(infos[1], StringUtil.split(infos[1], ",")));
             dictionary.add(entry.getWord(), entry);
         }
@@ -179,14 +180,15 @@ public class DictionaryUtil {
 
     public static WordEntry getUncompound(String key) throws MorphException {
 
+        char[] features = "90000X".toCharArray();
         try {
             if (uncompounds == null) {
-                uncompounds = new HashMap();
+                uncompounds = new HashMap<String, WordEntry>();
                 List<String> lines = FileUtil.readLines(KoreanEnv.getInstance().getValue(KoreanEnv.FILE_UNCOMPOUNDS), "UTF-8");
                 for (String compound : lines) {
                     String[] infos = StringUtil.split(compound, ":");
                     if (infos.length != 2) continue;
-                    WordEntry entry = new WordEntry(infos[0].trim(), "90000X".toCharArray());
+                    WordEntry entry = new WordEntry(infos[0].trim(), features);
                     entry.setCompounds(compoundArrayToList(infos[1], StringUtil.split(infos[1], ",")));
                     uncompounds.put(entry.getWord(), entry);
                 }
@@ -201,7 +203,7 @@ public class DictionaryUtil {
 
         try {
             if (cjwords == null) {
-                cjwords = new HashMap();
+                cjwords = new HashMap<String, String>();
                 List<String> lines = FileUtil.readLines(KoreanEnv.getInstance().getValue(KoreanEnv.FILE_CJ), "UTF-8");
                 for (String cj : lines) {
                     String[] infos = StringUtil.split(cj, ":");
@@ -218,31 +220,28 @@ public class DictionaryUtil {
 
     public static boolean existJosa(String str) throws MorphException {
         if (josas == null) {
-            josas = new HashMap();
+            josas = new HashMap<String, String>();
             readFile(josas, KoreanEnv.FILE_JOSA);
         }
-        if (josas.get(str) == null) return false;
-        else return true;
+        return josas.get(str) != null;
     }
 
     public static boolean existEomi(String str) throws MorphException {
         if (eomis == null) {
-            eomis = new HashMap();
+            eomis = new HashMap<String, String>();
             readFile(eomis, KoreanEnv.FILE_EOMI);
         }
 
-        if (eomis.get(str) == null) return false;
-        else return true;
+        return (eomis.get(str) != null);
     }
 
     public static boolean existPrefix(String str) throws MorphException {
         if (prefixs == null) {
-            prefixs = new HashMap();
+            prefixs = new HashMap<String, String>();
             readFile(prefixs, KoreanEnv.FILE_PREFIX);
         }
 
-        if (prefixs.get(str) == null) return false;
-        else return true;
+        return prefixs.get(str) != null;
     }
 
     public static boolean existSuffix(String str) throws MorphException {
@@ -251,17 +250,11 @@ public class DictionaryUtil {
             readFile(suffixs, KoreanEnv.FILE_SUFFIX);
         }
 
-        if (suffixs.get(str) != null) return true;
-
-        return false;
+        return suffixs.get(str) != null;
     }
 
     /**
      * ㄴ,ㄹ,ㅁ,ㅂ과 eomi 가 결합하여 어미가 될 수 있는지 점검한다.
-     *
-     * @param s
-     * @param end
-     * @return
      */
     public static String combineAndEomiCheck(char s, String eomi) throws MorphException {
 
@@ -274,18 +267,16 @@ public class DictionaryUtil {
         else eomi = s + eomi;
 
         if (existEomi(eomi)) return eomi;
-
         return null;
-
     }
 
     /**
-     * @param map
-     * @param type 1: josa, 2: eomi
+     * 사전 파일에서 항목을 읽어 사전으로 빌드합니다.
+     *
      * @throws org.apache.lucene.analysis.kr.morph.MorphException
      *
      */
-    private static synchronized void readFile(HashMap map, String dic) throws MorphException {
+    private static synchronized void readFile(HashMap<String, String> map, String dic) throws MorphException {
 
         String path = KoreanEnv.getInstance().getValue(dic);
 
@@ -294,10 +285,11 @@ public class DictionaryUtil {
             for (int i = 1; i < line.size(); i++) {
                 map.put(line.get(i).trim(), line.get(i));
             }
-        } catch (IOException e) {
-            throw new MorphException(e.getMessage(), e);
+            if (log.isDebugEnabled())
+                log.debug("사전파일을 읽어, [{}]개의 항목을 사전으로 등록했습니다. 사전=[{}]", line.size(), dic);
+
         } catch (Exception e) {
-            throw new MorphException(e.getMessage(), e);
+            throw new MorphException(e);
         }
     }
 
