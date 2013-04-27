@@ -17,6 +17,7 @@
 package org.apache.lucene.analysis.kr;
 
 import junit.framework.TestCase;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.FileUtils;
 import org.apache.lucene.analysis.kr.morph.*;
 import org.apache.lucene.analysis.kr.utils.DictionaryUtil;
@@ -26,32 +27,33 @@ import org.junit.Test;
 import java.io.File;
 import java.util.*;
 
+@Slf4j
 public class MorphAnalyzerTest extends TestCase {
 
-
+    @Test
     public void testMorphAnalyzer() throws Exception {
 
         String[] inputs = new String[]{
-                //"고물가시대의",
-                //"대외적",
-                //"합쳐져","뛰어오르고","급여생활자나","영세자영업자","영세농어민","서민계층들은","온몸으로","엄습하고",
-                //"드라마가",
-                //"과장광고","과소비",
-                //"날을","아울러","휴대전화기능처리부와","코발트의",
-                //"달라","포함하고",
-//				"사랑받아봄을","하는", 
+                "고물가시대의",
+                "대외적",
+                "합쳐져", "뛰어오르고", "급여생활자나", "영세자영업자", "영세농어민", "서민계층들은", "온몸으로", "엄습하고",
+                "드라마가",
+                "과장광고", "과소비",
+                "날을", "아울러", "휴대전화기능처리부와", "코발트의",
+                "달라", "포함하고",
+                "사랑받아봄을", "하는",
                 "아딸떡볶이"
-                // ,"발행일","출원인"	// 	어미로 끝나는 경우로 분석된다.
-                //,"노란",
-                //"만능청약통장","가시밭같다",
-                //"정책적",	"시리즈를","자리잡은","찜통이다","지난해",
-                //"데모입니다",
-                //"바이오및뇌공학",
-                //"급락조짐을",
-                //"4.19의거는",
-                //"고스트x를",
-                //"검색서비스를",
-                //"장애물이"
+                , "발행일", "출원인"    // 	어미로 끝나는 경우로 분석된다.
+                , "노란",
+                "만능청약통장", "가시밭같다",
+                "정책적", "시리즈를", "자리잡은", "찜통이다", "지난해",
+                "데모입니다",
+                "바이오및뇌공학",
+                "급락조짐을",
+                "4.19의거는",
+                "고스트x를",
+                "검색서비스를",
+                "장애물이"
         };
 
         MorphAnalyzer analyzer = new MorphAnalyzer();
@@ -71,6 +73,7 @@ public class MorphAnalyzerTest extends TestCase {
         System.out.println((System.currentTimeMillis() - start) + "ms");
     }
 
+    @Test
     public void testCloneAnalysisOutput() throws Exception {
         AnalysisOutput output = new AnalysisOutput();
 
@@ -83,7 +86,7 @@ public class MorphAnalyzerTest extends TestCase {
         System.out.println(clone.getStem());
     }
 
-
+    @Test
     public void testMorphAnalyzerManager() throws Exception {
         String input = "나는 학교에 갔습니다";
 
@@ -91,6 +94,7 @@ public class MorphAnalyzerTest extends TestCase {
         manager.analyze(input);
     }
 
+    @Test
     public void testAlphaNumeric() throws Exception {
         String str = "0123456789azAZ";
         for (int i = 0; i < str.length(); i++) {
@@ -98,6 +102,7 @@ public class MorphAnalyzerTest extends TestCase {
         }
     }
 
+    @Test
     public void testGetWordEntry() throws Exception {
         String s = "밤하늘";
         WordEntry we = DictionaryUtil.getCNoun(s);
@@ -178,6 +183,7 @@ public class MorphAnalyzerTest extends TestCase {
         FileUtils.writeLines(new File("data/all.txt"), outputs);
     }
 
+    @Test
     public void testCompoundNounsWithinDic() throws Exception {
 
         String input = "고투자율";
@@ -194,19 +200,19 @@ public class MorphAnalyzerTest extends TestCase {
 
     }
 
+    @Test
     public void testCompoundNouns() throws Exception {
 
         String input = "가돌리늄착화합물";
         CompoundNounAnalyzer cnAnalyzer = new CompoundNounAnalyzer();
-        cnAnalyzer.setExactMach(false);
+        cnAnalyzer.setExactMach(true);
 
         List<CompoundEntry> list = cnAnalyzer.analyze(input);
         if (list == null) return;
 
-        for (int i = 0; i < list.size(); i++) {
-            System.out.println(list.get(i).getWord());
+        for (CompoundEntry entry : list) {
+            System.out.println(entry.getWord());
         }
-
     }
 }
 

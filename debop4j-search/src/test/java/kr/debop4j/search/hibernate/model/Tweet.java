@@ -6,6 +6,7 @@ import kr.debop4j.data.model.AnnotatedEntityBase;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
+import org.apache.lucene.analysis.kr.KoreanAnalyzer;
 import org.hibernate.search.annotations.*;
 
 import javax.persistence.*;
@@ -19,9 +20,12 @@ import javax.persistence.*;
 @Entity
 @Table(name = "Tweet")
 @Indexed
+@Analyzer(impl = KoreanAnalyzer.class)
 @Getter
 @Setter
 public class Tweet extends AnnotatedEntityBase {
+
+    private static final long serialVersionUID = 3617783931787945059L;
 
     @Id
     @GeneratedValue

@@ -4,6 +4,7 @@ import kr.debop4j.core.tools.HashTool;
 import kr.debop4j.data.model.AnnotatedEntityBase;
 import lombok.Getter;
 import lombok.Setter;
+import org.apache.lucene.analysis.kr.KoreanAnalyzer;
 import org.hibernate.search.annotations.*;
 
 import javax.persistence.Entity;
@@ -20,6 +21,7 @@ import java.util.Date;
  */
 @Entity
 @Indexed
+@Analyzer(impl = KoreanAnalyzer.class)
 @Getter
 @Setter
 public class Employee extends AnnotatedEntityBase {

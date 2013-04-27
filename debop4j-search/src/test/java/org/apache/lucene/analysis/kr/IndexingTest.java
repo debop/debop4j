@@ -17,15 +17,18 @@
 package org.apache.lucene.analysis.kr;
 
 import junit.framework.TestCase;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.document.Field;
 import org.apache.lucene.index.IndexWriter;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.FSDirectory;
+import org.junit.Test;
 
 import java.io.File;
 import java.io.IOException;
 
+@Slf4j
 public class IndexingTest extends TestCase {
 
     private Directory directory;
@@ -38,6 +41,7 @@ public class IndexingTest extends TestCase {
         return new IndexWriter(directory, new KoreanAnalyzer(), IndexWriter.MaxFieldLength.UNLIMITED);
     }
 
+    @Test
     public void testIndexWriter() throws IOException {
 
         IndexWriter writer = getWriter();

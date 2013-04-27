@@ -17,6 +17,7 @@
 package org.apache.lucene.analysis.kr;
 
 import junit.framework.TestCase;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang.StringUtils;
 
@@ -24,6 +25,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.*;
 
+@Slf4j
 public class CNounsUtils extends TestCase {
 
     public void testAdjust() throws Exception {
@@ -31,7 +33,7 @@ public class CNounsUtils extends TestCase {
         List<String> strs = FileUtils.readLines(new File("cnouns_all.txt"));
 
         Map<String, String> compoundList = new TreeMap<String, String>();
-        Map<String, String> nounList = new TreeMap();
+        Map<String, String> nounList = new TreeMap<String, String>();
 
         for (String str : strs) {
             System.out.println(str);

@@ -7,8 +7,8 @@
     </appenders>
     <loggers>
         <logger name="kr.debop4j.search" level="trace"/>
-        <logger name="org.apache.lucene.analysis.kr" level="trace"/>
-        <logger name="org.hibernate.search" level="trace"/>
+        <!--<logger name="org.apache.lucene.analysis.kr" level="trace"/>-->
+        <!--<logger name="org.hibernate.search" level="trace"/>-->
         <root level="debug">
             <appender-ref ref="Console"/>
         </root>

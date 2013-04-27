@@ -44,7 +44,8 @@ public class KoreanAnalyzerTest extends TestCase {
 
         String source = "우리나라라면에서부터 일본라면이 파생되었잖니?";
 //		source = "呵呵大笑 가교복합체와 가공액을 포함하였다.";
-        source = "아딸떡볶이";
+//        source = "아딸떡볶이";
+        source = "너는 너는 다시 내게 돌아 올거야. school is a good place 呵呵大笑 呵呵大笑";
 
         long start = System.currentTimeMillis();
 
@@ -107,8 +108,8 @@ public class KoreanAnalyzerTest extends TestCase {
 
         for (int jj = 0; jj < han.length(); jj++) {
             char[] result = HanjaUtils.convertToHangul(han.charAt(jj));
-            for (int i = 0; i < result.length; i++)
-                System.out.print(result[i]);
+            for (char c : result)
+                System.out.print(c);
 
             System.out.println();
         }

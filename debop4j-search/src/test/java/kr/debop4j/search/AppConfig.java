@@ -17,6 +17,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Environment;
 import org.hibernate.cfg.beanvalidation.BeanValidationEventListener;
 import org.hibernate.event.spi.EventType;
+import org.hibernate.search.store.impl.FSDirectoryProvider;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Scope;
@@ -63,6 +64,11 @@ public class AppConfig {
         props.put("hibernate.search.default.indexmanager", "near-real-time");
         props.put("hibernate.search.default.directory_provider", "filesystem");
         props.put("hibernate.search.default.indexBase", ".lucene/indexes");
+
+        // hibernate-search sharding
+        String defaultPrefix = "hibernate.search.default";
+        props.put(defaultPrefix + ".sharding_strategy.nbr_of_shards", Integer.toString(Runtime.getRuntime().availableProcessors()));
+        props.put(defaultPrefix + ".directory_provider", FSDirectoryProvider.class.getName());
 
         // hibernate-search performance settings
         props.put("hibernate.search.worker.execution", "async");

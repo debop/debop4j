@@ -4,7 +4,7 @@ import kr.debop4j.core.tools.HashTool;
 import kr.debop4j.data.model.AnnotatedEntityBase;
 import lombok.Getter;
 import lombok.Setter;
-import org.apache.lucene.analysis.cjk.CJKAnalyzer;
+import org.apache.lucene.analysis.kr.KoreanAnalyzer;
 import org.hibernate.search.annotations.*;
 
 import javax.persistence.Entity;
@@ -19,11 +19,13 @@ import javax.persistence.Id;
 @Entity
 @Indexed
 // @Analyzer(impl=StandardAnalyzer.class)
-@Analyzer(impl = CJKAnalyzer.class)
+// @Analyzer(impl = CJKAnalyzer.class)
+@Analyzer(impl = KoreanAnalyzer.class)
 @Getter
 @Setter
 public class Animal extends AnnotatedEntityBase {
 
+    private static final long serialVersionUID = -857730019219332508L;
     @Id
     @DocumentId
     private Integer id;

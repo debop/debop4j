@@ -5,11 +5,7 @@ import kr.debop4j.search.SearchParameter;
 import kr.debop4j.search.hibernate.model.SearchItem;
 import kr.debop4j.search.tools.SearchTool;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.lucene.analysis.kr.KoreanAnalyzer;
-import org.apache.lucene.queryParser.MultiFieldQueryParser;
-import org.apache.lucene.queryParser.QueryParser;
 import org.apache.lucene.search.Query;
-import org.apache.lucene.util.Version;
 import org.junit.Test;
 
 import java.util.List;
@@ -53,12 +49,6 @@ public class HibernateSearchTest extends SearchTestBase {
         fts.flushToIndexes();
         fts.clear();
 
-
-        QueryParser parser = new MultiFieldQueryParser(Version.LUCENE_36,
-                                                       new String[]{ "title", "description" },
-                                                       //                                               new CJKAnalyzer(Version.LUCENE_36));
-                                                       new KoreanAnalyzer(Version.LUCENE_36));
-        //QueryParser parser = new QueryParser(Version.LUCENE_36, "title", new StandardAnalyzer(Version.LUCENE_36));
         try {
             // Query luceneQuery = parser.parse("description:어플");
             // Query luceneQuery = new WildcardQuery(new Term("description", "어플*"));

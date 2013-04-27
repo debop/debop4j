@@ -3,6 +3,7 @@ package kr.debop4j.search.hibernate.model;
 import kr.debop4j.data.model.AnnotatedEntityBase;
 import lombok.Getter;
 import lombok.Setter;
+import org.apache.lucene.analysis.kr.KoreanAnalyzer;
 import org.hibernate.search.annotations.*;
 
 import javax.persistence.Entity;
@@ -16,7 +17,7 @@ import javax.persistence.Id;
  */
 @Entity
 @Indexed
-@Analyzer(impl = org.apache.lucene.analysis.cjk.CJKAnalyzer.class)
+@Analyzer(impl = KoreanAnalyzer.class)
 @Getter
 @Setter
 public class Dvd extends AnnotatedEntityBase {
