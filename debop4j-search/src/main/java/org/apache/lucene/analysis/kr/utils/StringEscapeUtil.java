@@ -67,9 +67,6 @@ public class StringEscapeUtil {
      */
     public static void unescapeJava(Writer out, String str) throws IOException {
 
-        if (log.isTraceEnabled())
-            log.trace("java 리터럴 코드를 제거합니다. str=[{}]", str);
-
         if (out == null) {
             throw new IllegalArgumentException("The Writer must not be null");
         }

@@ -339,12 +339,11 @@ public class DictionaryUtil {
         String path = KoreanEnv.getInstance().getValue(dic);
 
         try {
-            List<String> line = FileUtil.readLines(path, "UTF-8");
-            for (int i = 1; i < line.size(); i++) {
-                map.put(line.get(i).trim(), line.get(i));
+            List<String> lines = FileUtil.readLines(path, "UTF-8");
+            for (final String line : lines) {
+                map.put(line.trim(), line);
             }
-            if (log.isDebugEnabled())
-                log.debug("사전파일을 읽어, [{}]개의 항목을 사전으로 등록했습니다. 사전=[{}]", line.size(), dic);
+            log.info("사전파일에서 [{}]개를 읽어, [{}]개를 등록했습니다. 사전=[{}]", lines.size(), map.size(), dic);
 
         } catch (Exception e) {
             throw new MorphException(e);
