@@ -23,7 +23,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
 import org.apache.lucene.analysis.kr.morph.MorphException;
 
-import java.io.IOException;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
@@ -98,7 +97,7 @@ public class SynonymUtil {
                 }
             }
             log.info("동의어 사전을 빌드했습니다. 라인수=[{}], 동의어수=[{}]", lines.size(), mmap.values().size());
-        } catch (IOException e) {
+        } catch (Exception e) {
             throw new MorphException(e);
         }
         return mmap;

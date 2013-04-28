@@ -22,8 +22,14 @@ import org.slf4j.LoggerFactory;
 
 import java.io.*;
 import java.net.URL;
+import java.nio.charset.Charset;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.Future;
 
 /**
  * file utility class
@@ -45,8 +51,6 @@ public class FileUtil {
      *                        the file can not be found in the classpath.
      */
     public static File getClassLoaderFile(String filename) throws MorphException {
-        if (log.isDebugEnabled())
-            log.debug("파일을 읽습니다. filename=[{}]", filename);
         // note that this method is used when initializing logging, so it must
         // not attempt to log anything.
         File file = null;
@@ -79,14 +83,18 @@ public class FileUtil {
      *                             if the encoding is not supported by the VM
      * @since Commons IO 1.1
      */
-    public static List readLines(File file, String encoding) throws IOException {
-        InputStream in = null;
-        try {
-            in = openInputStream(file);
-            return readLines(in, encoding);
-        } finally {
-            closeQuietly(in);
-        }
+    public static List<String> readLines(File file, String encoding) throws IOException {
+        if (log.isDebugEnabled())
+            log.debug("파일 내용을 읽어드립니다. fName=[{}], encoding=[{}]", file, encoding);
+
+        return Files.readAllLines(Paths.get(file.toURI()), Charset.forName(encoding));
+//        InputStream in = null;
+//        try {
+//            in = openInputStream(file);
+//            return readLines(in, encoding);
+//        } finally {
+//            closeQuietly(in);
+//        }
     }
 
     /**
@@ -103,25 +111,44 @@ public class FileUtil {
      *                             if the encoding is not supported by the VM
      * @since Commons IO 1.1
      */
-    public static List<String> readLines(String fName, String encoding) throws MorphException, IOException {
+    public static List<String> readLines(String fName, String encoding) /* throws MorphException, IOException */ {
         if (log.isDebugEnabled())
             log.debug("파일 내용을 읽어드립니다. fName=[{}], encoding=[{}]", fName, encoding);
 
-        InputStream in = null;
         try {
-
             File file = getClassLoaderFile(fName);
-            if (file != null && file.exists()) {
-                in = openInputStream(file);
-            } else {
-                in = new ByteArrayInputStream(readByteFromCurrentJar(fName));
-            }
-
-            return readLines(in, encoding);
-        } finally {
-            if (in != null)
-                closeQuietly(in);
+            Path path = Paths.get(file.toURI());
+            Future<List<String>> future = FileAsyncUtil.readAllLinesAsync(path, Charset.forName(encoding), StandardOpenOption.READ);
+            return future.get();
+        } catch (Exception e) {
+            log.error("파일 내용을 읽는데 실패했습니다. fName=" + fName, e);
+            throw new RuntimeException(e);
         }
+
+//        try {
+//            File file = getClassLoaderFile(fName);
+//            Path path = Paths.get(file.toURI());
+//            return Files.readAllLines(path, Charset.forName(encoding));
+//        } catch (Exception e) {
+//            log.error("파일 내용을 읽는데 실패했습니다. fName=" + fName, e);
+//            throw new RuntimeException(e);
+//        }
+
+//        InputStream in = null;
+//        try {
+//
+//            File file = getClassLoaderFile(fName);
+//            if (file != null && file.exists()) {
+//                in = openInputStream(file);
+//            } else {
+//                in = new ByteArrayInputStream(readByteFromCurrentJar(fName));
+//            }
+//
+//            return readLines(in, encoding);
+//        } finally {
+//            if (in != null)
+//                closeQuietly(in);
+//        }
     }
 
     //-----------------------------------------------------------------------

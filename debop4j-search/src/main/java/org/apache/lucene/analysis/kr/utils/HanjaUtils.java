@@ -20,7 +20,6 @@ import org.apache.lucene.analysis.kr.morph.MorphException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -51,7 +50,7 @@ public class HanjaUtils {
                 mapHanja.put(hanja, hanInfos[1].toCharArray());
             }
             log.info("한자 사전을 로드했습니다. 단어수=[{}], 로드수=[{}]", strList.size(), mapHanja.size());
-        } catch (IOException e) {
+        } catch (Exception e) {
             throw new MorphException(e);
         }
     }

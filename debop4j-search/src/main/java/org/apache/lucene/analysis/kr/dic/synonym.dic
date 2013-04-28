@@ -1,5 +1,6 @@
 #######
-한국,korea
+한국,대한민국,우리나라,korea
+서울,한성,수도,seoul
 통신,telecom,communication
 기술,technology,tech
 와이파이,wifi,wi-fi
@@ -20,7 +21,7 @@ tv,티비,텔레비젼,테레비
 computer,컴퓨터,컴퓨타,컴퓨러
 피씨,pc
 노트북,notebook
-고객,customer
+고객,소비자,customer
 목소리,voice
 서비스,service
 요청,request
@@ -94,3 +95,12 @@ computer,컴퓨터,컴퓨타,컴퓨러
 적외선,infrared
 통화연결음,컬러
 유튜브,youtube
+무료,free
+유료,pay,fee
+유무료,유료,무료,free,pay,fee
+팁,tip
+사전,before,dictionary
+큐알,qr
+코드,code
+블랙,black
+리스트,명단,list

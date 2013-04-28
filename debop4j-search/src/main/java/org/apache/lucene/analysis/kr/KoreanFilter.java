@@ -375,7 +375,7 @@ public class KoreanFilter extends TokenFilter {
             morphQueue.add(new IndexWord(candiList.get(i).toString(), 0));
         }
 
-        Map<String, String> cnounMap = new HashMap();
+        Map<String, String> cnounMap = new HashMap<String, String>();
 
         // 추출된 명사가 복합명사인 경우 분리한다.
         for (int i = 0; i < maxCandidate; i++) {
@@ -390,6 +390,7 @@ public class KoreanFilter extends TokenFilter {
                 // 한글과 매치되는 한자를 짤라서 큐에 저장한다.
                 IndexWord indexWord = new IndexWord(term.substring(offset, pos), offset);
                 morphQueue.add(indexWord);
+
                 if (isTraceEnabled)
                     log.trace("한글과 매치되는 한자를 큐에 저장한다. indexWord=[{}]", indexWord);
 

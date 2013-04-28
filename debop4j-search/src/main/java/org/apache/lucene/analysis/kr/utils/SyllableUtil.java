@@ -20,7 +20,6 @@ import org.apache.lucene.analysis.kr.morph.MorphException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -121,7 +120,7 @@ public class SyllableUtil {
                 if (i != 0)
                     syllables.add(line.get(i).toCharArray());
             }
-        } catch (IOException e) {
+        } catch (Exception e) {
             throw new MorphException(e.getMessage());
         }
 

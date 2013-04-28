@@ -16,6 +16,7 @@
 
 package kr.debop4j.core.io;
 
+import com.google.common.base.CharMatcher;
 import com.google.common.base.Splitter;
 import com.google.common.collect.Lists;
 import kr.debop4j.core.parallelism.AsyncTool;
@@ -23,10 +24,8 @@ import kr.debop4j.core.tools.StringTool;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.nio.ByteBuffer;
-import java.nio.CharBuffer;
 import java.nio.channels.AsynchronousFileChannel;
 import java.nio.charset.Charset;
 import java.nio.file.*;
@@ -34,11 +33,8 @@ import java.nio.file.attribute.BasicFileAttributes;
 import java.nio.file.attribute.FileAttribute;
 import java.util.List;
 import java.util.concurrent.Callable;
-import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 
-import static kr.debop4j.core.Guard.shouldBe;
-import static kr.debop4j.core.Guard.shouldNotBeNull;
 import static kr.debop4j.core.tools.StringTool.listToString;
 
 /**
@@ -54,6 +50,7 @@ public class FileTool {
     private static final boolean isDebugEnabled = log.isDebugEnabled();
 
     public static final int DEFAULT_BUFFER_SIZE = 4096;
+    public static final Charset UTF8 = Charset.forName("UTF-8");
 
     private FileTool() { }
 
@@ -198,43 +195,33 @@ public class FileTool {
     }
 
     public static byte[] readAllBytes(Path path) throws IOException {
-        if (isDebugEnabled)
-            log.debug("파일로부터 모든 내용을 읽어옵니다. path=[{}]", path);
+        if (isTraceEnabled)
+            log.trace("파일로부터 모든 내용을 읽어옵니다. path=[{}]", path);
         return Files.readAllBytes(path);
     }
 
     public static Future<byte[]> readAllBytesAsync(final Path path, final OpenOption... openOptions) {
-        shouldNotBeNull(path, "path");
-        shouldBe(FileTool.exists(path), "File not found. file=[%s]", path);
+        assert path != null;
 
-        if (isDebugEnabled)
-            log.debug("비동기 방식으로 파일 정보를 읽어 byte array로 반환합니다. file=[{}], openOptions=[{}]",
+        if (isTraceEnabled)
+            log.trace("비동기 방식으로 파일 정보를 읽어 byte array로 반환합니다. file=[{}], openOptions=[{}]",
                       path, StringTool.listToString(openOptions));
 
         return AsyncTool.startNew(new Callable<byte[]>() {
             @Override
             public byte[] call() throws Exception {
-                ByteBuffer buffer = ByteBuffer.allocate(DEFAULT_BUFFER_SIZE);
-                ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-
                 try (AsynchronousFileChannel fileChannel = AsynchronousFileChannel.open(path, openOptions)) {
-                    boolean completed = false;
-                    do {
-                        Future<Integer> readCountFuture = fileChannel.read(buffer, 0);
-                        int readCount = readCountFuture.get();
-                        completed = readCount == 0;
-
-                        if (!completed) {
-                            outputStream.write(buffer.array(), 0, readCount);
-                            buffer.clear();
-                        }
-                    } while (!completed);
-
-                } catch (IOException | InterruptedException | ExecutionException e) {
+                    ByteBuffer buffer = ByteBuffer.allocate((int) fileChannel.size());
+                    Future<Integer> result = fileChannel.read(buffer, 0);
+                    while (!result.isDone()) {
+                        Thread.sleep(1);
+                    }
+                    buffer.flip();
+                    return buffer.array();
+                } catch (Exception e) {
                     log.error("파일 내용을 읽어오는데 실패했습니다.", e);
                     throw new RuntimeException(e);
                 }
-                return outputStream.toByteArray();
             }
         });
     }
@@ -250,7 +237,11 @@ public class FileTool {
     }
 
     public static Future<List<String>> readAllLinesAsync(final Path path) {
-        return readAllLinesAsync(path, StringTool.UTF8);
+        return readAllLinesAsync(path, UTF8, StandardOpenOption.READ);
+    }
+
+    public static Future<List<String>> readAllLinesAsync(final Path path, final OpenOption... openOptions) {
+        return readAllLinesAsync(path, UTF8, openOptions);
     }
 
     public static Future<List<String>> readAllLinesAsync(final Path path,
@@ -263,11 +254,9 @@ public class FileTool {
             @Override
             public List<String> call() throws Exception {
                 Future<byte[]> readTask = readAllBytesAsync(path, openOptions);
-                byte[] bytes = readTask.get();
-                CharBuffer content = cs.decode(ByteBuffer.wrap(bytes));
-
                 return Lists.newArrayList(Splitter.on(System.lineSeparator())
-                                                  .split(content));
+                                                  .trimResults(CharMatcher.WHITESPACE)
+                                                  .split(new String(readTask.get(), cs)));
             }
         });
     }
@@ -300,19 +289,12 @@ public class FileTool {
             @Override
             public Void call() throws Exception {
                 try (AsynchronousFileChannel fileChannel = AsynchronousFileChannel.open(target, openOptions)) {
-                    ByteBuffer buffer = ByteBuffer.allocate(DEFAULT_BUFFER_SIZE);
-                    int position = 0;
-                    boolean completed = false;
-                    do {
-                        buffer.put(bytes, position, DEFAULT_BUFFER_SIZE);
-                        Future<Integer> writeResult = fileChannel.write(buffer, position);
-                        completed = writeResult.get() == 0 && position >= bytes.length;
-                        position += writeResult.get();
-                        buffer.reset();
-                    } while (!completed);
+                    Future<Integer> result = fileChannel.write(ByteBuffer.wrap(bytes), 0);
+                    while (!result.isDone()) {
+                        Thread.sleep(1);
+                    }
                     return null;
-
-                } catch (IOException | ExecutionException | InterruptedException e) {
+                } catch (Exception e) {
                     log.error("비동기 방식으로 파일에 쓰는 동안 예외가 발생했습니다.", e);
                     throw new RuntimeException(e);
                 }
