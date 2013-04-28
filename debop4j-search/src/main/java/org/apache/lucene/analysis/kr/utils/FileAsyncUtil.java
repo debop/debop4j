@@ -16,20 +16,22 @@
 
 package org.apache.lucene.analysis.kr.utils;
 
-import com.google.common.base.CharMatcher;
-import com.google.common.base.Splitter;
-import com.google.common.collect.Lists;
 import kr.debop4j.core.parallelism.AsyncTool;
 import kr.debop4j.core.tools.StringTool;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.BufferedReader;
+import java.io.ByteArrayInputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
 import java.nio.ByteBuffer;
 import java.nio.channels.AsynchronousFileChannel;
 import java.nio.charset.Charset;
 import java.nio.file.OpenOption;
 import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Callable;
 import java.util.concurrent.Future;
@@ -71,10 +73,7 @@ public class FileAsyncUtil {
             @Override
             public List<String> call() throws Exception {
                 Future<byte[]> readTask = readAllBytesAsync(path, openOptions);
-
-                return Lists.newArrayList(Splitter.on(System.lineSeparator())
-                                                  .trimResults(CharMatcher.WHITESPACE)
-                                                  .split(new String(readTask.get(), cs)));
+                return readAllLines(readTask.get(), cs);
             }
         });
     }
@@ -103,5 +102,27 @@ public class FileAsyncUtil {
                 }
             }
         });
+    }
+
+    public static List<String> readAllLines(byte[] bytes, Charset charset) {
+        List<String> lines = new ArrayList<String>();
+
+        if (bytes == null || bytes.length == 0)
+            return lines;
+
+        try (ByteArrayInputStream is = new ByteArrayInputStream(bytes);
+             Reader in = new InputStreamReader(is, charset);
+             BufferedReader br = new BufferedReader(in)) {
+
+            while (true) {
+                String line = br.readLine();
+                if (line == null)
+                    break;
+                lines.add(line);
+            }
+            return lines;
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 }

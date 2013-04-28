@@ -20,7 +20,7 @@ import kr.debop4j.core.tools.StringTool;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 
-import java.io.BufferedWriter;
+import java.io.*;
 import java.nio.ByteBuffer;
 import java.nio.channels.AsynchronousFileChannel;
 import java.nio.charset.Charset;
@@ -28,6 +28,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Future;
 
@@ -101,11 +102,38 @@ public class FileChannelTest {
             System.out.println("Bytes read: " + result.get());
 
             buffer.flip();
-            System.out.print(UTF8.decode(buffer));
+            byte[] bytes = buffer.array();
+
+            List<String> lines = readAllLines(bytes, UTF8);
+            for (String line : lines) {
+                System.out.println(line);
+            }
+            // System.out.print(UTF8.decode(buffer));
             buffer.clear();
         } finally {
             assert fc != null;
             fc.close();
+        }
+    }
+
+    public List<String> readAllLines(byte[] bytes, Charset charset) {
+        if (bytes == null || bytes.length == 0)
+            return new ArrayList<String>();
+
+        try (ByteArrayInputStream is = new ByteArrayInputStream(bytes);
+             Reader in = new InputStreamReader(is, charset);
+             BufferedReader br = new BufferedReader(in)) {
+
+            List<String> lines = new ArrayList<String>();
+            while (true) {
+                String line = br.readLine();
+                if (line == null)
+                    break;
+                lines.add(line);
+            }
+            return lines;
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
     }
 }

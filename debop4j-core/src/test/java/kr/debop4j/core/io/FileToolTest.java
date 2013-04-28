@@ -61,7 +61,7 @@ public class FileToolTest {
         List<String> lines = Lists.newArrayListWithCapacity(lineCount);
 
         for (int i = 0; i < lineCount; i++)
-            lines.add(TEST_TEXT);
+            lines.add(TEST_TEXT.trim());
 
         try {
             FileTool.createFile(path);
@@ -94,6 +94,6 @@ public class FileToolTest {
                                            StandardOpenOption.DELETE_ON_CLOSE);
         List<String> lines = readResult.get();
 
-        Assertions.assertThat(lines.size()).isEqualTo(lineCount + 1);
+        Assertions.assertThat(lines.size()).isEqualTo(lineCount);
     }
 }
