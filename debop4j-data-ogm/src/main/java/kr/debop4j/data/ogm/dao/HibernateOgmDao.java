@@ -144,7 +144,7 @@ public class HibernateOgmDao implements IHibernateOgmDao {
      * 엔티티 수형에 해당하는 모든 엔티티를 조회합니다.
      */
     @Override
-    public <T> List<T> findAll(Class<T> clazz) {
+    public final <T> List<T> findAll(Class<T> clazz) {
         return findAll(clazz, null);
     }
 
@@ -196,7 +196,7 @@ public class HibernateOgmDao implements IHibernateOgmDao {
             log.trace("엔티티 조회. clazz=[{}], luceneQuery=[{}], fitstResult=[{}], maxResults=[{}], sort=[{}], criteria=[{}]",
                       clazz, luceneQuery, firstResult, maxResults, sort, criteria);
 
-        FullTextQuery ftq = this.getFullTextQuery(luceneQuery, clazz);
+        FullTextQuery ftq = getFullTextQuery(luceneQuery, clazz);
         HibernateTool.setPaging(ftq, firstResult, maxResults);
         if (sort != null) ftq.setSort(sort);
         if (criteria != null) ftq.setCriteriaQuery(criteria);

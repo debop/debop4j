@@ -4,12 +4,10 @@ import kr.debop4j.search.hibernate.SearchTestBase;
 import kr.debop4j.search.hibernate.model.Voc;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.lucene.index.Term;
-import org.apache.lucene.search.BooleanClause;
-import org.apache.lucene.search.BooleanQuery;
-import org.apache.lucene.search.TermQuery;
-import org.apache.lucene.search.WildcardQuery;
+import org.apache.lucene.search.*;
 import org.fest.assertions.Assertions;
 import org.hibernate.search.FullTextQuery;
+import org.hibernate.search.query.dsl.QueryBuilder;
 import org.junit.Test;
 
 import java.util.Date;
@@ -29,7 +27,6 @@ public class CollectionTest extends SearchTestBase {
 
     @Test
     public void saveVocMemo() throws Exception {
-
         try {
             Voc voc = new Voc();
 
@@ -64,11 +61,23 @@ public class CollectionTest extends SearchTestBase {
             Assertions.assertThat(vocs.size()).isEqualTo(1);
 
             for (Voc v : vocs) {
-                System.out.println(v);
+                System.out.println(v.getId() + ":" + v.getMemo());
+            }
+
+            QueryBuilder builder = getSearchDao().getQueryBuilder(Voc.class);
+            Query query =
+                    builder.bool()
+                            .must(builder.keyword().onField("attrs.name").matching("담당").createQuery())
+                            .must(builder.keyword().onField("attrs.value").matching("송길주").createQuery())
+                            .must(builder.keyword().wildcard().onField("memo").matching("정의*").createQuery())
+                            .createQuery();
+            vocs = (List<Voc>) fts.createFullTextQuery(query, Voc.class).list();
+            Assertions.assertThat(vocs.size()).isEqualTo(1);
+            for (Voc v : vocs) {
+                System.out.println(v.getId() + ":" + v.getMemo());
             }
 
         } finally {
-
             getSearchDao().deleteAll(Voc.class);
             getSearchDao().clearIndex(Voc.class);
         }

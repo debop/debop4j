@@ -4,6 +4,7 @@ import com.google.common.base.Objects;
 import kr.debop4j.data.ogm.model.UuidEntityBase;
 import lombok.Getter;
 import lombok.Setter;
+import org.apache.lucene.analysis.kr.KoreanAnalyzer;
 import org.hibernate.search.annotations.*;
 
 import javax.persistence.Entity;
@@ -18,6 +19,7 @@ import javax.persistence.Entity;
 @Indexed
 @Getter
 @Setter
+@Analyzer(impl = KoreanAnalyzer.class)
 public class MongoDoc extends UuidEntityBase {
     private static final long serialVersionUID = -1795981911420947049L;
 

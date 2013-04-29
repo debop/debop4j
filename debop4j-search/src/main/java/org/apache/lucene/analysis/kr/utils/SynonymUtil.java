@@ -40,17 +40,8 @@ public class SynonymUtil {
     private static final boolean isTraceEnabled = log.isTraceEnabled();
     private static final boolean isDebugEnabled = log.isDebugEnabled();
 
-    private static SetMultimap<String, String> synonymMap;
+    private static SetMultimap<String, String> synonymMap = buildSynonymMap();
     private static final Set<String> EMPTY_SET = new HashSet<String>();
-
-    static {
-        try {
-            synonymMap = buildSynonymMap();
-        } catch (Exception e) {
-            log.error("동의어 사전을 로드하는데 실패했습니다.", e);
-            throw new RuntimeException(e);
-        }
-    }
 
     /**
      * 지정한 단어의 유사어가 있으면, 모든 유사어를 반환합니다.

@@ -95,6 +95,8 @@ public interface IHibernateSearchDao extends IHibernateDao {
 
     Future<Void> indexAllAsync(Class<?> clazz, int batchSize);
 
+    void flushIndexes();
+
     void clearIndex(Class<?> clazz);
 
     /**

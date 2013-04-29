@@ -5,7 +5,7 @@ import com.google.common.collect.Sets;
 import kr.debop4j.data.ogm.model.UuidEntityBase;
 import lombok.Getter;
 import lombok.Setter;
-import org.apache.lucene.analysis.cjk.CJKAnalyzer;
+import org.apache.lucene.analysis.kr.KoreanAnalyzer;
 import org.hibernate.search.annotations.*;
 
 import javax.persistence.*;
@@ -22,7 +22,7 @@ import java.util.Set;
 @Indexed
 @Getter
 @Setter
-@Analyzer(impl = CJKAnalyzer.class)
+@Analyzer(impl = KoreanAnalyzer.class)
 public class Player extends UuidEntityBase {
 
     private static final long serialVersionUID = 7317574732346075920L;

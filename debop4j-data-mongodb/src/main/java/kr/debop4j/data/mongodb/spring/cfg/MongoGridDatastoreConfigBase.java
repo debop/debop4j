@@ -18,6 +18,7 @@ package kr.debop4j.data.mongodb.spring.cfg;
 
 import com.mongodb.MongoClient;
 import com.mongodb.ServerAddress;
+import kr.debop4j.core.Local;
 import kr.debop4j.data.mongodb.dao.MongoOgmDao;
 import kr.debop4j.data.mongodb.tools.MongoTool;
 import kr.debop4j.data.ogm.spring.cfg.GridDatastoreConfigBase;
@@ -97,7 +98,13 @@ public abstract class MongoGridDatastoreConfigBase extends GridDatastoreConfigBa
     @Bean
     @Scope("prototype")
     public MongoOgmDao hibernateOgmDao() {
-        return new MongoOgmDao();
+        final String className = MongoOgmDao.class.getName();
+        MongoOgmDao dao = (MongoOgmDao) Local.get(className);
+        if (dao == null) {
+            dao = new MongoOgmDao(sessionFactory());
+            Local.put(className, dao);
+        }
+        return dao;
     }
 
     @Bean

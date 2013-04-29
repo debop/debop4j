@@ -68,23 +68,18 @@ public class HibernateSearchDao extends HibernateDao implements IHibernateSearch
         this.sessionFactory = sessionFactory;
     }
 
-    public HibernateSearchDao(Session session) {
-        this(session.getSessionFactory());
-        Local.put(SESSION_KEY, session);
-    }
-
-    @Override
-    public synchronized Session getSession() {
-        Session session = (Session) Local.get(SESSION_KEY);
-        if (session == null || !session.isOpen()) {
-            session = sessionFactory.openSession();
-            Local.put(SESSION_KEY, session);
-
-            if (isDebugEnabled)
-                log.debug("새로운 Session을 open 했습니다.");
-        }
-        return session;
-    }
+//    @Override
+//    public synchronized Session getSession() {
+//        Session session = (Session) Local.get(SESSION_KEY);
+//        if (session == null || !session.isOpen()) {
+//            session = sessionFactory.openSession();
+//            Local.put(SESSION_KEY, session);
+//
+//            if (isDebugEnabled)
+//                log.debug("새로운 Session을 open 했습니다.");
+//        }
+//        return session;
+//    }
 
     @Override
     public synchronized FullTextSession getFullTextSession() {
@@ -313,6 +308,10 @@ public class HibernateSearchDao extends HibernateDao implements IHibernateSearch
         fts.purgeAll(clazz);                        // remove obsolete index
         fts.flushToIndexes();                       // apply purge before optimize
         fts.getSearchFactory().optimize(clazz);     // physically clear space
+    }
+
+    public void flushIndexes() {
+        getFullTextSession().flushToIndexes();
     }
 
     /**

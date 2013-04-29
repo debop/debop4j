@@ -16,7 +16,7 @@
 
 package org.apache.lucene.analysis.kr.morph;
 
-public class MorphException extends Exception {
+public class MorphException extends RuntimeException {
 
     private static final long serialVersionUID = 7605164221652820591L;
 

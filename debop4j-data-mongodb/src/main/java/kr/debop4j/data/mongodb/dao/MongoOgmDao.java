@@ -16,6 +16,7 @@
 
 package kr.debop4j.data.mongodb.dao;
 
+import kr.debop4j.data.hibernate.unitofwork.UnitOfWorks;
 import kr.debop4j.data.ogm.dao.HibernateOgmDao;
 import org.apache.lucene.search.Query;
 import org.hibernate.Session;
@@ -39,7 +40,9 @@ public class MongoOgmDao extends HibernateOgmDao {
     private static final boolean isTraceEnabled = log.isTraceEnabled();
     private static final boolean isDebugEnabled = log.isDebugEnabled();
 
-    public MongoOgmDao() {}
+    public MongoOgmDao() {
+        this(UnitOfWorks.getCurrentSessionFactory());
+    }
 
     public MongoOgmDao(SessionFactory sessionFactory) {
         super(sessionFactory);
@@ -57,7 +60,7 @@ public class MongoOgmDao extends HibernateOgmDao {
     @Override
     public long count(Class<?> clazz, Query luceneQuery) {
         if (isTraceEnabled)
-            log.trace("수형[{}]에 대해 갯수를 구합니다. luceneQuery=[{}]", clazz, luceneQuery);
+            log.trace("수형[{}]에 대해 갯수를 구합니다. luceneQuery=[{}]", clazz, luceneQuery.toString());
 
         FullTextQuery ftq = getFullTextQuery(luceneQuery, clazz);
         return ftq.getResultSize();

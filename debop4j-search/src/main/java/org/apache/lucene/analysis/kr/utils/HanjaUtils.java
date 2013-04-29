@@ -30,6 +30,10 @@ public class HanjaUtils {
 
     private static Map<String, char[]> mapHanja;
 
+    static {
+        loadDictionary();
+    }
+
     public synchronized static void loadDictionary() throws MorphException {
         log.info("한자 사전을 로드합니다...");
 

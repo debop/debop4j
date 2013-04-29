@@ -16,6 +16,8 @@
 
 package kr.debop4j.search.hibernate;
 
+import kr.debop4j.core.spring.Springs;
+import kr.debop4j.data.hibernate.unitofwork.UnitOfWorks;
 import kr.debop4j.search.AppConfig;
 import kr.debop4j.search.dao.HibernateSearchDao;
 import lombok.extern.slf4j.Slf4j;
@@ -51,7 +53,10 @@ public abstract class SearchTestBase {
 
     @Before
     public void before() {
-        fts = Search.getFullTextSession(sessionFactory.openSession());
+        if (Springs.isNotInitialized())
+            Springs.init(appContext);
+        UnitOfWorks.start();
+        fts = Search.getFullTextSession(UnitOfWorks.getCurrentSession());
     }
 
     @After
@@ -59,10 +64,8 @@ public abstract class SearchTestBase {
         if (fts != null) {
             fts.flush();
             fts.flushToIndexes();
-
-            fts.close();
-            fts = null;
         }
+        UnitOfWorks.stop();
     }
 
     public HibernateSearchDao getSearchDao() {

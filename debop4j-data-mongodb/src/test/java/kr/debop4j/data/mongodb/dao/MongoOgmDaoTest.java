@@ -29,7 +29,7 @@ import static org.fest.assertions.Assertions.assertThat;
  * @since 13. 4. 16. 오후 3:14
  */
 @Slf4j
-public class MongoOgmDaoImplTest extends MongoGridDatastoreTestBase {
+public class MongoOgmDaoTest extends MongoGridDatastoreTestBase {
 
     private static final Random rnd = new Random();
     private static final Date BIRTH = DateTime.now().withTimeAtStartOfDay().withDate(1968, 10, 14).toDate();
@@ -184,38 +184,36 @@ public class MongoOgmDaoImplTest extends MongoGridDatastoreTestBase {
         for (int i = 0; i < REPEAT_COUNT; i++) {
             List<Player> players = createTestPlayers(PLAYER_COUNT);
             for (Player player : players) {
-                dao.save(player);
+                dao.persist(player);
             }
-            UnitOfWorks.getCurrent().flushSession();
-            UnitOfWorks.getCurrent().clearSession();
+            dao.flushToIndexes();
+            dao.getSession().flush();
+            dao.getSession().clear();
 
             log.debug("Player [{}]명을 추가했습니다.", players.size());
         }
 
-
-        action.perform(dao);
-
-        log.debug("Player 엔티티를 삭제합니다...");
-        List<Player> players = dao.findAll(Player.class);
-        assertThat(players.size()).isGreaterThan(0);
-        dao.deleteAll(players);
-        UnitOfWorks.getCurrent().flushSession();
-        UnitOfWorks.getCurrent().clearSession();
-
+        try {
+            action.perform(dao);
+        } finally {
+            log.debug("Player 엔티티를 삭제합니다...");
+            List<Player> players = dao.findAll(Player.class);
+            assertThat(players.size()).isGreaterThan(0);
+            dao.deleteAll(players);
+            UnitOfWorks.getCurrent().flushSession();
+            UnitOfWorks.getCurrent().clearSession();
+        }
         assertThat(dao.count(Player.class)).isEqualTo(0);
     }
 
     public void daoInParallel(Action1<IHibernateOgmDao> action) throws Exception {
-        IHibernateOgmDao dao = Springs.getBean(IHibernateOgmDao.class);
 
-        //TODO: 병렬로 Player 를 추가합니다. - 인덱스가 제대로 만들어지지 않습니다...
-        //
         Parallels.run(REPEAT_COUNT, new Action1<Integer>() {
             @Override
             public void perform(Integer arg) {
                 List<Player> players = createTestPlayers(PLAYER_COUNT);
 
-                MongoOgmDao dao = new MongoOgmDao(UnitOfWorks.getCurrentSessionFactory());
+                IHibernateOgmDao dao = Springs.getBean(IHibernateOgmDao.class);
 
                 for (Player player : players) {
                     dao.saveOrUpdate(player);
@@ -232,6 +230,8 @@ public class MongoOgmDaoImplTest extends MongoGridDatastoreTestBase {
             }
         });
 
+        IHibernateOgmDao dao = Springs.getBean(IHibernateOgmDao.class);
+
         try {
             action.perform(dao);
         } finally {
@@ -245,4 +245,5 @@ public class MongoOgmDaoImplTest extends MongoGridDatastoreTestBase {
         }
         assertThat(dao.count(Player.class)).isEqualTo(0);
     }
+
 }
