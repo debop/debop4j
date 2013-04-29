@@ -22,10 +22,13 @@ import org.apache.lucene.analysis.kr.morph.MorphException;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.nio.charset.Charset;
 import java.util.Properties;
 
 @Slf4j
 public class KoreanEnv {
+
+    public static final Charset UTF8 = Charset.forName("UTF-8");
 
     public static final String FILE_SYLLABLE_FEATURE = "syllable.dic";
 

@@ -1,5 +1,6 @@
 package kr.debop4j.search.hibernate.field;
 
+import kr.debop4j.search.dao.HibernateSearchDao;
 import org.hibernate.SessionFactory;
 import org.hibernate.search.FullTextSession;
 import org.hibernate.search.Search;
@@ -43,5 +44,9 @@ public abstract class LuceneTestBase {
             fts.close();
             fts = null;
         }
+    }
+
+    public HibernateSearchDao getSearchDao() {
+        return appContext.getBean(HibernateSearchDao.class);
     }
 }

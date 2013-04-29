@@ -124,31 +124,20 @@ public class FileUtil {
             log.error("파일 내용을 읽는데 실패했습니다. fName=" + fName, e);
             throw new RuntimeException(e);
         }
+    }
 
-//        try {
-//            File file = getClassLoaderFile(fName);
-//            Path path = Paths.get(file.toURI());
-//            return Files.readAllLines(path, Charset.forName(encoding));
-//        } catch (Exception e) {
-//            log.error("파일 내용을 읽는데 실패했습니다. fName=" + fName, e);
-//            throw new RuntimeException(e);
-//        }
+    public static Future<List<String>> readLinesAsync(String fName, Charset charset) {
+        if (log.isDebugEnabled())
+            log.debug("파일 내용을 읽어드립니다. fName=[{}], charset=[{}]", fName, charset);
 
-//        InputStream in = null;
-//        try {
-//
-//            File file = getClassLoaderFile(fName);
-//            if (file != null && file.exists()) {
-//                in = openInputStream(file);
-//            } else {
-//                in = new ByteArrayInputStream(readByteFromCurrentJar(fName));
-//            }
-//
-//            return readLines(in, encoding);
-//        } finally {
-//            if (in != null)
-//                closeQuietly(in);
-//        }
+        try {
+            File file = getClassLoaderFile(fName);
+            Path path = Paths.get(file.toURI());
+            return FileAsyncUtil.readAllLinesAsync(path, charset, StandardOpenOption.READ);
+        } catch (Exception e) {
+            log.error("파일 내용을 읽는데 실패했습니다. fName=" + fName, e);
+            throw new RuntimeException(e);
+        }
     }
 
     //-----------------------------------------------------------------------

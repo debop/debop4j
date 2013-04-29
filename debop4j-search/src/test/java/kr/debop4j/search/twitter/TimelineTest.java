@@ -27,9 +27,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import twitter4j.Paging;
-import twitter4j.Status;
-import twitter4j.Twitter;
+import twitter4j.*;
 
 import javax.inject.Inject;
 import java.util.List;
@@ -93,8 +91,68 @@ public class TimelineTest {
 
         } finally {
             dao.deleteAll(Twit.class);
-            dao.getFullTextSession().flush();
+            dao.flushSession();
             assertThat(dao.count(Twit.class)).isEqualTo(0);
         }
+    }
+
+    @Test
+    public void twitStream() throws Exception {
+
+        final IHibernateSearchDao dao = appContext.getBean(IHibernateSearchDao.class);
+
+        try {
+            TwitterStream twitterStream = Twitters.getTwitterStream();
+            twitterStream.addListener(getStatusListener());
+
+            for (int i = 0; i < 10; i++) {
+                twitterStream.sample();
+                Thread.sleep(10000);
+            }
+        } finally {
+            dao.deleteAll(Twit.class);
+            dao.flushSession();
+        }
+    }
+
+    private StatusListener getStatusListener() {
+        return new StatusListener() {
+            final IHibernateSearchDao dao = appContext.getBean(IHibernateSearchDao.class);
+
+            @Override
+            public void onStatus(Status status) {
+                Twit twit = Twitters.createTwit(status);
+                dao.saveOrUpdate(twit);
+                dao.flushSession();
+
+                if (log.isTraceEnabled())
+                    log.trace("Twit을 저장했습니다. [{}]", twit);
+            }
+
+            @Override
+            public void onDeletionNotice(StatusDeletionNotice statusDeletionNotice) {
+                log.debug("삭제된 정보. id=[{}]", statusDeletionNotice.getStatusId());
+            }
+
+            @Override
+            public void onTrackLimitationNotice(int numberOfLimitedStatuses) {
+                log.debug("회수 제한 경고:[{}]", numberOfLimitedStatuses);
+            }
+
+            @Override
+            public void onScrubGeo(long userId, long upToStatusId) {
+                // nothing to do.
+            }
+
+            @Override
+            public void onStallWarning(StallWarning warning) {
+                // nothing to do.
+            }
+
+            @Override
+            public void onException(Exception ex) {
+                log.error("예외가 발생했습니다.", ex);
+            }
+        };
     }
 }

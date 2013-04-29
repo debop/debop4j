@@ -17,6 +17,7 @@
 package kr.debop4j.search.hibernate;
 
 import kr.debop4j.search.AppConfig;
+import kr.debop4j.search.dao.HibernateSearchDao;
 import lombok.extern.slf4j.Slf4j;
 import org.hibernate.SessionFactory;
 import org.hibernate.search.FullTextSession;
@@ -24,10 +25,10 @@ import org.hibernate.search.Search;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-
-import javax.inject.Inject;
 
 /**
  * kr.debop4j.search.hibernate.SearchTestBase
@@ -40,7 +41,10 @@ import javax.inject.Inject;
 @ContextConfiguration(classes = { AppConfig.class })
 public abstract class SearchTestBase {
 
-    @Inject
+    @Autowired
+    ApplicationContext appContext;
+
+    @Autowired
     protected SessionFactory sessionFactory;
 
     protected FullTextSession fts;
@@ -61,4 +65,7 @@ public abstract class SearchTestBase {
         }
     }
 
+    public HibernateSearchDao getSearchDao() {
+        return appContext.getBean(HibernateSearchDao.class);
+    }
 }

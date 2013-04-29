@@ -26,6 +26,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.concurrent.Future;
 
 @SuppressWarnings("unchecked")
 public class DictionaryUtil {
@@ -55,10 +56,19 @@ public class DictionaryUtil {
         dictionary = new Trie<String, WordEntry>(true);
 
         log.info("표준 사전을 로드합니다...");
+        Future<List<String>> standardDic = FileUtil.readLinesAsync(KoreanEnv.getInstance().getValue(KoreanEnv.FILE_DICTIONARY), KoreanEnv.UTF8);
+        log.info("복합명사 사전을 로드합니다...");
+        Future<List<String>> compoundDic = FileUtil.readLinesAsync(KoreanEnv.getInstance().getValue(KoreanEnv.FILE_COMPOUNDS), KoreanEnv.UTF8);
+        log.info("확장 사전을 로드합니다...");
+        Future<List<String>> extensionDic = FileUtil.readLinesAsync(KoreanEnv.getInstance().getValue(KoreanEnv.FILE_EXTENSION), KoreanEnv.UTF8);
+        log.info("사용자 정의 사전을 로드합니다...");
+        Future<List<String>> customDic = FileUtil.readLinesAsync(KoreanEnv.getInstance().getValue(KoreanEnv.FILE_CUSTOM), KoreanEnv.UTF8);
+
         try {
-            List<String> strList = FileUtil.readLines(KoreanEnv.getInstance().getValue(KoreanEnv.FILE_DICTIONARY), "UTF-8");
+            log.info("표준 사전을 파싱합니다...");
+            final List<String> standards = standardDic.get();
             int count = 0;
-            for (String str : strList) {
+            for (String str : standards) {
                 String[] infos = StringUtil.split(str, ",");
                 if (infos.length != 2) continue;
                 infos[1] = infos[1].trim();
@@ -71,17 +81,18 @@ public class DictionaryUtil {
                     count++;
                 }
             }
-            log.info("표준 사전을 로드했습니다. 단어수=[{}], 등록수=[{}]", strList.size(), count);
+            log.info("표준 사전을 로드했습니다. 단어수=[{}], 등록수=[{}]", standards.size(), count);
         } catch (Exception e) {
             log.error("표준 사전을 로드하는데 실패했습니다.", e);
             throw new MorphException(e);
         }
 
-        log.info("복합명사 사전을 로드합니다...");
         try {
-            List<String> compounds = FileUtil.readLines(KoreanEnv.getInstance().getValue(KoreanEnv.FILE_COMPOUNDS), "UTF-8");
+            log.info("복합명사 사전을 파싱합니다...");
+            final List<String> compounds = compoundDic.get();
             char[] features = "20000000X".toCharArray();
             int count = 0;
+
             for (String compound : compounds) {
                 String[] infos = StringUtil.split(compound, ":");
                 if (infos.length != 2) continue;
@@ -98,11 +109,12 @@ public class DictionaryUtil {
             throw new MorphException(e);
         }
 
-        log.info("확장 사전을 로드합니다...");
         try {
-            List<String> strList = FileUtil.readLines(KoreanEnv.getInstance().getValue(KoreanEnv.FILE_EXTENSION), "UTF-8");
+            log.info("확장 사전을 파싱합니다...");
+            final List<String> extensions = extensionDic.get();
             int count = 0;
-            for (String str : strList) {
+
+            for (String str : extensions) {
                 String[] infos = StringUtil.split(str, ",");
                 if (infos.length != 2) continue;
                 infos[1] = infos[1].trim();
@@ -115,18 +127,18 @@ public class DictionaryUtil {
                     count++;
                 }
             }
-            log.info("확장 사전을 로드했습니다. 단어수=[{}], 등록수=[{}]", strList.size(), count);
+            log.info("확장 사전을 로드했습니다. 단어수=[{}], 등록수=[{}]", extensions.size(), count);
         } catch (Exception e) {
             log.error("확장 사전을 로드하는데 실패했습니다.", e);
             throw new MorphException(e);
         }
 
-        log.info("사용자정의 사전을 로드합니다...");
-
         try {
+            log.info("사용자정의 사전을 로드합니다...");
+            List<String> customs = customDic.get();
             char[] features = "100000000X".toCharArray();
-            List<String> customs = FileUtil.readLines(KoreanEnv.getInstance().getValue(KoreanEnv.FILE_CUSTOM), "UTF-8");
             int count = 0;
+
             for (String custom : customs) {
                 if (custom != null && custom.trim().length() > 0) {
                     if (dictionary.get(custom.trim()) == null) {

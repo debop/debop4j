@@ -67,7 +67,7 @@ public class FileAsyncUtil {
                                                          final Charset cs,
                                                          final OpenOption... openOptions) {
         if (isTraceEnabled)
-            log.trace("파일 내용을 문자열로 읽어드립니다. path=[{}], charset=[{}], openOption=[{}]", path, cs, listToString(openOptions));
+            log.trace("비동기 방식으로 파일 내용을 읽어드립니다. path=[{}], charset=[{}], openOption=[{}]", path, cs, listToString(openOptions));
 
         return AsyncTool.startNew(new Callable<List<String>>() {
             @Override
@@ -91,9 +91,7 @@ public class FileAsyncUtil {
                 try (AsynchronousFileChannel fileChannel = AsynchronousFileChannel.open(path, openOptions)) {
                     ByteBuffer buffer = ByteBuffer.allocate((int) fileChannel.size());
                     Future<Integer> result = fileChannel.read(buffer, 0);
-                    while (!result.isDone()) {
-                        Thread.sleep(1);
-                    }
+                    result.get();
                     buffer.flip();
                     return buffer.array();
                 } catch (Exception e) {

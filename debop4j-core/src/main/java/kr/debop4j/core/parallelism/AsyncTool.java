@@ -44,7 +44,7 @@ public class AsyncTool {
 
     @Getter(lazy = true)
     private static final ExecutorService executor =
-            Executors.newScheduledThreadPool(Runtime.getRuntime().availableProcessors());
+            Executors.newScheduledThreadPool(Runtime.getRuntime().availableProcessors() * 2);
 
     @Getter(lazy = true)
     private static final Runnable emptyRunnable =

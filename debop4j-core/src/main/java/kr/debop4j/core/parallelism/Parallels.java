@@ -49,6 +49,10 @@ public class Parallels {
     @Getter(lazy = true)
     private static final int workerCount = getProcessCount() * 2;
 
+    public static ExecutorService createExecutor() {
+        return createExecutor(getWorkerCount());
+    }
+
     public static ExecutorService createExecutor(int threadCount) {
         return Executors.newFixedThreadPool(threadCount);
     }
