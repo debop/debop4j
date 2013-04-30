@@ -20,6 +20,8 @@ import org.apache.lucene.analysis.kr.morph.AnalysisOutput;
 import org.apache.lucene.analysis.kr.morph.MorphException;
 import org.apache.lucene.analysis.kr.morph.PatternConstants;
 import org.apache.lucene.analysis.kr.utils.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -34,7 +36,13 @@ import java.util.List;
  */
 public class Tagger {
 
-    private static Trie<String, String[]> occurrences;
+    private static final Logger log = LoggerFactory.getLogger(Tagger.class);
+
+    private static Trie<String, String[]> occurrences = new Trie<String, String[]>(true);
+
+    static {
+        loadTaggerDic();
+    }
 
     private static final String tagDicLoc = "tagger.dic";
 
@@ -276,17 +284,15 @@ public class Tagger {
 
     @SuppressWarnings("unchecked")
     public static synchronized Iterator<String[]> getGR(String prefix) throws MorphException {
-        if (occurrences == null) loadTaggerDic();
-
         return (Iterator<String[]>) occurrences.getPrefixedBy(prefix);
     }
 
-    private static synchronized void loadTaggerDic() throws MorphException {
-
-        occurrences = new Trie<String, String[]>(true);
-
+    private static void loadTaggerDic() throws MorphException {
         try {
-            List<String> strs = FileUtil.readLines(KoreanEnv.getInstance().getValue(tagDicLoc), "UTF-8");
+            log.info("Tagger 사전을 읽어드립니다...");
+            List<String> strs = FileUtil.readLines(KoreanEnv.getInstance().getValue(tagDicLoc), KoreanEnv.UTF8);
+
+            log.info("Tagger 사전을 파싱합니다...");
 
             for (String str : strs) {
                 if (str == null) continue;
@@ -303,6 +309,7 @@ public class Tagger {
 
                 occurrences.add(syls[0] + key, patns);
             }
+            log.info("Tagger 사진을 빌드했습니다.");
         } catch (Exception e) {
             throw new MorphException("Fail to read the tagger dictionary.(" + tagDicLoc + ")\n" + e.getMessage());
         }

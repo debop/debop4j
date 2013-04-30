@@ -35,7 +35,6 @@ import java.util.Date;
 @Indexed
 @Getter
 @Setter
-//@Analyzer(impl = CJKAnalyzer.class)
 @Analyzer(impl = KoreanAnalyzer.class)
 public class Twit extends AnnotatedEntityBase {
 
@@ -46,16 +45,16 @@ public class Twit extends AnnotatedEntityBase {
     private Long id;
 
     @Column(name = "UserName")
-    @Field(index = Index.YES, store = Store.YES, analyze = Analyze.YES)
+    @Field(store = Store.YES)
     @Boost(1.5f)
     private String username;
 
     @Column(name = "Text", length = 300)
-    @Field(index = Index.YES, store = Store.COMPRESS, analyze = Analyze.YES)
+    @Field(store = Store.COMPRESS)
     private String text;
 
     @DateBridge(resolution = Resolution.SECOND)
     @Temporal(TemporalType.TIMESTAMP)
-    @Field(index = Index.YES, store = Store.YES, analyze = Analyze.NO)
+    @Field(analyze = Analyze.NO)
     private Date createdAt;
 }

@@ -33,18 +33,18 @@ public class VerbUtil {
     private static final boolean isTraceEnabled = log.isTraceEnabled();
     private static final boolean isDebugEnabled = log.isDebugEnabled();
 
-    public static final Map<String, String> verbSuffix = new HashMap<String, String>();
+    public static final Map<String, String> verbSuffix;
+    public static final Map<String, String> xVerb;
 
-    public static final Map<String, String> xVerb = new HashMap<String, String>();
+    private static final String[] suffixs = { "이", "하", "되", "내", "나", "스럽", "시키", "있", "없", "같", "당하", "만하", "드리", "받", "짓" };
+    private static final String[] xverbs = { "오", "내", "주", "보", "지", "오르", "올리" };
 
     static {
-        String[] suffixs = { "이", "하", "되", "내", "나", "스럽", "시키", "있", "없", "같", "당하", "만하", "드리", "받", "짓" };
-
+        verbSuffix = new HashMap<String, String>();
         for (String suffix : suffixs)
             verbSuffix.put(suffix, suffix);
 
-        String[] xverbs = { "오", "내", "주", "보", "지", "오르", "올리" };
-
+        xVerb = new HashMap<String, String>();
         for (String xverb : xverbs)
             xVerb.put(xverb, xverb);
     }

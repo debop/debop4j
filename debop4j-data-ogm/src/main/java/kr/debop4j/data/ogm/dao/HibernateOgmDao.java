@@ -80,7 +80,7 @@ public class HibernateOgmDao implements IHibernateOgmDao {
      * hibernate session을 반환합니다.
      */
     @Override
-    public synchronized final Session getSession() {
+    public final Session getSession() {
         return UnitOfWorks.getCurrentSession();
     }
 
@@ -88,7 +88,7 @@ public class HibernateOgmDao implements IHibernateOgmDao {
      * hibernate-search의 {@link FullTextSession} 을 반환합니다.
      */
     @Override
-    public final synchronized FullTextSession getFullTextSession() {
+    public final FullTextSession getFullTextSession() {
         FullTextSession fts = (FullTextSession) Local.get(FULL_TEXT_SESSION_KEY);
 
         if (fts == null || !fts.isOpen()) {

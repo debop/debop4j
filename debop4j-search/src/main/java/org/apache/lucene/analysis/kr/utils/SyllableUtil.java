@@ -16,7 +16,6 @@
 
 package org.apache.lucene.analysis.kr.utils;
 
-import lombok.Getter;
 import org.apache.lucene.analysis.kr.morph.MorphException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -81,8 +80,15 @@ public class SyllableUtil {
 
     public static int IDX_EOGAN = 39; // 어미 또는 어미의 변형으로 존재할 수 있는 음 (즉 IDX_EOMI 이거나 IDX_YNPNA 이후에 1이 있는 음절)
 
-    @Getter(lazy = true)
-    private static final List<char[]> syllables = getSyllableFeature();  // 음절특성 정보
+    private static final List<char[]> syllables = new ArrayList<char[]>();  // 음절특성 정보
+
+    static {
+        List<String> line = FileUtil.readLines(KoreanEnv.getInstance().getValue(KoreanEnv.FILE_SYLLABLE_FEATURE), KoreanEnv.UTF8);
+        for (int i = 0; i < line.size(); i++) {
+            if (i != 0)
+                syllables.add(line.get(i).toCharArray());
+        }
+    }
 
     /**
      * 인덱스 값에 해당하는 음절의 특성을 반환한다.
@@ -91,10 +97,10 @@ public class SyllableUtil {
      * @param idx '가'(0xAC00)이 0부터 유니코드에 의해 한글음절을 순차적으로 나열한 값
      */
     public static char[] getFeature(int idx) throws MorphException {
-        if (idx < 0 || idx >= getSyllables().size())
-            return (char[]) getSyllables().get(getSyllables().size() - 1);
+        if (idx < 0 || idx >= syllables.size())
+            return (char[]) syllables.get(syllables.size() - 1);
         else
-            return (char[]) getSyllables().get(idx);
+            return (char[]) syllables.get(idx);
     }
 
     /**
@@ -103,28 +109,11 @@ public class SyllableUtil {
      * @param syl 음절 하나
      */
     public static char[] getFeature(char syl) throws MorphException {
-        if (getSyllables().size() > 0) {
+        if (syllables.size() > 0) {
             int idx = syl - 0xAC00;
             return getFeature(idx);
         }
         return new char[0];
-    }
-
-    /**
-     * 음절정보특성을 파일에서 읽는다.
-     */
-    private synchronized static List<char[]> getSyllableFeature() {
-        try {
-            List<char[]> results = new ArrayList<char[]>();
-            List<String> line = FileUtil.readLines(KoreanEnv.getInstance().getValue(KoreanEnv.FILE_SYLLABLE_FEATURE), "UTF-8");
-            for (int i = 0; i < line.size(); i++) {
-                if (i != 0)
-                    results.add(line.get(i).toCharArray());
-            }
-            return results;
-        } catch (Exception e) {
-            throw new MorphException(e);
-        }
     }
 
     public static boolean isAlpanumeric(char ch) {

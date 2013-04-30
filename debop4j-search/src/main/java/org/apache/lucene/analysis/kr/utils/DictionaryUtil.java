@@ -26,6 +26,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.concurrent.Future;
 
 @SuppressWarnings("unchecked")
 public class DictionaryUtil {
@@ -34,17 +35,45 @@ public class DictionaryUtil {
 
     private static Trie<String, WordEntry> dictionary;
 
-    private static HashMap<String, String> josas;
+    private static HashMap<String, String> josas = new HashMap<String, String>();
 
-    private static HashMap<String, String> eomis;
+    private static HashMap<String, String> eomis = new HashMap<String, String>();
 
-    private static HashMap<String, String> prefixs;
+    private static HashMap<String, String> prefixs = new HashMap<String, String>();
 
-    private static HashMap<String, String> suffixs;
+    private static HashMap<String, String> suffixs = new HashMap<String, String>();
 
-    private static HashMap<String, WordEntry> uncompounds;
+    private static HashMap<String, WordEntry> uncompounds = new HashMap<String, WordEntry>();
 
-    private static HashMap<String, String> cjwords;
+    private static HashMap<String, String> cjwords = new HashMap<String, String>();
+
+    static {
+
+        readFile(josas, KoreanEnv.FILE_JOSA);
+        readFile(eomis, KoreanEnv.FILE_EOMI);
+        readFile(prefixs, KoreanEnv.FILE_PREFIX);
+        readFile(suffixs, KoreanEnv.FILE_SUFFIX);
+
+        // uncompunds
+        char[] features = "90000X".toCharArray();
+
+        List<String> lines = FileUtil.readLines(KoreanEnv.getInstance().getValue(KoreanEnv.FILE_UNCOMPOUNDS), KoreanEnv.UTF8);
+        for (String compound : lines) {
+            String[] infos = StringUtil.split(compound, ":");
+            if (infos.length != 2) continue;
+            WordEntry entry = new WordEntry(infos[0].trim(), features);
+            entry.setCompounds(compoundArrayToList(infos[1], StringUtil.split(infos[1], ",")));
+            uncompounds.put(entry.getWord(), entry);
+        }
+
+        lines = FileUtil.readLines(KoreanEnv.getInstance().getValue(KoreanEnv.FILE_CJ), KoreanEnv.UTF8);
+        for (String cj : lines) {
+            String[] infos = StringUtil.split(cj, ":");
+            if (infos.length != 2) continue;
+            cjwords.put(infos[0], infos[1]);
+        }
+    }
+
 
     /**
      * 사전을 로드한다.
@@ -54,19 +83,19 @@ public class DictionaryUtil {
 
         dictionary = new Trie<String, WordEntry>(true);
 
-//        log.info("표준 사전을 로드합니다...");
-//        Future<List<String>> standardDic = FileUtil.readLinesAsync(KoreanEnv.getInstance().getValue(KoreanEnv.FILE_DICTIONARY), KoreanEnv.UTF8);
-//        log.info("복합명사 사전을 로드합니다...");
-//        Future<List<String>> compoundDic = FileUtil.readLinesAsync(KoreanEnv.getInstance().getValue(KoreanEnv.FILE_COMPOUNDS), KoreanEnv.UTF8);
-//        log.info("확장 사전을 로드합니다...");
-//        Future<List<String>> extensionDic = FileUtil.readLinesAsync(KoreanEnv.getInstance().getValue(KoreanEnv.FILE_EXTENSION), KoreanEnv.UTF8);
-//        log.info("사용자 정의 사전을 로드합니다...");
-//        Future<List<String>> customDic = FileUtil.readLinesAsync(KoreanEnv.getInstance().getValue(KoreanEnv.FILE_CUSTOM), KoreanEnv.UTF8);
+        log.info("표준 사전을 로드합니다...");
+        Future<List<String>> standardDic = FileUtil.readLinesAsync(KoreanEnv.getInstance().getValue(KoreanEnv.FILE_DICTIONARY), KoreanEnv.UTF8);
+        log.info("복합명사 사전을 로드합니다...");
+        Future<List<String>> compoundDic = FileUtil.readLinesAsync(KoreanEnv.getInstance().getValue(KoreanEnv.FILE_COMPOUNDS), KoreanEnv.UTF8);
+        log.info("확장 사전을 로드합니다...");
+        Future<List<String>> extensionDic = FileUtil.readLinesAsync(KoreanEnv.getInstance().getValue(KoreanEnv.FILE_EXTENSION), KoreanEnv.UTF8);
+        log.info("사용자 정의 사전을 로드합니다...");
+        Future<List<String>> customDic = FileUtil.readLinesAsync(KoreanEnv.getInstance().getValue(KoreanEnv.FILE_CUSTOM), KoreanEnv.UTF8);
 
         try {
             log.info("표준 사전을 파싱합니다...");
-            // final List<String> standards = standardDic.get();
-            final List<String> standards = FileUtil.readLines(KoreanEnv.getInstance().getValue(KoreanEnv.FILE_DICTIONARY), "UTF-8");
+            List<String> standards = standardDic.get();
+            // List<String> standards = FileUtil.readLines(KoreanEnv.getInstance().getValue(KoreanEnv.FILE_DICTIONARY), "UTF-8");
             int count = 0;
             for (String str : standards) {
                 String[] infos = StringUtil.split(str, ",");
@@ -81,7 +110,7 @@ public class DictionaryUtil {
                     count++;
                 }
             }
-            log.info("표준 사전을 로드했습니다. 단어수=[{}], 등록수=[{}]", standards.size(), count);
+            log.info("표준 사전을 빌드했습니다. 단어수=[{}], 등록수=[{}]", standards.size(), count);
         } catch (Exception e) {
             log.error("표준 사전을 로드하는데 실패했습니다.", e);
             throw new MorphException(e);
@@ -89,8 +118,8 @@ public class DictionaryUtil {
 
         try {
             log.info("복합명사 사전을 파싱합니다...");
-            // final List<String> compounds = compoundDic.get();
-            final List<String> compounds = FileUtil.readLines(KoreanEnv.getInstance().getValue(KoreanEnv.FILE_COMPOUNDS), "UTF-8");
+            List<String> compounds = compoundDic.get();
+            // List<String> compounds = FileUtil.readLines(KoreanEnv.getInstance().getValue(KoreanEnv.FILE_COMPOUNDS), "UTF-8");
             char[] features = "20000000X".toCharArray();
             int count = 0;
 
@@ -104,7 +133,7 @@ public class DictionaryUtil {
                     count++;
                 }
             }
-            log.info("복합명사 사전을 로드했습니다. 단어수=[{}], 등록수=[{}]", compounds.size(), count);
+            log.info("복합명사 사전을 빌드했습니다. 단어수=[{}], 등록수=[{}]", compounds.size(), count);
         } catch (Exception e) {
             log.error("복합명사 사전을 로드하는데 실패했습니다.", e);
             throw new MorphException(e);
@@ -112,8 +141,8 @@ public class DictionaryUtil {
 
         try {
             log.info("확장 사전을 파싱합니다...");
-            // final List<String> extensions = extensionDic.get();
-            final List<String> extensions = FileUtil.readLines(KoreanEnv.getInstance().getValue(KoreanEnv.FILE_EXTENSION), "UTF-8");
+            List<String> extensions = extensionDic.get();
+            // List<String> extensions = FileUtil.readLines(KoreanEnv.getInstance().getValue(KoreanEnv.FILE_EXTENSION), "UTF-8");
             int count = 0;
 
             for (String str : extensions) {
@@ -129,16 +158,16 @@ public class DictionaryUtil {
                     count++;
                 }
             }
-            log.info("확장 사전을 로드했습니다. 단어수=[{}], 등록수=[{}]", extensions.size(), count);
+            log.info("확장 사전을 빌드했습니다. 단어수=[{}], 등록수=[{}]", extensions.size(), count);
         } catch (Exception e) {
             log.error("확장 사전을 로드하는데 실패했습니다.", e);
             throw new MorphException(e);
         }
 
         try {
-            log.info("사용자정의 사전을 로드합니다...");
-            // List<String> customs = customDic.get();
-            final List<String> customs = FileUtil.readLines(KoreanEnv.getInstance().getValue(KoreanEnv.FILE_CUSTOM), "UTF-8");
+            log.info("사용자정의 사전을 파싱합니다...");
+            List<String> customs = customDic.get();
+            // final List<String> customs = FileUtil.readLines(KoreanEnv.getInstance().getValue(KoreanEnv.FILE_CUSTOM), "UTF-8");
             char[] features = "100000000X".toCharArray();
             int count = 0;
 
@@ -151,13 +180,13 @@ public class DictionaryUtil {
                     }
                 }
             }
-            log.info("사용자정의 사전을 로드했습니다. 단어수=[{}], 등록수=[{}]", customs.size(), count);
+            log.info("사용자정의 사전을 빌드했습니다. 단어수=[{}], 등록수=[{}]", customs.size(), count);
         } catch (Exception e) {
             log.error("사용자정의 사전을 로드하는데 실패했습니다.", e);
             throw new MorphException(e);
         }
 
-        log.info("사전을 로드했습니다.");
+        log.info("사전을 빌드했습니다.");
     }
 
     public static Iterator findWithPrefix(String prefix) throws MorphException {
@@ -229,7 +258,6 @@ public class DictionaryUtil {
     public static WordEntry getIrrVerb(String key, char irrType) throws MorphException {
         WordEntry entry = getWord(key);
         if (entry == null) return null;
-
         if (entry.getFeature(WordEntry.IDX_VERB) == '1' &&
                 entry.getFeature(WordEntry.IDX_REGURA) == irrType) return entry;
         return null;
@@ -238,7 +266,6 @@ public class DictionaryUtil {
     public static WordEntry getBeVerb(String key) throws MorphException {
         WordEntry entry = getWord(key);
         if (entry == null) return null;
-
         if (entry.getFeature(WordEntry.IDX_BEV) == '1') return entry;
         return null;
     }
@@ -246,83 +273,31 @@ public class DictionaryUtil {
     public static WordEntry getDoVerb(String key) throws MorphException {
         WordEntry entry = getWord(key);
         if (entry == null) return null;
-
         if (entry.getFeature(WordEntry.IDX_DOV) == '1') return entry;
         return null;
     }
 
     public synchronized static WordEntry getUncompound(String key) throws MorphException {
-
-        char[] features = "90000X".toCharArray();
-        try {
-            if (uncompounds == null) {
-                uncompounds = new HashMap<String, WordEntry>();
-                List<String> lines = FileUtil.readLines(KoreanEnv.getInstance().getValue(KoreanEnv.FILE_UNCOMPOUNDS), "UTF-8");
-                for (String compound : lines) {
-                    String[] infos = StringUtil.split(compound, ":");
-                    if (infos.length != 2) continue;
-                    WordEntry entry = new WordEntry(infos[0].trim(), features);
-                    entry.setCompounds(compoundArrayToList(infos[1], StringUtil.split(infos[1], ",")));
-                    uncompounds.put(entry.getWord(), entry);
-                }
-            }
-        } catch (Exception e) {
-            throw new MorphException(e);
-        }
         return uncompounds.get(key);
     }
 
     public synchronized static String getCJWord(String key) throws MorphException {
-
-        try {
-            if (cjwords == null) {
-                cjwords = new HashMap<String, String>();
-                List<String> lines = FileUtil.readLines(KoreanEnv.getInstance().getValue(KoreanEnv.FILE_CJ), "UTF-8");
-                for (String cj : lines) {
-                    String[] infos = StringUtil.split(cj, ":");
-                    if (infos.length != 2) continue;
-                    cjwords.put(infos[0], infos[1]);
-                }
-            }
-        } catch (Exception e) {
-            throw new MorphException(e);
-        }
         return cjwords.get(key);
-
     }
 
     public static boolean existJosa(String str) throws MorphException {
-        if (josas == null) {
-            josas = new HashMap<String, String>();
-            readFile(josas, KoreanEnv.FILE_JOSA);
-        }
         return josas.get(str) != null;
     }
 
     public static boolean existEomi(String str) throws MorphException {
-        if (eomis == null) {
-            eomis = new HashMap<String, String>();
-            readFile(eomis, KoreanEnv.FILE_EOMI);
-        }
-
         return (eomis.get(str) != null);
     }
 
     public static boolean existPrefix(String str) throws MorphException {
-        if (prefixs == null) {
-            prefixs = new HashMap<String, String>();
-            readFile(prefixs, KoreanEnv.FILE_PREFIX);
-        }
-
         return prefixs.get(str) != null;
     }
 
     public static boolean existSuffix(String str) throws MorphException {
-        if (suffixs == null) {
-            suffixs = new HashMap();
-            readFile(suffixs, KoreanEnv.FILE_SUFFIX);
-        }
-
         return suffixs.get(str) != null;
     }
 
@@ -349,17 +324,14 @@ public class DictionaryUtil {
      * @throws org.apache.lucene.analysis.kr.morph.MorphException
      *
      */
-    private static synchronized void readFile(HashMap<String, String> map, String dic) throws MorphException {
-
-        String path = KoreanEnv.getInstance().getValue(dic);
-
+    private static void readFile(HashMap<String, String> map, String dic) throws MorphException {
+        String filename = KoreanEnv.getInstance().getValue(dic);
         try {
-            List<String> lines = FileUtil.readLines(path, "UTF-8");
+            List<String> lines = FileUtil.readLines(filename, KoreanEnv.UTF8);
             for (final String line : lines) {
                 map.put(line.trim(), line);
             }
-            log.info("사전파일에서 [{}]개를 읽어, [{}]개를 등록했습니다. 사전=[{}]", lines.size(), map.size(), dic);
-
+            log.info("사전 파일에서 [{}]개를 읽어, [{}]개를 등록했습니다. filename=[{}]", lines.size(), map.size(), filename);
         } catch (Exception e) {
             throw new MorphException(e);
         }

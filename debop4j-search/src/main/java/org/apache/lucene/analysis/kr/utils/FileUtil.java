@@ -16,6 +16,7 @@
 
 package org.apache.lucene.analysis.kr.utils;
 
+import kr.debop4j.core.parallelism.AsyncTool;
 import org.apache.lucene.analysis.kr.morph.MorphException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,11 +25,10 @@ import java.io.*;
 import java.net.URL;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
-import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.Callable;
 import java.util.concurrent.Future;
 
 /**
@@ -114,7 +114,7 @@ public class FileUtil {
      *                             if the encoding is not supported by the VM
      * @since Commons IO 1.1
      */
-    public static List<String> readLines(String fName, String encoding) /* throws MorphException, IOException */ {
+    public static List<String> readLines(String fName, String encoding) {
         if (log.isDebugEnabled())
             log.debug("파일 내용을 읽어드립니다. fName=[{}], encoding=[{}]", fName, encoding);
 
@@ -126,27 +126,38 @@ public class FileUtil {
         }
     }
 
-    public static Future<List<String>> readLinesAsync(final String fName, final Charset charset) {
+    public static List<String> readLines(String fName, Charset charset) {
         if (log.isDebugEnabled())
             log.debug("파일 내용을 읽어드립니다. fName=[{}], charset=[{}]", fName, charset);
 
         try {
-//            return AsyncTool.newTask(AsyncTool.getEmptyRunnable(),
-//                                     readLines(fName, charset.name()));
-//            return AsyncTool.startNew(new Callable<List<String>>() {
-//                @Override
-//                public List<String> call() throws Exception {
-//                    return FileUtil.readLines(fName, charset.name());
-//                }
-//            });
-            File file = getClassLoaderFile(fName);
-            Path path = Paths.get(file.toURI());
-            return FileAsyncUtil.readAllLinesAsync(path, charset, StandardOpenOption.READ);
-
+            return FileUtil.readLines(getResourceFileStream(fName), charset);
         } catch (Exception e) {
             log.error("파일 내용을 읽는데 실패했습니다. fName=" + fName, e);
             throw new RuntimeException(e);
         }
+    }
+
+    public static Future<List<String>> readLinesAsync(final String fName, final Charset charset) {
+        if (log.isDebugEnabled())
+            log.debug("파일 내용을 읽어드립니다. fName=[{}], charset=[{}]", fName, charset);
+
+        return AsyncTool.startNew(new Callable<List<String>>() {
+            @Override
+            public List<String> call() throws Exception {
+                InputStream in = getResourceFileStream(fName);
+                try (BufferedReader reader = new BufferedReader(new InputStreamReader(in, charset))) {
+                    List<String> result = new ArrayList<String>();
+                    for (; ; ) {
+                        String line = reader.readLine();
+                        if (line == null)
+                            break;
+                        result.add(line);
+                    }
+                    return result;
+                }
+            }
+        });
     }
 
     //-----------------------------------------------------------------------
@@ -165,8 +176,7 @@ public class FileUtil {
      * @param file the file to open for input, must not be <code>null</code>
      * @return a new {@link java.io.FileInputStream} for the specified file
      * @throws java.io.FileNotFoundException if the file does not exist
-     * @throws java.io.IOException           if the file object is a directory
-     * @throws java.io.IOException           if the file cannot be read
+     * @throws java.io.IOException           if the file object is a directory, if the file cannot be read
      * @since Commons IO 1.3
      */
     public static FileInputStream openInputStream(File file) throws IOException {
@@ -230,6 +240,15 @@ public class FileUtil {
         }
     }
 
+    public static List<String> readLines(InputStream input, Charset charset) throws IOException {
+        if (charset == null) {
+            charset = KoreanEnv.UTF8;
+        }
+        InputStreamReader reader = new InputStreamReader(input, charset);
+        return readLines(reader);
+    }
+
+
     /**
      * Get the contents of a <code>Reader</code> as a list of Strings,
      * one entry per line.
@@ -244,14 +263,15 @@ public class FileUtil {
      * @since Commons IO 1.1
      */
     public static List<String> readLines(Reader input) throws IOException {
-        BufferedReader reader = new BufferedReader(input);
-        List<String> lines = new ArrayList<String>(1000);
+        try (BufferedReader reader = new BufferedReader(input)) {
+            List<String> lines = new ArrayList<String>(1000);
 
-        String line = null;
-        while ((line = reader.readLine()) != null) {
-            lines.add(line);
+            String line = null;
+            while ((line = reader.readLine()) != null) {
+                lines.add(line);
+            }
+            return lines;
         }
-        return lines;
     }
 
     /**

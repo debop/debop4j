@@ -20,8 +20,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.lucene.analysis.kr.morph.MorphException;
 
 import java.io.ByteArrayInputStream;
-import java.io.File;
-import java.io.FileInputStream;
+import java.io.InputStream;
 import java.nio.charset.Charset;
 import java.util.Properties;
 
@@ -65,7 +64,7 @@ public class KoreanEnv {
      */
     private Properties props = null;
 
-    private static KoreanEnv instance = null;
+    private static KoreanEnv instance = new KoreanEnv();
 
     /**
      * The constructor loads property values from the property file.
@@ -82,9 +81,6 @@ public class KoreanEnv {
     }
 
     public static KoreanEnv getInstance() throws MorphException {
-        if (instance == null)
-            instance = new KoreanEnv();
-
         return instance;
     }
 
@@ -118,29 +114,24 @@ public class KoreanEnv {
      * @return The loaded SortedProperties object.
      */
     private Properties loadProperties(Properties def) throws MorphException {
+
         Properties properties = new Properties();
+        if (def != null) properties = new Properties(def);
 
-        if (def != null) {
-            properties = new Properties(def);
-        }
-
-        File file = null;
         try {
-            file = FileUtil.getClassLoaderFile(FILE_KOREAN_PROPERTY);
-            if (file != null) {
-                if (log.isDebugEnabled())
-                    log.debug("파일로부터 Properties 정보를 얻습니다. file=[{}]", file);
-                properties.load(new FileInputStream(file));
+            InputStream stream = FileUtil.getResourceFileStream(FILE_KOREAN_PROPERTY);
+            if (stream != null) {
+                properties.load(stream);
                 return properties;
             }
+
             byte[] in = FileUtil.readByteFromCurrentJar(FILE_KOREAN_PROPERTY);
             properties.load(new ByteArrayInputStream(in));
         } catch (Exception e) {
-            throw new MorphException("Failure while trying to load properties file " + file, e);
+            throw new MorphException("Failure while trying to load properties file. file=" + FILE_KOREAN_PROPERTY, e);
         }
         return properties;
     }
-
 
     /**
      * Returns the value of a property.

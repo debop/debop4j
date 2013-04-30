@@ -26,7 +26,6 @@ import org.fest.assertions.Assertions;
 import org.hibernate.SessionFactory;
 import org.junit.After;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -119,7 +118,6 @@ public class TimelineTest {
     }
 
     @Test
-    @Ignore("maven으로 실행 시에는 예외가 발생한다.")
     public void twitStream() throws Exception {
 
         final IHibernateSearchDao dao = appContext.getBean(IHibernateSearchDao.class);

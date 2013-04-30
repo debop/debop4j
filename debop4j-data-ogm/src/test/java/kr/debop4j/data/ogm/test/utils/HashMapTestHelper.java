@@ -8,6 +8,7 @@ import org.hibernate.ogm.grid.AssociationKey;
 import org.hibernate.ogm.grid.EntityKey;
 import org.hibernate.ogm.grid.RowKey;
 
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -60,7 +61,28 @@ public class HashMapTestHelper implements TestableGridDialect {
 
     @Override
     public Map<String, String> getEnvironmentProperties() {
-        return null;
+        Map<String, String> props = new HashMap<String, String>();
+
+        // hibernate-search 환경설정
+        props.put("hibernate.search.default.indexmanager", "near-real-time");
+        props.put("hibernate.search.default.directory_provider", "filesystem");
+        props.put("hibernate.search.default.indexBase", ".lucene/indexes");
+        props.put("hibernate.search.default.locking_strategy", "single");
+
+        // hibernate-search index worker settings
+        props.put("hibernate.search.worker.execution", "async");
+        props.put("hibernate.search.worker.thread_pool.size", "8");
+        props.put("hibernate.search.worker.buffer_queue.max", "1000000");
+
+        // hibernate-search performance settings
+        props.put("hibernate.search.default.indexwriter.max_buffered_doc", "true");
+        props.put("hibernate.search.default.indexwriter.max_merge_docs", "100");
+        props.put("hibernate.search.default.indexwriter.merge_factor", "20");
+        props.put("hibernate.search.default.indexwriter.term_index_interval", "default");
+        props.put("hibernate.search.default.indexwriter.ram_buffer_size", "2048");
+        props.put("hibernate.search.default.exclusive_index_use", "true");
+
+        return props;
     }
 
 }

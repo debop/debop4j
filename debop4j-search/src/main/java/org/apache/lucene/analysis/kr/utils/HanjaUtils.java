@@ -16,7 +16,6 @@
 
 package org.apache.lucene.analysis.kr.utils;
 
-import lombok.Getter;
 import org.apache.lucene.analysis.kr.morph.MorphException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,39 +28,24 @@ public class HanjaUtils {
 
     private static final Logger log = LoggerFactory.getLogger(HanjaUtils.class);
 
-    @Getter(lazy = true)
-    private static final Map<String, char[]> mapHanja = loadDictionary();
+    private static final Map<String, char[]> mapHanja = new HashMap<String, char[]>();
 
     static {
-        loadDictionary();
-    }
+        List<String> strList = FileUtil.readLines(KoreanEnv.getInstance().getValue(KoreanEnv.FILE_MAPHANJA), KoreanEnv.UTF8);
 
-    public synchronized static Map<String, char[]> loadDictionary() throws MorphException {
-        log.info("한자 사전을 로드합니다...");
+        log.info("한자 사전을 빌드합니다...");
 
-        Map<String, char[]> hanjaMap = new HashMap<String, char[]>();
+        for (String str : strList) {
+            if (str.length() < 1 || !str.contains(","))
+                continue;
+            String[] hanInfos = StringUtil.split(str, ",");
+            if (hanInfos.length != 2)
+                continue;
 
-        try {
-            List<String> strList = FileUtil.readLines(KoreanEnv.getInstance().getValue(KoreanEnv.FILE_MAPHANJA), "UTF-8");
-
-            log.info("한자 사전을 빌드합니다...");
-
-            for (String str : strList) {
-                if (str.length() < 1 || !str.contains(","))
-                    continue;
-                String[] hanInfos = StringUtil.split(str, ",");
-                if (hanInfos.length != 2)
-                    continue;
-
-                String hanja = StringEscapeUtil.unescapeJava(hanInfos[0]);
-                hanjaMap.put(hanja, hanInfos[1].toCharArray());
-            }
-            log.info("한자 사전을 빌드했습니다. 단어수=[{}], 로드수=[{}]", strList.size(), hanjaMap.size());
-        } catch (Exception e) {
-            log.error("한자 사전을 로드하는데 실패했습니다.", e);
-            // throw new MorphException(e);
+            String hanja = StringEscapeUtil.unescapeJava(hanInfos[0]);
+            mapHanja.put(hanja, hanInfos[1].toCharArray());
         }
-        return hanjaMap;
+        log.info("한자 사전을 빌드했습니다. 단어수=[{}], 로드수=[{}]", strList.size(), mapHanja.size());
     }
 
     /**
@@ -74,7 +58,7 @@ public class HanjaUtils {
     public static char[] convertToHangul(char hanja) throws MorphException {
 //		if(hanja>0x9FFF||hanja<0x3400) return new char[]{hanja};
 
-        char[] result = getMapHanja().get(new String(new char[]{ hanja }));
+        char[] result = mapHanja.get(new String(new char[]{ hanja }));
 
         if (result == null)
             result = new char[]{ hanja };

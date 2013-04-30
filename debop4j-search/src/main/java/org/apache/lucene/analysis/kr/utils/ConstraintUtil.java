@@ -29,7 +29,7 @@ import java.util.Map;
 @SuppressWarnings("unchecked")
 public class ConstraintUtil {
 
-    private static Map<String, String> hahes = new HashMap<String, String>(); // "글로벌화해 ", "민족화해" 처럼 화해와 결합이 가능한 명사
+    private static final Map<String, String> hahes = new HashMap<String, String>();
 
     static {
         hahes.put("민족", "Y");
@@ -37,7 +37,7 @@ public class ConstraintUtil {
         hahes.put("남북", "Y");
     }
 
-    private static Map<String, String> eomiPnouns = new HashMap<String, String>();
+    private static final Map<String, String> eomiPnouns = new HashMap<String, String>();
 
     static {
         eomiPnouns.put("ㄴ", "Y");
@@ -45,7 +45,7 @@ public class ConstraintUtil {
         eomiPnouns.put("ㅁ", "Y");
     }
 
-    private static Map<Integer, Integer> PTN_MLIST = new HashMap<Integer, Integer>();
+    private static final Map<Integer, Integer> PTN_MLIST = new HashMap<Integer, Integer>();
 
     static {
         PTN_MLIST.put(PatternConstants.PTN_NSM, PatternConstants.PTN_NSM);
@@ -57,7 +57,7 @@ public class ConstraintUtil {
         PTN_MLIST.put(PatternConstants.PTN_NVM, PatternConstants.PTN_NVM);
     }
 
-    private static Map<Integer, Integer> PTN_JLIST = new HashMap<Integer, Integer>();
+    private static final Map<Integer, Integer> PTN_JLIST = new HashMap<Integer, Integer>();
 
     static {
         PTN_JLIST.put(PatternConstants.PTN_NJ, PatternConstants.PTN_NJ);
@@ -66,7 +66,7 @@ public class ConstraintUtil {
         PTN_JLIST.put(PatternConstants.PTN_VMXMJ, PatternConstants.PTN_VMXMJ);
     }
 
-    private static Map<String, String> WORD_GUKS = new HashMap<String, String>();
+    private static final Map<String, String> WORD_GUKS = new HashMap<String, String>();
 
     static {
         WORD_GUKS.put("날것", "Y");
@@ -98,7 +98,7 @@ public class ConstraintUtil {
     }
 
     // 종성이 없는 음절과 연결될 수 없는 조사
-    private static Map<String, String> JOSA_THREE = new HashMap<String, String>();
+    private static final Map<String, String> JOSA_THREE = new HashMap<String, String>();
 
     static {
         JOSA_THREE.put("과", "Y");
@@ -125,7 +125,6 @@ public class ConstraintUtil {
         if (chrs.length == 3 && eomiPnouns.get(Character.toString(chrs[2])) != null) return true;
 
         return true;
-
     }
 
     public static boolean isEomiPhrase(int ptn) {

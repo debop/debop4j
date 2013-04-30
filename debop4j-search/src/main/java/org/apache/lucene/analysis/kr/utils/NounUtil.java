@@ -30,9 +30,10 @@ public class NounUtil {
     private static final boolean isTraceEnabled = log.isTraceEnabled();
     private static final boolean isDebugEnabled = log.isDebugEnabled();
 
-    private static final List<String> DNouns = new ArrayList<String>();
+    private static final List<String> DNouns;
 
     static {
+        DNouns = new ArrayList<String>();
         Collections.addAll(DNouns, "등", "들", "상", "간", "뿐", "별");
     }
 
@@ -45,7 +46,6 @@ public class NounUtil {
     public static boolean analysisMJ(AnalysisOutput o, List<AnalysisOutput> candidates) throws MorphException {
 
         int strlen = o.getStem().length();
-
         if (strlen < 2) return false;
 
         char[] chrs = MorphUtil.decompose(o.getStem().charAt(strlen - 1));
@@ -220,14 +220,14 @@ public class NounUtil {
     }
 
 
-    /**
-     * 복합명사인지 조사하고, 복합명사이면 단위명사들을 찾는다.
-     * 복합명사인지 여부는 단위명사가 모두 사전에 있는지 여부로 판단한다.
-     * 단위명사는 2글자 이상 단어에서만 찾는다.
-     * @param o
-     * @return
-     * @throws org.apache.lucene.analysis.kr.morph.MorphException
-     */
+//    /**
+//     * 복합명사인지 조사하고, 복합명사이면 단위명사들을 찾는다.
+//     * 복합명사인지 여부는 단위명사가 모두 사전에 있는지 여부로 판단한다.
+//     * 단위명사는 2글자 이상 단어에서만 찾는다.
+//     * @param o
+//     * @return
+//     * @throws org.apache.lucene.analysis.kr.morph.MorphException
+//     */
 //	   public static boolean confirmCNoun(AnalysisOutput o) throws MorphException  {
 //
 //		   if(o.getStem().length()<3) return false;
