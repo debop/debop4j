@@ -19,6 +19,7 @@ package kr.debop4j.data.ogm.dao;
 import kr.debop4j.data.ogm.model.UuidEntityBase;
 import lombok.Getter;
 import lombok.Setter;
+import org.apache.lucene.analysis.kr.KoreanAnalyzer;
 import org.hibernate.search.annotations.*;
 
 import javax.persistence.*;
@@ -33,6 +34,7 @@ import java.util.Date;
 @Entity
 @Table(name = "player")
 @Indexed
+@Analyzer(impl = KoreanAnalyzer.class)
 @Getter
 @Setter
 public class Player extends UuidEntityBase {
@@ -40,11 +42,11 @@ public class Player extends UuidEntityBase {
     private static final long serialVersionUID = 7317574732346075920L;
 
     @Column(name = "player_name")
-    @Field(index = Index.YES, analyze = Analyze.YES, store = Store.NO)
+    @Field
     private String name;
 
     @Column(name = "player_surname")
-    @Field(index = Index.YES, analyze = Analyze.NO, store = Store.NO)
+    @Field
     private String surname;
 
     @Column(name = "player_age")

@@ -24,6 +24,8 @@ import javax.persistence.Id;
 @Setter
 public class Hypothesis extends AnnotatedEntityBase {
 
+    private static final long serialVersionUID = -6968612655671062151L;
+
     @Id
     private String id;
 

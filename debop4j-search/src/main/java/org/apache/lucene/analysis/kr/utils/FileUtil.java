@@ -40,6 +40,16 @@ public class FileUtil {
 
     private static final Logger log = LoggerFactory.getLogger(FileUtil.class);
 
+    public static InputStream getResourceFileStream(String filename) {
+
+        ClassLoader classLoader = FileUtil.class.getClassLoader();
+        InputStream stream = classLoader.getResourceAsStream(filename);
+        if (stream == null) {
+            stream = ClassLoader.getSystemResourceAsStream(filename);
+        }
+        return stream;
+    }
+
     /**
      * Given a file name for a file that is located somewhere in the application
      * classpath, return a File object representing the file.
@@ -50,9 +60,9 @@ public class FileUtil {
      * @throws MorphException Thrown if the classloader can not be found or if
      *                        the file can not be found in the classpath.
      */
-    public static File getClassLoaderFile(String filename) throws MorphException {
-        // note that this method is used when initializing logging, so it must
-        // not attempt to log anything.
+    public synchronized static File getClassLoaderFile(String filename) throws MorphException {
+        // note that this method is used when initializing logging,
+        // so it must not attempt to log anything.
         File file = null;
         ClassLoader loader = FileUtil.class.getClassLoader();
         URL url = loader.getResource(filename);
@@ -88,13 +98,6 @@ public class FileUtil {
             log.debug("파일 내용을 읽어드립니다. fName=[{}], encoding=[{}]", file, encoding);
 
         return Files.readAllLines(Paths.get(file.toURI()), Charset.forName(encoding));
-//        InputStream in = null;
-//        try {
-//            in = openInputStream(file);
-//            return readLines(in, encoding);
-//        } finally {
-//            closeQuietly(in);
-//        }
     }
 
     /**
@@ -116,24 +119,30 @@ public class FileUtil {
             log.debug("파일 내용을 읽어드립니다. fName=[{}], encoding=[{}]", fName, encoding);
 
         try {
-            File file = getClassLoaderFile(fName);
-            Path path = Paths.get(file.toURI());
-            Future<List<String>> future = FileAsyncUtil.readAllLinesAsync(path, Charset.forName(encoding), StandardOpenOption.READ);
-            return future.get();
+            return FileUtil.readLines(getResourceFileStream(fName), encoding);
         } catch (Exception e) {
             log.error("파일 내용을 읽는데 실패했습니다. fName=" + fName, e);
             throw new RuntimeException(e);
         }
     }
 
-    public static Future<List<String>> readLinesAsync(String fName, Charset charset) {
+    public static Future<List<String>> readLinesAsync(final String fName, final Charset charset) {
         if (log.isDebugEnabled())
             log.debug("파일 내용을 읽어드립니다. fName=[{}], charset=[{}]", fName, charset);
 
         try {
+//            return AsyncTool.newTask(AsyncTool.getEmptyRunnable(),
+//                                     readLines(fName, charset.name()));
+//            return AsyncTool.startNew(new Callable<List<String>>() {
+//                @Override
+//                public List<String> call() throws Exception {
+//                    return FileUtil.readLines(fName, charset.name());
+//                }
+//            });
             File file = getClassLoaderFile(fName);
             Path path = Paths.get(file.toURI());
             return FileAsyncUtil.readAllLinesAsync(path, charset, StandardOpenOption.READ);
+
         } catch (Exception e) {
             log.error("파일 내용을 읽는데 실패했습니다. fName=" + fName, e);
             throw new RuntimeException(e);

@@ -5,6 +5,7 @@ import com.google.common.collect.Sets;
 import kr.debop4j.data.ogm.model.UuidEntityBase;
 import lombok.Getter;
 import lombok.Setter;
+import org.apache.lucene.analysis.cjk.CJKAnalyzer;
 import org.apache.lucene.analysis.kr.KoreanAnalyzer;
 import org.hibernate.search.annotations.*;
 
@@ -22,7 +23,7 @@ import java.util.Set;
 @Indexed
 @Getter
 @Setter
-@Analyzer(impl = KoreanAnalyzer.class)
+@Analyzer(impl = CJKAnalyzer.class)
 public class Player extends UuidEntityBase {
 
     private static final long serialVersionUID = 7317574732346075920L;
@@ -49,6 +50,7 @@ public class Player extends UuidEntityBase {
 
     @Field(index = Index.YES, analyze = Analyze.YES, store = Store.NO)
     @Boost(2.0f)
+    @Analyzer(impl = KoreanAnalyzer.class)
     private String description = "1. 동해 물과 백두산이 마르고 닳도록," +
             "   하느님이 보우하사 우리나라 만세." +
             "(후렴) 무궁화 삼천리 화려 강산," +

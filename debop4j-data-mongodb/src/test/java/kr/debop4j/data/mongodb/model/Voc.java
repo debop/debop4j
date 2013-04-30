@@ -21,6 +21,7 @@ import kr.debop4j.core.tools.HashTool;
 import kr.debop4j.data.ogm.model.UuidEntityBase;
 import lombok.Getter;
 import lombok.Setter;
+import org.apache.lucene.analysis.cjk.CJKAnalyzer;
 import org.apache.lucene.analysis.kr.KoreanAnalyzer;
 import org.hibernate.search.annotations.*;
 
@@ -41,7 +42,7 @@ import java.util.Set;
 @Indexed
 @Getter
 @Setter
-@Analyzer(impl = KoreanAnalyzer.class)
+@Analyzer(impl = CJKAnalyzer.class)
 public class Voc extends UuidEntityBase {
 
     private static final long serialVersionUID = -6113356114027050611L;
@@ -74,6 +75,7 @@ public class Voc extends UuidEntityBase {
 
     @Field
     @Boost(2.0f)
+    @Analyzer(impl = KoreanAnalyzer.class)
     private String memo = DefaultMemo;
 
     @Field

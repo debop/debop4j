@@ -3,6 +3,7 @@ package kr.debop4j.data.ogm.test.simpleentity;
 import kr.debop4j.data.ogm.model.UuidEntityBase;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.search.annotations.Indexed;
 
 import javax.persistence.Entity;
 
@@ -13,6 +14,7 @@ import javax.persistence.Entity;
  * @since 13. 4. 1
  */
 @Entity
+@Indexed
 @Getter
 @Setter
 public class Helicopter extends UuidEntityBase {

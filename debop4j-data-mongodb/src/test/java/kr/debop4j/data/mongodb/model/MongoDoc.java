@@ -4,8 +4,12 @@ import com.google.common.base.Objects;
 import kr.debop4j.data.ogm.model.UuidEntityBase;
 import lombok.Getter;
 import lombok.Setter;
+import org.apache.lucene.analysis.cjk.CJKAnalyzer;
 import org.apache.lucene.analysis.kr.KoreanAnalyzer;
-import org.hibernate.search.annotations.*;
+import org.hibernate.search.annotations.Analyzer;
+import org.hibernate.search.annotations.Field;
+import org.hibernate.search.annotations.Indexed;
+import org.hibernate.search.annotations.Store;
 
 import javax.persistence.Entity;
 
@@ -19,7 +23,7 @@ import javax.persistence.Entity;
 @Indexed
 @Getter
 @Setter
-@Analyzer(impl = KoreanAnalyzer.class)
+@Analyzer(impl = CJKAnalyzer.class)
 public class MongoDoc extends UuidEntityBase {
     private static final long serialVersionUID = -1795981911420947049L;
 
@@ -37,10 +41,11 @@ public class MongoDoc extends UuidEntityBase {
         this.body = DefaultBody;
     }
 
-    @Field(store = Store.YES, analyze = Analyze.YES, index = Index.YES)
+    @Field(store = Store.YES)
     private String name;
 
-    @Field(store = Store.YES, analyze = Analyze.YES, index = Index.YES)
+    @Field(store = Store.YES)
+    @Analyzer(impl = KoreanAnalyzer.class)
     private String body;
 
 

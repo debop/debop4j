@@ -94,15 +94,19 @@ public abstract class MongoGridDatastoreConfigBase extends GridDatastoreConfigBa
         return AssociationStorage.IN_ENTITY;
     }
 
+    private static final String MONGO_OGM_DAO_CLASS_NAME = MongoOgmDao.class.getName();
+
     @Override
     @Bean
     @Scope("prototype")
     public MongoOgmDao hibernateOgmDao() {
-        final String className = MongoOgmDao.class.getName();
-        MongoOgmDao dao = (MongoOgmDao) Local.get(className);
+        MongoOgmDao dao = Local.get(MONGO_OGM_DAO_CLASS_NAME, MongoOgmDao.class);
         if (dao == null) {
             dao = new MongoOgmDao(sessionFactory());
-            Local.put(className, dao);
+            Local.put(MONGO_OGM_DAO_CLASS_NAME, dao);
+
+            if (log.isDebugEnabled())
+                log.debug("현 스레드에서 새로운 MongoOgmDao 인스턴스를 생성했습니다. ThreadId=[{}]", Thread.currentThread().getId());
         }
         return dao;
     }

@@ -67,8 +67,8 @@ public class TimelineTest extends MongoGridDatastoreTestBase {
         } finally {
             dao.deleteAll(Twit.class);
             dao.getFullTextSession().flush();
-
-            assertThat(dao.count(Twit.class)).isEqualTo(0);
+            dao.clearIndex(Twit.class);
         }
+        assertThat(dao.count(Twit.class)).isEqualTo(0);
     }
 }

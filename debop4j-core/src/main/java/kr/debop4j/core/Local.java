@@ -17,11 +17,10 @@
 package kr.debop4j.core;
 
 import com.google.common.collect.Maps;
-import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.HashMap;
-
-import static kr.debop4j.core.Guard.shouldNotBeNull;
 
 
 /**
@@ -30,8 +29,9 @@ import static kr.debop4j.core.Guard.shouldNotBeNull;
  * @author sunghyouk.bae@gmail.com
  * @since 12. 9. 12
  */
-@Slf4j
 public class Local {
+
+    private static final Logger log = LoggerFactory.getLogger(Local.class);
 
     private Local() { }
 
@@ -39,9 +39,7 @@ public class Local {
             new ThreadLocal<HashMap>() {
                 @Override
                 public HashMap initialValue() {
-                    if (log.isDebugEnabled())
-                        log.debug("현 ThreadContext 에 저장소를 생성합니다...");
-
+                    log.debug("현 ThreadContext 에 저장소를 생성합니다...");
                     return Maps.newLinkedHashMap();
                 }
             };
@@ -51,26 +49,26 @@ public class Local {
     }
 
     public static Object get(Object key) {
-        shouldNotBeNull(key, "key");
         return threadLocal.get().get(key);
     }
 
     @SuppressWarnings("unchecked")
     public static <T> T get(Object key, Class<T> clazz) {
-        shouldNotBeNull(key, "key");
         return (T) threadLocal.get().get(key);
     }
 
     @SuppressWarnings("unchecked")
     public static void put(Object key, Object value) {
-        shouldNotBeNull(key, "key");
-        if (log.isDebugEnabled())
-            log.debug("Local 저장소에 key=[{}], value=[{}]를 저장합니다.", key, value);
+        assert key != null;
+
+        if (log.isTraceEnabled())
+            log.trace("Local 저장소에 key=[{}], value=[{}]를 저장합니다.", key, value);
 
         threadLocal.get().put(key, value);
     }
 
     public static void clear() {
         threadLocal.get().clear();
+        log.debug("Local 저장소의 모든 정보를 삭제했습니다.");
     }
 }

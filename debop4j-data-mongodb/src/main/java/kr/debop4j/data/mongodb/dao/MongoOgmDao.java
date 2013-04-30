@@ -19,7 +19,6 @@ package kr.debop4j.data.mongodb.dao;
 import kr.debop4j.data.hibernate.unitofwork.UnitOfWorks;
 import kr.debop4j.data.ogm.dao.HibernateOgmDao;
 import org.apache.lucene.search.Query;
-import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.search.FullTextQuery;
 import org.slf4j.Logger;
@@ -46,10 +45,6 @@ public class MongoOgmDao extends HibernateOgmDao {
 
     public MongoOgmDao(SessionFactory sessionFactory) {
         super(sessionFactory);
-    }
-
-    public MongoOgmDao(Session session) {
-        super(session);
     }
 
     @Override

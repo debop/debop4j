@@ -178,4 +178,14 @@ public interface IHibernateOgmDao {
      * 모든 엔티티의 인덱스를 최적화합니다.
      */
     void optimizeAll();
+
+    /**
+     * 세션의 모든 변경을 저장소에 적용한다.
+     */
+    void flush();
+
+    /**
+     * 세션의 모든 인덱스 변경 정보를 저장합니다.
+     */
+    void flushIndexes();
 }

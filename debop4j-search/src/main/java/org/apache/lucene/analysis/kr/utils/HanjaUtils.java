@@ -16,6 +16,7 @@
 
 package org.apache.lucene.analysis.kr.utils;
 
+import lombok.Getter;
 import org.apache.lucene.analysis.kr.morph.MorphException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,20 +29,22 @@ public class HanjaUtils {
 
     private static final Logger log = LoggerFactory.getLogger(HanjaUtils.class);
 
-    private static Map<String, char[]> mapHanja;
+    @Getter(lazy = true)
+    private static final Map<String, char[]> mapHanja = loadDictionary();
 
     static {
         loadDictionary();
     }
 
-    public synchronized static void loadDictionary() throws MorphException {
+    public synchronized static Map<String, char[]> loadDictionary() throws MorphException {
         log.info("한자 사전을 로드합니다...");
 
-        mapHanja = new HashMap<String, char[]>();
+        Map<String, char[]> hanjaMap = new HashMap<String, char[]>();
 
         try {
             List<String> strList = FileUtil.readLines(KoreanEnv.getInstance().getValue(KoreanEnv.FILE_MAPHANJA), "UTF-8");
-            // FileUtil.readLines("org/apache/lucene/analysis/kr/dic/mapHanja.dic", "UTF-8");
+
+            log.info("한자 사전을 빌드합니다...");
 
             for (String str : strList) {
                 if (str.length() < 1 || !str.contains(","))
@@ -51,12 +54,14 @@ public class HanjaUtils {
                     continue;
 
                 String hanja = StringEscapeUtil.unescapeJava(hanInfos[0]);
-                mapHanja.put(hanja, hanInfos[1].toCharArray());
+                hanjaMap.put(hanja, hanInfos[1].toCharArray());
             }
-            log.info("한자 사전을 로드했습니다. 단어수=[{}], 로드수=[{}]", strList.size(), mapHanja.size());
+            log.info("한자 사전을 빌드했습니다. 단어수=[{}], 로드수=[{}]", strList.size(), hanjaMap.size());
         } catch (Exception e) {
-            throw new MorphException(e);
+            log.error("한자 사전을 로드하는데 실패했습니다.", e);
+            // throw new MorphException(e);
         }
+        return hanjaMap;
     }
 
     /**
@@ -67,11 +72,9 @@ public class HanjaUtils {
      *
      */
     public static char[] convertToHangul(char hanja) throws MorphException {
-        if (mapHanja == null) loadDictionary();
-
 //		if(hanja>0x9FFF||hanja<0x3400) return new char[]{hanja};
 
-        char[] result = mapHanja.get(new String(new char[]{ hanja }));
+        char[] result = getMapHanja().get(new String(new char[]{ hanja }));
 
         if (result == null)
             result = new char[]{ hanja };

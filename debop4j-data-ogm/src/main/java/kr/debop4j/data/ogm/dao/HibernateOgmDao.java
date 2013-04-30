@@ -76,25 +76,12 @@ public class HibernateOgmDao implements IHibernateOgmDao {
         this.sessionFactory = sessionFactory;
     }
 
-    public HibernateOgmDao(Session session) {
-        this.sessionFactory = session.getSessionFactory();
-        Local.put(SESSION_KEY, session);
-    }
-
     /**
      * hibernate session을 반환합니다.
      */
     @Override
     public synchronized final Session getSession() {
-        Session session = (Session) Local.get(SESSION_KEY);
-        if (session == null || !session.isOpen()) {
-            if (log.isDebugEnabled())
-                log.debug("현 ThreadContext에 새로운 Session을 엽니다...");
-
-            session = sessionFactory.openSession();
-            Local.put(SESSION_KEY, session);
-        }
-        return session;
+        return UnitOfWorks.getCurrentSession();
     }
 
     /**
@@ -440,10 +427,9 @@ public class HibernateOgmDao implements IHibernateOgmDao {
         if (isDebugEnabled)
             log.debug("엔티티에 대한 모든 인덱스 정보를 삭제합니다... clazz=[{}]", clazz);
 
-        FullTextSession fts = getFullTextSession();
-        fts.purgeAll(clazz);                        // remove obsolete index
-        fts.flushToIndexes();                       // apply purge before optimize
-        fts.getSearchFactory().optimize(clazz);     // physically clear space
+        getFullTextSession().purgeAll(clazz);       // remove obsolete index
+        getFullTextSession().flushToIndexes();      // apply purge before optimize
+        optimize(clazz);                            // physically clear space
     }
 
     /**
@@ -480,5 +466,25 @@ public class HibernateOgmDao implements IHibernateOgmDao {
         if (isTraceEnabled)
             log.trace("모든 수형의 인덱스를 최적화합니다.");
         getFullTextSession().getSearchFactory().optimize();
+    }
+
+    /**
+     * 세션의 모든 변경을 저장소에 적용한다.
+     */
+    @Override
+    public void flush() {
+        if (isTraceEnabled)
+            log.trace("세션의 모든 변경 정보를 저장소에 적용합니다...");
+        getFullTextSession().flush();
+    }
+
+    /**
+     * 세션의 모든 인덱스 변경 정보를 저장합니다.
+     */
+    @Override
+    public void flushIndexes() {
+        if (isTraceEnabled)
+            log.trace("세션의 모든 인덱스 변경 정보를 저장합니다...");
+        getFullTextSession().flushToIndexes();
     }
 }

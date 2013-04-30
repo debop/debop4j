@@ -4,6 +4,8 @@ import com.google.common.collect.Lists;
 import kr.debop4j.core.Action1;
 import kr.debop4j.core.parallelism.Parallels;
 import kr.debop4j.core.spring.Springs;
+import kr.debop4j.data.hibernate.unitofwork.IUnitOfWork;
+import kr.debop4j.data.hibernate.unitofwork.UnitOfWorkNestingOptions;
 import kr.debop4j.data.hibernate.unitofwork.UnitOfWorks;
 import kr.debop4j.data.mongodb.MongoGridDatastoreTestBase;
 import kr.debop4j.data.mongodb.model.Player;
@@ -211,22 +213,29 @@ public class MongoOgmDaoTest extends MongoGridDatastoreTestBase {
         Parallels.run(REPEAT_COUNT, new Action1<Integer>() {
             @Override
             public void perform(Integer arg) {
-                List<Player> players = createTestPlayers(PLAYER_COUNT);
+                try (IUnitOfWork unitOfWork = UnitOfWorks.start(UnitOfWorkNestingOptions.CreateNewOrNestUnitOfWork)) {
+                    List<Player> players = createTestPlayers(PLAYER_COUNT);
 
-                IHibernateOgmDao dao = Springs.getBean(IHibernateOgmDao.class);
+                    IHibernateOgmDao dao = Springs.getBean(IHibernateOgmDao.class);
 
-                for (Player player : players) {
-                    dao.saveOrUpdate(player);
+                    for (Player player : players) {
+                        dao.saveOrUpdate(player);
+                    }
+                    dao.getSession().flush();
+                    try {
+                        Thread.sleep(10);
+                    } catch (InterruptedException ignored) {}
+                    /**
+                     * 병렬 작업 시에는 flushToIndexes() 메소드를 호출하여,
+                     * session이 닫히거나 스레드가 중단되기 전에 인덱싱을 마무리하도록 한다.
+                     */
+                    dao.flushToIndexes();
+                    dao.getSession().close();
+
+                    log.debug("Player [{}]명을 추가했습니다.", players.size());
+                } catch (Exception e) {
+                    log.error("예외 발생", e);
                 }
-                dao.getSession().flush();
-                /**
-                 * 병렬 작업 시에는 flushToIndexes() 메소드를 호출하여,
-                 * session이 닫히거나 스레드가 중단되기 전에 인덱싱을 마무리하도록 한다.
-                 */
-                dao.flushToIndexes();
-                dao.getSession().close();
-
-                log.debug("Player [{}]명을 추가했습니다.", players.size());
             }
         });
 

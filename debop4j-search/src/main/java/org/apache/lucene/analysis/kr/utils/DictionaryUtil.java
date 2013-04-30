@@ -26,7 +26,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
-import java.util.concurrent.Future;
 
 @SuppressWarnings("unchecked")
 public class DictionaryUtil {
@@ -55,18 +54,19 @@ public class DictionaryUtil {
 
         dictionary = new Trie<String, WordEntry>(true);
 
-        log.info("표준 사전을 로드합니다...");
-        Future<List<String>> standardDic = FileUtil.readLinesAsync(KoreanEnv.getInstance().getValue(KoreanEnv.FILE_DICTIONARY), KoreanEnv.UTF8);
-        log.info("복합명사 사전을 로드합니다...");
-        Future<List<String>> compoundDic = FileUtil.readLinesAsync(KoreanEnv.getInstance().getValue(KoreanEnv.FILE_COMPOUNDS), KoreanEnv.UTF8);
-        log.info("확장 사전을 로드합니다...");
-        Future<List<String>> extensionDic = FileUtil.readLinesAsync(KoreanEnv.getInstance().getValue(KoreanEnv.FILE_EXTENSION), KoreanEnv.UTF8);
-        log.info("사용자 정의 사전을 로드합니다...");
-        Future<List<String>> customDic = FileUtil.readLinesAsync(KoreanEnv.getInstance().getValue(KoreanEnv.FILE_CUSTOM), KoreanEnv.UTF8);
+//        log.info("표준 사전을 로드합니다...");
+//        Future<List<String>> standardDic = FileUtil.readLinesAsync(KoreanEnv.getInstance().getValue(KoreanEnv.FILE_DICTIONARY), KoreanEnv.UTF8);
+//        log.info("복합명사 사전을 로드합니다...");
+//        Future<List<String>> compoundDic = FileUtil.readLinesAsync(KoreanEnv.getInstance().getValue(KoreanEnv.FILE_COMPOUNDS), KoreanEnv.UTF8);
+//        log.info("확장 사전을 로드합니다...");
+//        Future<List<String>> extensionDic = FileUtil.readLinesAsync(KoreanEnv.getInstance().getValue(KoreanEnv.FILE_EXTENSION), KoreanEnv.UTF8);
+//        log.info("사용자 정의 사전을 로드합니다...");
+//        Future<List<String>> customDic = FileUtil.readLinesAsync(KoreanEnv.getInstance().getValue(KoreanEnv.FILE_CUSTOM), KoreanEnv.UTF8);
 
         try {
             log.info("표준 사전을 파싱합니다...");
-            final List<String> standards = standardDic.get();
+            // final List<String> standards = standardDic.get();
+            final List<String> standards = FileUtil.readLines(KoreanEnv.getInstance().getValue(KoreanEnv.FILE_DICTIONARY), "UTF-8");
             int count = 0;
             for (String str : standards) {
                 String[] infos = StringUtil.split(str, ",");
@@ -89,7 +89,8 @@ public class DictionaryUtil {
 
         try {
             log.info("복합명사 사전을 파싱합니다...");
-            final List<String> compounds = compoundDic.get();
+            // final List<String> compounds = compoundDic.get();
+            final List<String> compounds = FileUtil.readLines(KoreanEnv.getInstance().getValue(KoreanEnv.FILE_COMPOUNDS), "UTF-8");
             char[] features = "20000000X".toCharArray();
             int count = 0;
 
@@ -111,7 +112,8 @@ public class DictionaryUtil {
 
         try {
             log.info("확장 사전을 파싱합니다...");
-            final List<String> extensions = extensionDic.get();
+            // final List<String> extensions = extensionDic.get();
+            final List<String> extensions = FileUtil.readLines(KoreanEnv.getInstance().getValue(KoreanEnv.FILE_EXTENSION), "UTF-8");
             int count = 0;
 
             for (String str : extensions) {
@@ -135,7 +137,8 @@ public class DictionaryUtil {
 
         try {
             log.info("사용자정의 사전을 로드합니다...");
-            List<String> customs = customDic.get();
+            // List<String> customs = customDic.get();
+            final List<String> customs = FileUtil.readLines(KoreanEnv.getInstance().getValue(KoreanEnv.FILE_CUSTOM), "UTF-8");
             char[] features = "100000000X".toCharArray();
             int count = 0;
 
@@ -248,7 +251,7 @@ public class DictionaryUtil {
         return null;
     }
 
-    public static WordEntry getUncompound(String key) throws MorphException {
+    public synchronized static WordEntry getUncompound(String key) throws MorphException {
 
         char[] features = "90000X".toCharArray();
         try {
@@ -269,7 +272,7 @@ public class DictionaryUtil {
         return uncompounds.get(key);
     }
 
-    public static String getCJWord(String key) throws MorphException {
+    public synchronized static String getCJWord(String key) throws MorphException {
 
         try {
             if (cjwords == null) {

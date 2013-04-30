@@ -133,11 +133,12 @@ public class VocSearchTest extends MongoGridDatastoreTestBase {
                 dao.persist(voc);
             }
             dao.getSession().flush();
+            Thread.sleep(10);
             dao.flushToIndexes();
+            Thread.sleep(10);
             dao.getSession().clear();
         }
         log.debug("Voc [{}]개를 추가했습니다.", REPEAT_COUNT * VOC_COUNT);
-
 
         try {
             action.perform(dao);

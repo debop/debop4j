@@ -21,8 +21,7 @@ import kr.debop4j.core.ValueObjectBase;
 import kr.debop4j.core.tools.HashTool;
 import lombok.Getter;
 import lombok.Setter;
-import org.apache.lucene.analysis.kr.KoreanAnalyzer;
-import org.hibernate.search.annotations.Analyzer;
+import org.hibernate.search.annotations.Analyze;
 import org.hibernate.search.annotations.Boost;
 import org.hibernate.search.annotations.Field;
 
@@ -37,7 +36,7 @@ import javax.persistence.Embeddable;
 @Embeddable
 @Getter
 @Setter
-@Analyzer(impl = KoreanAnalyzer.class)
+//@Analyzer(impl = StandardAnalyzer.class)
 public class VocAttr extends ValueObjectBase {
 
     private static final long serialVersionUID = 5459929566638977310L;
@@ -49,10 +48,10 @@ public class VocAttr extends ValueObjectBase {
         this.value = value;
     }
 
-    @Field
+    @Field(analyze = Analyze.NO)
     private String name;
 
-    @Field
+    @Field(analyze = Analyze.NO)
     @Boost(1.1f)
     private String value;
 
