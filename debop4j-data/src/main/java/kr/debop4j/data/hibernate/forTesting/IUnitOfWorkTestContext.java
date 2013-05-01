@@ -19,7 +19,7 @@ package kr.debop4j.data.hibernate.forTesting;
 /**
  * 테스트용 Unit Of Work 컨텍스트
  *
- * @author sunghyouk.bae@gmail.com
+ * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 13. 2. 19.
  */
 public interface IUnitOfWorkTestContext {

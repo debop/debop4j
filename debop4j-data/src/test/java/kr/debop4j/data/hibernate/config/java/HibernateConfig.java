@@ -14,7 +14,7 @@ import javax.sql.DataSource;
 /**
  * kr.debop4j.data.hibernate.config.java.HibernateConfig
  *
- * @author sunghyouk.bae@gmail.com
+ * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 13. 2. 19.
  */
 @Configuration

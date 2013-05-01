@@ -12,7 +12,7 @@ import org.hibernate.criterion.Restrictions;
 /**
  * Access Library에서 제공하는 기본 Context 입니다.
  *
- * @author sunghyouk.bae@gmail.com
+ * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 13. 3. 10.
  */
 @Slf4j
@@ -20,23 +20,23 @@ public class AccessContext {
 
     private AccessContext() {}
 
-    private static final String LibraryName = "Access";
-    private static final String Administrator = "admin";
+    private static final String LIBRARY_NAME = "Access";
+    private static final String ADMINISTRATOR = "admin";
 
-    private static final String CurrentCompanyCodeKey = "kr.debop4j.access.current.companyCode.key";
-    private static final String CurrentDepartmentCodeKey = "kr.debop4j.access.current.departmentCode.key";
-    private static final String CurrentUsernameKey = "kr.debop4j.access.current.username.key";
+    private static final String CURRENT_COMPANY_CODE_KEY = "kr.debop4j.access.current.companyCode.key";
+    private static final String CURRENT_DEPARTMENT_CODE_KEY = "kr.debop4j.access.current.departmentCode.key";
+    private static final String CURRENT_USERNAME_KEY = "kr.debop4j.access.current.username.key";
 
-
+    /** 현 Thread Context 에 제공된 정보 */
     public static class Current {
 
         public static String getCompanyCode() {
-            return (String) Local.get(CurrentCompanyCodeKey);
+            return (String) Local.get(CURRENT_COMPANY_CODE_KEY);
         }
 
         public static void setCompanyCode(String companyCode) {
             Guard.shouldNotBeEmpty(companyCode, "companyCode");
-            Local.put(CurrentCompanyCodeKey, companyCode);
+            Local.put(CURRENT_COMPANY_CODE_KEY, companyCode);
         }
 
         public static Company getCompany() {
@@ -47,12 +47,12 @@ public class AccessContext {
         }
 
         public static String getDepartmentCode() {
-            return (String) Local.get(CurrentDepartmentCodeKey);
+            return (String) Local.get(CURRENT_DEPARTMENT_CODE_KEY);
         }
 
         public static void setDepartmentCode(String departmentCode) {
             Guard.shouldNotBeEmpty(departmentCode, "departmentCode");
-            Local.put(CurrentDepartmentCodeKey, departmentCode);
+            Local.put(CURRENT_DEPARTMENT_CODE_KEY, departmentCode);
         }
 
         public static Department getDepartment() {
@@ -63,12 +63,12 @@ public class AccessContext {
         }
 
         public static String getUsername() {
-            return (String) Local.get(CurrentUsernameKey);
+            return (String) Local.get(CURRENT_USERNAME_KEY);
         }
 
         public static void setUsername(String username) {
             Guard.shouldNotBeEmpty(username, "username");
-            Local.put(CurrentUsernameKey, username);
+            Local.put(CURRENT_USERNAME_KEY, username);
         }
 
         public static User getUser() {

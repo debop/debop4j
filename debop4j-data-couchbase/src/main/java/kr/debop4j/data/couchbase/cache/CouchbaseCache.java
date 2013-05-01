@@ -11,7 +11,7 @@ import org.springframework.cache.support.SimpleValueWrapper;
  * Couchbase를 캐시 저장소로 사용하는 Cache
  * 참고: http://techstickynotes.blogspot.kr/2012/04/spring-cache-couchbase-data-db.html
  *
- * @author sunghyouk.bae@gmail.com
+ * @author 배성혁 ( sunghyouk.bae@gmail.com )
  *         13. 3. 24. 오후 6:03
  */
 @Slf4j

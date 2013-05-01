@@ -17,7 +17,7 @@ import static org.fest.assertions.Assertions.assertThat;
 /**
  * Couchbase Cache 테스트
  *
- * @author sunghyouk.bae@gmail.com
+ * @author 배성혁 ( sunghyouk.bae@gmail.com )
  *         13. 3. 25 오후 5:36
  */
 @Slf4j

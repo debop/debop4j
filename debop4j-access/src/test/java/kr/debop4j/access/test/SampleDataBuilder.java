@@ -8,7 +8,7 @@ import java.util.Random;
 /**
  * 테스트 샘플용 데이터 빌드용 기본 틀래스입니다.
  *
- * @author sunghyouk.bae@gmail.com
+ * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 13. 3. 14 오전 10:35
  */
 @Slf4j

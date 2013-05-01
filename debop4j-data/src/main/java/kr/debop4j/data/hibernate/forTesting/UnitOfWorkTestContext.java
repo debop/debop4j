@@ -24,7 +24,7 @@ import lombok.extern.slf4j.Slf4j;
 /**
  * Hibernate를 이용한 Domain 테스트를 위한 UnitOfWork Context
  *
- * @author sunghyouk.bae@gmail.com
+ * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 13. 2. 19.
  */
 @Slf4j

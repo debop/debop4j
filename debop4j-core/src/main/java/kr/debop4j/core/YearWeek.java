@@ -24,7 +24,7 @@ import lombok.extern.slf4j.Slf4j;
 /**
  * 년차 (Week of Year) 를 나타냅니다.
  *
- * @author sunghyouk.bae@gmail.com
+ * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 12. 9. 12
  */
 @Slf4j
@@ -41,11 +41,14 @@ public class YearWeek extends ValueObjectBase implements IYearWeek, Comparable<Y
     @Setter
     private int week;
 
+    /** 기본 생성자 */
     public YearWeek() {
         this(0, 1);
     }
 
     /**
+     * 생성자
+     *
      * @param year 해당 년도
      * @param week 해당 주차 (1 ~ 53)
      */
@@ -54,6 +57,7 @@ public class YearWeek extends ValueObjectBase implements IYearWeek, Comparable<Y
         this.week = (int) Objects.firstNonNull(week, 1);
     }
 
+    /** Copy 생성자 */
     public YearWeek(YearWeek src) {
         this.year = src.year;
         this.week = src.week;

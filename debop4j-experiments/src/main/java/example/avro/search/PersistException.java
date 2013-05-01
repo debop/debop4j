@@ -62,9 +62,7 @@ public class PersistException extends org.apache.avro.specific.SpecificException
         }
     }
 
-    /**
-     * Gets the value of the 'message$' field.
-     */
+    /** Gets the value of the 'message$' field. */
     public java.lang.CharSequence getMessage$() {
         return message$;
     }
@@ -78,9 +76,7 @@ public class PersistException extends org.apache.avro.specific.SpecificException
         this.message$ = value;
     }
 
-    /**
-     * Gets the value of the 'code' field.
-     */
+    /** Gets the value of the 'code' field. */
     public java.lang.Integer getCode() {
         return code;
     }
@@ -94,53 +90,39 @@ public class PersistException extends org.apache.avro.specific.SpecificException
         this.code = value;
     }
 
-    /**
-     * Creates a new PersistException RecordBuilder
-     */
+    /** Creates a new PersistException RecordBuilder */
     public static example.avro.search.PersistException.Builder newBuilder() {
         return new example.avro.search.PersistException.Builder();
     }
 
-    /**
-     * Creates a new PersistException RecordBuilder by copying an existing Builder
-     */
+    /** Creates a new PersistException RecordBuilder by copying an existing Builder */
     public static example.avro.search.PersistException.Builder newBuilder(example.avro.search.PersistException.Builder other) {
         return new example.avro.search.PersistException.Builder(other);
     }
 
-    /**
-     * Creates a new PersistException RecordBuilder by copying an existing PersistException instance
-     */
+    /** Creates a new PersistException RecordBuilder by copying an existing PersistException instance */
     public static example.avro.search.PersistException.Builder newBuilder(example.avro.search.PersistException other) {
         return new example.avro.search.PersistException.Builder(other);
     }
 
-    /**
-     * RecordBuilder for PersistException instances.
-     */
+    /** RecordBuilder for PersistException instances. */
     public static class Builder extends org.apache.avro.specific.SpecificErrorBuilderBase<PersistException>
             implements org.apache.avro.data.ErrorBuilder<PersistException> {
 
         private java.lang.CharSequence message$;
         private int code;
 
-        /**
-         * Creates a new Builder
-         */
+        /** Creates a new Builder */
         private Builder() {
             super(example.avro.search.PersistException.SCHEMA$);
         }
 
-        /**
-         * Creates a Builder by copying an existing Builder
-         */
+        /** Creates a Builder by copying an existing Builder */
         private Builder(example.avro.search.PersistException.Builder other) {
             super(other);
         }
 
-        /**
-         * Creates a Builder by copying an existing PersistException instance
-         */
+        /** Creates a Builder by copying an existing PersistException instance */
         private Builder(example.avro.search.PersistException other) {
             super(other);
             if (isValidValue(fields()[0], other.message$)) {
@@ -177,16 +159,12 @@ public class PersistException extends org.apache.avro.specific.SpecificException
             return this;
         }
 
-        /**
-         * Gets the value of the 'message$' field
-         */
+        /** Gets the value of the 'message$' field */
         public java.lang.CharSequence getMessage$() {
             return message$;
         }
 
-        /**
-         * Sets the value of the 'message$' field
-         */
+        /** Sets the value of the 'message$' field */
         public example.avro.search.PersistException.Builder setMessage$(java.lang.CharSequence value) {
             validate(fields()[0], value);
             this.message$ = value;
@@ -194,32 +172,24 @@ public class PersistException extends org.apache.avro.specific.SpecificException
             return this;
         }
 
-        /**
-         * Checks whether the 'message$' field has been set
-         */
+        /** Checks whether the 'message$' field has been set */
         public boolean hasMessage$() {
             return fieldSetFlags()[0];
         }
 
-        /**
-         * Clears the value of the 'message$' field
-         */
+        /** Clears the value of the 'message$' field */
         public example.avro.search.PersistException.Builder clearMessage$() {
             message$ = null;
             fieldSetFlags()[0] = false;
             return this;
         }
 
-        /**
-         * Gets the value of the 'code' field
-         */
+        /** Gets the value of the 'code' field */
         public java.lang.Integer getCode() {
             return code;
         }
 
-        /**
-         * Sets the value of the 'code' field
-         */
+        /** Sets the value of the 'code' field */
         public example.avro.search.PersistException.Builder setCode(int value) {
             validate(fields()[1], value);
             this.code = value;
@@ -227,16 +197,12 @@ public class PersistException extends org.apache.avro.specific.SpecificException
             return this;
         }
 
-        /**
-         * Checks whether the 'code' field has been set
-         */
+        /** Checks whether the 'code' field has been set */
         public boolean hasCode() {
             return fieldSetFlags()[1];
         }
 
-        /**
-         * Clears the value of the 'code' field
-         */
+        /** Clears the value of the 'code' field */
         public example.avro.search.PersistException.Builder clearCode() {
             fieldSetFlags()[1] = false;
             return this;

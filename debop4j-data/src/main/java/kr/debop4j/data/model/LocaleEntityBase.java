@@ -31,7 +31,7 @@ import java.util.Set;
 /**
  * 지역화정보를 가지는 엔티티의 추상화 클래스
  *
- * @author sunghyouk.bae@gmail.com
+ * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 12. 9. 19
  */
 @Slf4j
@@ -46,9 +46,7 @@ public abstract class LocaleEntityBase<TId extends Serializable, TLocaleValue ex
 
     private TLocaleValue defaultLocaleValue = null;
 
-    /**
-     * 기본 Locale 정보를 생성하여 제공합니다.
-     */
+    /** 기본 Locale 정보를 생성하여 제공합니다. */
     public final TLocaleValue getDefaultLocale() {
         if (defaultLocaleValue == null) {
             try {

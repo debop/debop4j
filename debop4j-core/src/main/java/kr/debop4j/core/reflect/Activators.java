@@ -28,7 +28,7 @@ import java.util.List;
 /**
  * 리플렉션을 이용하여, 객체를 생성시키는 Utility Class 입니다.
  *
- * @author sunghyouk.bae@gmail.com
+ * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 12. 9. 12
  */
 @Slf4j

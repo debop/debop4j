@@ -17,7 +17,7 @@ import java.util.List;
 /**
  * 설명을 추가하세요.
  *
- * @author sunghyouk.bae@gmail.com
+ * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 12. 12. 17
  */
 @Slf4j

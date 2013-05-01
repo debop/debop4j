@@ -23,14 +23,10 @@ public class SearchResult extends org.apache.avro.specific.SpecificRecordBase im
     @Deprecated
     public java.util.List<example.avro.search.Entity> entities;
 
-    /**
-     * Default constructor.
-     */
+    /** Default constructor. */
     public SearchResult() {}
 
-    /**
-     * All-args constructor.
-     */
+    /** All-args constructor. */
     public SearchResult(java.lang.Integer pageNo, java.lang.Integer pageSize, java.lang.Integer pageCount, java.lang.Integer totalItemCount, java.util.List<example.avro.search.Entity> entities) {
         this.pageNo = pageNo;
         this.pageSize = pageSize;
@@ -83,9 +79,7 @@ public class SearchResult extends org.apache.avro.specific.SpecificRecordBase im
         }
     }
 
-    /**
-     * Gets the value of the 'pageNo' field.
-     */
+    /** Gets the value of the 'pageNo' field. */
     public java.lang.Integer getPageNo() {
         return pageNo;
     }
@@ -99,9 +93,7 @@ public class SearchResult extends org.apache.avro.specific.SpecificRecordBase im
         this.pageNo = value;
     }
 
-    /**
-     * Gets the value of the 'pageSize' field.
-     */
+    /** Gets the value of the 'pageSize' field. */
     public java.lang.Integer getPageSize() {
         return pageSize;
     }
@@ -115,9 +107,7 @@ public class SearchResult extends org.apache.avro.specific.SpecificRecordBase im
         this.pageSize = value;
     }
 
-    /**
-     * Gets the value of the 'pageCount' field.
-     */
+    /** Gets the value of the 'pageCount' field. */
     public java.lang.Integer getPageCount() {
         return pageCount;
     }
@@ -131,9 +121,7 @@ public class SearchResult extends org.apache.avro.specific.SpecificRecordBase im
         this.pageCount = value;
     }
 
-    /**
-     * Gets the value of the 'totalItemCount' field.
-     */
+    /** Gets the value of the 'totalItemCount' field. */
     public java.lang.Integer getTotalItemCount() {
         return totalItemCount;
     }
@@ -147,9 +135,7 @@ public class SearchResult extends org.apache.avro.specific.SpecificRecordBase im
         this.totalItemCount = value;
     }
 
-    /**
-     * Gets the value of the 'entities' field.
-     */
+    /** Gets the value of the 'entities' field. */
     public java.util.List<example.avro.search.Entity> getEntities() {
         return entities;
     }
@@ -163,30 +149,22 @@ public class SearchResult extends org.apache.avro.specific.SpecificRecordBase im
         this.entities = value;
     }
 
-    /**
-     * Creates a new SearchResult RecordBuilder
-     */
+    /** Creates a new SearchResult RecordBuilder */
     public static example.avro.search.SearchResult.Builder newBuilder() {
         return new example.avro.search.SearchResult.Builder();
     }
 
-    /**
-     * Creates a new SearchResult RecordBuilder by copying an existing Builder
-     */
+    /** Creates a new SearchResult RecordBuilder by copying an existing Builder */
     public static example.avro.search.SearchResult.Builder newBuilder(example.avro.search.SearchResult.Builder other) {
         return new example.avro.search.SearchResult.Builder(other);
     }
 
-    /**
-     * Creates a new SearchResult RecordBuilder by copying an existing SearchResult instance
-     */
+    /** Creates a new SearchResult RecordBuilder by copying an existing SearchResult instance */
     public static example.avro.search.SearchResult.Builder newBuilder(example.avro.search.SearchResult other) {
         return new example.avro.search.SearchResult.Builder(other);
     }
 
-    /**
-     * RecordBuilder for SearchResult instances.
-     */
+    /** RecordBuilder for SearchResult instances. */
     public static class Builder extends org.apache.avro.specific.SpecificRecordBuilderBase<SearchResult>
             implements org.apache.avro.data.RecordBuilder<SearchResult> {
 
@@ -196,23 +174,17 @@ public class SearchResult extends org.apache.avro.specific.SpecificRecordBase im
         private int totalItemCount;
         private java.util.List<example.avro.search.Entity> entities;
 
-        /**
-         * Creates a new Builder
-         */
+        /** Creates a new Builder */
         private Builder() {
             super(example.avro.search.SearchResult.SCHEMA$);
         }
 
-        /**
-         * Creates a Builder by copying an existing Builder
-         */
+        /** Creates a Builder by copying an existing Builder */
         private Builder(example.avro.search.SearchResult.Builder other) {
             super(other);
         }
 
-        /**
-         * Creates a Builder by copying an existing SearchResult instance
-         */
+        /** Creates a Builder by copying an existing SearchResult instance */
         private Builder(example.avro.search.SearchResult other) {
             super(example.avro.search.SearchResult.SCHEMA$);
             if (isValidValue(fields()[0], other.pageNo)) {
@@ -237,16 +209,12 @@ public class SearchResult extends org.apache.avro.specific.SpecificRecordBase im
             }
         }
 
-        /**
-         * Gets the value of the 'pageNo' field
-         */
+        /** Gets the value of the 'pageNo' field */
         public java.lang.Integer getPageNo() {
             return pageNo;
         }
 
-        /**
-         * Sets the value of the 'pageNo' field
-         */
+        /** Sets the value of the 'pageNo' field */
         public example.avro.search.SearchResult.Builder setPageNo(int value) {
             validate(fields()[0], value);
             this.pageNo = value;
@@ -254,31 +222,23 @@ public class SearchResult extends org.apache.avro.specific.SpecificRecordBase im
             return this;
         }
 
-        /**
-         * Checks whether the 'pageNo' field has been set
-         */
+        /** Checks whether the 'pageNo' field has been set */
         public boolean hasPageNo() {
             return fieldSetFlags()[0];
         }
 
-        /**
-         * Clears the value of the 'pageNo' field
-         */
+        /** Clears the value of the 'pageNo' field */
         public example.avro.search.SearchResult.Builder clearPageNo() {
             fieldSetFlags()[0] = false;
             return this;
         }
 
-        /**
-         * Gets the value of the 'pageSize' field
-         */
+        /** Gets the value of the 'pageSize' field */
         public java.lang.Integer getPageSize() {
             return pageSize;
         }
 
-        /**
-         * Sets the value of the 'pageSize' field
-         */
+        /** Sets the value of the 'pageSize' field */
         public example.avro.search.SearchResult.Builder setPageSize(int value) {
             validate(fields()[1], value);
             this.pageSize = value;
@@ -286,31 +246,23 @@ public class SearchResult extends org.apache.avro.specific.SpecificRecordBase im
             return this;
         }
 
-        /**
-         * Checks whether the 'pageSize' field has been set
-         */
+        /** Checks whether the 'pageSize' field has been set */
         public boolean hasPageSize() {
             return fieldSetFlags()[1];
         }
 
-        /**
-         * Clears the value of the 'pageSize' field
-         */
+        /** Clears the value of the 'pageSize' field */
         public example.avro.search.SearchResult.Builder clearPageSize() {
             fieldSetFlags()[1] = false;
             return this;
         }
 
-        /**
-         * Gets the value of the 'pageCount' field
-         */
+        /** Gets the value of the 'pageCount' field */
         public java.lang.Integer getPageCount() {
             return pageCount;
         }
 
-        /**
-         * Sets the value of the 'pageCount' field
-         */
+        /** Sets the value of the 'pageCount' field */
         public example.avro.search.SearchResult.Builder setPageCount(int value) {
             validate(fields()[2], value);
             this.pageCount = value;
@@ -318,31 +270,23 @@ public class SearchResult extends org.apache.avro.specific.SpecificRecordBase im
             return this;
         }
 
-        /**
-         * Checks whether the 'pageCount' field has been set
-         */
+        /** Checks whether the 'pageCount' field has been set */
         public boolean hasPageCount() {
             return fieldSetFlags()[2];
         }
 
-        /**
-         * Clears the value of the 'pageCount' field
-         */
+        /** Clears the value of the 'pageCount' field */
         public example.avro.search.SearchResult.Builder clearPageCount() {
             fieldSetFlags()[2] = false;
             return this;
         }
 
-        /**
-         * Gets the value of the 'totalItemCount' field
-         */
+        /** Gets the value of the 'totalItemCount' field */
         public java.lang.Integer getTotalItemCount() {
             return totalItemCount;
         }
 
-        /**
-         * Sets the value of the 'totalItemCount' field
-         */
+        /** Sets the value of the 'totalItemCount' field */
         public example.avro.search.SearchResult.Builder setTotalItemCount(int value) {
             validate(fields()[3], value);
             this.totalItemCount = value;
@@ -350,31 +294,23 @@ public class SearchResult extends org.apache.avro.specific.SpecificRecordBase im
             return this;
         }
 
-        /**
-         * Checks whether the 'totalItemCount' field has been set
-         */
+        /** Checks whether the 'totalItemCount' field has been set */
         public boolean hasTotalItemCount() {
             return fieldSetFlags()[3];
         }
 
-        /**
-         * Clears the value of the 'totalItemCount' field
-         */
+        /** Clears the value of the 'totalItemCount' field */
         public example.avro.search.SearchResult.Builder clearTotalItemCount() {
             fieldSetFlags()[3] = false;
             return this;
         }
 
-        /**
-         * Gets the value of the 'entities' field
-         */
+        /** Gets the value of the 'entities' field */
         public java.util.List<example.avro.search.Entity> getEntities() {
             return entities;
         }
 
-        /**
-         * Sets the value of the 'entities' field
-         */
+        /** Sets the value of the 'entities' field */
         public example.avro.search.SearchResult.Builder setEntities(java.util.List<example.avro.search.Entity> value) {
             validate(fields()[4], value);
             this.entities = value;
@@ -382,16 +318,12 @@ public class SearchResult extends org.apache.avro.specific.SpecificRecordBase im
             return this;
         }
 
-        /**
-         * Checks whether the 'entities' field has been set
-         */
+        /** Checks whether the 'entities' field has been set */
         public boolean hasEntities() {
             return fieldSetFlags()[4];
         }
 
-        /**
-         * Clears the value of the 'entities' field
-         */
+        /** Clears the value of the 'entities' field */
         public example.avro.search.SearchResult.Builder clearEntities() {
             entities = null;
             fieldSetFlags()[4] = false;

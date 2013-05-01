@@ -30,7 +30,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 /**
  * kr.debop4j.core.cache.redis.RedisCacheTest
  *
- * @author sunghyouk.bae@gmail.com
+ * @author 배성혁 ( sunghyouk.bae@gmail.com )
  *         13. 3. 26. 오전 11:35
  */
 @Slf4j

@@ -35,14 +35,10 @@ public class WordEntry implements Serializable {
     public static final int IDX_CNOUNX = 8;
     public static final int IDX_REGURA = 9;
 
-    /**
-     * 단어
-     */
+    /** 단어 */
     private String word;
 
-    /**
-     * 단어특성
-     */
+    /** 단어특성 */
     private char[] features;
 
     private List<CompoundEntry> compounds = new ArrayList<CompoundEntry>();

@@ -31,19 +31,13 @@ public class MorphAnalyzer {
     private static final boolean isTraceEnabled = log.isTraceEnabled();
     private static final boolean isDebugEnabled = log.isDebugEnabled();
 
-    /**
-     * starting word of sentence.
-     */
+    /** starting word of sentence. */
     public static final int POS_START = 1;
 
-    /**
-     * middle word of sentence
-     */
+    /** middle word of sentence */
     public static final int POS_MID = 2;
 
-    /**
-     * ending word of sentence.
-     */
+    /** ending word of sentence. */
     public static final int POS_END = 3;
 
     private CompoundNounAnalyzer cnAnalyzer = new CompoundNounAnalyzer();

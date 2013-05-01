@@ -15,7 +15,7 @@ import java.net.InetSocketAddress;
 /**
  * example.proto.MailServer
  *
- * @author sunghyouk.bae@gmail.com
+ * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 13. 4. 17. 오후 8:39
  */
 @Slf4j
@@ -23,9 +23,7 @@ public class MailServer {
 
     private static final boolean isDebugEnabled = log.isDebugEnabled();
 
-    /**
-     * 서버에서 수행할 내용입니다.
-     */
+    /** 서버에서 수행할 내용입니다. */
     public static class MailImpl implements Mail {
 
         @Override

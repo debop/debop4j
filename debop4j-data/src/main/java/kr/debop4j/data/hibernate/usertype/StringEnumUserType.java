@@ -33,7 +33,7 @@ import java.util.Properties;
 
 /**
  * Enum 값을 문자열로 DB에 저장하고, 로드 시에 Enum 값으로 파싱해서 설정한다.
- * Jpa@author sunghyouk.bae@gmail.com
+ * Jpa@author 배성혁 ( sunghyouk.bae@gmail.com )
  *
  * @since 12. 11. 19.
  */
@@ -56,7 +56,7 @@ public class StringEnumUserType implements UserType, ParameterizedType, Serializ
 
     @Override
     public int[] sqlTypes() {
-        return new int[]{ StandardBasicTypes.STRING.sqlType() };
+        return new int[] { StandardBasicTypes.STRING.sqlType() };
     }
 
     @Override

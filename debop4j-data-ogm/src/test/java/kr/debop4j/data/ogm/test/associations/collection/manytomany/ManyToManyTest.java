@@ -13,7 +13,7 @@ import static org.fest.assertions.Assertions.assertThat;
 /**
  * ManyToManyTest
  *
- * @author sunghyouk.bae@gmail.com
+ * @author 배성혁 ( sunghyouk.bae@gmail.com )
  *         13. 3. 29. 오후 9:10
  */
 @Slf4j
@@ -102,7 +102,7 @@ public class ManyToManyTest extends OgmTestBase {
 
     @Override
     protected Class<?>[] getAnnotatedClasses() {
-        return new Class<?>[]{
+        return new Class<?>[] {
                 AccountOwner.class,
                 BankAccount.class
         };

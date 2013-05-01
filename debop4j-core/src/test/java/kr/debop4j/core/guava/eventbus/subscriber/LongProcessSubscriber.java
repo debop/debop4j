@@ -11,7 +11,7 @@ import java.util.concurrent.CountDownLatch;
 /**
  * kr.debop4j.core.guava.eventbus.subscriber.LongProcessSubscriber
  *
- * @author sunghyouk.bae@gmail.com
+ * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 12. 12. 10.
  */
 public class LongProcessSubscriber {

@@ -26,7 +26,7 @@ import java.io.Serializable;
 
 /**
  * Hibernate 기본 도메인 엔티티의 추상화 클래스입니다.
- * Jpa@author sunghyouk.bae@gmail.com
+ * Jpa@author 배성혁 ( sunghyouk.bae@gmail.com )
  *
  * @since 12. 11. 19
  */
@@ -40,9 +40,7 @@ public abstract class EntityBase<TId extends Serializable> extends StatefulEntit
     @GeneratedValue
     private TId id;
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @SuppressWarnings("unchecked")
     public <TId> TId getId() {
         return (TId) this.id;

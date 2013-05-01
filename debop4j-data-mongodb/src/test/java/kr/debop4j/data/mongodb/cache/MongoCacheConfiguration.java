@@ -12,7 +12,7 @@ import org.springframework.data.mongodb.config.AbstractMongoConfiguration;
 /**
  * kr.debop4j.core.cache.mongodb.SpringMongoConfiguration
  *
- * @author sunghyouk.bae@gmail.com
+ * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 13. 3. 25 오후 3:36
  */
 @Configuration

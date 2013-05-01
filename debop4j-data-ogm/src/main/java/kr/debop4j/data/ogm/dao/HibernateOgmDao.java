@@ -49,7 +49,7 @@ import java.util.concurrent.Future;
  * hibernate-ogm 용 DAO 입니다.<br />
  * hibernate의 Criteria 기능을 제공할 수 없어, Criteria 부분은 hibernate-search를 사용합니다.
  *
- * @author sunghyouk.bae@gmail.com
+ * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 13. 4. 15. 오후 5:42
  */
 @Component
@@ -76,17 +76,13 @@ public class HibernateOgmDao implements IHibernateOgmDao {
         this.sessionFactory = sessionFactory;
     }
 
-    /**
-     * hibernate session을 반환합니다.
-     */
+    /** hibernate session을 반환합니다. */
     @Override
     public final Session getSession() {
         return UnitOfWorks.getCurrentSession();
     }
 
-    /**
-     * hibernate-search의 {@link FullTextSession} 을 반환합니다.
-     */
+    /** hibernate-search의 {@link FullTextSession} 을 반환합니다. */
     @Override
     public final FullTextSession getFullTextSession() {
         FullTextSession fts = (FullTextSession) Local.get(FULL_TEXT_SESSION_KEY);
@@ -101,9 +97,7 @@ public class HibernateOgmDao implements IHibernateOgmDao {
         return fts;
     }
 
-    /**
-     * 지정한 형식에 대한 질의 빌더를 생성합니다.
-     */
+    /** 지정한 형식에 대한 질의 빌더를 생성합니다. */
     @Override
     public final QueryBuilder getQueryBuilder(Class<?> clazz) {
         return getFullTextSession().getSearchFactory().buildQueryBuilder().forEntity(clazz).get();
@@ -127,17 +121,13 @@ public class HibernateOgmDao implements IHibernateOgmDao {
         return (T) getSession().get(clazz, id);
     }
 
-    /**
-     * 엔티티 수형에 해당하는 모든 엔티티를 조회합니다.
-     */
+    /** 엔티티 수형에 해당하는 모든 엔티티를 조회합니다. */
     @Override
     public final <T> List<T> findAll(Class<T> clazz) {
         return findAll(clazz, null);
     }
 
-    /**
-     * 엔티티 수형에 해당하는 모든 엔티티를 조회합니다.
-     */
+    /** 엔티티 수형에 해당하는 모든 엔티티를 조회합니다. */
     @Override
     public <T> List<T> findAll(Class<T> clazz, Sort luceneSort) {
         if (isTraceEnabled)
@@ -150,33 +140,25 @@ public class HibernateOgmDao implements IHibernateOgmDao {
         return (List<T>) ftq.list();
     }
 
-    /**
-     * 조회
-     */
+    /** 조회 */
     @Override
     public <T> List<T> find(Class<T> clazz, Query luceneQuery) {
         return find(clazz, luceneQuery, -1, -1, null, null);
     }
 
-    /**
-     * 조회
-     */
+    /** 조회 */
     @Override
     public <T> List<T> find(Class<T> clazz, Query luceneQuery, Sort sort) {
         return find(clazz, luceneQuery, -1, -1, sort, null);
     }
 
-    /**
-     * 조회
-     */
+    /** 조회 */
     @Override
     public <T> List<T> find(Class<T> clazz, Query luceneQuery, int firstResult, int maxResults, Sort sort) {
         return find(clazz, luceneQuery, firstResult, maxResults, sort, null);
     }
 
-    /**
-     * 조회
-     */
+    /** 조회 */
     @Override
     public <T> List<T> find(Class<T> clazz, Query luceneQuery, int firstResult, int maxResults, Sort sort, Criteria criteria) {
         if (log.isTraceEnabled())
@@ -191,17 +173,13 @@ public class HibernateOgmDao implements IHibernateOgmDao {
         return ftq.list();
     }
 
-    /**
-     * 페이징 조회
-     */
+    /** 페이징 조회 */
     @Override
     public <T> IPagedList<T> getPage(Class<T> clazz, Query luceneQuery, int pageNo, int pageSize, Sort sort) {
         return getPage(clazz, luceneQuery, pageNo, pageSize, sort, null);
     }
 
-    /**
-     * 페이징 조회
-     */
+    /** 페이징 조회 */
     @Override
     public <T> IPagedList<T> getPage(Class<T> clazz, Query luceneQuery, int pageNo, int pageSize, Sort sort, Criteria criteria) {
         if (log.isTraceEnabled())
@@ -219,12 +197,10 @@ public class HibernateOgmDao implements IHibernateOgmDao {
         return new SimplePagedList<T>(ftq.list(), pageNo, pageSize, totalCount);
     }
 
-    /**
-     * 엔티티의 Id를 페이징 조회
-     */
+    /** 엔티티의 Id를 페이징 조회 */
     @Override
     public IPagedList<Serializable> getIdPage(Class<?> clazz, Query luceneQuery, int pageNo, int pageSize, Sort sort, Criteria criteria) {
-        IPagedList<Object[]> list = getProjectionPage(clazz, luceneQuery, new String[]{ FullTextQuery.ID }, pageNo, pageSize, sort, criteria);
+        IPagedList<Object[]> list = getProjectionPage(clazz, luceneQuery, new String[] { FullTextQuery.ID }, pageNo, pageSize, sort, criteria);
         List<Serializable> ids = Lists.newArrayList();
         for (Object[] fields : list.getList()) {
             ids.add((Serializable) fields[0]);
@@ -232,9 +208,7 @@ public class HibernateOgmDao implements IHibernateOgmDao {
         return new SimplePagedList(ids, pageNo, pageSize, list.getItemCount());
     }
 
-    /**
-     * 루씬 부가 정보를 페이징 조회합니다. (FullTextQuery.ID, FullTextQuery.DOCUMENT_ID, FullTextQuery.SCORE 등)
-     */
+    /** 루씬 부가 정보를 페이징 조회합니다. (FullTextQuery.ID, FullTextQuery.DOCUMENT_ID, FullTextQuery.SCORE 등) */
     @Override
     public IPagedList<Object[]> getProjectionPage(Class<?> clazz, Query luceneQuery, String[] fields, int pageNo, int pageSize, Sort sort, Criteria criteria) {
         if (isTraceEnabled)
@@ -314,9 +288,7 @@ public class HibernateOgmDao implements IHibernateOgmDao {
         }
     }
 
-    /**
-     * 해당 엔티티의 인덱스 정보를 제거합니다.
-     */
+    /** 해당 엔티티의 인덱스 정보를 제거합니다. */
     @Override
     public <T> void purge(Class<T> clazz, Serializable id) {
         if (isTraceEnabled)
@@ -324,9 +296,7 @@ public class HibernateOgmDao implements IHibernateOgmDao {
         getFullTextSession().purge(clazz, id);
     }
 
-    /**
-     * 지정된 수형의 모든 엔티티들의 인덱스 정보를 제거합니다.
-     */
+    /** 지정된 수형의 모든 엔티티들의 인덱스 정보를 제거합니다. */
     @Override
     public <T> void purgeAll(Class<T> clazz) {
         if (isDebugEnabled)
@@ -334,9 +304,7 @@ public class HibernateOgmDao implements IHibernateOgmDao {
         getFullTextSession().purgeAll(clazz);
     }
 
-    /**
-     * Session에 남아있는 인덱싱 작업을 강제로 수행하도록 합니다.
-     */
+    /** Session에 남아있는 인덱싱 작업을 강제로 수행하도록 합니다. */
     @Override
     public void flushToIndexes() {
         getFullTextSession().flushToIndexes();
@@ -354,9 +322,7 @@ public class HibernateOgmDao implements IHibernateOgmDao {
         getFullTextSession().index(entity);
     }
 
-    /**
-     * 지정된 수형의 모든 엔티티들을 인덱싱 합니다.
-     */
+    /** 지정된 수형의 모든 엔티티들을 인덱싱 합니다. */
     @Override
     public void indexAll(Class<?> clazz, int batchSize) {
         if (log.isDebugEnabled())
@@ -397,9 +363,7 @@ public class HibernateOgmDao implements IHibernateOgmDao {
         }
     }
 
-    /**
-     * 해당 수형의 모든 인덱스를 비동기 방식으로 구성합니다.
-     */
+    /** 해당 수형의 모든 인덱스를 비동기 방식으로 구성합니다. */
     @Override
     public Future<Void> indexAllAsync(final Class<?> clazz, final int batchSize) {
         if (log.isDebugEnabled())
@@ -419,9 +383,7 @@ public class HibernateOgmDao implements IHibernateOgmDao {
         });
     }
 
-    /**
-     * 해당 수형의 모든 인덱스 정보를 삭제합니다.
-     */
+    /** 해당 수형의 모든 인덱스 정보를 삭제합니다. */
     @Override
     public void clearIndex(Class<?> clazz) {
         if (isDebugEnabled)
@@ -432,9 +394,7 @@ public class HibernateOgmDao implements IHibernateOgmDao {
         optimize(clazz);                            // physically clear space
     }
 
-    /**
-     * 모든 인덱스를 삭제합니다.
-     */
+    /** 모든 인덱스를 삭제합니다. */
     @Override
     public void clearIndexAll() {
         if (isDebugEnabled)
@@ -448,9 +408,7 @@ public class HibernateOgmDao implements IHibernateOgmDao {
         optimizeAll();
     }
 
-    /**
-     * 해당 수형의 인덱스를 최적화합니다.
-     */
+    /** 해당 수형의 인덱스를 최적화합니다. */
     @Override
     public void optimize(Class<?> clazz) {
         if (isTraceEnabled)
@@ -458,9 +416,7 @@ public class HibernateOgmDao implements IHibernateOgmDao {
         getFullTextSession().getSearchFactory().optimize(clazz);
     }
 
-    /**
-     * 모든 엔티티의 인덱스를 최적화합니다.
-     */
+    /** 모든 엔티티의 인덱스를 최적화합니다. */
     @Override
     public void optimizeAll() {
         if (isTraceEnabled)
@@ -468,9 +424,7 @@ public class HibernateOgmDao implements IHibernateOgmDao {
         getFullTextSession().getSearchFactory().optimize();
     }
 
-    /**
-     * 세션의 모든 변경을 저장소에 적용한다.
-     */
+    /** 세션의 모든 변경을 저장소에 적용한다. */
     @Override
     public void flush() {
         if (isTraceEnabled)
@@ -478,9 +432,7 @@ public class HibernateOgmDao implements IHibernateOgmDao {
         getFullTextSession().flush();
     }
 
-    /**
-     * 세션의 모든 인덱스 변경 정보를 저장합니다.
-     */
+    /** 세션의 모든 인덱스 변경 정보를 저장합니다. */
     @Override
     public void flushIndexes() {
         if (isTraceEnabled)

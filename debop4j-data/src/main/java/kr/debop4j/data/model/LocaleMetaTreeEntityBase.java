@@ -30,7 +30,7 @@ import java.util.Set;
 /**
  * 지역화정보, 메타정보를 가지는 Tree 구조의 엔티티를 표현합니다.
  *
- * @author sunghyouk.bae@gmail.com
+ * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 12. 9. 19
  */
 @MappedSuperclass

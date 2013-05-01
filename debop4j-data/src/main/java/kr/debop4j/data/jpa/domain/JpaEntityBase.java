@@ -24,7 +24,7 @@ import javax.persistence.PostPersist;
 /**
  * JPA 기반의 엔티티의 추상 클래스입니다.
  *
- * @author sunghyouk.bae@gmail.com
+ * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 12. 11. 25.
  */
 public abstract class JpaEntityBase extends StatefulEntityBase {

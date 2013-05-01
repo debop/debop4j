@@ -26,7 +26,7 @@ import java.util.List;
 /**
  * 동적으로 객체의 속성, 메소드에 접근할 수 있는 접근자입니다.
  *
- * @author sunghyouk.bae@gmail.com
+ * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 13. 1. 21
  */
 @Slf4j

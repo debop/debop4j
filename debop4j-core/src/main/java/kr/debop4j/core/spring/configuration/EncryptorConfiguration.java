@@ -26,7 +26,7 @@ import org.springframework.context.annotation.Configuration;
 /**
  * Encriptor 를 구현한 클래스들을 Springs Bean 으로 제공하는 Anntated Configuration 입니다.
  *
- * @author sunghyouk.bae@gmail.com
+ * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 12. 12. 17
  */
 @Configuration

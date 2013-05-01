@@ -11,7 +11,7 @@ import static org.junit.Assert.assertTrue;
 /**
  * kr.debop4j.core.spring.AnnotatedContextTest
  *
- * @author sunghyouk.bae@gmail.com
+ * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 12. 12. 2.
  */
 public class AnnotatedContextTest extends AbstractTest {

@@ -9,7 +9,7 @@ import javax.persistence.Entity;
 /**
  * kr.debop4j.data.ogm.test.associations.collection.type.Address
  *
- * @author sunghyouk.bae@gmail.com
+ * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 13. 3. 31. 오전 2:18
  */
 @Entity

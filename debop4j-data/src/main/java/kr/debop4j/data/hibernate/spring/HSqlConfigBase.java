@@ -26,7 +26,7 @@ import java.util.Properties;
 /**
  * HSql 을 DB로 사용하는 Hibernate Configuration
  *
- * @author sunghyouk.bae@gmail.com
+ * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 13. 2. 21.
  */
 public abstract class HSqlConfigBase extends HibernateConfigBase {

@@ -27,7 +27,7 @@ import static kr.debop4j.core.Guard.shouldNotBeNull;
 /**
  * Reflection 관련 Utility Class 입니다.
  *
- * @author sunghyouk.bae@gmail.com
+ * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 12. 9. 12
  */
 @Slf4j
@@ -56,16 +56,12 @@ public final class ReflectTool {
         }
     }
 
-    /**
-     * 인스턴스가 Generic 형식이라면 첫번째 Type parameter의 수형을 반환한다.
-     */
+    /** 인스턴스가 Generic 형식이라면 첫번째 Type parameter의 수형을 반환한다. */
     public static <T> Class<T> getGenericParameterType(Object x) {
         return getGenericParameterType(x, 0);
     }
 
-    /**
-     * 인스턴스가 Generic 형식이라면 index+1 번째 Type parameter의 수형을 반환한다.
-     */
+    /** 인스턴스가 Generic 형식이라면 index+1 번째 Type parameter의 수형을 반환한다. */
     @SuppressWarnings("unchecked")
     public static <T> Class<T> getGenericParameterType(Object x, int index) {
         shouldNotBeNull(x, "x");

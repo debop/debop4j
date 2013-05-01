@@ -59,16 +59,12 @@ public class KoreanEnv {
 
     private Properties defaults = null;
 
-    /**
-     * The props member gets its values from the configuration in the property file.
-     */
+    /** The props member gets its values from the configuration in the property file. */
     private Properties props = null;
 
     private static KoreanEnv instance = new KoreanEnv();
 
-    /**
-     * The constructor loads property values from the property file.
-     */
+    /** The constructor loads property values from the property file. */
     private KoreanEnv() throws MorphException {
         log.info("형태소분석기의 사전에 대한 환경설정 정보를 로드합니다...");
         try {
@@ -84,9 +80,7 @@ public class KoreanEnv {
         return instance;
     }
 
-    /**
-     * Initialize the default property values.
-     */
+    /** Initialize the default property values. */
     private void initDefaultProperties() {
         defaults = new Properties();
 

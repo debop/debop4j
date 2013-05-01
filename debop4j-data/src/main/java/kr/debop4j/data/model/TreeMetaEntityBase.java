@@ -26,7 +26,7 @@ import java.util.Set;
 /**
  * 트리 구조를 가지며, 메타정보를 제공하는 엔티티
  *
- * @author sunghyouk.bae@gmail.com
+ * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 12. 9. 19
  */
 public abstract class TreeMetaEntityBase<T extends IEntity<TId> & ITreeEntity<T>, TId extends Serializable>

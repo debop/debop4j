@@ -26,7 +26,7 @@ import java.util.*;
 /**
  * kr.debop4j.data.ogm.test.utils.jpa.JpaTestBase
  *
- * @author sunghyouk.bae@gmail.com
+ * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 13. 4. 12. 오전 11:22
  */
 @Slf4j
@@ -79,9 +79,7 @@ public abstract class JpaTestBase extends BaseOGMTest {
     // can be overridden by subclasses
     protected void refineInfo(GetterPersistenceUnitInfo info) { }
 
-    /**
-     * Get JBoss TM out of Hibernate
-     */
+    /** Get JBoss TM out of Hibernate */
     public static TransactionManager extractJBossTransactionManager(EntityManagerFactory factory) {
         if (log.isDebugEnabled())
             log.debug("TransactionManager를 꺼냅니다.");

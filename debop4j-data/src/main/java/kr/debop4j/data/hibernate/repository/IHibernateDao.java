@@ -31,7 +31,7 @@ import java.util.List;
 /**
  * kr.debop4j.data.hibernate.repository.IHibernateDao
  *
- * @author sunghyouk.bae@gmail.com
+ * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 13. 4. 15. 오후 2:05
  */
 public interface IHibernateDao {
@@ -66,14 +66,10 @@ public interface IHibernateDao {
 
     ScrollableResults getScroll(Query query, ScrollMode scrollMode, HibernateParameter... parameters);
 
-    /**
-     * 모든 엔티티를 필터링 없이 반환합니다.
-     */
+    /** 모든 엔티티를 필터링 없이 반환합니다. */
     <T> List<T> findAll(Class<T> clazz, Order... orders);
 
-    /**
-     * 모든 엔티티를 필터링 없이 Paging 처리하여 반환합니다.
-     */
+    /** 모든 엔티티를 필터링 없이 Paging 처리하여 반환합니다. */
     <T> List<T> findAll(Class<T> clazz, int firstResult, int maxResults, Order... orders);
 
     <T> List<T> find(Class<T> clazz, Criteria criteria, Order... orders);
@@ -182,9 +178,7 @@ public interface IHibernateDao {
 
     <T> void deleteAll(Class<T> clazz, Criteria criteria);
 
-    /**
-     * Cascade 적용 없이 엔티티들을 모두 삭제합니다.
-     */
+    /** Cascade 적용 없이 엔티티들을 모두 삭제합니다. */
     <T> int deleteAllWithoutCascade(Class<T> clazz);
 
     int executeUpdateByHql(String hql, HibernateParameter... parameters);

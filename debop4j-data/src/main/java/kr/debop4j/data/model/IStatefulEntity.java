@@ -20,7 +20,7 @@ import kr.debop4j.core.IValueObject;
 
 /**
  * 저장 상태 정보를 가지는 엔티티임을 나타내는 인터페이스입니다.
- * Jpa@author sunghyouk.bae@gmail.com
+ * Jpa@author 배성혁 ( sunghyouk.bae@gmail.com )
  *
  * @since 12. 11. 19
  */
@@ -32,18 +32,12 @@ public interface IStatefulEntity extends IValueObject {
      */
     boolean isPersisted();
 
-    /**
-     * 엔티티가 저장된 후 호출되는 함수
-     */
+    /** 엔티티가 저장된 후 호출되는 함수 */
     void onSave();
 
-    /**
-     * 엔티티가 저장된 후 호출되는 함수
-     */
+    /** 엔티티가 저장된 후 호출되는 함수 */
     void onPersist();
 
-    /**
-     * 엔티티가 영구 저장소에서 메모리로 로드된 후 호출되는 함수
-     */
+    /** 엔티티가 영구 저장소에서 메모리로 로드된 후 호출되는 함수 */
     void onLoad();
 }

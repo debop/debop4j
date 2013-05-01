@@ -20,7 +20,7 @@ import java.util.Map;
 /**
  * Apache Avro IDL 을 이용한 RPC 예제입니다.
  *
- * @author sunghyouk.bae@gmail.com
+ * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 13. 4. 18. 오후 3:34
  */
 @Slf4j

@@ -28,7 +28,7 @@ import javax.persistence.Embeddable;
 /**
  * kr.nsoft.data.domain.kr.debop4j.data.mapping.model.DateTimeRange
  *
- * @author sunghyouk.bae@gmail.com
+ * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 13. 1. 22.
  */
 @Embeddable

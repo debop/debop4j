@@ -24,27 +24,21 @@ import java.util.Map;
 /**
  * {@link IUnitOfWork} 를 생성하는 Factory 의 인터페이스 입니다.
  *
- * @author sunghyouk.bae@gmail.com
+ * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 12. 11. 29.
  */
 public interface IUnitOfWorkFactory {
 
-    /**
-     * 현 UnitOfWorkFactory가 사용하는 {@link org.hibernate.SessionFactory}
-     */
+    /** 현 UnitOfWorkFactory가 사용하는 {@link org.hibernate.SessionFactory} */
     SessionFactory getSessionFactory();
 
-    /**
-     * 현 IUnitOfWorkFactory 가 사용할 {@link org.hibernate.SessionFactory} 를 설정합니다.
-     */
+    /** 현 IUnitOfWorkFactory 가 사용할 {@link org.hibernate.SessionFactory} 를 설정합니다. */
     void setSessionFactory(SessionFactory sessionFactory);
 
 
     Map<String, SessionFactory> getSessionFactories();
 
-    /**
-     * Multi-Tenancy 를 적용할 때, 복수의 {@link org.hibernate.SessionFactory}를 등록하여, 사용할 수 있도록 한다.
-     */
+    /** Multi-Tenancy 를 적용할 때, 복수의 {@link org.hibernate.SessionFactory}를 등록하여, 사용할 수 있도록 한다. */
     void setSessionFactories(Map<String, SessionFactory> sessionFactories);
 
     /**
@@ -53,19 +47,13 @@ public interface IUnitOfWorkFactory {
      */
     Session getCurrentSession();
 
-    /**
-     * 현 Thread-Context 에서 사용할 Session 을 설정합니다.
-     */
+    /** 현 Thread-Context 에서 사용할 Session 을 설정합니다. */
     void setCurrentSession(Session session);
 
-    /**
-     * 현 UnitOfWorkFactory를 초기화합니다. Springs 에서 init-method 를 이용하여 호출해도 됩니다.
-     */
+    /** 현 UnitOfWorkFactory를 초기화합니다. Springs 에서 init-method 를 이용하여 호출해도 됩니다. */
     void Init();
 
-    /**
-     * 새로운 {@link IUnitOfWorkImplementor} 인스턴스를 생성합니다.
-     */
+    /** 새로운 {@link IUnitOfWorkImplementor} 인스턴스를 생성합니다. */
     IUnitOfWorkImplementor create(SessionFactory factory, IUnitOfWorkImplementor previous);
 
 

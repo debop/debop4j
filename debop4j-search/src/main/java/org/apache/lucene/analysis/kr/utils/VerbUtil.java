@@ -49,9 +49,7 @@ public class VerbUtil {
             xVerb.put(xverb, xverb);
     }
 
-    /**
-     * 어간이 용언화접미사로 끝나면 index 를 반환한다.  아니면 -1을 반환한다.
-     */
+    /** 어간이 용언화접미사로 끝나면 index 를 반환한다.  아니면 -1을 반환한다. */
     public static int endsWithVerbSuffix(String stem) {
         if (isTraceEnabled)
             log.trace("용언화접미사의 index를 반환합니다. stem=[{}]", stem);
@@ -67,9 +65,7 @@ public class VerbUtil {
         return -1;
     }
 
-    /**
-     * 어간부에 보조용언 [하,되,오,내,주,지]가 있는지 조사한다.
-     */
+    /** 어간부에 보조용언 [하,되,오,내,주,지]가 있는지 조사한다. */
     public static int endsWithXVerb(String stem) {
         if (isTraceEnabled)
             log.trace("보조용언의 index를 반환합니다. stem=[{}]", stem);
@@ -99,9 +95,7 @@ public class VerbUtil {
 
     }
 
-    /**
-     * 3. 학교에서이다 : 체언 + '에서/부터/에서부터' + '이' + 어미 (PTN_NJCM) <br>
-     */
+    /** 3. 학교에서이다 : 체언 + '에서/부터/에서부터' + '이' + 어미 (PTN_NJCM) <br> */
     public static boolean ananlysisNJCM(AnalysisOutput o, List<AnalysisOutput> candidates) throws MorphException {
 
         int strlen = o.getStem().length();

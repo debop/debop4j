@@ -14,20 +14,19 @@
  * limitations under the License.
  */
 
-package kr.debop4j.data.redis.client;
-
-import redis.clients.jedis.Jedis;
+package kr.debop4j.data.redis.serializer;
 
 /**
- * kr.debop4j.data.redis.client.RedisAction
+ * Serializer for Redis Key or Value
  *
- * @author sunghyouk.bae@gmail.com
- * @since 13. 4. 8. 오후 2:30
+ * @author 배성혁 ( sunghyouk.bae@gmail.com )
+ * @since 13. 4. 9 오후 10:20
  */
-public interface RedisAction {
+public interface RedisSerializer<T> {
 
-    /**
-     * 실행할 함수
-     */
-    void run(Jedis jedis);
+    /** Serialize Object */
+    byte[] serialize(T graph);
+
+    /** Deserialize to object */
+    T deserialize(byte[] bytes);
 }

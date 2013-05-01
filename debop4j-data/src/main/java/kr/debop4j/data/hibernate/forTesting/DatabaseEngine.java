@@ -19,7 +19,7 @@ package kr.debop4j.data.hibernate.forTesting;
 /**
  * kr.debop4j.data.hibernate.forTesting.DatabaseEngine
  *
- * @author sunghyouk.bae@gmail.com
+ * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 13. 2. 19.
  */
 public enum DatabaseEngine {

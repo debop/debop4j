@@ -16,7 +16,7 @@ import java.util.HashMap;
 /**
  * kr.debop4j.data.ehcache.ogm.dialect.ehcache.EhcacheDialectTest
  *
- * @author sunghyouk.bae@gmail.com
+ * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 13. 3. 29. 오후 9:50
  */
 @Slf4j

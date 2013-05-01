@@ -7,7 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 /**
  * kr.debop4j.core.tool.JClass
  *
- * @author sunghyouk.bae@gmail.com
+ * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 13. 1. 20.
  */
 @Slf4j

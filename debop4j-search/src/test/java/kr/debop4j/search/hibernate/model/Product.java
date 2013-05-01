@@ -13,7 +13,7 @@ import javax.persistence.Id;
 /**
  * kr.debop4j.search.hibernate.model.Product
  *
- * @author sunghyouk.bae@gmail.com
+ * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 13. 4. 25. 오후 3:48
  */
 @Entity

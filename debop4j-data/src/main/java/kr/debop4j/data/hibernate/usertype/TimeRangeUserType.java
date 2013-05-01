@@ -37,7 +37,7 @@ import java.util.Objects;
 /**
  * {@link DateTimeRange} 에 대한 Hibernate UserType 입니다.
  *
- * @author sunghyouk.bae@gmail.com
+ * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 12. 12. 3.
  */
 @Slf4j
@@ -59,12 +59,12 @@ public class TimeRangeUserType implements CompositeUserType, Serializable {
 
     @Override
     public String[] getPropertyNames() {
-        return new String[]{ "getStart", "getEnd" };
+        return new String[] { "getStart", "getEnd" };
     }
 
     @Override
     public Type[] getPropertyTypes() {
-        return new Type[]{ DateType.INSTANCE, DateType.INSTANCE };
+        return new Type[] { DateType.INSTANCE, DateType.INSTANCE };
     }
 
     @Override

@@ -16,7 +16,7 @@ import java.util.List;
 /**
  * 테스트용 엔티티입니다.
  *
- * @author sunghyouk.bae@gmail.com
+ * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 12. 12. 5.
  */
 @Slf4j

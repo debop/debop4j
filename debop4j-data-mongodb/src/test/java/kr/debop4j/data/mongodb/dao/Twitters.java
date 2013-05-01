@@ -13,7 +13,7 @@ import java.io.IOException;
 /**
  * 트윗터를 사용하기 위한 Helper Class 입니다.
  *
- * @author sunghyouk.bae@gmail.com
+ * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 13. 4. 15. 오후 2:46
  */
 @Slf4j

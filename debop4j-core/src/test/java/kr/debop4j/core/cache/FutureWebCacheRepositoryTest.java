@@ -10,7 +10,7 @@ import org.junit.rules.MethodRule;
 /**
  * kr.debop4j.core.caching.dao.FutureWebCacheRepositoryTest
  *
- * @author sunghyouk.bae@gmail.com
+ * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 13. 1. 24
  */
 @Slf4j
@@ -19,7 +19,7 @@ public class FutureWebCacheRepositoryTest {
     @Rule
     public MethodRule benchmarkRun = new BenchmarkRule();
 
-    private static final String[] urls = new String[]{
+    private static final String[] urls = new String[] {
             "http://www.daum.net",
             "http://www.naver.com",
             "http://www.nate.com"

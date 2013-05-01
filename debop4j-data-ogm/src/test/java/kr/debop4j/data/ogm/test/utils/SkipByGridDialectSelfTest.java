@@ -7,13 +7,13 @@ import org.junit.Test;
 /**
  * kr.debop4j.data.ogm.test.utils.SkipByGridDialectSelfTest
  *
- * @author sunghyouk.bae@gmail.com
+ * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 13. 4. 2. 오후 5:54
  */
 public class SkipByGridDialectSelfTest extends OgmTestBase {
     @Override
     protected Class<?>[] getAnnotatedClasses() {
-        return new Class<?>[]{ Hypothesis.class };
+        return new Class<?>[] { Hypothesis.class };
     }
 
     @Test

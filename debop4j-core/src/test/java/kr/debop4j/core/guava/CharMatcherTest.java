@@ -9,7 +9,7 @@ import org.junit.Test;
 /**
  * kr.debop4j.core.guava.CharMatcherTest
  *
- * @author sunghyouk.bae@gmail.com
+ * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 13. 1. 22.
  */
 @Slf4j

@@ -19,7 +19,7 @@ package kr.debop4j.core.tools;
 /**
  * 해시코드를 생성합니다.
  *
- * @author sunghyouk.bae@gmail.com
+ * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 12. 12. 27
  */
 public class HashTool {

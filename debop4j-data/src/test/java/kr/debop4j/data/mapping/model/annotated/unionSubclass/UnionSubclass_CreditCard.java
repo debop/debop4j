@@ -13,7 +13,7 @@ import java.util.Date;
 /**
  * org.annotated.mapping.domain.model.subclass.UnionSubclass_CreditCard
  *
- * @author sunghyouk.bae@gmail.com
+ * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 12. 12. 4.
  */
 @Getter

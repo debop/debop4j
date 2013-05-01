@@ -23,7 +23,7 @@ import lombok.Setter;
 
 /**
  * Hibernate용 Parameter 정보를 표현합니다.
- * Jpa@author sunghyouk.bae@gmail.com
+ * Jpa@author 배성혁 ( sunghyouk.bae@gmail.com )
  *
  * @since 12. 11. 19
  */

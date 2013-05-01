@@ -12,7 +12,7 @@ import javax.persistence.Embeddable;
 /**
  * org.annotated.mapping.domain.model.collection.JpaImage
  *
- * @author sunghyouk.bae@gmail.com
+ * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 12. 12. 2.
  */
 @Getter

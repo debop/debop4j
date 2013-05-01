@@ -9,7 +9,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 /**
  * kr.debop4j.data.hibernate.forTesting.configs.PgPoolConfig
  *
- * @author sunghyouk.bae@gmail.com
+ * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 13. 2. 26.
  */
 @Configuration
@@ -22,6 +22,6 @@ public class PgPoolConfig extends PgPoolConfigBase {
 
     protected void setupSessionFactory(LocalSessionFactoryBean factoryBean) {
         super.setupSessionFactory(factoryBean);
-        factoryBean.setAnnotatedClasses(new Class[]{ LongEntityForTesting.class });
+        factoryBean.setAnnotatedClasses(new Class[] { LongEntityForTesting.class });
     }
 }

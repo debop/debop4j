@@ -6,7 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 /**
  * kr.debop4j.data.ehcache.ogm.test.associations.collection.manytomany.EhCacheManyToManyTest
  *
- * @author sunghyouk.bae@gmail.com
+ * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 13. 4. 10. 오후 7:39
  */
 @Slf4j

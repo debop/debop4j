@@ -27,7 +27,7 @@ import java.util.Properties;
 /**
  * kr.debop4j.data.HibernateConfig
  *
- * @author sunghyouk.bae@gmail.com
+ * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 13. 3. 12.
  */
 @Configuration
@@ -47,7 +47,7 @@ public class DatabaseConfig extends HSqlConfigBase {
         return props;
     }
 
-    private static String[] mappedPackageNames = new String[]{
+    private static String[] mappedPackageNames = new String[] {
             "kr.debop4j.data.mapping.model.annotated",
             "kr.debop4j.data.mapping.model.annotated.collection",
             "kr.debop4j.data.mapping.model.annotated.join",

@@ -30,7 +30,7 @@ import static org.fest.assertions.Assertions.assertThat;
 /**
  * OgmTestBase
  *
- * @author sunghyouk.bae@gmail.com
+ * @author 배성혁 ( sunghyouk.bae@gmail.com )
  *         13. 3. 29. 오후 4:22
  */
 @Slf4j
@@ -74,7 +74,7 @@ public abstract class OgmTestBase {
     private static Class<?> lastTestClass;
 
     protected String[] getXmlFiles() {
-        return new String[]{ };
+        return new String[] { };
     }
 
     protected static void setCfg(Configuration cfg) {
@@ -96,7 +96,7 @@ public abstract class OgmTestBase {
     }
 
     protected String[] getAnnotatedPackages() {
-        return new String[]{ };
+        return new String[] { };
     }
 
     protected SearchFactoryImplementor getSearchFactoryImpl() {

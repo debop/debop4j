@@ -12,7 +12,7 @@ import java.util.Properties;
 /**
  * kr.debop4j.core.pool.Pool
  *
- * @author sunghyouk.bae@gmail.com
+ * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 13. 4. 8. 오전 10:31
  */
 @Slf4j

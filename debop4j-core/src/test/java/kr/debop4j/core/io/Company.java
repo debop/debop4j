@@ -13,7 +13,7 @@ import java.util.List;
 /**
  * pudding.pudding.commons.core.io.Company
  *
- * @author sunghyouk.bae@gmail.com
+ * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 12. 10. 4.
  */
 @Getter

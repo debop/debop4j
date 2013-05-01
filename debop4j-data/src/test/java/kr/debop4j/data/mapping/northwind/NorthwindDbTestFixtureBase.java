@@ -18,7 +18,7 @@ import org.junit.BeforeClass;
 /**
  * Northwind Database 를 사용하는 테스트 코드
  *
- * @author sunghyouk.bae@gmail.com
+ * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 13. 2. 23.
  */
 @Slf4j

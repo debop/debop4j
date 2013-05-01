@@ -35,7 +35,7 @@ import java.sql.SQLException;
  * 주차 (Week of Year)를 표현하는 클래스 {@link YearWeek}를
  * 하나의 속성값으로 처리하기 위한 {@link org.hibernate.usertype.CompositeUserType} 입니다.
  *
- * @author sunghyouk.bae@gmail.com
+ * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 12. 9. 18
  */
 @Slf4j
@@ -43,9 +43,7 @@ public class WeekOfYearUserType implements CompositeUserType, Serializable {
 
     private static final long serialVersionUID = 1007278892003631396L;
 
-    /**
-     * 객체를 {@link YearWeek} 로 변환합니다.
-     */
+    /** 객체를 {@link YearWeek} 로 변환합니다. */
     private static YearWeek asYearWeek(Object value) {
         if (value == null)
             return YearWeek.MIN_VALUE;
@@ -55,12 +53,12 @@ public class WeekOfYearUserType implements CompositeUserType, Serializable {
 
     @Override
     public String[] getPropertyNames() {
-        return new String[]{ "year", "week" };
+        return new String[] { "year", "week" };
     }
 
     @Override
     public Type[] getPropertyTypes() {
-        return new Type[]{ IntegerType.INSTANCE, IntegerType.INSTANCE };
+        return new Type[] { IntegerType.INSTANCE, IntegerType.INSTANCE };
     }
 
     @Override

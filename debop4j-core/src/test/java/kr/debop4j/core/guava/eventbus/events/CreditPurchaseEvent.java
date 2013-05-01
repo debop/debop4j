@@ -7,7 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 /**
  * kr.debop4j.core.guava.eventbus.events.CreditPurchaseEvent
  *
- * @author sunghyouk.bae@gmail.com
+ * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 12. 12. 10.
  */
 @Slf4j

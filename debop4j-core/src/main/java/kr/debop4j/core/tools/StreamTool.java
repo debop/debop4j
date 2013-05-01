@@ -30,7 +30,7 @@ import static kr.debop4j.core.Guard.shouldNotBeNull;
 /**
  * {@link java.io.InputStream}, {@link java.io.OutputStream} 에 대한 Utility Class 입니다.
  *
- * @author sunghyouk.bae@gmail.com
+ * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 12. 9. 13
  */
 @Slf4j
@@ -63,9 +63,7 @@ public final class StreamTool {
         return size;
     }
 
-    /**
-     * {@link java.io.InputStream} 내용을 읽어 바이트 배열로 반환합니다.
-     */
+    /** {@link java.io.InputStream} 내용을 읽어 바이트 배열로 반환합니다. */
     public static byte[] toByteArray(InputStream inputStream) throws IOException {
         shouldNotBeNull(inputStream, "inputStream");
 

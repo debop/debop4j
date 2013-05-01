@@ -8,7 +8,7 @@ import lombok.ToString;
 
 /**
  * org.hibernate.mapping.domain.model.JpaUser
- * Jpa@author sunghyouk.bae@gmail.com
+ * Jpa@author 배성혁 ( sunghyouk.bae@gmail.com )
  *
  * @since 12. 11. 19.
  */

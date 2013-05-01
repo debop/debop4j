@@ -6,10 +6,7 @@ import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
-import org.junit.BeforeClass;
-import org.junit.ClassRule;
-import org.junit.Rule;
-import org.junit.Test;
+import org.junit.*;
 import org.junit.rules.ExpectedException;
 
 import java.util.List;
@@ -19,7 +16,7 @@ import static org.fest.assertions.Assertions.assertThat;
 /**
  * kr.debop4j.data.ogm.test.queries.EhCacheSimpleQueriesTest
  *
- * @author sunghyouk.bae@gmail.com
+ * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 13. 4. 1
  */
 @Slf4j
@@ -31,6 +28,19 @@ public class SimpleQueriesTest {
     @ClassRule
     public static final SessionFactoryRule sessions = new SessionFactoryRule(Hypothesis.class,
                                                                              Helicopter.class);
+
+    @AfterClass
+    public static void cleanup() throws Exception {
+        final Session session = sessions.openSession();
+        for (Object entity : session.createQuery("from Helicopter").list()) {
+            session.delete(entity);
+        }
+        for (Object entity : session.createQuery("from Hypothesis").list()) {
+            session.delete(entity);
+        }
+        session.flush();
+        session.close();
+    }
 
     @Test
     public void simpleQueries() throws Exception {
@@ -126,6 +136,4 @@ public class SimpleQueriesTest {
         transaction.commit();
         session.close();
     }
-
-
 }

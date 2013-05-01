@@ -23,7 +23,7 @@ import java.util.List;
 /**
  * kr.nsoft.data.hibernate.dao.HibernateRepositoryTest
  *
- * @author sunghyouk.bae@gmail.com
+ * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 12. 11. 26.
  */
 @Slf4j

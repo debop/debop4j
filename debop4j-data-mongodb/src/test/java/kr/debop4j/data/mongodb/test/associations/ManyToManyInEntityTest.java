@@ -8,7 +8,7 @@ import org.hibernate.ogm.datastore.mongodb.Environment;
 /**
  * kr.debop4j.data.mongodb.test.associations.ManyToManyInEntityTest
  *
- * @author sunghyouk.bae@gmail.com
+ * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 13. 4. 12. 오후 10:00
  */
 public class ManyToManyInEntityTest extends ManyToManyTest {

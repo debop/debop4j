@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 /**
  * kr.debop4j.core.cache.ehcache.UserRepository
  *
- * @author sunghyouk.bae@gmail.com
+ * @author 배성혁 ( sunghyouk.bae@gmail.com )
  *         13. 3. 24. 오후 10:19
  */
 @Repository

@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 /**
  * 조직 정보를 관리하는 서비스입니다.
  *
- * @author sunghyouk.bae@gmail.com
+ * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 13. 3. 6.
  */
 @Service

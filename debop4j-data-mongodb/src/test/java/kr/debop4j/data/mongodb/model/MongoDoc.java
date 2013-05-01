@@ -16,7 +16,7 @@ import javax.persistence.Entity;
 /**
  * kr.debop4j.data.mongodb.model.MongoDoc
  *
- * @author sunghyouk.bae@gmail.com
+ * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 13. 4. 17. 오후 4:11
  */
 @Entity

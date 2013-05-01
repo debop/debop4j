@@ -7,7 +7,7 @@ import java.util.Calendar;
 /**
  * kr.debop4j.data.ehcache.ogm.test.type.descriptor.EhCacheCalendarTimeZoneDateTimeTypeDescriptorTest
  *
- * @author sunghyouk.bae@gmail.com
+ * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 13. 4. 10. 오후 9:24
  */
 public class EhCacheCalendarTimeZoneDateTimeTypeDescriptorTest extends CalendarTimeZoneDateTimeTypeDescriptorTest {

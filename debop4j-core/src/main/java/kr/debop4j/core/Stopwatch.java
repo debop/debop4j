@@ -22,7 +22,7 @@ import lombok.extern.slf4j.Slf4j;
 /**
  * 실행 시간을 측정하는 Stopwatch 입니다.
  *
- * @author sunghyouk.bae@gmail.com
+ * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 12. 9. 12
  */
 @Slf4j
@@ -67,6 +67,7 @@ public class Stopwatch {
         elapsedTime = 0;
     }
 
+    /** 시간 측정을 시작합니다. */
     public void start() {
         if (startTime != 0)
             reset();
@@ -77,6 +78,7 @@ public class Stopwatch {
         startTime = System.nanoTime();
     }
 
+    /** 시간 측정을 완료합니다. */
     public double stop() throws IllegalStateException {
         if (startTime == 0)
             throw new IllegalStateException("call start() method at first.");

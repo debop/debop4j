@@ -25,7 +25,7 @@ import lombok.Getter;
 /**
  * jackson 라이브러리를 이용한 Json Serializer
  *
- * @author sunghyouk.bae@gmail.com
+ * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 12. 9. 14
  */
 public class JacksonSerializer implements IJsonSerializer {

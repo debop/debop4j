@@ -12,7 +12,7 @@ import java.util.Date;
 /**
  * hibernate-ogm 은 Hibernate의 criteria를 지원하지 않습니다. 이를 보조하기 위해 hibernate-search를 사용합니다.
  *
- * @author sunghyouk.bae@gmail.com
+ * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 13. 4. 15. 오후 3:00
  */
 @Entity

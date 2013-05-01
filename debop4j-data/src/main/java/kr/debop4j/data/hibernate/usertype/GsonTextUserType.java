@@ -23,7 +23,7 @@ import lombok.extern.slf4j.Slf4j;
 /**
  * {@link GsonSerializer} 를 이용하여, 객체를 Json 직렬화하여 저장하는 사용자 타입입니다.
  *
- * @author sunghyouk.bae@gmail.com
+ * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 12. 9. 18
  */
 @Slf4j

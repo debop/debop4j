@@ -141,14 +141,10 @@ public class StringUtil {
     // String.concat about twice as fast as StringBuilder.append
     // (not sure who tested this)
 
-    /**
-     * The default buffer size to use.
-     */
+    /** The default buffer size to use. */
     private static final int DEFAULT_BUFFER_SIZE = 1024 * 4;
 
-    /**
-     * An empty immutable <code>String</code> array.
-     */
+    /** An empty immutable <code>String</code> array. */
     public static final String[] EMPTY_STRING_ARRAY = new String[0];
 
     /**
@@ -165,9 +161,7 @@ public class StringUtil {
      */
     public static final int INDEX_NOT_FOUND = -1;
 
-    /**
-     * <p>The maximum size to which the padding constant(s) can expand.</p>
-     */
+    /** <p>The maximum size to which the padding constant(s) can expand.</p> */
     private static final int PAD_LIMIT = 8192;
 
     /**

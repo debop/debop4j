@@ -26,7 +26,7 @@ import lombok.extern.slf4j.Slf4j;
 /**
  * <a href="http://code.google.com/p/google-gson/">google-gson</a> 을 이용한 json serializer 입니다.
  *
- * @author sunghyouk.bae@gmail.com
+ * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 12. 9. 14
  */
 @Slf4j

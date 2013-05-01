@@ -7,7 +7,7 @@ import kr.debop4j.core.guava.eventbus.events.CashPurchaseEvent;
 /**
  * kr.debop4j.core.guava.eventbus.subscriber.CashPurchaseEventSubscriber
  *
- * @author sunghyouk.bae@gmail.com
+ * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 12. 12. 10.
  */
 public class CashPurchaseEventSubscriber extends EventSubscriber<CashPurchaseEvent> {

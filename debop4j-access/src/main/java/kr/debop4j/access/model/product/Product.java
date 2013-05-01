@@ -16,7 +16,7 @@ import javax.persistence.Table;
 /**
  * 제품을 나타냅니다. 제품별로 사용자 관리, 권한 관리를 수행하도록 합니다.
  *
- * @author sunghyouk.bae@gmail.com
+ * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 13. 3. 10.
  */
 @Entity

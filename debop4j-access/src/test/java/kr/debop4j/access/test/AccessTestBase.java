@@ -15,7 +15,7 @@ import org.junit.BeforeClass;
 /**
  * Hibernate를 이용한 UnitOfWork로 테스트하기 위한 클래스
  *
- * @author sunghyouk.bae@gmail.com
+ * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 13. 3. 2.
  */
 public class AccessTestBase extends DatabaseTestFixtureBase {

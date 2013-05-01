@@ -15,7 +15,7 @@ import javax.persistence.*;
 /**
  * 그룹의 구성원
  *
- * @author sunghyouk.bae@gmail.com
+ * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 13. 3. 5 오후 4:26
  */
 @Entity

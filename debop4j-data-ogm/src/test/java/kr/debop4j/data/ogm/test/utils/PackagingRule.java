@@ -15,7 +15,7 @@ import java.net.URLClassLoader;
 /**
  * test case useful when one want to write a test relying on an archive (like a JPA archive)
  *
- * @author sunghyouk.bae@gmail.com
+ * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 13. 4. 12. 오후 1:34
  */
 public class PackagingRule extends TemporaryFolder {
@@ -42,7 +42,7 @@ public class PackagingRule extends TemporaryFolder {
     @Override
     public void before() throws Throwable {
         super.before();
-        URLClassLoader classLoader = new URLClassLoader(new URL[]{ testPackage.toURL() }, originalClassLoader);
+        URLClassLoader classLoader = new URLClassLoader(new URL[] { testPackage.toURL() }, originalClassLoader);
         Thread.currentThread().setContextClassLoader(classLoader);
     }
 

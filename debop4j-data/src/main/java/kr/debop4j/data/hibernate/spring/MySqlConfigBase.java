@@ -27,7 +27,7 @@ import java.util.Properties;
 /**
  * kr.debop4j.data.hibernate.spring.MySqlDbConfiguration
  *
- * @author sunghyouk.bae@gmail.com
+ * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 13. 2. 21.
  */
 @Configuration

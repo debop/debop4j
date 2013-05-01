@@ -28,7 +28,7 @@ import java.util.concurrent.Future;
 /**
  * kr.debop4j.core.tool.With
  *
- * @author sunghyouk.bae@gmail.com
+ * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 12. 11. 30.
  */
 @Slf4j

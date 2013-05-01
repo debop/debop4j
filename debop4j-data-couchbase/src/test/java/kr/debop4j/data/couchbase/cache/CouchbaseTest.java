@@ -12,7 +12,7 @@ import java.util.List;
 /**
  * kr.debop4j.core.cache.couchbase.CouchbaseTest
  *
- * @author sunghyouk.bae@gmail.com
+ * @author 배성혁 ( sunghyouk.bae@gmail.com )
  *         13. 3. 25. 오후 7:53
  */
 public class CouchbaseTest {

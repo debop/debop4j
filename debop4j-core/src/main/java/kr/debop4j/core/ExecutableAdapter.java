@@ -22,7 +22,7 @@ import lombok.extern.slf4j.Slf4j;
 /**
  * kr.debop4j.core.ExecutableAdapter
  *
- * @author sunghyouk.bae@gmail.com
+ * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 12. 12. 16.
  */
 @Slf4j

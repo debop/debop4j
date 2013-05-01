@@ -30,7 +30,7 @@ import javax.annotation.concurrent.ThreadSafe;
 /**
  * Unit of Work 패턴을 구현한 Static 클래스입니다.
  *
- * @author sunghyouk.bae@gmail.com
+ * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 12. 12. 18
  */
 @Slf4j
@@ -50,16 +50,12 @@ public final class UnitOfWorks {
     private static volatile IUnitOfWork globalNonThreadSafeUnitOfWork;
     private static volatile IUnitOfWorkFactory unitOfWorkFactory;
 
-    /**
-     * UnitOfWork 가 이미 시작되었는지 확인한다.
-     */
+    /** UnitOfWork 가 이미 시작되었는지 확인한다. */
     public static synchronized boolean isStarted() {
         return globalNonThreadSafeUnitOfWork != null || Local.get(CURRENT_UNIT_OF_WORK_KEY) != null;
     }
 
-    /**
-     * 현재 시작된 {@link IUnitOfWork}의 인스턴스 ({@link UnitOfWorkAdapter}를 반환합니다.
-     */
+    /** 현재 시작된 {@link IUnitOfWork}의 인스턴스 ({@link UnitOfWorkAdapter}를 반환합니다. */
     public static synchronized IUnitOfWork getCurrent() {
         if (!isStarted())
             throw new HibernateException(UNIT_OF_WORK_NOT_STARTED);
@@ -165,9 +161,7 @@ public final class UnitOfWorks {
         return getCurrent();
     }
 
-    /**
-     * 현재 실행중인 UnitOfWork를 종료합니다.
-     */
+    /** 현재 실행중인 UnitOfWork를 종료합니다. */
     public static void stop() {
         stop(false);
     }

@@ -10,7 +10,7 @@ import java.util.Properties;
 /**
  * PostgreSQL
  *
- * @author sunghyouk.bae@gmail.com
+ * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 13. 2. 23.
  */
 @Configuration
@@ -31,7 +31,7 @@ public class PostgreSqlConfig extends PostgreSqlConfigBase {
 
     @Override
     protected String[] getMappedPackageNames() {
-        return new String[]{
+        return new String[] {
                 kr.debop4j.data.mapping.northwind.model.Order.class.getPackage().getName()
         };
     }

@@ -21,7 +21,7 @@ import lombok.extern.slf4j.Slf4j;
 /**
  * 구현되지 않은 코드에 예외를 발생시켜, 코드 구현을 해야 함을 알려주고, 구현 중에 컴파일 에러로 나타나게 하지 않게 하기 위함이다.
  *
- * @author sunghyouk.bae@gmail.com
+ * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 12. 12. 25.
  */
 @Slf4j

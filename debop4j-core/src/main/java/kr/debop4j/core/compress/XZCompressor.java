@@ -28,7 +28,7 @@ import java.io.IOException;
 /**
  * XZ 알고리즘을 이용한 압축/복원을 수행합니다.
  *
- * @author sunghyouk.bae@gmail.com
+ * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 12. 9. 12.
  */
 @Slf4j

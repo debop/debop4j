@@ -15,14 +15,14 @@ import static org.junit.Assert.assertNotNull;
 /**
  * kr.debop4j.data.ogm.test.associations.manytoone.ManyToOneTest
  *
- * @author sunghyouk.bae@gmail.com
+ * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 13. 4. 2. 오후 12:08
  */
 @Slf4j
 public class ManyToOneTest extends OgmTestBase {
     @Override
     protected Class<?>[] getAnnotatedClasses() {
-        return new Class<?>[]{
+        return new Class<?>[] {
                 Jug.class,
                 Member.class,
                 SalesForce.class,

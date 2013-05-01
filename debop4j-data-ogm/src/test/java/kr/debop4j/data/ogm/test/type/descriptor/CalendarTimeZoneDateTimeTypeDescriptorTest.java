@@ -13,7 +13,7 @@ import static org.fest.assertions.Assertions.assertThat;
 /**
  * kr.debop4j.data.ogm.test.type.descriptor.CalendarTimeZoneDateTimeTypeDescriptorTest
  *
- * @author sunghyouk.bae@gmail.com
+ * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 13. 4. 2. 오후 5:13
  */
 @Slf4j
@@ -43,7 +43,7 @@ public class CalendarTimeZoneDateTimeTypeDescriptorTest {
         Calendar pastGMT = (GregorianCalendar) past.clone();
         pastGMT.setTimeZone(TimeZone.getDefault());
 
-        Object[][] data = new Object[][]{
+        Object[][] data = new Object[][] {
                 { null, null, true },
                 { GregorianCalendar.getInstance(), null, false },
                 { null, GregorianCalendar.getInstance(), false },

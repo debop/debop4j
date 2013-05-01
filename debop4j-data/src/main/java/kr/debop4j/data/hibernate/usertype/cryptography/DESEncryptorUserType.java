@@ -23,7 +23,7 @@ import lombok.extern.slf4j.Slf4j;
 /**
  * DES 알고리즘({@link DESByteEncryptor})을 이용하여 속성 값을 암호화하여 16진수 문자열로 저장합니다.
  *
- * @author sunghyouk.bae@gmail.com
+ * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 12. 9. 18
  */
 @Slf4j

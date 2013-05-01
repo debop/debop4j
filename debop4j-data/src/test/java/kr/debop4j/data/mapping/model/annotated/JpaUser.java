@@ -13,7 +13,7 @@ import javax.persistence.*;
 /**
  * org.annotated.mapping.domain.model.JpaUser
  * 참고 : 테이블이나 컬럼명에 예러 표시 날 때 : Inspection 'DataSource ORM Annotations Problem' options
- * Jpa@author sunghyouk.bae@gmail.com
+ * Jpa@author 배성혁 ( sunghyouk.bae@gmail.com )
  *
  * @since 12. 11. 20.
  */

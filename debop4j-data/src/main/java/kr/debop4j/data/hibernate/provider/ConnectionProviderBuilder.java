@@ -11,7 +11,7 @@ import java.util.Properties;
 /**
  * JDBC connection provider builder with HSQLDB.
  *
- * @author sunghyouk.bae@gmail.com
+ * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 12. 12. 16.
  */
 @Deprecated

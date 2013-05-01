@@ -13,7 +13,7 @@ import static org.fest.assertions.Assertions.assertThat;
 /**
  * kr.debop4j.data.ogm.test.id.CompositeIdTest
  *
- * @author sunghyouk.bae@gmail.com
+ * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 13. 4. 2. 오후 3:40
  */
 @Slf4j
@@ -21,7 +21,7 @@ public class CompositeIdTest extends JpaTestBase {
 
     @Override
     public Class<?>[] getEntities() {
-        return new Class<?>[]{
+        return new Class<?>[] {
                 News.class,
                 NewsID.class,
                 Label.class

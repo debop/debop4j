@@ -14,7 +14,7 @@ import javax.persistence.Table;
 /**
  * kr.debop4j.data.mapping.model.annotated.tree.TreeNode
  *
- * @author sunghyouk.bae@gmail.com
+ * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 13. 2. 23.
  */
 @Entity

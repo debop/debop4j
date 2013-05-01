@@ -23,7 +23,7 @@ import org.junit.Test;
 /**
  * HibernateSearchDaoTest
  *
- * @author sunghyouk.bae@gmail.com
+ * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 13. 4. 26. 오후 6:07
  */
 @Slf4j

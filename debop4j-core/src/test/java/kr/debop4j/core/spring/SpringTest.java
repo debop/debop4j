@@ -19,7 +19,7 @@ import static org.junit.Assert.*;
 /**
  * kr.debop4j.core.spring.SpringTest
  *
- * @author sunghyouk.bae@gmail.com
+ * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 12. 12. 2.
  */
 @Slf4j
@@ -28,7 +28,7 @@ public class SpringTest extends AbstractTest {
     private static final Object syncLock = new Object();
 
     private static Class[] compressorClasses =
-            new Class[]{ BZip2Compressor.class,
+            new Class[] { BZip2Compressor.class,
                     DeflateCompressor.class,
                     GZipCompressor.class,
                     XZCompressor.class };

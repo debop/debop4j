@@ -33,7 +33,7 @@ import static kr.debop4j.core.Guard.shouldNotBeNull;
 /**
  * {@link org.modelmapper.ModelMapper} 를 이용하여, 객체간의 정보를 매핑합니다.
  *
- * @author sunghyouk.bae@gmail.com
+ * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 12. 9. 20.
  */
 @Slf4j

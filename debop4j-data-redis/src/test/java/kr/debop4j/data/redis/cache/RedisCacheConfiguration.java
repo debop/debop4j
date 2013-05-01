@@ -38,7 +38,7 @@ import java.nio.charset.Charset;
 /**
  * kr.debop4j.core.cache.redis.RedisCacheConfiguration
  *
- * @author sunghyouk.bae@gmail.com
+ * @author 배성혁 ( sunghyouk.bae@gmail.com )
  *         13. 3. 25. 오후 11:50
  */
 @Configuration

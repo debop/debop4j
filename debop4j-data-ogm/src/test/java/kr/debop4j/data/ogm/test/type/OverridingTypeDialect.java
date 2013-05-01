@@ -11,7 +11,7 @@ import java.util.UUID;
 /**
  * kr.debop4j.data.ogm.test.type.OverridingTypeDialect
  *
- * @author sunghyouk.bae@gmail.com
+ * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 13. 4. 2. 오후 5:49
  */
 public class OverridingTypeDialect extends HashMapDialect {

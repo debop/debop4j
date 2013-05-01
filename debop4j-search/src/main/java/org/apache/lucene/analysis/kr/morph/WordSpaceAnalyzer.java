@@ -25,9 +25,7 @@ import org.slf4j.LoggerFactory;
 
 import java.util.*;
 
-/**
- * @author smlee
- */
+/** @author smlee */
 public class WordSpaceAnalyzer {
 
     private static final Logger log = LoggerFactory.getLogger(WordSpaceAnalyzer.class);
@@ -222,18 +220,14 @@ public class WordSpaceAnalyzer {
         return (!hasJosa) ? -1 : jend + 1;
     }
 
-    /**
-     * 향후 계산이나 원 문자열을 보여주기 위해 source string 을 저장한다.
-     */
+    /** 향후 계산이나 원 문자열을 보여주기 위해 source string 을 저장한다. */
     private void fillSourceString(final String source, List<AnalysisOutput> candidates) {
         for (final AnalysisOutput o : candidates) {
             o.setSource(source);
         }
     }
 
-    /**
-     * 목록의 1번지가 가장 큰 길이를 가진다.
-     */
+    /** 목록의 1번지가 가장 큰 길이를 가진다. */
     private void appendSingleWord(List<AnalysisOutput> candidates) throws MorphException {
 
         if (candidates.size() == 0) return;
@@ -432,9 +426,7 @@ public class WordSpaceAnalyzer {
         return estart + jend + 1;
     }
 
-    /**
-     * validation 후 후보가 될 가능성이 높은 최상위 것을 결과에 추가한다.
-     */
+    /** validation 후 후보가 될 가능성이 높은 최상위 것을 결과에 추가한다. */
     private int validationAndAppend(WSOutput output, List<AnalysisOutput> candidates, String input) throws MorphException {
 
         if (candidates.size() == 0) return 0;

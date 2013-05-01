@@ -14,7 +14,7 @@ import javax.persistence.*;
 /**
  * 제품의 설정 정보
  *
- * @author sunghyouk.bae@gmail.com
+ * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 13. 3. 12.
  */
 @Entity

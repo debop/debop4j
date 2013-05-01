@@ -28,7 +28,7 @@ import org.springframework.stereotype.Component;
 /**
  * MongoDB를 저장소로 사용하는 hibernate-ogm Data Access Object 입니다.
  *
- * @author sunghyouk.bae@gmail.com
+ * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 13. 4. 16. 오전 11:14
  */
 @Component
@@ -61,9 +61,7 @@ public class MongoOgmDao extends HibernateOgmDao {
         return ftq.getResultSize();
     }
 
-    /**
-     * 지정된 수형의 엔티티를 모두 삭제합니다.
-     */
+    /** 지정된 수형의 엔티티를 모두 삭제합니다. */
     @Override
     public void deleteAll(Class<?> clazz) {
         deleteAll(findAll(clazz));

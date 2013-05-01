@@ -38,7 +38,7 @@ import org.hibernate.type.Type;
 /**
  * RedisDialect
  *
- * @author sunghyouk.bae@gmail.com
+ * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 13. 4. 10. 오후 10:08
  */
 @Slf4j

@@ -26,7 +26,7 @@ import redis.clients.jedis.JedisShardInfo;
 /**
  * kr.debop4j.core.cache.redis.RedisTemplateTest
  *
- * @author sunghyouk.bae@gmail.com
+ * @author 배성혁 ( sunghyouk.bae@gmail.com )
  *         13. 3. 26. 오전 11:20
  */
 public class RedisTemplateTest {

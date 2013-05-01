@@ -14,7 +14,7 @@ import javax.persistence.*;
 /**
  * 직책 (보직) 을 나타낸다. (개발본부장, TFT 팀장, 경영지원실장 등)
  *
- * @author sunghyouk.bae@gmail.com
+ * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 13. 3. 8 오후 5:10
  */
 @Entity

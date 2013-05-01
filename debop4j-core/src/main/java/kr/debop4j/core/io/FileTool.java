@@ -38,7 +38,7 @@ import static kr.debop4j.core.tools.StringTool.listToString;
 /**
  * 파일 관련 Tool
  *
- * @author sunghyouk.bae@gmail.com
+ * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 12. 12. 11
  */
 public class FileTool {
@@ -104,9 +104,7 @@ public class FileTool {
                 });
     }
 
-    /**
-     * 파일을 이동합니다.
-     */
+    /** 파일을 이동합니다. */
     public static void move(Path src, Path dst) throws IOException {
         if (isTraceEnabled)
             log.trace("파일을 이동합니다. src=[{}], dst=[{}]", src, dst);

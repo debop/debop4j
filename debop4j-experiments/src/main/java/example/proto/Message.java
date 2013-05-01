@@ -19,14 +19,10 @@ public class Message extends org.apache.avro.specific.SpecificRecordBase impleme
     @Deprecated
     public java.lang.CharSequence body;
 
-    /**
-     * Default constructor.
-     */
+    /** Default constructor. */
     public Message() {}
 
-    /**
-     * All-args constructor.
-     */
+    /** All-args constructor. */
     public Message(java.lang.CharSequence to, java.lang.CharSequence from, java.lang.CharSequence body) {
         this.to = to;
         this.from = from;
@@ -67,9 +63,7 @@ public class Message extends org.apache.avro.specific.SpecificRecordBase impleme
         }
     }
 
-    /**
-     * Gets the value of the 'to' field.
-     */
+    /** Gets the value of the 'to' field. */
     public java.lang.CharSequence getTo() {
         return to;
     }
@@ -83,9 +77,7 @@ public class Message extends org.apache.avro.specific.SpecificRecordBase impleme
         this.to = value;
     }
 
-    /**
-     * Gets the value of the 'from' field.
-     */
+    /** Gets the value of the 'from' field. */
     public java.lang.CharSequence getFrom() {
         return from;
     }
@@ -99,9 +91,7 @@ public class Message extends org.apache.avro.specific.SpecificRecordBase impleme
         this.from = value;
     }
 
-    /**
-     * Gets the value of the 'body' field.
-     */
+    /** Gets the value of the 'body' field. */
     public java.lang.CharSequence getBody() {
         return body;
     }
@@ -115,30 +105,22 @@ public class Message extends org.apache.avro.specific.SpecificRecordBase impleme
         this.body = value;
     }
 
-    /**
-     * Creates a new Message RecordBuilder
-     */
+    /** Creates a new Message RecordBuilder */
     public static example.proto.Message.Builder newBuilder() {
         return new example.proto.Message.Builder();
     }
 
-    /**
-     * Creates a new Message RecordBuilder by copying an existing Builder
-     */
+    /** Creates a new Message RecordBuilder by copying an existing Builder */
     public static example.proto.Message.Builder newBuilder(example.proto.Message.Builder other) {
         return new example.proto.Message.Builder(other);
     }
 
-    /**
-     * Creates a new Message RecordBuilder by copying an existing Message instance
-     */
+    /** Creates a new Message RecordBuilder by copying an existing Message instance */
     public static example.proto.Message.Builder newBuilder(example.proto.Message other) {
         return new example.proto.Message.Builder(other);
     }
 
-    /**
-     * RecordBuilder for Message instances.
-     */
+    /** RecordBuilder for Message instances. */
     public static class Builder extends org.apache.avro.specific.SpecificRecordBuilderBase<Message>
             implements org.apache.avro.data.RecordBuilder<Message> {
 
@@ -146,23 +128,17 @@ public class Message extends org.apache.avro.specific.SpecificRecordBase impleme
         private java.lang.CharSequence from;
         private java.lang.CharSequence body;
 
-        /**
-         * Creates a new Builder
-         */
+        /** Creates a new Builder */
         private Builder() {
             super(example.proto.Message.SCHEMA$);
         }
 
-        /**
-         * Creates a Builder by copying an existing Builder
-         */
+        /** Creates a Builder by copying an existing Builder */
         private Builder(example.proto.Message.Builder other) {
             super(other);
         }
 
-        /**
-         * Creates a Builder by copying an existing Message instance
-         */
+        /** Creates a Builder by copying an existing Message instance */
         private Builder(example.proto.Message other) {
             super(example.proto.Message.SCHEMA$);
             if (isValidValue(fields()[0], other.to)) {
@@ -179,16 +155,12 @@ public class Message extends org.apache.avro.specific.SpecificRecordBase impleme
             }
         }
 
-        /**
-         * Gets the value of the 'to' field
-         */
+        /** Gets the value of the 'to' field */
         public java.lang.CharSequence getTo() {
             return to;
         }
 
-        /**
-         * Sets the value of the 'to' field
-         */
+        /** Sets the value of the 'to' field */
         public example.proto.Message.Builder setTo(java.lang.CharSequence value) {
             validate(fields()[0], value);
             this.to = value;
@@ -196,32 +168,24 @@ public class Message extends org.apache.avro.specific.SpecificRecordBase impleme
             return this;
         }
 
-        /**
-         * Checks whether the 'to' field has been set
-         */
+        /** Checks whether the 'to' field has been set */
         public boolean hasTo() {
             return fieldSetFlags()[0];
         }
 
-        /**
-         * Clears the value of the 'to' field
-         */
+        /** Clears the value of the 'to' field */
         public example.proto.Message.Builder clearTo() {
             to = null;
             fieldSetFlags()[0] = false;
             return this;
         }
 
-        /**
-         * Gets the value of the 'from' field
-         */
+        /** Gets the value of the 'from' field */
         public java.lang.CharSequence getFrom() {
             return from;
         }
 
-        /**
-         * Sets the value of the 'from' field
-         */
+        /** Sets the value of the 'from' field */
         public example.proto.Message.Builder setFrom(java.lang.CharSequence value) {
             validate(fields()[1], value);
             this.from = value;
@@ -229,32 +193,24 @@ public class Message extends org.apache.avro.specific.SpecificRecordBase impleme
             return this;
         }
 
-        /**
-         * Checks whether the 'from' field has been set
-         */
+        /** Checks whether the 'from' field has been set */
         public boolean hasFrom() {
             return fieldSetFlags()[1];
         }
 
-        /**
-         * Clears the value of the 'from' field
-         */
+        /** Clears the value of the 'from' field */
         public example.proto.Message.Builder clearFrom() {
             from = null;
             fieldSetFlags()[1] = false;
             return this;
         }
 
-        /**
-         * Gets the value of the 'body' field
-         */
+        /** Gets the value of the 'body' field */
         public java.lang.CharSequence getBody() {
             return body;
         }
 
-        /**
-         * Sets the value of the 'body' field
-         */
+        /** Sets the value of the 'body' field */
         public example.proto.Message.Builder setBody(java.lang.CharSequence value) {
             validate(fields()[2], value);
             this.body = value;
@@ -262,16 +218,12 @@ public class Message extends org.apache.avro.specific.SpecificRecordBase impleme
             return this;
         }
 
-        /**
-         * Checks whether the 'body' field has been set
-         */
+        /** Checks whether the 'body' field has been set */
         public boolean hasBody() {
             return fieldSetFlags()[2];
         }
 
-        /**
-         * Clears the value of the 'body' field
-         */
+        /** Clears the value of the 'body' field */
         public example.proto.Message.Builder clearBody() {
             body = null;
             fieldSetFlags()[2] = false;

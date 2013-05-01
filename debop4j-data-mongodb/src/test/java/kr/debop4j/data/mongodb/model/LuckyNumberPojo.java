@@ -10,7 +10,7 @@ import javax.persistence.Id;
 /**
  * kr.debop4j.data.mongodb.model.LuckyNumberPojo
  *
- * @author sunghyouk.bae@gmail.com
+ * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 13. 4. 14. 오후 10:20
  */
 @Entity

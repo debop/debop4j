@@ -19,7 +19,7 @@ package kr.debop4j.core.cache;
 /**
  * Cache 시스템에 정보를 관리하는 ICacheRepository 의 인터페이스입니다.
  *
- * @author sunghyouk.bae@gmail.com
+ * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 12. 9. 12
  */
 public interface ICacheRepository {
@@ -84,8 +84,6 @@ public interface ICacheRepository {
      */
     boolean exists(final String key);
 
-    /**
-     * 캐시의 모든 항목을 삭제합니다.
-     */
+    /** 캐시의 모든 항목을 삭제합니다. */
     void clear();
 }

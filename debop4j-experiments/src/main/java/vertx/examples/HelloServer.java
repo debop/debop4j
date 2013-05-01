@@ -9,7 +9,7 @@ import org.vertx.java.deploy.Verticle;
 /**
  * vertx.examples.HelloServer
  *
- * @author sunghyouk.bae@gmail.com
+ * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 13. 3. 30. 오후 10:55
  */
 @Slf4j

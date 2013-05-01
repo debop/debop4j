@@ -17,7 +17,7 @@ import javax.persistence.*;
 /**
  * 회사의 업무 시간을 표현하는 Working Calendar를 표시합니다.
  *
- * @author sunghyouk.bae@gmail.com
+ * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 13. 3. 11.
  */
 @Entity

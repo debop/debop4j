@@ -26,7 +26,7 @@ import java.util.concurrent.ExecutionException;
 /**
  * {@link DynamicAccessor} 의 생성자입니다.
  *
- * @author sunghyouk.bae@gmail.com
+ * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 13. 1. 21
  */
 @Slf4j

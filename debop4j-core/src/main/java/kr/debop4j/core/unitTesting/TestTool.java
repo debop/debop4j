@@ -26,11 +26,11 @@ import java.util.concurrent.*;
 /**
  * 멀티쓰레디로 테스트를 수행합니다.
  *
- * @author sunghyouk.bae@gmail.com
+ * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 12. 12. 3.
  */
 @Slf4j
-public class TestTool {
+public abstract class TestTool {
 
     private TestTool() { }
 
@@ -38,6 +38,12 @@ public class TestTool {
         return Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors() * 2);
     }
 
+    /**
+     * 지정된 횟수만큼 멀티스레드를 이용하여 작업을 수행합니다.
+     *
+     * @param count    수행활 횟수
+     * @param runnable 수행할 함수 객체
+     */
     public static void runTasks(int count, final Runnable runnable) {
         ExecutorService executor = newExecutorService();
         try {
@@ -60,7 +66,8 @@ public class TestTool {
         }
     }
 
-    @SuppressWarnings("unchecked")
+    /** 지정된 횟수만큼 멀티스레드를 이용하여 작업을 수행합니다. */
+    @SuppressWarnings( "unchecked" )
     public static <T> void runTasks(int count, Callable<T> callables) {
         ExecutorService executor = newExecutorService();
         try {
@@ -82,7 +89,8 @@ public class TestTool {
         }
     }
 
-    @SuppressWarnings("unchecked")
+    /** 지정된 횟수만큼 멀티스레드를 이용하여 작업을 수행합니다. */
+    @SuppressWarnings( "unchecked" )
     public static void runTasks(int count, final Action1<Integer> action) {
         ExecutorService executor = newExecutorService();
         final CountDownLatch latch = new CountDownLatch(count);
@@ -99,8 +107,7 @@ public class TestTool {
                 });
             }
             latch.await();
-
-        } catch (InterruptedException e) {
+        } catch (Exception e) {
             log.error("예외가 발생했습니다.", e);
             throw new RuntimeException(e);
         } finally {

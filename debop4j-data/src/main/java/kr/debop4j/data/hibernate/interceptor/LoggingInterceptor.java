@@ -34,7 +34,7 @@ import java.util.List;
 /**
  * 엔티티의 변화에 대해 로그를 기록한 후 이를 DB에 저장하는
  *
- * @author sunghyouk.bae@gmail.com
+ * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 12. 12. 16.
  */
 public class LoggingInterceptor extends EmptyInterceptor {

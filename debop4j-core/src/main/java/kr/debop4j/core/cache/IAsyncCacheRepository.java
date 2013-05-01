@@ -22,7 +22,7 @@ import java.util.concurrent.Future;
 /**
  * 비동기 방식으로 캐시 작업을 수행합니다.
  *
- * @author sunghyouk.bae@gmail.com
+ * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 12. 9. 12.
  */
 public interface IAsyncCacheRepository {

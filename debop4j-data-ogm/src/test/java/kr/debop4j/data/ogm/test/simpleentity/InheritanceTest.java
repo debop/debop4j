@@ -8,7 +8,7 @@ import org.junit.Test;
 /**
  * kr.debop4j.data.ogm.test.simpleentity.InheritanceTest
  *
- * @author sunghyouk.bae@gmail.com
+ * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 13. 4. 1
  */
 public class InheritanceTest extends OgmTestBase {

@@ -15,7 +15,7 @@ import javax.persistence.Id;
 /**
  * kr.debop4j.data.ogm.test.simpleentity.Hypothesis
  *
- * @author sunghyouk.bae@gmail.com
+ * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 13. 4. 1
  */
 @Entity
@@ -29,10 +29,10 @@ public class Hypothesis extends AnnotatedEntityBase {
     @Id
     private String id;
 
-    @Field(analyze = Analyze.NO)
+    @Field( analyze = Analyze.NO )
     private String description;
 
-    @Column(name = "pos")
+    @Column( name = "pos" )
     @Field
     @NumericField
     private int position;

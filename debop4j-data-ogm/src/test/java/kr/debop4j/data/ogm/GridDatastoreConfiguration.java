@@ -26,7 +26,7 @@ import java.util.Properties;
 /**
  * kr.debop4j.data.ogm.GridDatastoreConfiguration
  *
- * @author sunghyouk.bae@gmail.com
+ * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 13. 4. 16. 오후 12:05
  */
 @Configuration
@@ -39,7 +39,7 @@ public class GridDatastoreConfiguration extends GridDatastoreConfigBase {
 
     @Override
     protected String[] getMappedPackageNames() {
-        return new String[]{
+        return new String[] {
                 Player.class.getPackage().getName()
         };
     }

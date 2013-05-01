@@ -35,7 +35,7 @@ import static kr.debop4j.core.Guard.shouldNotBeWhiteSpace;
 /**
  * 설명을 추가하세요.
  *
- * @author sunghyouk.bae@gmail.com
+ * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 12. 9. 12
  */
 @Slf4j
@@ -60,16 +60,12 @@ public class HashMapCacheRepository extends CacheRepositoryBase {
         cache = builder.build();
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     public ConcurrentMap getCache() {
         return this.cache.asMap();
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public Object get(final String key) {
         shouldNotBeWhiteSpace(key, "key");
@@ -85,9 +81,7 @@ public class HashMapCacheRepository extends CacheRepositoryBase {
         return cache.getAllPresent(keys);
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public void set(final String key, final Object value, final long validFor) {
         shouldNotBeWhiteSpace(key, "key");
@@ -98,18 +92,14 @@ public class HashMapCacheRepository extends CacheRepositoryBase {
         cache.putAll(m);
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public void remove(final String key) {
         shouldNotBeWhiteSpace(key, "key");
         cache.invalidate(key);
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public void removeAll(String... keys) {
         cache.invalidateAll(Arrays.asList(keys));
@@ -120,18 +110,14 @@ public class HashMapCacheRepository extends CacheRepositoryBase {
         cache.invalidateAll(keys);
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public boolean exists(final String key) {
         shouldNotBeWhiteSpace(key, "key");
         return cache.getIfPresent(key) != null;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public void clear() {
         cache.invalidateAll();

@@ -7,7 +7,7 @@ import java.net.URI;
 /**
  * kr.debop4j.core.pool.PoolObject
  *
- * @author sunghyouk.bae@gmail.com
+ * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 13. 4. 8. 오전 10:31
  */
 @Data

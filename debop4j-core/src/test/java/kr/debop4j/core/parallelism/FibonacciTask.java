@@ -8,7 +8,7 @@ import java.util.concurrent.RecursiveTask;
 /**
  * pudding.pudding.commons.parallelism.forkjoin.FibonacciTask
  *
- * @author sunghyouk.bae@gmail.com
+ * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 12. 9. 28.
  */
 @Slf4j

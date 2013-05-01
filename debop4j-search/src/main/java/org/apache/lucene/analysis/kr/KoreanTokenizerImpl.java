@@ -29,24 +29,16 @@ import org.apache.lucene.analysis.tokenattributes.CharTermAttribute;
  */
 class KoreanTokenizerImpl {
 
-    /**
-     * This character denotes the end of file
-     */
+    /** This character denotes the end of file */
     public static final int YYEOF = -1;
 
-    /**
-     * initial size of the lookahead buffer
-     */
+    /** initial size of the lookahead buffer */
     private static final int ZZ_BUFFERSIZE = 16384;
 
-    /**
-     * lexical states
-     */
+    /** lexical states */
     public static final int YYINITIAL = 0;
 
-    /**
-     * Translates characters to character classes
-     */
+    /** Translates characters to character classes */
     private static final String ZZ_CMAP_PACKED =
             "\11\0\1\0\1\20\1\0\1\0\1\17\22\0\1\0\5\0\1\3" +
                     "\1\1\4\0\1\7\1\5\1\2\1\7\12\11\6\0\1\4\32\10" +
@@ -57,14 +49,10 @@ class KoreanTokenizerImpl {
                     "\u1040\0\u0150\16\140\0\20\16\u0100\0\200\16\200\0\u19c0\15\100\0\u5200\15" +
                     "\u0c00\0\u2bb0\13\u2150\0\u0200\15\u0465\0\73\16\75\10\43\0";
 
-    /**
-     * Translates characters to character classes
-     */
+    /** Translates characters to character classes */
     private static final char[] ZZ_CMAP = zzUnpackCMap(ZZ_CMAP_PACKED);
 
-    /**
-     * Translates DFA states to action switch labels.
-     */
+    /** Translates DFA states to action switch labels. */
     private static final int[] ZZ_ACTION = zzUnpackAction();
 
     private static final String ZZ_ACTION_PACKED_0 =
@@ -104,9 +92,7 @@ class KoreanTokenizerImpl {
     }
 
 
-    /**
-     * Translates a state to a row index in the transition table
-     */
+    /** Translates a state to a row index in the transition table */
     private static final int[] ZZ_ROWMAP = zzUnpackRowMap();
 
     private static final String ZZ_ROWMAP_PACKED_0 =
@@ -151,9 +137,7 @@ class KoreanTokenizerImpl {
         return j;
     }
 
-    /**
-     * The transition table of the DFA
-     */
+    /** The transition table of the DFA */
     private static final int[] ZZ_TRANS = zzUnpackTrans();
 
     private static final String ZZ_TRANS_PACKED_0 =
@@ -359,9 +343,7 @@ class KoreanTokenizerImpl {
             "Error: pushback value was too large"
     };
 
-    /**
-     * ZZ_ATTRIBUTE[aState] contains the attributes of state <code>aState</code>
-     */
+    /** ZZ_ATTRIBUTE[aState] contains the attributes of state <code>aState</code> */
     private static final int[] ZZ_ATTRIBUTE = zzUnpackAttribute();
 
     private static final String ZZ_ATTRIBUTE_PACKED_0 =
@@ -393,19 +375,13 @@ class KoreanTokenizerImpl {
         return j;
     }
 
-    /**
-     * the input device
-     */
+    /** the input device */
     private java.io.Reader zzReader;
 
-    /**
-     * the current state of the DFA
-     */
+    /** the current state of the DFA */
     private int zzState;
 
-    /**
-     * the current lexical state
-     */
+    /** the current lexical state */
     private int zzLexicalState = YYINITIAL;
 
     /**
@@ -414,24 +390,16 @@ class KoreanTokenizerImpl {
      */
     private char zzBuffer[] = new char[ZZ_BUFFERSIZE];
 
-    /**
-     * the textposition at the last accepting state
-     */
+    /** the textposition at the last accepting state */
     private int zzMarkedPos;
 
-    /**
-     * the textposition at the last state to be included in yytext
-     */
+    /** the textposition at the last state to be included in yytext */
     private int zzPushbackPos;
 
-    /**
-     * the current text position in the buffer
-     */
+    /** the current text position in the buffer */
     private int zzCurrentPos;
 
-    /**
-     * startRead marks the beginning of the yytext() string in the buffer
-     */
+    /** startRead marks the beginning of the yytext() string in the buffer */
     private int zzStartRead;
 
     /**
@@ -440,14 +408,10 @@ class KoreanTokenizerImpl {
      */
     private int zzEndRead;
 
-    /**
-     * number of newlines encountered up to the start of the matched text
-     */
+    /** number of newlines encountered up to the start of the matched text */
     private int yyline;
 
-    /**
-     * the number of characters up to the start of the matched text
-     */
+    /** the number of characters up to the start of the matched text */
     private int yychar;
 
     /**
@@ -456,14 +420,10 @@ class KoreanTokenizerImpl {
      */
     private int yycolumn;
 
-    /**
-     * zzAtBOL == true <=> the scanner is currently at the beginning of a line
-     */
+    /** zzAtBOL == true <=> the scanner is currently at the beginning of a line */
     private boolean zzAtBOL = true;
 
-    /**
-     * zzAtEOF == true <=> the scanner is at the EOF
-     */
+    /** zzAtEOF == true <=> the scanner is at the EOF */
     private boolean zzAtEOF;
 
   /* user code: */
@@ -485,7 +445,7 @@ class KoreanTokenizerImpl {
     public static final int KOREAN = 9;
     public static final int CHINESE = 10;
 
-    public static final String[] TOKEN_TYPES = new String[]{
+    public static final String[] TOKEN_TYPES = new String[] {
             "<ALPHANUM>",
             "<APOSTROPHE>",
             "<ACRONYM>",
@@ -503,9 +463,7 @@ class KoreanTokenizerImpl {
         return yychar;
     }
 
-    /**
-     * Fills Lucene token with the current token text.
-     */
+    /** Fills Lucene token with the current token text. */
     final void getText(CharTermAttribute t) {
         t.copyBuffer(zzBuffer, zzStartRead, zzMarkedPos - zzStartRead);
     }
@@ -593,9 +551,7 @@ class KoreanTokenizerImpl {
     }
 
 
-    /**
-     * Closes the input stream.
-     */
+    /** Closes the input stream. */
     public final void yyclose() throws java.io.IOException {
         zzAtEOF = true;            /* indicate end of file */
         zzEndRead = zzStartRead;  /* invalidate buffer    */
@@ -626,9 +582,7 @@ class KoreanTokenizerImpl {
     }
 
 
-    /**
-     * Returns the current lexical state.
-     */
+    /** Returns the current lexical state. */
     public final int yystate() {
         return zzLexicalState;
     }
@@ -644,9 +598,7 @@ class KoreanTokenizerImpl {
     }
 
 
-    /**
-     * Returns the text matched by the current regular expression.
-     */
+    /** Returns the text matched by the current regular expression. */
     public final String yytext() {
         return new String(zzBuffer, zzStartRead, zzMarkedPos - zzStartRead);
     }
@@ -667,9 +619,7 @@ class KoreanTokenizerImpl {
     }
 
 
-    /**
-     * Returns the length of the matched text region.
-     */
+    /** Returns the length of the matched text region. */
     public final int yylength() {
         return zzMarkedPos - zzStartRead;
     }

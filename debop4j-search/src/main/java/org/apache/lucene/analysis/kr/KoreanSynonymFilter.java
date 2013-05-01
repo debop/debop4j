@@ -37,9 +37,7 @@ public class KoreanSynonymFilter extends TokenFilter {
 
     private final CharTermAttribute termAtt = addAttribute(CharTermAttribute.class);
 
-    /**
-     * Construct a token stream filtering the given input.
-     */
+    /** Construct a token stream filtering the given input. */
     protected KoreanSynonymFilter(TokenStream input) {
         super(input);
     }

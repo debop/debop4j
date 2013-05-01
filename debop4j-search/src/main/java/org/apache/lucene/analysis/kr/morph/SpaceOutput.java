@@ -47,16 +47,12 @@ public class SpaceOutput {
         source = null;
     }
 
-    /**
-     * @return the output
-     */
+    /** @return the output */
     public AnalysisOutput getOutput() {
         return output;
     }
 
-    /**
-     * @param output the output to set
-     */
+    /** @param output the output to set */
     public void setOutput(AnalysisOutput output) {
         this.output = output;
     }
@@ -88,9 +84,7 @@ public class SpaceOutput {
         this.source = source;
     }
 
-    /**
-     * 분석된 전체 단어의 길이를 반환한다.
-     */
+    /** 분석된 전체 단어의 길이를 반환한다. */
     public int getLength() {
         return (this.source == null) ? 0 : this.source.length();
     }

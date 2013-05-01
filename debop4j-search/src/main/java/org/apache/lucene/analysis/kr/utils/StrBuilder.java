@@ -70,9 +70,7 @@ import java.util.Iterator;
  */
 public class StrBuilder implements Cloneable, Serializable {
 
-    /**
-     * The extra capacity for new builders.
-     */
+    /** The extra capacity for new builders. */
     static final int CAPACITY = 32;
 
     /**
@@ -82,9 +80,7 @@ public class StrBuilder implements Cloneable, Serializable {
      */
     private static final long serialVersionUID = 7628716375283629643L;
 
-    /**
-     * An empty immutable <code>char</code> array.
-     */
+    /** An empty immutable <code>char</code> array. */
     public static final char[] EMPTY_CHAR_ARRAY = new char[0];
 
     /**
@@ -107,28 +103,18 @@ public class StrBuilder implements Cloneable, Serializable {
      */
     public static final String LINE_SEPARATOR = Utilities.getSystemProperty("line.separator");
 
-    /**
-     * Internal data storage.
-     */
+    /** Internal data storage. */
     protected char[] buffer; // TODO make private?
-    /**
-     * Current size of the buffer.
-     */
+    /** Current size of the buffer. */
     protected int size; // TODO make private?
-    /**
-     * The new line.
-     */
+    /** The new line. */
     private String newLine;
-    /**
-     * The null text.
-     */
+    /** The null text. */
     private String nullText;
 
     //-----------------------------------------------------------------------
 
-    /**
-     * Constructor that creates an empty builder initial capacity 32 characters.
-     */
+    /** Constructor that creates an empty builder initial capacity 32 characters. */
     public StrBuilder() {
         this(CAPACITY);
     }
@@ -2442,36 +2428,24 @@ public class StrBuilder implements Cloneable, Serializable {
 
     //-----------------------------------------------------------------------
 
-    /**
-     * Inner class to allow StrBuilder to operate as a writer.
-     */
+    /** Inner class to allow StrBuilder to operate as a writer. */
     class StrBuilderReader extends Reader {
-        /**
-         * The current stream position.
-         */
+        /** The current stream position. */
         private int pos;
-        /**
-         * The last mark position.
-         */
+        /** The last mark position. */
         private int mark;
 
-        /**
-         * Default constructor.
-         */
+        /** Default constructor. */
         StrBuilderReader() {
             super();
         }
 
-        /**
-         * {@inheritDoc}
-         */
+        /** {@inheritDoc} */
         public void close() {
             // do nothing
         }
 
-        /**
-         * {@inheritDoc}
-         */
+        /** {@inheritDoc} */
         public int read() {
             if (ready() == false) {
                 return -1;
@@ -2479,9 +2453,7 @@ public class StrBuilder implements Cloneable, Serializable {
             return StrBuilder.this.charAt(pos++);
         }
 
-        /**
-         * {@inheritDoc}
-         */
+        /** {@inheritDoc} */
         public int read(char b[], int off, int len) {
             if (off < 0 || len < 0 || off > b.length ||
                     (off + len) > b.length || (off + len) < 0) {
@@ -2501,9 +2473,7 @@ public class StrBuilder implements Cloneable, Serializable {
             return len;
         }
 
-        /**
-         * {@inheritDoc}
-         */
+        /** {@inheritDoc} */
         public long skip(long n) {
             if (pos + n > StrBuilder.this.size()) {
                 n = StrBuilder.this.size() - pos;
@@ -2515,30 +2485,22 @@ public class StrBuilder implements Cloneable, Serializable {
             return n;
         }
 
-        /**
-         * {@inheritDoc}
-         */
+        /** {@inheritDoc} */
         public boolean ready() {
             return pos < StrBuilder.this.size();
         }
 
-        /**
-         * {@inheritDoc}
-         */
+        /** {@inheritDoc} */
         public boolean markSupported() {
             return true;
         }
 
-        /**
-         * {@inheritDoc}
-         */
+        /** {@inheritDoc} */
         public void mark(int readAheadLimit) {
             mark = pos;
         }
 
-        /**
-         * {@inheritDoc}
-         */
+        /** {@inheritDoc} */
         public void reset() {
             pos = mark;
         }
@@ -2546,63 +2508,45 @@ public class StrBuilder implements Cloneable, Serializable {
 
     //-----------------------------------------------------------------------
 
-    /**
-     * Inner class to allow StrBuilder to operate as a writer.
-     */
+    /** Inner class to allow StrBuilder to operate as a writer. */
     class StrBuilderWriter extends Writer {
 
-        /**
-         * Default constructor.
-         */
+        /** Default constructor. */
         StrBuilderWriter() {
             super();
         }
 
-        /**
-         * {@inheritDoc}
-         */
+        /** {@inheritDoc} */
         public void close() {
             // do nothing
         }
 
-        /**
-         * {@inheritDoc}
-         */
+        /** {@inheritDoc} */
         public void flush() {
             // do nothing
         }
 
-        /**
-         * {@inheritDoc}
-         */
+        /** {@inheritDoc} */
         public void write(int c) {
             StrBuilder.this.append((char) c);
         }
 
-        /**
-         * {@inheritDoc}
-         */
+        /** {@inheritDoc} */
         public void write(char[] cbuf) {
             StrBuilder.this.append(cbuf);
         }
 
-        /**
-         * {@inheritDoc}
-         */
+        /** {@inheritDoc} */
         public void write(char[] cbuf, int off, int len) {
             StrBuilder.this.append(cbuf, off, len);
         }
 
-        /**
-         * {@inheritDoc}
-         */
+        /** {@inheritDoc} */
         public void write(String str) {
             StrBuilder.this.append(str);
         }
 
-        /**
-         * {@inheritDoc}
-         */
+        /** {@inheritDoc} */
         public void write(String str, int off, int len) {
             StrBuilder.this.append(str, off, len);
         }

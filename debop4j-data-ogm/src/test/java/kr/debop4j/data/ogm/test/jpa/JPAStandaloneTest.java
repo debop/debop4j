@@ -16,7 +16,7 @@ import javax.transaction.TransactionManager;
 /**
  * kr.debop4j.data.ogm.test.jpa.JPAStandaloneTest
  *
- * @author sunghyouk.bae@gmail.com
+ * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 13. 4. 12. 오후 1:33
  */
 @Slf4j

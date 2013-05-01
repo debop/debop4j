@@ -22,7 +22,7 @@ import java.util.Set;
 /**
  * 부서 정보를 나타냅니다. (상위부서, 하위부서 등을 표현합니다)
  *
- * @author sunghyouk.bae@gmail.com
+ * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 13. 3. 1.
  */
 @Entity

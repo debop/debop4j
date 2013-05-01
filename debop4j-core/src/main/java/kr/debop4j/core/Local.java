@@ -26,7 +26,7 @@ import java.util.HashMap;
 /**
  * Thread Context 별로 격리된 저장소를 제공합니다.
  *
- * @author sunghyouk.bae@gmail.com
+ * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 12. 9. 12
  */
 public class Local {
@@ -48,16 +48,19 @@ public class Local {
         return threadLocal.get();
     }
 
+    /** 로컬 저장소에 저장된 객체를 조회합니다. */
     public static Object get(Object key) {
         return threadLocal.get().get(key);
     }
 
-    @SuppressWarnings("unchecked")
+    /** 로컬 저장소에 저장된 객체를 조회합니다. */
+    @SuppressWarnings( "unchecked" )
     public static <T> T get(Object key, Class<T> clazz) {
         return (T) threadLocal.get().get(key);
     }
 
-    @SuppressWarnings("unchecked")
+    /** 로컬 저장소에 객체를 저장합니다. */
+    @SuppressWarnings( "unchecked" )
     public static void put(Object key, Object value) {
         assert key != null;
 
@@ -67,6 +70,7 @@ public class Local {
         threadLocal.get().put(key, value);
     }
 
+    /** 로컬 저장소의 모든 정보를 삭제합니다. */
     public static void clear() {
         threadLocal.get().clear();
         log.debug("Local 저장소의 모든 정보를 삭제했습니다.");

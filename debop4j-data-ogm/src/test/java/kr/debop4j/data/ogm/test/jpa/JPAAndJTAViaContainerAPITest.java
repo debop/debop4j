@@ -9,13 +9,13 @@ import javax.persistence.EntityManager;
 /**
  * kr.debop4j.data.ogm.test.jpa.JPAAndJTAViaContainerAPITest
  *
- * @author sunghyouk.bae@gmail.com
+ * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 13. 4. 12. 오후 4:50
  */
 public class JPAAndJTAViaContainerAPITest extends JpaTestBase {
     @Override
     public Class<?>[] getEntities() {
-        return new Class<?>[]{ Poem.class };
+        return new Class<?>[] { Poem.class };
     }
 
     @Test

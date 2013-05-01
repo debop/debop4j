@@ -27,7 +27,7 @@ import java.util.Set;
 /**
  * 메타데이터를 제공하는 엔티티의 추상 클래스입니다.
  *
- * @author sunghyouk.bae@gmail.com
+ * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 12. 9. 19
  */
 @MappedSuperclass

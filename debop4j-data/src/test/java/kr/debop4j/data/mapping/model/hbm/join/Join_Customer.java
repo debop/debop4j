@@ -13,7 +13,7 @@ import java.util.Date;
 
 /**
  * 고객 정보
- * Jpa@author sunghyouk.bae@gmail.com
+ * Jpa@author 배성혁 ( sunghyouk.bae@gmail.com )
  *
  * @since 12. 11. 19.
  */

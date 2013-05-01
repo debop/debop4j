@@ -10,7 +10,7 @@ import java.util.Properties;
 /**
  * kr.debop4j.search.twitter.TwitterConfig
  *
- * @author sunghyouk.bae@gmail.com
+ * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 13. 4. 25. 오후 4:33
  */
 @Configuration

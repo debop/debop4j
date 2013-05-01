@@ -12,7 +12,7 @@ import static org.junit.Assert.assertEquals;
 /**
  * kr.debop4j.core.json.JsonToolTest
  *
- * @author sunghyouk.bae@gmail.com
+ * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 12. 12. 5.
  */
 @Slf4j

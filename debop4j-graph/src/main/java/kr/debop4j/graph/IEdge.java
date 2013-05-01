@@ -5,7 +5,7 @@ import java.io.Serializable;
 /**
  * kr.debop4j.graph.IEdge
  *
- * @author sunghyouk.bae@gmail.com
+ * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 13. 3. 14.
  */
 public interface IEdge extends Serializable {

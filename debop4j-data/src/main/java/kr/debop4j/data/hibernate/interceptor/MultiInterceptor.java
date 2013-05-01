@@ -33,7 +33,7 @@ import java.util.concurrent.FutureTask;
 /**
  * 복수 개의 Interceptor들을 모두 수행하도록 하는 Interceptor입니다. (기본적으로 Interceptor를 하나만 등록하게 되어 있어서)
  *
- * @author sunghyouk.bae@gmail.com
+ * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 12. 9. 23.
  */
 public class MultiInterceptor extends EmptyInterceptor {

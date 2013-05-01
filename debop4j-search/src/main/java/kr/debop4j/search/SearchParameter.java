@@ -24,7 +24,7 @@ import lombok.Getter;
 /**
  * 루씬 검색 시의 파라미터들
  *
- * @author sunghyouk.bae@gmail.com
+ * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 13. 4. 26. 오후 4:25
  */
 public class SearchParameter extends NamedParameterBase {

@@ -26,7 +26,7 @@ import java.util.List;
 /**
  * AccessClassLoader
  *
- * @author sunghyouk.bae@gmail.com
+ * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 13. 1. 21
  */
 @Slf4j
@@ -34,9 +34,7 @@ class AccessClassLoader extends ClassLoader {
 
     private static final List<AccessClassLoader> accessClassLoaders = Lists.newArrayList();
 
-    /**
-     * AccessClassLoger를 생성합니다.
-     */
+    /** AccessClassLoger를 생성합니다. */
     static AccessClassLoader get(Class type) {
         if (log.isDebugEnabled())
             log.debug("AccessClassLoader를 생성합니다. type=[{}]", type);
@@ -74,7 +72,7 @@ class AccessClassLoader extends ClassLoader {
         try {
             Method method = ClassLoader.class
                     .getDeclaredMethod("defineClass",
-                                       new Class[]{ String.class, byte[].class, int.class, int.class });
+                                       new Class[] { String.class, byte[].class, int.class, int.class });
             method.setAccessible(true);
             // NOTE: 꼭 Integer.valueOf() 를 써야 합니다.
             return (Class) method.invoke(getParent(), name, bytes, Integer.valueOf(0), Integer.valueOf(bytes.length));

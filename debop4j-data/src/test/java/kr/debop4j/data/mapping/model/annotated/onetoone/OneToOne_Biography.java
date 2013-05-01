@@ -11,7 +11,7 @@ import javax.persistence.*;
 /**
  * kr.debop4j.data.mapping.model.annotated.onetoone.OneToOne_Biography
  *
- * @author sunghyouk.bae@gmail.com
+ * @author 배성혁 ( sunghyouk.bae@gmail.com )
  *         13. 3. 23. 오후 10:08
  */
 @Entity
@@ -22,9 +22,7 @@ public class OneToOne_Biography extends AnnotatedEntityBase {
 
     private static final long serialVersionUID = -5261462229916986070L;
 
-    /**
-     * Hibernate 기본의 one-to-one 입니다!!!
-     */
+    /** Hibernate 기본의 one-to-one 입니다!!! */
     @Id
     @GeneratedValue(generator = "gen")
     @GenericGenerator(name = "gen", strategy = "foreign",

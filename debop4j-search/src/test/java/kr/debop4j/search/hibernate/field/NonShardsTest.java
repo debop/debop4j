@@ -9,7 +9,7 @@ import org.junit.Test;
 /**
  * NonShardsTest
  *
- * @author sunghyouk.bae@gmail.com
+ * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 13. 4. 25. 오후 2:26
  */
 @Slf4j

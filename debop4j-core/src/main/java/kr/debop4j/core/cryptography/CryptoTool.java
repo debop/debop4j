@@ -8,7 +8,7 @@ import java.security.SecureRandom;
 /**
  * 암호화 관련 Helper Class
  *
- * @author sunghyouk.bae@gmail.com
+ * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 12. 9. 14
  */
 @Slf4j

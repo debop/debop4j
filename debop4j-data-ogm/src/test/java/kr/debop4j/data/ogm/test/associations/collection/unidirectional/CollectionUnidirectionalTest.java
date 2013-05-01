@@ -15,7 +15,7 @@ import static org.junit.Assert.*;
 /**
  * kr.debop4j.data.ogm.test.associations.collection.unidirectional.CollectionUnidirectionalTest
  *
- * @author sunghyouk.bae@gmail.com
+ * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 13. 4. 2. 오후 12:58
  */
 @Slf4j
@@ -124,7 +124,7 @@ public class CollectionUnidirectionalTest extends OgmTestBase {
 
     @Override
     protected Class<?>[] getAnnotatedClasses() {
-        return new Class<?>[]{
+        return new Class<?>[] {
                 Cloud.class,
                 SnowFlake.class
         };

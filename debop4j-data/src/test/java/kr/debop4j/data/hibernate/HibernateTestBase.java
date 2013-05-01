@@ -8,7 +8,7 @@ import org.junit.BeforeClass;
 /**
  * kr.nsoft.data.hibernate.HibernateTestBase
  *
- * @author sunghyouk.bae@gmail.com
+ * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 12. 11. 26.
  */
 public abstract class HibernateTestBase extends DatabaseTestFixtureBase {

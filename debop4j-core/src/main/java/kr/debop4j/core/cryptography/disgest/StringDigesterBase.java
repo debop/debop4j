@@ -22,7 +22,7 @@ import org.jasypt.digest.StandardStringDigester;
 /**
  * 문자열을 Hash 암호화를 수행한ㄴ 기본 클래스입니다.
  *
- * @author sunghyouk.bae@gmail.com
+ * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 12. 12. 18
  */
 @Slf4j
@@ -46,17 +46,13 @@ public abstract class StringDigesterBase implements IStringDigester {
 
     abstract public String getAlgorithm();
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public boolean isInitialized() {
         return standardStringDigester.isInitialized();
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public String digest(String message) {
         if (log.isTraceEnabled())
@@ -64,9 +60,7 @@ public abstract class StringDigesterBase implements IStringDigester {
         return standardStringDigester.digest(message);
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public boolean matches(String message, String digest) {
         boolean match = standardStringDigester.matches(message, digest);

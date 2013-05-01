@@ -31,7 +31,7 @@ import java.sql.SQLException;
 /**
  * 엔티티의 속성 값을 압축하여 DB에 Hex Decimal 문자열로 저장합니다.
  *
- * @author sunghyouk.bae@gmail.com
+ * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 12. 9. 18
  */
 @Slf4j

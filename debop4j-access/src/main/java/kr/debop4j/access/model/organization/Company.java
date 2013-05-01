@@ -23,7 +23,7 @@ import java.util.Map;
 /**
  * 회사 정보
  *
- * @author sunghyouk.bae@gmail.com
+ * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 13. 3. 1.
  */
 @Entity
@@ -84,9 +84,7 @@ public class Company extends AccessLocaledEntityBase<Company.CompanyLocale> impl
     @Column(name = "ExAttr", length = 2000)
     private String exAttr;
 
-    /**
-     * 다국어 지원을 위한 정보
-     */
+    /** 다국어 지원을 위한 정보 */
     @CollectionTable(name = "CompanyLocale", joinColumns = { @JoinColumn(name = "CompanyId") })
     @ElementCollection(targetClass = CompanyLocale.class, fetch = FetchType.LAZY)
     @MapKeyClass(Locale.class)

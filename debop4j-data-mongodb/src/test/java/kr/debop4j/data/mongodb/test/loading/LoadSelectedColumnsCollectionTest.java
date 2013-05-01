@@ -36,7 +36,7 @@ import static org.junit.Assert.*;
 /**
  * org.hibernate.ogm.test.mongodb.loading.LoadSelectedColumnsCollectionTest
  *
- * @author sunghyouk.bae@gmail.com
+ * @author 배성혁 ( sunghyouk.bae@gmail.com )
  *         13. 3. 23. 오후 5:43
  */
 @Slf4j
@@ -101,15 +101,15 @@ public class LoadSelectedColumnsCollectionTest extends OgmTestBase {
 
         this.addExtraColumn();
         GridDialect gridDialect = this.getGridDialect();
-        AssociationKeyMetadata metadata = new AssociationKeyMetadata("Project_Module", new String[]{ "Project_id" });
-        metadata.setRowKeyColumnNames(new String[]{ "Project_id", "module_id" });
+        AssociationKeyMetadata metadata = new AssociationKeyMetadata("Project_Module", new String[] { "Project_id" });
+        metadata.setRowKeyColumnNames(new String[] { "Project_id", "module_id" });
         AssociationKey associationKey = new AssociationKey(
                 metadata,
-                new Object[]{ "projectID" }
+                new Object[] { "projectID" }
         );
         associationKey.setAssociationKind(AssociationKind.ASSOCIATION);
         associationKey.setCollectionRole("modules");
-        associationKey.setOwnerEntityKey(new EntityKey(new EntityKeyMetadata("Project", new String[]{ "id" }), new String[]{ "projectID" }));
+        associationKey.setOwnerEntityKey(new EntityKey(new EntityKeyMetadata("Project", new String[] { "id" }), new String[] { "projectID" }));
 
         AssociationContext associationContext = new AssociationContext(Arrays.asList(associationKey.getRowKeyColumnNames()));
         final Association association = gridDialect.getAssociation(associationKey, associationContext);
@@ -124,7 +124,7 @@ public class LoadSelectedColumnsCollectionTest extends OgmTestBase {
     }
 
     public Tuple getTuple(String collectionName, String id, List<String> selectedColumns) {
-        EntityKey key = new EntityKey(new EntityKeyMetadata(collectionName, new String[]{ MongoDBDialect.ID_FIELDNAME }), new Object[]{ id });
+        EntityKey key = new EntityKey(new EntityKeyMetadata(collectionName, new String[] { MongoDBDialect.ID_FIELDNAME }), new Object[] { id });
         TupleContext tupleContext = new TupleContext(selectedColumns);
         return this.getGridDialect().getTuple(key, tupleContext);
     }
@@ -147,7 +147,7 @@ public class LoadSelectedColumnsCollectionTest extends OgmTestBase {
 
     @Override
     protected Class<?>[] getAnnotatedClasses() {
-        return new Class<?>[]{
+        return new Class<?>[] {
                 Project.class,
                 Module.class
         };

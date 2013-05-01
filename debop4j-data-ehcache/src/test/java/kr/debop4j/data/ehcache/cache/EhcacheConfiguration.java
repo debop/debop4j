@@ -14,12 +14,12 @@ import javax.annotation.PostConstruct;
 /**
  * kr.debop4j.core.cache.ehcache.EhcacheConfiguration
  *
- * @author sunghyouk.bae@gmail.com
+ * @author 배성혁 ( sunghyouk.bae@gmail.com )
  *         13. 3. 24. 오후 8:59
  */
 @Configuration
 @EnableCaching
-@ComponentScan(basePackageClasses = {UserRepository.class})
+@ComponentScan(basePackageClasses = { UserRepository.class })
 @Slf4j
 public class EhcacheConfiguration {
 

@@ -5,7 +5,7 @@ import kr.debop4j.access.model.AccessEntityBase;
 /**
  * 사용자의 {@link WorkCalendarRule} 을 나타냅니다.
  *
- * @author sunghyouk.bae@gmail.com
+ * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 13. 3. 11.
  */
 public class WorkCalendarRuleOfUser extends AccessEntityBase {

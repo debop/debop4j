@@ -10,7 +10,7 @@ import lombok.Setter;
 /**
  * pudding.pudding.commons.core.io.User
  *
- * @author sunghyouk.bae@gmail.com
+ * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 12. 10. 4.
  */
 @Getter

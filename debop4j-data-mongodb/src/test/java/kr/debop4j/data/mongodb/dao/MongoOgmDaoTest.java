@@ -27,7 +27,7 @@ import static org.fest.assertions.Assertions.assertThat;
 /**
  * MongoDB를 저장소로 사용하는 Ogm 용 Dao인 MongoOgmDao 에 대한 테스트입니다.
  *
- * @author sunghyouk.bae@gmail.com
+ * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 13. 4. 16. 오후 3:14
  */
 @Slf4j

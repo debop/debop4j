@@ -29,7 +29,7 @@ import java.util.Set;
 /**
  * kr.debop4j.data.model.AnnotatedLocaleEntityBase
  *
- * @author sunghyouk.bae@gmail.com
+ * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 13. 3. 8 오전 11:37
  */
 @MappedSuperclass
@@ -44,9 +44,7 @@ public abstract class AnnotatedLocaleEntityBase<TLocaleValue extends ILocaleValu
     @Transient
     private TLocaleValue defaultLocaleValue = null;
 
-    /**
-     * 기본 Locale 정보를 생성하여 제공합니다.
-     */
+    /** 기본 Locale 정보를 생성하여 제공합니다. */
     public final TLocaleValue getDefaultLocaleValue() {
         if (defaultLocaleValue == null) {
             try {

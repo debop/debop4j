@@ -12,7 +12,7 @@ import javax.persistence.*;
 /**
  * 직원의 부가 정보
  *
- * @author sunghyouk.bae@gmail.com
+ * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 13. 3. 25 오후 1:14
  */
 @Entity
@@ -29,9 +29,7 @@ public class EmployeeAttribute extends AnnotatedEntityBase {
         this.employee = employee;
     }
 
-    /**
-     * Hibernate 기본의 one-to-one 입니다!!!
-     */
+    /** Hibernate 기본의 one-to-one 입니다!!! */
     @Id
     @GeneratedValue(generator = "gen")
     @GenericGenerator(name = "gen", strategy = "foreign",

@@ -17,7 +17,7 @@ import java.util.Locale;
 /**
  * kr.debop4j.access.test.repository.organization.CompanyRepositoryTest
  *
- * @author sunghyouk.bae@gmail.com
+ * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 13. 3. 12.
  */
 @Slf4j

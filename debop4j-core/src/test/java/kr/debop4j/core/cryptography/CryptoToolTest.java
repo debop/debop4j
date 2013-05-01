@@ -10,7 +10,7 @@ import java.util.Arrays;
 /**
  * CrytpTool 테스트
  *
- * @author sunghyouk.bae@gmail.com
+ * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 12. 9. 14
  */
 @Slf4j

@@ -16,7 +16,7 @@ import javax.inject.Inject;
 /**
  * kr.debop4j.search.hibernate.score.ScoreTestBase
  *
- * @author sunghyouk.bae@gmail.com
+ * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 13. 4. 25. 오후 3:52
  */
 @Slf4j

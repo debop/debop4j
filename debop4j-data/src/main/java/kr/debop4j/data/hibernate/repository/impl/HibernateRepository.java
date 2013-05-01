@@ -45,7 +45,7 @@ import java.util.List;
  * Spring의 HibernateDaoSupport 및 HibernateTemplate는 더 이상 사용하지 말라.
  * 참고: http://forum.springsource.org/showthread.php?117227-Missing-Hibernate-Classes-Interfaces-in-spring-orm-3.1.0.RC1
  *
- * @author sunghyouk.bae@gmail.com
+ * @author 배성혁 ( sunghyouk.bae@gmail.com )
  */
 @Repository
 @SuppressWarnings("unchecked")

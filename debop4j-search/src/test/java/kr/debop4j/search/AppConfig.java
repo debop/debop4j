@@ -31,7 +31,7 @@ import java.util.Properties;
 /**
  * hibernate와 hibernate-search를 이용한 검색 라이브러리를 테스트하기 위한 Spring 환경설정 파일입니다.
  *
- * @author sunghyouk.bae@gmail.com
+ * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 13. 2. 28.
  */
 @Configuration
@@ -90,7 +90,7 @@ public class AppConfig {
         return props;
     }
 
-    private static String[] mappingPackages = new String[]{
+    private static String[] mappingPackages = new String[] {
             SearchItem.class.getPackage().getName(),
             Twit.class.getPackage().getName()
     };

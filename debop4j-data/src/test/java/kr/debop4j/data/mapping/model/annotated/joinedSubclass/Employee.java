@@ -12,7 +12,7 @@ import java.util.Set;
 /**
  * org.annotated.mapping.domain.model.joinedSubclass.Employee
  *
- * @author sunghyouk.bae@gmail.com
+ * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 12. 12. 8.
  */
 @Entity

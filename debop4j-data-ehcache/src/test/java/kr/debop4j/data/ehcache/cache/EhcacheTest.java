@@ -15,12 +15,12 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 /**
  * kr.debop4j.core.cache.ehcache.EhcacheTest
  *
- * @author sunghyouk.bae@gmail.com
+ * @author 배성혁 ( sunghyouk.bae@gmail.com )
  *         13. 3. 24. 오후 8:58
  */
 @Slf4j
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = {EhcacheConfiguration.class})
+@ContextConfiguration(classes = { EhcacheConfiguration.class })
 public class EhcacheTest {
 
     @Autowired

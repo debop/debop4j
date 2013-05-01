@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 /**
  * User 정보를 관리하는 Repository - 캐시 테스트를 위한 Repository입니다.
  *
- * @author sunghyouk.bae@gmail.com
+ * @author 배성혁 ( sunghyouk.bae@gmail.com )
  *         13. 3. 25 오후 5:36
  */
 @Repository

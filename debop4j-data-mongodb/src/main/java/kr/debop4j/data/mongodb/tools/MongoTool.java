@@ -35,7 +35,7 @@ import java.util.List;
 /**
  * MongoDB 를 hibernate-ogm의 저장소로 사용할 때의 저장소
  *
- * @author sunghyouk.bae@gmail.com
+ * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 13. 3. 28
  */
 @Component
@@ -59,8 +59,8 @@ public class MongoTool {
 
     public Tuple getTuple(String collectionName, String id, List<String> selectedColumns) {
         EntityKey key = new EntityKey(new EntityKeyMetadata(collectionName,
-                                                            new String[]{ MongoDBDialect.ID_FIELDNAME }),
-                                      new Object[]{ id });
+                                                            new String[] { MongoDBDialect.ID_FIELDNAME }),
+                                      new Object[] { id });
         TupleContext tupleContext = new TupleContext(selectedColumns);
         return gridDialect.getTuple(key, tupleContext);
     }

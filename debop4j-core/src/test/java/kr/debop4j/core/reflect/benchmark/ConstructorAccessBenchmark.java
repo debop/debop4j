@@ -7,7 +7,7 @@ import org.junit.Test;
 /**
  * kr.debop4j.core.reflect.benchmark.ConstructorAccessBenchmark
  *
- * @author sunghyouk.bae@gmail.com
+ * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 13. 1. 21
  */
 @Slf4j

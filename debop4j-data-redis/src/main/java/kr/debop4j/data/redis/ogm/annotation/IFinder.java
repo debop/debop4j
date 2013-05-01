@@ -5,7 +5,7 @@ import java.lang.annotation.Annotation;
 /**
  * IFinder
  *
- * @author sunghyouk.bae@gmail.com
+ * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 13. 4. 10. 오후 10:23
  */
 public interface IFinder {

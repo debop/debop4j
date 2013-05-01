@@ -48,7 +48,7 @@ import java.util.Locale;
 /**
  * Hibernate 엔티티 정보를 관리하기 위한 Utility Class 입니다.
  *
- * @author sunghyouk.bae@gmail.com
+ * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 12. 9. 24
  */
 @Slf4j
@@ -255,9 +255,7 @@ public class EntityTool {
 
     // region << IEntity Mapper >>
 
-    /**
-     * 원본 엔티티의 속성정보를 대상 엔티티의 속성정보로 매핑시킵니다.
-     */
+    /** 원본 엔티티의 속성정보를 대상 엔티티의 속성정보로 매핑시킵니다. */
     public static <S, T> T mapEntity(S source, T target) {
         MapperTool.map(source, target);
         return target;
@@ -268,9 +266,7 @@ public class EntityTool {
         return MapperTool.map(source, targetClass);
     }
 
-    /**
-     * 원본 엔티티를 대상 엔티티로 매핑을 수행합니다. {@link kr.debop4j.core.tools.MapperTool} 을 사용합니다.
-     */
+    /** 원본 엔티티를 대상 엔티티로 매핑을 수행합니다. {@link kr.debop4j.core.tools.MapperTool} 을 사용합니다. */
     public static <S, T> List<T> mapEntities(List<S> sources, List<T> targets) {
         Guard.shouldNotBeNull(sources, "sources");
         Guard.shouldNotBeNull(targets, "targets");
@@ -283,9 +279,7 @@ public class EntityTool {
         return targets;
     }
 
-    /**
-     * 병렬 방식으로 원본으로부터 대상엔티티로 매핑합니다. 대용량 정보의 DTO 생성 시 유리합니다.
-     */
+    /** 병렬 방식으로 원본으로부터 대상엔티티로 매핑합니다. 대용량 정보의 DTO 생성 시 유리합니다. */
     public static <S, T> List<T> mapEntitiesAsParallel(final List<S> sources,
                                                        final Class<T> targetClass) {
         if (sources == null || sources.size() == 0)

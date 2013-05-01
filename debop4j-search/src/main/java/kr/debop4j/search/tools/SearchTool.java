@@ -53,7 +53,7 @@ import java.util.Set;
 /**
  * Hibernate Search 관련 Utility class s
  *
- * @author sunghyouk.bae@gmail.com
+ * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 13. 2. 28.
  */
 public class SearchTool {
@@ -62,9 +62,7 @@ public class SearchTool {
 
     private SearchTool() {}
 
-    /**
-     * Hibernate-Search의 FullTextIndexEventListener를 SessionFactory에 등록합니다.
-     */
+    /** Hibernate-Search의 FullTextIndexEventListener를 SessionFactory에 등록합니다. */
     public static void registerFullTextIndexEventListener(SessionFactory sessionFactory, FullTextIndexEventListener listener) {
         assert sessionFactory != null;
         log.info("sessionFactory에 FullTestIndexEventListener를 등록합니다... listener=[{}]", listener);
@@ -80,9 +78,7 @@ public class SearchTool {
         }
     }
 
-    /**
-     * 루씬용 Query를 빌드합니다.
-     */
+    /** 루씬용 Query를 빌드합니다. */
     public static org.apache.lucene.search.Query bulidLuceneQuery(FullTextSession fts, Class<?> clazz, String fieldName, String values) {
         if (log.isTraceEnabled())
             log.trace("루씬 쿼리를 빌드합니다. clazz=[{}], fieldName=[{}], values=[{}]", clazz, fieldName, values);
@@ -113,9 +109,7 @@ public class SearchTool {
         return ftq;
     }
 
-    /**
-     * 인덱싱을 수행할 엔티티 정보를 모두 조회합니다.
-     */
+    /** 인덱싱을 수행할 엔티티 정보를 모두 조회합니다. */
     public static Set<Class> getIndexedClasses(SessionFactory sessionFactory) {
         if (log.isDebugEnabled())
             log.debug("매핑된 엔티티중에 인덱싱을 수행할 엔티티들을 조회합니다.");
@@ -169,9 +163,7 @@ public class SearchTool {
         });
     }
 
-    /**
-     * 루씬 검색용 QueryBuilder 를 생성합니다.
-     */
+    /** 루씬 검색용 QueryBuilder 를 생성합니다. */
     public static QueryBuilder buildLuceneQuery(final Class<?> clazz, final FullTextSession fts, SearchParameter... parameters) {
         QueryBuilder builder = fts.getSearchFactory().buildQueryBuilder().forEntity(clazz).get();
 

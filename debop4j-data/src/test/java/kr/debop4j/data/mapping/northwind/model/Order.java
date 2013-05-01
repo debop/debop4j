@@ -19,7 +19,7 @@ import java.util.List;
 /**
  * kr.debop4j.data.mapping.northwind.model.Order
  *
- * @author sunghyouk.bae@gmail.com
+ * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 13. 2. 23.
  */
 @Entity

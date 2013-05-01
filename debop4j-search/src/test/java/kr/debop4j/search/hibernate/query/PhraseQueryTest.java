@@ -33,13 +33,13 @@ import java.util.StringTokenizer;
 /**
  * kr.debop4j.search.hibernate.query.PhraseQueryTest
  *
- * @author sunghyouk.bae@gmail.com
+ * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 13. 4. 23. 오후 9:06
  */
 @Slf4j
 public class PhraseQueryTest extends SearchTestBase {
 
-    String[] descs = new String[]{
+    String[] descs = new String[] {
             "he hits the road as a traveling salesman",
             "Star Trek The Next Generation",
             "the fifth season of star trek",

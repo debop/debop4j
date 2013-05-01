@@ -12,7 +12,7 @@ import java.util.Map;
 /**
  * 압축 관련 테스트
  *
- * @author sunghyouk.bae@gmail.com
+ * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 12. 12. 17
  */
 @Slf4j

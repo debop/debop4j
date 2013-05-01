@@ -58,10 +58,10 @@ public class HanjaUtils {
     public static char[] convertToHangul(char hanja) throws MorphException {
 //		if(hanja>0x9FFF||hanja<0x3400) return new char[]{hanja};
 
-        char[] result = mapHanja.get(new String(new char[]{ hanja }));
+        char[] result = mapHanja.get(new String(new char[] { hanja }));
 
         if (result == null)
-            result = new char[]{ hanja };
+            result = new char[] { hanja };
 
         if (log.isTraceEnabled())
             log.trace("한자에 대응하는 한글을 찾아서 변환합니다. hanja=[{}], result=[{}]", hanja, result);

@@ -40,7 +40,7 @@ import java.util.List;
 /**
  * Hibernate Dao 기본 클래스
  *
- * @author sunghyouk.bae@gmail.com
+ * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 13. 4. 15. 오전 10:21
  */
 @Repository
@@ -156,9 +156,7 @@ public class HibernateDao implements IHibernateDao {
         return HibernateTool.setParameters(query, parameters).scroll(scrollMode);
     }
 
-    /**
-     * 모든 엔티티를 필터링 없이 반환합니다.
-     */
+    /** 모든 엔티티를 필터링 없이 반환합니다. */
     @Override
     public final <T> List<T> findAll(Class<T> clazz, Order... orders) {
         if (ArrayTool.isEmpty(orders)) {
@@ -171,9 +169,7 @@ public class HibernateDao implements IHibernateDao {
         }
     }
 
-    /**
-     * 모든 엔티티를 필터링 없이 Paging 처리하여 반환합니다.
-     */
+    /** 모든 엔티티를 필터링 없이 Paging 처리하여 반환합니다. */
     @Override
     public final <T> List<T> findAll(Class<T> clazz, int firstResult, int maxResults, Order... orders) {
         Criteria criteria = getSession().createCriteria(clazz);
@@ -563,9 +559,7 @@ public class HibernateDao implements IHibernateDao {
         deleteAll(find(clazz, criteria));
     }
 
-    /**
-     * Cascade 적용 없이 엔티티들을 모두 삭제합니다.
-     */
+    /** Cascade 적용 없이 엔티티들을 모두 삭제합니다. */
     @Override
     public <T> int deleteAllWithoutCascade(Class<T> clazz) {
         if (isTraceEnabled)

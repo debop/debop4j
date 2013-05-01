@@ -17,10 +17,12 @@
 package kr.debop4j.core;
 
 /**
- * @author sunghyouk.bae@gmail.com
+ * kr.debop4j.core 에서 사용할 String Resource 입니다.
+ *
+ * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 12. 9. 12
  */
-public final class SR {
+public abstract class SR {
 
     private SR() {}
 

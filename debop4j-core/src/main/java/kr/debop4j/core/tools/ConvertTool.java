@@ -24,7 +24,7 @@ import java.util.Date;
 /**
  * pudding.pudding.commons.core.tool.ConvertTool
  *
- * @author sunghyouk.bae@gmail.com
+ * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 12. 9. 26.
  */
 @Slf4j

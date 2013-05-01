@@ -19,7 +19,7 @@ import java.util.Date;
 /**
  * 메뉴 정보를 나타냅니다.
  *
- * @author sunghyouk.bae@gmail.com
+ * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 13. 3. 11.
  */
 @Entity
@@ -43,9 +43,7 @@ public class Menu extends AnnotatedTreeEntityBase<Menu> implements ITreeEntity<M
     @Index(name = "ix_menu_code")
     private Product product;
 
-    /**
-     * Company 가 null이면, Product 의 기본 메뉴라고 볼 수 있다.
-     */
+    /** Company 가 null이면, Product 의 기본 메뉴라고 볼 수 있다. */
     @ManyToOne
     @JoinColumn(name = "CompanyId")
     @Index(name = "ix_menu_code")

@@ -7,7 +7,7 @@ import javax.persistence.Entity;
 /**
  * org.annotated.mapping.domain.model.subclass.Subclass_BankAccount
  *
- * @author sunghyouk.bae@gmail.com
+ * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 12. 12. 4.
  */
 @Entity

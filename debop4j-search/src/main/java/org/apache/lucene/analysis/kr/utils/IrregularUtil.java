@@ -120,7 +120,7 @@ public class IrregularUtil {
             if (irrs != null) return irrs;
         } else if (("가".equals(start) && "거라".equals(end)) ||
                 ("오".equals(start) && "너라".equals(end))) {
-            return new String[]{ start, end };
+            return new String[] { start, end };
         }
 
         return null;
@@ -149,13 +149,13 @@ public class IrregularUtil {
             ch = MorphUtil.makeChar(ch, 17);
 
             if (start.length() > 2)
-                start = Utilities.arrayToString(new String[]{ start.substring(0, start.length() - 2), Character.toString(ch) });
+                start = Utilities.arrayToString(new String[] { start.substring(0, start.length() - 2), Character.toString(ch) });
             else
                 start = Character.toString(ch);
 
             WordEntry entry = DictionaryUtil.getVerb(start);
             if (entry != null && entry.getFeature(WordEntry.IDX_REGURA) == IRR_TYPE_BIUP)
-                return new String[]{ start, end };
+                return new String[] { start, end };
         }
 
 
@@ -177,13 +177,13 @@ public class IrregularUtil {
 
         ch = MorphUtil.makeChar(ch, 7);
         if (start.length() > 1)
-            start = Utilities.arrayToString(new String[]{ start.substring(0, start.length() - 1), Character.toString(ch) });
+            start = Utilities.arrayToString(new String[] { start.substring(0, start.length() - 1), Character.toString(ch) });
         else
             start = Character.toString(ch);
 
         WordEntry entry = DictionaryUtil.getVerb(start);
         if (entry != null && entry.getFeature(WordEntry.IDX_REGURA) == IRR_TYPE_DI)
-            return new String[]{ start, end };
+            return new String[] { start, end };
 
         return null;
     }
@@ -209,7 +209,7 @@ public class IrregularUtil {
 
         WordEntry entry = DictionaryUtil.getVerb(start);
         if (entry != null && entry.getFeature(WordEntry.IDX_REGURA) == IRR_TYPE_SIUT)
-            return new String[]{ start, end };
+            return new String[] { start, end };
 
         return null;
     }
@@ -243,7 +243,7 @@ public class IrregularUtil {
 
             WordEntry entry = DictionaryUtil.getVerb(sb.toString());
             if (entry != null && entry.getFeature(WordEntry.IDX_REGURA) == IRR_TYPE_LOO)
-                return new String[]{ sb.toString(), end };
+                return new String[] { sb.toString(), end };
 
         }
 
@@ -269,7 +269,7 @@ public class IrregularUtil {
 
         WordEntry entry = DictionaryUtil.getVerb(start);
         if (entry != null)
-            return new String[]{ start, end };
+            return new String[] { start, end };
 
         return null;
     }
@@ -299,7 +299,7 @@ public class IrregularUtil {
 
         WordEntry entry = DictionaryUtil.getVerb(start);
         if (entry != null && entry.getFeature(WordEntry.IDX_REGURA) == IRR_TYPE_RU)
-            return new String[]{ start, end };
+            return new String[] { start, end };
 
         return null;
     }
@@ -332,7 +332,7 @@ public class IrregularUtil {
 
         WordEntry entry = DictionaryUtil.getVerb(start);
         if (entry != null && entry.getFeature(WordEntry.IDX_REGURA) == IRR_TYPE_HIOOT)
-            return new String[]{ start, end };
+            return new String[] { start, end };
 
         return null;
     }
@@ -357,7 +357,7 @@ public class IrregularUtil {
             start = Character.toString(ch);
 
         WordEntry entry = DictionaryUtil.getVerb(start);
-        if (entry != null) return new String[]{ start, end };
+        if (entry != null) return new String[] { start, end };
 
         return null;
     }

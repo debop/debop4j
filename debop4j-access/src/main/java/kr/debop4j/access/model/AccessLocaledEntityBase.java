@@ -14,7 +14,7 @@ import java.util.Date;
 /**
  * 다국어를 지원하는 Entity를 나타냅니다.
  *
- * @author sunghyouk.bae@gmail.com
+ * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 13. 3. 8 오후 3:46
  */
 @MappedSuperclass

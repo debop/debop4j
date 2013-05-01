@@ -12,7 +12,7 @@ import javax.persistence.Embeddable;
 /**
  * 주소를 나타내는 Component
  *
- * @author sunghyouk.bae@gmail.com
+ * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 13. 3. 1.
  */
 @Embeddable

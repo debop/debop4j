@@ -12,7 +12,7 @@ import static org.junit.Assert.assertNull;
 /**
  * kr.debop4j.data.ogm.test.associations.onetoone.OneToOneTest
  *
- * @author sunghyouk.bae@gmail.com
+ * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 13. 4. 1
  */
 @Slf4j
@@ -130,7 +130,7 @@ public class OneToOneTest extends OgmTestBase {
 
     @Override
     protected Class<?>[] getAnnotatedClasses() {
-        return new Class<?>[]{
+        return new Class<?>[] {
                 Horse.class,
                 Cavalier.class,
                 Vehicle.class,

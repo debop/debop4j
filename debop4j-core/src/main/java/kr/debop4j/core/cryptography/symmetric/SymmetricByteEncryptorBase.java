@@ -6,7 +6,7 @@ import org.jasypt.encryption.pbe.StandardPBEByteEncryptor;
 /**
  * 대칭형 암호화 알고리즘을 수행하는 기본 클래스입니다. 암호화/복호화를 수행합니다.
  *
- * @author sunghyouk.bae@gmail.com
+ * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 12. 12. 18
  */
 @Slf4j
@@ -30,25 +30,19 @@ public abstract class SymmetricByteEncryptorBase implements ISymmetricByteEncryp
 
     abstract public String getAlgorithm();
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public boolean isInitialized() {
         return byteEncryptor.isInitialized();
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public void setPassword(String password) {
         byteEncryptor.setPassword(password);
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public byte[] encrypt(byte[] plainBytes) {
         if (plainBytes == null || plainBytes.length == 0)
@@ -60,9 +54,7 @@ public abstract class SymmetricByteEncryptorBase implements ISymmetricByteEncryp
         return byteEncryptor.encrypt(plainBytes);
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public byte[] decrypt(byte[] encryptedBytes) {
         if (encryptedBytes == null || encryptedBytes.length == 0)

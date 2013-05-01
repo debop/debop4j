@@ -28,7 +28,7 @@ import java.util.zip.InflaterInputStream;
 /**
  * Deflate 알고리즘을 사용하는 Compressor
  *
- * @author sunghyouk.bae@gmail.com
+ * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 12. 9. 12.
  */
 @Slf4j

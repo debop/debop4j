@@ -33,7 +33,7 @@ import static org.hibernate.criterion.Restrictions.*;
 /**
  * Criteria 관련 Utility Class 입니다.
  *
- * @author sunghyouk.bae@gmail.com
+ * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 12. 9. 21
  */
 @Slf4j
@@ -46,9 +46,7 @@ public final class CriteriaTool {
     // region << Criterion >>
 
 
-    /**
-     * 특정 속성 값이 lowerValue 와 upperValue 구간에 속하는지 구합니다.
-     */
+    /** 특정 속성 값이 lowerValue 와 upperValue 구간에 속하는지 구합니다. */
     public static Criterion getIsBetweenCriterion(String propertyName, Object lo, Object hi) {
         return getIsBetweenCriterion(propertyName, lo, hi, true, true);
     }
@@ -78,9 +76,7 @@ public final class CriteriaTool {
         return result;
     }
 
-    /**
-     * 지정한 값이 두 속성 값 사이에 존재하는지 여부
-     */
+    /** 지정한 값이 두 속성 값 사이에 존재하는지 여부 */
     public static Criterion getIsInRangeCriterion(final String loPropertyName,
                                                   final String hiPropertyName,
                                                   Object value) {
@@ -91,9 +87,7 @@ public final class CriteriaTool {
                                      true);
     }
 
-    /**
-     * 지정한 값이 두 속성 값 사이에 존재하는지 여부
-     */
+    /** 지정한 값이 두 속성 값 사이에 존재하는지 여부 */
     public static Criterion getIsInRangeCriterion(final String loPropertyName,
                                                   final String hiPropertyName,
                                                   Object value,
@@ -115,9 +109,7 @@ public final class CriteriaTool {
                              .add(hiCritiera));
     }
 
-    /**
-     * 지정한 범위 값이 두 속성 값 구간과 겹치는지를 알아보기 위한 질의어
-     */
+    /** 지정한 범위 값이 두 속성 값 구간과 겹치는지를 알아보기 위한 질의어 */
     public static Criterion getIsOverlapCriterion(final String loPropertyName,
                                                   final String hiPropertyName,
                                                   Object lo,
@@ -125,9 +117,7 @@ public final class CriteriaTool {
         return getIsOverlapCriterion(loPropertyName, hiPropertyName, lo, hi, true, true);
     }
 
-    /**
-     * 지정한 범위 값이 두 속성 값 구간과 겹치는지를 알아보기 위한 질의어
-     */
+    /** 지정한 범위 값이 두 속성 값 구간과 겹치는지를 알아보기 위한 질의어 */
     public static Criterion getIsOverlapCriterion(String loPropertyName,
                                                   String hiPropertyName,
                                                   Object lo,
@@ -170,9 +160,7 @@ public final class CriteriaTool {
         }
     }
 
-    /**
-     * value가 null 이 아니면, 속성값과 eq 이거나 null 인 경우 모두 구한다. value가 null 인 경우는 isNull 로 만든다.
-     */
+    /** value가 null 이 아니면, 속성값과 eq 이거나 null 인 경우 모두 구한다. value가 null 인 경우는 isNull 로 만든다. */
     public static Criterion getEqIncludeNull(final String propertyName, Object value) {
         if (value != null)
             return disjunction()
@@ -182,9 +170,7 @@ public final class CriteriaTool {
         return isNull(propertyName);
     }
 
-    /**
-     * value 가 null 이면 isnull 을 null 이 아니면 eq 질의를 수행합니다.
-     */
+    /** value 가 null 이면 isnull 을 null 이 아니면 eq 질의를 수행합니다. */
     public static Criterion getEqOrNull(final String propertyName, Object value) {
         return (value == null)
                 ? isNull(propertyName)
@@ -283,16 +269,12 @@ public final class CriteriaTool {
         return criteria.add(like(propertyName, value, matchMode));
     }
 
-    /**
-     * Insensitive Like search
-     */
+    /** Insensitive Like search */
     public static Criteria addILike(Criteria criteria, String propertyName, String value) {
         return addILike(criteria, propertyName, value, MatchMode.START);
     }
 
-    /**
-     * Insensitive Like search
-     */
+    /** Insensitive Like search */
     public static Criteria addILike(Criteria criteria, String propertyName, String value, MatchMode matchMode) {
         return criteria.add(ilike(propertyName, value, matchMode));
     }
@@ -471,16 +453,12 @@ public final class CriteriaTool {
         return dc.add(Restrictions.like(propertyName, value, matchMode));
     }
 
-    /**
-     * Insensitive Like search
-     */
+    /** Insensitive Like search */
     public static DetachedCriteria addILike(DetachedCriteria dc, String propertyName, String value) {
         return addILike(dc, propertyName, value, MatchMode.START);
     }
 
-    /**
-     * Insensitive Like search
-     */
+    /** Insensitive Like search */
     public static DetachedCriteria addILike(DetachedCriteria dc, String propertyName, String value, MatchMode matchMode) {
         return dc.add(Restrictions.ilike(propertyName, value, matchMode));
     }

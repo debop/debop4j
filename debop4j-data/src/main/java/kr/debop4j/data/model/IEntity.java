@@ -20,7 +20,7 @@ import java.io.Serializable;
 
 /**
  * 엔티티의 기본 인터페이스입니다.
- * Jpa@author sunghyouk.bae@gmail.com
+ * Jpa@author 배성혁 ( sunghyouk.bae@gmail.com )
  *
  * @since 12. 11. 19
  */

@@ -19,7 +19,7 @@ package kr.debop4j.core;
 /**
  * 시스템에서 지원하지 않는 기능을 호출했을 때 발생하는 예외입니다.
  *
- * @author sunghyouk.bae@gmail.com
+ * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 12. 12. 27.
  */
 public class NotSupportException extends RuntimeException {

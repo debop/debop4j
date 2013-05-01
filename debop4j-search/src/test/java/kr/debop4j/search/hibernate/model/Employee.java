@@ -16,7 +16,7 @@ import java.util.Date;
 /**
  * kr.debop4j.search.hibernate.model.Employee
  *
- * @author sunghyouk.bae@gmail.com
+ * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 13. 4. 25. 오후 2:21
  */
 @Entity

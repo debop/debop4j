@@ -32,7 +32,7 @@ import java.sql.SQLException;
 /**
  * 엔티티의 속성 값을 압축하여 DB에 저장 / 로드하는 Hibernate 사용자 수형의 기본 클래스입니다.
  *
- * @author sunghyouk.bae@gmail.com
+ * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 12. 9. 18
  */
 @Slf4j
@@ -40,9 +40,7 @@ public abstract class AbstractCompressedUserType implements UserType, Serializab
 
     private static final long serialVersionUID = -3570021248450932340L;
 
-    /**
-     * 속성 값을 압축/복원하는 {@link ICompressor}의 구현 객체를 반환합니다.
-     */
+    /** 속성 값을 압축/복원하는 {@link ICompressor}의 구현 객체를 반환합니다. */
     abstract public ICompressor getCompressor();
 
 
@@ -64,7 +62,7 @@ public abstract class AbstractCompressedUserType implements UserType, Serializab
 
     @Override
     public int[] sqlTypes() {
-        return new int[]{ BinaryType.INSTANCE.sqlType() };
+        return new int[] { BinaryType.INSTANCE.sqlType() };
     }
 
     @Override

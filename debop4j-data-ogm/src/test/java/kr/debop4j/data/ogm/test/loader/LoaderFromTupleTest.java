@@ -26,13 +26,13 @@ import static org.fest.assertions.Assertions.assertThat;
 /**
  * kr.debop4j.data.ogm.test.loader.LoaderFromTupleTest
  *
- * @author sunghyouk.bae@gmail.com
+ * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 13. 4. 1
  */
 public class LoaderFromTupleTest extends OgmTestBase {
     @Override
     protected Class<?>[] getAnnotatedClasses() {
-        return new Class<?>[]{ Feeling.class };
+        return new Class<?>[] { Feeling.class };
     }
 
     @Test
@@ -48,8 +48,8 @@ public class LoaderFromTupleTest extends OgmTestBase {
         transaction.commit();
         session.clear();
 
-        EntityKey key = new EntityKey(new EntityKeyMetadata("Feeling", new String[]{ "id" }),
-                                      new Object[]{ feeling.getId() });
+        EntityKey key = new EntityKey(new EntityKeyMetadata("Feeling", new String[] { "id" }),
+                                      new Object[] { feeling.getId() });
         Map<String, Object> entityTuple = (Map<String, Object>) extractEntityTuple(sessions, key);
         final Tuple tuple = new Tuple(new MapTupleSnapshot(entityTuple));
 
@@ -57,7 +57,7 @@ public class LoaderFromTupleTest extends OgmTestBase {
                 ((SessionFactoryImplementor) session.getSessionFactory())
                         .getEntityPersister(Feeling.class.getName());
 
-        OgmLoader loader = new OgmLoader(new OgmEntityPersister[]{ (OgmEntityPersister) persister });
+        OgmLoader loader = new OgmLoader(new OgmEntityPersister[] { (OgmEntityPersister) persister });
         OgmLoadingContext ogmLoadingContext = new OgmLoadingContext();
         List<Tuple> tuples = new ArrayList<Tuple>();
         tuples.add(tuple);

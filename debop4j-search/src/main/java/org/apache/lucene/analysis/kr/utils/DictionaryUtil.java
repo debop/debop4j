@@ -75,9 +75,7 @@ public class DictionaryUtil {
     }
 
 
-    /**
-     * 사전을 로드한다.
-     */
+    /** 사전을 로드한다. */
     public synchronized static void loadDictionary() throws MorphException {
         log.info("사전을 로드합니다...");
 
@@ -301,9 +299,7 @@ public class DictionaryUtil {
         return suffixs.get(str) != null;
     }
 
-    /**
-     * ㄴ,ㄹ,ㅁ,ㅂ과 eomi 가 결합하여 어미가 될 수 있는지 점검한다.
-     */
+    /** ㄴ,ㄹ,ㅁ,ㅂ과 eomi 가 결합하여 어미가 될 수 있는지 점검한다. */
     public static String combineAndEomiCheck(char s, String eomi) throws MorphException {
 
         if (eomi == null) eomi = "";

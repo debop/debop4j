@@ -37,7 +37,7 @@ import static kr.debop4j.core.tools.StringTool.getStringFromBytes;
 /**
  * {@link ISerializer} 를 이용한 직렬화/역직렬화를 수행하는 Utility Method 를 제공합니다.
  *
- * @author sunghyouk.bae@gmail.com
+ * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 12. 9. 14
  */
 @Slf4j
@@ -48,9 +48,7 @@ public final class SerializeTool {
     private SerializeTool() {
     }
 
-    /**
-     * 객체를 직렬화하여 문자열로 반환합니다.
-     */
+    /** 객체를 직렬화하여 문자열로 반환합니다. */
     public static String serializeAsString(ISerializer serializer, Object graph) {
         shouldNotBeNull(serializer, "serializer");
         if (graph == null)
@@ -59,9 +57,7 @@ public final class SerializeTool {
         return getStringFromBytes(serializer.serialize(graph), BinaryStringFormat.HexDecimal);
     }
 
-    /**
-     * 직렬화된 문자열을 역직렬화하여, 객체로 빌드합니다.
-     */
+    /** 직렬화된 문자열을 역직렬화하여, 객체로 빌드합니다. */
     public static <T> T deserializeFromString(ISerializer serializer,
                                               Class<T> clazz,
                                               String serializedStr) {
@@ -72,9 +68,7 @@ public final class SerializeTool {
         return serializer.deserialize(getBytesFromHexString(serializedStr), clazz);
     }
 
-    /**
-     * 객체를 직렬화하여 {@link java.io.OutputStream} 으로 변환합니다.
-     */
+    /** 객체를 직렬화하여 {@link java.io.OutputStream} 으로 변환합니다. */
     public static OutputStream serializeAsStream(ISerializer serializer, Object graph) throws IOException {
         shouldNotBeNull(serializer, "serializer");
         if (graph == null)
@@ -83,9 +77,7 @@ public final class SerializeTool {
         return StreamTool.toOutputStream(serializer.serialize(graph));
     }
 
-    /**
-     * {@link java.io.InputStream} 을 읽어 역직렬화하여, 객체를 빌드합니다.
-     */
+    /** {@link java.io.InputStream} 을 읽어 역직렬화하여, 객체를 빌드합니다. */
     public static <T> T deserializeFromStream(ISerializer serializer,
                                               Class<T> clazz,
                                               InputStream inputStream) throws IOException {
@@ -116,9 +108,7 @@ public final class SerializeTool {
         return binarySerializer.deserialize(bytes, clazz);
     }
 
-    /**
-     * 객체를 {@link BinarySerializer} 를 이용하여 deep copy 를 수행합니다.
-     */
+    /** 객체를 {@link BinarySerializer} 를 이용하여 deep copy 를 수행합니다. */
     @SuppressWarnings("unchecked")
     public static <T> T copyObject(T graph) {
         if (graph == null)

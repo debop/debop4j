@@ -34,7 +34,7 @@ import static kr.debop4j.core.Guard.shouldNotBeNull;
 /**
  * 대량 데이터에 대한 병렬 실행을 수행할 수 있도록 해주는 Class 입니다.
  *
- * @author sunghyouk.bae@gmail.com
+ * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 12. 9. 26.
  */
 @Slf4j
@@ -61,9 +61,7 @@ public class Parallels {
         return (itemCount / partitionCount) + ((itemCount % partitionCount) > 0 ? 1 : 0);
     }
 
-    /**
-     * 지정한 작업을 병렬로 수행합니다.
-     */
+    /** 지정한 작업을 병렬로 수행합니다. */
     public static void run(int count, final Runnable runnable) {
         run(0, count, runnable);
     }

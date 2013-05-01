@@ -14,7 +14,7 @@ import java.util.List;
 /**
  * {@link Company} 에 대한 Repository 입니다.
  *
- * @author sunghyouk.bae@gmail.com
+ * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 13. 3. 1.
  */
 @Repository

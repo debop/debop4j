@@ -8,7 +8,7 @@ import java.util.Map;
 /**
  * TestableGridDialect
  *
- * @author sunghyouk.bae@gmail.com
+ * @author 배성혁 ( sunghyouk.bae@gmail.com )
  *         13. 3. 29. 오후 4:41
  */
 public interface TestableGridDialect {

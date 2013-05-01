@@ -32,7 +32,7 @@ import java.io.Serializable;
 /**
  * MongoDB를 저장소로 사용하는 캐시
  *
- * @author sunghyouk.bae@gmail.com
+ * @author 배성혁 ( sunghyouk.bae@gmail.com )
  *         13. 3. 25 오후 3:14
  */
 @Slf4j

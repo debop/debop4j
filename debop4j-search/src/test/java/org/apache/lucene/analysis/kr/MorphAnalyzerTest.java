@@ -33,7 +33,7 @@ public class MorphAnalyzerTest extends TestCase {
     @Test
     public void testMorphAnalyzer() throws Exception {
 
-        String[] inputs = new String[]{
+        String[] inputs = new String[] {
                 "고물가시대의",
                 "대외적",
                 "합쳐져", "뛰어오르고", "급여생활자나", "영세자영업자", "영세농어민", "서민계층들은", "온몸으로", "엄습하고",

@@ -32,7 +32,7 @@ import java.util.Date;
 /**
  * Joda-Time 의 DateTime 을 위한 Hibernate UserType 입니다. {@link DateTime}
  *
- * @author sunghyouk.bae@gmail.com
+ * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 13. 4. 26. 오후 6:17
  */
 @Slf4j
@@ -57,7 +57,7 @@ public class JodaDateTimeUserType implements UserType, Serializable {
 
     @Override
     public int[] sqlTypes() {
-        return new int[]{ StandardBasicTypes.TIMESTAMP.sqlType() };
+        return new int[] { StandardBasicTypes.TIMESTAMP.sqlType() };
     }
 
     @Override

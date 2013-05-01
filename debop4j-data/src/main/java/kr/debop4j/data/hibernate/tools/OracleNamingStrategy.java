@@ -21,7 +21,7 @@ import org.hibernate.cfg.ImprovedNamingStrategy;
 /**
  * 속성명을 ORACLE 명명규칙을 사용하여 DB 엔티티의 요소를 변경한다.
  * {@link org.hibernate.cfg.Configuration#setNamingStrategy(org.hibernate.cfg.NamingStrategy)} 메소드를 사용합니다.)
- * Jpa@author sunghyouk.bae@gmail.com
+ * Jpa@author 배성혁 ( sunghyouk.bae@gmail.com )
  *
  * @since 12. 11. 19
  */

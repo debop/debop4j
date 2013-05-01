@@ -27,7 +27,7 @@ import java.util.Properties;
 /**
  * kr.debop4j.search.hibernate.sharding.ShardingConfig
  *
- * @author sunghyouk.bae@gmail.com
+ * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 13. 4. 25. 오전 10:48
  */
 @Configuration

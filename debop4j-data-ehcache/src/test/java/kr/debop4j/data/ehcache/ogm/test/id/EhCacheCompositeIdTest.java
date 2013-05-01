@@ -6,7 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 /**
  * kr.debop4j.data.ehcache.ogm.test.id.EhCacheCompositeIdTest
  *
- * @author sunghyouk.bae@gmail.com
+ * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 13. 4. 10. 오후 8:24
  */
 @Slf4j

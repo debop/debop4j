@@ -26,7 +26,7 @@ import org.junit.BeforeClass;
 /**
  * kr.debop4j.data.ogm.GridDatastoreTestBase
  *
- * @author sunghyouk.bae@gmail.com
+ * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 13. 4. 16. 오후 12:05
  */
 public class GridDatastoreTestBase {

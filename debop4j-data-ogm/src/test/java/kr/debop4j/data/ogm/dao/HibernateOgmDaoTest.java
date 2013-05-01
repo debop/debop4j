@@ -32,7 +32,7 @@ import static org.fest.assertions.Assertions.assertThat;
  * {@link IHibernateOgmDao} 테스트 코드
  * 검색 관련 테스트는 debop4j-data-mongodb 를 참고하세요. ( MongoOgmDaoImplTest )
  *
- * @author sunghyouk.bae@gmail.com
+ * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 13. 4. 15. 오후 11:43
  */
 @Slf4j

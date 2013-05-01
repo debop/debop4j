@@ -21,7 +21,7 @@ import static org.junit.Assert.assertEquals;
 /**
  * kr.debop4j.data.ogm.test.type.BuiltInTypeTest
  *
- * @author sunghyouk.bae@gmail.com
+ * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 13. 4. 2. 오후 5:34
  */
 @Slf4j
@@ -32,7 +32,7 @@ public class BuiltInTypeTest extends OgmTestBase {
 
     @Override
     protected Class<?>[] getAnnotatedClasses() {
-        return new Class<?>[]{ Bookmark.class };
+        return new Class<?>[] { Bookmark.class };
     }
 
     @Test
@@ -147,8 +147,8 @@ public class BuiltInTypeTest extends OgmTestBase {
         b = (Bookmark) session.get(Bookmark.class, b.getId());
 
         //Check directly in the cache the values stored
-        EntityKeyMetadata keyMetadata = new EntityKeyMetadata("Bookmark", new String[]{ "id" });
-        EntityKey key = new EntityKey(keyMetadata, new Object[]{ "42" });
+        EntityKeyMetadata keyMetadata = new EntityKeyMetadata("Bookmark", new String[] { "id" });
+        EntityKey key = new EntityKey(keyMetadata, new Object[] { "42" });
         Map<String, String> entity = (Map<String, String>) TestHelper.extractEntityTuple(sessions, key);
 
         assertEquals("Entity visits count incorrect", entity.get("visits_count"), "444");

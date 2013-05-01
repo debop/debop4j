@@ -33,7 +33,7 @@ import java.util.concurrent.Future;
 /**
  * kr.debop4j.search.dao.IHibernateSearchDao
  *
- * @author sunghyouk.bae@gmail.com
+ * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 13. 4. 26. 오전 9:55
  */
 public interface IHibernateSearchDao extends IHibernateDao {
@@ -42,9 +42,7 @@ public interface IHibernateSearchDao extends IHibernateDao {
 
     FullTextSession getFullTextSession();
 
-    /**
-     * 지정한 형식에 대한 질의 빌더를 생성합니다.
-     */
+    /** 지정한 형식에 대한 질의 빌더를 생성합니다. */
     QueryBuilder getQueryBuilder(Class<?> clazz);
 
     FullTextQuery getFullTextQuery(Query luceneQuery, Class<?>... classes);
@@ -59,38 +57,26 @@ public interface IHibernateSearchDao extends IHibernateDao {
 
     <T> IPagedList<T> getPage(Class<T> clazz, Query luceneQuery, int pageNo, int pageSize, Criteria criteria, Sort sort);
 
-    /**
-     * 지정한 쿼리를 수행하여 해당 엔티티의 ID 값만 가져옵니다.
-     */
+    /** 지정한 쿼리를 수행하여 해당 엔티티의 ID 값만 가져옵니다. */
     IPagedList<Serializable> getIds(Class<?> clazz, Query luceneQuery, int pageNo, int pageSize, Sort sort);
 
-    /**
-     * 지정한 쿼리를 수행하여 해당 필드의 값들만 뽑아온다.
-     */
+    /** 지정한 쿼리를 수행하여 해당 필드의 값들만 뽑아온다. */
     IPagedList getProjectionPage(Class<?> clazz, Query luceneQuery, String[] fields, int pageNo, int pageSize, Sort sort);
 
     long count(Class<?> clazz);
 
     long count(Class<?> clazz, Query luceneQuery);
 
-    /**
-     * 해당 엔티티의 인덱스 정보만을 삭제합니다.
-     */
+    /** 해당 엔티티의 인덱스 정보만을 삭제합니다. */
     void purge(Class<?> clazz, Serializable id);
 
-    /**
-     * 지정된 수형의 인덱싱 정보를 삭제합니다. (DB의 엔티티 정보는 보존합니다.)
-     */
+    /** 지정된 수형의 인덱싱 정보를 삭제합니다. (DB의 엔티티 정보는 보존합니다.) */
     void purgeAll(Class<?> clazz);
 
-    /**
-     * 엔티티를 인덱싱합니다.
-     */
+    /** 엔티티를 인덱싱합니다. */
     <T> void index(T entity);
 
-    /**
-     * 지정된 수형의 모든 엔티티들을 인덱싱 합니다.
-     */
+    /** 지정된 수형의 모든 엔티티들을 인덱싱 합니다. */
     void indexAll(Class<?> clazz, int batchSize);
 
     Future<Void> indexAllAsync(Class<?> clazz, int batchSize);
@@ -99,9 +85,7 @@ public interface IHibernateSearchDao extends IHibernateDao {
 
     void clearIndex(Class<?> clazz);
 
-    /**
-     * 해당 수형의 인덱스를 최적화합니다.
-     */
+    /** 해당 수형의 인덱스를 최적화합니다. */
     void optimize(Class<?> clazz);
 
     void optimizeAll();

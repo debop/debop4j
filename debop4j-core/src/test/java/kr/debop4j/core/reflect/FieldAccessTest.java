@@ -11,7 +11,7 @@ import static org.junit.Assert.fail;
 /**
  * kr.debop4j.core.reflect.FieldAccessTest
  *
- * @author sunghyouk.bae@gmail.com
+ * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 13. 1. 21
  */
 @Slf4j

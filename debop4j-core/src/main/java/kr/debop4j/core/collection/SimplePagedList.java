@@ -9,7 +9,7 @@ import static kr.debop4j.core.Guard.*;
 /**
  * 페이징된 목록을 표현하는 클래스입니다.
  *
- * @author sunghyouk.bae@gmail.com
+ * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 12. 9. 13
  */
 @Getter

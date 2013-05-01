@@ -23,7 +23,7 @@ import java.io.IOException;
 /**
  * 압축기의 기본 클래스입니다. Template pattern을 이용하여, 압축/복원 전후의 루틴한 작업을 추상 클래스로 뺐습니다.
  *
- * @author sunghyouk.bae@gmail.com
+ * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 12. 9. 12
  */
 public abstract class CompressorBase implements ICompressor {
@@ -36,9 +36,7 @@ public abstract class CompressorBase implements ICompressor {
 
     abstract protected byte[] doDecompress(byte[] compressed) throws IOException;
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     public final byte[] compress(byte[] plain) {
         if (plain == null || plain.length == 0)
             return new byte[0];
@@ -59,9 +57,7 @@ public abstract class CompressorBase implements ICompressor {
         }
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     public final byte[] decompress(byte[] compressed) {
         if (compressed == null || compressed.length == 0)
             return new byte[0];
@@ -82,9 +78,7 @@ public abstract class CompressorBase implements ICompressor {
         }
     }
 
-    /**
-     * 문자열을 압축하여, base64 문자열로 만듭니다.
-     */
+    /** 문자열을 압축하여, base64 문자열로 만듭니다. */
     @Override
     public String compressString(String plainText) {
         if (StringTool.isWhiteSpace(plainText))
@@ -97,9 +91,7 @@ public abstract class CompressorBase implements ICompressor {
         return StringTool.encodeBase64String(bytes);
     }
 
-    /**
-     * 압축된 base64 문자열을 복원하여 일반 문자열로 만듭니다.
-     */
+    /** 압축된 base64 문자열을 복원하여 일반 문자열로 만듭니다. */
     @Override
     public String decompressString(String compressedBase64) {
         if (StringTool.isWhiteSpace(compressedBase64))

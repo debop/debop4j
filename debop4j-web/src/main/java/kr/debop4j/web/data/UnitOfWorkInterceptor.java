@@ -11,15 +11,13 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * Spring MVC 에서 servlet 시작과 완료 시에 UnitOfWork를 시작하고, 완료하도록 합니다.
  *
- * @author sunghyouk.bae@gmail.com
+ * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 13. 2. 15.
  */
 @Slf4j
 public class UnitOfWorkInterceptor implements HandlerInterceptor {
 
-    /**
-     * Controller 가 수행되기 전에 호출됩니다.
-     */
+    /** Controller 가 수행되기 전에 호출됩니다. */
     @Override
     public boolean preHandle(HttpServletRequest request,
                              HttpServletResponse response,
@@ -28,9 +26,7 @@ public class UnitOfWorkInterceptor implements HandlerInterceptor {
         return true;
     }
 
-    /**
-     * Controller의 메소드가 수행이 완료되고, View 를 호출하기 전에 호출됩니다.
-     */
+    /** Controller의 메소드가 수행이 완료되고, View 를 호출하기 전에 호출됩니다. */
     @Override
     public void postHandle(HttpServletRequest request,
                            HttpServletResponse response,
@@ -39,9 +35,7 @@ public class UnitOfWorkInterceptor implements HandlerInterceptor {
         // Nothing to do
     }
 
-    /**
-     * View 작업까지 완료된 후 Client에 응답하기 바로 전에 호출됩니다.
-     */
+    /** View 작업까지 완료된 후 Client에 응답하기 바로 전에 호출됩니다. */
     @Override
     public void afterCompletion(HttpServletRequest request,
                                 HttpServletResponse response,

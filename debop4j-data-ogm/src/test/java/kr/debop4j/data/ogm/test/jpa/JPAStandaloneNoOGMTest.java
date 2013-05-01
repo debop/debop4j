@@ -12,7 +12,7 @@ import javax.persistence.Persistence;
 /**
  * kr.debop4j.data.ogm.test.jpa.JPAStandaloneNoOGMTest
  *
- * @author sunghyouk.bae@gmail.com
+ * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 13. 4. 12. 오후 2:51
  */
 @Slf4j

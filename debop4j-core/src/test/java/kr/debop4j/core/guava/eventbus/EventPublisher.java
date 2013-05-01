@@ -9,7 +9,7 @@ import kr.debop4j.core.guava.eventbus.events.SimpleEvent;
 /**
  * kr.debop4j.core.guava.eventbus.EventPublisher
  *
- * @author sunghyouk.bae@gmail.com
+ * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 12. 12. 10.
  */
 // 참고 : https://github.com/bbejeck/guava-blog/tree/master/src/main/java/bbejeck/guava/eventbus

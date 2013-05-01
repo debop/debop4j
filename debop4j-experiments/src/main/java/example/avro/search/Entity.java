@@ -21,14 +21,10 @@ public class Entity extends org.apache.avro.specific.SpecificRecordBase implemen
     @Deprecated
     public java.util.Map<java.lang.CharSequence, java.lang.CharSequence> attrs;
 
-    /**
-     * Default constructor.
-     */
+    /** Default constructor. */
     public Entity() {}
 
-    /**
-     * All-args constructor.
-     */
+    /** All-args constructor. */
     public Entity(java.lang.CharSequence rowId, java.lang.CharSequence createdAt, java.lang.CharSequence text, java.util.Map<java.lang.CharSequence, java.lang.CharSequence> attrs) {
         this.rowId = rowId;
         this.createdAt = createdAt;
@@ -75,9 +71,7 @@ public class Entity extends org.apache.avro.specific.SpecificRecordBase implemen
         }
     }
 
-    /**
-     * Gets the value of the 'rowId' field.
-     */
+    /** Gets the value of the 'rowId' field. */
     public java.lang.CharSequence getRowId() {
         return rowId;
     }
@@ -91,9 +85,7 @@ public class Entity extends org.apache.avro.specific.SpecificRecordBase implemen
         this.rowId = value;
     }
 
-    /**
-     * Gets the value of the 'createdAt' field.
-     */
+    /** Gets the value of the 'createdAt' field. */
     public java.lang.CharSequence getCreatedAt() {
         return createdAt;
     }
@@ -107,9 +99,7 @@ public class Entity extends org.apache.avro.specific.SpecificRecordBase implemen
         this.createdAt = value;
     }
 
-    /**
-     * Gets the value of the 'text' field.
-     */
+    /** Gets the value of the 'text' field. */
     public java.lang.CharSequence getText() {
         return text;
     }
@@ -123,9 +113,7 @@ public class Entity extends org.apache.avro.specific.SpecificRecordBase implemen
         this.text = value;
     }
 
-    /**
-     * Gets the value of the 'attrs' field.
-     */
+    /** Gets the value of the 'attrs' field. */
     public java.util.Map<java.lang.CharSequence, java.lang.CharSequence> getAttrs() {
         return attrs;
     }
@@ -139,30 +127,22 @@ public class Entity extends org.apache.avro.specific.SpecificRecordBase implemen
         this.attrs = value;
     }
 
-    /**
-     * Creates a new Entity RecordBuilder
-     */
+    /** Creates a new Entity RecordBuilder */
     public static example.avro.search.Entity.Builder newBuilder() {
         return new example.avro.search.Entity.Builder();
     }
 
-    /**
-     * Creates a new Entity RecordBuilder by copying an existing Builder
-     */
+    /** Creates a new Entity RecordBuilder by copying an existing Builder */
     public static example.avro.search.Entity.Builder newBuilder(example.avro.search.Entity.Builder other) {
         return new example.avro.search.Entity.Builder(other);
     }
 
-    /**
-     * Creates a new Entity RecordBuilder by copying an existing Entity instance
-     */
+    /** Creates a new Entity RecordBuilder by copying an existing Entity instance */
     public static example.avro.search.Entity.Builder newBuilder(example.avro.search.Entity other) {
         return new example.avro.search.Entity.Builder(other);
     }
 
-    /**
-     * RecordBuilder for Entity instances.
-     */
+    /** RecordBuilder for Entity instances. */
     public static class Builder extends org.apache.avro.specific.SpecificRecordBuilderBase<Entity>
             implements org.apache.avro.data.RecordBuilder<Entity> {
 
@@ -171,23 +151,17 @@ public class Entity extends org.apache.avro.specific.SpecificRecordBase implemen
         private java.lang.CharSequence text;
         private java.util.Map<java.lang.CharSequence, java.lang.CharSequence> attrs;
 
-        /**
-         * Creates a new Builder
-         */
+        /** Creates a new Builder */
         private Builder() {
             super(example.avro.search.Entity.SCHEMA$);
         }
 
-        /**
-         * Creates a Builder by copying an existing Builder
-         */
+        /** Creates a Builder by copying an existing Builder */
         private Builder(example.avro.search.Entity.Builder other) {
             super(other);
         }
 
-        /**
-         * Creates a Builder by copying an existing Entity instance
-         */
+        /** Creates a Builder by copying an existing Entity instance */
         private Builder(example.avro.search.Entity other) {
             super(example.avro.search.Entity.SCHEMA$);
             if (isValidValue(fields()[0], other.rowId)) {
@@ -208,16 +182,12 @@ public class Entity extends org.apache.avro.specific.SpecificRecordBase implemen
             }
         }
 
-        /**
-         * Gets the value of the 'rowId' field
-         */
+        /** Gets the value of the 'rowId' field */
         public java.lang.CharSequence getRowId() {
             return rowId;
         }
 
-        /**
-         * Sets the value of the 'rowId' field
-         */
+        /** Sets the value of the 'rowId' field */
         public example.avro.search.Entity.Builder setRowId(java.lang.CharSequence value) {
             validate(fields()[0], value);
             this.rowId = value;
@@ -225,32 +195,24 @@ public class Entity extends org.apache.avro.specific.SpecificRecordBase implemen
             return this;
         }
 
-        /**
-         * Checks whether the 'rowId' field has been set
-         */
+        /** Checks whether the 'rowId' field has been set */
         public boolean hasRowId() {
             return fieldSetFlags()[0];
         }
 
-        /**
-         * Clears the value of the 'rowId' field
-         */
+        /** Clears the value of the 'rowId' field */
         public example.avro.search.Entity.Builder clearRowId() {
             rowId = null;
             fieldSetFlags()[0] = false;
             return this;
         }
 
-        /**
-         * Gets the value of the 'createdAt' field
-         */
+        /** Gets the value of the 'createdAt' field */
         public java.lang.CharSequence getCreatedAt() {
             return createdAt;
         }
 
-        /**
-         * Sets the value of the 'createdAt' field
-         */
+        /** Sets the value of the 'createdAt' field */
         public example.avro.search.Entity.Builder setCreatedAt(java.lang.CharSequence value) {
             validate(fields()[1], value);
             this.createdAt = value;
@@ -258,32 +220,24 @@ public class Entity extends org.apache.avro.specific.SpecificRecordBase implemen
             return this;
         }
 
-        /**
-         * Checks whether the 'createdAt' field has been set
-         */
+        /** Checks whether the 'createdAt' field has been set */
         public boolean hasCreatedAt() {
             return fieldSetFlags()[1];
         }
 
-        /**
-         * Clears the value of the 'createdAt' field
-         */
+        /** Clears the value of the 'createdAt' field */
         public example.avro.search.Entity.Builder clearCreatedAt() {
             createdAt = null;
             fieldSetFlags()[1] = false;
             return this;
         }
 
-        /**
-         * Gets the value of the 'text' field
-         */
+        /** Gets the value of the 'text' field */
         public java.lang.CharSequence getText() {
             return text;
         }
 
-        /**
-         * Sets the value of the 'text' field
-         */
+        /** Sets the value of the 'text' field */
         public example.avro.search.Entity.Builder setText(java.lang.CharSequence value) {
             validate(fields()[2], value);
             this.text = value;
@@ -291,32 +245,24 @@ public class Entity extends org.apache.avro.specific.SpecificRecordBase implemen
             return this;
         }
 
-        /**
-         * Checks whether the 'text' field has been set
-         */
+        /** Checks whether the 'text' field has been set */
         public boolean hasText() {
             return fieldSetFlags()[2];
         }
 
-        /**
-         * Clears the value of the 'text' field
-         */
+        /** Clears the value of the 'text' field */
         public example.avro.search.Entity.Builder clearText() {
             text = null;
             fieldSetFlags()[2] = false;
             return this;
         }
 
-        /**
-         * Gets the value of the 'attrs' field
-         */
+        /** Gets the value of the 'attrs' field */
         public java.util.Map<java.lang.CharSequence, java.lang.CharSequence> getAttrs() {
             return attrs;
         }
 
-        /**
-         * Sets the value of the 'attrs' field
-         */
+        /** Sets the value of the 'attrs' field */
         public example.avro.search.Entity.Builder setAttrs(java.util.Map<java.lang.CharSequence, java.lang.CharSequence> value) {
             validate(fields()[3], value);
             this.attrs = value;
@@ -324,16 +270,12 @@ public class Entity extends org.apache.avro.specific.SpecificRecordBase implemen
             return this;
         }
 
-        /**
-         * Checks whether the 'attrs' field has been set
-         */
+        /** Checks whether the 'attrs' field has been set */
         public boolean hasAttrs() {
             return fieldSetFlags()[3];
         }
 
-        /**
-         * Clears the value of the 'attrs' field
-         */
+        /** Clears the value of the 'attrs' field */
         public example.avro.search.Entity.Builder clearAttrs() {
             attrs = null;
             fieldSetFlags()[3] = false;

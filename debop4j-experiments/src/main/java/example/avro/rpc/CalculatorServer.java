@@ -12,7 +12,7 @@ import java.net.InetSocketAddress;
 /**
  * Avro Async Callback 을 활용한 RPC 통신
  *
- * @author sunghyouk.bae@gmail.com
+ * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 13. 4. 17. 오후 9:16
  */
 @Slf4j

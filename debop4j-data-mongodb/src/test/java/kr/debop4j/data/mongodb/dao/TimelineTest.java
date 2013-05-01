@@ -20,7 +20,7 @@ import static org.fest.assertions.Assertions.assertThat;
 /**
  * kr.debop4j.data.mongodb.dao.TimelineTest
  *
- * @author sunghyouk.bae@gmail.com
+ * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 13. 4. 15. 오후 2:58
  */
 @Slf4j
@@ -35,9 +35,7 @@ public class TimelineTest extends MongoGridDatastoreTestBase {
         assertThat(props.getValue("oauth.consumerKey")).isNotEmpty();
     }
 
-    /**
-     * hibernate-ogm 은 아직 hibernate 의 criteria api 를 지원하지 않습니다!!!
-     */
+    /** hibernate-ogm 은 아직 hibernate 의 criteria api 를 지원하지 않습니다!!! */
     @Test
     public void insertAndLoadDelete() throws Exception {
         IHibernateOgmDao dao = Springs.getBean(HibernateOgmDao.class);

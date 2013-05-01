@@ -34,7 +34,7 @@ import static org.easymock.EasyMock.*;
 /**
  * kr.debop4j.search.hibernate.mock.MockingTest
  *
- * @author sunghyouk.bae@gmail.com
+ * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 13. 4. 25. 오전 11:42
  */
 public class MockingTest {
@@ -52,7 +52,7 @@ public class MockingTest {
         expect(ftq.setProjection("title")).andReturn(ftq);
 
         List<Object[]> results = new ArrayList<Object[]>();
-        results.add(new Object[]{ "The Incredibles" });
+        results.add(new Object[] { "The Incredibles" });
         expect(ftq.list()).andReturn(results);
 
         replay(factory);

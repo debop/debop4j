@@ -91,14 +91,10 @@ public class Trie<S, V> {
      */
     private boolean ignoreCase;
 
-    /**
-     * The constant EmptyIterator to return when nothing matches.
-     */
+    /** The constant EmptyIterator to return when nothing matches. */
     private final static Iterator EMPTY_ITERATOR = new EmptyIterator();
 
-    /**
-     * Constructs a new, empty tree.
-     */
+    /** Constructs a new, empty tree. */
     public Trie(boolean ignoreCase) {
         this.ignoreCase = ignoreCase;
         clear();
@@ -246,9 +242,7 @@ public class Trie<S, V> {
         return ret;
     }
 
-    /**
-     * Returns the node associated with prefix, or null if none. (internal)
-     */
+    /** Returns the node associated with prefix, or null if none. (internal) */
     private TrieNode<V> fetch(String prefix) {
         // This private method uses prefixes already in canonical form.
         TrieNode<V> node = root;
@@ -382,9 +376,7 @@ public class Trie<S, V> {
         }
     }
 
-    /**
-     * Yields nothing. (internal)
-     */
+    /** Yields nothing. (internal) */
     private static class EmptyIterator implements Iterator {
         // inherits javadoc comment
         public boolean hasNext() {
@@ -524,9 +516,7 @@ public class Trie<S, V> {
  * that is Trie's job. Nor does it deal with case.
  */
 final class TrieNode<V> {
-    /**
-     * The value of this node.
-     */
+    /** The value of this node. */
     private V value = null;
 
     /**
@@ -541,29 +531,21 @@ final class TrieNode<V> {
      */
     private ArrayList<TrieEdge<V>> /* of TrieEdge */children = new ArrayList<TrieEdge<V>>(0);
 
-    /**
-     * Creates a trie with no children and no value.
-     */
+    /** Creates a trie with no children and no value. */
     public TrieNode() {
     }
 
-    /**
-     * Creates a trie with no children and the given value.
-     */
+    /** Creates a trie with no children and the given value. */
     public TrieNode(V value) {
         this.value = value;
     }
 
-    /**
-     * Gets the value associated with this node, or null if none.
-     */
+    /** Gets the value associated with this node, or null if none. */
     public V getValue() {
         return value;
     }
 
-    /**
-     * Sets the value associated with this node.
-     */
+    /** Sets the value associated with this node. */
     public void setValue(V value) {
         this.value = value;
     }
@@ -693,9 +675,7 @@ final class TrieNode<V> {
         return new ChildrenForwardIterator();
     }
 
-    /**
-     * Maps (lambda(edge) edge.getChild) on children.iterator().
-     */
+    /** Maps (lambda(edge) edge.getChild) on children.iterator(). */
     private class ChildrenForwardIterator extends UnmodifiableIterator {
         int i = 0;
 
@@ -740,9 +720,7 @@ final class TrieNode<V> {
         return new LabelForwardIterator();
     }
 
-    /**
-     * Maps (lambda(edge) edge.getLabel) on children.iterator()
-     */
+    /** Maps (lambda(edge) edge.getLabel) on children.iterator() */
     private class LabelForwardIterator extends UnmodifiableIterator {
         int i = 0;
 
@@ -765,9 +743,7 @@ final class TrieNode<V> {
      * public Iterator labelsBackward() { return new LabelBackwardIterator(); }
      */
 
-    /**
-     * Maps (lambda(edge) edge.getLabel) on children.iteratorBackward()
-     */
+    /** Maps (lambda(edge) edge.getLabel) on children.iteratorBackward() */
     /*
      * private class LabelBackwardIterator extends UnmodifiableIterator { int i =
      * children.size() - 1;
@@ -793,9 +769,7 @@ final class TrieNode<V> {
      */
 }
 
-/**
- * A labelled edge, i.e., a String label and a TrieNode endpoint.
- */
+/** A labelled edge, i.e., a String label and a TrieNode endpoint. */
 final class TrieEdge<V> {
     private String label;
     private TrieNode<V> child;
@@ -813,9 +787,7 @@ final class TrieEdge<V> {
         return label;
     }
 
-    /**
-     * Returns the first character of the label, i.e., getLabel().charAt(0).
-     */
+    /** Returns the first character of the label, i.e., getLabel().charAt(0). */
     public char getLabelStart() {
         // You could store this char as an optimization if needed.
         return label.charAt(0);

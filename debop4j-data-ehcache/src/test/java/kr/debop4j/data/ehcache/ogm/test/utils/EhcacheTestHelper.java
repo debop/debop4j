@@ -18,7 +18,7 @@ import static org.hibernate.ogm.datastore.spi.DefaultDatastoreNames.ENTITY_STORE
 /**
  * kr.debop4j.data.ehcache.ogm.test.utils.EhcacheTestHelper
  *
- * @author sunghyouk.bae@gmail.com
+ * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 13. 3. 29. 오후 10:03
  */
 @Slf4j

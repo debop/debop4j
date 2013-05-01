@@ -18,7 +18,7 @@ import javax.persistence.Id;
 /**
  * org.hibernate.ogm.test.mongodb.model.Module
  *
- * @author sunghyouk.bae@gmail.com
+ * @author 배성혁 ( sunghyouk.bae@gmail.com )
  *         13. 3. 23. 오후 2:21
  */
 @Entity

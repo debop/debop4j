@@ -10,7 +10,7 @@ import javax.sql.DataSource;
 /**
  * PgBouncer에 연결하는 방식에 대한 설정 : BoneCP 는 pgBouncer와 연결이 안됩니다!!! 그래서 dbcp BasicDataSource를 사용합니다.
  *
- * @author sunghyouk.bae@gmail.com
+ * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 13. 2. 25
  */
 @Configuration

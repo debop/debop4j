@@ -7,7 +7,7 @@ import org.junit.Before;
 /**
  * 단위 테스트 클래스의 최상위 추상 클래스
  *
- * @author sunghyouk.bae@gmail.com
+ * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 12. 9. 12
  */
 @Slf4j

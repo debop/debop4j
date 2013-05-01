@@ -29,7 +29,7 @@ import static org.objectweb.asm.Opcodes.*;
 /**
  * 객체의 생성자에 접근하여, 생성자를 생성할 수 있도록 합니다.
  *
- * @author sunghyouk.bae@gmail.com
+ * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 13. 1. 21
  */
 @Slf4j
@@ -38,19 +38,13 @@ public abstract class ConstructorAccess<T> {
     @Getter
     boolean nonStaticMemberClass;
 
-    /**
-     * Constructor for top-level classes and static nested classes.
-     */
+    /** Constructor for top-level classes and static nested classes. */
     abstract public T newInstance();
 
-    /**
-     * Constructor for inner classes (non-static nested classes) - except static nested classes
-     */
+    /** Constructor for inner classes (non-static nested classes) - except static nested classes */
     abstract public T newInstance(Object enclosingInstance);
 
-    /**
-     * 지정한 수형의 생성자에 대한 접근자를 생성합니다.
-     */
+    /** 지정한 수형의 생성자에 대한 접근자를 생성합니다. */
     @SuppressWarnings("unchecked")
     static public <T> ConstructorAccess<T> get(Class<T> type) {
         Guard.shouldNotBeNull(type, "type");

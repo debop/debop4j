@@ -36,9 +36,7 @@ public class KoreanTokenizer extends Tokenizer {
     private static final boolean isTraceEnabled = log.isTraceEnabled();
     private static final boolean isDebugEnabled = log.isDebugEnabled();
 
-    /**
-     * A private instance of the JFlex-constructed scanner
-     */
+    /** A private instance of the JFlex-constructed scanner */
     private final KoreanTokenizerImpl scanner;
 
     public static final int ALPHANUM = 0;
@@ -53,10 +51,8 @@ public class KoreanTokenizer extends Tokenizer {
     public static final int KOREAN = 9;
     public static final int CHINESE = 10;
 
-    /**
-     * String token types that correspond to token type int constants
-     */
-    public static final String[] TOKEN_TYPES = new String[]{
+    /** String token types that correspond to token type int constants */
+    public static final String[] TOKEN_TYPES = new String[] {
             "<ALPHANUM>",
             "<APOSTROPHE>",
             "<ACRONYM>",
@@ -82,9 +78,7 @@ public class KoreanTokenizer extends Tokenizer {
         this.maxTokenLength = length;
     }
 
-    /**
-     * @see #setMaxTokenLength
-     */
+    /** @see #setMaxTokenLength */
     public int getMaxTokenLength() {
         return maxTokenLength;
     }
@@ -103,18 +97,14 @@ public class KoreanTokenizer extends Tokenizer {
         init(input, matchVersion);
     }
 
-    /**
-     * Creates a new StandardTokenizer with a given {@link org.apache.lucene.util.AttributeSource}.
-     */
+    /** Creates a new StandardTokenizer with a given {@link org.apache.lucene.util.AttributeSource}. */
     public KoreanTokenizer(Version matchVersion, AttributeSource source, Reader input) {
         super(source, input);
         this.scanner = new KoreanTokenizerImpl(input);
         init(input, matchVersion);
     }
 
-    /**
-     * Creates a new StandardTokenizer with a given {@link org.apache.lucene.util.AttributeSource.AttributeFactory}
-     */
+    /** Creates a new StandardTokenizer with a given {@link org.apache.lucene.util.AttributeSource.AttributeFactory} */
     public KoreanTokenizer(Version matchVersion, AttributeFactory factory, Reader input) {
         super(factory, input);
         this.scanner = new KoreanTokenizerImpl(input);

@@ -19,7 +19,7 @@ package kr.debop4j.search;
 /**
  * kr.debop4j.search.QueryMethod
  *
- * @author sunghyouk.bae@gmail.com
+ * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 13. 4. 26. 오후 4:29
  */
 public enum QueryMethod {

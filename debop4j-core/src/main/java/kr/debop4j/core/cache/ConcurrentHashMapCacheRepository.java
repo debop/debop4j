@@ -33,7 +33,7 @@ import static kr.debop4j.core.Guard.shouldNotBeWhiteSpace;
 /**
  * {@link java.util.concurrent.ConcurrentHashMap}을 캐시 저장소로 사용하는 비동기 캐시 저장소입니다.
  *
- * @author sunghyouk.bae@gmail.com
+ * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 12. 9. 12
  */
 @Slf4j
@@ -138,9 +138,7 @@ public class ConcurrentHashMapCacheRepository extends CacheRepositoryBase {
         return cache.getIfPresent(key) != null;
     }
 
-    /**
-     * 캐시의 모든 항목을 삭제합니다.
-     */
+    /** 캐시의 모든 항목을 삭제합니다. */
     @Override
     public synchronized void clear() {
         cache.cleanUp();

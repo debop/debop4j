@@ -11,7 +11,7 @@ import java.util.Properties;
 /**
  * kr.debop4j.data.mongodb.ogm.MongoDbConfiguration
  *
- * @author sunghyouk.bae@gmail.com
+ * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 13. 3. 28
  */
 @Configuration
@@ -27,7 +27,7 @@ public class MongoGridDatastoreConfiguration extends MongoGridDatastoreConfigBas
 
     @Override
     protected String[] getMappedPackageNames() {
-        return new String[]{
+        return new String[] {
                 Project.class.getPackage().getName(),
         };
     }

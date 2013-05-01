@@ -11,7 +11,7 @@ import java.util.List;
 /**
  * kr.debop4j.core.guava.IterablesTest
  *
- * @author sunghyouk.bae@gmail.com
+ * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 13. 1. 11.
  */
 @Slf4j
@@ -20,8 +20,8 @@ public class IterablesTest extends AbstractTest {
     @Test
     public void testIterablesPartition() {
 
-        int[] limits = new int[]{ 97, 98, 99, 100, 101, 102, 103, 104, 105, 106, 107, 108 };
-        int[] partitions = new int[]{ 1, 2, 3, 4, 5, 6, 7, 8 };
+        int[] limits = new int[] { 97, 98, 99, 100, 101, 102, 103, 104, 105, 106, 107, 108 };
+        int[] partitions = new int[] { 1, 2, 3, 4, 5, 6, 7, 8 };
 
         for (int limit : limits) {
             for (int partition : partitions) {

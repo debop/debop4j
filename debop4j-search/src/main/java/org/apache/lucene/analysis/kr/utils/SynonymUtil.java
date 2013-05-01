@@ -41,9 +41,7 @@ public class SynonymUtil {
     private static final boolean isTraceEnabled = log.isTraceEnabled();
     private static final boolean isDebugEnabled = log.isDebugEnabled();
 
-    /**
-     * 동의어 사전
-     */
+    /** 동의어 사전 */
     private static final SetMultimap<String, String> synonymMap = TreeMultimap.create();
     private static final Set<String> EMPTY_SET = new HashSet<String>();
 

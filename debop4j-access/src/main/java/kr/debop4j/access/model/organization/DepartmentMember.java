@@ -17,7 +17,7 @@ import java.util.Date;
 /**
  * 한 부서의 구성원 정보 (직원의 겸직이 가능하므로, 부서-직원은 many-to-many 관계를 가집입니다)
  *
- * @author sunghyouk.bae@gmail.com
+ * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 13. 3. 5 오후 4:33
  */
 @Entity
@@ -52,30 +52,22 @@ public class DepartmentMember extends AccessEntityBase {
     @Column(name = "DeptMemberId")
     private Long id;
 
-    /**
-     * 소속 부서
-     */
+    /** 소속 부서 */
     @ManyToOne
     @JoinColumn(name = "DepartmentId", nullable = false)
     private Department department;
 
-    /**
-     * 소속 직원
-     */
+    /** 소속 직원 */
     @ManyToOne
     @JoinColumn(name = "EmployeeId", nullable = false)
     private Employee employee;
 
-    /**
-     * 소속 시작일
-     */
+    /** 소속 시작일 */
     @Column(name = "StartTime")
     @Temporal(TemporalType.TIMESTAMP)
     private Date startTime;
 
-    /**
-     * 소속 종료일
-     */
+    /** 소속 종료일 */
     @Column(name = "EndTime")
     @Temporal(TemporalType.TIMESTAMP)
     private Date endTime;
@@ -86,9 +78,7 @@ public class DepartmentMember extends AccessEntityBase {
     @Column(name = "ExAttr", length = 4000)
     private String exAttr;
 
-    /**
-     * 직책
-     */
+    /** 직책 */
     @ManyToOne
     @JoinColumn(name = "EmpTitleId")
     private EmployeeTitle empTitle;

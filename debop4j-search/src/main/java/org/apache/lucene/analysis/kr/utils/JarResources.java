@@ -61,9 +61,7 @@ public final class JarResources {
         return read(name);
     }
 
-    /**
-     * initializes internal hash tables with Jar file resources.
-     */
+    /** initializes internal hash tables with Jar file resources. */
     private byte[] read(String name) {
         try {
             // extracts just sizes only.

@@ -29,7 +29,7 @@ public class SyllableTest extends TestCase {
 
     public void testWordSpace() throws Exception {
 
-        String[] strs = new String[]{
+        String[] strs = new String[] {
                 "하지만푸미폰국왕의신격화를지난30년동안제도적으로보호하고언론에재갈을물린시대착오적왕실모독죄는안팎으로도전을받고있다", //0
                 "올해크리스마스에는눈이내리지않고비교적포근할전망이다", //1
                 "갑근세원천징수에관한질의", //2

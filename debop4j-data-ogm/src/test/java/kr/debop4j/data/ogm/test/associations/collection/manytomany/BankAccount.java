@@ -13,7 +13,7 @@ import java.util.Set;
 /**
  * BankAccount
  *
- * @author sunghyouk.bae@gmail.com
+ * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 13. 3. 29. 오후 9:09
  */
 @Entity

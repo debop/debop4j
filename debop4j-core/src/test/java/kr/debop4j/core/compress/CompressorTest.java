@@ -17,7 +17,7 @@ import java.util.Random;
 /**
  * {@link ICompressor} TestCase
  *
- * @author sunghyouk.bae@gmail.com
+ * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 12. 9. 12
  */
 @Slf4j

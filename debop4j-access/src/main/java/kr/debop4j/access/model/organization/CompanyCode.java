@@ -20,7 +20,7 @@ import java.util.Set;
 /**
  * 특정 회사에서 사용하는 코드
  *
- * @author sunghyouk.bae@gmail.com
+ * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 13. 3. 8 오후 1:07
  */
 @Entity

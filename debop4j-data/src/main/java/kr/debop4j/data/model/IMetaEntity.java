@@ -21,7 +21,7 @@ import java.util.Set;
 /**
  * 메타 정보({@link java.util.Map} 구조)를 가지는 엔티티의 인터페이스입니다.
  *
- * @author sunghyouk.bae@gmail.com
+ * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 12. 9. 19
  */
 public interface IMetaEntity extends IStatefulEntity {

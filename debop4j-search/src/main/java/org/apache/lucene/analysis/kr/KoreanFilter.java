@@ -173,9 +173,7 @@ public class KoreanFilter extends TokenFilter {
         return true;
     }
 
-    /**
-     * queue에 저장된 값으로 buffer의 값을 복사한다.
-     */
+    /** queue에 저장된 값으로 buffer의 값을 복사한다. */
     private void setTermBufferByQueue(boolean isFirst) {
 
         clearAttributes();

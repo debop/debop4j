@@ -14,7 +14,7 @@ import java.util.Date;
 /**
  * debop4j access 모듈의 엔티티들의 기본 클래스입니다.
  *
- * @author sunghyouk.bae@gmail.com
+ * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 13. 3. 8 오후 1:12
  */
 @MappedSuperclass

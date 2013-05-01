@@ -17,16 +17,18 @@
 package kr.debop4j.core;
 
 import lombok.Getter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * 자동으로 리소스를 정리하는 메소드를 가진 클래스입니다.
  *
- * @author sunghyouk.bae@gmail.com
+ * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 12. 11. 30.
  */
 public class AutoCloseableAction implements AutoCloseable {
 
-    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AutoCloseableAction.class);
+    private static final Logger log = LoggerFactory.getLogger(AutoCloseableAction.class);
 
     @Getter
     private final Runnable action;
@@ -34,11 +36,11 @@ public class AutoCloseableAction implements AutoCloseable {
     protected boolean closed;
 
     public AutoCloseableAction(final Runnable action) {
-        assert action != null;
         this.action = action;
         this.closed = false;
     }
 
+    /** 리소스를 정리할 action을 수행합니다. */
     @Override
     public void close() {
         if (closed)
@@ -54,8 +56,8 @@ public class AutoCloseableAction implements AutoCloseable {
             if (log.isTraceEnabled())
                 log.trace("AutoCloseable의 close 작업을 완료했습니다.");
 
-        } catch (Exception e) {
-            log.warn("AutoClosesable의 close 작업에 예외가 발생했습니다. 예외는 무시됩니다.", e);
+        } catch (Throwable t) {
+            log.warn("AutoClosesable의 close 작업에 예외가 발생했습니다. 예외는 무시됩니다.", t);
         } finally {
             closed = true;
         }

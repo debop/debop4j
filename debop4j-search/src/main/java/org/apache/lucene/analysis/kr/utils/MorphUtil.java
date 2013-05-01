@@ -45,13 +45,11 @@ public class MorphUtil {
     private static final int JUNG_JONG = JUNGSEONG.length * JONGSEONG.length;
 
 
-    /**
-     * 한글 한글자를 초성/중성/종성의 배열로 만들어 반환한다.
-     */
+    /** 한글 한글자를 초성/중성/종성의 배열로 만들어 반환한다. */
     public static char[] decompose(char c) {
         char[] result = null;
 
-        if (c > 0xD7A3 || c < 0xAC00) return new char[]{ c };
+        if (c > 0xD7A3 || c < 0xAC00) return new char[] { c };
 
         c -= 0xAC00;
 
@@ -63,9 +61,9 @@ public class MorphUtil {
         char jongseong = JONGSEONG[c % JONGSEONG.length];
 
         if (jongseong != 0) {
-            result = new char[]{ choseong, jungseong, jongseong };
+            result = new char[] { choseong, jungseong, jongseong };
         } else {
-            result = new char[]{ choseong, jungseong };
+            result = new char[] { choseong, jungseong };
         }
         return result;
     }
@@ -97,9 +95,7 @@ public class MorphUtil {
         return makeChar(dest, last);
     }
 
-    /**
-     * 형태소 유형 출력을 위한 문자열을 생성한다.
-     */
+    /** 형태소 유형 출력을 위한 문자열을 생성한다. */
     public static String buildTypeString(String word, char type) {
         return word + "(" + type + ")";
 //        StringBuilder sb = new StringBuilder();

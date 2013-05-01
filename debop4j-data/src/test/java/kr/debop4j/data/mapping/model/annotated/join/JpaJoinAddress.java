@@ -11,7 +11,7 @@ import javax.persistence.Embeddable;
 /**
  * org.annotated.mapping.domain.model.join.JpaJoinAddress
  *
- * @author sunghyouk.bae@gmail.com
+ * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 12. 12. 5.
  */
 @Embeddable

@@ -33,7 +33,7 @@ import static org.objectweb.asm.Opcodes.*;
 /**
  * 객체의 특정 메소드를 동적으로 호출할 수 있도록 한 메소드 접근자입니다.
  *
- * @author sunghyouk.bae@gmail.com
+ * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 13. 1. 21
  */
 @Slf4j
@@ -68,9 +68,7 @@ abstract public class MethodAccess {
         throw new IllegalArgumentException("Unable to find public method: " + methodName + " " + Arrays.toString(parameterTypes));
     }
 
-    /**
-     * 지정한 수형의 메소드에 동적으로 접근하기 위한 MethodAccess를 빌드합니다.
-     */
+    /** 지정한 수형의 메소드에 동적으로 접근하기 위한 MethodAccess를 빌드합니다. */
     static public MethodAccess get(Class type) {
         Guard.shouldNotBeNull(type, "type");
 
@@ -143,7 +141,7 @@ abstract public class MethodAccess {
                         for (int i = 0, n = labels.length; i < n; i++) {
                             mv.visitLabel(labels[i]);
                             if (i == 0)
-                                mv.visitFrame(Opcodes.F_APPEND, 1, new Object[]{ classNameInternal }, 0, null);
+                                mv.visitFrame(Opcodes.F_APPEND, 1, new Object[] { classNameInternal }, 0, null);
                             else
                                 mv.visitFrame(Opcodes.F_SAME, 0, null, 0, null);
                             mv.visitVarInsn(ALOAD, 4);

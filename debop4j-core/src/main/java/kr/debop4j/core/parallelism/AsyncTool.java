@@ -34,7 +34,7 @@ import static kr.debop4j.core.Guard.shouldNotBeNull;
 /**
  * 비동기 작업 관련 Utility Class
  *
- * @author sunghyouk.bae@gmail.com
+ * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 12. 9. 14
  */
 @Slf4j
@@ -80,23 +80,17 @@ public class AsyncTool {
         return new FutureTask<Void>(runnable, null);
     }
 
-    /**
-     * 새로운 작업을 생성하고, 자동으로 시작합니다.
-     */
+    /** 새로운 작업을 생성하고, 자동으로 시작합니다. */
     public static <T> Future<T> startNew(Callable<T> callable) {
         return getExecutor().submit(callable);
     }
 
-    /**
-     * 새로운 작업을 생성하고, 작업을 실행합니다.
-     */
+    /** 새로운 작업을 생성하고, 작업을 실행합니다. */
     public static <T> Future<T> startNew(Runnable runnable, @Nullable T result) {
         return getExecutor().submit(runnable, result);
     }
 
-    /**
-     * prevTask 가 완료되면, action을 수행합니다.
-     */
+    /** prevTask 가 완료되면, action을 수행합니다. */
     public static <T, V> Future<V> continueTask(final FutureTask<T> prevTask,
                                                 final Action1<T> action,
                                                 final @Nullable V result) {
@@ -112,9 +106,7 @@ public class AsyncTool {
         return startNew(chainTask);
     }
 
-    /**
-     * prevTask의 실행 결과 값을 받아 후속 function에서 작업하고 결과를 반환합니다.
-     */
+    /** prevTask의 실행 결과 값을 받아 후속 function에서 작업하고 결과를 반환합니다. */
     public static <T, V> Future<V> continueTask(final FutureTask<T> prevTask,
                                                 final Function1<T, V> function) {
         return startNew(new Callable<V>() {
@@ -130,9 +122,7 @@ public class AsyncTool {
         return newTask(getEmptyRunnable(), result);
     }
 
-    /**
-     * 지정한 시퀀스를 인자로 하는 함수를 수행하고, 결과를 반환하는 {@link java.util.concurrent.FutureTask} 의 리스트를 반환한다.
-     */
+    /** 지정한 시퀀스를 인자로 하는 함수를 수행하고, 결과를 반환하는 {@link java.util.concurrent.FutureTask} 의 리스트를 반환한다. */
     public static <T, R> List<Future<R>> runAsync(final Iterable<? extends T> elements,
                                                   final Function1<T, R> function) throws InterruptedException {
         shouldNotBeNull(function, "function");
@@ -162,9 +152,7 @@ public class AsyncTool {
         getAll(getExecutor().invokeAll(tasks, timeout, unit));
     }
 
-    /**
-     * 비동기 작업들을 실행하고, 작업이 완료되거나 취소될때까지 기다립니다.
-     */
+    /** 비동기 작업들을 실행하고, 작업이 완료되거나 취소될때까지 기다립니다. */
     public static <T> void runAll(Iterable<? extends Future<T>> tasks) {
 
         if (log.isDebugEnabled())
@@ -176,9 +164,7 @@ public class AsyncTool {
             log.debug("비동기 작업들이 모두 완료 되었습니다!!!");
     }
 
-    /**
-     * 비동기 작업 목록들의 결과값을 모두 취합하여 반환합니다. (동시에 모든 작업을 수행하여, 성능 상 이익입니다.)
-     */
+    /** 비동기 작업 목록들의 결과값을 모두 취합하여 반환합니다. (동시에 모든 작업을 수행하여, 성능 상 이익입니다.) */
     public static <T> List<T> getAll(Iterable<? extends Future<T>> tasks) {
 
         if (log.isDebugEnabled())
@@ -198,9 +184,7 @@ public class AsyncTool {
         return results;
     }
 
-    /**
-     * 비동기 작업 목록들의 결과값을 모두 취합하여 반환합니다. (동시에 모든 작업을 수행하여, 성능 상 이익입니다.)
-     */
+    /** 비동기 작업 목록들의 결과값을 모두 취합하여 반환합니다. (동시에 모든 작업을 수행하여, 성능 상 이익입니다.) */
     public static <T> List<T> getAll(Iterable<? extends Future<T>> tasks,
                                      long timeout,
                                      TimeUnit unit) {

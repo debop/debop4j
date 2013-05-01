@@ -127,9 +127,7 @@ public class EomiUtil {
         return result;
     }
 
-    /**
-     * 선어말어미를 분석한다.
-     */
+    /** 선어말어미를 분석한다. */
     public static String[] splitPomi(String stem) throws MorphException {
 
         if (log.isTraceEnabled())
@@ -282,9 +280,7 @@ public class EomiUtil {
         return results;
     }
 
-    /**
-     * 어간만 변하는 경우
-     */
+    /** 어간만 변하는 경우 */
     private static void irregularStem(List<String[]> results, String stem, String ending) {
 
         char feCh = ending.charAt(0);
@@ -295,13 +291,13 @@ public class EomiUtil {
         if (feCh == '아' || feCh == '어' || feCh == '으') {
             if (lsJaso[lsJaso.length - 1] == 'ㄹ') { // ㄷ 불규칙
                 results.add(
-                        new String[]{ stem.substring(0, stem.length() - 1) +
+                        new String[] { stem.substring(0, stem.length() - 1) +
                                 MorphUtil.makeChar(stem.charAt(stem.length() - 1), 7)
                                 , ending
                                 , String.valueOf(PatternConstants.IRR_TYPE_DI) });
             } else if (lsJaso.length == 2) { // ㅅ 불규칙
                 results.add(
-                        new String[]{ stem.substring(0, stem.length() - 1) +
+                        new String[] { stem.substring(0, stem.length() - 1) +
                                 MorphUtil.makeChar(stem.charAt(stem.length() - 1), 19)
                                 , ending
                                 , String.valueOf(PatternConstants.IRR_TYPE_SI) });
@@ -311,7 +307,7 @@ public class EomiUtil {
         if ((fechJaso[0] == 'ㄴ' || fechJaso[0] == 'ㄹ' || fechJaso[0] == 'ㅁ' || feCh == '오' || feCh == '시')
                 && (ls == '우')) { // ㅂ 불규칙
             results.add(
-                    new String[]{ stem.substring(0, stem.length() - 1) +
+                    new String[] { stem.substring(0, stem.length() - 1) +
                             MorphUtil.makeChar(stem.charAt(stem.length() - 1), 17)
                             , ending
                             , String.valueOf(PatternConstants.IRR_TYPE_BI) });
@@ -321,7 +317,7 @@ public class EomiUtil {
                 && (lsJaso.length == 2)) { // ㄹ 탈락
 
             results.add(
-                    new String[]{ stem.substring(0, stem.length() - 1) +
+                    new String[] { stem.substring(0, stem.length() - 1) +
                             MorphUtil.makeChar(stem.charAt(stem.length() - 1), 8)
                             , ending
                             , String.valueOf(PatternConstants.IRR_TYPE_LI) });
@@ -332,16 +328,14 @@ public class EomiUtil {
                 lsJaso[1] == 'ㅏ' || lsJaso[1] == 'ㅓ' || lsJaso[1] == 'ㅑ' || lsJaso[1] == 'ㅕ')
                 && !"나".equals(stem)) { // ㅎ 불규칙, 그러나 [낳다]는 ㅎ 불규칙이 아니다.
             results.add(
-                    new String[]{ stem.substring(0, stem.length() - 1) +
+                    new String[] { stem.substring(0, stem.length() - 1) +
                             MorphUtil.makeChar(stem.charAt(stem.length() - 1), 27)
                             , ending
                             , String.valueOf(PatternConstants.IRR_TYPE_HI) });
         }
     }
 
-    /**
-     * 어미만 변하는 경우
-     */
+    /** 어미만 변하는 경우 */
     private static void irregularEnding(List<String[]> results, String stem, String ending) {
         if (ending.startsWith("ㅆ")) return;
 
@@ -350,32 +344,30 @@ public class EomiUtil {
 
         if (feCh == '러' && ls == '르') { // '러' 불규칙
             results.add(
-                    new String[]{ stem
+                    new String[] { stem
                             , "어" + ending.substring(1)
                             , String.valueOf(PatternConstants.IRR_TYPE_RO) });
         } else if ("라".equals(ending) && "가거".equals(stem)) { // '거라' 불규칙
             results.add(
-                    new String[]{ stem.substring(0, stem.length() - 1)
+                    new String[] { stem.substring(0, stem.length() - 1)
                             , "어라"
                             , String.valueOf(PatternConstants.IRR_TYPE_GU) });
         } else if ("라".equals(ending) && "오너".equals(stem)) { // '너라' 불규칙
             results.add(
-                    new String[]{ stem.substring(0, stem.length() - 1)
+                    new String[] { stem.substring(0, stem.length() - 1)
                             , "어라"
                             , String.valueOf(PatternConstants.IRR_TYPE_NU) });
         }
 
         if ("여".equals(ending) && ls == '하') { // '여' 불규칙
             results.add(
-                    new String[]{ stem
+                    new String[] { stem
                             , "어"
                             , String.valueOf(PatternConstants.IRR_TYPE_NU) });
         }
     }
 
-    /**
-     * 어간과 어미가 모두 변하는 경우
-     */
+    /** 어간과 어미가 모두 변하는 경우 */
     private static void irregularAO(List<String[]> results, String stem, String ending) {
 
         char ls = stem.charAt(stem.length() - 1);
@@ -386,33 +378,33 @@ public class EomiUtil {
         if (lsJaso[1] == 'ㅘ') {
             if (stem.endsWith("도와") || stem.endsWith("고와")) { // '곱다', '돕다'의 'ㅂ' 불규칙
                 results.add(
-                        new String[]{ stem.substring(0, stem.length() - 2) +
+                        new String[] { stem.substring(0, stem.length() - 2) +
                                 MorphUtil.makeChar(stem.charAt(stem.length() - 2), 17) // + 'ㅂ'
                                 , makeTesnseEomi("아", ending)
                                 , String.valueOf(PatternConstants.IRR_TYPE_BI) });
             } else { // '와' 축약
                 results.add(
-                        new String[]{ stem.substring(0, stem.length() - 1) +
+                        new String[] { stem.substring(0, stem.length() - 1) +
                                 MorphUtil.makeChar(stem.charAt(stem.length() - 1), 8, 0) // 자음 + ㅗ
                                 , makeTesnseEomi("아", ending)
                                 , String.valueOf(PatternConstants.IRR_TYPE_WA) });
             }
         } else if (stem.endsWith("퍼")) {
             results.add(
-                    new String[]{ stem.substring(0, stem.length() - 1) +
+                    new String[] { stem.substring(0, stem.length() - 1) +
                             MorphUtil.makeChar(stem.charAt(stem.length() - 1), 18, 0) // 자음 + -
                             , makeTesnseEomi("어", ending)
                             , String.valueOf(PatternConstants.IRR_TYPE_WA) });
         } else if (lsJaso[1] == 'ㅝ') {
             if (stem.length() >= 2) // 'ㅂ' 불규칙
                 results.add(
-                        new String[]{ stem.substring(0, stem.length() - 2) +
+                        new String[] { stem.substring(0, stem.length() - 2) +
                                 MorphUtil.makeChar(stem.charAt(stem.length() - 2), 17) // + 'ㅂ'
                                 , makeTesnseEomi("어", ending)
                                 , String.valueOf(PatternConstants.IRR_TYPE_BI) });
 
             results.add(
-                    new String[]{ stem.substring(0, stem.length() - 1) +
+                    new String[] { stem.substring(0, stem.length() - 1) +
                             MorphUtil.makeChar(stem.charAt(stem.length() - 1), 13, 0) // 자음 + ㅗ
                             , makeTesnseEomi("어", ending)
                             , String.valueOf(PatternConstants.IRR_TYPE_WA) });
@@ -420,7 +412,7 @@ public class EomiUtil {
             char[] ns = MorphUtil.decompose(stem.charAt(stem.length() - 2));
             if (ns.length == 3 && ns[2] == 'ㄹ') { // 르 불규칙
                 results.add(
-                        new String[]{ stem.substring(0, stem.length() - 2) +
+                        new String[] { stem.substring(0, stem.length() - 2) +
                                 MorphUtil.makeChar(stem.charAt(stem.length() - 2), 0) + "르"
                                 , makeTesnseEomi("아", ending)
                                 , String.valueOf(PatternConstants.IRR_TYPE_RO) });
@@ -429,67 +421,67 @@ public class EomiUtil {
             char[] ns = MorphUtil.decompose(stem.charAt(stem.length() - 2));
             if (stem.charAt(stem.length() - 2) == '르') { // 러 불규칙
                 results.add(
-                        new String[]{ stem.substring(0, stem.length() - 1)
+                        new String[] { stem.substring(0, stem.length() - 1)
                                 , makeTesnseEomi("어", ending)
                                 , String.valueOf(PatternConstants.IRR_TYPE_LO) });
             } else if (ns.length == 3 && ns[2] == 'ㄹ') { // 르 불규칙
                 results.add(
-                        new String[]{ stem.substring(0, stem.length() - 2) +
+                        new String[] { stem.substring(0, stem.length() - 2) +
                                 MorphUtil.makeChar(stem.charAt(stem.length() - 2), 0) + "르"
                                 , makeTesnseEomi("어", ending)
                                 , String.valueOf(PatternConstants.IRR_TYPE_RO) });
             }
         } else if (stem.endsWith("펴") || stem.endsWith("켜")) {
             results.add(
-                    new String[]{ stem.substring(0, stem.length() - 1) +
+                    new String[] { stem.substring(0, stem.length() - 1) +
                             MorphUtil.makeChar(stem.charAt(stem.length() - 1), 20, 0)
                             , makeTesnseEomi("어", ending)
                             , String.valueOf(PatternConstants.IRR_TYPE_EI) });
         } else if (stem.endsWith("해")) {
             results.add(
-                    new String[]{ stem.substring(0, stem.length() - 1) +
+                    new String[] { stem.substring(0, stem.length() - 1) +
                             MorphUtil.makeChar(stem.charAt(stem.length() - 1), 0, 0)
                             , makeTesnseEomi("어", ending)
                             , String.valueOf(PatternConstants.IRR_TYPE_EI) });
         } else if (lsJaso.length == 2 && lsJaso[1] == 'ㅏ') {
             results.add(
-                    new String[]{ stem.substring(0, stem.length() - 1) +
+                    new String[] { stem.substring(0, stem.length() - 1) +
                             MorphUtil.makeChar(stem.charAt(stem.length() - 1), 18, 0)
                             , makeTesnseEomi("어", ending)
                             , String.valueOf(PatternConstants.IRR_TYPE_UO) });
         } else if (lsJaso.length == 2 && lsJaso[1] == 'ㅓ') {
             // 으 탈락
             results.add(
-                    new String[]{ stem.substring(0, stem.length() - 1) +
+                    new String[] { stem.substring(0, stem.length() - 1) +
                             MorphUtil.makeChar(stem.charAt(stem.length() - 1), 18, 0)
                             , makeTesnseEomi("어", ending)
                             , String.valueOf(PatternConstants.IRR_TYPE_UO) });
             //	 아 불규칙
             results.add(
-                    new String[]{ stem
+                    new String[] { stem
                             , makeTesnseEomi("어", ending)
                             , String.valueOf(PatternConstants.IRR_TYPE_AH) });
         } else if (lsJaso[1] == 'ㅕ') {
             results.add(
-                    new String[]{ stem.substring(0, stem.length() - 1) +
+                    new String[] { stem.substring(0, stem.length() - 1) +
                             MorphUtil.makeChar(stem.charAt(stem.length() - 1), 20, 0)
                             , makeTesnseEomi("어", ending)
                             , String.valueOf(PatternConstants.IRR_TYPE_EI) });
         } else if (lsJaso[1] == 'ㅙ') {
             results.add(
-                    new String[]{ stem.substring(0, stem.length() - 1) +
+                    new String[] { stem.substring(0, stem.length() - 1) +
                             MorphUtil.makeChar(stem.charAt(stem.length() - 1), 11, 0)
                             , makeTesnseEomi("어", ending)
                             , String.valueOf(PatternConstants.IRR_TYPE_OE) });
         } else if (lsJaso[1] == 'ㅐ') {
             results.add(
-                    new String[]{ stem.substring(0, stem.length() - 1) +
+                    new String[] { stem.substring(0, stem.length() - 1) +
                             MorphUtil.makeChar(stem.charAt(stem.length() - 1), 0, 27)
                             , makeTesnseEomi("아", ending)
                             , String.valueOf(PatternConstants.IRR_TYPE_HI) });
         } else if (lsJaso[1] == 'ㅒ') {
             results.add(
-                    new String[]{ stem.substring(0, stem.length() - 1) +
+                    new String[] { stem.substring(0, stem.length() - 1) +
                             MorphUtil.makeChar(stem.charAt(stem.length() - 1), 2, 27)
                             , makeTesnseEomi("아", ending)
                             , String.valueOf(PatternConstants.IRR_TYPE_HI) });
@@ -528,9 +520,7 @@ public class EomiUtil {
     }
 
 
-    /**
-     * '음/기' + '이' + 어미, '에서/부터/에서부터' + '이' + 어미 인지 조사한다.
-     */
+    /** '음/기' + '이' + 어미, '에서/부터/에서부터' + '이' + 어미 인지 조사한다. */
     public static boolean endsWithEEomi(String stem) {
         int len = stem.length();
         if (len < 2 || !stem.endsWith("이")) return false;
@@ -648,7 +638,7 @@ public class EomiUtil {
             strs[1] = end;
 
         } else if (!"".equals(end) && DictionaryUtil.existEomi(end)) {
-            strs = new String[]{ stem, end };
+            strs = new String[] { stem, end };
         }
 
         if (log.isTraceEnabled())

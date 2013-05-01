@@ -27,15 +27,13 @@ import java.io.ObjectOutputStream;
 /**
  * 객체를 메모리 덤프를 통해 직렬화를 수행합니다.
  *
- * @author sunghyouk.bae@gmail.com
+ * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 12. 10. 4.
  */
 @Slf4j
 public class BinarySerializer implements ISerializer {
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public byte[] serialize(Object graph) {
 
@@ -54,9 +52,7 @@ public class BinarySerializer implements ISerializer {
         }
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     @SuppressWarnings("unchecked")
     public <T> T deserialize(byte[] bytes, Class<T> clazz) {

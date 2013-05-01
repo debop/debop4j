@@ -25,7 +25,7 @@ import org.hibernate.event.spi.PreUpdateEventListener;
 /**
  * {@link IUpdateTimestampedEntity} 를 구현한 엔티티의 updateTimestamp 값을 엔티티 저장 시에 갱신해 주는 Event Listener 입니다.
  *
- * @author sunghyouk.bae@gmail.com
+ * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 12. 11. 22.
  */
 public class UpdateTimestampedEventListener implements PreInsertEventListener, PreUpdateEventListener {

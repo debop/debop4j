@@ -20,7 +20,7 @@ import java.util.Properties;
 /**
  * PostgreSQL DB를 사용하는 Hibernate 환경설정입니다.
  *
- * @author sunghyouk.bae@gmail.com
+ * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 13. 3. 7.
  */
 @Configuration
@@ -34,7 +34,7 @@ public class UsingPostgreSqlConfiguration extends PostgreSqlConfigBase {
 
     @Override
     protected String[] getMappedPackageNames() {
-        return new String[]{
+        return new String[] {
                 CompanyCode.class.getPackage().getName(),
                 Company.class.getPackage().getName(),
                 Product.class.getPackage().getName(),

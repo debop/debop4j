@@ -18,9 +18,7 @@ package org.apache.lucene.analysis.kr.morph;
 
 public interface PatternConstants {
 
-    /**
-     * Hangul word patterns for KMA
-     */
+    /** Hangul word patterns for KMA */
     public static int PTN_N = 1;  //* 체언 : N/PN/NM/XN/CN/UN/AS/HJ/ET */
     public static int PTN_NJ = 2;  //* 체언 + 조사 */
     public static int PTN_NSM = 3;  //* 체언 + 용언화접미사 + 어미 */
@@ -43,9 +41,7 @@ public interface PatternConstants {
     public static int PTN_ZZZ = 35;  //* 문장부호, KS 완성형 기호열, 단독조사/어미 */
 
 
-    /**
-     * Definition of sentence types and parts of speech
-     */
+    /** Definition of sentence types and parts of speech */
 
     //*         CLASSIFICATION OF SENTENCE PATTERNS              */
     public static char SPTN_DECL = 'D';       //* declarative sentence */
@@ -116,9 +112,7 @@ public interface PatternConstants {
     public static char POS_RPAREN = 'r';       //* right parenthesis     */
 
 
-    /**
-     * ----------------------  불규칙 변형 유형  ------------------------
-     */
+    /** ----------------------  불규칙 변형 유형  ------------------------ */
     public static char IRR_TYPE_DI = 'd';  //* ㄷ 불규칙
     public static char IRR_TYPE_BI = 'b'; //* ㅂ 불규칙
     public static char IRR_TYPE_SI = 's'; //* ㅅ 불규칙

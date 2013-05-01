@@ -15,7 +15,7 @@ import java.util.List;
 /**
  * kr.debop4j.search.hibernate.score.TestSalesmanSearch
  *
- * @author sunghyouk.bae@gmail.com
+ * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 13. 4. 25. 오후 3:53
  */
 @Slf4j

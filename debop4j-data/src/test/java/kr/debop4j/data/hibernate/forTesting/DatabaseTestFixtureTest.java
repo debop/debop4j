@@ -10,7 +10,7 @@ import org.junit.*;
 /**
  * 다양한 Database에 대해 hibernate Domain Model을 테스트 할 수 잇도록 합니다.
  *
- * @author sunghyouk.bae@gmail.com
+ * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 13. 2. 21.
  */
 @Slf4j

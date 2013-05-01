@@ -23,7 +23,7 @@ import org.joda.time.DateTimeConstants;
 /**
  * 날짜 관련 Utility Class
  *
- * @author sunghyouk.bae@gmail.com
+ * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 13. 1. 27.
  */
 @Slf4j
@@ -31,6 +31,7 @@ public class DateTool {
 
     private DateTool() {}
 
+    /** 지정된 DateTime 에서 time-part를 제외한 date-part만을 제공합니다. */
     public static DateTime getStartOfDay(DateTime time) {
         return time.withTimeAtStartOfDay();
     }

@@ -16,7 +16,7 @@ import static com.google.common.collect.Lists.newArrayList;
 /**
  * kr.debop4j.core.guava.OrderingTest
  *
- * @author sunghyouk.bae@gmail.com
+ * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 13. 1. 22.
  */
 @Slf4j

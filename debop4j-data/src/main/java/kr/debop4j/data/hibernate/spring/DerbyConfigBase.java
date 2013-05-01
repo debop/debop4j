@@ -25,7 +25,7 @@ import java.util.Properties;
 /**
  * Derby Embedded DB 에 대한 Hibernate 관련 Configuration 입니다.
  *
- * @author sunghyouk.bae@gmail.com
+ * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 13. 2. 22.
  */
 public abstract class DerbyConfigBase extends HibernateConfigBase {

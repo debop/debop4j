@@ -43,7 +43,7 @@ import java.util.Properties;
 /**
  * hibernate 의 환경설정을 spring framework의 bean 환경설정으로 구현했습니다.
  *
- * @author sunghyouk.bae@gmail.com
+ * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 13. 2. 21.
  */
 @Slf4j
@@ -83,9 +83,7 @@ public abstract class HibernateConfigBase {
     @Bean(destroyMethod = "close")
     abstract public DataSource dataSource();
 
-    /**
-     * factoryBean 에 추가 설정을 지정할 수 있습니다.
-     */
+    /** factoryBean 에 추가 설정을 지정할 수 있습니다. */
     protected void setupSessionFactory(LocalSessionFactoryBean factoryBean) { }
 
     @Bean

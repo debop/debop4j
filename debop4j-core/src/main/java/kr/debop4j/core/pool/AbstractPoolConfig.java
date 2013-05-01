@@ -22,7 +22,7 @@ import org.apache.commons.pool.impl.GenericObjectPool;
 /**
  * Apache common pool 을 설정 정보
  *
- * @author sunghyouk.bae@gmail.com
+ * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 13. 4. 8. 오전 10:53
  */
 @Slf4j

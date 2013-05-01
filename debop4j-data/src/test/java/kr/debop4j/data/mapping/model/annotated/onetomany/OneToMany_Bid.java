@@ -13,7 +13,7 @@ import java.sql.Timestamp;
 /**
  * org.annotated.mapping.domain.model.onetomany.OneToMany_Bid
  *
- * @author sunghyouk.bae@gmail.com
+ * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 12. 12. 4.
  */
 @Entity

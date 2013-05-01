@@ -3,7 +3,7 @@ package kr.debop4j.access.model.product;
 /**
  * kr.debop4j.access.model.product.ActorKind
  *
- * @author sunghyouk.bae@gmail.com
+ * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 13. 3. 11.
  */
 public enum ActorKind {

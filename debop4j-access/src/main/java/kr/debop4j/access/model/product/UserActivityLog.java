@@ -17,7 +17,7 @@ import java.util.Locale;
 /**
  * 사용자의 활동 로그를 기록하빈다.
  *
- * @author sunghyouk.bae@gmail.com
+ * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 13. 3. 10.
  */
 @Entity

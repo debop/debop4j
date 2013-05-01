@@ -20,7 +20,7 @@ import static org.fest.assertions.Assertions.assertThat;
 /**
  * kr.debop4j.data.ogm.test.jpa.JPAAPIWrappingTest
  *
- * @author sunghyouk.bae@gmail.com
+ * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 13. 4. 12. 오후 3:38
  */
 public class JPAAPIWrappingTest extends JpaTestBase {
@@ -67,6 +67,6 @@ public class JPAAPIWrappingTest extends JpaTestBase {
 
     @Override
     public Class<?>[] getEntities() {
-        return new Class<?>[]{ Poem.class };
+        return new Class<?>[] { Poem.class };
     }
 }

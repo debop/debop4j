@@ -24,7 +24,7 @@ import javax.sql.DataSource;
 /**
  * Jdbc 관련 Utility class
  *
- * @author sunghyouk.bae@gmail.com
+ * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 13. 2. 26
  */
 @Slf4j
@@ -36,9 +36,7 @@ public class JdbcTool {
         return getTomcatDataSource(driverClass, url, username, passwd);
     }
 
-    /**
-     * DataSource 를 빌드합니다.
-     */
+    /** DataSource 를 빌드합니다. */
     public static javax.sql.DataSource getBoneCpDataSource(String driverClass, String url, String username, String passwd) {
         if (log.isDebugEnabled())
             log.debug("build BoneCP DataSource... driverClass=[{}], url=[{}], username=[{}], passwd=[{}]",
@@ -62,9 +60,7 @@ public class JdbcTool {
         return ds;
     }
 
-    /**
-     * DataSource 를 빌드합니다.
-     */
+    /** DataSource 를 빌드합니다. */
     public static DataSource getTomcatDataSource(String driverClass, String url, String username, String passwd) {
         if (log.isDebugEnabled())
             log.debug("build Tomcat pool DataSource... driverClass=[{}], url=[{}], username=[{}], passwd=[{}]",
@@ -94,9 +90,7 @@ public class JdbcTool {
         return ds;
     }
 
-    /**
-     * 테스트에 사용하기 위해 메모리를 사용하는 HSql DB 에 대한 DataSource 를 반환합니다.
-     */
+    /** 테스트에 사용하기 위해 메모리를 사용하는 HSql DB 에 대한 DataSource 를 반환합니다. */
     public static DataSource getEmbeddedHsqlDataSource() {
         return getDataSource("org.hsqldb.jdbcDriver",
                              "jdbc:hsqldb:mem:test;MVCC=TRUE",

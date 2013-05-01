@@ -25,7 +25,7 @@ import lombok.extern.slf4j.Slf4j;
 /**
  * {@link ISerializer} 를 통해 직렬화/역직렬환 정보를 압축/복원을 수행하여 전달한다.
  *
- * @author sunghyouk.bae@gmail.com
+ * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 12. 12. 17
  */
 @Slf4j

@@ -24,7 +24,7 @@ import lombok.Setter;
 /**
  * 객체를 JSON 직렬화를 수행하여, 그 결과를 저장하려고 할 때 사용한다.
  *
- * @author sunghyouk.bae@gmail.com
+ * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 12. 9. 18
  */
 public class JsonTextObject extends ValueObjectBase {

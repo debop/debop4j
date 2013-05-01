@@ -14,7 +14,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 /**
  * kr.debop4j.data.ehcache.ogm.cfg.EhcacheGridDatastoreConfigBase
  *
- * @author sunghyouk.bae@gmail.com
+ * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 13. 3. 29
  */
 @Configuration

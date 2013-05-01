@@ -25,7 +25,7 @@ import javax.sql.DataSource;
 /**
  * PostgreSQL 용 ConnectionPool과 Replication을 제공하는 PgPool 로 Connection을 만듭니다. (포트 9999를 사용합니다)
  *
- * @author sunghyouk.bae@gmail.com
+ * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 13. 2. 26.
  */
 @Configuration

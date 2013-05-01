@@ -9,7 +9,7 @@ import java.util.concurrent.Callable;
 /**
  * kr.debop4j.core.unitTesting.TestToolTest
  *
- * @author sunghyouk.bae@gmail.com
+ * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 12. 12. 3.
  */
 @Slf4j

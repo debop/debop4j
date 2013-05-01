@@ -12,7 +12,7 @@ import java.util.logging.Logger;
 /**
  * 테스트를 목적으로 아무런 작업도 하지 않는 Database 를 표현합니다.
  *
- * @author sunghyouk.bae@gmail.com
+ * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 13. 4. 12. 오전 11:42
  */
 @Slf4j

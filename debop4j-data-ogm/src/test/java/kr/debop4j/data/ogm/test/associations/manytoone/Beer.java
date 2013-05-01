@@ -11,7 +11,7 @@ import javax.persistence.ManyToOne;
 /**
  * Beer
  *
- * @author sunghyouk.bae@gmail.com
+ * @author 배성혁 ( sunghyouk.bae@gmail.com )
  *         13. 3. 29. 오후 9:08
  */
 @Entity

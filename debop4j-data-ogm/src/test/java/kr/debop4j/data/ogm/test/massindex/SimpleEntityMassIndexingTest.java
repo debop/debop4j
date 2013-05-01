@@ -23,14 +23,14 @@ import static org.fest.assertions.Assertions.assertThat;
 /**
  * hibernate-search-engine 4.3.0-SNAPSHOT 이상에서 테스트가 가능합니다.
  *
- * @author sunghyouk.bae@gmail.com
+ * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 13. 4. 2. 오후 1:17
  */
 @Ignore("hibernate-search-engine 4.3.0 이상에서 지원합니다.")
 public class SimpleEntityMassIndexingTest extends OgmTestBase {
     @Override
     protected Class<?>[] getAnnotatedClasses() {
-        return new Class<?>[]{ Insurance.class, IndexedNews.class, IndexedLabel.class };
+        return new Class<?>[] { Insurance.class, IndexedNews.class, IndexedLabel.class };
     }
 
     @After

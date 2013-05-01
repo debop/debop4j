@@ -21,15 +21,13 @@ import lombok.extern.slf4j.Slf4j;
 /**
  * 설명을 추가하세요.
  *
- * @author sunghyouk.bae@gmail.com
+ * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 12. 12. 18
  */
 @Slf4j
 public class SHA512StringDigester extends StringDigesterBase {
 
-    /**
-     * SHA-512
-     */
+    /** SHA-512 */
     @Override
     public final String getAlgorithm() {
         return "SHA-512";

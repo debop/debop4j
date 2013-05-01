@@ -3,7 +3,7 @@ package kr.debop4j.core.cryptography.symmetric;
 /**
  * 설명을 추가하세요.
  *
- * @author sunghyouk.bae@gmail.com
+ * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 12. 12. 18
  */
 public interface ISymmetricByteEncryptor {
@@ -15,9 +15,7 @@ public interface ISymmetricByteEncryptor {
      */
     String getAlgorithm();
 
-    /**
-     * 초기화 여부
-     */
+    /** 초기화 여부 */
     boolean isInitialized();
 
     /**

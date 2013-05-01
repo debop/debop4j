@@ -31,7 +31,7 @@ import java.util.Set;
 /**
  * 트리 형태의 엔티티의 기본 클래스입니다.
  *
- * @author sunghyouk.bae@gmail.com
+ * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 12. 9. 15.
  */
 @MappedSuperclass
@@ -42,24 +42,18 @@ public abstract class TreeEntityBase<T extends ITreeEntity<T>, TId extends Seria
 
     private static final long serialVersionUID = 5383928955741762564L;
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ParentId")
     private T parent;
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Setter(AccessLevel.PROTECTED)
     @OneToMany(mappedBy = "parent", cascade = { CascadeType.ALL })
     @LazyCollection(LazyCollectionOption.EXTRA)
     private Set<T> children = Sets.newLinkedHashSet();
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Embedded
     private TreeNodePosition nodePosition = new TreeNodePosition();
 

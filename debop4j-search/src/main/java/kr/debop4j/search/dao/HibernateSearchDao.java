@@ -44,7 +44,7 @@ import java.util.concurrent.Future;
 /**
  * hibernate-search 를 이용하여 엔티티를 관리하는 Data Access Object 입니다.
  *
- * @author sunghyouk.bae@gmail.com
+ * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 13. 4. 20. 오후 10:03
  */
 @SuppressWarnings("unchecked")
@@ -96,9 +96,7 @@ public class HibernateSearchDao extends HibernateDao implements IHibernateSearch
         return fts;
     }
 
-    /**
-     * 지정한 형식에 대한 질의 빌더를 생성합니다.
-     */
+    /** 지정한 형식에 대한 질의 빌더를 생성합니다. */
     @Override
     public final QueryBuilder getQueryBuilder(Class<?> clazz) {
         return getFullTextSession().getSearchFactory().buildQueryBuilder().forEntity(clazz).get();
@@ -181,17 +179,13 @@ public class HibernateSearchDao extends HibernateDao implements IHibernateSearch
         return new SimplePagedList<T>(ftq.list(), pageNo, pageSize, totalCount);
     }
 
-    /**
-     * 지정한 쿼리를 수행하여 해당 엔티티의 ID 값만 가져옵니다.
-     */
+    /** 지정한 쿼리를 수행하여 해당 엔티티의 ID 값만 가져옵니다. */
     @Override
     public IPagedList<Serializable> getIds(Class<?> clazz, Query luceneQuery, int pageNo, int pageSize, Sort sort) {
-        return getProjectionPage(clazz, luceneQuery, new String[]{ FullTextQuery.ID }, pageNo, pageSize, sort);
+        return getProjectionPage(clazz, luceneQuery, new String[] { FullTextQuery.ID }, pageNo, pageSize, sort);
     }
 
-    /**
-     * 지정한 쿼리를 수행하여 해당 필드의 값들만 뽑아온다.
-     */
+    /** 지정한 쿼리를 수행하여 해당 필드의 값들만 뽑아온다. */
     @Override
     public IPagedList getProjectionPage(Class<?> clazz, Query luceneQuery, String[] fields, int pageNo, int pageSize, Sort sort) {
         if (isTraceEnabled)
@@ -218,33 +212,25 @@ public class HibernateSearchDao extends HibernateDao implements IHibernateSearch
     }
 
 
-    /**
-     * 해당 엔티티의 인덱스 정보만을 삭제합니다.
-     */
+    /** 해당 엔티티의 인덱스 정보만을 삭제합니다. */
     @Override
     public void purge(Class<?> clazz, Serializable id) {
         getFullTextSession().purge(clazz, id);
     }
 
-    /**
-     * 지정된 수형의 인덱싱 정보를 삭제합니다. (DB의 엔티티 정보는 보존합니다.)
-     */
+    /** 지정된 수형의 인덱싱 정보를 삭제합니다. (DB의 엔티티 정보는 보존합니다.) */
     @Override
     public void purgeAll(Class<?> clazz) {
         getFullTextSession().purgeAll(clazz);
     }
 
-    /**
-     * 엔티티를 인덱싱합니다.
-     */
+    /** 엔티티를 인덱싱합니다. */
     @Override
     public <T> void index(T entity) {
         getFullTextSession().index(entity);
     }
 
-    /**
-     * 지정된 수형의 모든 엔티티들을 인덱싱 합니다.
-     */
+    /** 지정된 수형의 모든 엔티티들을 인덱싱 합니다. */
     @Override
     public void indexAll(Class<?> clazz, int batchSize) {
         if (isDebugEnabled)
@@ -314,9 +300,7 @@ public class HibernateSearchDao extends HibernateDao implements IHibernateSearch
         getFullTextSession().flushToIndexes();
     }
 
-    /**
-     * 해당 수형의 인덱스를 최적화합니다.
-     */
+    /** 해당 수형의 인덱스를 최적화합니다. */
     @Override
     public void optimize(Class<?> clazz) {
         if (isTraceEnabled)

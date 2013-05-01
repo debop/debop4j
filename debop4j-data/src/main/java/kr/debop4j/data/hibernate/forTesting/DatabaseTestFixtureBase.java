@@ -31,7 +31,7 @@ import java.util.NoSuchElementException;
 /**
  * 여러 Database에 대해, Hibernate 작업 Test를 위한 기본 클래스입니다.
  *
- * @author sunghyouk.bae@gmail.com
+ * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 13. 2. 19.
  */
 @Slf4j

@@ -14,7 +14,7 @@ import javax.persistence.*;
 /**
  * kr.debop4j.search.hibernate.model.Tweet
  *
- * @author sunghyouk.bae@gmail.com
+ * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 13. 2. 28.
  */
 @Entity

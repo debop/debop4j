@@ -113,9 +113,7 @@ public class ConstraintUtil {
         return hahes.get(key) != null;
     }
 
-    /**
-     * 어미가 ㄴ,ㄹ,ㅁ 으로 끝나는지 조사한다.
-     */
+    /** 어미가 ㄴ,ㄹ,ㅁ 으로 끝나는지 조사한다. */
     public static boolean isNLM(String eomi) {
 
         if (eomi == null || eomi.length() == 0) return false;

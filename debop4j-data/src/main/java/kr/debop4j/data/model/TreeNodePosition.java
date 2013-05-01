@@ -29,7 +29,7 @@ import javax.persistence.Embeddable;
 /**
  * 트리 형식의 자료 구조의 하나의 노드의 위치를 나타냅니다.
  *
- * @author sunghyouk.bae@gmail.com
+ * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 12. 9. 13.
  */
 @Embeddable

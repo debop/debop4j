@@ -18,7 +18,7 @@ import java.util.Set;
 /**
  * 제품에서 사용하는 마스터 코드 정보
  *
- * @author sunghyouk.bae@gmail.com
+ * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 13. 3. 12.
  */
 @Entity

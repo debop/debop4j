@@ -42,7 +42,7 @@ import static org.fest.assertions.Assertions.assertThat;
 /**
  * kr.debop4j.search.twitter.TimelineTest
  *
- * @author sunghyouk.bae@gmail.com
+ * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 13. 4. 23. 오후 10:53
  */
 @Slf4j
@@ -78,9 +78,7 @@ public class TimelineTest {
         assertThat(props.getValue("oauth.consumerKey")).isNotEmpty();
     }
 
-    /**
-     * hibernate-ogm 은 아직 hibernate 의 criteria api 를 지원하지 않습니다!!!
-     */
+    /** hibernate-ogm 은 아직 hibernate 의 criteria api 를 지원하지 않습니다!!! */
     @Test
     public void insertAndLoadDelete() throws Exception {
         HibernateSearchDao dao = appContext.getBean(HibernateSearchDao.class);

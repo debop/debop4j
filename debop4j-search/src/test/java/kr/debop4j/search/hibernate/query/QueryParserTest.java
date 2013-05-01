@@ -25,7 +25,7 @@ import java.util.List;
 /**
  * kr.debop4j.search.hibernate.query.QueryParserTest
  *
- * @author sunghyouk.bae@gmail.com
+ * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 13. 4. 23. 오후 5:06
  */
 @Slf4j
@@ -52,7 +52,7 @@ public class QueryParserTest extends SearchTestBase {
     }
 
 
-    String[] descs = new String[]{
+    String[] descs = new String[] {
             "he hits the road as a traveling salesman",
             "he's not a computer salesman",
             "a traveling salesman touting the wave of the future",

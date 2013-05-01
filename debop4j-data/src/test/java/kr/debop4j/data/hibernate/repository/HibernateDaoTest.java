@@ -22,7 +22,7 @@ import java.util.List;
 /**
  * kr.debop4j.data.hibernate.repository.HibernateDaoTest
  *
- * @author sunghyouk.bae@gmail.com
+ * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 13. 4. 15. 오후 2:08
  */
 @Slf4j

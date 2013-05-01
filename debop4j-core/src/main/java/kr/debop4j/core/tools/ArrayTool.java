@@ -29,7 +29,7 @@ import java.util.Set;
 /**
  * Array 관련 Utility class 입니다.
  *
- * @author sunghyouk.bae@gmail.com
+ * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 12. 9. 14
  */
 @Slf4j
@@ -40,9 +40,7 @@ public final class ArrayTool {
 
     public static final byte[] EmptyByteArray = new byte[0];
 
-    /**
-     * 지졍된 배열이 null 이거나 빈 배열이면 true를 반환한다.
-     */
+    /** 지졍된 배열이 null 이거나 빈 배열이면 true를 반환한다. */
     public static <T> boolean isEmpty(T[] array) {
         return ((array == null) || (array.length == 0));
     }

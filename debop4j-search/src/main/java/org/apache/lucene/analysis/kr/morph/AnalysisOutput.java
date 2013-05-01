@@ -219,16 +219,12 @@ public class AnalysisOutput implements Cloneable {
         compound.addAll(cnoun);
     }
 
-    /**
-     * @return the source
-     */
+    /** @return the source */
     public String getSource() {
         return source;
     }
 
-    /**
-     * @param source the source to set
-     */
+    /** @param source the source to set */
     public void setSource(String source) {
         this.source = source;
     }

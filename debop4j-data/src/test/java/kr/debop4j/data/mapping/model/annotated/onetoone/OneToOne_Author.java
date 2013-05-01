@@ -10,7 +10,7 @@ import javax.persistence.*;
 /**
  * kr.debop4j.data.mapping.model.annotated.onetoone.OneToOne_Author
  *
- * @author sunghyouk.bae@gmail.com
+ * @author 배성혁 ( sunghyouk.bae@gmail.com )
  *         13. 3. 23. 오후 10:08
  */
 @Entity
@@ -29,7 +29,7 @@ public class OneToOne_Author extends AnnotatedEntityBase {
     @Column(name = "AuthorName", nullable = false, length = 128)
     private String name;
 
-    @OneToOne(mappedBy = "author", cascade = {CascadeType.ALL})
+    @OneToOne(mappedBy = "author", cascade = { CascadeType.ALL })
     private OneToOne_Biography biography;
 
     @Override

@@ -12,7 +12,7 @@ import org.hibernate.ogm.datastore.spi.DatastoreProvider;
 /**
  * kr.debop4j.data.mongodb.test.loading.LoadSelectedColumnsGlobalTest
  *
- * @author sunghyouk.bae@gmail.com
+ * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 13. 3. 28
  */
 @Slf4j

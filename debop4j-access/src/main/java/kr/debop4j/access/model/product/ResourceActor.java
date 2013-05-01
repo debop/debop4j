@@ -18,7 +18,7 @@ import java.util.Set;
 /**
  * 리소스에 대한 사용자의 접근 권한을 나타냅니다.
  *
- * @author sunghyouk.bae@gmail.com
+ * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 13. 3. 11.
  */
 @Entity

@@ -26,7 +26,7 @@ import org.springframework.data.mongodb.core.MongoTemplate;
 import java.util.Collection;
 
 /**
- * @author sunghyouk.bae@gmail.com
+ * @author 배성혁 ( sunghyouk.bae@gmail.com )
  *         13. 3. 25 오후 3:15
  */
 @Slf4j

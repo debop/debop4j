@@ -22,7 +22,7 @@ import java.util.concurrent.Future;
 /**
  * examples.async.AsyncLoadPage
  *
- * @author sunghyouk.bae@gmail.com
+ * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 13. 2. 17.
  */
 @Slf4j

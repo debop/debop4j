@@ -33,7 +33,7 @@ import static org.objectweb.asm.Opcodes.*;
 /**
  * 객체의 속성에 접근하기 위한 Accessor 입니다. (속성에 대해 get, set을 수행할 수 있습니다)
  *
- * @author sunghyouk.bae@gmail.com
+ * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 13. 1. 21
  */
 @Slf4j

@@ -19,14 +19,12 @@ package kr.debop4j.core.reflect;
 /**
  * Reflection 관련 상수
  *
- * @author sunghyouk.bae@gmail.com
+ * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 13. 1. 21
  */
 public class ReflectConsts {
 
-    /**
-     * Reflection 관련 base package : kr.debop4j.core.reflect
-     */
+    /** Reflection 관련 base package : kr.debop4j.core.reflect */
     public static final String BASE_PACKAGE = "kr.debop4j.core.reflect";
 
     public static final String CONSTRUCTOR_ACCESS_PATH = "kr/debop4j/core/reflect/ConstructorAccess";

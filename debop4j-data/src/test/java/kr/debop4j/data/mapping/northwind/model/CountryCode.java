@@ -3,7 +3,7 @@ package kr.debop4j.data.mapping.northwind.model;
 /**
  * kr.debop4j.data.mapping.northwind.model.CountryCode
  *
- * @author sunghyouk.bae@gmail.com
+ * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 13. 2. 23.
  */
 public enum CountryCode {

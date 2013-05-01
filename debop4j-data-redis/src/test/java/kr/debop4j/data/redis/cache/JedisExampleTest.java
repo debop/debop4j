@@ -24,7 +24,7 @@ import redis.clients.jedis.Jedis;
  * Redis Example
  * 참고: http://krams915.blogspot.kr/2012/02/spring-mvc-31-implement-crud-with_1921.html
  *
- * @author sunghyouk.bae@gmail.com
+ * @author 배성혁 ( sunghyouk.bae@gmail.com )
  *         13. 3. 25. 오후 10:53
  */
 public class JedisExampleTest {

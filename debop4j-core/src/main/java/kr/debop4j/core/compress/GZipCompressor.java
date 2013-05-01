@@ -28,7 +28,7 @@ import java.util.zip.GZIPOutputStream;
 /**
  * GZip 압축을 수행합니다.
  *
- * @author sunghyouk.bae@gmail.com
+ * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 12. 9. 12
  */
 @Slf4j

@@ -41,7 +41,7 @@ import java.util.Stack;
 /**
  * Springs Framework 의 Dependency Injection을 담당하는 클래스입니다.
  *
- * @author sunghyouk.bae@gmail.com
+ * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 12. 11. 23.
  */
 @Slf4j
@@ -178,9 +178,7 @@ public final class Springs {
         }
     }
 
-    /**
-     * Springs ApplicationContext를 초기화합니다.
-     */
+    /** Springs ApplicationContext를 초기화합니다. */
     public static synchronized void reset() {
         if (getLocalContext() != null)
             reset(getLocalContext());
@@ -236,9 +234,7 @@ public final class Springs {
         return getContext().getBeanNamesForType(beanClass, includeNonSingletons, allowEagerInit);
     }
 
-    /**
-     * 지정한 타입의 Bean 들의 인스턴스를 가져옵니다. (Prototype Bean 도 포함됩니다.)
-     */
+    /** 지정한 타입의 Bean 들의 인스턴스를 가져옵니다. (Prototype Bean 도 포함됩니다.) */
     public static <T> List<T> getBeansByType(Class<T> beanClass) {
         return getBeansByType(beanClass, true, true);
     }
@@ -260,16 +256,12 @@ public final class Springs {
             return null;
     }
 
-    /**
-     * 지정된 수형 또는 상속한 수형으로 등록된 bean 들을 조회합니다.
-     */
+    /** 지정된 수형 또는 상속한 수형으로 등록된 bean 들을 조회합니다. */
     public static synchronized <T> Map<String, T> getBeansOfType(Class<T> beanClass) {
         return getBeansOfType(beanClass, true, true);
     }
 
-    /**
-     * 지정된 수형 또는 상속한 수형으로 등록된 bean 들을 조회합니다.
-     */
+    /** 지정된 수형 또는 상속한 수형으로 등록된 bean 들을 조회합니다. */
     public static synchronized <T> Map<String, T> getBeansOfType(Class<T> beanClass,
                                                                  boolean includeNonSingletons,
                                                                  boolean allowEagerInit) {

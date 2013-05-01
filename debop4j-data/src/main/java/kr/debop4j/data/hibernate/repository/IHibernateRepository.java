@@ -32,7 +32,7 @@ import java.util.List;
 /**
  * Hibernate 용 Data Access Object Interface 입니다.
  *
- * @author sunghyouk.bae@gmail.com
+ * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 12. 11. 27.
  */
 public interface IHibernateRepository<E extends IStatefulEntity> {
@@ -53,9 +53,7 @@ public interface IHibernateRepository<E extends IStatefulEntity> {
 
     List<E> getIn(Serializable[] ids);
 
-    /**
-     * 대용량 데이터의 경우 Scroll이 가능한 Server Cursor를 반환합니다.
-     */
+    /** 대용량 데이터의 경우 Scroll이 가능한 Server Cursor를 반환합니다. */
     ScrollableResults getScroll(DetachedCriteria dc);
 
     ScrollableResults getScroll(DetachedCriteria dc, ScrollMode scrollMode);
@@ -68,15 +66,11 @@ public interface IHibernateRepository<E extends IStatefulEntity> {
 
     ScrollableResults getScroll(Query query, ScrollMode scrollMode, HibernateParameter... parameters);
 
-    /**
-     * Use {@link IHibernateRepository#findAll(org.hibernate.criterion.Order...)} instead.
-     */
+    /** Use {@link IHibernateRepository#findAll(org.hibernate.criterion.Order...)} instead. */
     @Deprecated
     List<E> getAll();
 
-    /**
-     * 모든 엔티티를 조회합니다.
-     */
+    /** 모든 엔티티를 조회합니다. */
     List<E> findAll(Order... orders);
 
     List<E> findAll(int firstResult, int maxResults, Order... orders);

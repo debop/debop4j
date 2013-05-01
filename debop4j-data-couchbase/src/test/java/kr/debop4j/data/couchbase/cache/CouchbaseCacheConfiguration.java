@@ -15,12 +15,12 @@ import java.util.List;
 /**
  * kr.debop4j.core.cache.couchbase.CouchbaseCacheConfiguration
  *
- * @author sunghyouk.bae@gmail.com
+ * @author 배성혁 ( sunghyouk.bae@gmail.com )
  *         13. 3. 25 오후 5:36
  */
 @Configuration
 @EnableCaching
-@ComponentScan(basePackageClasses = {UserRepository.class})
+@ComponentScan(basePackageClasses = { UserRepository.class })
 @Slf4j
 public class CouchbaseCacheConfiguration {
 

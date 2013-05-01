@@ -17,7 +17,7 @@ import javax.persistence.*;
 /**
  * 프로그램에서 생산한 자원 정보. Actor가 접근 가능한 대상을 말합니다.
  *
- * @author sunghyouk.bae@gmail.com
+ * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 13. 3. 10.
  */
 @Entity

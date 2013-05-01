@@ -29,7 +29,7 @@ import java.sql.Connection;
 /**
  * StatelessSession 을 이용하여 작업할 수 있도록 제공하는 클래스입니다.
  *
- * @author sunghyouk.bae@gmail.com
+ * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 13. 2. 19.
  */
 @Slf4j
@@ -41,9 +41,7 @@ public class StatelessTool {
         executeTransactional(UnitOfWorks.getCurrentSession(), action);
     }
 
-    /**
-     * 지정한 session으로부터 StatelessSession을 생성한 후 작업을 수행하고, 닫습니다.
-     */
+    /** 지정한 session으로부터 StatelessSession을 생성한 후 작업을 수행하고, 닫습니다. */
     public static void executeTransactional(Session session, Action1<StatelessSession> action) {
         if (log.isDebugEnabled())
             log.debug("StatelessSession을 이용하여 Transaction 하에서 특정 작업을 수행합니다.");

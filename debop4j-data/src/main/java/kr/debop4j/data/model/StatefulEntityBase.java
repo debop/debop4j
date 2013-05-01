@@ -22,7 +22,7 @@ import kr.debop4j.core.ValueObjectBase;
 /**
  * Hibernate 저장 상태를 표현하는 추상화 클래스입니다.
  *
- * @author sunghyouk.bae@gmail.com
+ * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 12. 11. 19
  */
 public abstract class StatefulEntityBase extends ValueObjectBase implements IStatefulEntity {

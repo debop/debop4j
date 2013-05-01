@@ -35,7 +35,7 @@ import java.sql.SQLException;
 /**
  * 문자열을 암호화하여, HexDecimal 형태의 문자열로 변환하여 DB에 저장합니다.
  *
- * @author sunghyouk.bae@gmail.com
+ * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 12. 9. 18
  */
 public abstract class AbstractSymmetricEncryptStringUserType implements UserType, Serializable {
@@ -47,9 +47,7 @@ public abstract class AbstractSymmetricEncryptStringUserType implements UserType
 
     abstract public ISymmetricByteEncryptor getEncryptor();
 
-    /**
-     * 문자열을 암호화하여, 16진법 문자열로 변환합니다.
-     */
+    /** 문자열을 암호화하여, 16진법 문자열로 변환합니다. */
     protected String encrypt(String value) throws Exception {
         if (value == null)
             return null;
@@ -61,9 +59,7 @@ public abstract class AbstractSymmetricEncryptStringUserType implements UserType
         return StringTool.getStringFromBytes(bytes, BinaryStringFormat.HexDecimal);
     }
 
-    /**
-     * 암호화된 16진법 문자열을 복원하여, 원래 문자열로 변환합니다.
-     */
+    /** 암호화된 16진법 문자열을 복원하여, 원래 문자열로 변환합니다. */
     protected String decrypt(String value) throws Exception {
         if (value == null)
             return null;
@@ -78,7 +74,7 @@ public abstract class AbstractSymmetricEncryptStringUserType implements UserType
 
     @Override
     public int[] sqlTypes() {
-        return new int[]{ StringType.INSTANCE.sqlType() };
+        return new int[] { StringType.INSTANCE.sqlType() };
     }
 
     @Override

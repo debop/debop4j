@@ -13,7 +13,7 @@ import java.util.Collection;
 /**
  * Couchbase를 캐시 저장소로 사용하는 Spring Cache 용 CacheManager 입니다.
  *
- * @author sunghyouk.bae@gmail.com
+ * @author 배성혁 ( sunghyouk.bae@gmail.com )
  *         13. 3. 24. 오후 6:00
  */
 @Slf4j

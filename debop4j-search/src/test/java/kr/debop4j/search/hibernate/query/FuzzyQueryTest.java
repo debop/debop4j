@@ -32,13 +32,13 @@ import java.util.List;
 /**
  * kr.debop4j.search.hibernate.query.FuzzyQueryTest
  *
- * @author sunghyouk.bae@gmail.com
+ * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 13. 4. 23. 오후 9:33
  */
 @Slf4j
 public class FuzzyQueryTest extends SearchTestBase {
 
-    String[] titles = new String[]{
+    String[] titles = new String[] {
             "Titan A.E.",
             "Little Women",
             "Little Shop of Horrors",

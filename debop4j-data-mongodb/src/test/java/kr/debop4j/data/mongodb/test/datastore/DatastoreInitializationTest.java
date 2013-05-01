@@ -16,7 +16,7 @@ import static org.junit.Assert.fail;
 /**
  * kr.debop4j.data.mongodb.test.datastore.DatastoreInitializationTest
  *
- * @author sunghyouk.bae@gmail.com
+ * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 13. 3. 28
  */
 @Slf4j

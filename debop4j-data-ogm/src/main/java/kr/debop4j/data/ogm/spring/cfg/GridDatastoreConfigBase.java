@@ -42,31 +42,25 @@ import java.util.Set;
 /**
  * hibernate-ogm 의 환경설정을 Spring Configuration으로 구현합니다.
  *
- * @author sunghyouk.bae@gmail.com
+ * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 13. 3. 29
  */
 @Configuration
 @Slf4j
 public abstract class GridDatastoreConfigBase {
-    /**
-     * DataStoreProvider 를 제공합니다.
-     */
+    /** DataStoreProvider 를 제공합니다. */
     @Bean
     public DatastoreProvider datastoreProvider() {
         return (DatastoreProvider) getService(DatastoreProvider.class);
     }
 
-    /**
-     * {@link GridDialect} 를 제공합니다.
-     */
+    /** {@link GridDialect} 를 제공합니다. */
     @Bean
     public GridDialect gridDialect() {
         return ((DatastoreServices) getService(DatastoreServices.class)).getGridDialect();
     }
 
-    /**
-     * hibernate-ogm용 configuration을 제공합니다.
-     */
+    /** hibernate-ogm용 configuration을 제공합니다. */
     @Bean
     public OgmConfiguration ogmConfiguration() {
 
@@ -99,9 +93,7 @@ public abstract class GridDatastoreConfigBase {
         return cfg;
     }
 
-    /**
-     * Hibernate SessionFactory 를 제공합니다.
-     */
+    /** Hibernate SessionFactory 를 제공합니다. */
     @Bean
     public SessionFactory sessionFactory() {
         log.info("hiberante-ogm 용 SessionFactory를 생성합니다...");
@@ -144,9 +136,7 @@ public abstract class GridDatastoreConfigBase {
         return new Class<?>[0];
     }
 
-    /**
-     * hibernate 용 속성을 설정합니다.
-     */
+    /** hibernate 용 속성을 설정합니다. */
     protected Properties getHibernateProperties() {
         if (log.isDebugEnabled())
             log.debug("Hibernate properties 를 설정합니다...");
@@ -163,9 +153,7 @@ public abstract class GridDatastoreConfigBase {
         return props;
     }
 
-    /**
-     * hibernate-ogm 용 속성을 반환합니다.
-     */
+    /** hibernate-ogm 용 속성을 반환합니다. */
     protected Properties getHibernateOgmProperties() {
         if (log.isDebugEnabled())
             log.debug("hibernate-ogm 용 property를 설정합니다...");

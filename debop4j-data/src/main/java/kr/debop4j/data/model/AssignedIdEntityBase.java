@@ -24,7 +24,7 @@ import java.io.Serializable;
 /**
  * 엔티티의 Identifier generator가 assigned 인 경우에 사용합니다.
  *
- * @author sunghyouk.bae@gmail.com
+ * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 13. 1. 27.
  */
 @MappedSuperclass

@@ -10,7 +10,7 @@ import static org.junit.Assert.assertEquals;
 /**
  * kr.debop4j.core.guava.CaseFormatTest
  *
- * @author sunghyouk.bae@gmail.com
+ * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 13. 1. 22.
  */
 @Slf4j

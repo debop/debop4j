@@ -10,7 +10,7 @@ import org.springframework.context.annotation.Configuration;
 /**
  * kr.debop4j.core.spring.SpringTestConfig
  *
- * @author sunghyouk.bae@gmail.com
+ * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 12. 12. 2.
  */
 @Slf4j

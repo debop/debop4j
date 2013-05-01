@@ -20,18 +20,14 @@ package kr.debop4j.data.hibernate.unitofwork;
 /**
  * kr.nsoft.data.hibernate.unitofwork.IUnitOfWorkTransaction
  *
- * @author sunghyouk.bae@gmail.com
+ * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 12. 11. 29.
  */
 public interface IUnitOfWorkTransaction {
 
-    /**
-     * Transaction을 commit 합니다.
-     */
+    /** Transaction을 commit 합니다. */
     void commit();
 
-    /**
-     * Transaction을 Rollback합니다.
-     */
+    /** Transaction을 Rollback합니다. */
     void rollback();
 }

@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.concurrent.Callable;
 
 /**
- * @author sunghyouk.bae@gmail.com
+ * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 13. 1. 11
  */
 @Slf4j

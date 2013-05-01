@@ -15,7 +15,7 @@ import java.util.Date;
 /**
  * 사용자가 즐겨찾기한 컨텐츠 (메뉴)
  *
- * @author sunghyouk.bae@gmail.com
+ * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 13. 3. 11.
  */
 @Entity
@@ -59,9 +59,7 @@ public class UserFavorite extends AccessEntityBase {
     @Column(name = "IsActive")
     private Boolean active;
 
-    /**
-     * 우선순위
-     */
+    /** 우선순위 */
     @Basic
     private Integer preference;
 

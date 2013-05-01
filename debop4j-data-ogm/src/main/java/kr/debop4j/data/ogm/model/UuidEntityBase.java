@@ -31,7 +31,7 @@ import javax.persistence.MappedSuperclass;
 /**
  * 엔티티의 Identifier의 수형이 UUID 인 엔티티입니다.
  *
- * @author sunghyouk.bae@gmail.com
+ * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 13. 3. 31. 오전 2:19
  */
 @MappedSuperclass

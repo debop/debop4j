@@ -12,14 +12,14 @@ import static org.fest.assertions.Assertions.assertThat;
 /**
  * kr.debop4j.data.ogm.test.associations.collection.type.ListAndMapTest
  *
- * @author sunghyouk.bae@gmail.com
+ * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 13. 4. 2. 오전 11:18
  */
 @Slf4j
 public class ListAndMapTest extends OgmTestBase {
     @Override
     protected Class<?>[] getAnnotatedClasses() {
-        return new Class<?>[]{
+        return new Class<?>[] {
                 User.class,
                 Address.class,
                 Father.class,

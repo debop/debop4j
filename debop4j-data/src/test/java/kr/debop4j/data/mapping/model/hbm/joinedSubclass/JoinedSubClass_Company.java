@@ -9,7 +9,7 @@ import lombok.Setter;
 /**
  * org.hibernate.mapping.domain.model.joinedSubclass.JoinedSubClass_Company.hbm.xml
  *
- * @author sunghyouk.bae@gmail.com
+ * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 12. 12. 2.
  */
 public class JoinedSubClass_Company extends EntityBase<Long> {

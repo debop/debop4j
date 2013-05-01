@@ -11,7 +11,7 @@ import static org.fest.assertions.Assertions.assertThat;
 /**
  * kr.debop4j.data.ogm.test.id.SequenceIdGeneratorTest
  *
- * @author sunghyouk.bae@gmail.com
+ * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 13. 4. 2. 오후 4:43
  */
 @Slf4j
@@ -19,7 +19,7 @@ public class SequenceIdGeneratorTest extends JpaTestBase {
 
     @Override
     public Class<?>[] getEntities() {
-        return new Class<?>[]{ Song.class, Actor.class };
+        return new Class<?>[] { Song.class, Actor.class };
     }
 
     @Test

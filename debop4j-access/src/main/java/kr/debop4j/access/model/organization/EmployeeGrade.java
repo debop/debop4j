@@ -14,7 +14,7 @@ import javax.persistence.*;
 /**
  * 직원 직급 (Grade) 정보 (예: 1급, 2급 등 호봉체계에 사용된다.)
  *
- * @author sunghyouk.bae@gmail.com
+ * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 13. 3. 8 오후 5:03
  */
 @Entity

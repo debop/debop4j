@@ -20,7 +20,7 @@ import java.util.Properties;
 /**
  * com.kt.vital.domain.UsingMySqlConfiguration
  *
- * @author sunghyouk.bae@gmail.com
+ * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 13. 3. 18.
  */
 @Configuration
@@ -34,7 +34,7 @@ public class UsingMySqlConfiguration extends MySqlConfigBase {
 
     @Override
     protected String[] getMappedPackageNames() {
-        return new String[]{
+        return new String[] {
                 CompanyCode.class.getPackage().getName(),
                 Company.class.getPackage().getName(),
                 Product.class.getPackage().getName(),

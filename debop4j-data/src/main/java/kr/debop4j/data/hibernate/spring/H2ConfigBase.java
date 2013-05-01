@@ -25,7 +25,7 @@ import java.util.Properties;
 /**
  * H2 Embedded DB를 사용하는 Hibernate 설정정입니다.
  *
- * @author sunghyouk.bae@gmail.com
+ * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 13. 2. 21.
  */
 public abstract class H2ConfigBase extends HibernateConfigBase {

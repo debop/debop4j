@@ -6,24 +6,18 @@ import java.util.List;
 /**
  * 스크롤되는 목록을 표현하는 인터페이스입니다.
  *
- * @author sunghyouk.bae@gmail.com
+ * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 12. 9. 12
  */
 public interface IScrolledList<E, N extends Comparable<N>> extends Serializable {
 
-    /**
-     * 스크롤 영역의 목록
-     */
+    /** 스크롤 영역의 목록 */
     List<E> getList();
 
-    /**
-     * 스크롤 영역의 하한 값
-     */
+    /** 스크롤 영역의 하한 값 */
     N getLowerBound();
 
-    /**
-     * 스크롤 영역의 상한 값
-     */
+    /** 스크롤 영역의 상한 값 */
     N getUpperBound();
 
 }

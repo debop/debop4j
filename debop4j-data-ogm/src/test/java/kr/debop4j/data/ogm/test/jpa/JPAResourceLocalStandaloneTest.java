@@ -16,7 +16,7 @@ import static org.fest.assertions.Assertions.assertThat;
 /**
  * kr.debop4j.data.ogm.test.jpa.JPAResourceLocalStandaloneTest
  *
- * @author sunghyouk.bae@gmail.com
+ * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 13. 4. 12. 오후 2:59
  */
 public class JPAResourceLocalStandaloneTest {

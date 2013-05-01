@@ -19,7 +19,7 @@ import java.util.Properties;
 /**
  * HSql 메모리 DB를 사용하는 Hibernate 환경 설정입니다.
  *
- * @author sunghyouk.bae@gmail.com
+ * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 13. 3. 7.
  */
 @Configuration
@@ -28,7 +28,7 @@ public class UsingHSqlConfiguration extends HSqlConfigBase {
 
     @Override
     protected String[] getMappedPackageNames() {
-        return new String[]{
+        return new String[] {
                 Company.class.getPackage().getName(),
                 Product.class.getPackage().getName(),
                 WorkCalendar.class.getPackage().getName(),

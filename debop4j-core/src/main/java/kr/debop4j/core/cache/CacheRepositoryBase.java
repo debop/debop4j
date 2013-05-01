@@ -22,7 +22,7 @@ import lombok.extern.slf4j.Slf4j;
 /**
  * Cache 시스템에 정보를 관리하는 ICacheRepository 의 기본 추상화 클래스입니다.
  *
- * @author sunghyouk.bae@gmail.com
+ * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 12. 9. 12
  */
 @Slf4j
@@ -104,9 +104,7 @@ public abstract class CacheRepositoryBase implements ICacheRepository {
      */
     abstract public boolean exists(final String key);
 
-    /**
-     * 캐시의 모든 항목을 삭제합니다.
-     */
+    /** 캐시의 모든 항목을 삭제합니다. */
     abstract public void clear();
 
     @Override

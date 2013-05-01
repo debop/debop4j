@@ -24,7 +24,7 @@ import java.util.Iterator;
 /**
  * kr.debop4j.data.ogm.test.datastore.DatastoreProviderGeneratingSchema
  *
- * @author sunghyouk.bae@gmail.com
+ * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 13. 4. 1
  */
 public class DatastoreProviderGeneratingSchema implements DatastoreProvider, StartStoppable {

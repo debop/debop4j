@@ -20,15 +20,13 @@ import java.io.Serializable;
 
 /**
  * SQL 실행 문의 인자 정보를 나타내는 인터페이스입니다.
- * Jpa@author sunghyouk.bae@gmail.com
+ * Jpa@author 배성혁 ( sunghyouk.bae@gmail.com )
  *
  * @since 12. 11. 19
  */
 public interface INamedParameter extends Serializable {
 
-    /**
-     * 인자 명
-     */
+    /** 인자 명 */
     String getName();
 
     /**
@@ -38,9 +36,7 @@ public interface INamedParameter extends Serializable {
      */
     void setName(String name);
 
-    /**
-     * 인자 값
-     */
+    /** 인자 값 */
     Object getValue();
 
     /**

@@ -23,7 +23,7 @@ import java.util.Map;
 /**
  * kr.debop4j.data.mongodb.test.utils.MongoDBTestHelper
  *
- * @author sunghyouk.bae@gmail.com
+ * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 13. 4. 10. 오후 9:50
  */
 public class MongoDBTestHelper implements TestableGridDialect {

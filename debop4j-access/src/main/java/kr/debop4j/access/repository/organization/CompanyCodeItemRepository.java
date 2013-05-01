@@ -18,7 +18,7 @@ import java.util.List;
 /**
  * kr.debop4j.access.repository.organization.CompanyCodeItemRepository
  *
- * @author sunghyouk.bae@gmail.com
+ * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 13. 3. 14.
  */
 @Repository

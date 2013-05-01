@@ -28,7 +28,7 @@ import static kr.debop4j.core.Guard.shouldNotBeNull;
 /**
  * {@link IUnitOfWork} 의 가장 기본적인 구현 클래스입니다.
  *
- * @author sunghyouk.bae@gmail.com
+ * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 12. 11. 29.
  */
 @Slf4j
