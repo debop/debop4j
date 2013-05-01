@@ -187,6 +187,7 @@
         <commons.compress.version>1.4.1</commons.compress.version>
         <commons.pool.version>1.6</commons.pool.version>
         <commons.collections.version>3.2.1</commons.collections.version>
+        <commons.lang.version>2.6</commons.lang.version>
         <commons.lang3.version>3.1</commons.lang3.version>
         <commons.validator.version>1.4.0</commons.validator.version>
 
@@ -347,6 +348,11 @@
             </dependency>
             <dependency>
                 <groupId>org.apache.commons</groupId>
+                <artifactId>commons-lang</artifactId>
+                <version>${commons.lang.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.commons</groupId>
                 <artifactId>commons-lang3</artifactId>
                 <version>${commons.lang3.version}</version>
             </dependency>
@@ -445,6 +451,17 @@
                 <version>${fastjson.version}</version>
             </dependency>
 
+            <!-- Jackson Mapper ASL -->
+            <dependency>
+                <groupId>org.codehaus.jackson</groupId>
+                <artifactId>jackson-mapper-asl</artifactId>
+                <version>1.9.12</version>
+            </dependency>
+            <dependency>
+                <groupId>org.codehaus.jackson</groupId>
+                <artifactId>jackson-core-asl</artifactId>
+                <version>1.9.12</version>
+            </dependency>
 
             <!-- ASM -->
             <dependency>
@@ -708,11 +725,6 @@
             <dependency>
                 <groupId>org.hibernate</groupId>
                 <artifactId>hibernate-search-orm</artifactId>
-                <version>${hibernate.search.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.hibernate</groupId>
-                <artifactId>hibernate-search-infinispan</artifactId>
                 <version>${hibernate.search.version}</version>
             </dependency>
 

@@ -61,18 +61,18 @@
     <dependencies>
 
         <!-- Jest for ElasticSearch -->
-        <dependency>
-            <groupId>io.searchbox</groupId>
-            <artifactId>jest</artifactId>
-            <version>0.0.3</version>
-        </dependency>
+        <!--<dependency>-->
+        <!--<groupId>io.searchbox</groupId>-->
+        <!--<artifactId>jest</artifactId>-->
+        <!--<version>0.0.3</version>-->
+        <!--</dependency>-->
 
         <!-- ElasticSearch -->
-        <dependency>
-            <groupId>org.elasticsearch</groupId>
-            <artifactId>elasticsearch</artifactId>
-            <version>0.90.0.RC2</version>
-        </dependency>
+        <!--<dependency>-->
+        <!--<groupId>org.elasticsearch</groupId>-->
+        <!--<artifactId>elasticsearch</artifactId>-->
+        <!--<version>0.90.0.RC2</version>-->
+        <!--</dependency>-->
 
         <!-- Avro -->
         <dependency>
@@ -86,21 +86,21 @@
 
 
         <!-- Scala & Akka -->
-        <dependency>
-            <groupId>org.scala-lang</groupId>
-            <artifactId>scala-library</artifactId>
-            <version>${scala.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.scala-lang</groupId>
-            <artifactId>scala-compiler</artifactId>
-            <version>${scala.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.scala-lang</groupId>
-            <artifactId>scala-actors</artifactId>
-            <version>${scala.version}</version>
-        </dependency>
+        <!--<dependency>-->
+        <!--<groupId>org.scala-lang</groupId>-->
+        <!--<artifactId>scala-library</artifactId>-->
+        <!--<version>${scala.version}</version>-->
+        <!--</dependency>-->
+        <!--<dependency>-->
+        <!--<groupId>org.scala-lang</groupId>-->
+        <!--<artifactId>scala-compiler</artifactId>-->
+        <!--<version>${scala.version}</version>-->
+        <!--</dependency>-->
+        <!--<dependency>-->
+        <!--<groupId>org.scala-lang</groupId>-->
+        <!--<artifactId>scala-actors</artifactId>-->
+        <!--<version>${scala.version}</version>-->
+        <!--</dependency>-->
 
         <!-- Vert.x -->
         <dependency>

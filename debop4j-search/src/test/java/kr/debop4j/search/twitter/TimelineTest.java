@@ -18,6 +18,8 @@ package kr.debop4j.search.twitter;
 
 import jodd.props.Props;
 import kr.debop4j.core.spring.Springs;
+import kr.debop4j.data.hibernate.unitofwork.IUnitOfWork;
+import kr.debop4j.data.hibernate.unitofwork.UnitOfWorkNestingOptions;
 import kr.debop4j.data.hibernate.unitofwork.UnitOfWorks;
 import kr.debop4j.search.dao.HibernateSearchDao;
 import kr.debop4j.search.dao.IHibernateSearchDao;
@@ -138,13 +140,14 @@ public class TimelineTest {
 
     private StatusListener getStatusListener() {
         return new StatusListener() {
-            final IHibernateSearchDao dao = appContext.getBean(IHibernateSearchDao.class);
-
             @Override
             public void onStatus(Status status) {
                 Twit twit = Twitters.createTwit(status);
-                dao.saveOrUpdate(twit);
-                dao.flushSession();
+                try (IUnitOfWork unitOfWork = UnitOfWorks.start(UnitOfWorkNestingOptions.CreateNewOrNestUnitOfWork)) {
+                    final IHibernateSearchDao dao = appContext.getBean(IHibernateSearchDao.class);
+                    dao.saveOrUpdate(twit);
+                    dao.flushSession();
+                }
 
                 if (log.isTraceEnabled())
                     log.trace("Twit을 저장했습니다. [{}]", twit);

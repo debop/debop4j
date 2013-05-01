@@ -33,7 +33,7 @@ public class DictionaryUtil {
 
     private static final Logger log = LoggerFactory.getLogger(DictionaryUtil.class);
 
-    private static Trie<String, WordEntry> dictionary;
+    private static Trie<String, WordEntry> dictionary = new Trie<String, WordEntry>(true);
 
     private static HashMap<String, String> josas = new HashMap<String, String>();
 
@@ -48,6 +48,8 @@ public class DictionaryUtil {
     private static HashMap<String, String> cjwords = new HashMap<String, String>();
 
     static {
+
+        loadDictionary();
 
         readFile(josas, KoreanEnv.FILE_JOSA);
         readFile(eomis, KoreanEnv.FILE_EOMI);
@@ -78,8 +80,6 @@ public class DictionaryUtil {
     /** 사전을 로드한다. */
     public synchronized static void loadDictionary() throws MorphException {
         log.info("사전을 로드합니다...");
-
-        dictionary = new Trie<String, WordEntry>(true);
 
         log.info("표준 사전을 로드합니다...");
         Future<List<String>> standardDic = FileUtil.readLinesAsync(KoreanEnv.getInstance().getValue(KoreanEnv.FILE_DICTIONARY), KoreanEnv.UTF8);
@@ -183,17 +183,14 @@ public class DictionaryUtil {
             log.error("사용자정의 사전을 로드하는데 실패했습니다.", e);
             throw new MorphException(e);
         }
-
         log.info("사전을 빌드했습니다.");
     }
 
     public static Iterator findWithPrefix(String prefix) throws MorphException {
-        if (dictionary == null) loadDictionary();
         return dictionary.getPrefixedBy(prefix);
     }
 
     public static WordEntry getWord(String key) throws MorphException {
-        if (dictionary == null) loadDictionary();
         if (key.length() == 0) return null;
 
         return (WordEntry) dictionary.get(key);
