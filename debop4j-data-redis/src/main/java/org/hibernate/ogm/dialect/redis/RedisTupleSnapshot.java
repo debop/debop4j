@@ -14,26 +14,31 @@
  * limitations under the License.
  */
 
-package kr.debop4j.data.redis.ogm.datastore.redis.impl;
+package org.hibernate.ogm.dialect.redis;
 
+import lombok.Getter;
 import org.hibernate.ogm.datastore.spi.TupleSnapshot;
 
-import java.util.HashMap;
+import java.io.Serializable;
 import java.util.Map;
 import java.util.Set;
 
 /**
- * RedisTupleSnapshot
+ * {@link TupleSnapshot} for Redis
  *
- * @author 배성혁 ( sunghyouk.bae@gmail.com )
- * @since 13. 4. 10. 오후 10:08
+ * @author 배성혁 sunghyouk.bae@gmail.com
+ * @since 13. 5. 3. 오후 9:15
  */
-public class RedisTupleSnapshot implements TupleSnapshot {
+public class RedisTupleSnapshot implements TupleSnapshot, Serializable {
 
-    private Map<String, Object> map;
+    private static final long serialVersionUID = 9136662772359532463L;
+
+    @Getter
+    private final Map<String, Object> map;
 
     public RedisTupleSnapshot(Map<String, Object> map) {
-        this.map = (map != null) ? map : new HashMap<String, Object>();
+        assert map != null;
+        this.map = map;
     }
 
     @Override
@@ -49,9 +54,5 @@ public class RedisTupleSnapshot implements TupleSnapshot {
     @Override
     public Set<String> getColumnNames() {
         return map.keySet();
-    }
-
-    public Map<String, Object> getMap() {
-        return map;
     }
 }

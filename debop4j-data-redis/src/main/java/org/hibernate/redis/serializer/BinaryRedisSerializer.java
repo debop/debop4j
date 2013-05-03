@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package kr.debop4j.data.redis.serializer;
+package org.hibernate.redis.serializer;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -28,8 +28,6 @@ import java.io.ObjectOutputStream;
  * @since 13. 4. 9 오후 10:20
  */
 public class BinaryRedisSerializer<T> implements RedisSerializer<T> {
-
-    private static final byte[] EMPTY_BYTES = new byte[0];
 
     @Override
     public byte[] serialize(T graph) {

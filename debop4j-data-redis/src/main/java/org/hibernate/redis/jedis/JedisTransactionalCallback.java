@@ -14,19 +14,21 @@
  * limitations under the License.
  */
 
-package kr.debop4j.data.redis.serializer;
+package org.hibernate.redis.jedis;
+
+import redis.clients.jedis.Transaction;
 
 /**
- * Serializer for Redis Key or Value
+ * Jedis 의 Transaction을 이용하여 복수의 작업을 수행하도록 합니다.
  *
- * @author 배성혁 ( sunghyouk.bae@gmail.com )
- * @since 13. 4. 9 오후 10:20
+ * @author 배성혁 sunghyouk.bae@gmail.com
+ * @since 13. 5. 1. 오후 2:20
  */
-public interface RedisSerializer<T> {
-
-    /** Serialize Object */
-    byte[] serialize(T graph);
-
-    /** Deserialize to object */
-    T deserialize(byte[] bytes);
+public interface JedisTransactionalCallback {
+    /**
+     * Transaction 하에서 작업을 수행합니다.
+     *
+     * @param tx Jedis Transaction
+     */
+    public void execute(Transaction tx);
 }

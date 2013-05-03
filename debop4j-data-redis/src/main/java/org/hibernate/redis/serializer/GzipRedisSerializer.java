@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package kr.debop4j.data.redis.serializer;
+package org.hibernate.redis.serializer;
 
 import lombok.Cleanup;
 import lombok.extern.slf4j.Slf4j;
@@ -46,8 +46,8 @@ public class GzipRedisSerializer<T> implements RedisSerializer<T> {
     @Override
     public byte[] serialize(T graph) throws SerializationException {
 
-        if (log.isTraceEnabled())
-            log.trace("객체를 직렬화 후에 압축을 수행합니다...");
+        if (GzipRedisSerializer.log.isTraceEnabled())
+            GzipRedisSerializer.log.trace("객체를 직렬화 후에 압축을 수행합니다...");
 
         if (graph == null)
             return new byte[0];
@@ -61,8 +61,8 @@ public class GzipRedisSerializer<T> implements RedisSerializer<T> {
             gzip.close();
             byte[] result = bos.toByteArray();
 
-            if (log.isTraceEnabled())
-                log.trace("객체를 직렬화 후에 압축했습니다. 기존=[{}], 압축후=[{}]", bytes.length, result.length);
+            if (GzipRedisSerializer.log.isTraceEnabled())
+                GzipRedisSerializer.log.trace("객체를 직렬화 후에 압축했습니다. 기존=[{}], 압축후=[{}]", bytes.length, result.length);
 
             return result;
         } catch (Exception e) {
@@ -73,8 +73,8 @@ public class GzipRedisSerializer<T> implements RedisSerializer<T> {
     @Override
     public T deserialize(byte[] bytes) throws SerializationException {
 
-        if (log.isTraceEnabled())
-            log.trace("압축된 데이터를 복원 후 객체로 역직렬화 합니다...");
+        if (GzipRedisSerializer.log.isTraceEnabled())
+            GzipRedisSerializer.log.trace("압축된 데이터를 복원 후 객체로 역직렬화 합니다...");
 
         if (bytes == null || bytes.length == 0)
             return null;
@@ -91,8 +91,8 @@ public class GzipRedisSerializer<T> implements RedisSerializer<T> {
             }
             T result = (T) innerSerializer.deserialize(bos.toByteArray());
 
-            if (log.isTraceEnabled())
-                log.trace("압축된 데이터를 복원 후 객체로 역직렬화 했습니다. result=[{}]", result);
+            if (GzipRedisSerializer.log.isTraceEnabled())
+                GzipRedisSerializer.log.trace("압축된 데이터를 복원 후 객체로 역직렬화 했습니다. result=[{}]", result);
 
             return result;
         } catch (Exception e) {

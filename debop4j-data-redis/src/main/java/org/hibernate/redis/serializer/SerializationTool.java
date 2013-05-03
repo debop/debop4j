@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package kr.debop4j.data.redis.serializer;
+package org.hibernate.redis.serializer;
 
 import java.util.*;
 
@@ -25,8 +25,6 @@ import java.util.*;
  * @since 13. 4. 4. 오후 11:38
  */
 public abstract class SerializationTool {
-
-    static final byte[] EMPTY_ARRAY = new byte[0];
 
     static boolean isEmpty(byte[] data) {
         return (data == null || data.length == 0);
