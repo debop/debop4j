@@ -31,13 +31,13 @@ import java.util.Properties;
 public abstract class DerbyConfigBase extends HibernateConfigBase {
 
     protected String getDatabaseName() {
-        return "memory";
+        return "test";
     }
 
     @Bean(destroyMethod = "close")
     public DataSource dataSource() {
         return buildDataSource("org.apache.derby.jdbc.EmbeddedDriver",
-                               "jdbc:derby:" + getDatabaseName() + ":test;create=true;",
+                               "jdbc:derby:memory:" + getDatabaseName() + ";create=true;",
                                "",
                                "");
     }

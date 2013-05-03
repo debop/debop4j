@@ -30,6 +30,7 @@ import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 import redis.clients.jedis.Transaction;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Set;
@@ -175,6 +176,8 @@ public class JedisClient {
      */
     public List<Object> mget(Collection<? extends Object> keys) {
         if (isTraceEnabled) log.trace("multi get... keys=[{}]", StringTool.listToString(keys));
+        if (keys == null || keys.size() == 0)
+            return new ArrayList<Object>();
 
         final byte[][] rawKeys = rawKeys(keys);
         List<byte[]> rawValues = run(new JedisCallback<List<byte[]>>() {
@@ -216,8 +219,7 @@ public class JedisClient {
      * @param unit    시간 단위 (기본은 seconds)
      */
     protected void set(Object key, Object value, long timeout, TimeUnit unit) {
-        if (isTraceEnabled)
-            log.trace("캐시를 저장합니다... key=[{}], value=[{}]", key, value);
+        if (isTraceEnabled) log.trace("캐시를 저장합니다... key=[{}], value=[{}]", key, value);
 
         final byte[] rawKey = rawKey(key);
         final byte[] rawValue = rawValue(value);
@@ -256,6 +258,9 @@ public class JedisClient {
     /** 지정된 키의 항목으로 삭제합니다. */
     public void mdel(Collection<? extends Object> keys) {
         if (isTraceEnabled) log.trace("캐시를 삭제합니다. keys=[{}]", StringTool.listToString(keys));
+
+        if (keys == null || keys.size() == 0)
+            return;
 
         final byte[][] rawKeys = rawKeys(keys);
         final byte[][] rawRegions = rawRegions(keys);
@@ -329,12 +334,12 @@ public class JedisClient {
     }
 
     /** 키를 이용해 region 값을 직렬화합니다. */
-    @SuppressWarnings( "unchecked" )
+    @SuppressWarnings("unchecked")
     private byte[] rawRegion(Object key) {
         return getKeySerializer().serialize(getEntityName(key));
     }
 
-    @SuppressWarnings( "unchecked" )
+    @SuppressWarnings("unchecked")
     private byte[][] rawRegions(Collection<? extends Object> keys) {
         byte[][] rawRegions = new byte[keys.size()][];
         int i = 0;

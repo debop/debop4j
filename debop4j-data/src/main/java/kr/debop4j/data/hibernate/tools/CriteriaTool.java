@@ -28,6 +28,7 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.Map;
 
+import static kr.debop4j.core.Guard.shouldNotBeEmpty;
 import static org.hibernate.criterion.Restrictions.*;
 
 /**
@@ -39,8 +40,7 @@ import static org.hibernate.criterion.Restrictions.*;
 @Slf4j
 public final class CriteriaTool {
 
-    private CriteriaTool() {
-    }
+    private CriteriaTool() { }
 
 
     // region << Criterion >>
@@ -53,8 +53,7 @@ public final class CriteriaTool {
 
     public static Criterion getIsBetweenCriterion(String propertyName, Object lo, Object hi,
                                                   boolean includeLo, boolean includeHi) {
-
-        Guard.shouldNotBeWhiteSpace(propertyName, "propertyName");
+        shouldNotBeEmpty(propertyName, "propertyName");
 
         if (lo == null && hi == null)
             throw new IllegalArgumentException("상하한 값 모두 null 이면 안됩니다.");
@@ -128,9 +127,9 @@ public final class CriteriaTool {
             throw new IllegalArgumentException("lo, hi 모두 null 값이면 질의어를 만들 수 없습니다.");
 
         if (log.isDebugEnabled())
-            log.debug(String.format("build getIsOverlapCriterion... loPropertyName=[%s], hiPropertyName=[%s]" +
-                                            " lo=[%s], hi=[%s], includeLo=[%s], includeHi=[%s]",
-                                    loPropertyName, hiPropertyName, lo, hi, includeLo, includeHi));
+            log.debug("build getIsOverlapCriterion... " +
+                              "loPropertyName=[{}], hiPropertyName=[{}}] lo=[{}}], hi=[{}], includeLo=[{}}], includeHi=[{}]",
+                      loPropertyName, hiPropertyName, lo, hi, includeLo, includeHi);
 
         if (lo != null && hi != null) {
             return Restrictions

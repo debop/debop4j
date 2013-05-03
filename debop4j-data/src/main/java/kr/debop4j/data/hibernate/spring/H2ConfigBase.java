@@ -32,14 +32,14 @@ public abstract class H2ConfigBase extends HibernateConfigBase {
 
     @Override
     protected String getDatabaseName() {
-        return "mem";
+        return "test";
     }
 
     @Override
     @Bean(destroyMethod = "close")
     public DataSource dataSource() {
         return buildDataSource("org.h2.Driver",
-                               "jdbc:h2:" + getDatabaseName() + ":test;DB_CLOSE_DELAY=-1",
+                               "jdbc:h2:mem:" + getDatabaseName() + ";DB_CLOSE_DELAY=-1;MVCC=TRUE;",
                                "sa",
                                "");
     }
