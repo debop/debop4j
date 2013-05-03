@@ -65,7 +65,7 @@
         <module>debop4j-data-ehcache</module>
         <module>debop4j-data-mongodb</module>
         <module>debop4j-data-redis</module>
-        <!--<module>debop4j-data-couchbase</module>-->
+        <module>debop4j-data-couchbase</module>
 
         <module>debop4j-access</module>
         <module>debop4j-graph</module>
@@ -583,6 +583,11 @@
             </dependency>
 
             <!-- Spring framework -->
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-core</artifactId>
+                <version>${springframework.version}</version>
+            </dependency>
             <dependency>
                 <groupId>org.springframework</groupId>
                 <artifactId>spring-context</artifactId>

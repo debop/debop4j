@@ -1,38 +1,42 @@
-package kr.debop4j.data.couchbase.cache;
+package kr.debop4j.data.couchbase.spring.cache;
 
 import com.couchbase.client.CouchbaseClient;
-import com.google.common.collect.Lists;
+import kr.debop4j.data.couchbase.UserRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Scope;
 
 import java.io.IOException;
 import java.net.URI;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
- * kr.debop4j.core.cache.couchbase.CouchbaseCacheConfiguration
+ * com.couchbase.spring.cache.CouchbaseCacheConfig
  *
- * @author 배성혁 ( sunghyouk.bae@gmail.com )
- *         13. 3. 25 오후 5:36
+ * @author 배성혁 sunghyouk.bae@gmail.com
+ * @since 13. 5. 3. 오후 6:14
  */
 @Configuration
 @EnableCaching
-@ComponentScan(basePackageClasses = { UserRepository.class })
+@ComponentScan( basePackageClasses = { UserRepository.class } )
 @Slf4j
-public class CouchbaseCacheConfiguration {
+public class CouchbaseCacheConfig {
 
     @Bean
-    public List<URI> couchbaseList() {
-        List<URI> uris = Lists.newArrayList(URI.create("http://localhost:8091/pools"));
-        return uris;
+    public List<URI> servers() {
+        List<URI> servers = new ArrayList<URI>();
+        servers.add(URI.create("http://localhost:8091/pools"));
+        return servers;
     }
 
     @Bean
+    @Scope( "prototype" )
     public CouchbaseClient couchbaseClient() throws IOException {
-        return new CouchbaseClient(couchbaseList(), "default", "");
+        return new CouchbaseClient(servers(), "default", "");
     }
 
     @Bean

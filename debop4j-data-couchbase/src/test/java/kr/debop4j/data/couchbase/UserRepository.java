@@ -1,26 +1,24 @@
-package kr.debop4j.data.couchbase.cache;
+package kr.debop4j.data.couchbase;
 
-import kr.debop4j.data.couchbase.User;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Repository;
 
 /**
- * User 정보를 관리하는 Repository - 캐시 테스트를 위한 Repository입니다.
+ * com.couchbase.UserRepository
  *
- * @author 배성혁 ( sunghyouk.bae@gmail.com )
- *         13. 3. 25 오후 5:36
+ * @author 배성혁 sunghyouk.bae@gmail.com
+ * @since 13. 5. 3. 오후 6:14
  */
 @Repository
 @Slf4j
 public class UserRepository {
 
-    @Cacheable(value = "user", key = "#id")
-    public User getUser(String id) {
+    public final User getUser(String id) {
         return getUser(id, 1000);
     }
 
-    @Cacheable(value = "user", key = "#id")
+    @Cacheable( value = "user", key = "#id" )
     public User getUser(String id, int favoriteMovieSize) {
         User user = new User();
 
