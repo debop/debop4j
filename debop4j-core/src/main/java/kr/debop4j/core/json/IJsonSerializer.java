@@ -26,6 +26,8 @@ import kr.debop4j.core.ISerializer;
  */
 public interface IJsonSerializer extends ISerializer {
 
+    public static final byte[] EMPTY_BYTES = new byte[0];
+
     /** JSON 포맷으로 직렬화하여 Json Text 형식의 문자열로 반환합니다. */
     String serializeToText(Object graph);
 

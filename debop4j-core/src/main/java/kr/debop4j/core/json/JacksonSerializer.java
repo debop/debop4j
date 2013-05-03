@@ -21,6 +21,8 @@ import kr.debop4j.core.Guard;
 import kr.debop4j.core.tools.ArrayTool;
 import kr.debop4j.core.tools.StringTool;
 import lombok.Getter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * jackson 라이브러리를 이용한 Json Serializer
@@ -30,7 +32,7 @@ import lombok.Getter;
  */
 public class JacksonSerializer implements IJsonSerializer {
 
-    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(JacksonSerializer.class);
+    private static final Logger log = LoggerFactory.getLogger(JacksonSerializer.class);
     private static final boolean isDebugEnabled = log.isDebugEnabled();
 
     @Getter
@@ -48,7 +50,7 @@ public class JacksonSerializer implements IJsonSerializer {
     public byte[] serialize(Object graph) {
         try {
             if (graph == null)
-                return ArrayTool.EmptyByteArray;
+                return EMPTY_BYTES;
 
             if (log.isDebugEnabled())
                 log.debug("인스턴스를 JSON 포맷으로 직렬화합니다. graph=[{}]", graph);

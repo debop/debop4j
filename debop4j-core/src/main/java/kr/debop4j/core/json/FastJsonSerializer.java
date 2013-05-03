@@ -54,7 +54,7 @@ public class FastJsonSerializer implements IJsonSerializer {
     @Override
     public byte[] serialize(Object graph) {
         if (graph == null)
-            return new byte[0];
+            return EMPTY_BYTES;
 
         if (log.isTraceEnabled())
             log.trace("지정한 객체를 JSON 직렬화를 수행합니다. graph=[{}]", graph);
