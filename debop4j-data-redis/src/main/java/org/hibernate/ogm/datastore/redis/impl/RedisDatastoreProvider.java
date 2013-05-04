@@ -16,12 +16,14 @@
 
 package org.hibernate.ogm.datastore.redis.impl;
 
+import lombok.Getter;
 import org.apache.commons.pool.impl.GenericObjectPool;
 import org.hibernate.ogm.datastore.redis.Environment;
 import org.hibernate.ogm.datastore.spi.DatastoreProvider;
 import org.hibernate.ogm.dialect.GridDialect;
 import org.hibernate.ogm.dialect.redis.RedisDialect;
 import org.hibernate.ogm.helper.JsonHelper;
+import org.hibernate.ogm.jedis.OgmJedisClient;
 import org.hibernate.service.spi.Configurable;
 import org.hibernate.service.spi.Startable;
 import org.hibernate.service.spi.Stoppable;
@@ -57,6 +59,9 @@ public class RedisDatastoreProvider implements DatastoreProvider, Startable, Sto
 
     /** JedisPool */
     private JedisPool pool;
+    /** Jedis Client */
+    @Getter
+    private OgmJedisClient redisClient;
 
 
     @Override
@@ -83,11 +88,15 @@ public class RedisDatastoreProvider implements DatastoreProvider, Startable, Sto
         log.info("RedisDatastoreProvider를 시작합니다...");
 
         try {
-            setupJedis();
+            pool = setupJedis();
+            redisClient = new OgmJedisClient(pool);
+
+            isCacheStarted.set(true);
+            log.info("RedisDatastoreProvider를 시작했습니다.");
 
         } catch (Exception e) {
             log.error("Redis용 DatastoreProvider를 시작하는데 예외가 발생했습니다.", e);
-            stop();
+            throw new RuntimeException("Redis용 DatastoreProvider를 시작하는데 예외가 발생했습니다.", e);
         }
     }
 
@@ -98,6 +107,7 @@ public class RedisDatastoreProvider implements DatastoreProvider, Startable, Sto
         log.info("RedisDatastoreProvider를 중지합니다...");
 
         try {
+            redisClient = null;
             if (pool != null)
                 pool.destroy();
 
@@ -106,10 +116,11 @@ public class RedisDatastoreProvider implements DatastoreProvider, Startable, Sto
             log.info("RedisDatastoreProvider를 중지했습니다.");
         } catch (Exception e) {
             log.error("Redis용 DatastoreProvider를 중지하는데 예외가 발생했습니다.", e);
+            throw new RuntimeException("Redis용 DatastoreProvider를 중지하는데 예외가 발생했습니다.", e);
         }
     }
 
-    private synchronized void setupJedis() {
+    private synchronized JedisPool setupJedis() {
 
         String host = props.getProperty(Environment.REDIS_HOST, Environment.REDIS_DEFAULT_HOST);
         String port = props.getProperty(Environment.REDIS_PORT, Environment.REDIS_DEFAULT_PORT);
@@ -121,7 +132,7 @@ public class RedisDatastoreProvider implements DatastoreProvider, Startable, Sto
             log.debug("Create JedisPool... host=[{}], port=[{}], timeout=[{}], password=[{}], database=[{}]",
                       host, port, timeout, password, database);
 
-        pool = new JedisPool(getPoolConfig(),
+        return new JedisPool(getPoolConfig(),
                              host,
                              Integer.decode(port),
                              Integer.decode(timeout),
@@ -136,5 +147,4 @@ public class RedisDatastoreProvider implements DatastoreProvider, Startable, Sto
 
         return poolConfig;
     }
-
 }

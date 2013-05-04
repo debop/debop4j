@@ -37,6 +37,7 @@ public class JacksonRedisSerializer<T> implements RedisSerializer<T> {
             if (log.isTraceEnabled()) log.trace("인스턴스를 JSON 포맷으로 직렬화합니다. graph=[{}]", graph);
 
             return mapper.writeValueAsBytes(graph);
+
         } catch (Exception e) {
             log.error("객체를 Json 직렬화하는데 실패했습니다.", e);
             throw new RuntimeException(e);

@@ -16,6 +16,10 @@
 
 package org.hibernate.ogm.helper;
 
+import org.hibernate.redis.serializer.JacksonRedisSerializer;
+
+import java.util.Map;
+
 /**
  * Json 변환 관련 Heler class 입니다.
  *
@@ -23,4 +27,16 @@ package org.hibernate.ogm.helper;
  * @since 13. 5. 3. 오후 9:16
  */
 public class JsonHelper {
+
+    private final JacksonRedisSerializer serializer = new JacksonRedisSerializer();
+
+    public byte[] toJson(Object graph) {
+        return serializer.serialize(graph);
+    }
+
+    @SuppressWarnings( "unchecked" )
+    public Map<String, Object> createAssociation(byte[] associationAsJson) {
+        return (Map<String, Object>) serializer.deserialize(associationAsJson);
+    }
+
 }
