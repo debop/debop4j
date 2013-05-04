@@ -23,7 +23,7 @@ import org.hibernate.ogm.datastore.spi.DatastoreProvider;
 import org.hibernate.ogm.dialect.GridDialect;
 import org.hibernate.ogm.dialect.redis.RedisDialect;
 import org.hibernate.ogm.helper.JsonHelper;
-import org.hibernate.ogm.jedis.OgmJedisClient;
+import org.hibernate.ogm.repository.RedisRepository;
 import org.hibernate.service.spi.Configurable;
 import org.hibernate.service.spi.Startable;
 import org.hibernate.service.spi.Stoppable;
@@ -61,7 +61,7 @@ public class RedisDatastoreProvider implements DatastoreProvider, Startable, Sto
     private JedisPool pool;
     /** Jedis Client */
     @Getter
-    private OgmJedisClient redisClient;
+    private RedisRepository redisClient;
 
 
     @Override
@@ -89,7 +89,7 @@ public class RedisDatastoreProvider implements DatastoreProvider, Startable, Sto
 
         try {
             pool = setupJedis();
-            redisClient = new OgmJedisClient(pool);
+            redisClient = new RedisRepository(pool);
 
             isCacheStarted.set(true);
             log.info("RedisDatastoreProvider를 시작했습니다.");

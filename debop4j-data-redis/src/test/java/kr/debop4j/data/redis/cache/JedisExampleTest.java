@@ -35,7 +35,7 @@ public class JedisExampleTest {
         jedis.connect();
         Assert.assertTrue(jedis.isConnected());
 
-        String key = "debop-mail-using-jedis";
+        String key = "debop-mail-using-repository";
         String email = "sunghyouk.bae@gmail.com";
 
         if (jedis.exists(key))

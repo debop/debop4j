@@ -1,4 +1,4 @@
-package org.hibernate.ogm.jedis;
+package org.hibernate.ogm.repository;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -17,15 +17,15 @@ import redis.clients.jedis.Transaction;
 import java.util.*;
 
 /**
- * Redis와 통신하기 위한 Client 입니다. {@link JedisPool} 과 {@link Jedis}
+ * hibernate-ogm 의 엔티티에 대한 CRUD를 담당하는 Repository입니다.
  *
  * @author 배성혁 sunghyouk.bae@gmail.com
  * @since 13. 5. 3. 오후 11:57
  */
 @SuppressWarnings( "unchecked" )
-public class OgmJedisClient {
+public class RedisRepository {
 
-    private static final Logger log = LoggerFactory.getLogger(OgmJedisClient.class);
+    private static final Logger log = LoggerFactory.getLogger(RedisRepository.class);
     private static final boolean isTraceEnabled = log.isTraceEnabled();
     private static final boolean isDebugEnabled = log.isDebugEnabled();
 
@@ -42,12 +42,23 @@ public class OgmJedisClient {
     @Getter
     private static final RedisSerializer valueSerializer = new BinaryRedisSerializer<Object>();
 
-    private static final String ENTITY_HSET = "OGM-Entity";
-    private static final byte[] RAW_ENTITY_HSET = fieldSerializer.serialize(ENTITY_HSET);
+    public static final String ENTITY_HSET = "OGM-Entity";
+    public static final byte[] RAW_ENTITY_HSET = fieldSerializer.serialize(ENTITY_HSET);
+
+    public static final String ASSOCIATION_HSET = "OGM_Association";
+    public static final byte[] RAW_ASSOCIATION_HSET = fieldSerializer.serialize(ASSOCIATION_HSET);
+
+    public static final String SEQUENCE_HSET = "OGM-Sequence";
+    public static final byte[] RAW_SEQUENCE_HSET = fieldSerializer.serialize(SEQUENCE_HSET);
 
 
-    public OgmJedisClient(JedisPool pool) {
+    public RedisRepository(JedisPool pool) {
+        this(pool, 0);
+    }
+
+    public RedisRepository(JedisPool pool, int database) {
         this.jedisPool = pool;
+        this.database = database;
     }
 
 
@@ -84,6 +95,18 @@ public class OgmJedisClient {
             log.error("엔티티 저장에 실패했습니다.", e);
             throw new RuntimeException(e);
         }
+    }
+
+    public void removeEntity(EntityKey key) {
+        if (isTraceEnabled)
+            log.trace("엔티티를 삭제합니다... key=[{}]", key);
+        final byte[] rawField = fieldSerializer.serialize(key);
+        Long result = run(new JedisCallback<Long>() {
+            @Override
+            public Long execute(Jedis jedis) {
+                return jedis.hdel(RAW_ENTITY_HSET, rawField);
+            }
+        });
     }
 
     public byte[] rawField(EntityKey key) {

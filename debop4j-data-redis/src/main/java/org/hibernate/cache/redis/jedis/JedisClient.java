@@ -41,7 +41,7 @@ import java.util.concurrent.TimeUnit;
 /**
  * RedisClient implements using Jedis library
  * <p/>
- * 참고 : https://github.com/xetorthio/jedis/wiki/AdvancedUsage
+ * 참고 : https://github.com/xetorthio/repository/wiki/AdvancedUsage
  *
  * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 13. 4. 9 오후 10:20
