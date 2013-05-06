@@ -100,13 +100,13 @@ public interface IHibernateOgmDao {
 
     void deleteAll(Class<?> clazz);
 
-    <T> void deleteAll(Collection<T> entities);
+    void deleteAll(Collection<?> entities);
 
     /** 해당 엔티티의 인덱스 정보를 제거합니다. */
-    <T> void purge(Class<T> clazz, Serializable id);
+    void purge(Class<?> clazz, Serializable id);
 
     /** 지정된 수형의 모든 엔티티들의 인덱스 정보를 제거합니다. */
-    <T> void purgeAll(Class<T> clazz);
+    void purgeAll(Class<?> clazz);
 
     /** Session에 남아있는 인덱싱 작업을 강제로 수행하도록 합니다. */
     void flushToIndexes();

@@ -26,6 +26,8 @@ import org.springframework.transaction.TransactionDefinition;
  */
 public interface IUnitOfWork extends AutoCloseable {
 
+    public final String CURRENT_UNIT_OF_WORK_KEY = "kr.debop4j.data.hibernate.unitofwork.UnitOfWorks.CurrentUnitOfWork";
+
     /** Current {@link org.hibernate.Session} 의 변경 내용을 flush 해서 저장소에 적용되도록 합니다. */
     void flushSession();
 

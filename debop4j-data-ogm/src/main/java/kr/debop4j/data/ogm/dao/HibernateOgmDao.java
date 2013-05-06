@@ -85,7 +85,7 @@ public class HibernateOgmDao implements IHibernateOgmDao {
     /** hibernate-search의 {@link FullTextSession} 을 반환합니다. */
     @Override
     public final FullTextSession getFullTextSession() {
-        FullTextSession fts = (FullTextSession) Local.get(FULL_TEXT_SESSION_KEY);
+        FullTextSession fts = Local.get(FULL_TEXT_SESSION_KEY, FullTextSession.class);
 
         if (fts == null || !fts.isOpen()) {
             if (isDebugEnabled)
@@ -242,7 +242,7 @@ public class HibernateOgmDao implements IHibernateOgmDao {
 
     @Override
     public Object merge(Object entity) {
-        return getFullTextSession().merge(entity);
+        return (Object) getFullTextSession().merge(entity);
     }
 
     @Override
@@ -267,30 +267,35 @@ public class HibernateOgmDao implements IHibernateOgmDao {
 
     @Override
     public void deleteById(Class<?> clazz, Serializable id) {
-        Object entity = getFullTextSession().load(clazz, id);
-        delete(entity);
+        try {
+            Object entity = getSession().load(clazz, id);
+            delete(entity);
+        } catch (Exception t) {
+            log.warn("엔티티 삭제에 실패했습니다. 엔티티가 없을 수 있습니다. clazz=[{}], id=[{}]", clazz, id);
+        }
     }
 
     @Override
     public void deleteAll(Class<?> clazz) {
+        // 해당 ID 값만 조회하여 삭제한다.
         deleteAll(findAll(clazz));
     }
 
     @Override
-    public <T> void deleteAll(Collection<T> entities) {
+    public void deleteAll(Collection<?> entities) {
         if (ArrayTool.isEmpty(entities)) return;
         if (isTraceEnabled)
             log.trace("엔티티 컬렉션을 모두 삭제합니다... entity count=[{}]", entities.size());
 
         Session session = getFullTextSession();
-        for (T entity : entities) {
+        for (Object entity : entities) {
             session.delete(entity);
         }
     }
 
     /** 해당 엔티티의 인덱스 정보를 제거합니다. */
     @Override
-    public <T> void purge(Class<T> clazz, Serializable id) {
+    public void purge(Class<?> clazz, Serializable id) {
         if (isTraceEnabled)
             log.trace("인덱스를 제거합니다. clazz=[{}], id=[{}]", clazz, id);
         getFullTextSession().purge(clazz, id);
@@ -298,7 +303,7 @@ public class HibernateOgmDao implements IHibernateOgmDao {
 
     /** 지정된 수형의 모든 엔티티들의 인덱스 정보를 제거합니다. */
     @Override
-    public <T> void purgeAll(Class<T> clazz) {
+    public void purgeAll(Class<?> clazz) {
         if (isDebugEnabled)
             log.debug("지정된 수형의 모든 엔티티들의 인덱스를 제거합니다. clazz=[{}]", clazz);
         getFullTextSession().purgeAll(clazz);

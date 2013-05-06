@@ -12,14 +12,10 @@ public class Entity extends org.apache.avro.specific.SpecificRecordBase implemen
 
     public static org.apache.avro.Schema getClassSchema() { return SCHEMA$; }
 
-    @Deprecated
-    public java.lang.CharSequence rowId;
-    @Deprecated
-    public java.lang.CharSequence createdAt;
-    @Deprecated
-    public java.lang.CharSequence text;
-    @Deprecated
-    public java.util.Map<java.lang.CharSequence, java.lang.CharSequence> attrs;
+    @Deprecated public java.lang.CharSequence rowId;
+    @Deprecated public java.lang.CharSequence createdAt;
+    @Deprecated public java.lang.CharSequence text;
+    @Deprecated public java.util.Map<java.lang.CharSequence, java.lang.CharSequence> attrs;
 
     /** Default constructor. */
     public Entity() {}

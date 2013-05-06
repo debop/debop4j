@@ -12,16 +12,11 @@ public class SearchResult extends org.apache.avro.specific.SpecificRecordBase im
 
     public static org.apache.avro.Schema getClassSchema() { return SCHEMA$; }
 
-    @Deprecated
-    public int pageNo;
-    @Deprecated
-    public int pageSize;
-    @Deprecated
-    public int pageCount;
-    @Deprecated
-    public int totalItemCount;
-    @Deprecated
-    public java.util.List<example.avro.search.Entity> entities;
+    @Deprecated public int pageNo;
+    @Deprecated public int pageSize;
+    @Deprecated public int pageCount;
+    @Deprecated public int totalItemCount;
+    @Deprecated public java.util.List<example.avro.search.Entity> entities;
 
     /** Default constructor. */
     public SearchResult() {}

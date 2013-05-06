@@ -31,7 +31,7 @@ import java.util.List;
 import java.util.concurrent.Future;
 
 /**
- * kr.debop4j.search.dao.IHibernateSearchDao
+ * hibernate-search 를 이용하여 엔티티를 관리하는 Data Access Object의 인터페이스입니다.
  *
  * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 13. 4. 26. 오전 9:55

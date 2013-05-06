@@ -29,6 +29,8 @@ import java.util.Map;
  */
 public interface IUnitOfWorkFactory {
 
+    public final String CURRENT_HIBERNATE_SESSION = UnitOfWorkFactory.class.getName() + ".current.hibernate.session";
+
     /** 현 UnitOfWorkFactory가 사용하는 {@link org.hibernate.SessionFactory} */
     SessionFactory getSessionFactory();
 

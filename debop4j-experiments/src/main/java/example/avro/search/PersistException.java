@@ -12,10 +12,8 @@ public class PersistException extends org.apache.avro.specific.SpecificException
 
     public static org.apache.avro.Schema getClassSchema() { return SCHEMA$; }
 
-    @Deprecated
-    public java.lang.CharSequence message$;
-    @Deprecated
-    public int code;
+    @Deprecated public java.lang.CharSequence message$;
+    @Deprecated public int code;
 
     public PersistException() {
         super();

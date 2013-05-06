@@ -22,6 +22,7 @@ import lombok.Setter;
 import org.hibernate.cache.CacheException;
 import org.hibernate.cache.spi.CacheKey;
 import org.hibernate.redis.jedis.JedisCallback;
+import org.hibernate.redis.jedis.JedisPipelineCallback;
 import org.hibernate.redis.jedis.JedisTransactionalCallback;
 import org.hibernate.redis.serializer.BinaryRedisSerializer;
 import org.hibernate.redis.serializer.RedisSerializer;
@@ -30,6 +31,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
+import redis.clients.jedis.Pipeline;
 import redis.clients.jedis.Transaction;
 
 import java.util.ArrayList;
@@ -377,7 +379,7 @@ public class JedisClient {
      * Redis 작업을 수행합니다.<br/>
      * {@link redis.clients.jedis.JedisPool} 을 이용하여, {@link redis.clients.jedis.Jedis}를 풀링하여 사용하도록 합니다.
      */
-    private <T> T run(final JedisCallback<T> callback) {
+    public <T> T run(final JedisCallback<T> callback) {
 
         final Jedis jedis = jedisPool.getResource();
 
@@ -396,7 +398,7 @@ public class JedisClient {
      * 복수의 작업을 하나의 Transaction 하에서 수행하도록 합니다.<br />
      * {@link redis.clients.jedis.JedisPool} 을 이용하여, {@link redis.clients.jedis.Jedis}를 풀링하여 사용하도록 합니다.
      */
-    private List<Object> runWithTx(final JedisTransactionalCallback callback) {
+    public List<Object> runWithTx(final JedisTransactionalCallback callback) {
 
         final Jedis jedis = jedisPool.getResource();
 
@@ -406,8 +408,32 @@ public class JedisClient {
             callback.execute(tx);
             return tx.exec();
         } catch (Throwable t) {
-            log.error("Redis 작업 중 예외가 발생했습니다.", t);
+            log.error("Transaction하에서 Redis 작업 중 예외가 발생했습니다.", t);
             throw new RuntimeException(t);
+        } finally {
+            jedisPool.returnResource(jedis);
+        }
+    }
+
+    public void pipeline(final JedisPipelineCallback callback) {
+        final Jedis jedis = jedisPool.getResource();
+        try {
+            if (database != 0) jedis.select(database);
+            Pipeline pipeline = jedis.pipelined();
+            callback.execute(pipeline);
+            pipeline.sync();
+        } finally {
+            jedisPool.returnResource(jedis);
+        }
+    }
+
+    public List<Object> pipelineAndReturnAll(final JedisPipelineCallback callback) {
+        final Jedis jedis = jedisPool.getResource();
+        try {
+            if (database != 0) jedis.select(database);
+            Pipeline pipeline = jedis.pipelined();
+            callback.execute(pipeline);
+            return pipeline.syncAndReturnAll();
         } finally {
             jedisPool.returnResource(jedis);
         }

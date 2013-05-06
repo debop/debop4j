@@ -44,7 +44,6 @@ public final class UnitOfWorks {
             log.info("UnitOfWorks 인스턴스가 생성되었습니다.");
     }
 
-    private static final String CURRENT_UNIT_OF_WORK_KEY = "kr.debop4j.data.hibernate.unitofwork.UnitOfWorks";
     private static final String UNIT_OF_WORK_NOT_STARTED = "UnitOfWorks가 시작되지 않았습니다. 사용 전에 UnitOfWorks.start()를 호출하세요.";
 
     private static volatile IUnitOfWork globalNonThreadSafeUnitOfWork;
@@ -52,7 +51,7 @@ public final class UnitOfWorks {
 
     /** UnitOfWork 가 이미 시작되었는지 확인한다. */
     public static synchronized boolean isStarted() {
-        return globalNonThreadSafeUnitOfWork != null || Local.get(CURRENT_UNIT_OF_WORK_KEY) != null;
+        return globalNonThreadSafeUnitOfWork != null || Local.get(IUnitOfWork.CURRENT_UNIT_OF_WORK_KEY) != null;
     }
 
     /** 현재 시작된 {@link IUnitOfWork}의 인스턴스 ({@link UnitOfWorkAdapter}를 반환합니다. */
@@ -63,7 +62,7 @@ public final class UnitOfWorks {
         if (globalNonThreadSafeUnitOfWork != null)
             return globalNonThreadSafeUnitOfWork;
 
-        return (IUnitOfWork) Local.get(CURRENT_UNIT_OF_WORK_KEY);
+        return Local.get(IUnitOfWork.CURRENT_UNIT_OF_WORK_KEY, IUnitOfWork.class);
     }
 
     public static synchronized SessionFactory getCurrentSessionFactory() {
@@ -95,7 +94,7 @@ public final class UnitOfWorks {
     public static void setCurrent(IUnitOfWork unitOfWork) {
         if (log.isDebugEnabled())
             log.debug("현 Thread Context의 UnitOfWork 인스턴스를 설정합니다. unitOfWork=[{}]", unitOfWork);
-        Local.put(CURRENT_UNIT_OF_WORK_KEY, unitOfWork);
+        Local.put(IUnitOfWork.CURRENT_UNIT_OF_WORK_KEY, unitOfWork);
     }
 
     public static synchronized AutoCloseableAction registerGlobalUnitOfWork(IUnitOfWork globalUnitOfWork) {
@@ -131,7 +130,7 @@ public final class UnitOfWorks {
         if (globalNonThreadSafeUnitOfWork != null)
             return globalNonThreadSafeUnitOfWork;
 
-        IUnitOfWorkImplementor existing = (IUnitOfWorkImplementor) Local.get(CURRENT_UNIT_OF_WORK_KEY);
+        IUnitOfWorkImplementor existing = Local.get(IUnitOfWork.CURRENT_UNIT_OF_WORK_KEY, IUnitOfWorkImplementor.class);
 
         boolean useExisting =
                 existing != null && nestingOptions == UnitOfWorkNestingOptions.ReturnExistingOrCreateUnitOfWork;

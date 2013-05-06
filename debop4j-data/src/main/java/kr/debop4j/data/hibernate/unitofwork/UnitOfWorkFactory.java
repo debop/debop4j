@@ -33,8 +33,6 @@ import java.util.Map;
 @Slf4j
 public class UnitOfWorkFactory implements IUnitOfWorkFactory {
 
-    public static final String CURRENT_HIBERNATE_SESSION = UnitOfWorkFactory.class.getName() + ".current.hibernate.session";
-
     protected final Object syncLock = new Object();
     protected SessionFactory sessionFactory;
     protected Map<String, SessionFactory> sessionFactories;

@@ -44,21 +44,18 @@ import java.nio.charset.Charset;
 @Configuration
 @EnableCaching
 @ComponentScan(basePackageClasses = UserRepository.class)
-@PropertySource("classpath:/redis.properties")
+@PropertySource(name = "redis", value = { "classpath:/redis.properties" })
 @Slf4j
 public class RedisCacheConfiguration {
 
     @Autowired
     Environment env;
 
-    @Value("${redis.host}")
-    private String redisHostName;
-    @Value("${redis.port}")
-    private int redisPort;
-    @Value("${redis.usePool}")
-    private boolean redisUsePool;
+    private @Value("${redis.host}") String redisHostName;
+    private @Value("${redis.port}") int redisPort;
+    private @Value("${redis.usePool}") boolean redisUsePool;
 
-    // @PropertySource, @Value를 사용하려면 PropertySourcesPlaceholderConfigurer를 정의해줘야 한다.
+    /** @PropertySource, @Value를 사용하려면 PropertySourcesPlaceholderConfigurer를 정의해줘야 한다. */
     @Bean
     public static PropertySourcesPlaceholderConfigurer placeholderConfigurer() {
         return new PropertySourcesPlaceholderConfigurer();

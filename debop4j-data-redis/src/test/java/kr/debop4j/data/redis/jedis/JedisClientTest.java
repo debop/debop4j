@@ -18,10 +18,14 @@ package kr.debop4j.data.redis.jedis;
 
 import kr.debop4j.core.unitTesting.TestTool;
 import org.hibernate.cache.redis.jedis.JedisClient;
+import org.hibernate.redis.jedis.JedisCallback;
+import org.hibernate.redis.jedis.JedisPipelineCallback;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
+import redis.clients.jedis.Pipeline;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -150,5 +154,28 @@ public class JedisClientTest {
         client.deleteRegion(JedisClient.DEFAULT_REGION_NAME);
         keysInRegion = client.keysInRegion(JedisClient.DEFAULT_REGION_NAME);
         assertThat(keysInRegion.size()).isEqualTo(0);
+    }
+
+    @Test
+    public void pipelineTest() throws Exception {
+        final int count = 100000;
+        client.pipeline(new JedisPipelineCallback() {
+            @Override
+            public void execute(Pipeline pipeline) {
+                for (int i = 0; i < count; i++) {
+                    pipeline.setex("Key-" + i, 30, "Value-" + i);
+                }
+            }
+        });
+
+        client.run(new JedisCallback<Void>() {
+            @Override
+            public Void execute(Jedis jedis) {
+                for (int i = 0; i < count; i++) {
+                    assertThat(jedis.get("Key-" + i)).isEqualTo("Value-" + i);
+                }
+                return null;
+            }
+        });
     }
 }
