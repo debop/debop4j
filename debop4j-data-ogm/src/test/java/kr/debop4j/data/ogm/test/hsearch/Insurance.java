@@ -20,6 +20,8 @@ import javax.persistence.Entity;
 @Setter
 public class Insurance extends UuidEntityBase {
 
+    private static final long serialVersionUID = 5084037331217508887L;
+
     @Field
     private String name;
 }

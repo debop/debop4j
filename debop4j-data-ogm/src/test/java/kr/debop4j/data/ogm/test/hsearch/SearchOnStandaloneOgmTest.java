@@ -27,10 +27,11 @@ public class SearchOnStandaloneOgmTest extends OgmTestBase {
     @Override
     protected void configure(Configuration cfg) {
         super.configure(cfg);
-        cfg.setProperty("hibernate.search.default.directory_provider", "ram");
 
         // hibernate-search 환경설정
         cfg.setProperty("hibernate.search.default.indexmanager", "near-real-time");
+        cfg.setProperty("hibernate.search.default.directory_provider", "ram");
+        cfg.setProperty("hibernate.search.default.locking_strategy", "single");
 
         // hibernate-search performance settings
         cfg.setProperty("hibernate.search.default.indexwriter.max_buffered_doc", "true");
