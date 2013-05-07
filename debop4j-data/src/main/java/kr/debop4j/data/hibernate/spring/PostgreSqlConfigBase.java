@@ -34,24 +34,40 @@ import java.util.Properties;
 @EnableTransactionManagement
 public abstract class PostgreSqlConfigBase extends HibernateConfigBase {
 
+    public static final String DRIVER_CLASS = "org.postgresql.Driver";
+    public static final String DIALECT = "org.hibernate.dialect.PostgreSQL82Dialect";
+
     @Override
     public String getDatabaseName() {
         return "hibernate";
     }
 
-    @Bean(destroyMethod = "close")
+    @Override
+    public String getJdbcUrl() {
+        return "jdbc:postgresql://localhost/" + getDatabaseName() + "?Set=UTF8";
+    }
+
+    @Override
+    public String getUsername() {
+        return "root";
+    }
+
+    @Override
+    public String getPassword() {
+        return "root";
+    }
+
+
+    @Bean( destroyMethod = "close" )
     public DataSource dataSource() {
-        return buildDataSource("org.postgresql.Driver",
-                               "jdbc:postgresql://localhost/" + getDatabaseName() + "?Set=UTF8",
-                               "root",
-                               "root");
+        return buildDataSource(DRIVER_CLASS, getJdbcUrl(), getUsername(), getPassword());
     }
 
     @Bean
     public Properties hibernateProperties() {
         Properties props = super.hibernateProperties();
 
-        props.put(Environment.DIALECT, "org.hibernate.dialect.PostgreSQL82Dialect");
+        props.put(Environment.DIALECT, DIALECT);
 
         return props;
     }

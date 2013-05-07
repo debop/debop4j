@@ -30,16 +30,29 @@ import java.util.Properties;
  */
 public abstract class DerbyConfigBase extends HibernateConfigBase {
 
-    protected String getDatabaseName() {
+    @Override
+    public String getDatabaseName() {
         return "test";
     }
 
-    @Bean(destroyMethod = "close")
+    @Override
+    public String getJdbcUrl() {
+        return "jdbc:derby:memory:" + getDatabaseName() + ";create=true;";
+    }
+
+    @Override
+    public String getUsername() {
+        return "sa";
+    }
+
+    @Override
+    public String getPassword() {
+        return "";
+    }
+
+    @Bean( destroyMethod = "close" )
     public DataSource dataSource() {
-        return buildDataSource("org.apache.derby.jdbc.EmbeddedDriver",
-                               "jdbc:derby:memory:" + getDatabaseName() + ";create=true;",
-                               "",
-                               "");
+        return buildDataSource("org.apache.derby.jdbc.EmbeddedDriver", getJdbcUrl(), getUsername(), getPassword());
     }
 
     @Bean

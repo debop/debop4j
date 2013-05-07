@@ -32,15 +32,31 @@ import javax.sql.DataSource;
 @EnableTransactionManagement
 public abstract class SQLServerConfigBase extends HibernateConfigBase {
 
-    protected String getDatabaseName() {
+    @Override
+    public String getDatabaseName() {
         return "hibernate";
+    }
+
+    @Override
+    public String getJdbcUrl() {
+        return "jdbc:sqlserver://localhost/" + getDatabaseName() + ";integratedSecurity=true;";
+    }
+
+    @Override
+    public String getUsername() {
+        return "sa";
+    }
+
+    @Override
+    public String getPassword() {
+        return "sa";
     }
 
     @Bean(destroyMethod = "close")
     public DataSource dataSource() {
         return buildDataSource("com.microsoft.sqlserver.jdbc.SQLServerDriver",
-                               "jdbc:sqlserver://localhost/" + getDatabaseName() + ";integratedSecurity=true;",
-                               "sa",
-                               "sa");
+                               getJdbcUrl(),
+                               getUsername(),
+                               getPassword());
     }
 }

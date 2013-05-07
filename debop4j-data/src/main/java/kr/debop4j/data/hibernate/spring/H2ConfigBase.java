@@ -31,18 +31,30 @@ import java.util.Properties;
 public abstract class H2ConfigBase extends HibernateConfigBase {
 
     @Override
-    protected String getDatabaseName() {
+    public String getDatabaseName() {
         return "test";
     }
 
     @Override
-    @Bean(destroyMethod = "close")
-    public DataSource dataSource() {
-        return buildDataSource("org.h2.Driver",
-                               "jdbc:h2:mem:" + getDatabaseName() + ";DB_CLOSE_DELAY=-1;MVCC=TRUE;",
-                               "sa",
-                               "");
+    public String getJdbcUrl() {
+        return "jdbc:h2:mem:" + getDatabaseName() + ";DB_CLOSE_DELAY=-1;MVCC=TRUE;";
     }
+
+    @Override
+    public String getUsername() {
+        return "sa";
+    }
+
+    @Override
+    public String getPassword() {
+        return "";
+    }
+
+    @Bean( destroyMethod = "close" )
+    public DataSource dataSource() {
+        return buildDataSource("org.h2.Driver", getJdbcUrl(), getUsername(), getPassword());
+    }
+
 
     @Override
     @Bean

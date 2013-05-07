@@ -53,16 +53,32 @@ public abstract class HibernateConfigBase {
     @Setter
     private UnitOfWorkTestContextBase testContext;
 
-    abstract protected String getDatabaseName();
+    /** Database 명 */
+    abstract public String getDatabaseName();
 
+    /** Database JDBC URL */
+    abstract public String getJdbcUrl();
+
+    /** 사용자 Id */
+    public String getUsername() {
+        return "";
+    }
+
+    /** 사용자 비밀번호 */
+    public String getPassword() {
+        return "";
+    }
+
+    /** 매핑된 엔티티가 있는 Pagacke 명들 */
     abstract protected String[] getMappedPackageNames();
 
+    /** Hibernate 설정 값 */
     protected Properties hibernateProperties() {
 
         Properties props = new Properties();
 
         props.put(Environment.FORMAT_SQL, "true");
-        props.put(Environment.HBM2DDL_AUTO, "create"); // create | spawn | spawn-drop | update | validate
+        props.put(Environment.HBM2DDL_AUTO, "create"); // create | spawn | spawn-drop | update | validate | none
         props.put(Environment.SHOW_SQL, "true");
         props.put(Environment.RELEASE_CONNECTIONS, ConnectionReleaseMode.ON_CLOSE);
         props.put(Environment.AUTOCOMMIT, "true");
@@ -80,7 +96,7 @@ public abstract class HibernateConfigBase {
         return JdbcTool.getEmbeddedHsqlDataSource();
     }
 
-    @Bean(destroyMethod = "close")
+    @Bean( destroyMethod = "close" )
     abstract public DataSource dataSource();
 
     /** factoryBean 에 추가 설정을 지정할 수 있습니다. */

@@ -35,16 +35,29 @@ public abstract class HSqlConfigBase extends HibernateConfigBase {
         return DatabaseEngine.HSql;
     }
 
+    @Override
     public String getDatabaseName() {
         return "test";
     }
 
+    @Override
+    public String getJdbcUrl() {
+        return "jdbc:hsqldb:mem:" + getDatabaseName() + ";MVCC=TRUE;";
+    }
+
+    @Override
+    public String getUsername() {
+        return "sa";
+    }
+
+    @Override
+    public String getPassword() {
+        return "";
+    }
+
     @Bean(destroyMethod = "close")
     public DataSource dataSource() {
-        return buildDataSource("org.hsqldb.jdbcDriver",
-                               "jdbc:hsqldb:mem:" + getDatabaseName() + ";MVCC=TRUE;",
-                               "sa",
-                               "");
+        return buildDataSource("org.hsqldb.jdbcDriver", getJdbcUrl(), getUsername(), getPassword());
     }
 
     protected Properties hibernateProperties() {

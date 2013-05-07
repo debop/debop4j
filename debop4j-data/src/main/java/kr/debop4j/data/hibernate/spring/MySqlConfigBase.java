@@ -39,12 +39,27 @@ public abstract class MySqlConfigBase extends HibernateConfigBase {
         return "hibernate";
     }
 
+    @Override
+    public String getJdbcUrl() {
+        return "jdbc:mysql://localhost/" + getDatabaseName();
+    }
+
+    @Override
+    public String getUsername() {
+        return "root";
+    }
+
+    @Override
+    public String getPassword() {
+        return "root";
+    }
+
     @Bean(destroyMethod = "close")
     public DataSource dataSource() {
         return buildDataSource("com.mysql.jdbc.Driver",
-                               "jdbc:mysql://localhost/" + getDatabaseName(),
-                               "root",
-                               "root");
+                               getJdbcUrl(),
+                               getUsername(),
+                               getPassword());
     }
 
     @Override
