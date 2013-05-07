@@ -167,7 +167,8 @@ public abstract class GridDatastoreConfigBase {
         props.put("hibernate.search.default.indexmanager", "near-real-time");
         props.put("hibernate.search.default.directory_provider", "filesystem");
         props.put("hibernate.search.default.indexBase", ".lucene/indexes");
-        props.put("hibernate.search.default.locking_strategy", "single");
+        // simple|native|single|none
+        props.put("hibernate.search.default.locking_strategy", "simple");
 
         // hibernate-search index worker settings
         // props.put("hibernate.search.worker.execution", "async");     // sync

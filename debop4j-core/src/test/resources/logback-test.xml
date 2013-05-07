@@ -12,8 +12,28 @@
     </appender>
     <!--
     <appender name="file" class="ch.qos.logback.core.FileAppender">
-        <file>logs/kr.kth.commons.log.txt</file>
+        <file>kr.debop4j.core.log.txt</file>
         <append>true</append>
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} %-5level [%thread] %logger{36}.%method : %msg%n</pattern>
+            <immediateFlush>false</immediateFlush>
+            <charset>UTF-8</charset>
+        </encoder>
+    </appender>
+    -->
+    <!--
+    <appender name="rollingFile" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>daisy.search.log.txt</file>
+        <append>true</append>
+
+        <prudent>true</prudent>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>daisy.search.log-%d{yyyy-MM-dd}-%i.txt</fileNamePattern>
+            <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <maxFileSize>10MB</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+            <maxHistory>30</maxHistory>
+        </rollingPolicy>
         <encoder>
             <pattern>%d{HH:mm:ss.SSS} %-5level [%thread] %logger{36}.%method : %msg%n</pattern>
             <immediateFlush>false</immediateFlush>
