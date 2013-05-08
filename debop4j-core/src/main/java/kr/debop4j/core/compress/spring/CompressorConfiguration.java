@@ -1,4 +1,4 @@
-package kr.debop4j.core.spring.configuration;
+package kr.debop4j.core.compress.spring;
 
 import kr.debop4j.core.compress.BZip2Compressor;
 import kr.debop4j.core.compress.DeflateCompressor;
@@ -18,13 +18,13 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class CompressorConfiguration {
 
-    private static final boolean isTraceEnabled = log.isTraceEnabled();
-    private static final boolean isDebugEnabled = log.isDebugEnabled();
+    private static final boolean isTraceEnabled = CompressorConfiguration.log.isTraceEnabled();
+    private static final boolean isDebugEnabled = CompressorConfiguration.log.isDebugEnabled();
 
     @Bean(name = "bzip2Compressor")
     public BZip2Compressor bzip2Compressor() {
         if (isTraceEnabled)
-            log.trace("BZip2Compressor Bean 을 생성합니다.");
+            CompressorConfiguration.log.trace("BZip2Compressor Bean 을 생성합니다.");
 
         return new BZip2Compressor();
     }
@@ -32,7 +32,7 @@ public class CompressorConfiguration {
     @Bean(name = "gzipCompressor")
     public GZipCompressor gzipCompressor() {
         if (isTraceEnabled)
-            log.trace("GZipCompressor Bean 을 생성합니다.");
+            CompressorConfiguration.log.trace("GZipCompressor Bean 을 생성합니다.");
 
         return new GZipCompressor();
     }
@@ -40,7 +40,7 @@ public class CompressorConfiguration {
     @Bean(name = "deflateCompressor")
     public DeflateCompressor deflateCompressor() {
         if (isTraceEnabled)
-            log.trace("DeflateCompressor Bean 을 생성합니다.");
+            CompressorConfiguration.log.trace("DeflateCompressor Bean 을 생성합니다.");
 
         return new DeflateCompressor();
     }
@@ -48,7 +48,7 @@ public class CompressorConfiguration {
     @Bean(name = "xzCompressor")
     public XZCompressor xzCompressor() {
         if (isTraceEnabled)
-            log.trace("XZCompressor Bean 을 생성합니다.");
+            CompressorConfiguration.log.trace("XZCompressor Bean 을 생성합니다.");
 
         return new XZCompressor();
     }

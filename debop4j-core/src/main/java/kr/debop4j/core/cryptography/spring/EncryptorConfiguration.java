@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package kr.debop4j.core.spring.configuration;
+package kr.debop4j.core.cryptography.spring;
 
 import kr.debop4j.core.cryptography.disgest.*;
 import kr.debop4j.core.cryptography.symmetric.DESByteEncryptor;

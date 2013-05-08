@@ -2,8 +2,8 @@ package kr.debop4j.core.compress;
 
 import com.carrotsearch.junitbenchmarks.BenchmarkOptions;
 import kr.debop4j.core.AbstractTest;
-import kr.debop4j.core.spring.configuration.CompressorConfiguration;
-import kr.debop4j.core.spring.configuration.SerializerConfiguration;
+import kr.debop4j.core.compress.spring.CompressorConfiguration;
+import kr.debop4j.core.io.spring.SerializerConfiguration;
 import kr.debop4j.core.tools.StringTool;
 import lombok.extern.slf4j.Slf4j;
 import org.fest.assertions.Assertions;
@@ -27,8 +27,8 @@ import java.util.Random;
  * @since 12. 9. 12
  */
 @Slf4j
-@RunWith( SpringJUnit4ClassRunner.class )
-@ContextConfiguration( classes = { CompressorConfiguration.class, SerializerConfiguration.class } )
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(classes = { CompressorConfiguration.class, SerializerConfiguration.class })
 public class CompressorTest extends AbstractTest {
 
     private static final int TextCount = 10;
@@ -63,9 +63,9 @@ public class CompressorTest extends AbstractTest {
     }
 
 
-    @BenchmarkOptions( concurrency = BenchmarkOptions.CONCURRENCY_AVAILABLE_CORES,
-                       benchmarkRounds = 100,
-                       warmupRounds = 1 )
+    @BenchmarkOptions(concurrency = BenchmarkOptions.CONCURRENCY_AVAILABLE_CORES,
+                      benchmarkRounds = 100,
+                      warmupRounds = 1)
     @Test
     public void testCompressors() {
         for (ICompressor compressor : compressors) {

@@ -1,7 +1,7 @@
 package kr.debop4j.core.cryptography;
 
 import kr.debop4j.core.cryptography.disgest.IStringDigester;
-import kr.debop4j.core.spring.configuration.EncryptorConfiguration;
+import kr.debop4j.core.cryptography.spring.EncryptorConfiguration;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -21,8 +21,8 @@ import static org.fest.assertions.Assertions.assertThat;
  * @since 12. 12. 18
  */
 @Slf4j
-@RunWith( SpringJUnit4ClassRunner.class )
-@ContextConfiguration( classes = { EncryptorConfiguration.class } )
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(classes = { EncryptorConfiguration.class })
 public class StringDiagesterTest {
 
     private static final String MESSAGE = "kth1234!";

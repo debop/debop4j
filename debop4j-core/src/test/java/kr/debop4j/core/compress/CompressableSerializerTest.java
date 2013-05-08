@@ -1,6 +1,6 @@
 package kr.debop4j.core.compress;
 
-import kr.debop4j.core.spring.configuration.CompressorConfiguration;
+import kr.debop4j.core.compress.spring.CompressorConfiguration;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -20,8 +20,8 @@ import static org.fest.assertions.Assertions.assertThat;
  * @since 12. 12. 17
  */
 @Slf4j
-@RunWith( SpringJUnit4ClassRunner.class )
-@ContextConfiguration( classes = { CompressorConfiguration.class } )
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(classes = { CompressorConfiguration.class })
 public class CompressableSerializerTest {
 
     @Autowired

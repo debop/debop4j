@@ -1,7 +1,7 @@
 package kr.debop4j.core.cryptography;
 
+import kr.debop4j.core.cryptography.spring.EncryptorConfiguration;
 import kr.debop4j.core.cryptography.symmetric.ISymmetricByteEncryptor;
-import kr.debop4j.core.spring.configuration.EncryptorConfiguration;
 import kr.debop4j.core.tools.StringTool;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
@@ -22,8 +22,8 @@ import static org.fest.assertions.Assertions.assertThat;
  * @since 12. 12. 18
  */
 @Slf4j
-@RunWith( SpringJUnit4ClassRunner.class )
-@ContextConfiguration( classes = { EncryptorConfiguration.class } )
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(classes = { EncryptorConfiguration.class })
 public class EncryptorTest {
 
     private static final String PLAIN_TEXT = "동해물과 백두산이 마르고 닳도록~ Hello World! 1234567890";

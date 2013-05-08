@@ -22,10 +22,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 public abstract class MongoGridDatastoreTestBase {
 
     @BeforeClass
-    public static void beforeClass() {
-        // Springs.reset();
-        // Springs.initByAnnotatedClasses(MongoGridDatastoreConfiguration.class);
-    }
+    public static void beforeClass() {}
 
     @AfterClass
     public static void afterClass() {

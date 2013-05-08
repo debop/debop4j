@@ -23,6 +23,7 @@ import kr.debop4j.core.tools.ArrayTool;
 import kr.debop4j.core.tools.StringTool;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.PropertyValue;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.beans.factory.support.BeanDefinitionValidationException;
@@ -31,6 +32,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.support.GenericApplicationContext;
 import org.springframework.context.support.GenericXmlApplicationContext;
+import org.springframework.stereotype.Component;
 
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.ThreadSafe;
@@ -46,19 +48,23 @@ import java.util.Stack;
  */
 @Slf4j
 @ThreadSafe
+@Component
 public final class Springs {
 
-    private Springs() {}
+    @Autowired
+    protected Springs(ApplicationContext context) {
+        globalContext = context;
+    }
 
     public static final String DEFAULT_APPLICATION_CONTEXT_XML = "applicationContext.xml";
-    private static final String LOCAL_SPRING_CONTEXT = "kr.debop4j.core.spring.Springs.globalContext";
+    private static final String LOCAL_SPRING_CONTEXT = Springs.class.getName() + ".globalContext";
     private static final String NOT_INITIALIZED_MSG =
-            "Springs의 ApplicationContext가 초기화되지 않았습니다. 사용하기 전에  Springs.init()을 호출해주기시 바랍니다.";
+            "Springs의 ApplicationContext가 초기화되지 않았습니다. Springs를 ComponentScan 해주셔야합니다. ";
 
     private static volatile ApplicationContext globalContext;
 
-    private static ThreadLocal<Stack<GenericApplicationContext>> localContextStack = new ThreadLocal<>();
-
+    private static ThreadLocal<Stack<GenericApplicationContext>> localContextStack
+            = new ThreadLocal<Stack<GenericApplicationContext>>();
 
     public static synchronized boolean isInitialized() {
         return (globalContext != null);

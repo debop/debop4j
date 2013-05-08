@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package kr.debop4j.core.spring.configuration;
+package kr.debop4j.core.io.spring;
 
 import kr.debop4j.core.io.BinarySerializer;
 import kr.debop4j.core.json.GsonSerializer;

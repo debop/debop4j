@@ -2,10 +2,10 @@ package kr.debop4j.core.io;
 
 import kr.debop4j.core.ISerializer;
 import kr.debop4j.core.compress.ICompressor;
+import kr.debop4j.core.compress.spring.CompressorConfiguration;
+import kr.debop4j.core.cryptography.spring.EncryptorConfiguration;
 import kr.debop4j.core.cryptography.symmetric.ISymmetricByteEncryptor;
-import kr.debop4j.core.spring.configuration.CompressorConfiguration;
-import kr.debop4j.core.spring.configuration.EncryptorConfiguration;
-import kr.debop4j.core.spring.configuration.SerializerConfiguration;
+import kr.debop4j.core.io.spring.SerializerConfiguration;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Assert;
 import org.junit.Test;
