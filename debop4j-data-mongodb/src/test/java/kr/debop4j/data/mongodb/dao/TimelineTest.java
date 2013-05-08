@@ -1,13 +1,11 @@
 package kr.debop4j.data.mongodb.dao;
 
 import jodd.props.Props;
-import kr.debop4j.core.spring.Springs;
 import kr.debop4j.data.mongodb.MongoGridDatastoreTestBase;
 import kr.debop4j.data.mongodb.model.Twit;
-import kr.debop4j.data.ogm.dao.HibernateOgmDao;
-import kr.debop4j.data.ogm.dao.IHibernateOgmDao;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
 import twitter4j.Paging;
 import twitter4j.Status;
@@ -26,6 +24,9 @@ import static org.fest.assertions.Assertions.assertThat;
 @Slf4j
 public class TimelineTest extends MongoGridDatastoreTestBase {
 
+    @Autowired
+    MongoOgmDao dao;
+
     @Test
     public void loadProps() throws Exception {
         Props props = new Props();
@@ -38,8 +39,6 @@ public class TimelineTest extends MongoGridDatastoreTestBase {
     /** hibernate-ogm 은 아직 hibernate 의 criteria api 를 지원하지 않습니다!!! */
     @Test
     public void insertAndLoadDelete() throws Exception {
-        IHibernateOgmDao dao = Springs.getBean(HibernateOgmDao.class);
-
         try {
             // 트위터 정보를 받아 저장하기
             Twitter twitter = Twitters.getTwitter();

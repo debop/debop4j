@@ -17,7 +17,6 @@
 package kr.debop4j.access.test;
 
 import kr.debop4j.access.AccessContext;
-import kr.debop4j.core.spring.Springs;
 import kr.debop4j.data.hibernate.forTesting.DatabaseTestFixtureBase;
 import kr.debop4j.data.hibernate.repository.IHibernateRepository;
 import kr.debop4j.data.hibernate.repository.IHibernateRepositoryFactory;
@@ -27,6 +26,10 @@ import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 /**
  * Hibernate를 이용한 UnitOfWork로 테스트하기 위한 클래스
@@ -34,6 +37,8 @@ import org.junit.BeforeClass;
  * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 13. 3. 2.
  */
+@RunWith( SpringJUnit4ClassRunner.class )
+@ContextConfiguration( classes = { AppConfig.class } )
 public class AccessTestBase extends DatabaseTestFixtureBase {
 
     @BeforeClass
@@ -66,8 +71,9 @@ public class AccessTestBase extends DatabaseTestFixtureBase {
 
     protected void doAfter() {}
 
-    @Getter(lazy = true)
-    private static final IHibernateRepositoryFactory factory = Springs.getBean(IHibernateRepositoryFactory.class);
+    @Getter
+    @Autowired
+    private IHibernateRepositoryFactory factory;// = Springs.getBean(IHibernateRepositoryFactory.class);
 
     public <T extends IStatefulEntity> IHibernateRepository<T> getRepository(Class<T> entityClass) {
         return getFactory().getOrCreateHibernateRepository(entityClass);

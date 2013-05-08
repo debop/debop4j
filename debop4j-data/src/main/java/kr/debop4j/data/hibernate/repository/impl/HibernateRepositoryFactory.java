@@ -17,7 +17,7 @@
 package kr.debop4j.data.hibernate.repository.impl;
 
 import kr.debop4j.core.Guard;
-import kr.debop4j.core.spring.Springs;
+import kr.debop4j.core.Local;
 import kr.debop4j.data.hibernate.repository.IHibernateRepository;
 import kr.debop4j.data.hibernate.repository.IHibernateRepositoryFactory;
 import kr.debop4j.data.model.IStatefulEntity;
@@ -46,31 +46,32 @@ public class HibernateRepositoryFactory implements IHibernateRepositoryFactory {
 
         String repositoryKey = getHibernateRepositoryKey(entityClass);
         HibernateRepository<E> repository = null;
-        try {
-            repository = (HibernateRepository<E>) Springs.getBean(repositoryKey);
-        } catch (Exception ignored) {}
 
-        if (repository == null) {
-            if (HibernateRepositoryFactory.log.isDebugEnabled())
-                HibernateRepositoryFactory.log.debug("HibernateRepository<{}> 인스턴스를 생성합니다.", entityClass.getName());
-
-            repository = new HibernateRepository<E>(entityClass);
-            Springs.registerSingletonBean(repositoryKey, repository);
-        }
-        return repository;
-
-//        String daoKey = getHibernateRepositoryKey(entityClass);
-//        HibernateRepository<E> dao = (HibernateRepository<E>) Local.get(daoKey);
+//        try {
+//            repository = (HibernateRepository<E>) Springs.getBean(repositoryKey);
+//        } catch (Exception ignored) {}
 //
-//        if (dao == null) {
-//            if (log.isDebugEnabled())
-//                log.debug("IHibernateRepository<{}> 인스턴스를 생성합니다.", entityClass.getName());
+//        if (repository == null) {
+//            if (HibernateRepositoryFactory.log.isDebugEnabled())
+//                HibernateRepositoryFactory.log.debug("HibernateRepository<{}> 인스턴스를 생성합니다.", entityClass.getName());
 //
-//            dao = new HibernateRepository<E>(entityClass);
-//            Local.put(daoKey, dao);
+//            repository = new HibernateRepository<E>(entityClass);
+//            Springs.registerSingletonBean(repositoryKey, repository);
 //        }
-//
-//        return dao;
+//        return repository;
+
+        String daoKey = getHibernateRepositoryKey(entityClass);
+        IHibernateRepository<E> dao = (IHibernateRepository<E>) Local.get(daoKey);
+
+        if (dao == null) {
+            if (log.isDebugEnabled())
+                log.debug("IHibernateRepository<{}> 인스턴스를 생성합니다.", entityClass.getName());
+
+            dao = new HibernateRepository<E>(entityClass);
+            Local.put(daoKey, dao);
+        }
+
+        return dao;
     }
 
     protected String getHibernateRepositoryKey(Class<?> entityClass) {

@@ -15,8 +15,10 @@ import java.util.Properties;
  * @since 13. 3. 28
  */
 @Configuration
-@ComponentScan({ "kr.debop4j.data.mongodb.spring.cfg",
-                       "kr.debop4j.data.mongodb.tools" })
+@ComponentScan({
+                       "kr.debop4j.data.mongodb.spring.cfg",
+                       "kr.debop4j.data.mongodb.tools"
+               })
 @Slf4j
 public class MongoGridDatastoreConfiguration extends MongoGridDatastoreConfigBase {
 

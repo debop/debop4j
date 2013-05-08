@@ -41,14 +41,14 @@ import java.util.Collection;
 import java.util.List;
 
 /**
- * Hibernate 엔티티에 대한 CRUD를 수해하는 Repository 입니다.
+ * Hibernate 엔티티에 대한 CRUD를 수행하는 Repository 입니다.
  * Spring의 HibernateDaoSupport 및 HibernateTemplate는 더 이상 사용하지 말라.
  * 참고: http://forum.springsource.org/showthread.php?117227-Missing-Hibernate-Classes-Interfaces-in-spring-orm-3.1.0.RC1
  *
  * @author 배성혁 ( sunghyouk.bae@gmail.com )
  */
 @Repository
-@SuppressWarnings("unchecked")
+@SuppressWarnings( "unchecked" )
 public class HibernateRepository<E extends IStatefulEntity> implements IHibernateRepository<E> {
 
     // Slf4j

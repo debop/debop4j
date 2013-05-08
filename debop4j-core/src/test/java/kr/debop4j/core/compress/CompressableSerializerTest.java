@@ -1,13 +1,17 @@
 package kr.debop4j.core.compress;
 
-import kr.debop4j.core.spring.Springs;
 import kr.debop4j.core.spring.configuration.CompressorConfiguration;
 import lombok.extern.slf4j.Slf4j;
-import org.junit.Assert;
-import org.junit.BeforeClass;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.util.Map;
+
+import static org.fest.assertions.Assertions.assertThat;
 
 /**
  * 압축 관련 테스트
@@ -16,22 +20,17 @@ import java.util.Map;
  * @since 12. 12. 17
  */
 @Slf4j
+@RunWith( SpringJUnit4ClassRunner.class )
+@ContextConfiguration( classes = { CompressorConfiguration.class } )
 public class CompressableSerializerTest {
 
-    @BeforeClass
-    public static void beforeClass() {
-        if (Springs.isNotInitialized())
-            Springs.initByPackages(CompressorConfiguration.class.getPackage().getName());
-    }
+    @Autowired
+    ApplicationContext context;
 
     @Test
     public void shouldBeExistsCompressors() {
-        Map<String, ICompressor> compressorMap = Springs.getBeansOfType(ICompressor.class);
-        Assert.assertNotNull(compressorMap);
-        Assert.assertTrue(compressorMap.size() > 0);
-    }
-
-    @Test
-    public void compressBinarySerializer() {
+        Map<String, ICompressor> compressorMap = context.getBeansOfType(ICompressor.class);
+        assertThat(compressorMap).isNotNull();
+        assertThat(compressorMap.size()).isGreaterThan(0);
     }
 }

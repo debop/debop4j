@@ -3,20 +3,19 @@ package kr.debop4j.data.mongodb.dao;
 import com.google.common.collect.Lists;
 import kr.debop4j.core.Action1;
 import kr.debop4j.core.parallelism.Parallels;
-import kr.debop4j.core.spring.Springs;
 import kr.debop4j.data.hibernate.unitofwork.IUnitOfWork;
 import kr.debop4j.data.hibernate.unitofwork.UnitOfWorkNestingOptions;
 import kr.debop4j.data.hibernate.unitofwork.UnitOfWorks;
 import kr.debop4j.data.mongodb.MongoGridDatastoreTestBase;
 import kr.debop4j.data.mongodb.model.Player;
 import kr.debop4j.data.mongodb.model.Tournament;
-import kr.debop4j.data.ogm.dao.HibernateOgmDao;
 import kr.debop4j.data.ogm.dao.IHibernateOgmDao;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.lucene.search.Query;
 import org.hibernate.search.query.dsl.QueryBuilder;
 import org.joda.time.DateTime;
 import org.junit.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.Date;
 import java.util.List;
@@ -38,6 +37,9 @@ public class MongoOgmDaoTest extends MongoGridDatastoreTestBase {
     private static final int REPEAT_COUNT = 10;
     private static final int PLAYER_COUNT = 1000;
     private static final int TOURNAMENT_COUNT = 16;
+
+    @Autowired
+    MongoOgmDao dao;
 
     private Player createPlayer() {
         Player player = new Player();
@@ -81,7 +83,7 @@ public class MongoOgmDaoTest extends MongoGridDatastoreTestBase {
 
     @Test
     public void crud() throws Exception {
-        IHibernateOgmDao dao = Springs.getBean(IHibernateOgmDao.class);
+
         Player player = createPlayer();
 
         dao.saveOrUpdate(player);
@@ -113,7 +115,7 @@ public class MongoOgmDaoTest extends MongoGridDatastoreTestBase {
 
     @Test
     public void deleteByIdTest() throws Exception {
-        IHibernateOgmDao dao = Springs.getBean(IHibernateOgmDao.class);
+
         Player player = createPlayer();
 
         dao.saveOrUpdate(player);
@@ -181,7 +183,6 @@ public class MongoOgmDaoTest extends MongoGridDatastoreTestBase {
     }
 
     public void daoInSerial(Action1<IHibernateOgmDao> action) throws Exception {
-        final IHibernateOgmDao dao = Springs.getBean(HibernateOgmDao.class);
 
         for (int i = 0; i < REPEAT_COUNT; i++) {
             List<Player> players = createTestPlayers(PLAYER_COUNT);
@@ -216,8 +217,6 @@ public class MongoOgmDaoTest extends MongoGridDatastoreTestBase {
                 try (IUnitOfWork unitOfWork = UnitOfWorks.start(UnitOfWorkNestingOptions.CreateNewOrNestUnitOfWork)) {
                     List<Player> players = createTestPlayers(PLAYER_COUNT);
 
-                    IHibernateOgmDao dao = Springs.getBean(IHibernateOgmDao.class);
-
                     for (Player player : players) {
                         dao.saveOrUpdate(player);
                     }
@@ -238,8 +237,6 @@ public class MongoOgmDaoTest extends MongoGridDatastoreTestBase {
                 }
             }
         });
-
-        IHibernateOgmDao dao = Springs.getBean(IHibernateOgmDao.class);
 
         try {
             action.perform(dao);

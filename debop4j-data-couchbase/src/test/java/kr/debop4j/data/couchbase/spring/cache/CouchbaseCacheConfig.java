@@ -22,7 +22,7 @@ import java.util.List;
  */
 @Configuration
 @EnableCaching
-@ComponentScan( basePackageClasses = { UserRepository.class } )
+@ComponentScan(basePackageClasses = { UserRepository.class })
 @Slf4j
 public class CouchbaseCacheConfig {
 
@@ -34,7 +34,7 @@ public class CouchbaseCacheConfig {
     }
 
     @Bean
-    @Scope( "prototype" )
+    @Scope("prototype")
     public CouchbaseClient couchbaseClient() throws IOException {
         return new CouchbaseClient(servers(), "default", "");
     }

@@ -17,7 +17,6 @@
 package kr.debop4j.data.mongodb.dao;
 
 import kr.debop4j.core.Action1;
-import kr.debop4j.core.spring.Springs;
 import kr.debop4j.data.mongodb.MongoGridDatastoreTestBase;
 import kr.debop4j.data.mongodb.model.Voc;
 import kr.debop4j.data.ogm.dao.IHibernateOgmDao;
@@ -25,6 +24,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.lucene.search.Query;
 import org.hibernate.search.query.dsl.QueryBuilder;
 import org.junit.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,6 +44,9 @@ public class VocSearchTest extends MongoGridDatastoreTestBase {
     private static final Random rnd = new Random();
     private static final int REPEAT_COUNT = 100;
     private static final int VOC_COUNT = 100;
+
+    @Autowired
+    MongoOgmDao dao;
 
     public Voc createVoc() {
         Voc voc = new Voc("배성혁-" + rnd.nextInt());
@@ -65,7 +68,6 @@ public class VocSearchTest extends MongoGridDatastoreTestBase {
 
     @Test
     public void crud() throws Exception {
-        IHibernateOgmDao dao = Springs.getBean(IHibernateOgmDao.class);
 
         Voc voc = new Voc("배성혁");
         voc.addAttr("담당", "송길주");
@@ -126,7 +128,6 @@ public class VocSearchTest extends MongoGridDatastoreTestBase {
 
     public void daoInSerial(Action1<IHibernateOgmDao> action) throws Exception {
 
-        IHibernateOgmDao dao = Springs.getBean(IHibernateOgmDao.class);
         for (int i = 0; i < REPEAT_COUNT; i++) {
             List<Voc> vocs = createVocs(VOC_COUNT);
             for (Voc voc : vocs) {

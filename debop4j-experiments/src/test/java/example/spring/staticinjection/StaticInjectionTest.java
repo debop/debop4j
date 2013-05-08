@@ -14,32 +14,28 @@
  * limitations under the License.
  */
 
-package kr.debop4j.data.ogm;
+package example.spring.staticinjection;
 
-import kr.debop4j.data.hibernate.unitofwork.UnitOfWorks;
-import org.junit.After;
-import org.junit.Before;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import static org.fest.assertions.Assertions.assertThat;
+
 /**
- * kr.debop4j.data.ogm.GridDatastoreTestBase
+ * example.spring.staticinjection.StaticInjectionTest
  *
- * @author 배성혁 ( sunghyouk.bae@gmail.com )
- * @since 13. 4. 16. 오후 12:05
+ * @author 배성혁 sunghyouk.bae@gmail.com
+ * @since 13. 5. 7. 오후 10:14
  */
-@RunWith( SpringJUnit4ClassRunner.class )
-@ContextConfiguration( classes = { GridDatastoreConfiguration.class } )
-public class GridDatastoreTestBase {
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(classes = { StaticInjectionConfig.class })
+public class StaticInjectionTest {
 
-    @Before
-    public void before() {
-        UnitOfWorks.start();
+    @Test
+    public void staticFieldInjection() throws Exception {
+        assertThat(UnitOfWorks.getUnitOfWorkFactory()).isNotNull();
     }
 
-    @After
-    public void after() {
-        UnitOfWorks.stop();
-    }
 }

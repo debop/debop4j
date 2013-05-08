@@ -17,11 +17,11 @@
 package kr.debop4j.data.ogm.dao;
 
 import com.google.common.collect.Lists;
-import kr.debop4j.core.spring.Springs;
 import kr.debop4j.data.hibernate.unitofwork.UnitOfWorks;
 import kr.debop4j.data.ogm.GridDatastoreTestBase;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.Date;
 import java.util.List;
@@ -38,9 +38,11 @@ import static org.fest.assertions.Assertions.assertThat;
 @Slf4j
 public class HibernateOgmDaoTest extends GridDatastoreTestBase {
 
+    @Autowired
+    IHibernateOgmDao dao;
+
     @Test
     public void createTest() throws Exception {
-        IHibernateOgmDao dao = Springs.getBean(HibernateOgmDao.class);
         assertThat(dao).isNotNull();
     }
 
@@ -67,7 +69,6 @@ public class HibernateOgmDaoTest extends GridDatastoreTestBase {
 
     @Test
     public void crud() throws Exception {
-        IHibernateOgmDao dao = Springs.getBean(HibernateOgmDao.class);
         Player player = createPlayer();
 
         dao.saveOrUpdate(player);
@@ -99,7 +100,6 @@ public class HibernateOgmDaoTest extends GridDatastoreTestBase {
 
     @Test
     public void deleteByIdTest() throws Exception {
-        IHibernateOgmDao dao = Springs.getBean(HibernateOgmDao.class);
         Player player = createPlayer();
 
         dao.saveOrUpdate(player);

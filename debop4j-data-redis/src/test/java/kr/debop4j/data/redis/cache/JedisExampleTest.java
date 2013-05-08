@@ -20,6 +20,8 @@ import org.junit.Assert;
 import org.junit.Test;
 import redis.clients.jedis.Jedis;
 
+import static org.fest.assertions.Assertions.assertThat;
+
 /**
  * Redis Example
  * 참고: http://krams915.blogspot.kr/2012/02/spring-mvc-31-implement-crud-with_1921.html
@@ -33,19 +35,20 @@ public class JedisExampleTest {
     public void usingJedis() {
         Jedis jedis = new Jedis("localhost", 6379);
         jedis.connect();
-        Assert.assertTrue(jedis.isConnected());
+        try {
+            assertThat(jedis.isConnected()).isTrue();
 
-        String key = "debop-mail-using-repository";
-        String email = "sunghyouk.bae@gmail.com";
+            String key = "debop-mail-using-repository";
+            String email = "sunghyouk.bae@gmail.com";
 
-        if (jedis.exists(key))
-            Assert.assertEquals(1L, (long) jedis.del(key));
+            if (jedis.exists(key))
+                Assert.assertEquals(1L, (long) jedis.del(key));
 
-        jedis.setex(key, 60, email);
-        Assert.assertTrue(jedis.exists(key));
-
-        Assert.assertEquals(email, jedis.get(key));
-
-        jedis.disconnect();
+            jedis.setex(key, 60, email);
+            assertThat(jedis.exists(key)).isTrue();
+            assertThat(jedis.get(key)).isEqualTo(email);
+        } finally {
+            jedis.disconnect();
+        }
     }
 }

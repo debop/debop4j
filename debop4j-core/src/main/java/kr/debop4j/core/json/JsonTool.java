@@ -17,7 +17,7 @@
 package kr.debop4j.core.json;
 
 import kr.debop4j.core.Guard;
-import kr.debop4j.core.spring.Springs;
+import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -29,15 +29,8 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class JsonTool {
 
-    private static IJsonSerializer serializer = new GsonSerializer();
-
-    synchronized static IJsonSerializer getDefaultSerializer() {
-        if (serializer == null) {
-            // IJsonSerializer 를 검색하고, 없다면 GsonSerializer 를 등록하고 반환한다.
-            serializer = Springs.getOrRegisterBean(IJsonSerializer.class, JacksonSerializer.class);
-        }
-        return serializer;
-    }
+    @Getter
+    private static IJsonSerializer serializer = new JacksonSerializer();
 
     /** 지정된 객체를 Json 직렬화를 수행하여 byte 배열로 변환합니다. */
     public static <T> byte[] serializeAsBytes(T graph) {

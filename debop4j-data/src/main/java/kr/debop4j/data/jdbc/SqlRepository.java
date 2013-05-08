@@ -25,7 +25,7 @@ import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import java.util.List;
 
 /**
- * Springs Framework의 {@link NamedParameterJdbcDaoSupport}를 상속받아 Jdbc 작업을 손쉽게 할 수 있는 메소드를 제공합니다.
+ * Spring Framework의 {@link NamedParameterJdbcDaoSupport}를 상속받아 Jdbc 작업을 손쉽게 할 수 있는 메소드를 제공합니다.
  *
  * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 12. 11. 25.

@@ -14,6 +14,7 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.hibernate4.HibernateTransactionManager;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -28,15 +29,14 @@ import java.util.List;
 @Slf4j
 public class HibernateDaoTest extends HibernateTestBase {
 
+    @Autowired
     IHibernateDao hibernateDao;
+
+    @Autowired
     HibernateTransactionManager transactionManager;
 
     @Before
     public void before() {
-
-        hibernateDao = Springs.getBean(IHibernateDao.class);
-        transactionManager = Springs.getBean(HibernateTransactionManager.class);
-
         UnitOfWorks.start();
     }
 
@@ -74,7 +74,7 @@ public class HibernateDaoTest extends HibernateTestBase {
     }
 
     @Test
-    @SuppressWarnings("unchecked")
+    @SuppressWarnings( "unchecked" )
     public void loadSessionFactory() {
         SessionFactory sessionFactory = Springs.getBean(SessionFactory.class);
         Assert.assertNotNull(sessionFactory);

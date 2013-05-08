@@ -18,13 +18,12 @@ package kr.debop4j.data.hibernate.tools;
 
 import com.google.common.collect.Maps;
 import kr.debop4j.core.Guard;
-import kr.debop4j.core.spring.Springs;
 import kr.debop4j.core.tools.SerializeTool;
 import kr.debop4j.core.tools.StringTool;
 import kr.debop4j.data.hibernate.HibernateParameter;
 import kr.debop4j.data.hibernate.listener.UpdateTimestampedEventListener;
 import kr.debop4j.data.hibernate.repository.IHibernateRepository;
-import kr.debop4j.data.hibernate.repository.impl.HibernateRepositoryFactory;
+import kr.debop4j.data.hibernate.repository.IHibernateRepositoryFactory;
 import kr.debop4j.data.model.IStatefulEntity;
 import org.hibernate.Criteria;
 import org.hibernate.Query;
@@ -42,6 +41,8 @@ import org.hibernate.service.ServiceRegistryBuilder;
 import org.hibernate.type.ObjectType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.util.Map;
 
@@ -54,6 +55,7 @@ import static kr.debop4j.core.Guard.shouldNotBeNull;
  *
  * @since 12. 11. 19
  */
+@Component
 public class HibernateTool {
 
     private static final Logger log = LoggerFactory.getLogger(HibernateTool.class);
@@ -77,16 +79,22 @@ public class HibernateTool {
         return factory;
     }
 
-    public static HibernateRepositoryFactory getHibernateDaoFactory() {
-        // 이 작업이 가능하려면 Springs 로 Initialize 를 수행할 수 있도록 해 주어야 합니다.
-        return Springs.getFirstBeanByType(HibernateRepositoryFactory.class);
+    private static IHibernateRepositoryFactory hibernateDaoFactory;
+
+    @Autowired
+    public void setHibernateDaoFactory(IHibernateRepositoryFactory factory) {
+        hibernateDaoFactory = factory;
+    }
+
+    public static IHibernateRepositoryFactory getHibernateDaoFactory() {
+        return hibernateDaoFactory;
     }
 
     public static <E extends IStatefulEntity> IHibernateRepository getHibernateDao(Class<E> entityClass) {
         return getHibernateDaoFactory().getOrCreateHibernateRepository(entityClass);
     }
 
-    @SuppressWarnings("unchecked")
+    @SuppressWarnings( "unchecked" )
     public static void registerEventListener(SessionFactory sessionFactory, Object listener, EventType... eventTypes) {
         Guard.shouldNotBeNull(sessionFactory, "sessionFactory");
         Guard.shouldNotBeNull(listener, "listener");

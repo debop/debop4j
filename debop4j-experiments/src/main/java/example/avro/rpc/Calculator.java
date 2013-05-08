@@ -5,7 +5,7 @@
  */
 package example.avro.rpc;
 
-@SuppressWarnings( "all" )
+@SuppressWarnings("all")
 @org.apache.avro.specific.AvroGenerated
 public interface Calculator {
     public static final org.apache.avro.Protocol PROTOCOL = org.apache.avro.Protocol.parse("{\"protocol\":\"Calculator\",\"namespace\":\"example.avro.rpc\",\"types\":[],\"messages\":{\"add\":{\"request\":[{\"name\":\"x\",\"type\":\"double\"},{\"name\":\"y\",\"type\":\"double\"}],\"response\":\"double\"},\"subtract\":{\"request\":[{\"name\":\"x\",\"type\":\"double\"},{\"name\":\"y\",\"type\":\"double\"}],\"response\":\"double\"}}}");
@@ -14,7 +14,7 @@ public interface Calculator {
 
     double subtract(double x, double y) throws org.apache.avro.AvroRemoteException;
 
-    @SuppressWarnings( "all" )
+    @SuppressWarnings("all")
     public interface Callback extends Calculator {
         public static final org.apache.avro.Protocol PROTOCOL = example.avro.rpc.Calculator.PROTOCOL;
 

@@ -3,16 +3,19 @@ package kr.debop4j.core.io;
 import kr.debop4j.core.ISerializer;
 import kr.debop4j.core.compress.ICompressor;
 import kr.debop4j.core.cryptography.symmetric.ISymmetricByteEncryptor;
-import kr.debop4j.core.spring.Springs;
 import kr.debop4j.core.spring.configuration.CompressorConfiguration;
 import kr.debop4j.core.spring.configuration.EncryptorConfiguration;
 import kr.debop4j.core.spring.configuration.SerializerConfiguration;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Assert;
-import org.junit.BeforeClass;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import java.util.List;
+import java.util.Collection;
 
 /**
  * 설명을 추가하세요.
@@ -21,23 +24,16 @@ import java.util.List;
  * @since 12. 12. 17
  */
 @Slf4j
+@RunWith( SpringJUnit4ClassRunner.class )
+@ContextConfiguration( classes = {
+        CompressorConfiguration.class,
+        EncryptorConfiguration.class,
+        SerializerConfiguration.class
+} )
 public class SerializerTest {
 
-    static List<ICompressor> compressors;
-    static List<ISerializer> serializers;
-    static List<ISymmetricByteEncryptor> encryptors;
-
-    @BeforeClass
-    public static void beforeClass() {
-        if (Springs.isNotInitialized())
-            Springs.initByAnnotatedClasses(CompressorConfiguration.class,
-                                           EncryptorConfiguration.class,
-                                           SerializerConfiguration.class);
-
-        compressors = Springs.getBeansByType(ICompressor.class);
-        serializers = Springs.getBeansByType(ISerializer.class);
-        encryptors = Springs.getBeansByType(ISymmetricByteEncryptor.class);
-    }
+    @Autowired
+    ApplicationContext context;
 
     private static final Company company;
 
@@ -60,6 +56,10 @@ public class SerializerTest {
 
     @Test
     public void compressableSerializeTest() {
+
+        Collection<ICompressor> compressors = context.getBeansOfType(ICompressor.class).values();
+        Collection<ISerializer> serializers = context.getBeansOfType(ISerializer.class).values();
+
         for (ICompressor compressor : compressors) {
             for (ISerializer serializer : serializers) {
                 ISerializer cs = new CompressableSerializer(serializer, compressor);
@@ -79,6 +79,11 @@ public class SerializerTest {
 
     @Test
     public void encryptableSerializeTest() {
+
+        Collection<ICompressor> compressors = context.getBeansOfType(ICompressor.class).values();
+        Collection<ISerializer> serializers = context.getBeansOfType(ISerializer.class).values();
+        Collection<ISymmetricByteEncryptor> encryptors = context.getBeansOfType(ISymmetricByteEncryptor.class).values();
+
         for (ISymmetricByteEncryptor encryptor : encryptors) {
             for (ISerializer serializer : serializers) {
                 ISerializer cs = new EncryptableSerializer(serializer, encryptor);

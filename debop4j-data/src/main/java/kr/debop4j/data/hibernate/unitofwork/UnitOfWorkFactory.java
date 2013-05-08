@@ -95,9 +95,7 @@ public class UnitOfWorkFactory implements IUnitOfWorkFactory {
             log.debug("Local ThreadContext 에 Session을 설정합니다...");
 
         // Builder 패턴을 사용해도 됩니다.
-//        Session session = factory.withOptions()
-//                .interceptor(Springs.getBean(MultiInterceptor.class))
-//                .openSession();
+        // sSession session = factory.withOptions().interceptor(interceptor).openSession();
         Session session = factory.openSession();
         Local.put(CURRENT_HIBERNATE_SESSION, session);
 

@@ -52,7 +52,7 @@ public interface IUnitOfWorkFactory {
     /** 현 Thread-Context 에서 사용할 Session 을 설정합니다. */
     void setCurrentSession(Session session);
 
-    /** 현 UnitOfWorkFactory를 초기화합니다. Springs 에서 init-method 를 이용하여 호출해도 됩니다. */
+    /** 현 UnitOfWorkFactory를 초기화합니다. */
     void Init();
 
     /** 새로운 {@link IUnitOfWorkImplementor} 인스턴스를 생성합니다. */

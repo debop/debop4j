@@ -17,13 +17,13 @@
 package kr.debop4j.data.hibernate.unitofwork;
 
 import kr.debop4j.core.AutoCloseableAction;
-import kr.debop4j.core.Guard;
 import kr.debop4j.core.Local;
-import kr.debop4j.core.spring.Springs;
 import lombok.extern.slf4j.Slf4j;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import javax.annotation.concurrent.ThreadSafe;
 
@@ -33,6 +33,7 @@ import javax.annotation.concurrent.ThreadSafe;
  * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 12. 12. 18
  */
+@Component
 @Slf4j
 @ThreadSafe
 public final class UnitOfWorks {
@@ -40,8 +41,7 @@ public final class UnitOfWorks {
     private UnitOfWorks() { }
 
     static {
-        if (log.isInfoEnabled())
-            log.info("UnitOfWorks 인스턴스가 생성되었습니다.");
+        log.info("UnitOfWorks 인스턴스가 생성되었습니다.");
     }
 
     private static final String UNIT_OF_WORK_NOT_STARTED = "UnitOfWorks가 시작되지 않았습니다. 사용 전에 UnitOfWorks.start()를 호출하세요.";
@@ -74,21 +74,22 @@ public final class UnitOfWorks {
     }
 
     public static synchronized IUnitOfWorkFactory getUnitOfWorkFactory() {
-        if (unitOfWorkFactory == null) {
-            unitOfWorkFactory = Springs.getFirstBeanByType(IUnitOfWorkFactory.class);
+        if (unitOfWorkFactory == null)
+            throw new RuntimeException("Spring 환경설정에서 UnitOfWorks를 ComponentScan에 추가해주세요.");
 
-            if (log.isInfoEnabled())
-                log.info("IUnitOfWorkFactory Bean을 가져옵니다. unitOfWorkFactory=[{}]", unitOfWorkFactory);
-
-            Guard.shouldNotBeNull(unitOfWorkFactory, "unitOfWorkFactory");
-        }
         return unitOfWorkFactory;
     }
 
-    public static synchronized void setUnitOfWorkFactory(IUnitOfWorkFactory unitOfWorkFactory) {
-        if (log.isInfoEnabled())
-            log.info("UnitOfWorkFactory를 설정합니다. unitOfWorkFactory=[{}]", unitOfWorkFactory);
-        UnitOfWorks.unitOfWorkFactory = unitOfWorkFactory;
+    /** Spring에서 직접 Injection을 수행한다. */
+    @Autowired(required = true)
+    public void injectUnitOfWorkFactory(IUnitOfWorkFactory factory) {
+        log.info("Spring에서 UnitOfWorkFactory를 인젝션합니다. unitOfWorkFactory=[{}]", factory);
+        UnitOfWorks.unitOfWorkFactory = factory;
+    }
+
+    public static synchronized void setUnitOfWorkFactory(IUnitOfWorkFactory factory) {
+        log.info("UnitOfWorkFactory를 설정합니다. unitOfWorkFactory=[{}]", factory);
+        unitOfWorkFactory = factory;
     }
 
     public static void setCurrent(IUnitOfWork unitOfWork) {

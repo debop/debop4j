@@ -17,11 +17,9 @@
 package kr.debop4j.search.twitter;
 
 import jodd.props.Props;
-import kr.debop4j.core.spring.Springs;
 import kr.debop4j.data.hibernate.unitofwork.IUnitOfWork;
 import kr.debop4j.data.hibernate.unitofwork.UnitOfWorkNestingOptions;
 import kr.debop4j.data.hibernate.unitofwork.UnitOfWorks;
-import kr.debop4j.search.dao.HibernateSearchDao;
 import kr.debop4j.search.dao.IHibernateSearchDao;
 import lombok.extern.slf4j.Slf4j;
 import org.fest.assertions.Assertions;
@@ -48,8 +46,8 @@ import static org.fest.assertions.Assertions.assertThat;
  * @since 13. 4. 23. 오후 10:53
  */
 @Slf4j
-@RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = { TwitterConfig.class })
+@RunWith( SpringJUnit4ClassRunner.class )
+@ContextConfiguration( classes = { TwitterConfig.class } )
 public class TimelineTest {
 
     @Autowired
@@ -60,9 +58,6 @@ public class TimelineTest {
 
     @Before
     public void before() {
-        if (Springs.isNotInitialized())
-            Springs.init(appContext);
-
         UnitOfWorks.start();
     }
 
@@ -83,7 +78,7 @@ public class TimelineTest {
     /** hibernate-ogm 은 아직 hibernate 의 criteria api 를 지원하지 않습니다!!! */
     @Test
     public void insertAndLoadDelete() throws Exception {
-        HibernateSearchDao dao = appContext.getBean(HibernateSearchDao.class);
+        IHibernateSearchDao dao = appContext.getBean(IHibernateSearchDao.class);
 
         try {
             // 트위터 정보를 받아 저장하기

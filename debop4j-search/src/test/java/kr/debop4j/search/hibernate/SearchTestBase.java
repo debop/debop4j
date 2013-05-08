@@ -16,10 +16,9 @@
 
 package kr.debop4j.search.hibernate;
 
-import kr.debop4j.core.spring.Springs;
 import kr.debop4j.data.hibernate.unitofwork.UnitOfWorks;
 import kr.debop4j.search.AppConfig;
-import kr.debop4j.search.dao.HibernateSearchDao;
+import kr.debop4j.search.dao.IHibernateSearchDao;
 import lombok.extern.slf4j.Slf4j;
 import org.hibernate.SessionFactory;
 import org.hibernate.search.FullTextSession;
@@ -39,8 +38,8 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
  * @since 13. 4. 23. 오후 9:25
  */
 @Slf4j
-@RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = { AppConfig.class })
+@RunWith( SpringJUnit4ClassRunner.class )
+@ContextConfiguration( classes = { AppConfig.class } )
 public abstract class SearchTestBase {
 
     @Autowired
@@ -53,8 +52,6 @@ public abstract class SearchTestBase {
 
     @Before
     public void before() {
-        if (Springs.isNotInitialized())
-            Springs.init(appContext);
         UnitOfWorks.start();
         fts = Search.getFullTextSession(UnitOfWorks.getCurrentSession());
     }
@@ -68,7 +65,7 @@ public abstract class SearchTestBase {
         UnitOfWorks.stop();
     }
 
-    public HibernateSearchDao getSearchDao() {
-        return appContext.getBean(HibernateSearchDao.class);
+    public IHibernateSearchDao getSearchDao() {
+        return appContext.getBean(IHibernateSearchDao.class);
     }
 }

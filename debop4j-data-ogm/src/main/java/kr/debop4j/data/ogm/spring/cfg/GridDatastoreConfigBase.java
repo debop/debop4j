@@ -17,7 +17,12 @@
 package kr.debop4j.data.ogm.spring.cfg;
 
 import kr.debop4j.data.hibernate.interceptor.StatefulEntityInterceptor;
+import kr.debop4j.data.hibernate.repository.IHibernateRepositoryFactory;
+import kr.debop4j.data.hibernate.repository.impl.HibernateRepositoryFactory;
+import kr.debop4j.data.hibernate.tools.HibernateTool;
+import kr.debop4j.data.hibernate.unitofwork.IUnitOfWorkFactory;
 import kr.debop4j.data.hibernate.unitofwork.UnitOfWorkFactory;
+import kr.debop4j.data.hibernate.unitofwork.UnitOfWorks;
 import kr.debop4j.data.ogm.dao.HibernateOgmDao;
 import lombok.extern.slf4j.Slf4j;
 import org.hibernate.SessionFactory;
@@ -32,6 +37,7 @@ import org.hibernate.service.ServiceRegistryBuilder;
 import org.hibernate.service.spi.ServiceRegistryImplementor;
 import org.reflections.Reflections;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Scope;
 
@@ -46,6 +52,7 @@ import java.util.Set;
  * @since 13. 3. 29
  */
 @Configuration
+@ComponentScan(basePackageClasses = { UnitOfWorks.class, HibernateTool.class })
 @Slf4j
 public abstract class GridDatastoreConfigBase {
     /** DataStoreProvider 를 제공합니다. */
@@ -112,16 +119,21 @@ public abstract class GridDatastoreConfigBase {
     }
 
     @Bean
-    public UnitOfWorkFactory unitOfWorkFactory() {
+    public IUnitOfWorkFactory unitOfWorkFactory() {
         log.info("UnitOfWorkFactory를 생성합니다...");
 
-        UnitOfWorkFactory factory = new UnitOfWorkFactory();
+        IUnitOfWorkFactory factory = new UnitOfWorkFactory();
         factory.setSessionFactory(sessionFactory());
         return factory;
     }
 
     @Bean
-    @Scope("prototype")
+    public IHibernateRepositoryFactory hibernateRepositoryFactory() {
+        return new HibernateRepositoryFactory();
+    }
+
+    @Bean
+    @Scope( "prototype" )
     public HibernateOgmDao hibernateOgmDao() {
         return new HibernateOgmDao();
     }

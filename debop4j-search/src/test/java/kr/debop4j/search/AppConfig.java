@@ -1,11 +1,17 @@
 package kr.debop4j.search;
 
+import kr.debop4j.core.Local;
 import kr.debop4j.data.hibernate.interceptor.StatefulEntityInterceptor;
 import kr.debop4j.data.hibernate.interceptor.UpdateTimestampedInterceptor;
+import kr.debop4j.data.hibernate.repository.IHibernateRepositoryFactory;
+import kr.debop4j.data.hibernate.repository.impl.HibernateRepositoryFactory;
 import kr.debop4j.data.hibernate.tools.HibernateTool;
+import kr.debop4j.data.hibernate.unitofwork.IUnitOfWorkFactory;
 import kr.debop4j.data.hibernate.unitofwork.UnitOfWorkFactory;
+import kr.debop4j.data.hibernate.unitofwork.UnitOfWorks;
 import kr.debop4j.data.jdbc.JdbcTool;
 import kr.debop4j.search.dao.HibernateSearchDao;
+import kr.debop4j.search.dao.IHibernateSearchDao;
 import kr.debop4j.search.hibernate.model.SearchItem;
 import kr.debop4j.search.twitter.Twit;
 import lombok.extern.slf4j.Slf4j;
@@ -18,6 +24,7 @@ import org.hibernate.cfg.Environment;
 import org.hibernate.cfg.beanvalidation.BeanValidationEventListener;
 import org.hibernate.event.spi.EventType;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Scope;
 import org.springframework.orm.hibernate4.HibernateTransactionManager;
@@ -36,10 +43,11 @@ import java.util.Properties;
  */
 @Configuration
 @EnableTransactionManagement
+@ComponentScan( basePackageClasses = { UnitOfWorks.class, HibernateTool.class } )
 @Slf4j
 public class AppConfig {
 
-    @Bean(destroyMethod = "close")
+    @Bean( destroyMethod = "close" )
     public DataSource dataSource() {
         return JdbcTool.getEmbeddedHsqlDataSource();
     }
@@ -157,28 +165,44 @@ public class AppConfig {
     }
 
     @Bean
-    public UnitOfWorkFactory unitOfWorkFactory() {
+    public IUnitOfWorkFactory unitOfWorkFactory() {
         UnitOfWorkFactory factory = new UnitOfWorkFactory();
         factory.setSessionFactory(sessionFactory());
-
-        // 꼭 Springs.initByAnnotatedClasses(AppConfig.clss) 를 먼저 수행해줘야 합니다
-        // UnitOfWorks.setUnitOfWorkFactory(factory);
         return factory;
     }
 
     @Bean
-    @Scope("prototype")
-    public Analyzer luceneAnalyzer() {
-        try {
-            return new KoreanAnalyzer(Version.LUCENE_36);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
+    public IHibernateRepositoryFactory hibernateRepositoryFactory() {
+        return new HibernateRepositoryFactory();
     }
 
+    private static final String LUCENE_ANALYZER_CURRENT = Analyzer.class.getName() + ".Current";
+
     @Bean
-    @Scope("prototype")
-    public HibernateSearchDao hibernateSearchDao() {
-        return new HibernateSearchDao(sessionFactory());
+    @Scope( "prototype" )
+    public Analyzer luceneAnalyzer() {
+        Analyzer analyzer = Local.get(LUCENE_ANALYZER_CURRENT, Analyzer.class);
+        if (analyzer == null) {
+            try {
+                analyzer = new KoreanAnalyzer(Version.LUCENE_36);
+                Local.put(LUCENE_ANALYZER_CURRENT, analyzer);
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        }
+        return analyzer;
+    }
+
+    public static final String HIBERNATE_SEARCH_DAO_CURRENT = HibernateSearchDao.class.getName() + ".Current";
+
+    @Bean
+    @Scope( "prototype" )
+    public IHibernateSearchDao hibernateSearchDao() {
+        IHibernateSearchDao dao = Local.get(HIBERNATE_SEARCH_DAO_CURRENT, HibernateSearchDao.class);
+        if (dao == null) {
+            dao = new HibernateSearchDao(sessionFactory());
+            Local.put(HIBERNATE_SEARCH_DAO_CURRENT, dao);
+        }
+        return dao;
     }
 }

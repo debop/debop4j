@@ -20,15 +20,22 @@ import com.google.common.collect.Iterables;
 import kr.debop4j.access.model.organization.Company;
 import kr.debop4j.access.repository.organization.CompanyRepository;
 import kr.debop4j.access.test.repository.RepositoryTestBase;
-import kr.debop4j.core.spring.Springs;
 import kr.debop4j.core.tools.StringTool;
+import kr.debop4j.data.hibernate.repository.impl.HibernateDao;
 import kr.debop4j.data.hibernate.unitofwork.UnitOfWorks;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
+import org.hibernate.criterion.DetachedCriteria;
+import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.List;
 import java.util.Locale;
+
+import static org.fest.assertions.Assertions.assertThat;
 
 /**
  * kr.debop4j.access.test.repository.organization.CompanyRepositoryTest
@@ -39,58 +46,70 @@ import java.util.Locale;
 @Slf4j
 public class CompanyRepositoryTest extends RepositoryTestBase {
 
-    @Getter(lazy = true)
-    private final CompanyRepository repository = Springs.getBean(CompanyRepository.class);
+    @Getter
+    @Autowired
+    private CompanyRepository repository; // = Springs.getBean(CompanyRepository.class);
 
+    private Company company;
+    private Company loaded;
 
-    private Company createCompany() {
-        Company company = new Company("KTH", "케이티하이텔");
+    public CompanyRepositoryTest() {
+        HibernateDao dao = new HibernateDao();
+        dao.deleteAll(Company.class);
+        dao.transactionalFlush();
+    }
+
+    @Before
+    public void before() {
+
+        company = new Company("KTH", "케이티하이텔");
+
         getRepository().saveOrUpdate(company);
-
         UnitOfWorks.getCurrent().transactionalFlush();
         UnitOfWorks.getCurrent().clearSession();
+    }
 
-        return company;
+    @After
+    public void after() {
+        if (loaded != null) {
+            getRepository().delete(loaded);
+            UnitOfWorks.getCurrent().transactionalFlush();
+        }
     }
 
     @Test
-    public void createTest() {
-        Company company = createCompany();
-
-        Company loaded = getRepository().get(company.getId());
-        Assert.assertEquals(company.getCode(), loaded.getCode());
-        Assert.assertEquals(company.getName(), loaded.getName());
-
-        getRepository().delete(loaded);
-        UnitOfWorks.getCurrent().flushSession();
+    public void findById() {
+        loaded = getRepository().get(company.getId());
+        assertThat(loaded).isNotNull();
+        assertThat(loaded.getCode()).isEqualTo(company.getCode());
+        assertThat(loaded.getName()).isEqualTo(company.getName());
     }
 
     @Test
     public void findByCode() {
-        Company company = createCompany();
-        Company loaded = getRepository().findByCode(DefaultCompanyCode);
-        Assert.assertNotNull(loaded);
-        Assert.assertEquals(DefaultCompanyCode, loaded.getCode());
-
-        getRepository().delete(loaded);
-        UnitOfWorks.getCurrent().flushSession();
+        loaded = getRepository().findByCode(DefaultCompanyCode);
+        assertThat(loaded).isNotNull();
+        assertThat(loaded.getCode()).isEqualTo(DefaultCompanyCode);
     }
 
     @Test
     public void getByName() {
-        Company company = createCompany();
-        Company loaded = Iterables.getFirst(getRepository().findByName("케이"), null);
 
+        loaded = Iterables.getFirst(getRepository().findByName("케이"), null);
         Assert.assertNotNull(loaded);
         Assert.assertTrue(StringTool.contains(loaded.getName(), "케이"));
+    }
 
-        getRepository().delete(loaded);
-        UnitOfWorks.getCurrent().flushSession();
+    @Test
+    public void getByCodeAndName() {
+        DetachedCriteria dc = getRepository().buildCriteria(company.getCode(), company.getName(), null);
+        List<Company> companys = getRepository().find(dc);
+        assertThat(companys.size()).isEqualTo(1);
+        assertThat(companys.get(0).getCode()).isEqualToIgnoringCase(company.getCode());
     }
 
     @Test
     public void localeTest() throws Exception {
-        Company company = createCompany();
 
         company.addLocaleValue(Locale.KOREA,
                                new Company.CompanyLocale("케이티하이텔", "케이티 자회사입니다."));
@@ -102,15 +121,12 @@ public class CompanyRepositoryTest extends RepositoryTestBase {
         UnitOfWorks.getCurrent().transactionalFlush();
         UnitOfWorks.getCurrent().clearSession();
 
-        Company loaded = getRepository().get(company.getId());
+        loaded = getRepository().get(company.getId());
         Assert.assertNotNull(loaded);
         Assert.assertEquals(2, loaded.getLocaleMap().size());
 
         for (Company.CompanyLocale companyLocale : loaded.getLocaleMap().values()) {
             CompanyRepositoryTest.log.debug("CompanyLocale=[{}]", companyLocale);
         }
-
-        getRepository().delete(loaded);
-        UnitOfWorks.getCurrent().flushSession();
     }
 }

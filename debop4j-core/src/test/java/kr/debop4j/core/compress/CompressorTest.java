@@ -1,14 +1,20 @@
 package kr.debop4j.core.compress;
 
+import com.carrotsearch.junitbenchmarks.BenchmarkOptions;
 import kr.debop4j.core.AbstractTest;
-import kr.debop4j.core.spring.Springs;
 import kr.debop4j.core.spring.configuration.CompressorConfiguration;
 import kr.debop4j.core.spring.configuration.SerializerConfiguration;
 import kr.debop4j.core.tools.StringTool;
 import lombok.extern.slf4j.Slf4j;
+import org.fest.assertions.Assertions;
 import org.junit.Assert;
-import org.junit.BeforeClass;
+import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.util.Collection;
 import java.util.Map;
@@ -21,22 +27,24 @@ import java.util.Random;
  * @since 12. 9. 12
  */
 @Slf4j
+@RunWith( SpringJUnit4ClassRunner.class )
+@ContextConfiguration( classes = { CompressorConfiguration.class, SerializerConfiguration.class } )
 public class CompressorTest extends AbstractTest {
 
     private static final int TextCount = 10;
     protected static final String text = "동해물과 백두산이 마르고 닳도록, 하느님이 부우하사 우리나라 만세~ Hello world!";
     protected static String plainText;
 
-    private static Collection<ICompressor> compressors;
+    private Collection<ICompressor> compressors;
 
-    @BeforeClass
-    public static void BeforeClass() {
+    @Autowired
+    ApplicationContext context;
 
-        if (Springs.isNotInitialized())
-            Springs.initByAnnotatedClasses(CompressorConfiguration.class,
-                                           SerializerConfiguration.class);
+    @Before
+    public void before() {
 
-        Map<String, ICompressor> compressorMap = Springs.getBeansOfType(ICompressor.class);
+        Assertions.assertThat(context).isNotNull();
+        Map<String, ICompressor> compressorMap = context.getBeansOfType(ICompressor.class); //= Springs.getBeansOfType(ICompressor.class);
         compressors = compressorMap.values();
 
 
@@ -54,9 +62,10 @@ public class CompressorTest extends AbstractTest {
         plainText = builder.toString();
     }
 
-    //	@BenchmarkOptions(concurrency = BenchmarkOptions.CONCURRENCY_AVAILABLE_CORES,
-//	                  benchmarkRounds = 1,
-//	                  warmupRounds = 1)
+
+    @BenchmarkOptions( concurrency = BenchmarkOptions.CONCURRENCY_AVAILABLE_CORES,
+                       benchmarkRounds = 100,
+                       warmupRounds = 1 )
     @Test
     public void testCompressors() {
         for (ICompressor compressor : compressors) {

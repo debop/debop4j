@@ -2,7 +2,6 @@ package kr.debop4j.data.hibernate.repository;
 
 import kr.debop4j.core.spring.Springs;
 import kr.debop4j.data.hibernate.HibernateTestBase;
-import kr.debop4j.data.hibernate.repository.impl.HibernateRepositoryFactory;
 import kr.debop4j.data.hibernate.unitofwork.IUnitOfWork;
 import kr.debop4j.data.hibernate.unitofwork.UnitOfWorks;
 import kr.debop4j.data.mapping.model.annotated.JpaUser;
@@ -15,6 +14,7 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.hibernate4.HibernateTransactionManager;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -29,15 +29,14 @@ import java.util.List;
 @Slf4j
 public class HibernateRepositoryTest extends HibernateTestBase {
 
-    HibernateRepositoryFactory hibernateRepositoryfactory;
+    @Autowired
+    IHibernateRepositoryFactory hibernateRepositoryfactory;
+    @Autowired
     HibernateTransactionManager transactionManager;
     IUnitOfWork unitOfWork;
 
     @Before
     public void before() {
-        hibernateRepositoryfactory = Springs.getBean(HibernateRepositoryFactory.class);
-        transactionManager = Springs.getBean(HibernateTransactionManager.class);
-
         UnitOfWorks.start();
     }
 
@@ -77,7 +76,7 @@ public class HibernateRepositoryTest extends HibernateTestBase {
     }
 
     @Test
-    @SuppressWarnings("unchecked")
+    @SuppressWarnings( "unchecked" )
     public void loadSessionFactory() {
         SessionFactory sessionFactory = Springs.getBean(SessionFactory.class);
         Assert.assertNotNull(sessionFactory);

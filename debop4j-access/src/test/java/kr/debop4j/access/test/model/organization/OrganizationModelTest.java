@@ -72,5 +72,8 @@ public class OrganizationModelTest extends AccessTestBase {
         Assert.assertEquals(company, loaded);
 
         Assert.assertEquals(2, loaded.getLocaleMap().size());
+
+        repository.delete(loaded);
+        UnitOfWorks.getCurrent().transactionalFlush();
     }
 }

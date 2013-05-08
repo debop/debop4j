@@ -28,8 +28,8 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * Spring MVC 사용 시 Controller 작업에 대한 인터셉터를 이용하여, UnitOfWork의 시작과 종료를 수행할 수 있습니다.
  * <p/>
- * 참고: http://debop.blogspot.kr/2013/02/spring-mvc-controller.html
- * 예제에는 xml로 환경설정을 하는데 {@link kr.debop4j.web.spring.UnitOfWorkMvcConfigBase} 를 상속받아 환경설정을 해줘야 한다.
+ * Spring 환경설정에서 UnitOfWorks 를 Component로 등록할 수 있도록 ComponentScan을 수행하고, UnitOfWorkFactory를 Bean으로 추가하면 된다.
+ * 참고: http://debop.blogspot.kr/2013/05/spring-framework-static-field-injection.html
  *
  * @author 배성혁 sunghyouk.bae@gmail.com
  * @since 13. 5. 7. 오후 3:52
@@ -43,7 +43,8 @@ public class UnitOfWorkMvcInterceptor implements HandlerInterceptor {
     }
 
     /**
-     * MVC Controller 가 수행되기 전에 호출되는 메소드입니다. 여기에서 {@link kr.debop4j.data.hibernate.unitofwork.UnitOfWorks#start()} 초기화 작업을 수행합니다.
+     * MVC Controller 가 수행되기 전에 호출되는 메소드입니다.
+     * 여기에서 {@link kr.debop4j.data.hibernate.unitofwork.UnitOfWorks#start()} 초기화 작업을 수행합니다.
      *
      * @throws Exception
      */
@@ -70,7 +71,8 @@ public class UnitOfWorkMvcInterceptor implements HandlerInterceptor {
     }
 
     /**
-     * View 작업까지 완료된 후 Client에 응답하기 바로 전에 호출됩니다. 여기에서 {@link kr.debop4j.data.hibernate.unitofwork.UnitOfWorks#stop()} 을 호출합니다.
+     * View 작업까지 완료된 후 Client에 응답하기 바로 전에 호출됩니다.
+     * 여기에서 {@link kr.debop4j.data.hibernate.unitofwork.UnitOfWorks#stop()} 을 호출합니다.
      *
      * @throws Exception
      */

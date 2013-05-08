@@ -43,7 +43,7 @@ import java.nio.charset.Charset;
  */
 @Configuration
 @EnableCaching
-@ComponentScan(basePackageClasses = UserRepository.class)
+@ComponentScan(basePackageClasses = { UserRepository.class })
 @PropertySource(name = "redis", value = { "classpath:/redis.properties" })
 @Slf4j
 public class RedisCacheConfiguration {

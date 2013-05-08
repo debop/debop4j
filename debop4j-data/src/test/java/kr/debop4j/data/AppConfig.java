@@ -16,6 +16,7 @@
 
 package kr.debop4j.data;
 
+import kr.debop4j.data.hibernate.unitofwork.UnitOfWorks;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
@@ -29,7 +30,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
  */
 @Configuration
 @EnableTransactionManagement
-@ComponentScan({ "kr.debop4j.data.hibernate.repository" })
+@ComponentScan(basePackageClasses = { UnitOfWorks.class })
 @Import({ kr.debop4j.data.DatabaseConfig.class })
 public class AppConfig {
 

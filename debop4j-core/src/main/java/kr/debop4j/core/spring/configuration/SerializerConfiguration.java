@@ -33,17 +33,17 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class SerializerConfiguration {
 
-    @Bean(name = "binarySerializer")
+    @Bean
     public BinarySerializer binarySerializer() {
         return new BinarySerializer();
     }
 
-    @Bean(name = "gsonSerializer")
+    @Bean
     public GsonSerializer gsonSerializer() {
         return new GsonSerializer();
     }
 
-    @Bean(name = "jacksonSerializer")
+    @Bean
     public JacksonSerializer jacksonSerializer() {
         return new JacksonSerializer();
     }
