@@ -37,6 +37,12 @@
             <scope>test</scope>
         </dependency>
 
+        <!-- joda-time -->
+        <dependency>
+            <groupId>joda-time</groupId>
+            <artifactId>joda-time</artifactId>
+        </dependency>
+
         <!-- Jodd -->
         <dependency>
             <groupId>org.jodd</groupId>
