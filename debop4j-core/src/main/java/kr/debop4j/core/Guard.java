@@ -19,6 +19,8 @@ package kr.debop4j.core;
 import kr.debop4j.core.tools.StringTool;
 import lombok.extern.slf4j.Slf4j;
 
+import java.util.Objects;
+
 import static java.lang.String.format;
 
 
@@ -32,8 +34,7 @@ import static java.lang.String.format;
 @Slf4j
 public final class Guard {
 
-    private Guard() {
-    }
+    private Guard() { }
 
     public static <T> T firstNotNull(T first, T second) {
         if (first != null)
@@ -45,223 +46,171 @@ public final class Guard {
     }
 
     public static void shouldBe(boolean condition) {
-        if (!condition)
-            throw new IllegalArgumentException();
+        assert condition;
     }
 
     public static void shouldBe(boolean condition, String format, Object... args) {
-        if (!condition)
-            throw new IllegalArgumentException(format(format, args));
+        assert condition : format(format, args);
     }
 
     public static void shouldBeEquals(Object actual,
                                       Object expected,
                                       final String actualName) {
-        if (actual != expected)
-            throw new IllegalArgumentException(format(SR.ShouldBeEquals, actualName, actual, expected));
+        assert Objects.equals(actual, expected) : format(SR.ShouldBeEquals, actualName, actual, expected);
     }
 
     public static void shouldNotBeEquals(Object actual,
                                          Object expected,
                                          final String actualName) {
-        if (actual == expected)
-            throw new IllegalArgumentException(format(SR.ShouldNotBeEquals, actualName, actual, expected));
+        assert !Objects.equals(actual, expected) : format(SR.ShouldNotBeEquals, actualName, actual, expected);
     }
 
     public static <T> void shouldBeNull(T arg, final String argName) {
-        if (arg != null)
-            throw new IllegalArgumentException(format(SR.ShouldBeNull, argName));
+        assert arg == null : format(SR.ShouldBeNull, argName);
     }
 
     public static <T> T shouldNotBeNull(T arg, final String argName) {
-        if (arg == null)
-            throw new IllegalArgumentException(format(SR.ShouldNotBeNull, argName));
+        assert arg != null : format(SR.ShouldNotBeNull, argName);
         return arg;
     }
 
     public static String shouldBeEmpty(String arg, final String argName) {
-        if (StringTool.isNotEmpty(arg))
-            throw new IllegalArgumentException(format(SR.ShouldBeEmptyString, argName));
+        assert StringTool.isEmpty(arg) : format(SR.ShouldBeEmptyString, argName);
         return arg;
     }
 
     public static String shouldNotBeEmpty(String arg, final String argName) {
-        if (StringTool.isEmpty(arg))
-            throw new IllegalArgumentException(format(SR.ShouldNotBeEmptyString, argName));
+        assert StringTool.isNotEmpty(arg) : format(SR.ShouldNotBeEmptyString, argName);
         return arg;
     }
 
     public static String shouldBeWhiteSpace(String arg, final String argName) {
-        if (StringTool.isNotWhiteSpace(arg))
-            throw new IllegalArgumentException(format(SR.ShouldBeWhiteSpace, argName));
-
+        assert StringTool.isWhiteSpace(arg) : format(SR.ShouldBeWhiteSpace, argName);
         return arg;
     }
 
     public static String shouldNotBeWhiteSpace(String arg, final String argName) {
-        if (StringTool.isWhiteSpace(arg))
-            throw new IllegalArgumentException(format(SR.ShouldNotBeWhiteSpace, argName));
-
+        assert StringTool.isNotWhiteSpace(arg) : format(SR.ShouldNotBeWhiteSpace, argName);
         return arg;
     }
 
     public static int shouldBePositiveNumber(int arg, final String argName) {
-        if (arg <= 0)
-            throw new IllegalArgumentException(format(SR.ShouldBePositiveNumber, argName));
+        assert arg > 0 : format(SR.ShouldBePositiveNumber, argName);
         return arg;
     }
 
     public static long shouldBePositiveNumber(long arg, final String argName) {
-        if (arg <= 0L)
-            throw new IllegalArgumentException(format(SR.ShouldBePositiveNumber, argName));
+        assert arg > 0L : format(SR.ShouldBePositiveNumber, argName);
         return arg;
     }
 
     public static float shouldBePositiveNumber(float arg, final String argName) {
-        if (arg <= 0f)
-            throw new IllegalArgumentException(format(SR.ShouldBePositiveNumber, argName));
+        assert arg > 0.0f : format(SR.ShouldBePositiveNumber, argName);
         return arg;
     }
 
     public static double shouldBePositiveNumber(double arg, final String argName) {
-        if (arg <= 0.0)
-            throw new IllegalArgumentException(format(SR.ShouldBePositiveNumber, argName));
+        assert arg > 0.0 : format(SR.ShouldBePositiveNumber, argName);
         return arg;
     }
 
     public static int shouldNotBePositiveNumber(int arg, final String argName) {
-        if (arg > 0)
-            throw new IllegalArgumentException(format(SR.ShouldNotBePositiveNumber, argName));
+        assert arg <= 0 : format(SR.ShouldNotBePositiveNumber, argName);
         return arg;
     }
 
     public static long shouldNotBePositiveNumber(long arg, final String argName) {
-        if (arg > 0L)
-            throw new IllegalArgumentException(format(SR.ShouldNotBePositiveNumber, argName));
+        assert arg <= 0L : format(SR.ShouldNotBePositiveNumber, argName);
         return arg;
     }
 
     public static float shouldNotBePositiveNumber(float arg, final String argName) {
-        if (arg > 0.0f)
-            throw new IllegalArgumentException(format(SR.ShouldNotBePositiveNumber, argName));
+        assert arg <= 0.0f : format(SR.ShouldNotBePositiveNumber, argName);
         return arg;
     }
 
     public static double shouldNotBePositiveNumber(double arg, final String argName) {
-        if (arg > 0.0)
-            throw new IllegalArgumentException(format(SR.ShouldNotBePositiveNumber, argName));
+        assert arg <= 0.0 : format(SR.ShouldNotBePositiveNumber, argName);
         return arg;
     }
 
     public static int shouldBeNegativeNumber(int arg, final String argName) {
-        if (arg < 0)
-            throw new IllegalArgumentException(format(SR.ShouldBeNegativeNumber, argName));
+        assert arg < 0 : format(SR.ShouldBeNegativeNumber, argName);
         return arg;
     }
 
     public static long shouldBeNegativeNumber(long arg, final String argName) {
-        if (arg < 0L)
-            throw new IllegalArgumentException(format(SR.ShouldBeNegativeNumber, argName));
+        assert arg < 0L : format(SR.ShouldBeNegativeNumber, argName);
         return arg;
     }
 
     public static float shouldBeNegativeNumber(float arg, final String argName) {
-        if (arg < 0.0f)
-            throw new IllegalArgumentException(format(SR.ShouldBeNegativeNumber, argName));
+        assert arg < 0f : format(SR.ShouldBeNegativeNumber, argName);
         return arg;
     }
 
     public static double shouldBeNegativeNumber(double arg, final String argName) {
-        if (arg < 0.0)
-            throw new IllegalArgumentException(format(SR.ShouldBeNegativeNumber, argName));
+        assert arg < 0.0 : format(SR.ShouldBeNegativeNumber, argName);
         return arg;
     }
 
     public static int shouldNotBeNegativeNumber(int arg, final String argName) {
-        if (arg >= 0)
-            throw new IllegalArgumentException(format(SR.ShouldNotBeNegativeNumber, argName));
+        assert arg >= 0 : format(SR.ShouldNotBeNegativeNumber, argName);
         return arg;
     }
 
     public static long shouldNotBeNegativeNumber(long arg, final String argName) {
-        if (arg >= 0L)
-            throw new IllegalArgumentException(format(SR.ShouldNotBeNegativeNumber, argName));
+        assert arg >= 0L : format(SR.ShouldNotBeNegativeNumber, argName);
         return arg;
     }
 
     public static float shouldNotBeNegativeNumber(float arg, final String argName) {
-        if (arg >= 0.0f)
-            throw new IllegalArgumentException(format(SR.ShouldNotBeNegativeNumber, argName));
+        assert arg >= 0.0f : format(SR.ShouldNotBeNegativeNumber, argName);
         return arg;
     }
 
     public static double shouldNotBeNegativeNumber(double arg, final String argName) {
-        if (arg >= 0.0)
-            throw new IllegalArgumentException(format(SR.ShouldNotBeNegativeNumber, argName));
+        assert arg >= 0.0 : format(SR.ShouldNotBeNegativeNumber, argName);
         return arg;
     }
 
     public static void shouldBeInRange(int value, int fromInclude, int toExclude, String argName) {
-        if (value >= fromInclude && value < toExclude)
-            return;
-
-        String errMsg = format("%s[%d] 이 범위 [%d, %d)를 벗어났습니다.", argName, value, fromInclude, toExclude);
-        throw new IllegalArgumentException(errMsg);
+        assert (value >= fromInclude && value < toExclude)
+                : format("%s[%d] 이 범위 [%d, %d)를 벗어났습니다.", argName, value, fromInclude, toExclude);
     }
 
     public static void shouldBeInRange(long value, long fromInclude, long toExclude, String argName) {
-        if (value >= fromInclude && value < toExclude)
-            return;
-
-        String errMsg = format("%s[%d] 이 범위 [%d, %d)를 벗어났습니다.", argName, value, fromInclude, toExclude);
-        throw new IllegalArgumentException(errMsg);
+        assert (value >= fromInclude && value < toExclude)
+                : format("%s[%d] 이 범위 [%d, %d)를 벗어났습니다.", argName, value, fromInclude, toExclude);
     }
 
     public static void shouldBeInRange(float value, float fromInclude, float toExclude, String argName) {
-        if (value >= fromInclude && value < toExclude)
-            return;
-
-        String errMsg = format("%s[%f] 이 범위 [%f, %f)를 벗어났습니다.", argName, value, fromInclude, toExclude);
-        throw new IllegalArgumentException(errMsg);
+        assert (value >= fromInclude && value < toExclude)
+                : format("%s[%f] 이 범위 [%f, %f)를 벗어났습니다.", argName, value, fromInclude, toExclude);
     }
 
     public static void shouldBeInRange(double value, double fromInclude, double toExclude, String argName) {
-        if (value >= fromInclude && value < toExclude)
-            return;
-
-        String errMsg = format("%s[%f] 이 범위 [%f, %f)를 벗어났습니다.", argName, value, fromInclude, toExclude);
-        throw new IllegalArgumentException(errMsg);
+        assert (value >= fromInclude && value < toExclude)
+                : format("%s[%f] 이 범위 [%f, %f)를 벗어났습니다.", argName, value, fromInclude, toExclude);
     }
 
     public static void shouldBeBetween(int value, int fromInclude, int toInclude, String argName) {
-        if (value >= fromInclude && value <= toInclude)
-            return;
-
-        String errMsg = format("%s[%d] 이 범위 [%d, %d]를 벗어났습니다.", argName, value, fromInclude, toInclude);
-        throw new IllegalArgumentException(errMsg);
+        assert (value >= fromInclude && value <= toInclude)
+                : format("%s[%d] 이 범위 [%d, %d]를 벗어났습니다.", argName, value, fromInclude, toInclude);
     }
 
     public static void shouldBeBetween(long value, long fromInclude, long toInclude, String argName) {
-        if (value >= fromInclude && value <= toInclude)
-            return;
-
-        String errMsg = format("%s[%d] 이 범위 [%d, %d]를 벗어났습니다.", argName, value, fromInclude, toInclude);
-        throw new IllegalArgumentException(errMsg);
+        assert (value >= fromInclude && value <= toInclude)
+                : format("%s[%d] 이 범위 [%d, %d]를 벗어났습니다.", argName, value, fromInclude, toInclude);
     }
 
     public static void shouldBeBetween(float value, float fromInclude, float toInclude, String argName) {
-        if (value >= fromInclude && value <= toInclude)
-            return;
-
-        String errMsg = format("%s[%f] 이 범위 [%f, %f]를 벗어났습니다.", argName, value, fromInclude, toInclude);
-        throw new IllegalArgumentException(errMsg);
+        assert (value >= fromInclude && value <= toInclude)
+                : format("%s[%f] 이 범위 [%f, %f]를 벗어났습니다.", argName, value, fromInclude, toInclude);
     }
 
     public static void shouldBeBetween(double value, double fromInclude, double toInclude, String argName) {
-        if (value >= fromInclude && value <= toInclude)
-            return;
-
-        String errMsg = format("%s[%f] 이 범위 [%f, %f]를 벗어났습니다.", argName, value, fromInclude, toInclude);
-        throw new IllegalArgumentException(errMsg);
+        assert (value >= fromInclude && value <= toInclude)
+                : format("%s[%f] 이 범위 [%f, %f]를 벗어났습니다.", argName, value, fromInclude, toInclude);
     }
 }
