@@ -58,6 +58,7 @@
 
     <modules>
         <module>debop4j-core</module>
+        <module>debop4j-timeperiod</module>
 
         <module>debop4j-data</module>
         <module>debop4j-data-mybatis</module>
@@ -75,6 +76,7 @@
         <module>debop4j-web</module>
         <module>debop4j-web-example</module>
         <module>debop4j-experiments</module>
+
 
     </modules>
 
