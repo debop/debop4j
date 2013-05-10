@@ -5,7 +5,7 @@
  */
 package example.avro.search;
 
-@SuppressWarnings( "all" )
+@SuppressWarnings("all")
 @org.apache.avro.specific.AvroGenerated
 public class Entity extends org.apache.avro.specific.SpecificRecordBase implements org.apache.avro.specific.SpecificRecord {
     public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"Entity\",\"namespace\":\"example.avro.search\",\"fields\":[{\"name\":\"rowId\",\"type\":\"string\"},{\"name\":\"createdAt\",\"type\":\"string\"},{\"name\":\"text\",\"type\":\"string\"},{\"name\":\"attrs\",\"type\":{\"type\":\"map\",\"values\":\"string\"}}]}");
@@ -47,7 +47,7 @@ public class Entity extends org.apache.avro.specific.SpecificRecordBase implemen
     }
 
     // Used by DatumReader.  Applications should not call.
-    @SuppressWarnings( value = "unchecked" )
+    @SuppressWarnings(value = "unchecked")
     public void put(int field$, java.lang.Object value$) {
         switch (field$) {
             case 0:
