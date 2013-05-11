@@ -33,6 +33,6 @@ public interface ITimeBlock extends ITimePeriod {
     ITimeBlock getPreviousBlock(Duration offset);
 
     /** 지정된 Offset만큼 기간이 이후 시간으로 이동한 TimeBlock을 반환한다. */
-    ITimeBlock GetNextBlock(Duration offset);
+    ITimeBlock getNextBlock(Duration offset);
 
 }

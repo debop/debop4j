@@ -26,6 +26,7 @@ public enum IntervalEdge {
 
     /** 폐구간 */
     Closed,
+
     /** 개구간 */
     Open;
 }

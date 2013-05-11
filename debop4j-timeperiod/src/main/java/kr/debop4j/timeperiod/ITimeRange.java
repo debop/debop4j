@@ -38,6 +38,9 @@ public interface ITimeRange extends ITimePeriod {
     /** 완료시각을 지정된 시각으로 설정합니다. 완료시각 이전이어야 합니다. */
     void shrinkEndTo(DateTime moment);
 
+    /** 시작시각, 완료시각을 지정된 시각으로 설정합니다. */
+    void shrinkTo(DateTime moment);
+
     /** 시작시각과 완료시각을 지정된 기간으로 설정합니다. */
     void shrinkTo(ITimePeriod period);
 }

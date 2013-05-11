@@ -88,12 +88,12 @@ public class TimePeriodBase implements ITimePeriod {
 
     @Getter
     @Setter( AccessLevel.PROTECTED )
-    private boolean readonly;
+    protected boolean readonly;
 
     /** 기간을 TimeSpan으료 표현, 기간이 정해지지 않았다면 <see cref="TimeSpec.MaxPeriodTime"/> 을 반환합니다. */
     @Override
     public Duration getDuration() {
-        return Duration.millis(end.getMillis() - start.getMillis());
+        return new Duration(getStart(), getEnd());
     }
 
     public void setDuration(Duration duration) {
@@ -136,8 +136,8 @@ public class TimePeriodBase implements ITimePeriod {
 
     @Override
     public void setup(DateTime newStart, DateTime newEnd) {
-        if (TimePeriodBase.log.isTraceEnabled())
-            TimePeriodBase.log.trace("기간을 새로 설정합니다. newStart=[{}], newEnd=[{}]", newStart, newEnd);
+        if (log.isTraceEnabled())
+            log.trace("기간을 새로 설정합니다. newStart=[{}], newEnd=[{}]", newStart, newEnd);
         this.start = newStart;
         this.end = newEnd;
     }
@@ -148,8 +148,8 @@ public class TimePeriodBase implements ITimePeriod {
 
     @Override
     public ITimePeriod copy(Duration offset) {
-        if (TimePeriodBase.log.isTraceEnabled())
-            TimePeriodBase.log.trace("기간 [{}]에 offset[{}]을 준 기간을 반환합니다...", this, offset);
+        if (log.isTraceEnabled())
+            log.trace("기간 [{}]에 offset[{}]을 준 기간을 반환합니다...", this, offset);
 
         if (offset == Duration.ZERO)
             return new TimeRange(this);
@@ -165,7 +165,7 @@ public class TimePeriodBase implements ITimePeriod {
             return;
         assertMutable();
 
-        if (TimePeriodBase.log.isTraceEnabled()) TimePeriodBase.log.trace("기간[{}]을 offset[{}]만큼 이동합니다.", this, offset);
+        if (log.isTraceEnabled()) log.trace("기간[{}]을 offset[{}]만큼 이동합니다.", this, offset);
 
         if (hasStart())
             start = start.plus(offset.getMillis());
@@ -205,8 +205,8 @@ public class TimePeriodBase implements ITimePeriod {
         assertMutable();
         start = TimeSpec.MinPeriodTime;
         end = TimeSpec.MaxPeriodTime;
-        if (TimePeriodBase.log.isTraceEnabled())
-            TimePeriodBase.log.trace("기간을 리셋했습니다. start=[{}], end=[{}]", start, end);
+        if (log.isTraceEnabled())
+            log.trace("기간을 리셋했습니다. start=[{}], end=[{}]", start, end);
     }
 
     @Override
@@ -229,6 +229,14 @@ public class TimePeriodBase implements ITimePeriod {
         return TimeTool.getUnionRange(this, other);
     }
 
+    protected String format(ITimeFormatter formatter) {
+        return formatter.getPeriod(getStart(), getEnd(), getDuration());
+    }
+
+    protected final void assertMutable() {
+        assert !readonly : "readonly 입니다.";
+    }
+
     @Override
     public int compareTo(ITimePeriod o) {
         return start.compareTo(o.getStart());
@@ -236,9 +244,9 @@ public class TimePeriodBase implements ITimePeriod {
 
     @Override
     public boolean equals(Object obj) {
-        return (obj != null) &&
-                (obj instanceof ITimePeriod) &&
-                (hashCode() == obj.hashCode());
+        return obj != null &&
+                getClass().equals(obj.getClass()) &&
+                hashCode() == obj.hashCode();
     }
 
     @Override
@@ -248,10 +256,6 @@ public class TimePeriodBase implements ITimePeriod {
 
     @Override
     public String toString() {
-        return getClass().getName() + "# " + getDescription(null);
-    }
-
-    protected final void assertMutable() {
-        assert !readonly : "readonly 입니다.";
+        return getClass().getName() + "#" + getDescription(null);
     }
 }

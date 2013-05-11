@@ -65,6 +65,7 @@ public class SearchDaoImpl implements SearchDao {
 
     @Autowired
     private final SessionFactory sessionFactory;
+
     /** 현 Thread-context에서 사용할 {@link org.hibernate.Session} 의 저장소 키 (참고: {@link kr.debop4j.core.Local}) */
     public String SESSION_KEY = IUnitOfWorkFactory.CURRENT_HIBERNATE_SESSION;
 

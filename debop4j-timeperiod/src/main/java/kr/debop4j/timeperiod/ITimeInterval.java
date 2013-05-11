@@ -71,6 +71,7 @@ public interface ITimeInterval extends ITimePeriod {
     void shrinkTo(ITimePeriod period);
 
     /** 현재 IInterval에서 오프셋만큼 이동한 {@link ITimeInterval}을 반환합니다. */
+    @Override
     ITimeInterval copy(Duration offset);
 }
 

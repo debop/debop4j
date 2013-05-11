@@ -17,13 +17,15 @@ public class TimeRange extends TimePeriodBase implements ITimeRange {
 
     private static final long serialVersionUID = -5665345604375538630L;
 
-    public static final TimeRange AnyTime = new TimeRange(true);
+    public static final TimeRange Anytime = new TimeRange(true);
 
     public static ITimeBlock toTimeBlock(ITimeRange range) {
+        // TODO: 구현 필요
         throw new NotImplementedException("구현 중");
     }
 
     public static ITimeInterval toTimeInterval(ITimeRange range) {
+        // TODO: 구현 필요
         throw new NotImplementedException("구현 중");
     }
 
@@ -118,8 +120,15 @@ public class TimeRange extends TimePeriodBase implements ITimeRange {
             end = moment;
     }
 
+    public void shrinkTo(DateTime moment) {
+        assertMutable();
+        shrinkStartTo(moment);
+        shrinkEndTo(moment);
+    }
+
     @Override
     public void shrinkTo(ITimePeriod period) {
+        assert period != null;
         assertMutable();
 
         if (period.hasStart())
