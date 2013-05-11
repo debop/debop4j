@@ -247,7 +247,7 @@
         <logback.version>1.0.11</logback.version>
         <commons.logging.version>1.1.2</commons.logging.version>
 
-        <lombok.version>0.11.6</lombok.version>
+        <lombok.version>0.11.8</lombok.version>
 
         <springframework.version>3.2.2.RELEASE</springframework.version>
         <springframework.data.version>1.0.0.RELEASE</springframework.data.version>
