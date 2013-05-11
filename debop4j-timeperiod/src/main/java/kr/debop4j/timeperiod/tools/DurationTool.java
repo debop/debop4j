@@ -9,7 +9,7 @@ import lombok.extern.slf4j.Slf4j;
  * @since 13. 5. 10. 오후 11:58
  */
 @Slf4j
-public class DurationTool {
+public abstract class DurationTool {
 
     private DurationTool() {}
 }

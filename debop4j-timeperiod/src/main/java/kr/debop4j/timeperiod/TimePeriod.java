@@ -4,13 +4,15 @@ import org.joda.time.DateTime;
 import org.joda.time.Duration;
 import org.joda.time.format.DateTimeFormatter;
 
+import java.io.Serializable;
+
 /**
  * kr.debop4j.timeperiod.TimePeriod
  *
  * @author 배성혁 sunghyouk.bae@gmail.com
  * @since 13. 5. 10. 오후 10:49
  */
-public interface TimePeriod extends Comparable<TimePeriod> {
+public interface TimePeriod extends Comparable<TimePeriod>, Serializable {
 
     DateTime getStart();
 
