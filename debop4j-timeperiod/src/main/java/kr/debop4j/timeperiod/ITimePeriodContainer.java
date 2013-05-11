@@ -5,12 +5,12 @@ import org.joda.time.DateTime;
 import java.util.List;
 
 /**
- * kr.debop4j.timeperiod.TimePeriodContainer
+ * kr.debop4j.timeperiod.ITimePeriodContainer
  *
  * @author 배성혁 sunghyouk.bae@gmail.com
  * @since 13. 5. 10. 오후 11:33
  */
-public interface TimePeriodContainer extends List<TimePeriod>, TimePeriod {
+public interface ITimePeriodContainer extends List<ITimePeriod>, ITimePeriod {
 
     void setStart(DateTime start);
 
@@ -18,9 +18,9 @@ public interface TimePeriodContainer extends List<TimePeriod>, TimePeriod {
 
     boolean isReadonly();
 
-    boolean containsPeriod(TimePeriod target);
+    boolean containsPeriod(ITimePeriod target);
 
-    void addAll(Iterable<TimePeriod> periods);
+    void addAll(Iterable<ITimePeriod> periods);
 
     void sortByStart(OrderDirection sortDir);
 

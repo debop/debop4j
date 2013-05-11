@@ -11,7 +11,7 @@ import java.util.Locale;
  * @author 배성혁 sunghyouk.bae@gmail.com
  * @since 13. 5. 11. 오후 6:42
  */
-public interface TimeCalendar extends TimePeriodMapper {
+public interface ITimeCalendar extends ITimePeriodMapper {
 
     /** 문화권 정보 (문화권에 따라 달력에 대한 규칙 및 명칭이 달라집니다.) */
     Locale getLocale();

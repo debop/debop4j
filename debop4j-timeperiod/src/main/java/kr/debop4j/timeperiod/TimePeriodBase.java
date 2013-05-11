@@ -22,7 +22,7 @@ import java.util.Objects;
  * @since 13. 5. 11. 오후 12:12
  */
 @Slf4j
-public class TimePeriodBase implements TimePeriod {
+public class TimePeriodBase implements ITimePeriod {
 
     private static final long serialVersionUID = -7255762434105570062L;
 
@@ -66,7 +66,7 @@ public class TimePeriodBase implements TimePeriod {
         this.readonly = readonly;
     }
 
-    protected TimePeriodBase(TimePeriod source) {
+    protected TimePeriodBase(ITimePeriod source) {
         Guard.shouldNotBeNull(source, "source");
 
         this.start = source.getStart();
@@ -74,17 +74,17 @@ public class TimePeriodBase implements TimePeriod {
         this.readonly = source.isReadonly();
     }
 
-    protected TimePeriodBase(TimePeriod source, boolean readonly) {
+    protected TimePeriodBase(ITimePeriod source, boolean readonly) {
         this.readonly = readonly;
     }
 
     // endregion
 
     @Getter
-    private DateTime start;
+    protected DateTime start;
 
     @Getter
-    private DateTime end;
+    protected DateTime end;
 
     @Getter
     @Setter( AccessLevel.PROTECTED )
@@ -104,8 +104,8 @@ public class TimePeriodBase implements TimePeriod {
 
     @Override
     public String getDurationDescription() {
-        // TODO: TimeFormatter 제작하여 구현해야 함.
-        // TimeFormatter.Instance.GetDuration(Duration, DurationFormatKind.Detailed);
+        // TODO: ITimeFormatter 제작하여 구현해야 함.
+        // ITimeFormatter.Instance.GetDuration(Duration, DurationFormatKind.Detailed);
         throw new NotImplementedException("구현 중");
     }
 
@@ -136,26 +136,27 @@ public class TimePeriodBase implements TimePeriod {
 
     @Override
     public void setup(DateTime newStart, DateTime newEnd) {
-        if (log.isTraceEnabled()) log.trace("기간을 새로 설정합니다. newStart=[{}], newEnd=[{}]", newStart, newEnd);
+        if (TimePeriodBase.log.isTraceEnabled())
+            TimePeriodBase.log.trace("기간을 새로 설정합니다. newStart=[{}], newEnd=[{}]", newStart, newEnd);
         this.start = newStart;
         this.end = newEnd;
     }
 
-    public TimePeriod copy() {
+    public ITimePeriod copy() {
         return copy(Duration.ZERO);
     }
 
     @Override
-    public TimePeriod copy(Duration offset) {
-        if (log.isTraceEnabled())
-            log.trace("기간 [{}]에 offset[{}]을 준 기간을 반환합니다...", this, offset);
+    public ITimePeriod copy(Duration offset) {
+        if (TimePeriodBase.log.isTraceEnabled())
+            TimePeriodBase.log.trace("기간 [{}]에 offset[{}]을 준 기간을 반환합니다...", this, offset);
 
         if (offset == Duration.ZERO)
-            return new TimeRangeImpl(this);
+            return new TimeRange(this);
 
-        return new TimeRangeImpl(hasStart() ? start.plus(offset.getMillis()) : start,
-                                 hasEnd() ? end.plus(offset.getMillis()) : end,
-                                 readonly);
+        return new TimeRange(hasStart() ? start.plus(offset.getMillis()) : start,
+                             hasEnd() ? end.plus(offset.getMillis()) : end,
+                             readonly);
     }
 
     @Override
@@ -164,7 +165,7 @@ public class TimePeriodBase implements TimePeriod {
             return;
         assertMutable();
 
-        if (log.isTraceEnabled()) log.trace("기간[{}]을 offset[{}]만큼 이동합니다.", this, offset);
+        if (TimePeriodBase.log.isTraceEnabled()) TimePeriodBase.log.trace("기간[{}]을 offset[{}]만큼 이동합니다.", this, offset);
 
         if (hasStart())
             start = start.plus(offset.getMillis());
@@ -173,7 +174,7 @@ public class TimePeriodBase implements TimePeriod {
     }
 
     @Override
-    public boolean isSamePeriod(TimePeriod other) {
+    public boolean isSamePeriod(ITimePeriod other) {
         return (other != null) &&
                 Objects.equals(start, other.getStart()) &&
                 Objects.equals(end, other.getEnd());
@@ -185,17 +186,17 @@ public class TimePeriodBase implements TimePeriod {
     }
 
     @Override
-    public boolean hasInside(TimePeriod other) {
+    public boolean hasInside(ITimePeriod other) {
         return TimeTool.hasInside(this, other);
     }
 
     @Override
-    public boolean intersectsWith(TimePeriod other) {
+    public boolean intersectsWith(ITimePeriod other) {
         return TimeTool.intersectsWith(this, other);
     }
 
     @Override
-    public boolean overlapsWith(TimePeriod other) {
+    public boolean overlapsWith(ITimePeriod other) {
         return TimeTool.overlapsWith(this, other);
     }
 
@@ -204,39 +205,39 @@ public class TimePeriodBase implements TimePeriod {
         assertMutable();
         start = TimeSpec.MinPeriodTime;
         end = TimeSpec.MaxPeriodTime;
-        if (log.isTraceEnabled())
-            log.trace("기간을 리셋했습니다. start=[{}], end=[{}]", start, end);
+        if (TimePeriodBase.log.isTraceEnabled())
+            TimePeriodBase.log.trace("기간을 리셋했습니다. start=[{}], end=[{}]", start, end);
     }
 
     @Override
-    public PeriodRelation getRelation(TimePeriod other) {
+    public PeriodRelation getRelation(ITimePeriod other) {
         return TimeTool.getRelation(this, other);
     }
 
     @Override
     public String getDescription(DateTimeFormatter formatter) {
-        return format(Guard.firstNotNull(formatter, TimeFormatter.getInstance()));
+        return format(Guard.firstNotNull(formatter, ITimeFormatter.getInstance()));
     }
 
     @Override
-    public TimePeriod getIntersection(TimePeriod other) {
+    public ITimePeriod getIntersection(ITimePeriod other) {
         return TimeTool.getIntersectionRange(this, other);
     }
 
     @Override
-    public TimePeriod getUnion(TimePeriod other) {
+    public ITimePeriod getUnion(ITimePeriod other) {
         return TimeTool.getUnionRange(this, other);
     }
 
     @Override
-    public int compareTo(TimePeriod o) {
+    public int compareTo(ITimePeriod o) {
         return start.compareTo(o.getStart());
     }
 
     @Override
     public boolean equals(Object obj) {
         return (obj != null) &&
-                (obj instanceof TimePeriod) &&
+                (obj instanceof ITimePeriod) &&
                 (hashCode() == obj.hashCode());
     }
 

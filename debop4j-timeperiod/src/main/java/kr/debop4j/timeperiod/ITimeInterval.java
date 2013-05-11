@@ -9,7 +9,7 @@ import org.joda.time.Duration;
  * @author 배성혁 sunghyouk.bae@gmail.com
  * @since 13. 5. 11. 오후 2:58
  */
-public interface TimeInterval extends TimePeriod {
+public interface ITimeInterval extends ITimePeriod {
 
     /** 시작시작이 열린 구간인가? 즉 start time 에 값이 없다 */
     boolean isStartOpen();
@@ -60,7 +60,7 @@ public interface TimeInterval extends TimePeriod {
 
     void expandTo(DateTime moment);
 
-    void expandTo(TimePeriod period);
+    void expandTo(ITimePeriod period);
 
     void shrinkStartTo(DateTime moment);
 
@@ -68,10 +68,10 @@ public interface TimeInterval extends TimePeriod {
 
     void shrinkTo(DateTime moment);
 
-    void shrinkTo(TimePeriod period);
+    void shrinkTo(ITimePeriod period);
 
-    /** 현재 IInterval에서 오프셋만큼 이동한 {@link TimeInterval}을 반환합니다. */
-    TimeInterval copy(Duration offset);
+    /** 현재 IInterval에서 오프셋만큼 이동한 {@link ITimeInterval}을 반환합니다. */
+    ITimeInterval copy(Duration offset);
 }
 
 

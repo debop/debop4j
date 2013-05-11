@@ -11,7 +11,7 @@ import java.util.Locale;
  * @author 배성혁 sunghyouk.bae@gmail.com
  * @since 13. 5. 11. 오후 6:11
  */
-public interface TimeFormatter {
+public interface ITimeFormatter {
 
     /** 문화권 */
     Locale getLocale();

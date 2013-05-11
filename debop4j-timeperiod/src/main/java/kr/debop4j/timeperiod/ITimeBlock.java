@@ -9,7 +9,7 @@ import org.joda.time.Duration;
  * @author 배성혁 sunghyouk.bae@gmail.com
  * @since 13. 5. 11. 오후 2:47
  */
-public interface TimeBlock extends TimePeriod {
+public interface ITimeBlock extends ITimePeriod {
 
     /** 시작시각을 설정합니다. */
     void setStart(DateTime start);
@@ -30,9 +30,9 @@ public interface TimeBlock extends TimePeriod {
     void durationFromEnd(Duration newDuration);
 
     /** 지정된 Offset만큼 기간이 이전 시간으로 이동한 TimeBlock을 반환한다. */
-    TimeBlock getPreviousBlock(Duration offset);
+    ITimeBlock getPreviousBlock(Duration offset);
 
     /** 지정된 Offset만큼 기간이 이후 시간으로 이동한 TimeBlock을 반환한다. */
-    TimeBlock GetNextBlock(Duration offset);
+    ITimeBlock GetNextBlock(Duration offset);
 
 }

@@ -11,7 +11,7 @@ import java.util.List;
  * @author 배성혁 sunghyouk.bae@gmail.com
  * @since 13. 5. 11. 오후 7:02
  */
-public interface DateTimeSet extends List<DateTime> {
+public interface IDateTimeSet extends List<DateTime> {
 
 
     /// 최소값, 요소가 없으면 null을 반환한다.

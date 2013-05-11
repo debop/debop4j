@@ -7,12 +7,12 @@ import org.joda.time.format.DateTimeFormatter;
 import java.io.Serializable;
 
 /**
- * kr.debop4j.timeperiod.TimePeriod
+ * kr.debop4j.timeperiod.ITimePeriod
  *
  * @author 배성혁 sunghyouk.bae@gmail.com
  * @since 13. 5. 10. 오후 10:49
  */
-public interface TimePeriod extends Comparable<TimePeriod>, Serializable {
+public interface ITimePeriod extends Comparable<ITimePeriod>, Serializable {
 
     DateTime getStart();
 
@@ -39,33 +39,33 @@ public interface TimePeriod extends Comparable<TimePeriod>, Serializable {
 
     void setup(DateTime newStart, DateTime newEnd);
 
-    TimePeriod copy(Duration offset);
+    ITimePeriod copy(Duration offset);
 
     void move(Duration offset);
 
-    boolean isSamePeriod(TimePeriod other);
+    boolean isSamePeriod(ITimePeriod other);
 
     boolean hasInside(DateTime moment);
 
-    boolean hasInside(TimePeriod other);
+    boolean hasInside(ITimePeriod other);
 
-    boolean intersectsWith(TimePeriod other);
+    boolean intersectsWith(ITimePeriod other);
 
-    boolean overlapsWith(TimePeriod other);
+    boolean overlapsWith(ITimePeriod other);
 
     /** 기간을 미정으로 초기화합니다. */
     void reset();
 
-    /** 다른 TimePeriod 와의 관계를 나타냅니다. */
-    PeriodRelation getRelation(TimePeriod other);
+    /** 다른 ITimePeriod 와의 관계를 나타냅니다. */
+    PeriodRelation getRelation(ITimePeriod other);
 
-    /** TimePeriod 정보를 문자열로 표현합니다. */
+    /** ITimePeriod 정보를 문자열로 표현합니다. */
     String getDescription(DateTimeFormatter formatter);
 
     /** 두 기간이 겹치는 (교집합) 기간을 반환합니다. */
-    TimePeriod getIntersection(TimePeriod other);
+    ITimePeriod getIntersection(ITimePeriod other);
 
     /** 두 기간의 합집합 기간을 반환합니다. */
-    TimePeriod getUnion(TimePeriod other);
+    ITimePeriod getUnion(ITimePeriod other);
 
 }

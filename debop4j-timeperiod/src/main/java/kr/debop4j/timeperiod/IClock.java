@@ -4,12 +4,12 @@ import org.joda.time.DateTime;
 import org.joda.time.Duration;
 
 /**
- * kr.debop4j.timeperiod.Clock
+ * kr.debop4j.timeperiod.IClock
  *
  * @author 배성혁 sunghyouk.bae@gmail.com
  * @since 13. 5. 11. 오후 7:14
  */
-public interface Clock {
+public interface IClock {
 
     /** 현재 시각 */
     DateTime now();

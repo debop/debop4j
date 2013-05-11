@@ -6,17 +6,17 @@ package kr.debop4j.timeperiod;
  * @author 배성혁 sunghyouk.bae@gmail.com
  * @since 13. 5. 11. 오후 6:06
  */
-public interface TimeLine {
+public interface ITimeLine {
 
-    TimePeriodContainer getPeriods();
+    ITimePeriodContainer getPeriods();
 
-    TimePeriod getLimits();
+    ITimePeriod getLimits();
 
-    TimePeriodMapper getPeriodMapper();
+    ITimePeriodMapper getPeriodMapper();
 
-    TimePeriodCollection combinePeriods();
+    ITimePeriodCollection combinePeriods();
 
-    TimePeriodCollection intersectPeriods();
+    ITimePeriodCollection intersectPeriods();
 
-    TimePeriodCollection calculateGaps();
+    ITimePeriodCollection calculateGaps();
 }

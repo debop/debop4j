@@ -8,7 +8,7 @@ import org.joda.time.DateTime;
  * @author 배성혁 sunghyouk.bae@gmail.com
  * @since 13. 5. 10. 오후 11:55
  */
-public interface TimePeriodMapper {
+public interface ITimePeriodMapper {
 
     /** Start offset을 적용합니다. */
     DateTime mapStart(DateTime moment);

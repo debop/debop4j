@@ -1,46 +1,142 @@
 package kr.debop4j.timeperiod;
 
+import kr.debop4j.core.NotImplementedException;
+import kr.debop4j.timeperiod.tools.TimeTool;
+import lombok.extern.slf4j.Slf4j;
 import org.joda.time.DateTime;
 import org.joda.time.Duration;
 
 /**
- * 시작 시각 ~ 완료시각이라는 시간의 범위를 나타내는 자료구조이고, 기간(Duration) 값은 계산됩니다.
+ * 기간을 표현하는 클래스입니다.
  *
  * @author 배성혁 sunghyouk.bae@gmail.com
- * @since 13. 5. 10. 오후 11:07
+ * @since 13. 5. 11. 오후 2:05
  */
-public interface TimeRange extends TimePeriod {
+@Slf4j
+public class TimeRange extends TimePeriodBase implements ITimeRange {
 
-    /** 시작시각을 설정합니다. */
-    void setStart(DateTime start);
+    private static final long serialVersionUID = -5665345604375538630L;
 
-    /** 완료시각을 설정합니다. */
-    void setEnd(DateTime end);
+    public static final TimeRange AnyTime = new TimeRange(true);
 
-    /** 시작시각을 기준으로 기간을 설정합니다. */
-    void setDuration(Duration duration);
+    public static ITimeBlock toTimeBlock(ITimeRange range) {
+        throw new NotImplementedException("구현 중");
+    }
 
-    /** 시작시각을 지정된 시각으로 설정합니다. 시작시각 이전이여야 합니다. */
-    void expandStartTo(DateTime moment);
+    public static ITimeInterval toTimeInterval(ITimeRange range) {
+        throw new NotImplementedException("구현 중");
+    }
 
-    /** 완료시각을 지정된 시각으로 설정합니다. 완료시각 이후여야 합니다. */
-    void expandEndTo(DateTime moment);
+    // region << Constructor >>
 
-    /** 시작시각, 완료시각을 지정된 시각으로 설정합니다. */
-    void expandTo(DateTime moment);
+    public TimeRange() {}
 
-    /** 시작시각과 완료시각을 지정된 기간으로 설정합니다. */
-    void expandTo(TimePeriod period);
+    public TimeRange(boolean readonly) {
+        super(readonly);
+    }
 
-    /** 시작시각을 지정된 시각으로 설정합니다. 시작시각 이후여야 합니다. */
-    void shrinkStartTo(DateTime moment);
+    public TimeRange(DateTime start, DateTime end) {
+        super(start, end);
+    }
 
-    /** 완료시각을 지정된 시각으로 설정합니다. 완료시각 이전이어야 합니다. */
-    void shrinkEndTo(DateTime moment);
+    public TimeRange(DateTime start, DateTime end, boolean readonly) {
+        super(start, end, readonly);
+    }
 
-    /** 시작시각, 완료시각을 지정된 시각으로 설정합니다. */
-    void shrinkTo(DateTime moment);
+    public TimeRange(DateTime start, Duration duration) {
+        super(start, duration);
+    }
 
-    /** 시작시각과 완료시각을 지정된 기간으로 설정합니다. */
-    void shrinkTo(TimePeriod period);
+    public TimeRange(DateTime start, Duration duration, boolean readonly) {
+        super(start, duration, readonly);
+    }
+
+    public TimeRange(ITimePeriod source) {
+        super(source);
+    }
+
+    public TimeRange(ITimePeriod source, boolean readonly) {
+        super(source, readonly);
+    }
+
+    // endregion
+
+    @Override
+    public void setStart(DateTime start) {
+        assertMutable();
+        this.start = start;
+    }
+
+    @Override
+    public void setEnd(DateTime end) {
+        assertMutable();
+        this.end = end;
+    }
+
+    @Override
+    public void expandStartTo(DateTime moment) {
+        assertMutable();
+        if (start.compareTo(moment) > 0)
+            this.start = moment;
+    }
+
+    @Override
+    public void expandEndTo(DateTime moment) {
+        assertMutable();
+        if (end.compareTo(moment) < 0)
+            this.end = moment;
+    }
+
+    @Override
+    public void expandTo(DateTime moment) {
+        assertMutable();
+        expandStartTo(moment);
+        expandEndTo(moment);
+    }
+
+    @Override
+    public void expandTo(ITimePeriod period) {
+        assertMutable();
+
+        if (period.hasStart())
+            expandStartTo(period.getStart());
+        if (period.hasEnd())
+            expandEndTo(period.getEnd());
+    }
+
+    @Override
+    public void shrinkStartTo(DateTime moment) {
+        assertMutable();
+        if (hasInside(moment) && start.compareTo(moment) < 0)
+            start = moment;
+    }
+
+    @Override
+    public void shrinkEndTo(DateTime moment) {
+        assertMutable();
+        if (hasInside(moment) && end.compareTo(moment) > 0)
+            end = moment;
+    }
+
+    @Override
+    public void shrinkTo(ITimePeriod period) {
+        assertMutable();
+
+        if (period.hasStart())
+            shrinkStartTo(period.getStart());
+        if (period.hasEnd())
+            shrinkEndTo(period.getEnd());
+    }
+
+    @Override
+    public ITimePeriod getIntersection(ITimePeriod other) {
+        assert other != null;
+        return TimeTool.getIntersectionRange(this, other);
+    }
+
+    @Override
+    public ITimePeriod getUnion(ITimePeriod other) {
+        assert other != null;
+        return TimeTool.getUnion(this, other);
+    }
 }
