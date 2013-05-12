@@ -2,6 +2,7 @@ package kr.debop4j.timeperiod;
 
 import kr.debop4j.core.Guard;
 import kr.debop4j.core.NotImplementedException;
+import kr.debop4j.core.ValueObjectBase;
 import kr.debop4j.core.tools.HashTool;
 import kr.debop4j.timeperiod.tools.TimeSpec;
 import kr.debop4j.timeperiod.tools.TimeTool;
@@ -21,7 +22,7 @@ import java.util.Objects;
  * @since 13. 5. 11. 오후 12:12
  */
 @Slf4j
-public class TimePeriodBase implements ITimePeriod {
+public class TimePeriodBase extends ValueObjectBase implements ITimePeriod {
 
     private static final long serialVersionUID = -7255762434105570062L;
 
@@ -86,7 +87,7 @@ public class TimePeriodBase implements ITimePeriod {
     protected DateTime end;
 
     @Getter
-    @Setter(AccessLevel.PROTECTED)
+    @Setter( AccessLevel.PROTECTED )
     protected boolean readonly;
 
     /** 기간을 TimeSpan으료 표현, 기간이 정해지지 않았다면 <see cref="TimeSpec.MaxPeriodTime"/> 을 반환합니다. */
@@ -254,7 +255,10 @@ public class TimePeriodBase implements ITimePeriod {
     }
 
     @Override
-    public String toString() {
-        return getClass().getName() + "#" + getDescription(null);
+    protected com.google.common.base.Objects.ToStringHelper buildStringHelper() {
+        return super.buildStringHelper()
+                .add("start", start)
+                .add("end", end)
+                .add("readonly", readonly);
     }
 }

@@ -22,7 +22,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 /**
- * kr.debop4j.timeperiod.YearAndMonth
+ * 년도와 월을 표현
  *
  * @author 배성혁 sunghyouk.bae@gmail.com
  * @since 13. 5. 12. 오후 1:54
