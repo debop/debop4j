@@ -11,7 +11,6 @@ import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.joda.time.DateTime;
 import org.joda.time.Duration;
-import org.joda.time.format.DateTimeFormatter;
 
 import java.util.Objects;
 
@@ -87,7 +86,7 @@ public class TimePeriodBase implements ITimePeriod {
     protected DateTime end;
 
     @Getter
-    @Setter( AccessLevel.PROTECTED )
+    @Setter(AccessLevel.PROTECTED)
     protected boolean readonly;
 
     /** 기간을 TimeSpan으료 표현, 기간이 정해지지 않았다면 <see cref="TimeSpec.MaxPeriodTime"/> 을 반환합니다. */
@@ -215,8 +214,8 @@ public class TimePeriodBase implements ITimePeriod {
     }
 
     @Override
-    public String getDescription(DateTimeFormatter formatter) {
-        return format(Guard.firstNotNull(formatter, ITimeFormatter.getInstance()));
+    public String getDescription(TimeFormatter formatter) {
+        return format(Guard.firstNotNull(formatter, TimeFormatter.getInstance()));
     }
 
     @Override

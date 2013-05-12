@@ -2,7 +2,6 @@ package kr.debop4j.timeperiod;
 
 import org.joda.time.DateTime;
 import org.joda.time.Duration;
-import org.joda.time.format.DateTimeFormatter;
 
 import java.io.Serializable;
 
@@ -60,7 +59,7 @@ public interface ITimePeriod extends Comparable<ITimePeriod>, Serializable {
     PeriodRelation getRelation(ITimePeriod other);
 
     /** ITimePeriod 정보를 문자열로 표현합니다. */
-    String getDescription(DateTimeFormatter formatter);
+    String getDescription(TimeFormatter formatter);
 
     /** 두 기간이 겹치는 (교집합) 기간을 반환합니다. */
     ITimePeriod getIntersection(ITimePeriod other);

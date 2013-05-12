@@ -1,14 +1,12 @@
 package kr.debop4j.timeperiod;
 
+import com.google.common.collect.Iterables;
+import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.joda.time.DateTime;
 import org.joda.time.Duration;
-import org.joda.time.format.DateTimeFormatter;
 
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.List;
-import java.util.ListIterator;
+import java.util.*;
 
 /**
  * kr.debop4j.timeperiod.TimePeriodContainer
@@ -20,6 +18,16 @@ import java.util.ListIterator;
 public class TimePeriodContainer implements ITimePeriodContainer {
 
     private static final long serialVersionUID = -7112720659283751048L;
+
+    @Getter
+    protected final List<ITimePeriod> periods = new ArrayList<>();
+
+    public TimePeriodContainer() {}
+
+    public TimePeriodContainer(Iterable<? extends ITimePeriod> collection) {
+        if (collection != null)
+            Iterables.addAll(periods, collection);
+    }
 
     @Override
     public void setStart(DateTime start) {
@@ -132,7 +140,7 @@ public class TimePeriodContainer implements ITimePeriodContainer {
     }
 
     @Override
-    public String getDescription(DateTimeFormatter formatter) {
+    public String getDescription(TimeFormatter formatter) {
         return null;  //To change body of implemented methods use File | Settings | File Templates.
     }
 
