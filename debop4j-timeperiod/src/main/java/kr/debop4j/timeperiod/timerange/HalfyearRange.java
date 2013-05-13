@@ -16,15 +16,16 @@
 
 package kr.debop4j.timeperiod.timerange;
 
+import kr.debop4j.timeperiod.HalfyearKind;
 import kr.debop4j.timeperiod.ITimeCalendar;
-import kr.debop4j.timeperiod.QuarterKind;
 import kr.debop4j.timeperiod.TimeCalendar;
+import kr.debop4j.timeperiod.YearAndHalfyear;
 import kr.debop4j.timeperiod.clock.ClockProxy;
 import kr.debop4j.timeperiod.tools.TimeTool;
 import org.joda.time.DateTime;
 
 /**
- * kr.debop4j.timeperiod.timerange.HalfyearRange
+ * 반기를 기간으로 표현합니다.
  *
  * @author 배성혁 sunghyouk.bae@gmail.com
  * @since 13. 5. 13. 오후 11:12
@@ -52,13 +53,42 @@ public class HalfyearRange extends HalfyearTimeRange {
              TimeTool.getHalfyearOfMonth(moment.getMonthOfYear()), calendar);
     }
 
-    public HalfyearRange(int startYear, QuarterKind startQuarter) {
-        super(startYear, startQuarter, 1);
+    public HalfyearRange(int startYear, HalfyearKind startHalfyear) {
+        super(startYear, startHalfyear, 1, new TimeCalendar());
     }
 
-    public HalfyearRange(int startYear, QuarterKind startQuarter, ITimeCalendar calendar) {
-        super(startYear, startQuarter, 1, calendar);
+    public HalfyearRange(int startYear, HalfyearKind startHalfyear, ITimeCalendar calendar) {
+        super(startYear, startHalfyear, 1, calendar);
     }
 
     // endregion
+
+    public int getYear() {
+        return getStartYear();
+    }
+
+    public HalfyearKind getHalfyear() {
+        return getStartHalfyear();
+    }
+
+    public String getHalfyearName() {
+        return getTimeCalendar().getHalfyearName(getHalfyear());
+    }
+
+    public String getHalfyearOfYearName() {
+        return getTimeCalendar().getHalfyearOfYearName(getYear(), getHalfyear());
+    }
+
+    public HalfyearRange previousHalfyear() {
+        return addHalfyears(-1);
+    }
+
+    public HalfyearRange nextHalfyear() {
+        return addHalfyears(1);
+    }
+
+    public HalfyearRange addHalfyears(int count) {
+        YearAndHalfyear yhy = TimeTool.addHalfyear(getHalfyear(), getYear(), count);
+        return new HalfyearRange(yhy.getYear(), yhy.getHalfyear(), getTimeCalendar());
+    }
 }

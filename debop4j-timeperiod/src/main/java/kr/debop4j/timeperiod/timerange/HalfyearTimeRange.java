@@ -27,7 +27,7 @@ import org.joda.time.DateTime;
 import java.util.List;
 
 /**
- * kr.debop4j.timeperiod.timerange.HalfyearTimeRange
+ * 반기(Halfyear) 단위의 기간을 표현합니다.
  *
  * @author 배성혁 sunghyouk.bae@gmail.com
  * @since 13. 5. 13. 오후 10:29

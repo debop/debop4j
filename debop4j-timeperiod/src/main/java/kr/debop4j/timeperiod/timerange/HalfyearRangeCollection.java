@@ -16,11 +16,53 @@
 
 package kr.debop4j.timeperiod.timerange;
 
+import com.google.common.collect.Lists;
+import kr.debop4j.timeperiod.HalfyearKind;
+import kr.debop4j.timeperiod.ITimeCalendar;
+import kr.debop4j.timeperiod.TimeCalendar;
+import kr.debop4j.timeperiod.YearAndHalfyear;
+import kr.debop4j.timeperiod.tools.TimeTool;
+import org.joda.time.DateTime;
+
+import java.util.List;
+
 /**
- * kr.debop4j.timeperiod.timerange.HalfyearRangeCollection
+ * 반기 단위 {@link HalfyearRange}의 기간의 컬렉션
  *
  * @author 배성혁 sunghyouk.bae@gmail.com
  * @since 13. 5. 13. 오후 11:13
  */
-public class HalfyearRangeCollection {
+public class HalfyearRangeCollection extends HalfyearTimeRange {
+    private static final long serialVersionUID = 425689128251222210L;
+
+    public HalfyearRangeCollection(DateTime moment, int halfyearCount) {
+        this(moment, halfyearCount, new TimeCalendar());
+    }
+
+    public HalfyearRangeCollection(DateTime moment, int halfyearCount, ITimeCalendar timeCalendar) {
+        this(TimeTool.getYearOf(timeCalendar.getYear(moment), timeCalendar.getMonthOfYear(moment)),
+             TimeTool.getHalfyearOf(timeCalendar.getMonthOfYear(moment)),
+             halfyearCount,
+             timeCalendar);
+    }
+
+    public HalfyearRangeCollection(int year, HalfyearKind halfyear, int halfyearCount) {
+        this(year, halfyear, halfyearCount, new TimeCalendar());
+    }
+
+    public HalfyearRangeCollection(int year, HalfyearKind halfyear, int halfyearCount, ITimeCalendar timeCalendar) {
+        super(year, halfyear, halfyearCount, timeCalendar);
+    }
+
+
+    public List<HalfyearRange> getHalfyears() {
+        int halfyearCount = getHalfyearCount();
+        List<HalfyearRange> halfyears = Lists.newArrayListWithCapacity(halfyearCount);
+
+        for (int hy = 0; hy < halfyearCount; hy++) {
+            YearAndHalfyear yhy = TimeTool.addHalfyear(getStartHalfyear(), getStartYear(), hy);
+            halfyears.add(new HalfyearRange(yhy.getYear(), yhy.getHalfyear(), getTimeCalendar()));
+        }
+        return halfyears;
+    }
 }
