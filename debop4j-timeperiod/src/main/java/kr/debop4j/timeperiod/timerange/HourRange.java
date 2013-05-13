@@ -21,42 +21,43 @@ import kr.debop4j.timeperiod.ITimeFormatter;
 import kr.debop4j.timeperiod.TimeCalendar;
 import kr.debop4j.timeperiod.TimeFormatter;
 import kr.debop4j.timeperiod.clock.ClockProxy;
+import kr.debop4j.timeperiod.tools.TimeTool;
 import org.joda.time.DateTime;
 
 /**
- * 분(Minute) 단위의 기간을 표현합니다.
+ * 시(Hour) 단위의 기간을 표현합니다.
  *
  * @author 배성혁 sunghyouk.bae@gmail.com
- * @since 13. 5. 12. 오후 10:26
+ * @since 13. 5. 13. 오전 11:12
  */
-public class MinuteRange extends MinuteTimeRange {
+public class HourRange extends HourTimeRange {
 
-    private static final long serialVersionUID = 4111802915947727424L;
+    private static final long serialVersionUID = 2876823794105220883L;
 
-    // region << Constructor >>
+    // region << Contructor >>
 
-    public MinuteRange() {
+    public HourRange() {
         this(new TimeCalendar());
     }
 
-    public MinuteRange(ITimeCalendar timeCalendar) {
+    public HourRange(ITimeCalendar timeCalendar) {
         this(ClockProxy.getClock().now(), timeCalendar);
     }
 
-    public MinuteRange(DateTime moment) {
-        this(moment, new TimeCalendar());
+    public HourRange(DateTime moment) {
+        super(moment, 1);
     }
 
-    public MinuteRange(DateTime moment, ITimeCalendar calendar) {
+    public HourRange(DateTime moment, ITimeCalendar calendar) {
         super(moment, 1, calendar);
     }
 
-    public MinuteRange(int year, int monthOfYear, int dayOfMonth, int hourOfDay, int minuteOfHour) {
-        super(year, monthOfYear, dayOfMonth, hourOfDay, minuteOfHour, 1);
+    public HourRange(int year, int monthOfYear, int dayOfMonth, int hourOfDay) {
+        super(year, monthOfYear, dayOfMonth, hourOfDay, 1);
     }
 
-    public MinuteRange(int year, int monthOfYear, int dayOfMonth, int hourOfDay, int minuteOfHour, ITimeCalendar timeCalendar) {
-        super(year, monthOfYear, dayOfMonth, hourOfDay, minuteOfHour, 1, timeCalendar);
+    public HourRange(int year, int monthOfYear, int dayOfMonth, int hourOfDay, ITimeCalendar calendar) {
+        super(year, monthOfYear, dayOfMonth, hourOfDay, 1, calendar);
     }
 
     // endregion
@@ -69,19 +70,17 @@ public class MinuteRange extends MinuteTimeRange {
 
     public int getHourOfDay() { return getStartHourOfDay(); }
 
-    public int getMinuteOfHour() { return getStartMinuteOfHour(); }
-
-    public MinuteRange getPreviousMinute() {
-        return addMinutes(-1);
+    public HourRange getPreviousHour() {
+        return addHours(-1);
     }
 
-    public MinuteRange getNextMinute() {
-        return addMinutes(1);
+    public HourRange getNextHour() {
+        return addHours(1);
     }
 
-    public MinuteRange addMinutes(int minutes) {
-        DateTime start = getStart().withTimeAtStartOfDay().withTime(getStartHourOfDay(), getStartMinuteOfHour(), 0, 0);
-        return new MinuteRange(start.plusMinutes(minutes), getTimeCalendar());
+    public HourRange addHours(int hours) {
+        DateTime startHour = TimeTool.trimToHour(getStart(), getStartHourOfDay());
+        return new HourRange(startHour.plusHours(hours), getTimeCalendar());
     }
 
     @Override

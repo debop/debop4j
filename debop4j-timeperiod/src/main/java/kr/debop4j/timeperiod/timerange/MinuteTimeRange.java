@@ -35,19 +35,19 @@ import org.joda.time.Duration;
 public class MinuteTimeRange extends CalendarTimeRange {
     private static final long serialVersionUID = -5669915582907325590L;
 
-    protected MinuteTimeRange(DateTime moment, int minuteCount) {
+    public MinuteTimeRange(DateTime moment, int minuteCount) {
         this(moment, minuteCount, new TimeCalendar());
     }
 
-    protected MinuteTimeRange(DateTime moment, int minuteCount, ITimeCalendar calendar) {
+    public MinuteTimeRange(DateTime moment, int minuteCount, ITimeCalendar calendar) {
         this(calendar.getYear(moment), calendar.getMonth(moment), calendar.getDayOfMonth(moment), calendar.getHour(moment), calendar.getMinute(moment), minuteCount, calendar);
     }
 
-    protected MinuteTimeRange(int year, int monthOfYear, int dayOfMonth, int hourOfDay, int minuteOfHour, int minuteCount) {
+    public MinuteTimeRange(int year, int monthOfYear, int dayOfMonth, int hourOfDay, int minuteOfHour, int minuteCount) {
         this(year, monthOfYear, dayOfMonth, hourOfDay, minuteOfHour, minuteCount, new TimeCalendar());
     }
 
-    protected MinuteTimeRange(int year, int monthOfYear, int dayOfMonth, int hourOfDay, int minuteOfHour, int minuteCount, ITimeCalendar calendar) {
+    public MinuteTimeRange(int year, int monthOfYear, int dayOfMonth, int hourOfDay, int minuteOfHour, int minuteCount, ITimeCalendar calendar) {
         super(getPeriodOf(year, monthOfYear, dayOfMonth, hourOfDay, minuteOfHour, minuteCount), calendar);
 
         this.minuteCount = minuteCount;
