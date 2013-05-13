@@ -27,13 +27,11 @@ import lombok.Setter;
  * @author 배성혁 sunghyouk.bae@gmail.com
  * @since 13. 5. 12. 오후 1:54
  */
-@Getter
-@Setter
 public class YearAndMonth extends ValueObjectBase implements Comparable<YearAndMonth> {
     private static final long serialVersionUID = -8352695673514932824L;
 
-    private Integer year;
-    private Integer monthOfYear;
+    @Getter @Setter private Integer year;
+    @Getter @Setter private Integer monthOfYear;
 
     public YearAndMonth(Integer year, Integer monthOfYear) {
         this.year = year;

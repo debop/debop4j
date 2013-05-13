@@ -16,6 +16,7 @@
 
 package kr.debop4j.timeperiod.timerange;
 
+import com.google.common.base.Objects;
 import kr.debop4j.core.tools.HashTool;
 import kr.debop4j.timeperiod.ITimeCalendar;
 import kr.debop4j.timeperiod.ITimePeriod;
@@ -32,7 +33,7 @@ import org.joda.time.Duration;
  * @author 배성혁 sunghyouk.bae@gmail.com
  * @since 13. 5. 12. 오후 9:51
  */
-public class MinuteTimeRange extends CalendarTimeRange {
+public abstract class MinuteTimeRange extends CalendarTimeRange {
     private static final long serialVersionUID = -5669915582907325590L;
 
     public MinuteTimeRange(DateTime moment, int minuteCount) {
@@ -40,7 +41,7 @@ public class MinuteTimeRange extends CalendarTimeRange {
     }
 
     public MinuteTimeRange(DateTime moment, int minuteCount, ITimeCalendar calendar) {
-        this(calendar.getYear(moment), calendar.getMonth(moment), calendar.getDayOfMonth(moment), calendar.getHour(moment), calendar.getMinute(moment), minuteCount, calendar);
+        this(calendar.getYear(moment), calendar.getMonthOfYear(moment), calendar.getDayOfMonth(moment), calendar.getHourOfDay(moment), calendar.getMinuteOfHour(moment), minuteCount, calendar);
     }
 
     public MinuteTimeRange(int year, int monthOfYear, int dayOfMonth, int hourOfDay, int minuteOfHour, int minuteCount) {
@@ -57,14 +58,20 @@ public class MinuteTimeRange extends CalendarTimeRange {
     @Getter private final int minuteCount;
     @Getter private final int endMinute;
 
-    @Override
-    public int hashCode() {
-        return HashTool.compute(super.hashCode(), endMinute);
-    }
-
     private static ITimePeriod getPeriodOf(int year, int monthOfYear, int dayOfMonth, int hourOfDay, int minuteOfHour, int minuteCount) {
         DateTime start = new DateTime(year, monthOfYear, dayOfMonth, hourOfDay, minuteOfHour, 0);
         return new TimeRange(start, Duration.millis(minuteCount * TimeSpec.MillisPerMinute));
     }
 
+    @Override
+    public int hashCode() {
+        return HashTool.compute(super.hashCode(), endMinute);
+    }
+
+    @Override
+    protected Objects.ToStringHelper buildStringHelper() {
+        return super.buildStringHelper()
+                .add("minuteCount", minuteCount)
+                .add("endMinute", endMinute);
+    }
 }

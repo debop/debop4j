@@ -18,8 +18,6 @@ package kr.debop4j.timeperiod.timerange;
 
 import com.google.common.collect.Lists;
 import kr.debop4j.timeperiod.ITimeCalendar;
-import kr.debop4j.timeperiod.ITimeFormatter;
-import kr.debop4j.timeperiod.TimeFormatter;
 import kr.debop4j.timeperiod.tools.TimeTool;
 import org.joda.time.DateTime;
 
@@ -59,17 +57,5 @@ public class HourRangeCollection extends HourTimeRange {
             hours.add(new HourRange(startHour.plusHours(h), getTimeCalendar()));
 
         return hours;
-    }
-
-    @Override
-    protected String format(ITimeFormatter formatter) {
-        if (formatter == null)
-            formatter = TimeFormatter.getInstance();
-
-        return formatter.getCalendarPeriod(formatter.getShortDate(getStart()),
-                                           formatter.getShortDate(getEnd()),
-                                           formatter.getShortTime(getStart()),
-                                           formatter.getShortTime(getEnd()),
-                                           getDuration());
     }
 }

@@ -17,9 +17,7 @@
 package kr.debop4j.timeperiod.timerange;
 
 import kr.debop4j.timeperiod.ITimeCalendar;
-import kr.debop4j.timeperiod.ITimeFormatter;
 import kr.debop4j.timeperiod.TimeCalendar;
-import kr.debop4j.timeperiod.TimeFormatter;
 import kr.debop4j.timeperiod.clock.ClockProxy;
 import org.joda.time.DateTime;
 
@@ -82,16 +80,5 @@ public class MinuteRange extends MinuteTimeRange {
     public MinuteRange addMinutes(int minutes) {
         DateTime start = getStart().withTimeAtStartOfDay().withTime(getStartHourOfDay(), getStartMinuteOfHour(), 0, 0);
         return new MinuteRange(start.plusMinutes(minutes), getTimeCalendar());
-    }
-
-    @Override
-    protected String format(ITimeFormatter formatter) {
-        if (formatter == null)
-            formatter = TimeFormatter.getInstance();
-
-        return formatter.getCalendarPeriod(formatter.getShortDate(getStart()),
-                                           formatter.getShortTime(getStart()),
-                                           formatter.getShortTime(getEnd()),
-                                           getDuration());
     }
 }

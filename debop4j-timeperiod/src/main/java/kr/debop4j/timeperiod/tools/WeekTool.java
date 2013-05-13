@@ -14,34 +14,15 @@
  * limitations under the License.
  */
 
-package kr.debop4j.timeperiod;
-
-import lombok.Getter;
+package kr.debop4j.timeperiod.tools;
 
 /**
- * 월 (Month) 종류
+ * kr.debop4j.timeperiod.tools.WeekTool
  *
  * @author 배성혁 sunghyouk.bae@gmail.com
- * @since 13. 5. 11. 오전 10:48
+ * @since 13. 5. 13. 오후 2:34
  */
-public enum MonthKind {
+public abstract class WeekTool {
 
-    January(1),
-    Feburary(2),
-    March(3),
-    April(4),
-    May(5),
-    June(6),
-    July(7),
-    August(8),
-    September(9),
-    October(10),
-    November(11),
-    December(12);
-
-    @Getter private final int value;
-
-    MonthKind(int value) {
-        this.value = value;
-    }
+    private WeekTool() {}
 }

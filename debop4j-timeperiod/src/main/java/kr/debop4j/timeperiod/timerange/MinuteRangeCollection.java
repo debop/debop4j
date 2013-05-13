@@ -18,8 +18,6 @@ package kr.debop4j.timeperiod.timerange;
 
 import com.google.common.collect.Lists;
 import kr.debop4j.timeperiod.ITimeCalendar;
-import kr.debop4j.timeperiod.ITimeFormatter;
-import kr.debop4j.timeperiod.TimeFormatter;
 import lombok.Getter;
 import org.joda.time.DateTime;
 
@@ -51,7 +49,7 @@ public class MinuteRangeCollection extends MinuteTimeRange {
         super(year, monthOfYear, dayOfMonth, hourOfDay, minuteOfHour, minuteCount, calendar);
     }
 
-    @Getter( lazy = true )
+    @Getter(lazy = true)
     private final List<MinuteRange> minutes = createMinutes();
 
     /** 기간을 분단위의 기간으로 표현한 클래스인 {@link MinuteRange}의 열거자를 반환합니다. */
@@ -63,17 +61,5 @@ public class MinuteRangeCollection extends MinuteTimeRange {
             minutes.add(new MinuteRange(startMinute.plusMinutes(i), getTimeCalendar()));
         }
         return minutes;
-    }
-
-    @Override
-    protected String format(ITimeFormatter formatter) {
-        if (formatter == null)
-            formatter = TimeFormatter.getInstance();
-
-        return formatter.getCalendarPeriod(formatter.getShortDate(getStart()),
-                                           formatter.getShortDate(getEnd()),
-                                           formatter.getShortTime(getStart()),
-                                           formatter.getShortTime(getEnd()),
-                                           getDuration());
     }
 }

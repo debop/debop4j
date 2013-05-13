@@ -16,6 +16,7 @@
 
 package kr.debop4j.timeperiod.timerange;
 
+import com.google.common.base.Objects;
 import com.google.common.collect.Lists;
 import kr.debop4j.core.tools.HashTool;
 import kr.debop4j.timeperiod.ITimeCalendar;
@@ -33,25 +34,25 @@ import java.util.List;
  * @author 배성혁 sunghyouk.bae@gmail.com
  * @since 13. 5. 13. 오전 10:57
  */
-public class HourTimeRange extends CalendarTimeRange {
+public abstract class HourTimeRange extends CalendarTimeRange {
 
     private static final long serialVersionUID = -6167012104632243454L;
 
     // region << Constructor >>
 
-    public HourTimeRange(DateTime moment, int hourCount) {
+    protected HourTimeRange(DateTime moment, int hourCount) {
         this(moment, hourCount, new TimeCalendar());
     }
 
-    public HourTimeRange(DateTime moment, int hourCount, ITimeCalendar calendar) {
-        this(calendar.getYear(moment), calendar.getMonth(moment), calendar.getDayOfMonth(moment), calendar.getHour(moment), hourCount, calendar);
+    protected HourTimeRange(DateTime moment, int hourCount, ITimeCalendar calendar) {
+        this(calendar.getYear(moment), calendar.getMonthOfYear(moment), calendar.getDayOfMonth(moment), calendar.getHourOfDay(moment), hourCount, calendar);
     }
 
-    public HourTimeRange(int year, int monthOfYear, int dayOfMonth, int hourOfDay, int hourCount) {
+    protected HourTimeRange(int year, int monthOfYear, int dayOfMonth, int hourOfDay, int hourCount) {
         this(year, monthOfYear, dayOfMonth, hourOfDay, hourCount, new TimeCalendar());
     }
 
-    public HourTimeRange(int year, int monthOfYear, int dayOfMonth, int hourOfDay, int hourCount, ITimeCalendar calendar) {
+    protected HourTimeRange(int year, int monthOfYear, int dayOfMonth, int hourOfDay, int hourCount, ITimeCalendar calendar) {
         super(getPeriodOf(year, monthOfYear, dayOfMonth, hourOfDay, hourCount), calendar);
 
         this.hourCount = hourCount;
@@ -79,15 +80,22 @@ public class HourTimeRange extends CalendarTimeRange {
         return minutes;
     }
 
-    @Override
-    public int hashCode() {
-        return HashTool.compute(super.hashCode(), hourCount);
-    }
-
     private static TimeRange getPeriodOf(int year, int month, int day, int hour, int hourCount) {
         DateTime start = new DateTime(year, month, day, hour, 0, 0);
         DateTime end = start.plusHours(hourCount);
 
         return new TimeRange(start, end);
+    }
+
+    @Override
+    public int hashCode() {
+        return HashTool.compute(super.hashCode(), hourCount);
+    }
+
+    @Override
+    protected Objects.ToStringHelper buildStringHelper() {
+        return super.buildStringHelper()
+                .add("hourCount", hourCount)
+                .add("endHour", endHour);
     }
 }

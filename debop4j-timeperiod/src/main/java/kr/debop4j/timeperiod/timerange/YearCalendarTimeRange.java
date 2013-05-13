@@ -14,34 +14,30 @@
  * limitations under the License.
  */
 
-package kr.debop4j.timeperiod;
+package kr.debop4j.timeperiod.timerange;
 
-import lombok.Getter;
+import kr.debop4j.timeperiod.ITimeCalendar;
+import kr.debop4j.timeperiod.ITimePeriod;
 
 /**
- * 월 (Month) 종류
+ * kr.debop4j.timeperiod.timerange.YearCalendarTimeRange
  *
  * @author 배성혁 sunghyouk.bae@gmail.com
- * @since 13. 5. 11. 오전 10:48
+ * @since 13. 5. 13. 오후 8:27
  */
-public enum MonthKind {
+public abstract class YearCalendarTimeRange extends CalendarTimeRange {
 
-    January(1),
-    Feburary(2),
-    March(3),
-    April(4),
-    May(5),
-    June(6),
-    July(7),
-    August(8),
-    September(9),
-    October(10),
-    November(11),
-    December(12);
+    private static final long serialVersionUID = -7922671338410846872L;
 
-    @Getter private final int value;
+    public YearCalendarTimeRange(ITimePeriod period, ITimeCalendar calendar) {
+        super(period, calendar);
+    }
 
-    MonthKind(int value) {
-        this.value = value;
+    public int getYearBaseMonth() {
+        return 1;
+    }
+
+    public int getBaseYear() {
+        return getStartYear();
     }
 }

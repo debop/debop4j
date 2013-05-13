@@ -16,46 +16,50 @@
 
 package kr.debop4j.timeperiod.timerange;
 
+import kr.debop4j.timeperiod.DayOfWeek;
 import kr.debop4j.timeperiod.ITimeCalendar;
 import kr.debop4j.timeperiod.TimeCalendar;
 import kr.debop4j.timeperiod.clock.ClockProxy;
-import kr.debop4j.timeperiod.tools.TimeTool;
 import org.joda.time.DateTime;
 
 /**
- * 시(Hour) 단위의 기간을 표현합니다.
+ * 일단위의 기간을 표현합니다.
  *
  * @author 배성혁 sunghyouk.bae@gmail.com
- * @since 13. 5. 13. 오전 11:12
+ * @since 13. 5. 13. 오후 2:08
  */
-public class HourRange extends HourTimeRange {
+public class DayRange extends DayTimeRange {
 
-    private static final long serialVersionUID = 2876823794105220883L;
+    private static final long serialVersionUID = 7993201574147735665L;
 
-    // region << Contructor >>
+    // region << Constructor >>
 
-    public HourRange() {
+    public DayRange() {
         this(new TimeCalendar());
     }
 
-    public HourRange(ITimeCalendar timeCalendar) {
-        this(ClockProxy.getClock().now(), timeCalendar);
+    public DayRange(ITimeCalendar calendar) {
+        this(ClockProxy.getClock().today(), calendar);
     }
 
-    public HourRange(DateTime moment) {
+    public DayRange(DateTime moment) {
         super(moment, 1);
     }
 
-    public HourRange(DateTime moment, ITimeCalendar calendar) {
+    public DayRange(DateTime moment, ITimeCalendar calendar) {
         super(moment, 1, calendar);
     }
 
-    public HourRange(int year, int monthOfYear, int dayOfMonth, int hourOfDay) {
-        super(year, monthOfYear, dayOfMonth, hourOfDay, 1);
+    public DayRange(int year, int monthOfYear) {
+        super(year, monthOfYear, 1, 1);
     }
 
-    public HourRange(int year, int monthOfYear, int dayOfMonth, int hourOfDay, ITimeCalendar calendar) {
-        super(year, monthOfYear, dayOfMonth, hourOfDay, 1, calendar);
+    public DayRange(int year, int monthOfYear, int dayOfMonth) {
+        super(year, monthOfYear, dayOfMonth, 1);
+    }
+
+    public DayRange(int year, int monthOfYear, int dayOfMonth, ITimeCalendar calendar) {
+        super(year, monthOfYear, dayOfMonth, 1, calendar);
     }
 
     // endregion
@@ -66,18 +70,19 @@ public class HourRange extends HourTimeRange {
 
     public int getDayOfMonth() { return getStartDayOfMonth(); }
 
-    public int getHourOfDay() { return getStartHourOfDay(); }
+    public DayOfWeek getDayOfWeek() { return getStartDayOfWeek(); }
 
-    public HourRange getPreviousHour() {
-        return addHours(-1);
+    public String getDayName() { return getStartDayName(); }
+
+    public DayRange getPreviousDay() {
+        return addDays(-1);
     }
 
-    public HourRange getNextHour() {
-        return addHours(1);
+    public DayRange getNextDay() {
+        return addDays(1);
     }
 
-    public HourRange addHours(int hours) {
-        DateTime startHour = TimeTool.trimToHour(getStart(), getStartHourOfDay());
-        return new HourRange(startHour.plusHours(hours), getTimeCalendar());
+    public DayRange addDays(int days) {
+        return new DayRange(getStart().withTimeAtStartOfDay().plusDays(days), getTimeCalendar());
     }
 }

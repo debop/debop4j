@@ -1,5 +1,22 @@
+/*
+ * Copyright 2011-2013 the original author or authors.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package kr.debop4j.timeperiod;
 
+import com.google.common.base.Objects;
 import kr.debop4j.core.Guard;
 import kr.debop4j.core.NotImplementedException;
 import kr.debop4j.core.ValueObjectBase;
@@ -12,8 +29,6 @@ import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.joda.time.DateTime;
 import org.joda.time.Duration;
-
-import java.util.Objects;
 
 /**
  * 기간을 표현하는 기본 클래스입니다.
@@ -87,7 +102,7 @@ public class TimePeriodBase extends ValueObjectBase implements ITimePeriod {
     protected DateTime end;
 
     @Getter
-    @Setter( AccessLevel.PROTECTED )
+    @Setter(AccessLevel.PROTECTED)
     protected boolean readonly;
 
     /** 기간을 TimeSpan으료 표현, 기간이 정해지지 않았다면 <see cref="TimeSpec.MaxPeriodTime"/> 을 반환합니다. */
@@ -176,8 +191,8 @@ public class TimePeriodBase extends ValueObjectBase implements ITimePeriod {
     @Override
     public boolean isSamePeriod(ITimePeriod other) {
         return (other != null) &&
-                Objects.equals(start, other.getStart()) &&
-                Objects.equals(end, other.getEnd());
+                Objects.equal(start, other.getStart()) &&
+                Objects.equal(end, other.getEnd());
     }
 
     @Override
@@ -255,7 +270,7 @@ public class TimePeriodBase extends ValueObjectBase implements ITimePeriod {
     }
 
     @Override
-    protected com.google.common.base.Objects.ToStringHelper buildStringHelper() {
+    protected Objects.ToStringHelper buildStringHelper() {
         return super.buildStringHelper()
                 .add("start", start)
                 .add("end", end)

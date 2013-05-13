@@ -1,3 +1,19 @@
+/*
+ * Copyright 2011-2013 the original author or authors.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package kr.debop4j.timeperiod;
 
 import org.joda.time.DateTime;
@@ -29,13 +45,13 @@ public interface ITimeCalendar extends ITimePeriodMapper {
     int getYear(DateTime time);
 
     /** 지정된 일자의 월 */
-    int getMonth(DateTime time);
+    int getMonthOfYear(DateTime time);
 
     /** 지정된 시각의 시간 */
-    int getHour(DateTime time);
+    int getHourOfDay(DateTime time);
 
     /** 지정된 시각의 분 */
-    int getMinute(DateTime time);
+    int getMinuteOfHour(DateTime time);
 
     /** 지정된 날짜의 월 몇번째 일인지 */
     int getDayOfMonth(DateTime time);
@@ -50,10 +66,10 @@ public interface ITimeCalendar extends ITimePeriodMapper {
     String getYearName(int year);
 
     /** 반기를 표현하는 문자열을 반환합니다. */
-    String getHalfYearName(HalfyearKind halfyear);
+    String getHalfyearName(HalfyearKind halfyear);
 
     /** 지정한 년도의 반기를 표현하는 문자열을 반환합니다. */
-    String getHalfYearOfYearName(int year, HalfyearKind halfyear);
+    String getHalfyearOfYearName(int year, HalfyearKind halfyear);
 
     /** 분기를 표현하는 문자열을 반환합니다. (2사분기) */
     String getQuarterName(QuarterKind quarter);
