@@ -1,3 +1,19 @@
+/*
+ * Copyright 2011-2013 the original author or authors.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package kr.debop4j.timeperiod.tools;
 
 import kr.debop4j.timeperiod.DayOfWeek;
@@ -49,9 +65,9 @@ public final class TimeSpec {
     public static final int SecondsPerMinute = 60;
 
     /** 단위 초의 밀리 초 (1000) */
-    public static final int MillisecondsPerSecond = 1000;
+    public static final int MillisPerSecond = 1000;
 
-    public static final long MillisPerMinute = MillisecondsPerSecond * 60L;
+    public static final long MillisPerMinute = MillisPerSecond * 60L;
     public static final long MillisPerHour = MillisPerMinute * 60L;
     public static final long MillisPerDay = MillisPerHour * 24L;
 
@@ -72,8 +88,11 @@ public final class TimeSpec {
     /** 한 주의 주말 일 수 (2) */
     public static final int WeekEndsPerWeek = 2;
 
-    /** 한 주의 첫번째 주중 요일 (월요일) - ISO8601을 따른다. */
+    /** 한 주의 첫번째 주중 요일 (월요일) */
     public static final DayOfWeek FirstWorkingDayOfWeek = DayOfWeek.Monday;
+
+    /** 한 주의 첫번째 요일 (월요일) - ISO8601을 따른다. */
+    public static final DayOfWeek FirstDayOfWeek = DayOfWeek.Monday;
 
     /** 전반기에 속하는 월 (1월~6월) */
     public static final int[] FirstHalfyearMonths = new int[] { 1, 2, 3, 4, 5, 6 };

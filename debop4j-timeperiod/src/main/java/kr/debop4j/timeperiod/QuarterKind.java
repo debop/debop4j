@@ -25,7 +25,7 @@ import lombok.Getter;
  * @since 13. 5. 11. 오전 11:31
  */
 public enum QuarterKind {
-    First(1), Second(2), Third(3), Fouth(4);
+    First(1), Second(2), Third(3), Fourth(4);
 
     @Getter
     private final int value;
@@ -43,8 +43,8 @@ public enum QuarterKind {
             case 3:
                 return Third;
             case 4:
-                return Fouth;
+                return Fourth;
         }
-        throw new IllegalArgumentException("Invalid quarter number. [1-4]");
+        throw new IllegalArgumentException("Invalid quarter number. [1-4], quarter=" + quarter);
     }
 }

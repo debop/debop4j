@@ -91,7 +91,7 @@ public class TimePart extends ValueObjectBase implements Comparable<TimePart> {
     }
 
     public double getTotalSeconds() {
-        return getMillis() / TimeSpec.MillisecondsPerSecond;
+        return getMillis() / TimeSpec.MillisPerSecond;
     }
 
     public long getMillis() {

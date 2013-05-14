@@ -25,7 +25,7 @@ import org.joda.time.DateTime;
 import java.util.List;
 
 /**
- * kr.debop4j.timeperiod.timerange.YearRangeCollection
+ * 년(Year)단위의 기간들의 컬렉션을 표현합니다.
  *
  * @author 배성혁 sunghyouk.bae@gmail.com
  * @since 13. 5. 14. 오전 12:02
@@ -39,7 +39,7 @@ public class YearRangeCollection extends YearTimeRange {
     }
 
     public YearRangeCollection(DateTime moment, int yearCount, ITimeCalendar calendar) {
-        this(TimeTool.getYearOf(calendar, moment), yearCount, calendar);
+        this(TimeTool.getYearOf(, calendar, , moment), yearCount, calendar);
     }
 
     public YearRangeCollection(int year, int yearCount) {
@@ -50,6 +50,7 @@ public class YearRangeCollection extends YearTimeRange {
         super(year, yearCount, calendar);
     }
 
+    /** Year 단위의 기간들을 열거합니다. */
     public List<YearRange> getYears() {
         int start = getStartYear();
 

@@ -42,6 +42,11 @@ public class YearAndQuarter extends ValueObjectBase implements Comparable<YearAn
         this.quarter = quarter;
     }
 
+    public YearAndQuarter(Integer year, int quarter) {
+        this.year = year;
+        this.quarter = QuarterKind.valueOf(quarter);
+    }
+
     @Override
     public int compareTo(YearAndQuarter o) {
         return hashCode() - o.hashCode();

@@ -32,10 +32,10 @@ public enum HalfyearKind {
     /** 하반기 */
     Second(2);
 
-    @Getter private final int halfyear;
+    @Getter private final int value;
 
-    HalfyearKind(int halfyear) {
-        this.halfyear = halfyear;
+    HalfyearKind(int value) {
+        this.value = value;
     }
 
     public static HalfyearKind valueOf(int halfyear) {
