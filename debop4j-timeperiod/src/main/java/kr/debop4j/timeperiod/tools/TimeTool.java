@@ -20,6 +20,7 @@ import kr.debop4j.timeperiod.*;
 import kr.debop4j.timeperiod.clock.ClockProxy;
 import lombok.Getter;
 import org.joda.time.DateTime;
+import org.joda.time.Duration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -32,8 +33,8 @@ import org.slf4j.LoggerFactory;
 public abstract class TimeTool {
 
     private static final Logger log = LoggerFactory.getLogger(TimeTool.class);
-    @Getter(lazy = true) private static final boolean traceEnabled = log.isTraceEnabled();
-    @Getter(lazy = true) private static final boolean debugEnabled = log.isDebugEnabled();
+    @Getter( lazy = true ) private static final boolean traceEnabled = log.isTraceEnabled();
+    @Getter( lazy = true ) private static final boolean debugEnabled = log.isDebugEnabled();
 
     private TimeTool() {}
 
@@ -474,35 +475,35 @@ public abstract class TimeTool {
         return endTimeOfMonth(moment.minusMonths(1));
     }
 
-    public DateTime startTimeOfWeek(DateTime moment) {
+    public static DateTime startTimeOfWeek(DateTime moment) {
         return startTimeOfWeek(moment, TimeSpec.FirstDayOfWeek);
     }
 
-    public DateTime startTimeOfWeek(DateTime moment, DayOfWeek firstDayOfWeek) {
+    public static DateTime startTimeOfWeek(DateTime moment, DayOfWeek firstDayOfWeek) {
         return getStartOfWeek(moment, firstDayOfWeek);
     }
 
-    public DateTime endTimeOfWeek(DateTime moment) {
+    public static DateTime endTimeOfWeek(DateTime moment) {
         return endTimeOfWeek(moment, TimeSpec.FirstDayOfWeek);
     }
 
-    public DateTime endTimeOfWeek(DateTime moment, DayOfWeek firstDayOfWeek) {
+    public static DateTime endTimeOfWeek(DateTime moment, DayOfWeek firstDayOfWeek) {
         return startTimeOfWeek(moment, firstDayOfWeek).plusWeeks(1).minus(TimeSpec.MinPositiveDuration);
     }
 
-    public DateTime startTimeOfLastWeek(DateTime moment) {
+    public static DateTime startTimeOfLastWeek(DateTime moment) {
         return startTimeOfLastWeek(moment, TimeSpec.FirstDayOfWeek);
     }
 
-    public DateTime startTimeOfLastWeek(DateTime moment, DayOfWeek firstDayOfWeek) {
+    public static DateTime startTimeOfLastWeek(DateTime moment, DayOfWeek firstDayOfWeek) {
         return startTimeOfWeek(moment, firstDayOfWeek).minusWeeks(1);
     }
 
-    public DateTime endTimeOfLastWeek(DateTime moment) {
+    public static DateTime endTimeOfLastWeek(DateTime moment) {
         return endTimeOfLastWeek(moment, TimeSpec.FirstDayOfWeek);
     }
 
-    public DateTime endTimeOfLastWeek(DateTime moment, DayOfWeek firstDayOfWeek) {
+    public static DateTime endTimeOfLastWeek(DateTime moment, DayOfWeek firstDayOfWeek) {
         return endTimeOfWeek(moment, firstDayOfWeek).minusWeeks(1);
     }
 
@@ -554,10 +555,150 @@ public abstract class TimeTool {
         return quarter.getValue() * TimeSpec.MonthsPerQuarter;
     }
 
-    public static QuarterKind quarterOf(int month) {
-        return QuarterKind.valueOf((month - 1) / TimeSpec.MonthsPerQuarter + 1);
+    public static QuarterKind quarterOf(int monthOfYear) {
+        return QuarterKind.valueOf((monthOfYear - 1) / TimeSpec.MonthsPerQuarter + 1);
     }
 
+    public static QuarterKind quarterOf(DateTime moment) {
+        return quarterOf(moment.getMonthOfYear());
+    }
+
+    public static QuarterKind previousQuarterOf(DateTime moment) {
+        return previousQuarter(moment.getYear(), quarterOf(moment)).getQuarter();
+    }
+
+    /** 지정한 일자의 다음 주 같은 요일을 반환합니다. */
+    public static DateTime nextDayOfWeek(DateTime moment) {
+        return nextDayOfWeek(moment, DayOfWeek.valueOf(moment.getDayOfWeek()));
+    }
+
+    /** 기준일 이후로 지정한 요일에 해당하는 일자를 반환합니다. */
+    public static DateTime nextDayOfWeek(DateTime moment, DayOfWeek dayOfWeek) {
+        int dow = dayOfWeek.getValue();
+        DateTime next = moment.plusDays(1);
+
+        while (next.getDayOfWeek() != dow) {
+            next = next.plusDays(1);
+        }
+        return next;
+    }
+
+    /** 지정한 일자의 전주의 같은 요일을 반환합니다. */
+    public static DateTime previousDayOfWeek(DateTime moment) {
+        return previousDayOfWeek(moment, DayOfWeek.valueOf(moment.getDayOfWeek()));
+    }
+
+    /** 지정한 일자 이전에 지정한 요일에 해당하는 일자를 반환한다. */
+    public static DateTime previousDayOfWeek(DateTime moment, DayOfWeek dayOfWeek) {
+        int dow = dayOfWeek.getValue();
+        DateTime prev = moment.minusDays(1);
+
+        while (prev.getDayOfWeek() != dow) {
+            prev = prev.minusDays(1);
+        }
+        return prev;
+    }
+
+    /** 시간부분을 제외한 날짜 부분만 반환한다 */
+    public static DateTime getDatePart(DateTime moment) {
+        return moment.withTimeAtStartOfDay();
+    }
+
+    /** 일자부분이 존재하는지 */
+    public static boolean hasDatePart(DateTime moment) {
+        return moment.withTimeAtStartOfDay().getMillis() > 0;
+    }
+
+    /** 지정한 날짜에 알자(년/월/일) 부분을 지정한 datePart로 설정합니다. */
+    public static DateTime setDatePart(DateTime moment, DateTime datepart) {
+        return new DatePart(datepart).getDateTime(new TimePart(moment));
+    }
+
+    /** 지정한 날짜의 년, 월, 일을 수정합니다. */
+    public static DateTime setDatePart(DateTime moment, int year, int month, int day) {
+        return setDatePart(moment, new DateTime(year, month, day, 0, 0));
+    }
+
+    /** 지정한 일자의 년도만 수정합니다. */
+    public static DateTime setYear(DateTime moment, int year) {
+        return setDatePart(moment, year, moment.getMonthOfYear(), moment.getDayOfMonth());
+    }
+
+    /** 지정한 일자의 월만 수정합니다. */
+    public static DateTime setMonth(DateTime moment, int monthOfYear) {
+        return setDatePart(moment, moment.getYear(), monthOfYear, moment.getDayOfMonth());
+    }
+
+    /** 지정한 일자의 일만 수정합니다. */
+    public static DateTime setDay(DateTime moment, int dayOfMonth) {
+        return setDatePart(moment, moment.getYear(), moment.getMonthOfYear(), dayOfMonth);
+    }
+
+    /** 일자 부분과 시간 부분을 조합합니다. */
+    public static DateTime combine(DateTime datepart, DateTime timepart) {
+        return setTimePart(datepart, timepart);
+    }
+
+    /** 일자의 시간 부분만을 반환합니다. */
+    public static Duration getTimePart(DateTime moment) {
+        return new Duration(moment.getMillisOfDay());
+    }
+
+    public static boolean hasTimePart(DateTime moment) {
+        return moment.getMillisOfDay() > TimeSpec.ZeroMillis;
+    }
+
+    public static DateTime setTimePart(DateTime moment, DateTime timepart) {
+        return setTimePart(moment, timepart.getMillisOfDay());
+    }
+
+    public static DateTime setTimePart(DateTime moment, int millis) {
+        return moment.withTimeAtStartOfDay().plusMillis(millis);
+    }
+
+    public static DateTime setTimePart(DateTime moment, int hourOfDay, int minuteOfHour, int secondOfMinute, int millisOfSecond) {
+        return moment.withTimeAtStartOfDay().withTime(hourOfDay, minuteOfHour, secondOfMinute, millisOfSecond);
+    }
+
+    public static DateTime setHour(DateTime moment, int hourOfDay) {
+        return setTimePart(moment, hourOfDay, moment.getMinuteOfHour(), moment.getSecondOfMinute(), moment.getMillisOfSecond());
+    }
+
+    public static DateTime setMinute(DateTime moment, int minuteOfHour) {
+        return setTimePart(moment, moment.getHourOfDay(), minuteOfHour, moment.getSecondOfMinute(), moment.getMillisOfSecond());
+    }
+
+    public static DateTime setSecond(DateTime moment, int secondOfMinute) {
+        return setTimePart(moment, moment.getHourOfDay(), moment.getMinuteOfHour(), secondOfMinute, moment.getMillisOfSecond());
+    }
+
+    public static DateTime setMillisecond(DateTime moment, int millisOfSecond) {
+        return setTimePart(moment, moment.getHourOfDay(), moment.getMinuteOfHour(), moment.getSecondOfMinute(), millisOfSecond);
+    }
+
+    /** 정오 */
+    public static DateTime noon(DateTime moment) {
+        return moment.withTimeAtStartOfDay().plusHours(12);
+    }
+
+    /** 지정한 시각에서 지정한 기간 이전의 시각 */
+    public static DateTime ago(DateTime moment, Duration duration) {
+        return moment.minus(duration);
+    }
+
+    /** 지정한 시각에서 지정한 기간 이후의 시각 */
+    public static DateTime from(DateTime moment, Duration duration) {
+        return moment.plus(duration);
+    }
+
+    public static DateTime fromNow(Duration duration) {
+        return from(DateTime.now(), duration);
+    }
+
+    /** 지정한 시각에서 지정한 기간 이후의 시각 */
+    public static DateTime since(DateTime moment, Duration duration) {
+        return moment.plus(duration);
+    }
 
     // endregion << DateTime >>
 }
