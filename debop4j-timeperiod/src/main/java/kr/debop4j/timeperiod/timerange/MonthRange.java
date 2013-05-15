@@ -68,6 +68,6 @@ public class MonthRange extends MonthTimeRange {
     }
 
     public MonthRange addMonths(int months) {
-        return new MonthRange(TimeTool.getStartTimeOfMonth(getStart()).plusMonths(months), getTimeCalendar());
+        return new MonthRange(TimeTool.startTimeOfMonth(getStart()).plusMonths(months), getTimeCalendar());
     }
 }

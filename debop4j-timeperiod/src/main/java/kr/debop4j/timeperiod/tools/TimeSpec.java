@@ -81,12 +81,17 @@ public final class TimeSpec {
     /** 1년의 시작 월 (1) */
     public static final int CalendarYearStartMonth = 1;
 
-
     /** 한 주의 주중 일 수 (5) */
     public static final int WeekDaysPerWeek = 5;
 
     /** 한 주의 주말 일 수 (2) */
     public static final int WeekEndsPerWeek = 2;
+
+    /** 주중 요일 */
+    public static DayOfWeek[] Weekdays = new DayOfWeek[] { DayOfWeek.Monday, DayOfWeek.ThuesDay, DayOfWeek.WednesDay, DayOfWeek.ThursDay, DayOfWeek.FriDay };
+
+    /** 주말 요일 */
+    public static DayOfWeek[] Weekends = new DayOfWeek[] { DayOfWeek.Saturday, DayOfWeek.Sunday };
 
     /** 한 주의 첫번째 주중 요일 (월요일) */
     public static final DayOfWeek FirstWorkingDayOfWeek = DayOfWeek.Monday;

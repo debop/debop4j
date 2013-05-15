@@ -33,6 +33,8 @@ public class WeekRange extends WeekTimeRange {
 
     private static final long serialVersionUID = 562359121625029972L;
 
+    // region << Constructor >>
+
     public WeekRange() {
         this(new TimeCalendar());
     }
@@ -64,6 +66,8 @@ public class WeekRange extends WeekTimeRange {
     public WeekRange(int year, int weekOfYear, ITimeCalendar timeCalendar) {
         super(year, weekOfYear, 1, timeCalendar);
     }
+
+    // endregion
 
     public int getWeekOfYear() {
         return getStartWeekOfYear();

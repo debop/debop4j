@@ -20,6 +20,7 @@ import com.google.common.base.Objects;
 import kr.debop4j.core.ValueObjectBase;
 import lombok.Getter;
 import lombok.Setter;
+import org.joda.time.DateTime;
 
 /**
  * 년도와 주차를 표현
@@ -30,12 +31,18 @@ import lombok.Setter;
 @Getter
 @Setter
 public class YearAndWeek extends ValueObjectBase implements Comparable<YearAndWeek> {
+
     private static final long serialVersionUID = 7426266466794583765L;
 
     private Integer year;
     private Integer weekOfYear;
 
-    public YearAndWeek() { }
+    protected YearAndWeek() { }
+
+    public YearAndWeek(DateTime moment) {
+        this.year = moment.getWeekyear();
+        this.weekOfYear = moment.getWeekOfWeekyear();
+    }
 
     public YearAndWeek(Integer year, Integer weekOfYear) {
         this.year = year;

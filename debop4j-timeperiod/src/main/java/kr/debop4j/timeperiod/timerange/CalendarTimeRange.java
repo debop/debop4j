@@ -1,3 +1,19 @@
+/*
+ * Copyright 2011-2013 the original author or authors.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package kr.debop4j.timeperiod.timerange;
 
 import com.google.common.base.Objects;
@@ -16,13 +32,13 @@ import org.joda.time.Duration;
  * @since 13. 5. 11. 오전 12:01
  */
 @Slf4j
-public class CalendarTimeRange extends TimeRange implements ICalendarTimeRange, Comparable<CalendarTimeRange> {
+public class CalendarTimeRange extends TimeRange implements ICalendarTimeRange {
 
     private static final long serialVersionUID = -422889827258277497L;
 
     public static TimeRange toCalendarTimeRange(ITimePeriod period, ITimePeriodMapper mapper) {
         assert period != null;
-        if (mapper == null) mapper = new TimeCalendar();
+        if (mapper == null) mapper = TimeCalendar.getDefault();
 
         DateTime mappedStart = mapper.mapStart(period.getStart());
         DateTime mappedEnd = mapper.mapEnd(period.getEnd());
@@ -60,7 +76,7 @@ public class CalendarTimeRange extends TimeRange implements ICalendarTimeRange, 
 
     public CalendarTimeRange(ITimePeriod period, ITimeCalendar timeCalendar) {
         super(toCalendarTimeRange(period, timeCalendar));
-        this.timeCalendar = timeCalendar;
+        this.timeCalendar = (timeCalendar != null) ? timeCalendar : TimeCalendar.getDefault();
     }
 
     // endregion
@@ -137,28 +153,16 @@ public class CalendarTimeRange extends TimeRange implements ICalendarTimeRange, 
     }
 
     public DateTime getStartSecondStart() {
-        return TimeTool.trimToMillisecond(getStart());
+        return TimeTool.trimToMillis(getStart());
     }
 
     public DateTime getEndSecondStart() {
-        return TimeTool.trimToMillisecond(getEnd());
+        return TimeTool.trimToMillis(getEnd());
     }
 
     @Override
     public ITimePeriod copy(Duration offset) {
         return toCalendarTimeRange(super.copy(offset), timeCalendar);
-    }
-
-    @Override
-    protected String format(ITimeFormatter formatter) {
-        return formatter.getCalendarPeriod(formatter.getDateTime(getStart()),
-                                           formatter.getDateTime(getEnd()),
-                                           getDuration());
-    }
-
-    @Override
-    public int compareTo(CalendarTimeRange o) {
-        return getStart().compareTo(o.getStart());
     }
 
     @Override

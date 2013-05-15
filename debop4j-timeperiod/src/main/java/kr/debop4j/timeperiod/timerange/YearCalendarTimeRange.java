@@ -18,6 +18,7 @@ package kr.debop4j.timeperiod.timerange;
 
 import kr.debop4j.timeperiod.ITimeCalendar;
 import kr.debop4j.timeperiod.ITimePeriod;
+import kr.debop4j.timeperiod.TimeCalendar;
 
 /**
  * kr.debop4j.timeperiod.timerange.YearCalendarTimeRange
@@ -30,7 +31,7 @@ public abstract class YearCalendarTimeRange extends CalendarTimeRange {
     private static final long serialVersionUID = -7922671338410846872L;
 
     public YearCalendarTimeRange(ITimePeriod period, ITimeCalendar calendar) {
-        super(period, calendar);
+        super(period, (calendar != null) ? calendar : TimeCalendar.getDefault());
     }
 
     public int getYearBaseMonth() {

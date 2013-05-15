@@ -83,7 +83,7 @@ public abstract class MonthTimeRange extends CalendarTimeRange {
     }
 
     public List<DayRange> getDays() {
-        DateTime startMonth = TimeTool.getStartTimeOfMonth(getStart());
+        DateTime startMonth = TimeTool.startTimeOfMonth(getStart());
         List<DayRange> days = Lists.newArrayListWithCapacity(monthCount * TimeSpec.MaxDaysPerMonth);
 
         for (int m = 0; m < monthCount; m++) {

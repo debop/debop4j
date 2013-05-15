@@ -42,7 +42,7 @@ public class QuarterRangeCollection extends QuarterTimeRange {
 
     public QuarterRangeCollection(DateTime moment, int quarterCount, ITimeCalendar timeCalendar) {
         this(TimeTool.getYearOf(timeCalendar.getYear(moment), timeCalendar.getMonthOfYear(moment)),
-             TimeTool.getQuarterOf(timeCalendar.getMonthOfYear(moment)),
+             TimeTool.quarterOf(timeCalendar.getMonthOfYear(moment)),
              quarterCount,
              timeCalendar);
     }
@@ -62,7 +62,7 @@ public class QuarterRangeCollection extends QuarterTimeRange {
 
         List<QuarterRange> quarters = Lists.newArrayListWithCapacity(getQuarterCount());
         for (int q = 0; q < getQuarterCount(); q++) {
-            YearAndQuarter yq = TimeTool.addQuarter(getStartQuarter(), getStartYear(), q);
+            YearAndQuarter yq = TimeTool.addQuarter(getStartYear(), getStartQuarter(), q);
             quarters.add(new QuarterRange(yq.getYear(), yq.getQuarter(), getTimeCalendar()));
         }
         return quarters;

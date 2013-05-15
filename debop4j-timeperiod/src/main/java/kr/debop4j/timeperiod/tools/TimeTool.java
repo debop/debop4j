@@ -16,16 +16,26 @@
 
 package kr.debop4j.timeperiod.tools;
 
+import com.google.common.base.Objects;
+import com.google.common.collect.Iterables;
+import jodd.util.Tuple2;
+import kr.debop4j.core.NotSupportException;
+import kr.debop4j.core.tools.ArrayTool;
 import kr.debop4j.timeperiod.*;
 import kr.debop4j.timeperiod.clock.ClockProxy;
+import kr.debop4j.timeperiod.timerange.*;
 import lombok.Getter;
 import org.joda.time.DateTime;
 import org.joda.time.Duration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.Iterator;
+
+import static kr.debop4j.core.Guard.shouldNotBeNull;
+
 /**
- * kr.debop4j.timeperiod.tools.TimeTool
+ * {@link DateTime} 관련 Utility Class
  *
  * @author 배성혁 sunghyouk.bae@gmail.com
  * @since 13. 5. 11. 오후 2:44
@@ -42,7 +52,7 @@ public abstract class TimeTool {
     public static final DateTime UnixEpoch = new DateTime(1970, 1, 1, 0, 0, 0, 0);
 
     public static String asString(ITimePeriod period) {
-        return (period == null) ? NullString : period.getDescription(TimeFormatter.getInstance());
+        return (period == null) ? NullString : period.toString();
     }
 
     public static DateTime toDateTime(String value) {
@@ -176,7 +186,7 @@ public abstract class TimeTool {
     }
 
     public static DateTime getStartOfWeek(DateTime time) {
-        getStartOfWeek(time, TimeSpec.FirstDayOfWeek);
+        return getStartOfWeek(time, TimeSpec.FirstDayOfWeek);
     }
 
     public static DateTime getStartOfWeek(DateTime time, DayOfWeek firstDayOfWeek) {
@@ -417,7 +427,7 @@ public abstract class TimeTool {
     }
 
     public static DateTime startTimeOfQuarter(DateTime moment) {
-        startTimeOfQuarter(moment.getYear(), moment.getMonthOfYear());
+        return startTimeOfQuarter(moment.getYear(), moment.getMonthOfYear());
     }
 
     public static DateTime startTimeOfQuarter(int year, int monthOfYear) {
@@ -483,12 +493,35 @@ public abstract class TimeTool {
         return getStartOfWeek(moment, firstDayOfWeek);
     }
 
+    public static DateTime startTimeOfWeek(int year, int weekOfYear) {
+        return startTimeOfWeek(year, weekOfYear, TimeCalendar.getDefault());
+    }
+
+    public static DateTime startTimeOfWeek(int year, int weekOfYear, ITimeCalendar timeCalendar) {
+
+        DateTime current = new DateTime(year, 1, 1, 0, 0).minusWeeks(1);
+        while (current.getYear() < year + 2) {
+            if (current.getWeekyear() == year && current.getWeekOfWeekyear() == weekOfYear)
+                break;
+            current = current.plusDays(1);
+        }
+        return current;
+    }
+
     public static DateTime endTimeOfWeek(DateTime moment) {
         return endTimeOfWeek(moment, TimeSpec.FirstDayOfWeek);
     }
 
     public static DateTime endTimeOfWeek(DateTime moment, DayOfWeek firstDayOfWeek) {
         return startTimeOfWeek(moment, firstDayOfWeek).plusWeeks(1).minus(TimeSpec.MinPositiveDuration);
+    }
+
+    public static DateTime endTimeOfWeek(int year, int weekOfYear) {
+        return endTimeOfWeek(year, weekOfYear, TimeCalendar.getDefault());
+    }
+
+    public static DateTime endTimeOfWeek(int year, int weekOfYear, ITimeCalendar timeCalendar) {
+        return startTimeOfWeek(year, weekOfYear, timeCalendar).plusWeeks(1).minus(TimeSpec.MinPositiveDuration);
     }
 
     public static DateTime startTimeOfLastWeek(DateTime moment) {
@@ -701,4 +734,554 @@ public abstract class TimeTool {
     }
 
     // endregion << DateTime >>
+
+    // region << Math >>
+
+    public static DateTime min(DateTime a, DateTime b) {
+        return a.compareTo(b) < 0 ? a : b;
+    }
+
+    public static DateTime max(DateTime a, DateTime b) {
+        return a.compareTo(b) > 0 ? a : b;
+    }
+
+    public static Duration min(Duration a, Duration b) {
+        return a.compareTo(b) < 0 ? a : b;
+    }
+
+    public static Duration max(Duration a, Duration b) {
+        return a.compareTo(b) > 0 ? a : b;
+    }
+
+    public static Tuple2<DateTime, DateTime> adjustPeriod(DateTime start, DateTime end) {
+        return (start.compareTo(end) < 0)
+                ? Tuple2.tuple(start, end)
+                : Tuple2.tuple(end, start);
+    }
+
+    public static Tuple2<DateTime, Duration> adjustPeriod(DateTime start, Duration duration) {
+        return (duration.getMillis() < 0)
+                ? Tuple2.tuple(start.plus(duration), new Duration(-duration.getMillis()))
+                : Tuple2.tuple(start, duration);
+    }
+
+    // endregion
+
+    // region << Period >>
+
+    public static TimeBlock getTimeBlock(DateTime start, Duration duration) {
+        return new TimeBlock(start, duration, false);
+    }
+
+    public static TimeBlock getTimeBlock(DateTime start, DateTime end) {
+        return new TimeBlock(start, end, false);
+    }
+
+    public static TimeRange getTimeRange(DateTime start, Duration duration) {
+        return new TimeRange(start, duration);
+    }
+
+    public static TimeRange getTimeRange(DateTime start, DateTime end) {
+        return new TimeRange(start, end);
+    }
+
+    /** 시작 시각으로부터 지정한 년도(years) 이후의 기간 */
+    public static TimeRange getRelativeYearPeriod(DateTime start, int years) {
+        return getTimeRange(start, start.plusYears(years));
+    }
+
+    /** 시작 시각으로부터 지정한 개월(months) 이후의 기간 */
+    public static TimeRange getRelativeMonthPeriod(DateTime start, int months) {
+        return getTimeRange(start, start.plusMonths(months));
+    }
+
+    /** 시작 시각으로부터 지정한 주(weeks) 이후의 기간 */
+    public static TimeRange getRelativeWeekPeriod(DateTime start, int weeks) {
+        return getTimeRange(start, start.plusWeeks(weeks));
+    }
+
+    /** 시작 시각으로부터 지정한 일(days) 이후의 기간 */
+    public static TimeRange getRelativeDayPeriod(DateTime start, int days) {
+        return getTimeRange(start, start.plusDays(days));
+    }
+
+    /** 시작 시각으로부터 지정한 시간(hours) 이후의 기간 */
+    public static TimeRange getRelativeHourPeriod(DateTime start, int hours) {
+        return getTimeRange(start, start.plusHours(hours));
+    }
+
+    /** 시작 시각으로부터 지정한 분(minutes) 이후의 기간 */
+    public static TimeRange getRelativeMinutePeriod(DateTime start, int minutes) {
+        return getTimeRange(start, start.plusMinutes(minutes));
+    }
+
+    /** 시작 시각으로부터 지정한 초(seconds) 이후의 기간 */
+    public static TimeRange getRelativeSecondPeriod(DateTime start, int seconds) {
+        return getTimeRange(start, start.plusSeconds(seconds));
+    }
+
+    /**
+     * moment가 속한 특정 종류의 기간
+     *
+     * @param moment
+     * @param periodKind
+     * @return
+     */
+    public static ITimePeriod getPeriodOf(DateTime moment, PeriodKind periodKind) {
+        return getPeriodOf(moment, periodKind, TimeCalendar.getDefault());
+    }
+
+    /** moment가 속한 특정 종류의 기간 */
+    public static ITimePeriod getPeriodOf(DateTime moment, PeriodKind periodKind, ITimeCalendar timeCalendar) {
+        if (isTraceEnabled())
+            log.trace("일자[{}]가 속한 기간 종류[{}]의 기간을 구합니다.", moment, periodKind);
+
+        switch (periodKind) {
+            case Year:
+                return getYearRange(moment, timeCalendar);
+            case Halfyear:
+                return getHalfyearRange(moment, timeCalendar);
+            case Quarter:
+                return getQuarterRange(moment, timeCalendar);
+            case Month:
+                return getMonthRange(moment, timeCalendar);
+            case Week:
+                return getWeekRange(moment, timeCalendar);
+            case Day:
+                return getDayRange(moment, timeCalendar);
+            case Hour:
+                return getHourRange(moment, timeCalendar);
+            case Minute:
+                return getMinuteRange(moment, timeCalendar);
+
+            default:
+                throw new NotSupportException("지원하지 않는 Period 종류입니다. periodKind=" + periodKind);
+        }
+    }
+
+    /**
+     * moment 가 속한 특정 종류의 기간에 대해 periodCount 갯수만큼의 기간 정보를 컬렉션으로 반환한다.
+     *
+     * @param moment
+     * @param periodKind
+     * @param periodCount
+     * @return
+     */
+    public static ICalendarTimeRange getPeriodsOf(DateTime moment, PeriodKind periodKind, int periodCount) {
+        return getPeriodsOf(moment, periodKind, periodCount, TimeCalendar.getDefault());
+    }
+
+    /**
+     * moment 가 속한 특정 종류의 기간에 대해 periodCount 갯수만큼의 기간 정보를 컬렉션으로 반환한다.
+     *
+     * @param moment
+     * @param periodKind
+     * @param periodCount
+     * @param timeCalendar
+     * @return
+     */
+    public static ICalendarTimeRange getPeriodsOf(DateTime moment, PeriodKind periodKind, int periodCount, ITimeCalendar timeCalendar) {
+        if (isTraceEnabled())
+            log.trace("일자[{}]가 속한 기간 종류[{}]의 기간을 구합니다.", moment, periodKind);
+
+        switch (periodKind) {
+            case Year:
+                return getYearRanges(moment, periodCount, timeCalendar);
+            case Halfyear:
+                return getHalfyearRanges(moment, periodCount, timeCalendar);
+            case Quarter:
+                return getQuarterRanges(moment, periodCount, timeCalendar);
+            case Month:
+                return getMonthRanges(moment, periodCount, timeCalendar);
+            case Week:
+                return getWeekRanges(moment, periodCount, timeCalendar);
+            case Day:
+                return getDayRanges(moment, periodCount, timeCalendar);
+            case Hour:
+                return getHourRanges(moment, periodCount, timeCalendar);
+            case Minute:
+                return getMinuteRanges(moment, periodCount, timeCalendar);
+
+            default:
+                throw new NotSupportException("지원하지 않는 Period 종류입니다. periodKind=" + periodKind);
+        }
+    }
+
+
+    public static YearRange getYearRange(DateTime moment, ITimeCalendar timeCalendar) {
+        return new YearRange(moment, timeCalendar);
+    }
+
+    public static YearRangeCollection getYearRanges(DateTime moment, int years, ITimeCalendar timeCalendar) {
+        return new YearRangeCollection(moment, years, timeCalendar);
+    }
+
+    public static HalfyearRange getHalfyearRange(DateTime moment, ITimeCalendar timeCalendar) {
+        return new HalfyearRange(moment, timeCalendar);
+    }
+
+    public static HalfyearRangeCollection getHalfyearRanges(DateTime moment, int halfyears, ITimeCalendar timeCalendar) {
+        return new HalfyearRangeCollection(moment, halfyears, timeCalendar);
+    }
+
+    public static QuarterRange getQuarterRange(DateTime moment, ITimeCalendar timeCalendar) {
+        return new QuarterRange(moment, timeCalendar);
+    }
+
+    public static QuarterRangeCollection getQuarterRanges(DateTime moment, int quarters, ITimeCalendar timeCalendar) {
+        return new QuarterRangeCollection(moment, quarters, timeCalendar);
+    }
+
+    public static MonthRange getMonthRange(DateTime moment, ITimeCalendar timeCalendar) {
+        return new MonthRange(moment, timeCalendar);
+    }
+
+    public static MonthRangeCollection getMonthRanges(DateTime moment, int months, ITimeCalendar timeCalendar) {
+        return new MonthRangeCollection(moment, months, timeCalendar);
+    }
+
+    public static WeekRange getWeekRange(DateTime moment, ITimeCalendar timeCalendar) {
+        return new WeekRange(moment, timeCalendar);
+    }
+
+    public static WeekRangeCollection getWeekRanges(DateTime moment, int weeks, ITimeCalendar timeCalendar) {
+        return new WeekRangeCollection(moment, weeks, timeCalendar);
+    }
+
+    public static DayRange getDayRange(DateTime moment, ITimeCalendar timeCalendar) {
+        return new DayRange(moment, timeCalendar);
+    }
+
+    public static DayRangeCollection getDayRanges(DateTime moment, int days, ITimeCalendar timeCalendar) {
+        return new DayRangeCollection(moment, days, timeCalendar);
+    }
+
+    public static HourRange getHourRange(DateTime moment, ITimeCalendar timeCalendar) {
+        return new HourRange(moment, timeCalendar);
+    }
+
+    public static HourRangeCollection getHourRanges(DateTime moment, int hours, ITimeCalendar timeCalendar) {
+        return new HourRangeCollection(moment, hours, timeCalendar);
+    }
+
+    public static MinuteRange getMinuteRange(DateTime moment, ITimeCalendar timeCalendar) {
+        return new MinuteRange(moment, timeCalendar);
+    }
+
+    public static MinuteRangeCollection getMinuteRanges(DateTime moment, int minutes, ITimeCalendar timeCalendar) {
+        return new MinuteRangeCollection(moment, minutes, timeCalendar);
+    }
+
+    // endregion << Period >>
+
+    // region << Relation >>
+
+    /**
+     * 지정된 기간 안에 일자(target)이 있는지 여부
+     *
+     * @param period
+     * @param target
+     * @return
+     */
+    public static boolean hasInside(ITimePeriod period, DateTime target) {
+        shouldNotBeNull(period, "period");
+        boolean isInside = target.compareTo(period.getStart()) >= 0 && target.compareTo(period.getEnd()) <= 0;
+
+        if (isTraceEnabled()) log.trace("기간 [{}] 안에 target[{}]이 포함되는가? [{}]", isInside);
+
+        return isInside;
+    }
+
+    public static boolean hasInside(ITimePeriod period, ITimePeriod target) {
+        shouldNotBeNull(period, "period");
+        shouldNotBeNull(target, "target");
+        boolean isInside = hasInside(period, target.getStart()) && hasInside(period, target.getEnd());
+
+        if (isTraceEnabled()) log.trace("기간 [{}] 안에 target[{}]이 포함되는가? [{}]", isInside);
+
+        return isInside;
+    }
+
+    public static boolean hasPureInside(ITimePeriod period, DateTime target) {
+        shouldNotBeNull(period, "period");
+
+        boolean isInside = target.compareTo(period.getStart()) > 0 && target.compareTo(period.getEnd()) < 0;
+
+        if (isTraceEnabled()) log.trace("기간 [{}] 안에 target[{}]이 경계를 제외하고, 포함되는가? [{}]", isInside);
+
+        return isInside;
+    }
+
+    public static boolean hasPureInside(ITimePeriod period, ITimePeriod target) {
+        shouldNotBeNull(period, "period");
+        shouldNotBeNull(target, "target");
+
+        boolean isInside = hasPureInside(period, target.getStart()) && hasPureInside(period, target.getEnd());
+
+        if (isTraceEnabled()) log.trace("기간 [{}] 안에 target[{}]이 경계를 제외하고, 포함되는가? [{}]", isInside);
+
+        return isInside;
+    }
+
+    public static boolean isAnytime(ITimePeriod period) {
+        return period != null && period.isAnytime();
+    }
+
+    public static boolean isNotAnytime(ITimePeriod period) {
+        return period != null && !period.isAnytime();
+    }
+
+    /**
+     * 기준 기간과 대상 기간의 관계를 파악합니다.
+     *
+     * @param period
+     * @param target
+     * @return
+     */
+    public static PeriodRelation getRelation(ITimePeriod period, ITimePeriod target) {
+        shouldNotBeNull(period, "period");
+        shouldNotBeNull(target, "target");
+
+        PeriodRelation relation = PeriodRelation.NoRelation;
+
+        if (period.getStart().compareTo(target.getEnd()) > 0) {
+            relation = PeriodRelation.After;
+        } else if (period.getEnd().compareTo(target.getStart()) < 0) {
+            relation = PeriodRelation.Before;
+        } else if (period.getStart().equals(period.getStart()) && period.getEnd().equals(period.getEnd())) {
+            relation = PeriodRelation.ExactMatch;
+        } else if (period.getStart().equals(period.getEnd())) {
+            relation = PeriodRelation.StartTouching;
+        } else if (period.getEnd().equals(period.getStart())) {
+            relation = PeriodRelation.EndTouching;
+        } else if (hasInside(period, target)) {
+            if (period.getStart().equals(target.getStart()))
+                relation = PeriodRelation.EnclosingStartTouching;
+            else
+                relation = (period.getEnd().equals(target.getEnd()))
+                        ? PeriodRelation.EnclosingEndTouching
+                        : PeriodRelation.Inside;
+        } else {
+            boolean insideStart = hasInside(target, period.getStart());
+            boolean insideEnd = hasInside(target, period.getEnd());
+
+            if (insideStart && insideEnd) {
+                relation = Objects.equal(period.getStart(), target.getStart())
+                        ? PeriodRelation.InsideStartTouching
+                        : (Objects.equal(period.getEnd(), target.getEnd()) ? PeriodRelation.InsideEndTouching : PeriodRelation.Inside);
+            } else if (insideStart) {
+                relation = PeriodRelation.StartInside;
+            } else if (insideEnd) {
+                relation = PeriodRelation.EndInside;
+            }
+        }
+
+        if (isDebugEnabled())
+            log.debug("period [{}], target [{}]의 관계는 [{}] 입니다.", period, target, relation);
+
+        return relation;
+    }
+
+    /** 두 기간이 교차하거나, period가 target의 내부 구간이면 true를 반환합니다. */
+    public static boolean intersectsWith(ITimePeriod period, ITimePeriod target) {
+        shouldNotBeNull(period, "period");
+        shouldNotBeNull(target, "target");
+
+        boolean isIntersected = hasInside(period, target.getStart()) ||
+                hasInside(period, target.getEnd()) ||
+                hasPureInside(target, period);
+
+        if (isTraceEnabled())
+            log.trace("period[{}]와 target[{}]이 교차 구간인가? result=[{}]", period, target, isIntersected);
+        return isIntersected;
+    }
+
+    /**
+     * 두 구간이 겹치는 구간이 있으면 true를 반환합니다.
+     *
+     * @param period
+     * @param target
+     * @return
+     */
+    public static boolean overlapsWith(ITimePeriod period, ITimePeriod target) {
+        shouldNotBeNull(period, "period");
+        shouldNotBeNull(target, "target");
+
+        PeriodRelation relation = getRelation(period, target);
+
+        boolean isOverlaps = relation != PeriodRelation.After &&
+                relation != PeriodRelation.StartTouching &&
+                relation != PeriodRelation.EndTouching &&
+                relation != PeriodRelation.Before;
+
+        if (isTraceEnabled())
+            log.trace("period[{}]와 target[{}]이 overlap 되는가? [{}]", period, target, isOverlaps);
+
+        return isOverlaps;
+    }
+
+    /** 두 기간의 교집합 (교차 구간)을 구합니다. */
+    public static TimeBlock getIntersectionBlock(ITimePeriod period, ITimePeriod target) {
+        shouldNotBeNull(period, "period");
+        shouldNotBeNull(target, "target");
+
+        TimeBlock intersection = null;
+        if (intersectsWith(period, target)) {
+            DateTime start = max(period.getStart(), target.getStart());
+            DateTime end = min(period.getEnd(), target.getEnd());
+            intersection = new TimeBlock(start, end, period.isReadonly());
+        }
+        if (isTraceEnabled())
+            log.trace("period[{}], target[{}]의 교집합 [{}]", period, target, intersection);
+
+        return intersection;
+    }
+
+    /** 두 기간의 합집합 구간을 구합니다. */
+    public static TimeBlock getUnionBlock(ITimePeriod period, ITimePeriod target) {
+        shouldNotBeNull(period, "period");
+        shouldNotBeNull(target, "target");
+
+        DateTime start = min(period.getStart(), target.getStart());
+        DateTime end = max(period.getEnd(), target.getEnd());
+        TimeBlock union = new TimeBlock(start, end, period.isReadonly());
+
+        if (isTraceEnabled())
+            log.trace("period[{}], target[{}]의 합집합 [{}]", period, target, union);
+
+        return union;
+    }
+
+    /** 두 기간의 교집합 (교차 구간)을 구합니다. */
+    public static TimeRange getIntersectionRange(ITimePeriod period, ITimePeriod target) {
+        shouldNotBeNull(period, "period");
+        shouldNotBeNull(target, "target");
+
+        TimeRange intersection = null;
+        if (intersectsWith(period, target)) {
+            DateTime start = max(period.getStart(), target.getStart());
+            DateTime end = min(period.getEnd(), target.getEnd());
+            intersection = new TimeRange(start, end, period.isReadonly());
+        }
+        if (isTraceEnabled())
+            log.trace("period[{}], target[{}]의 교집합 [{}]", period, target, intersection);
+
+        return intersection;
+    }
+
+    /** 두 기간의 합집합 구간을 구합니다. */
+    public static TimeRange getUnionRange(ITimePeriod period, ITimePeriod target) {
+        shouldNotBeNull(period, "period");
+        shouldNotBeNull(target, "target");
+
+        DateTime start = min(period.getStart(), target.getStart());
+        DateTime end = max(period.getEnd(), target.getEnd());
+        TimeRange union = new TimeRange(start, end, period.isReadonly());
+
+        if (isTraceEnabled())
+            log.trace("period[{}], target[{}]의 합집합 [{}]", period, target, union);
+
+        return union;
+    }
+
+    // endregion << Relation >>
+
+    // region << Trim >>
+
+    public static DateTime trimToYear(DateTime moment) {
+        return new DateTime(moment.getYear(), 1, 1, 0, 0);
+    }
+
+    public static DateTime trimToMonth(DateTime moment) {
+        return trimToMonth(moment, 1);
+    }
+
+    public static DateTime trimToMonth(DateTime moment, int monthOfYear) {
+        return new DateTime(moment.getYear(), monthOfYear, 1, 0, 0);
+    }
+
+    public static DateTime trimToDay(DateTime moment) {
+        return trimToDay(moment, 1);
+    }
+
+    public static DateTime trimToDay(DateTime moment, int dayOfMonth) {
+        return new DateTime(moment.getYear(), moment.getMonthOfYear(), dayOfMonth, 0, 0);
+    }
+
+    public static DateTime trimToHour(DateTime moment) {
+        return trimToHour(moment, 0);
+
+    }
+
+    public static DateTime trimToHour(DateTime moment, int hourOfDay) {
+        return trimToDay(moment).plusHours(hourOfDay);
+    }
+
+    public static DateTime trimToMinute(DateTime moment) {
+        return trimToMinute(moment, 0);
+
+    }
+
+    public static DateTime trimToMinute(DateTime moment, int minuteOfHour) {
+        return trimToHour(moment).plusMinutes(minuteOfHour);
+    }
+
+    public static DateTime trimToSecond(DateTime moment) {
+        return trimToSecond(moment, 0);
+
+    }
+
+    public static DateTime trimToSecond(DateTime moment, int secondOfMinute) {
+        return trimToMinute(moment).plusSeconds(secondOfMinute);
+    }
+
+    public static DateTime trimToMillis(DateTime moment) {
+        return trimToMillis(moment, 0);
+
+    }
+
+    public static DateTime trimToMillis(DateTime moment, int millisOfSecond) {
+        return trimToSecond(moment).plusMillis(millisOfSecond);
+    }
+
+    // endregion << Trim >>
+
+    // region << Validation >>
+
+    public static void assertValidPeriod(DateTime start, DateTime end) {
+        if (start != null && end != null)
+            assert start.compareTo(end) <= 0
+                    : String.format("시작시각이 완료시각보다 이전이어야 합니다. start=[%s], end=[%s]", start, end);
+    }
+
+    public static void assertMutable(ITimePeriod period) {
+        shouldNotBeNull(period, "period");
+        assert !period.isReadonly() : "TimePeriod가 읽기전용입니다. period=" + period;
+    }
+
+    public static boolean allItemsAreEqual(Iterable<ITimePeriod> left, Iterable<ITimePeriod> right) {
+        shouldNotBeNull(left, "left");
+        shouldNotBeNull(right, "right");
+
+        if (Iterables.size(left) != Iterables.size(right))
+            return false;
+
+        Iterator<ITimePeriod> leftIter = left.iterator();
+        Iterator<ITimePeriod> rightIter = right.iterator();
+        while (leftIter.hasNext() && rightIter.hasNext()) {
+            if (!Objects.equal(leftIter.next(), rightIter.next()))
+                return false;
+        }
+        return true;
+    }
+
+    public static boolean isWeekday(DayOfWeek dayOfWeek) {
+        return ArrayTool.contains(TimeSpec.Weekdays, dayOfWeek);
+    }
+
+    public static boolean isWeekend(DayOfWeek dayOfWeek) {
+        return ArrayTool.contains(TimeSpec.Weekends, dayOfWeek);
+    }
+
+    // endregion << Validation >>
 }

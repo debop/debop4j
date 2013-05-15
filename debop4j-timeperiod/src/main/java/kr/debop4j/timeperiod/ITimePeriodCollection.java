@@ -1,3 +1,19 @@
+/*
+ * Copyright 2011-2013 the original author or authors.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package kr.debop4j.timeperiod;
 
 import org.joda.time.DateTime;
@@ -10,12 +26,16 @@ import org.joda.time.DateTime;
  */
 public interface ITimePeriodCollection extends ITimePeriodContainer {
 
+    /** 대상 ITimePeriod 기간에 속하는 기간이 있다면 true를 반환합니다. */
     boolean hasInsidePeriods(ITimePeriod target);
 
+    /** 대상 ITimePeriod 기간과 교집합이 존재하면 true를 반환합니다. */
     boolean hasOverlapPeriods(ITimePeriod target);
 
+    /** 대상 시각과 교집합이 존재하면 true를 반환합니다. */
     boolean hasIntersectionPeriods(DateTime moment);
 
+    /** 대상 ITimePeriod 기간과 교집합이 존재하면 true를 반환합니다. */
     boolean hasIntersectionPeriods(ITimePeriod target);
 
     /** 대상 ITimePeriod 기간을 포함하는 ITimePeriod 들을 열거합니다. */

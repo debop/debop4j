@@ -44,7 +44,7 @@ public abstract class HalfyearTimeRange extends YearCalendarTimeRange {
 
         this.halfyearCount = halfyearCount;
 
-        YearAndHalfyear endYH = TimeTool.addHalfyear(startHalfyear, startYear, halfyearCount - 1);
+        YearAndHalfyear endYH = TimeTool.addHalfyear(startYear, startHalfyear, halfyearCount - 1);
         this.endYear = endYH.getYear();
         this.endHalfyear = endYH.getHalfyear();
     }

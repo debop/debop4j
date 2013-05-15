@@ -47,7 +47,7 @@ public abstract class QuarterTimeRange extends YearCalendarTimeRange {
         this.startQuarter = startQuarter;
         this.quarterCount = quarterCount;
 
-        YearAndQuarter yq = TimeTool.addQuarter(startQuarter, startYear, quarterCount - 1);
+        YearAndQuarter yq = TimeTool.addQuarter(startYear, startQuarter, quarterCount - 1);
         this.endYear = yq.getYear();
         this.endQuarter = yq.getQuarter();
 
@@ -78,20 +78,20 @@ public abstract class QuarterTimeRange extends YearCalendarTimeRange {
 
     public int getStartMonthOfYear() {
         int months = (startQuarter.getValue() - 1) * TimeSpec.MonthsPerQuarter;
-        return TimeTool.addMonths(startYear, 1, months).getMonthOfYear();
+        return TimeTool.addMonth(startYear, 1, months).getMonthOfYear();
     }
 
     public int getEndMonthOfYear() {
         int months = (startQuarter.getValue() - 1 + quarterCount) * TimeSpec.MonthsPerQuarter;
-        return TimeTool.addMonths(endYear, 1, months).getMonthOfYear();
+        return TimeTool.addMonth(endYear, 1, months).getMonthOfYear();
     }
 
     public boolean isMultipleCalendarYears() {
         int months = (startQuarter.getValue() - 1) * TimeSpec.MonthsPerQuarter;
-        YearAndMonth startYM = TimeTool.addMonths(startYear, 1, months);
+        YearAndMonth startYM = TimeTool.addMonth(startYear, 1, months);
 
         months = (startQuarter.getValue() - 1 + quarterCount) * TimeSpec.MonthsPerQuarter;
-        YearAndMonth endYM = TimeTool.addMonths(endYear, 1, months);
+        YearAndMonth endYM = TimeTool.addMonth(endYear, 1, months);
 
         return !startYM.getYear().equals(endYM.getYear());
     }

@@ -37,15 +37,15 @@ public class TimeCalendar implements ITimeCalendar {
     public static final Duration DefaultStartOffset = TimeSpec.NoDuration;
     public static final Duration DefaultEndOffset = TimeSpec.MinNegativeDuration;
 
-    public static TimeCalendar create() {
+    public static TimeCalendar getDefault() {
         throw new NotImplementedException("구현 중");
     }
 
-    public static TimeCalendar create(Locale locale) {
+    public static TimeCalendar getDefault(Locale locale) {
         throw new NotImplementedException("구현 중");
     }
 
-    public static TimeCalendar create(int yearBaseMonth) {
+    public static TimeCalendar getDefault(int yearBaseMonth) {
         throw new NotImplementedException("구현 중");
     }
 

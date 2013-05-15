@@ -65,6 +65,21 @@ public final class ArrayTool {
         return ((array == null) || (array.length == 0));
     }
 
+    public static <T> boolean contains(T[] array, T target) {
+        for (T item : array)
+            if (item.equals(target))
+                return true;
+        return false;
+    }
+
+    public static <T> int indexOf(T[] array, T target) {
+        for (int i = 0; i < array.length; i++) {
+            if (array[i].equals(target))
+                return i;
+        }
+        return -1;
+    }
+
     @SuppressWarnings("unchecked")
     public static <T> T[] asArray(Collection<T> collection) {
         Guard.shouldNotBeNull(collection, "collection");

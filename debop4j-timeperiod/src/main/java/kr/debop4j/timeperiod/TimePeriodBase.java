@@ -17,8 +17,8 @@
 package kr.debop4j.timeperiod;
 
 import com.google.common.base.Objects;
+import jodd.util.Tuple2;
 import kr.debop4j.core.Guard;
-import kr.debop4j.core.NotImplementedException;
 import kr.debop4j.core.ValueObjectBase;
 import kr.debop4j.core.tools.HashTool;
 import kr.debop4j.timeperiod.tools.TimeSpec;
@@ -44,11 +44,11 @@ public class TimePeriodBase extends ValueObjectBase implements ITimePeriod {
     // region << Constructors >>
 
     protected TimePeriodBase() {
-        this((DateTime) null, (DateTime) null, false);
+        this(TimeSpec.MinPeriodTime, TimeSpec.MaxPeriodTime, false);
     }
 
     protected TimePeriodBase(boolean readonly) {
-        this((DateTime) null, (DateTime) null, readonly);
+        this(TimeSpec.MinPeriodTime, TimeSpec.MaxPeriodTime, readonly);
     }
 
     protected TimePeriodBase(DateTime moment) {
@@ -64,8 +64,11 @@ public class TimePeriodBase extends ValueObjectBase implements ITimePeriod {
     }
 
     protected TimePeriodBase(DateTime start, DateTime end, boolean readonly) {
-        this.start = Guard.firstNotNull(start, TimeSpec.MinPeriodTime);
-        this.end = Guard.firstNotNull(end, TimeSpec.MaxPeriodTime);
+        start = Guard.firstNotNull(start, TimeSpec.MinPeriodTime);
+        end = Guard.firstNotNull(end, TimeSpec.MaxPeriodTime);
+        Tuple2<DateTime, DateTime> result = TimeTool.adjustPeriod(start, end);
+        this.start = result.v1;
+        this.end = result.v2;
         this.readonly = readonly;
     }
 
@@ -74,10 +77,9 @@ public class TimePeriodBase extends ValueObjectBase implements ITimePeriod {
     }
 
     protected TimePeriodBase(DateTime start, Duration duration, boolean readonly) {
-        // TODO: TimeTool.adjustPeriod() 메소드를 사용해야한다.
-        // TimeTool.adjustPeriod(start, duration)
-        this.start = start;
-        setDuration(duration);
+        Tuple2<DateTime, Duration> result = TimeTool.adjustPeriod(start, duration);
+        this.start = result.v1;
+        setDuration(result.v2);
         this.readonly = readonly;
     }
 
@@ -102,7 +104,7 @@ public class TimePeriodBase extends ValueObjectBase implements ITimePeriod {
     protected DateTime end;
 
     @Getter
-    @Setter(AccessLevel.PROTECTED)
+    @Setter( AccessLevel.PROTECTED )
     protected boolean readonly;
 
     /** 기간을 TimeSpan으료 표현, 기간이 정해지지 않았다면 <see cref="TimeSpec.MaxPeriodTime"/> 을 반환합니다. */
@@ -115,13 +117,6 @@ public class TimePeriodBase extends ValueObjectBase implements ITimePeriod {
         assert duration.getMillis() >= Duration.ZERO.getMillis() : "Duration의 크기가 0보다 크거나 같아야 합니다.";
         if (hasStart())
             end = start.plus(duration);
-    }
-
-    @Override
-    public String getDurationDescription() {
-        // TODO: ITimeFormatter 제작하여 구현해야 함.
-        // ITimeFormatter.Instance.GetDuration(Duration, DurationFormatKind.Detailed);
-        throw new NotImplementedException("구현 중");
     }
 
     @Override
@@ -141,7 +136,7 @@ public class TimePeriodBase extends ValueObjectBase implements ITimePeriod {
 
     @Override
     public boolean isMoment() {
-        return Objects.equals(start, end);
+        return Objects.equal(start, end);
     }
 
     @Override
@@ -153,8 +148,17 @@ public class TimePeriodBase extends ValueObjectBase implements ITimePeriod {
     public void setup(DateTime newStart, DateTime newEnd) {
         if (log.isTraceEnabled())
             log.trace("기간을 새로 설정합니다. newStart=[{}], newEnd=[{}]", newStart, newEnd);
-        this.start = newStart;
-        this.end = newEnd;
+
+        newStart = Guard.firstNotNull(newStart, TimeSpec.MinPeriodTime);
+        newEnd = Guard.firstNotNull(newEnd, TimeSpec.MaxPeriodTime);
+
+        if (newStart.compareTo(newEnd) < 0) {
+            this.start = newStart;
+            this.end = newEnd;
+        } else {
+            this.start = newEnd;
+            this.end = newStart;
+        }
     }
 
     public ITimePeriod copy() {
@@ -188,6 +192,7 @@ public class TimePeriodBase extends ValueObjectBase implements ITimePeriod {
             end = end.plus(offset.getMillis());
     }
 
+    /** 시작과 완료 시각이 같은지 여부 */
     @Override
     public boolean isSamePeriod(ITimePeriod other) {
         return (other != null) &&
@@ -230,11 +235,6 @@ public class TimePeriodBase extends ValueObjectBase implements ITimePeriod {
     }
 
     @Override
-    public String getDescription(TimeFormatter formatter) {
-        return format(Guard.firstNotNull(formatter, TimeFormatter.getInstance()));
-    }
-
-    @Override
     public ITimePeriod getIntersection(ITimePeriod other) {
         return TimeTool.getIntersectionRange(this, other);
     }
@@ -242,10 +242,6 @@ public class TimePeriodBase extends ValueObjectBase implements ITimePeriod {
     @Override
     public ITimePeriod getUnion(ITimePeriod other) {
         return TimeTool.getUnionRange(this, other);
-    }
-
-    protected String format(ITimeFormatter formatter) {
-        return formatter.getPeriod(getStart(), getEnd(), getDuration());
     }
 
     protected final void assertMutable() {

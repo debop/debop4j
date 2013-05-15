@@ -88,7 +88,7 @@ public class HalfyearRange extends HalfyearTimeRange {
     }
 
     public HalfyearRange addHalfyears(int count) {
-        YearAndHalfyear yhy = TimeTool.addHalfyear(getHalfyear(), getYear(), count);
+        YearAndHalfyear yhy = TimeTool.addHalfyear(getYear(), getHalfyear(), count);
         return new HalfyearRange(yhy.getYear(), yhy.getHalfyear(), getTimeCalendar());
     }
 }

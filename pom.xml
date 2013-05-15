@@ -219,6 +219,7 @@
 
         <javax.inject.version>1</javax.inject.version>
         <javax.transaction.version>1.1</javax.transaction.version>
+        <javax.validation.version>1.1.0.Final</javax.validation.version>
         <jsr305.version>1.3.9</jsr305.version>
         <javax.servlet.api.version>3.0.1</javax.servlet.api.version>
         <javaee.api.version>6.0</javaee.api.version>
@@ -421,6 +422,11 @@
                 <groupId>javax.transaction</groupId>
                 <artifactId>jta</artifactId>
                 <version>${javax.transaction.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>javax.validation</groupId>
+                <artifactId>validation-api</artifactId>
+                <version>${javax.validation.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.google.code.findbugs</groupId>
@@ -1070,6 +1076,13 @@
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
+        </dependency>
+
+        <!-- JSR -->
+        <dependency>
+            <groupId>javax.validation</groupId>
+            <artifactId>validation-api</artifactId>
+            <version>${javax.validation.version}</version>
         </dependency>
 
         <!-- Guava -->

@@ -39,6 +39,7 @@ public abstract class TimeLists {
 
     private TimeLists() {}
 
+    /** 지정된 기간을 기간 단위별로 세분하여 컬렉션을 빌드합니다. */
     public static List<ITimePeriod> foreachPeriods(ITimePeriod period, PeriodKind periodKind) {
         switch (periodKind) {
             case Year:
@@ -70,12 +71,7 @@ public abstract class TimeLists {
         }
     }
 
-    /**
-     * 지정된 기간을 년단위로 컬렉션을 만듭니다.
-     *
-     * @param period
-     * @return
-     */
+    /** 지정된 기간을 년단위로 컬렉션을 만듭니다. */
     public static List<ITimePeriod> foreachYears(ITimePeriod period) {
         assert period != null;
         if (log.isTraceEnabled())
@@ -96,7 +92,7 @@ public abstract class TimeLists {
         DateTime current = TimeTool.startTimeOfYear(period.getStart()).plusYears(1);
         int endYear = period.getEnd().getYear();
         while (current.getYear() < endYear) {
-            years.add(TimeTool.getYearRange(current));
+            years.add(TimeTool.getYearRange(current, null));
             current = current.plusYears(1);
         }
 
@@ -107,12 +103,7 @@ public abstract class TimeLists {
         return years;
     }
 
-    /**
-     * 지정된 기간을 반기 단위로 열거합니다.
-     *
-     * @param period
-     * @return
-     */
+    /** 지정된 기간을 반기 단위로 열거합니다. */
     public static List<ITimePeriod> foreachHalfyears(ITimePeriod period) {
         assert period != null;
         if (log.isTraceEnabled())
@@ -135,7 +126,7 @@ public abstract class TimeLists {
         int endHashCode = period.getEnd().getYear() * 10 + TimeTool.halfyearOf(period.getEnd()).getValue();
         current = current.plusDays(1);
         while (current.getYear() * 10 + TimeTool.halfyearOf(current).getValue() < endHashCode) {
-            halfyears.add(TimeTool.getHalfyearRange(current));
+            halfyears.add(TimeTool.getHalfyearRange(current, null));
             current = current.plusMonths(TimeSpec.MonthsPerHalfyear);
         }
 
@@ -146,12 +137,7 @@ public abstract class TimeLists {
         return halfyears;
     }
 
-    /**
-     * 지정된 기간을 분기단위로 열거합니다.
-     *
-     * @param period
-     * @return
-     */
+    /** 지정된 기간을 분기단위로 열거합니다. */
     public static List<ITimePeriod> foreachQuarters(ITimePeriod period) {
         assert period != null;
         if (log.isTraceEnabled())
@@ -174,7 +160,7 @@ public abstract class TimeLists {
         int endHashCode = period.getEnd().getYear() * 10 + TimeTool.quarterOf(period.getEnd()).getValue();
         current = current.plusDays(1);
         while (current.getYear() * 10 + TimeTool.quarterOf(current).getValue() < endHashCode) {
-            quarters.add(TimeTool.getQuarterRange(current));
+            quarters.add(TimeTool.getQuarterRange(current, null));
             current = current.plusMonths(TimeSpec.MonthsPerQuarter);
         }
 
@@ -184,12 +170,7 @@ public abstract class TimeLists {
         return quarters;
     }
 
-    /**
-     * 지정된 기간을 월단위로 열거합니다.
-     *
-     * @param period
-     * @return
-     */
+    /** 지정된 기간을 월(Month) 단위로 열거합니다. */
     public static List<ITimePeriod> foreachMonths(ITimePeriod period) {
         assert period != null;
         if (log.isTraceEnabled())
@@ -212,7 +193,7 @@ public abstract class TimeLists {
         DateTime monthEnd = TimeTool.startTimeOfMonth(period.getEnd());
         current = current.plusDays(1);
         while (current.compareTo(monthEnd) < 0) {
-            months.add(TimeTool.getMonthRange(current));
+            months.add(TimeTool.getMonthRange(current, null));
             current = current.plusMonths(1);
         }
 
@@ -223,6 +204,7 @@ public abstract class TimeLists {
         return months;
     }
 
+    /** 지정된 기간을 주(Week) 단위로 열거합니다. */
     public static List<ITimePeriod> foreachWeeks(ITimePeriod period) {
         assert period != null;
         if (log.isTraceEnabled())
@@ -248,7 +230,7 @@ public abstract class TimeLists {
         weeks.add(new TimeRange(current, weekEnd));
         current = current.plusWeeks(1);
         while (current.compareTo(period.getEnd()) < 0) {
-            weeks.add(TimeTool.getWeekRange(current));
+            weeks.add(TimeTool.getWeekRange(current, null));
             current = current.plusWeeks(1);
         }
 
@@ -259,12 +241,7 @@ public abstract class TimeLists {
         return weeks;
     }
 
-    /**
-     * 지정한 기간을 일(Day)단위로 열거합니다.
-     *
-     * @param period
-     * @return
-     */
+    /** 지정한 기간을 일(Day)단위로 열거합니다. */
     public static List<ITimePeriod> foreachDays(ITimePeriod period) {
         assert period != null;
         if (log.isTraceEnabled())
@@ -287,7 +264,7 @@ public abstract class TimeLists {
         DateTime current = period.getStart().withTimeAtStartOfDay().plusDays(1);
 
         while (current.compareTo(endDay) < 0) {
-            days.add(TimeTool.getDayRange(current));
+            days.add(TimeTool.getDayRange(current, null));
             current = current.plusDays(1);
         }
         if (endDay.getMillisOfDay() > 0)
@@ -296,6 +273,7 @@ public abstract class TimeLists {
         return days;
     }
 
+    /** 지정한 기간을 시(Hour) 단위로 열거합니다. */
     public static List<ITimePeriod> foreachHours(ITimePeriod period) {
         assert period != null;
         if (log.isTraceEnabled())
@@ -315,10 +293,10 @@ public abstract class TimeLists {
         hours.add(new TimeRange(period.getStart(), TimeTool.endTimeOfHour(period.getStart())));
 
         DateTime endHour = period.getEnd();
-        DateTime current = TimeTool.trimToHour(period.getStart().getHourOfDay() + 1);
+        DateTime current = TimeTool.trimToHour(period.getStart(), period.getStart().getHourOfDay() + 1);
 
         while (current.compareTo(endHour) < 0) {
-            hours.add(TimeTool.getHourRange(current));
+            hours.add(TimeTool.getHourRange(current, null));
             current = current.plusHours(1);
         }
         if (endHour.minusHours(endHour.getHourOfDay()).getMillisOfDay() > 0) {
@@ -328,6 +306,7 @@ public abstract class TimeLists {
         return hours;
     }
 
+    /** 지정한 기간을 분(Minute) 단위로 열거합니다. */
     public static List<ITimePeriod> foreachMinutes(ITimePeriod period) {
         assert period != null;
         if (log.isTraceEnabled())
@@ -347,10 +326,10 @@ public abstract class TimeLists {
         minutes.add(new TimeRange(period.getStart(), TimeTool.endTimeOfMinute(period.getStart())));
 
         DateTime endMinute = period.getEnd();
-        DateTime current = TimeTool.trimToMinute(period.getStart().getMinuteOfHour() + 1);
+        DateTime current = TimeTool.trimToMinute(period.getStart(), period.getStart().getMinuteOfHour() + 1);
 
         while (current.compareTo(endMinute) < 0) {
-            minutes.add(TimeTool.getMinuteRange(current));
+            minutes.add(TimeTool.getMinuteRange(current, null));
             current = current.plusMinutes(1);
         }
         if (endMinute.minusMinutes(endMinute.getMinuteOfHour()).getMillisOfDay() > 0) {
@@ -364,7 +343,7 @@ public abstract class TimeLists {
         assert period != null && period.hasPeriod() : "기간이 설정되지 않았습니다. period=" + period;
     }
 
-
+    /** 기간을 특정 단위로 열거한 값을 이용하여 특정 코드를 수행하여 결과값을 반환합니다. */
     public static <T> List<T> runPeriods(ITimePeriod period, PeriodKind periodKind, Function1<ITimePeriod, T> runner) {
         Guard.shouldNotBeNull(period, "period");
         Guard.shouldNotBeNull(runner, "runner");
@@ -381,6 +360,7 @@ public abstract class TimeLists {
         return results;
     }
 
+    /** 기간을 특정 단위로 열거한 값을 이용하여 특정 코드를 병렬로 수행하여 결과값을 반환합니다. */
     public static <T> List<T> runPeriodsAsParallel(ITimePeriod period, PeriodKind periodKind, Function1<ITimePeriod, T> runner) {
         Guard.shouldNotBeNull(period, "period");
         Guard.shouldNotBeNull(runner, "runner");

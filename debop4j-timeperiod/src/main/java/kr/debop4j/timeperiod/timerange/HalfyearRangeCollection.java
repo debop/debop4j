@@ -41,7 +41,7 @@ public class HalfyearRangeCollection extends HalfyearTimeRange {
 
     public HalfyearRangeCollection(DateTime moment, int halfyearCount, ITimeCalendar timeCalendar) {
         this(TimeTool.getYearOf(timeCalendar.getYear(moment), timeCalendar.getMonthOfYear(moment)),
-             TimeTool.getHalfyearOf(timeCalendar.getMonthOfYear(moment)),
+             TimeTool.halfyearOf(timeCalendar.getMonthOfYear(moment)),
              halfyearCount,
              timeCalendar);
     }
@@ -60,7 +60,7 @@ public class HalfyearRangeCollection extends HalfyearTimeRange {
         List<HalfyearRange> halfyears = Lists.newArrayListWithCapacity(halfyearCount);
 
         for (int hy = 0; hy < halfyearCount; hy++) {
-            YearAndHalfyear yhy = TimeTool.addHalfyear(getStartHalfyear(), getStartYear(), hy);
+            YearAndHalfyear yhy = TimeTool.addHalfyear(getStartYear(), getStartHalfyear(), hy);
             halfyears.add(new HalfyearRange(yhy.getYear(), yhy.getHalfyear(), getTimeCalendar()));
         }
         return halfyears;

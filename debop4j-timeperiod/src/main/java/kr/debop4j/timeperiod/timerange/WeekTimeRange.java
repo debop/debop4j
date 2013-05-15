@@ -42,7 +42,7 @@ public abstract class WeekTimeRange extends CalendarTimeRange {
     protected WeekTimeRange(ITimePeriod period, ITimeCalendar timeCalendar) {
         super(period, timeCalendar);
         this.year = period.getStart().getYear();
-        this.startWeekOfYear = WeekTool.getYearAndWeek(period.getStart(), timeCalendar).getWeek();
+        this.startWeekOfYear = WeekTool.getYearAndWeek(period.getStart(), timeCalendar).getWeekOfYear();
         this.weekCount = 1;
     }
 
@@ -94,11 +94,6 @@ public abstract class WeekTimeRange extends CalendarTimeRange {
     }
 
     @Override
-    public boolean isSamePeriod(ITimePeriod other) {
-        return equals(other);
-    }
-
-    @Override
     public int hashCode() {
         return HashTool.compute(super.hashCode(), year, startWeekOfYear, weekCount);
     }
@@ -112,16 +107,14 @@ public abstract class WeekTimeRange extends CalendarTimeRange {
     }
 
     private static TimeRange getPeriodOf(DateTime moment, int weekCount, ITimeCalendar timeCalendar) {
-        DateTime startOfWeek = TimeTool.getStartTimeOfWeek(moment, timeCalendar.getFirstDayOfWeek());
+        DateTime startOfWeek = TimeTool.startTimeOfWeek(moment, timeCalendar.getFirstDayOfWeek());
         return new TimeRange(startOfWeek, DurationTool.weeks(weekCount));
     }
 
     private static TimeRange getPeriodOf(int year, int weekOfYear, int weekCount, ITimeCalendar timeCalendar) {
         assert weekCount >= 0;
 
-        WeekRange startWeek = WeekTool.getWeekRange(new YearAndWeek(year, weekOfYear), timeCalendar);
-        DateTime startDay = startWeek.getStart();
-
-        return new TimeRange(startDay, startDay.plusDays(weekCount * TimeSpec.DaysPerWeek));
+        DateTime startWeek = TimeTool.startTimeOfWeek(year, weekOfYear, timeCalendar);
+        return new TimeRange(startWeek, startWeek.plusWeeks(1));
     }
 }

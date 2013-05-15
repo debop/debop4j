@@ -16,11 +16,20 @@
 
 package kr.debop4j.timeperiod;
 
+import com.google.common.base.Predicate;
+import com.google.common.collect.Iterables;
+import com.google.common.collect.Lists;
+import kr.debop4j.timeperiod.tools.TimeTool;
 import lombok.extern.slf4j.Slf4j;
 import org.joda.time.DateTime;
 
+import javax.annotation.Nullable;
+import java.util.List;
+
+import static kr.debop4j.core.Guard.shouldNotBeNull;
+
 /**
- * kr.debop4j.timeperiod.TimePeriodCollection
+ * {@link ITimePeriod}를 요소로 가지는 컬렉션입니다.
  *
  * @author 배성혁 sunghyouk.bae@gmail.com
  * @since 13. 5. 12. 오후 1:04
@@ -32,57 +41,105 @@ public class TimePeriodCollection extends TimePeriodContainer implements ITimePe
 
     public TimePeriodCollection() {}
 
+    public TimePeriodCollection(ITimePeriod... collection) {
+        super(collection);
+    }
+
     public TimePeriodCollection(Iterable<? extends ITimePeriod> collection) {
         super(collection);
     }
 
     @Override
     public boolean hasInsidePeriods(ITimePeriod target) {
-        return false;  //To change body of implemented methods use File | Settings | File Templates.
+        shouldNotBeNull(target, "target");
+        for (ITimePeriod period : getPeriods())
+            if (TimeTool.hasInside(target, period))
+                return true;
+        return false;
     }
 
     @Override
     public boolean hasOverlapPeriods(ITimePeriod target) {
-        return false;  //To change body of implemented methods use File | Settings | File Templates.
+        shouldNotBeNull(target, "target");
+        for (ITimePeriod period : getPeriods())
+            if (TimeTool.overlapsWith(target, period))
+                return true;
+        return false;
     }
 
     @Override
     public boolean hasIntersectionPeriods(DateTime moment) {
-        return false;  //To change body of implemented methods use File | Settings | File Templates.
+        for (ITimePeriod period : getPeriods())
+            if (TimeTool.hasInside(period, moment))
+                return true;
+        return false;
     }
 
     @Override
     public boolean hasIntersectionPeriods(ITimePeriod target) {
-        return false;  //To change body of implemented methods use File | Settings | File Templates.
+        shouldNotBeNull(target, "target");
+        for (ITimePeriod period : getPeriods())
+            if (TimeTool.intersectsWith(target, period))
+                return true;
+        return false;
     }
 
     @Override
-    public Iterable<ITimePeriod> insidePeriods(ITimePeriod target) {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
+    public Iterable<ITimePeriod> insidePeriods(final ITimePeriod target) {
+        shouldNotBeNull(target, "target");
+        return Iterables.filter(getPeriods(), new Predicate<ITimePeriod>() {
+            @Override
+            public boolean apply(@Nullable ITimePeriod input) {
+                return TimeTool.hasInside(target, input);
+            }
+        });
     }
 
     @Override
-    public Iterable<ITimePeriod> overlapPeriods(ITimePeriod target) {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
+    public Iterable<ITimePeriod> overlapPeriods(final ITimePeriod target) {
+        shouldNotBeNull(target, "target");
+        return Iterables.filter(getPeriods(), new Predicate<ITimePeriod>() {
+            @Override
+            public boolean apply(@Nullable ITimePeriod input) {
+                return TimeTool.overlapsWith(target, input);
+            }
+        });
     }
 
     @Override
-    public Iterable<ITimePeriod> intersectionPeriods(DateTime moment) {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
+    public Iterable<ITimePeriod> intersectionPeriods(final DateTime moment) {
+        shouldNotBeNull(moment, "moment");
+        return Iterables.filter(getPeriods(), new Predicate<ITimePeriod>() {
+            @Override
+            public boolean apply(@Nullable ITimePeriod input) {
+                return TimeTool.hasInside(input, moment);
+            }
+        });
     }
 
     @Override
-    public Iterable<ITimePeriod> intersectionPeriods(ITimePeriod target) {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
+    public Iterable<ITimePeriod> intersectionPeriods(final ITimePeriod target) {
+        shouldNotBeNull(target, "target");
+        return Iterables.filter(getPeriods(), new Predicate<ITimePeriod>() {
+            @Override
+            public boolean apply(@Nullable ITimePeriod input) {
+                return TimeTool.intersectsWith(target, input);
+            }
+        });
     }
 
     @Override
-    public Iterable<ITimePeriod> relationPeriods(ITimePeriod target, PeriodRelation relation, PeriodRelation... relations) {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
-    }
+    public Iterable<ITimePeriod> relationPeriods(final ITimePeriod target, PeriodRelation relation, PeriodRelation... relations) {
+        shouldNotBeNull(target, "target");
+        final List<PeriodRelation> filteringRelation = Lists.newArrayList(relations);
+        filteringRelation.add(0, relation);
 
-    @Override
-    public String getDescription(TimeFormatter formatter) {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
+        return Iterables.filter(getPeriods(), new Predicate<ITimePeriod>() {
+            @Override
+            public boolean apply(@Nullable ITimePeriod input) {
+                PeriodRelation targetRelation = TimeTool.getRelation(input, target);
+                return filteringRelation.contains(targetRelation);
+            }
+        });
     }
 }

@@ -88,7 +88,7 @@ public class QuarterRange extends QuarterTimeRange {
     }
 
     public QuarterRange addQuarters(int quarters) {
-        YearAndQuarter yq = TimeTool.addQuarter(getStartQuarter(), getStartYear(), quarters);
+        YearAndQuarter yq = TimeTool.addQuarter(getStartYear(), getStartQuarter(), quarters);
         return new QuarterRange(yq.getYear(), yq.getQuarter(), getTimeCalendar());
     }
 }
