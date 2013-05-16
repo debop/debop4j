@@ -323,6 +323,7 @@ public final class StringTool {
 //    }
 
     public static String join(Object[] items, String separator) {
+        if (items == null || items.length == 0) return "";
         List<Object> strings =
                 Lists.transform(Lists.newArrayList(items), new Function<Object, Object>() {
                     @Nullable
@@ -339,15 +340,21 @@ public final class StringTool {
     }
 
     public static String join(Iterable<?> items, String separator) {
-        List<Object> strings =
-                Lists.transform(Lists.newArrayList(items), new Function<Object, Object>() {
-                    @Nullable
-                    @Override
-                    public Object apply(@Nullable Object input) {
-                        return (input != null) ? input : NULL_STR;
-                    }
-                });
-        return Joiner.on(separator).join(strings);
+        if (items == null) return "";
+
+        try {
+            List<Object> strings =
+                    Lists.transform(Lists.newArrayList(items), new Function<Object, Object>() {
+                        @Nullable
+                        @Override
+                        public Object apply(@Nullable Object input) {
+                            return (input != null) ? input : NULL_STR;
+                        }
+                    });
+            return Joiner.on(separator).join(strings);
+        } catch (Throwable t) {
+            return items.toString();
+        }
     }
 
     public static String quotedStr(final String str) {
@@ -394,7 +401,16 @@ public final class StringTool {
         return result;
     }
 
-    public static Iterable<String> split(final String str, final String... separators) {
+    public static List<String> split(final String str, final String... separators) {
+        return split(str, true, separators);
+    }
+
+    public static List<String> split(final String str, boolean ignoreCase, final String... separators) {
+        return split(str, ignoreCase, true, separators);
+    }
+
+    /** 지정된 문자열을 구분자로 분리하여 배열로 반환합니다. */
+    public static List<String> split(final String str, boolean ignoreCase, boolean removeEmptyEntries, final String... separators) {
         if (isEmpty(str))
             return Lists.newArrayList();
 
@@ -402,21 +418,40 @@ public final class StringTool {
         List<char[]> seps = Lists.newArrayList();
 
         for (String sep : separators) {
-            seps.add(sep.toCharArray());
+            if (ignoreCase) seps.add(sep.toLowerCase().toCharArray());
+            else seps.add(sep.toCharArray());
         }
+
         char[] strArray = str.toCharArray();
+        char[] strArray2 = (ignoreCase) ? str.toLowerCase().toCharArray() : str.toCharArray();
 
         int startIndex = 0;
-        for (int i = 0; i < strArray.length; i++) {
+        int prevIndex = 0;
+        while (startIndex < strArray.length) {
             for (char[] sep : seps) {
-                if (Arrays.equals(sep, Arrays.copyOf(strArray, sep.length))) {
-                    if (i - 1 - startIndex > 0) {
-                        result.add(new String(Arrays.copyOfRange(strArray, startIndex, i - 1)));
-                    }
-                    startIndex = i + sep.length;
+                if (Arrays.equals(sep, Arrays.copyOfRange(strArray2, startIndex, startIndex + sep.length))) {
+                    String item = new String(Arrays.copyOfRange(strArray, prevIndex, startIndex));
+                    if (!(removeEmptyEntries && StringTool.isWhiteSpace(item)))
+                        result.add(item);
+                    prevIndex = startIndex + sep.length;
+                    startIndex = startIndex + sep.length;
                 }
             }
+            startIndex++;
         }
+        if (prevIndex < strArray.length - 1)
+            result.add(new String(Arrays.copyOfRange(strArray, prevIndex, strArray.length)));
+
+//        if (removeEmptyEntries) {
+//            int index = result.size() - 1;
+//            while (index >= 0) {
+//                if (StringTool.isWhiteSpace(result.get(index)))
+//                    result.remove(index);
+//                else
+//                    result.set(index, result.get(index).trim());
+//                index--;
+//            }
+//        }
 
         return result;
     }
@@ -515,29 +550,21 @@ public final class StringTool {
 
     /** {@link Iterable} 정보를 문자열로 표현합니다. */
     public static <T> String listToString(Iterable<? extends T> items) {
-        if (items == null)
-            return NULL_STR;
-
-        return join(items, ",");
+        return items == null ? NULL_STR : join(items, ",");
     }
 
     public static String listToString(Object[] items) {
-        if (items == null || items.length == 0)
-            return NULL_STR;
-
-        return join(items, ",");
+        return items == null || items.length == 0 ? NULL_STR : join(items, ",");
     }
 
     /** {@link java.util.Map} 정보를 문자열로 표현합니다. */
     public static String mapToString(final Map map) {
-        if (map == null)
-            return NULL_STR;
-
-        return "{" + join(mapToEntryList(map), ",") + "}";
+        return map == null ? NULL_STR : "{" + join(mapToEntryList(map), ",") + "}";
     }
 
     private static List<String> mapToEntryList(final Map map) {
         List<String> list = new ArrayList<String>();
+        if (map == null) return list;
         for (Object key : map.keySet()) {
             list.add(key + "=" + map.get(key));
         }
