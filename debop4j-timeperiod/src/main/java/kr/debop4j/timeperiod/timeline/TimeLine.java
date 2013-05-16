@@ -17,12 +17,16 @@
 package kr.debop4j.timeperiod.timeline;
 
 import kr.debop4j.core.Guard;
+import kr.debop4j.core.tools.StringTool;
 import kr.debop4j.timeperiod.*;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
+import org.joda.time.DateTime;
+
+import java.util.Collection;
 
 /**
- * kr.debop4j.timeperiod.timeline.ITimeLine
+ * 여러 {@link ITimePeriod}들을 시간의 흐름별로 펼쳐서 표현합니다.
  *
  * @author 배성혁 sunghyouk.bae@gmail.com
  * @since 13. 5. 11. 오전 12:01
@@ -52,33 +56,97 @@ public class TimeLine<T extends ITimePeriod> implements ITimeLine {
     @Getter private final ITimePeriod limits;
     @Getter private final ITimePeriodMapper periodMapper;
 
-    @Override
-    public ITimePeriodContainer getPeriods() {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
-    }
-
-    @Override
-    public ITimePeriod getLimits() {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
-    }
-
-    @Override
-    public ITimePeriodMapper getPeriodMapper() {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
-    }
-
+    /** Periods의 기간들의 합집합에 해당하는 기간들을 반환합니다. */
     @Override
     public ITimePeriodCollection combinePeriods() {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
+        if (periods.size() == 0)
+            return new TimePeriodCollection();
+
+        ITimeLineMomentCollection moments = getTimeLineMoments();
+        if (moments == null || moments.size() == 0)
+            return new TimePeriodCollection(new TimeRange(this.periods));
+
+        return TimeLines.combinePeriods(moments);
     }
 
+    /** Periods의 기간들의 교집합에 해당하는 기간들을 반환합니다. */
     @Override
     public ITimePeriodCollection intersectPeriods() {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
+        if (periods.size() == 0)
+            return new TimePeriodCollection();
+
+        ITimeLineMomentCollection moments = getTimeLineMoments();
+        if (moments == null || moments.size() == 0)
+            return new TimePeriodCollection();
+
+        return TimeLines.intersectPeriods(moments);
     }
 
+    /** Periods의 기간들의 여집합에 해당하는 기간들을 반환합니다. */
     @Override
     public ITimePeriodCollection calculateGaps() {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
+        if (periods.size() == 0)
+            return new TimePeriodCollection();
+
+        ITimePeriodCollection gapPeriods = new TimePeriodCollection();
+
+        for (ITimePeriod period : periods) {
+            if (limits.intersectsWith(period)) {
+                gapPeriods.add(new TimeRange(period));
+            }
+        }
+
+        ITimeLineMomentCollection moments = getTimeLineMoments();
+        if (moments == null || moments.size() == 0)
+            return new TimePeriodCollection(limits);
+
+        ITimePeriod range = new TimeRange(mapPeriodStart(getLimits().getStart()),
+                                          mapPeriodStart(getLimits().getEnd()));
+
+        return TimeLines.calculateGap(moments, range);
+    }
+
+    /** 기간 컬렉션으로부터 ITimeLineMoment 컬렉션을 빌드합니다 */
+    private ITimeLineMomentCollection getTimeLineMoments() {
+        return getTimeLineMoments(this.periods);
+    }
+
+    /** 기간 컬렉션으로부터 ITimeLineMoment 컬렉션을 빌드합니다 */
+    private ITimeLineMomentCollection getTimeLineMoments(Collection<? extends ITimePeriod> momentPeriods) {
+        if (log.isTraceEnabled())
+            log.trace("기간 컬렉션으로부터 ITimeLineMoment 컬렉션을 빌드합니다...");
+
+        ITimeLineMomentCollection moments = new TimeLineMomentCollection();
+        if (momentPeriods == null || momentPeriods.size() == 0)
+            return moments;
+
+        // setup gap set with all start/end points
+        ITimePeriodCollection intersections = new TimePeriodCollection();
+
+        for (ITimePeriod mp : momentPeriods) {
+            if (!mp.isMoment()) {
+                ITimePeriod intersection = limits.getIntersection(mp);
+                if (intersection != null && !intersection.isMoment()) {
+                    if (periodMapper != null)
+                        intersection.setup(mapPeriodStart(intersection.getStart()),
+                                           mapPeriodEnd(intersection.getEnd()));
+                    intersections.add(intersection);
+                }
+            }
+        }
+        moments.addAll(intersections);
+
+        if (log.isTraceEnabled())
+            log.trace("기간 컬렉션으로부터 ITimeLineMoment 컬렉션을 빌드했습니다. moments=[{}]", StringTool.listToString(moments));
+
+        return moments;
+    }
+
+    private DateTime mapPeriodStart(DateTime moment) {
+        return (periodMapper != null) ? periodMapper.unmapStart(moment) : moment;
+    }
+
+    private DateTime mapPeriodEnd(DateTime moment) {
+        return (periodMapper != null) ? periodMapper.unmapEnd(moment) : moment;
     }
 }

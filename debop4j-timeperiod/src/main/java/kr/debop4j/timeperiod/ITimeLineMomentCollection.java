@@ -16,28 +16,35 @@
 
 package kr.debop4j.timeperiod;
 
+import org.joda.time.DateTime;
+
 import java.io.Serializable;
 
 /**
- * TimePeriod의 컬렉션을 가지며, 이를 통해 여러 기간에 대한 Union, Intersection, Gap 등을 구할 수 있도록 합니다.
+ * {@link ITimeLineMoment} 의 컬렉션
  *
  * @author 배성혁 sunghyouk.bae@gmail.com
- * @since 13. 5. 11. 오후 6:06
+ * @since 13. 5. 16. 오전 1:34
  */
-public interface ITimeLine extends Serializable {
+public interface ITimeLineMomentCollection extends Iterable<ITimeLineMoment>, Serializable {
 
-    ITimePeriodContainer getPeriods();
+    int size();
 
-    ITimePeriod getLimits();
+    boolean isEmpty();
 
-    ITimePeriodMapper getPeriodMapper();
+    ITimeLineMoment getMin();
 
-    /** 기간들의 합집합을 구합니다. */
-    ITimePeriodCollection combinePeriods();
+    ITimeLineMoment getMax();
 
-    /** 기간들의 교집합을 구합니다. */
-    ITimePeriodCollection intersectPeriods();
+    ITimeLineMoment get(int index);
 
-    /** 기간들의 여집합을 구합니다. */
-    ITimePeriodCollection calculateGaps();
+    void add(ITimePeriod period);
+
+    void addAll(Iterable<? extends ITimePeriod> periods);
+
+    void remove(ITimePeriod period);
+
+    ITimeLineMoment find(DateTime moment);
+
+    boolean contains(DateTime moment);
 }
