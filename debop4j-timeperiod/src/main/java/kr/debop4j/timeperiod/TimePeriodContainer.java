@@ -203,7 +203,7 @@ public class TimePeriodContainer implements ITimePeriodContainer {
     }
 
     @Override
-    public void addAll(Iterable<ITimePeriod> periods) {
+    public void addAll(Iterable<? extends ITimePeriod> periods) {
         Iterables.addAll(this.periods, periods);
     }
 
@@ -355,17 +355,17 @@ public class TimePeriodContainer implements ITimePeriodContainer {
     }
 
 
-    @Getter( lazy = true )
+    @Getter(lazy = true)
     private static final StartComparator startComparator = new StartComparator();
-    @Getter( lazy = true )
+    @Getter(lazy = true)
     private static final StartDescComparator startDescComparator = new StartDescComparator();
-    @Getter( lazy = true )
+    @Getter(lazy = true)
     private static final EndComparator endComparator = new EndComparator();
-    @Getter( lazy = true )
+    @Getter(lazy = true)
     private static final EndDescComparator endDescComparator = new EndDescComparator();
-    @Getter( lazy = true )
+    @Getter(lazy = true)
     private static final DurationComparator durationComparator = new DurationComparator();
-    @Getter( lazy = true )
+    @Getter(lazy = true)
     private static final DurationDescComparator durationDescComparator = new DurationDescComparator();
 
     public static class StartComparator implements Comparator<ITimePeriod> {
