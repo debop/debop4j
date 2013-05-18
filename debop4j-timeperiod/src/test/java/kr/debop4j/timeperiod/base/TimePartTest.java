@@ -28,13 +28,13 @@ import org.junit.Test;
 import static org.fest.assertions.Assertions.assertThat;
 
 /**
- * kr.debop4j.timeperiod.base.TimePartTest
+ * {@link Timepart} 테스트 코드
  *
  * @author 배성혁 sunghyouk.bae@gmail.com
  * @since 13. 5. 18. 오후 9:57
  */
 @Slf4j
-public class TimePartTest extends TimePeriodBase {
+public class TimepartTest extends TimePeriodBase {
 
     private static final long serialVersionUID = -5272329190162193573L;
 
@@ -43,7 +43,7 @@ public class TimePartTest extends TimePeriodBase {
         DateTime now = DateTime.now();
         Timepart time = new Timepart(now);
 
-        TimePartTest.log.debug("now=[{}], time=[{}]", now, time);
+        TimepartTest.log.debug("now=[{}], time=[{}]", now, time);
 
         assertThat(time.getHourOfDay()).isEqualTo(now.getHourOfDay());
         assertThat(time.getMinuteOfHour()).isEqualTo(now.getMinuteOfHour());

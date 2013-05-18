@@ -23,7 +23,7 @@ import lombok.Getter;
 import org.joda.time.DateTime;
 
 /**
- * DateTime 정보 중에 시간 정보를 뺀 일자 정보만을 가진다.
+ * {@link DateTime} 정보 중에 시간 정보를 뺀 일자 정보만을 가진다.
  *
  * @author 배성혁 sunghyouk.bae@gmail.com
  * @since 13. 5. 12. 오후 2:24

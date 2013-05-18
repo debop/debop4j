@@ -30,12 +30,12 @@ import java.io.Serializable;
 import java.util.List;
 
 /**
- * kr.debop4j.timeperiod.samples.TimeBlockPeriodReleationTestData
+ * kr.debop4j.timeperiod.samples.TimeBlockPeriodRelationTestData
  *
  * @author 배성혁 sunghyouk.bae@gmail.com
  * @since 13. 5. 17. 오후 3:34
  */
-public class TimeBlockPeriodReleationTestData implements Serializable {
+public class TimeBlockPeriodRelationTestData implements Serializable {
 
     private static final long serialVersionUID = -5287403574700352744L;
 
@@ -83,7 +83,7 @@ public class TimeBlockPeriodReleationTestData implements Serializable {
     @Getter @Setter
     private ITimeBlock after;
 
-    public TimeBlockPeriodReleationTestData(DateTime start, DateTime end, Duration duration) {
+    public TimeBlockPeriodRelationTestData(DateTime start, DateTime end, Duration duration) {
 
         Guard.shouldBe(duration.compareTo(Duration.ZERO) >= 0, "duration은 0이상의 기간을 가져야 합니다.");
 

@@ -108,7 +108,7 @@ public class TimeBlock extends TimePeriodBase implements ITimeBlock {
     private Duration duration;
 
     protected void assertValidDuration(Duration duration) {
-        assert duration.compareTo(TimeSpec.MinDuration) > 0 : "duration은 0 보다 커야합니다.";
+        assert duration.compareTo(TimeSpec.MinDuration) >= 0 : "duration은 0 이상이어야 합니다.";
     }
 
     @Override
@@ -166,6 +166,9 @@ public class TimeBlock extends TimePeriodBase implements ITimeBlock {
     public void durationFromStart(Duration newDuration) {
         assertMutable();
         assertValidDuration(newDuration);
+
+        if (end != null)
+            assert this.end.plus(duration).compareTo(TimeSpec.MaxPeriodTime) <= 0 : "duration 이 너무 크네요.";
 
         this.duration = newDuration;
         this.end = this.start.plus(this.duration);
