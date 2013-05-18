@@ -30,18 +30,18 @@ import lombok.Getter;
 public class HourRangeInDay extends ValueObjectBase implements Comparable<HourRangeInDay> {
     private static final long serialVersionUID = 6958950354517975186L;
 
-    @Getter private final TimePart startHourOfDay;
-    @Getter private final TimePart endHourOfDay;
+    @Getter private final Timepart startHourOfDay;
+    @Getter private final Timepart endHourOfDay;
 
     public HourRangeInDay(int hourOfDay) {
         this(hourOfDay, hourOfDay);
     }
 
     public HourRangeInDay(int startHourOfDay, int endHourOfDay) {
-        this(new TimePart(startHourOfDay), new TimePart(endHourOfDay));
+        this(new Timepart(startHourOfDay), new Timepart(endHourOfDay));
     }
 
-    public HourRangeInDay(TimePart start, TimePart end) {
+    public HourRangeInDay(Timepart start, Timepart end) {
         if (start.compareTo(end) <= 0) {
             this.startHourOfDay = start;
             this.endHourOfDay = end;

@@ -23,36 +23,38 @@ import lombok.Getter;
 import org.joda.time.DateTime;
 
 /**
- * kr.debop4j.timeperiod.DatePart
+ * DateTime 정보 중에 시간 정보를 뺀 일자 정보만을 가진다.
  *
  * @author 배성혁 sunghyouk.bae@gmail.com
  * @since 13. 5. 12. 오후 2:24
  */
-public class DatePart extends ValueObjectBase implements Comparable<DatePart> {
+public class Datepart extends ValueObjectBase implements Comparable<Datepart> {
     private static final long serialVersionUID = -2730296141281632596L;
 
-    private static DatePart today() {
-        return new DatePart(DateTime.now());
+    private static Datepart today() {
+        return new Datepart(DateTime.now());
     }
 
     @Getter
     private DateTime datepart;
 
-    public DatePart() {}
+    public Datepart() {
+        this.datepart = new DateTime(0).withTimeAtStartOfDay();
+    }
 
-    public DatePart(DateTime datetime) {
+    public Datepart(DateTime datetime) {
         this.datepart = datetime.withTimeAtStartOfDay();
     }
 
-    public DatePart(int year) {
+    public Datepart(int year) {
         this(year, 1, 1);
     }
 
-    public DatePart(int year, int monthOfYear) {
+    public Datepart(int year, int monthOfYear) {
         this(year, monthOfYear, 1);
     }
 
-    public DatePart(int year, int monthOfYear, int dayOfMonth) {
+    public Datepart(int year, int monthOfYear, int dayOfMonth) {
         this.datepart = new DateTime().withDate(year, monthOfYear, dayOfMonth);
     }
 
@@ -68,7 +70,7 @@ public class DatePart extends ValueObjectBase implements Comparable<DatePart> {
         return datepart.getDayOfMonth();
     }
 
-    public DateTime getDateTime(TimePart time) {
+    public DateTime getDateTime(Timepart time) {
         return datepart.plus(time.getMillis());
     }
 
@@ -77,11 +79,11 @@ public class DatePart extends ValueObjectBase implements Comparable<DatePart> {
     }
 
     public DateTime getDateTime(int hourOfDay, int minuteOfHour, int secondOfMinute, int millisOfSecond) {
-        return getDateTime(new TimePart(hourOfDay, minuteOfHour, secondOfMinute, millisOfSecond));
+        return getDateTime(new Timepart(hourOfDay, minuteOfHour, secondOfMinute, millisOfSecond));
     }
 
     @Override
-    public int compareTo(DatePart o) {
+    public int compareTo(Datepart o) {
         return hashCode() - o.hashCode();
     }
 

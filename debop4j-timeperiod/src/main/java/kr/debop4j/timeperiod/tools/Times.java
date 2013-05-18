@@ -51,6 +51,22 @@ public abstract class Times {
     public static final String NullString = "<null>";
     public static final DateTime UnixEpoch = new DateTime(1970, 1, 1, 0, 0, 0, 0);
 
+    public static DateTime now() {
+        return DateTime.now();
+    }
+
+    public static DateTime today() {
+        return DateTime.now().withTimeAtStartOfDay();
+    }
+
+    public static Datepart datepart(DateTime moment) {
+        return new Datepart(moment);
+    }
+
+    public static Timepart timepart(DateTime moment) {
+        return new Timepart(moment);
+    }
+
     public static String asString(ITimePeriod period) {
         return (period == null) ? NullString : period.toString();
     }
@@ -644,7 +660,7 @@ public abstract class Times {
 
     /** 지정한 날짜에 알자(년/월/일) 부분을 지정한 datePart로 설정합니다. */
     public static DateTime setDatePart(DateTime moment, DateTime datepart) {
-        return new DatePart(datepart).getDateTime(new TimePart(moment));
+        return new Datepart(datepart).getDateTime(new Timepart(moment));
     }
 
     /** 지정한 날짜의 년, 월, 일을 수정합니다. */
@@ -976,13 +992,7 @@ public abstract class Times {
 
     // region << Relation >>
 
-    /**
-     * 지정된 기간 안에 일자(target)이 있는지 여부
-     *
-     * @param period
-     * @param target
-     * @return
-     */
+    /** 지정된 기간 안에 일자(target)이 있는지 여부 */
     public static boolean hasInside(ITimePeriod period, DateTime target) {
         shouldNotBeNull(period, "period");
         boolean isInside = target.compareTo(period.getStart()) >= 0 && target.compareTo(period.getEnd()) <= 0;
@@ -992,6 +1002,7 @@ public abstract class Times {
         return isInside;
     }
 
+    /** 지정된 기간 안에 대상 기간이 있는지 여부 */
     public static boolean hasInside(ITimePeriod period, ITimePeriod target) {
         shouldNotBeNull(period, "period");
         shouldNotBeNull(target, "target");
@@ -1048,20 +1059,21 @@ public abstract class Times {
             relation = PeriodRelation.After;
         } else if (period.getEnd().compareTo(target.getStart()) < 0) {
             relation = PeriodRelation.Before;
-        } else if (period.getStart().equals(period.getStart()) && period.getEnd().equals(period.getEnd())) {
+        } else if (period.getStart().equals(target.getStart()) && period.getEnd().equals(target.getEnd())) {
             relation = PeriodRelation.ExactMatch;
-        } else if (period.getStart().equals(period.getEnd())) {
+        } else if (period.getStart().equals(target.getEnd())) {
             relation = PeriodRelation.StartTouching;
-        } else if (period.getEnd().equals(period.getStart())) {
+        } else if (period.getEnd().equals(target.getStart())) {
             relation = PeriodRelation.EndTouching;
         } else if (hasInside(period, target)) {
-            if (period.getStart().equals(target.getStart()))
+            if (Objects.equal(period.getStart(), target.getStart()))
                 relation = PeriodRelation.EnclosingStartTouching;
             else
-                relation = (period.getEnd().equals(target.getEnd()))
+                relation = Objects.equal(period.getEnd(), target.getEnd())
                         ? PeriodRelation.EnclosingEndTouching
-                        : PeriodRelation.Inside;
+                        : PeriodRelation.Enclosing;
         } else {
+            // 기간이 대상 내부에 속할 때
             boolean insideStart = hasInside(target, period.getStart());
             boolean insideEnd = hasInside(target, period.getEnd());
 

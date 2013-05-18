@@ -513,5 +513,268 @@ public class TimeRangeTest {
     public void hasInsideTest() {
 
         assertThat(testData.getReference().hasInside(testData.getBefore())).isFalse();
+        assertThat(testData.getReference().hasInside(testData.getStartTouching())).isFalse();
+        assertThat(testData.getReference().hasInside(testData.getStartInside())).isFalse();
+        assertThat(testData.getReference().hasInside(testData.getInsideStartTouching())).isFalse();
+
+        assertThat(testData.getReference().hasInside(testData.getEnclosingStartTouching())).isTrue();
+        assertThat(testData.getReference().hasInside(testData.getEnclosing())).isTrue();
+        assertThat(testData.getReference().hasInside(testData.getEnclosingEndTouching())).isTrue();
+        assertThat(testData.getReference().hasInside(testData.getExactMatch())).isTrue();
+
+        assertThat(testData.getReference().hasInside(testData.getInside())).isFalse();
+        assertThat(testData.getReference().hasInside(testData.getInsideEndTouching())).isFalse();
+        assertThat(testData.getReference().hasInside(testData.getEndTouching())).isFalse();
+        assertThat(testData.getReference().hasInside(testData.getAfter())).isFalse();
     }
+
+    @Test
+    public void intersectsWithTest() {
+
+        assertThat(testData.getReference().intersectsWith(testData.getBefore())).isFalse();
+        assertThat(testData.getReference().intersectsWith(testData.getStartTouching())).isTrue();
+        assertThat(testData.getReference().intersectsWith(testData.getStartInside())).isTrue();
+        assertThat(testData.getReference().intersectsWith(testData.getInsideStartTouching())).isTrue();
+
+        assertThat(testData.getReference().intersectsWith(testData.getEnclosingStartTouching())).isTrue();
+        assertThat(testData.getReference().intersectsWith(testData.getEnclosing())).isTrue();
+        assertThat(testData.getReference().intersectsWith(testData.getEnclosingEndTouching())).isTrue();
+        assertThat(testData.getReference().intersectsWith(testData.getExactMatch())).isTrue();
+
+        assertThat(testData.getReference().intersectsWith(testData.getInside())).isTrue();
+        assertThat(testData.getReference().intersectsWith(testData.getInsideEndTouching())).isTrue();
+        assertThat(testData.getReference().intersectsWith(testData.getEndTouching())).isTrue();
+        assertThat(testData.getReference().intersectsWith(testData.getAfter())).isFalse();
+    }
+
+    @Test
+    public void overlapsWithTest() {
+
+        assertThat(testData.getReference().overlapsWith(testData.getBefore())).isFalse();
+        assertThat(testData.getReference().overlapsWith(testData.getStartTouching())).isFalse();
+        assertThat(testData.getReference().overlapsWith(testData.getStartInside())).isTrue();
+        assertThat(testData.getReference().overlapsWith(testData.getInsideStartTouching())).isTrue();
+
+        assertThat(testData.getReference().overlapsWith(testData.getEnclosingStartTouching())).isTrue();
+        assertThat(testData.getReference().overlapsWith(testData.getEnclosing())).isTrue();
+        assertThat(testData.getReference().overlapsWith(testData.getEnclosingEndTouching())).isTrue();
+        assertThat(testData.getReference().overlapsWith(testData.getExactMatch())).isTrue();
+
+        assertThat(testData.getReference().overlapsWith(testData.getInside())).isTrue();
+        assertThat(testData.getReference().overlapsWith(testData.getInsideEndTouching())).isTrue();
+        assertThat(testData.getReference().overlapsWith(testData.getEndTouching())).isFalse();
+        assertThat(testData.getReference().overlapsWith(testData.getAfter())).isFalse();
+    }
+
+    @Test
+    public void intersectsWithDateTimeTest() {
+        TimeRange range = new TimeRange(start, end);
+
+        // before
+        assertThat(range.intersectsWith(new TimeRange(start.minusHours(2), start.minusHours(1)))).isFalse();
+        assertThat(range.intersectsWith(new TimeRange(start.minusHours(1), start))).isTrue();
+        assertThat(range.intersectsWith(new TimeRange(start.minusHours(1), start.plusMillis(1)))).isTrue();
+
+        // after
+        assertThat(range.intersectsWith(new TimeRange(end.plusHours(1), end.plusHours(2)))).isFalse();
+        assertThat(range.intersectsWith(new TimeRange(end, end.plusMillis(1)))).isTrue();
+        assertThat(range.intersectsWith(new TimeRange(end.minusMillis(1), end.plusMillis(1)))).isTrue();
+
+        // intersect
+        assertThat(range.intersectsWith(range)).isTrue();
+        assertThat(range.intersectsWith(new TimeRange(start.minusMillis(1), end.plusHours(2)))).isTrue();
+        assertThat(range.intersectsWith(new TimeRange(start.minusMillis(1), start.plusMillis(1)))).isTrue();
+        assertThat(range.intersectsWith(new TimeRange(end.minusMillis(1), end.plusMillis(1)))).isTrue();
+    }
+
+    @Test
+    public void getIntersectionTest() {
+        TimeRange range = new TimeRange(start, end);
+
+        // before
+        assertThat(range.getIntersection(new TimeRange(start.minusHours(2), start.minusHours(1)))).isNull();
+        assertThat(range.getIntersection(new TimeRange(start.minusMillis(1), start))).isEqualTo(new TimeRange(start));
+        assertThat(range.getIntersection(new TimeRange(start.minusHours(1), start.plusMillis(1)))).isEqualTo(new TimeRange(start, start.plusMillis(1)));
+
+        // after
+        assertThat(range.getIntersection(new TimeRange(end.plusHours(1), end.plusHours(2)))).isNull();
+        assertThat(range.getIntersection(new TimeRange(end, end.plusMillis(1)))).isEqualTo(new TimeRange(end));
+        assertThat(range.getIntersection(new TimeRange(end.minusMillis(1), end.plusMillis(1)))).isEqualTo(new TimeRange(end.minusMillis(1), end));
+
+        // intersect
+        assertThat(range.getIntersection(range)).isEqualTo(range);
+        assertThat(range.getIntersection(new TimeRange(start.minusMillis(1), end.plusMillis(1)))).isEqualTo(range);
+        assertThat(range.getIntersection(new TimeRange(start.plusMillis(1), end.minusMillis(1)))).isEqualTo(new TimeRange(start.plusMillis(1), end.minusMillis(1)));
+    }
+
+    @Test
+    public void getRelationTest() {
+        assertThat(testData.getReference().getRelation(testData.getBefore())).isEqualTo(PeriodRelation.Before);
+        assertThat(testData.getReference().getRelation(testData.getStartTouching())).isEqualTo(PeriodRelation.StartTouching);
+        assertThat(testData.getReference().getRelation(testData.getStartInside())).isEqualTo(PeriodRelation.StartInside);
+        assertThat(testData.getReference().getRelation(testData.getInsideStartTouching())).isEqualTo(PeriodRelation.InsideStartTouching);
+        assertThat(testData.getReference().getRelation(testData.getEnclosing())).isEqualTo(PeriodRelation.Enclosing);
+        assertThat(testData.getReference().getRelation(testData.getExactMatch())).isEqualTo(PeriodRelation.ExactMatch);
+        assertThat(testData.getReference().getRelation(testData.getInside())).isEqualTo(PeriodRelation.Inside);
+        assertThat(testData.getReference().getRelation(testData.getInsideEndTouching())).isEqualTo(PeriodRelation.InsideEndTouching);
+        assertThat(testData.getReference().getRelation(testData.getEndInside())).isEqualTo(PeriodRelation.EndInside);
+        assertThat(testData.getReference().getRelation(testData.getEndTouching())).isEqualTo(PeriodRelation.EndTouching);
+        assertThat(testData.getReference().getRelation(testData.getAfter())).isEqualTo(PeriodRelation.After);
+
+        // reference
+        assertThat(testData.getReference().getStart()).isEqualTo(start);
+        assertThat(testData.getReference().getEnd()).isEqualTo(end);
+        assertThat(testData.getReference().isReadonly()).isTrue();
+
+        // after
+        assertThat(testData.getAfter().isReadonly()).isTrue();
+        assertThat(testData.getAfter().getStart().compareTo(start)).isLessThan(0);
+        assertThat(testData.getAfter().getEnd().compareTo(start)).isLessThan(0);
+
+        assertThat(testData.getReference().hasInside(testData.getAfter().getStart())).isFalse();
+        assertThat(testData.getReference().hasInside(testData.getAfter().getEnd())).isFalse();
+        assertThat(testData.getReference().getRelation(testData.getAfter())).isEqualTo(PeriodRelation.After);
+
+        // start touching
+        assertThat(testData.getStartTouching().isReadonly()).isTrue();
+        assertThat(testData.getStartTouching().getStart().getMillis()).isLessThan(start.getMillis());
+        assertThat(testData.getStartTouching().getEnd()).isEqualTo(start);
+
+        assertThat(testData.getReference().hasInside(testData.getStartTouching().getStart())).isFalse();
+        assertThat(testData.getReference().hasInside(testData.getStartTouching().getEnd())).isTrue();
+        assertThat(testData.getReference().getRelation(testData.getStartTouching())).isEqualTo(PeriodRelation.StartTouching);
+
+        // start inside
+        assertThat(testData.getStartInside().isReadonly()).isTrue();
+        assertThat(testData.getStartInside().getStart().getMillis()).isLessThan(start.getMillis());
+        assertThat(testData.getStartInside().getEnd().getMillis()).isLessThan(end.getMillis());
+
+        assertThat(testData.getReference().hasInside(testData.getStartInside().getStart())).isFalse();
+        assertThat(testData.getReference().hasInside(testData.getStartInside().getEnd())).isTrue();
+        assertThat(testData.getReference().getRelation(testData.getStartInside())).isEqualTo(PeriodRelation.StartInside);
+
+        // inside start touching
+        assertThat(testData.getInsideStartTouching().isReadonly()).isTrue();
+        assertThat(testData.getInsideStartTouching().getStart().getMillis()).isEqualTo(start.getMillis());
+        assertThat(testData.getInsideStartTouching().getEnd().getMillis()).isGreaterThan(end.getMillis());
+
+        assertThat(testData.getReference().hasInside(testData.getInsideStartTouching().getStart())).isTrue();
+        assertThat(testData.getReference().hasInside(testData.getInsideStartTouching().getEnd())).isFalse();
+        assertThat(testData.getReference().getRelation(testData.getInsideStartTouching())).isEqualTo(PeriodRelation.InsideStartTouching);
+
+        // enclosing start touching
+        assertThat(testData.getInsideStartTouching().isReadonly()).isTrue();
+        assertThat(testData.getInsideStartTouching().getStart().getMillis()).isEqualTo(start.getMillis());
+        assertThat(testData.getInsideStartTouching().getEnd().getMillis()).isGreaterThan(end.getMillis());
+
+        assertThat(testData.getReference().hasInside(testData.getInsideStartTouching().getStart())).isTrue();
+        assertThat(testData.getReference().hasInside(testData.getInsideStartTouching().getEnd())).isFalse();
+        assertThat(testData.getReference().getRelation(testData.getInsideStartTouching())).isEqualTo(PeriodRelation.InsideStartTouching);
+
+        // enclosing
+        assertThat(testData.getEnclosing().isReadonly()).isTrue();
+        assertThat(testData.getEnclosing().getStart().getMillis()).isGreaterThan(start.getMillis());
+        assertThat(testData.getEnclosing().getEnd().getMillis()).isLessThan(end.getMillis());
+
+        assertThat(testData.getReference().hasInside(testData.getEnclosing().getStart())).isTrue();
+        assertThat(testData.getReference().hasInside(testData.getEnclosing().getEnd())).isTrue();
+        assertThat(testData.getReference().getRelation(testData.getEnclosing())).isEqualTo(PeriodRelation.Enclosing);
+
+        // enclosing end touching
+        assertThat(testData.getEnclosingEndTouching().isReadonly()).isTrue();
+        assertThat(testData.getEnclosingEndTouching().getStart().getMillis()).isGreaterThan(start.getMillis());
+        assertThat(testData.getEnclosingEndTouching().getEnd().getMillis()).isEqualTo(end.getMillis());
+
+        assertThat(testData.getReference().hasInside(testData.getEnclosingEndTouching().getStart())).isTrue();
+        assertThat(testData.getReference().hasInside(testData.getEnclosingEndTouching().getEnd())).isTrue();
+        assertThat(testData.getReference().getRelation(testData.getEnclosingEndTouching())).isEqualTo(PeriodRelation.EnclosingEndTouching);
+
+        // exact match
+        assertThat(testData.getExactMatch().isReadonly()).isTrue();
+        assertThat(testData.getExactMatch().getStart().getMillis()).isEqualTo(start.getMillis());
+        assertThat(testData.getExactMatch().getEnd().getMillis()).isEqualTo(end.getMillis());
+
+        assertThat(testData.getReference().hasInside(testData.getExactMatch().getStart())).isTrue();
+        assertThat(testData.getReference().hasInside(testData.getExactMatch().getEnd())).isTrue();
+        assertThat(testData.getReference().getRelation(testData.getExactMatch())).isEqualTo(PeriodRelation.ExactMatch);
+
+        // inside
+        assertThat(testData.getInside().isReadonly()).isTrue();
+        assertThat(testData.getInside().getStart().getMillis()).isLessThan(start.getMillis());
+        assertThat(testData.getInside().getEnd().getMillis()).isGreaterThan(end.getMillis());
+
+        assertThat(testData.getReference().hasInside(testData.getInside().getStart())).isFalse();
+        assertThat(testData.getReference().hasInside(testData.getInside().getEnd())).isFalse();
+        assertThat(testData.getReference().getRelation(testData.getInside())).isEqualTo(PeriodRelation.Inside);
+
+        // inside end touching
+        assertThat(testData.getInsideEndTouching().isReadonly()).isTrue();
+        assertThat(testData.getInsideEndTouching().getStart().getMillis()).isLessThan(start.getMillis());
+        assertThat(testData.getInsideEndTouching().getEnd().getMillis()).isEqualTo(end.getMillis());
+
+        assertThat(testData.getReference().hasInside(testData.getInsideEndTouching().getStart())).isFalse();
+        assertThat(testData.getReference().hasInside(testData.getInsideEndTouching().getEnd())).isTrue();
+        assertThat(testData.getReference().getRelation(testData.getInsideEndTouching())).isEqualTo(PeriodRelation.InsideEndTouching);
+
+        // end inside
+        assertThat(testData.getEndInside().isReadonly()).isTrue();
+        assertThat(testData.getEndInside().getStart().getMillis()).isGreaterThan(start.getMillis());
+        assertThat(testData.getEndInside().getStart().getMillis()).isLessThan(end.getMillis());
+        assertThat(testData.getEndInside().getEnd().getMillis()).isGreaterThan(end.getMillis());
+
+        assertThat(testData.getReference().hasInside(testData.getEndInside().getStart())).isTrue();
+        assertThat(testData.getReference().hasInside(testData.getEndInside().getEnd())).isFalse();
+        assertThat(testData.getReference().getRelation(testData.getEndInside())).isEqualTo(PeriodRelation.EndInside);
+
+        // end touching
+        assertThat(testData.getEndTouching().isReadonly()).isTrue();
+        assertThat(testData.getEndTouching().getStart().getMillis()).isEqualTo(end.getMillis());
+        assertThat(testData.getEndTouching().getEnd().getMillis()).isGreaterThan(end.getMillis());
+
+        assertThat(testData.getReference().hasInside(testData.getEndTouching().getStart())).isTrue();
+        assertThat(testData.getReference().hasInside(testData.getEndTouching().getEnd())).isFalse();
+        assertThat(testData.getReference().getRelation(testData.getEndTouching())).isEqualTo(PeriodRelation.EndTouching);
+
+        // before
+        assertThat(testData.getBefore().isReadonly()).isTrue();
+        assertThat(testData.getBefore().getStart().getMillis()).isGreaterThan(end.getMillis());
+        assertThat(testData.getBefore().getEnd().getMillis()).isGreaterThan(end.getMillis());
+
+        assertThat(testData.getReference().hasInside(testData.getBefore().getStart())).isFalse();
+        assertThat(testData.getReference().hasInside(testData.getBefore().getEnd())).isFalse();
+        assertThat(testData.getReference().getRelation(testData.getBefore())).isEqualTo(PeriodRelation.Before);
+    }
+
+    @Test
+    public void resetTest() {
+        TimeRange range = new TimeRange(start, end);
+
+        assertThat(range.getStart()).isEqualTo(start);
+        assertThat(range.hasStart()).isTrue();
+        assertThat(range.getEnd()).isEqualTo(end);
+        assertThat(range.hasEnd()).isTrue();
+
+        range.reset();
+
+        assertThat(range.getStart()).isEqualTo(TimeSpec.MinPeriodTime);
+        assertThat(range.hasStart()).isFalse();
+        assertThat(range.getEnd()).isEqualTo(TimeSpec.MaxPeriodTime);
+        assertThat(range.hasEnd()).isFalse();
+    }
+
+    @Test
+    public void equalsTest() {
+        TimeRange range1 = new TimeRange(start, end);
+        TimeRange range2 = new TimeRange(start, end);
+        TimeRange range3 = new TimeRange(start.plusMillis(-1), end.plusMillis(1));
+        TimeRange range4 = new TimeRange(start, end, true);
+
+        assertThat(range1).isEqualTo(range2);
+        assertThat(range1).isNotEqualTo(range3);
+        assertThat(range2).isEqualTo(range1);
+        assertThat(range2).isNotEqualTo(range3);
+
+        assertThat(range1).isNotEqualTo(range4);
+    }
+
 }

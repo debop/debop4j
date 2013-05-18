@@ -17,7 +17,7 @@
 package kr.debop4j.timeperiod.timerange;
 
 import kr.debop4j.core.ValueObjectBase;
-import kr.debop4j.timeperiod.TimePart;
+import kr.debop4j.timeperiod.Timepart;
 import lombok.Getter;
 
 import java.io.Serializable;
@@ -33,18 +33,18 @@ public class HourRangeInDay extends ValueObjectBase implements Comparable<HourRa
 
     private static final long serialVersionUID = -5824233675219678490L;
 
-    @Getter private final TimePart start;
-    @Getter private final TimePart end;
+    @Getter private final Timepart start;
+    @Getter private final Timepart end;
 
     public HourRangeInDay(int hourOfDay) {
         this(hourOfDay, hourOfDay);
     }
 
     public HourRangeInDay(int startHourOfDay, int endHourOfDay) {
-        this(new TimePart(startHourOfDay), new TimePart(endHourOfDay));
+        this(new Timepart(startHourOfDay), new Timepart(endHourOfDay));
     }
 
-    public HourRangeInDay(TimePart start, TimePart end) {
+    public HourRangeInDay(Timepart start, Timepart end) {
         if (start.compareTo(end) <= 0) {
             this.start = start;
             this.end = end;
@@ -62,7 +62,7 @@ public class HourRangeInDay extends ValueObjectBase implements Comparable<HourRa
         return start.getHourOfDay() <= hourOfDay && hourOfDay <= end.getHourOfDay();
     }
 
-    public boolean hasInside(TimePart time) {
+    public boolean hasInside(Timepart time) {
         return time.compareTo(start) >= 0 && time.compareTo(end) <= 0;
     }
 

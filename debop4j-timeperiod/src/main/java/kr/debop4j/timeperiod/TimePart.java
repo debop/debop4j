@@ -29,37 +29,39 @@ import org.joda.time.Duration;
  * @author 배성혁 sunghyouk.bae@gmail.com
  * @since 13. 5. 12. 오후 2:23
  */
-public class TimePart extends ValueObjectBase implements Comparable<TimePart> {
+public class Timepart extends ValueObjectBase implements Comparable<Timepart> {
 
     private static final long serialVersionUID = -4029003873537088627L;
 
-    public static TimePart now() {
-        return new TimePart(DateTime.now());
+    public static Timepart now() {
+        return new Timepart(DateTime.now());
     }
 
-    public TimePart() {}
-
-    public TimePart(DateTime time) {
-        this.timepart = new DateTime(time.getMillisOfDay());
+    public Timepart() {
+        this(new DateTime().withTimeAtStartOfDay());
     }
 
-    public TimePart(Duration duration) {
-        this(new DateTime(duration));
+    public Timepart(Duration duration) {
+        this.timepart = new DateTime(0).withMillisOfDay((int) duration.getMillis());
     }
 
-    public TimePart(int hourOfDay) {
+    public Timepart(DateTime time) {
+        this.timepart = new DateTime(0).withMillisOfDay(time.getMillisOfDay());
+    }
+
+    public Timepart(int hourOfDay) {
         this(hourOfDay, 0, 0, 0);
     }
 
-    public TimePart(int hourOfDay, int minuteOfHour) {
+    public Timepart(int hourOfDay, int minuteOfHour) {
         this(hourOfDay, minuteOfHour, 0, 0);
     }
 
-    public TimePart(int hourOfDay, int minuteOfHour, int secondOfMinute) {
+    public Timepart(int hourOfDay, int minuteOfHour, int secondOfMinute) {
         this(hourOfDay, minuteOfHour, secondOfMinute, 0);
     }
 
-    public TimePart(int hourOfDay, int minuteOfHour, int secondOfMinute, int millisOfSecond) {
+    public Timepart(int hourOfDay, int minuteOfHour, int secondOfMinute, int millisOfSecond) {
         this(new DateTime().withTime(hourOfDay, minuteOfHour, secondOfMinute, millisOfSecond));
     }
 
@@ -94,20 +96,24 @@ public class TimePart extends ValueObjectBase implements Comparable<TimePart> {
         return getMillis() / TimeSpec.MillisPerSecond;
     }
 
+    public long getTotalMillis() {
+        return timepart.getMillisOfDay();
+    }
+
     public long getMillis() {
-        return timepart.getMillis();
+        return timepart.getMillisOfDay();
     }
 
     public DateTime getDateTime(DateTime moment) {
         return moment.withTimeAtStartOfDay().plus(getMillis());
     }
 
-    public DateTime getDateTime(DatePart datepart) {
+    public DateTime getDateTime(Datepart datepart) {
         return datepart.getDateTime(this);
     }
 
     @Override
-    public int compareTo(TimePart o) {
+    public int compareTo(Timepart o) {
         return hashCode() - o.hashCode();
     }
 
