@@ -21,7 +21,7 @@ import kr.debop4j.timeperiod.ITimeCalendar;
 import kr.debop4j.timeperiod.QuarterKind;
 import kr.debop4j.timeperiod.TimeCalendar;
 import kr.debop4j.timeperiod.YearAndQuarter;
-import kr.debop4j.timeperiod.tools.TimeTool;
+import kr.debop4j.timeperiod.tools.Times;
 import org.joda.time.DateTime;
 
 import java.util.List;
@@ -41,8 +41,8 @@ public class QuarterRangeCollection extends QuarterTimeRange {
     }
 
     public QuarterRangeCollection(DateTime moment, int quarterCount, ITimeCalendar timeCalendar) {
-        this(TimeTool.getYearOf(timeCalendar.getYear(moment), timeCalendar.getMonthOfYear(moment)),
-             TimeTool.quarterOf(timeCalendar.getMonthOfYear(moment)),
+        this(Times.getYearOf(timeCalendar.getYear(moment), timeCalendar.getMonthOfYear(moment)),
+             Times.quarterOf(timeCalendar.getMonthOfYear(moment)),
              quarterCount,
              timeCalendar);
     }
@@ -62,7 +62,7 @@ public class QuarterRangeCollection extends QuarterTimeRange {
 
         List<QuarterRange> quarters = Lists.newArrayListWithCapacity(getQuarterCount());
         for (int q = 0; q < getQuarterCount(); q++) {
-            YearAndQuarter yq = TimeTool.addQuarter(getStartYear(), getStartQuarter(), q);
+            YearAndQuarter yq = Times.addQuarter(getStartYear(), getStartQuarter(), q);
             quarters.add(new QuarterRange(yq.getYear(), yq.getQuarter(), getTimeCalendar()));
         }
         return quarters;

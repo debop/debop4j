@@ -21,7 +21,7 @@ import com.google.common.collect.Lists;
 import kr.debop4j.core.tools.HashTool;
 import kr.debop4j.timeperiod.*;
 import kr.debop4j.timeperiod.tools.TimeSpec;
-import kr.debop4j.timeperiod.tools.TimeTool;
+import kr.debop4j.timeperiod.tools.Times;
 import lombok.Getter;
 import org.joda.time.DateTime;
 
@@ -55,7 +55,7 @@ public abstract class MonthTimeRange extends CalendarTimeRange {
         super(getPeriodOf(year, monthOfYear, monthCount), calendar);
         this.monthCount = monthCount;
 
-        YearAndMonth ym = TimeTool.addMonth(year, monthOfYear, monthCount - 1);
+        YearAndMonth ym = Times.addMonth(year, monthOfYear, monthCount - 1);
         endYear = ym.getYear();
         endMonthOfYear = ym.getMonthOfYear();
     }
@@ -83,12 +83,12 @@ public abstract class MonthTimeRange extends CalendarTimeRange {
     }
 
     public List<DayRange> getDays() {
-        DateTime startMonth = TimeTool.startTimeOfMonth(getStart());
+        DateTime startMonth = Times.startTimeOfMonth(getStart());
         List<DayRange> days = Lists.newArrayListWithCapacity(monthCount * TimeSpec.MaxDaysPerMonth);
 
         for (int m = 0; m < monthCount; m++) {
             DateTime monthStart = startMonth.plusMonths(m);
-            int daysOfMonth = TimeTool.getDaysInMonth(monthStart.getYear(), monthStart.getMonthOfYear());
+            int daysOfMonth = Times.getDaysInMonth(monthStart.getYear(), monthStart.getMonthOfYear());
             for (int d = 0; d < daysOfMonth; d++) {
                 days.add(new DayRange(monthStart.plusDays(d), getTimeCalendar()));
             }

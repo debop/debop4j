@@ -20,7 +20,7 @@ import com.google.common.collect.Lists;
 import kr.debop4j.core.tools.HashTool;
 import kr.debop4j.timeperiod.*;
 import kr.debop4j.timeperiod.tools.TimeSpec;
-import kr.debop4j.timeperiod.tools.TimeTool;
+import kr.debop4j.timeperiod.tools.Times;
 import lombok.Getter;
 import org.joda.time.DateTime;
 
@@ -47,7 +47,7 @@ public abstract class QuarterTimeRange extends YearCalendarTimeRange {
         this.startQuarter = startQuarter;
         this.quarterCount = quarterCount;
 
-        YearAndQuarter yq = TimeTool.addQuarter(startYear, startQuarter, quarterCount - 1);
+        YearAndQuarter yq = Times.addQuarter(startYear, startQuarter, quarterCount - 1);
         this.endYear = yq.getYear();
         this.endQuarter = yq.getQuarter();
 
@@ -78,20 +78,20 @@ public abstract class QuarterTimeRange extends YearCalendarTimeRange {
 
     public int getStartMonthOfYear() {
         int months = (startQuarter.getValue() - 1) * TimeSpec.MonthsPerQuarter;
-        return TimeTool.addMonth(startYear, 1, months).getMonthOfYear();
+        return Times.addMonth(startYear, 1, months).getMonthOfYear();
     }
 
     public int getEndMonthOfYear() {
         int months = (startQuarter.getValue() - 1 + quarterCount) * TimeSpec.MonthsPerQuarter;
-        return TimeTool.addMonth(endYear, 1, months).getMonthOfYear();
+        return Times.addMonth(endYear, 1, months).getMonthOfYear();
     }
 
     public boolean isMultipleCalendarYears() {
         int months = (startQuarter.getValue() - 1) * TimeSpec.MonthsPerQuarter;
-        YearAndMonth startYM = TimeTool.addMonth(startYear, 1, months);
+        YearAndMonth startYM = Times.addMonth(startYear, 1, months);
 
         months = (startQuarter.getValue() - 1 + quarterCount) * TimeSpec.MonthsPerQuarter;
-        YearAndMonth endYM = TimeTool.addMonth(endYear, 1, months);
+        YearAndMonth endYM = Times.addMonth(endYear, 1, months);
 
         return !startYM.getYear().equals(endYM.getYear());
     }

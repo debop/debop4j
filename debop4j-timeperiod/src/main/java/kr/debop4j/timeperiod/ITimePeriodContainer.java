@@ -28,19 +28,43 @@ import java.util.List;
  */
 public interface ITimePeriodContainer extends List<ITimePeriod>, ITimePeriod {
 
+    /** 시작시각을 설정합니다. */
     void setStart(DateTime start);
 
+    /** 완료시각을 설정합니다. */
     void setEnd(DateTime end);
 
+    /** 읽기전용 여부 */
     boolean isReadonly();
 
+    /** 지정한 기간을 포함하는지 여부 */
     boolean containsPeriod(ITimePeriod target);
 
+    /**
+     * 모든 기간들을 추가합니다.
+     *
+     * @param periods 추가할 기간들
+     */
     void addAll(Iterable<? extends ITimePeriod> periods);
 
+    /**
+     * 시작시각으로 정렬을 수행합니다.
+     *
+     * @param sortDir 정렬 방식 (순차|역순)
+     */
     void sortByStart(OrderDirection sortDir);
 
+    /**
+     * 완료시각으로 정렬을 수행합니다.
+     *
+     * @param sortDir 정렬 방식 (순차|역순)
+     */
     void sortByEnd(OrderDirection sortDir);
 
+    /**
+     * Duration 속성값으로 정렬을 수행합니다.
+     *
+     * @param sortDir 정렬 방식 (순차|역순)
+     */
     void sortByDuration(OrderDirection sortDir);
 }

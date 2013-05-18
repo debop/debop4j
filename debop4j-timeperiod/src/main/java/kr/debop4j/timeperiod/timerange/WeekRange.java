@@ -20,7 +20,7 @@ import kr.debop4j.timeperiod.ITimeCalendar;
 import kr.debop4j.timeperiod.ITimePeriod;
 import kr.debop4j.timeperiod.TimeCalendar;
 import kr.debop4j.timeperiod.clock.ClockProxy;
-import kr.debop4j.timeperiod.tools.TimeTool;
+import kr.debop4j.timeperiod.tools.Times;
 import org.joda.time.DateTime;
 
 /**
@@ -98,7 +98,7 @@ public class WeekRange extends WeekTimeRange {
     }
 
     public WeekRange addWeeks(int weeks) {
-        DateTime startOfWeek = TimeTool.getStartOfYearWeek(getYear(), getStartWeekOfYear(), getTimeCalendar());
+        DateTime startOfWeek = Times.getStartOfYearWeek(getYear(), getStartWeekOfYear(), getTimeCalendar());
         return new WeekRange(startOfWeek.plusWeeks(weeks), getTimeCalendar());
     }
 }

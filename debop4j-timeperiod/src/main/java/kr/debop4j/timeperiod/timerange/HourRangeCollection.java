@@ -18,7 +18,7 @@ package kr.debop4j.timeperiod.timerange;
 
 import com.google.common.collect.Lists;
 import kr.debop4j.timeperiod.ITimeCalendar;
-import kr.debop4j.timeperiod.tools.TimeTool;
+import kr.debop4j.timeperiod.tools.Times;
 import org.joda.time.DateTime;
 
 import java.util.List;
@@ -50,7 +50,7 @@ public class HourRangeCollection extends HourTimeRange {
     }
 
     public List<HourRange> getHours() {
-        DateTime startHour = TimeTool.trimToHour(getStart(), getStartHourOfDay());
+        DateTime startHour = Times.trimToHour(getStart(), getStartHourOfDay());
 
         List<HourRange> hours = Lists.newArrayListWithCapacity(getHourCount());
         for (int h = 0; h < getHourCount(); h++)

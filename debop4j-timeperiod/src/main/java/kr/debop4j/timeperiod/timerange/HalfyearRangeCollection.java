@@ -21,7 +21,7 @@ import kr.debop4j.timeperiod.HalfyearKind;
 import kr.debop4j.timeperiod.ITimeCalendar;
 import kr.debop4j.timeperiod.TimeCalendar;
 import kr.debop4j.timeperiod.YearAndHalfyear;
-import kr.debop4j.timeperiod.tools.TimeTool;
+import kr.debop4j.timeperiod.tools.Times;
 import org.joda.time.DateTime;
 
 import java.util.List;
@@ -40,8 +40,8 @@ public class HalfyearRangeCollection extends HalfyearTimeRange {
     }
 
     public HalfyearRangeCollection(DateTime moment, int halfyearCount, ITimeCalendar timeCalendar) {
-        this(TimeTool.getYearOf(timeCalendar.getYear(moment), timeCalendar.getMonthOfYear(moment)),
-             TimeTool.halfyearOf(timeCalendar.getMonthOfYear(moment)),
+        this(Times.getYearOf(timeCalendar.getYear(moment), timeCalendar.getMonthOfYear(moment)),
+             Times.halfyearOf(timeCalendar.getMonthOfYear(moment)),
              halfyearCount,
              timeCalendar);
     }
@@ -60,7 +60,7 @@ public class HalfyearRangeCollection extends HalfyearTimeRange {
         List<HalfyearRange> halfyears = Lists.newArrayListWithCapacity(halfyearCount);
 
         for (int hy = 0; hy < halfyearCount; hy++) {
-            YearAndHalfyear yhy = TimeTool.addHalfyear(getStartYear(), getStartHalfyear(), hy);
+            YearAndHalfyear yhy = Times.addHalfyear(getStartYear(), getStartHalfyear(), hy);
             halfyears.add(new HalfyearRange(yhy.getYear(), yhy.getHalfyear(), getTimeCalendar()));
         }
         return halfyears;

@@ -16,8 +16,7 @@
 
 package kr.debop4j.timeperiod;
 
-import kr.debop4j.core.NotImplementedException;
-import kr.debop4j.timeperiod.tools.TimeTool;
+import kr.debop4j.timeperiod.tools.Times;
 import lombok.extern.slf4j.Slf4j;
 import org.joda.time.DateTime;
 import org.joda.time.Duration;
@@ -36,13 +35,11 @@ public class TimeRange extends TimePeriodBase implements ITimeRange {
     public static final TimeRange Anytime = new TimeRange(true);
 
     public static ITimeBlock toTimeBlock(ITimeRange range) {
-        // TODO: 구현 필요
-        throw new NotImplementedException("구현 중");
+        return new TimeBlock(range.getStart(), range.getEnd());
     }
 
     public static ITimeInterval toTimeInterval(ITimeRange range) {
-        // TODO: 구현 필요
-        throw new NotImplementedException("구현 중");
+        return new TimeInterval(range.getStart(), range.getEnd());
     }
 
     // region << Constructor >>
@@ -51,6 +48,10 @@ public class TimeRange extends TimePeriodBase implements ITimeRange {
 
     public TimeRange(boolean readonly) {
         super(readonly);
+    }
+
+    public TimeRange(DateTime moment) {
+        super(moment);
     }
 
     public TimeRange(DateTime start, DateTime end) {
@@ -82,13 +83,25 @@ public class TimeRange extends TimePeriodBase implements ITimeRange {
     @Override
     public void setStart(DateTime start) {
         assertMutable();
+        assert start.compareTo(this.end) <= 0 : "시작시각이 완료시각보다 클 수 없습니다.";
         this.start = start;
     }
 
     @Override
     public void setEnd(DateTime end) {
         assertMutable();
+        assert end.compareTo(this.start) >= 0 : "완료시각이 시작시각보다 작을 수 없습니다.";
         this.end = end;
+    }
+
+    @Override
+    public TimeRange copy() {
+        return (TimeRange) super.copy();
+    }
+
+    @Override
+    public TimeRange copy(Duration offset) {
+        return (TimeRange) super.copy(offset);
     }
 
     @Override
@@ -156,12 +169,12 @@ public class TimeRange extends TimePeriodBase implements ITimeRange {
     @Override
     public ITimePeriod getIntersection(ITimePeriod other) {
         assert other != null;
-        return TimeTool.getIntersectionRange(this, other);
+        return Times.getIntersectionRange(this, other);
     }
 
     @Override
     public ITimePeriod getUnion(ITimePeriod other) {
         assert other != null;
-        return TimeTool.getUnionRange(this, other);
+        return Times.getUnionRange(this, other);
     }
 }

@@ -20,7 +20,7 @@ import com.google.common.collect.Iterables;
 import kr.debop4j.core.Guard;
 import kr.debop4j.core.NotSupportException;
 import kr.debop4j.timeperiod.tools.TimeSpec;
-import kr.debop4j.timeperiod.tools.TimeTool;
+import kr.debop4j.timeperiod.tools.Times;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.joda.time.DateTime;
@@ -41,7 +41,7 @@ public class TimePeriodContainer implements ITimePeriodContainer {
     private static final long serialVersionUID = -7112720659283751048L;
 
     @Getter
-    protected final List<ITimePeriod> periods = new ArrayList<>();
+    protected final List<ITimePeriod> periods = new ArrayList<ITimePeriod>();
 
     public TimePeriodContainer() {}
 
@@ -143,6 +143,8 @@ public class TimePeriodContainer implements ITimePeriodContainer {
         if (offset == null || offset.getMillis() == 0)
             return;
 
+        if (log.isTraceEnabled()) log.trace("모든 기간을 offset[{}] 만큼 이동합니다.", offset);
+
         for (ITimePeriod period : this.periods)
             period.move(offset);
     }
@@ -154,22 +156,22 @@ public class TimePeriodContainer implements ITimePeriodContainer {
 
     @Override
     public boolean hasInside(DateTime moment) {
-        return TimeTool.hasInside(this, moment);
+        return Times.hasInside(this, moment);
     }
 
     @Override
     public boolean hasInside(ITimePeriod other) {
-        return TimeTool.hasInside(this, other);
+        return Times.hasInside(this, other);
     }
 
     @Override
     public boolean intersectsWith(ITimePeriod other) {
-        return TimeTool.intersectsWith(this, other);
+        return Times.intersectsWith(this, other);
     }
 
     @Override
     public boolean overlapsWith(ITimePeriod other) {
-        return TimeTool.overlapsWith(this, other);
+        return Times.overlapsWith(this, other);
     }
 
     @Override
@@ -179,19 +181,20 @@ public class TimePeriodContainer implements ITimePeriodContainer {
 
     @Override
     public PeriodRelation getRelation(ITimePeriod other) {
-        return TimeTool.getRelation(this, other);
+        return Times.getRelation(this, other);
     }
 
     @Override
     public ITimePeriod getIntersection(ITimePeriod other) {
-        return TimeTool.getIntersectionRange(this, other);
+        return Times.getIntersectionRange(this, other);
     }
 
     @Override
     public ITimePeriod getUnion(ITimePeriod other) {
-        return TimeTool.getUnionRange(this, other);
+        return Times.getUnionRange(this, other);
     }
 
+    /** 지정한 기간을 포함하는지 여부 */
     @Override
     public boolean containsPeriod(ITimePeriod target) {
         Guard.shouldNotBeNull(target, "target");
@@ -202,11 +205,21 @@ public class TimePeriodContainer implements ITimePeriodContainer {
         return false;
     }
 
+    /**
+     * 모든 기간들을 추가합니다.
+     *
+     * @param periods 추가할 기간들
+     */
     @Override
     public void addAll(Iterable<? extends ITimePeriod> periods) {
         Iterables.addAll(this.periods, periods);
     }
 
+    /**
+     * 시작시각으로 정렬을 수행합니다.
+     *
+     * @param sortDir 정렬 방식 (순차|역순)
+     */
     @Override
     public void sortByStart(OrderDirection sortDir) {
         if (sortDir == OrderDirection.ASC) {
@@ -216,6 +229,11 @@ public class TimePeriodContainer implements ITimePeriodContainer {
         }
     }
 
+    /**
+     * 완료시각으로 정렬을 수행합니다.
+     *
+     * @param sortDir 정렬 방식 (순차|역순)
+     */
     @Override
     public void sortByEnd(OrderDirection sortDir) {
         if (sortDir == OrderDirection.ASC) {
@@ -225,6 +243,11 @@ public class TimePeriodContainer implements ITimePeriodContainer {
         }
     }
 
+    /**
+     * Duration 속성값으로 정렬을 수행합니다.
+     *
+     * @param sortDir 정렬 방식 (순차|역순)
+     */
     @Override
     public void sortByDuration(OrderDirection sortDir) {
         if (sortDir == OrderDirection.ASC) {

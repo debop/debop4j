@@ -17,7 +17,7 @@
 package kr.debop4j.timeperiod;
 
 import kr.debop4j.timeperiod.tools.TimeSpec;
-import kr.debop4j.timeperiod.tools.TimeTool;
+import kr.debop4j.timeperiod.tools.Times;
 import lombok.extern.slf4j.Slf4j;
 import org.joda.time.DateTime;
 import org.joda.time.Duration;
@@ -54,6 +54,7 @@ public class TimePeriodChain extends TimePeriodContainer implements ITimePeriodC
         return (getFirst() != null) ? getFirst().getStart() : TimeSpec.MinPeriodTime;
     }
 
+    /** period chain의 시작 시각을 지정합니다. */
     @Override
     public void setStart(DateTime value) {
         if (getFirst() != null)
@@ -71,11 +72,21 @@ public class TimePeriodChain extends TimePeriodContainer implements ITimePeriodC
             move(new Duration(getEnd(), value));
     }
 
+    /**
+     * Period 체인의 첫번째 요소, 없으면 null을 반환합니다.
+     *
+     * @return
+     */
     @Override
     public ITimePeriod getFirst() {
         return (size() > 0) ? getPeriods().get(0) : null;
     }
 
+    /**
+     * period chain의 마지막 요소, 없으면 null을 반환합니다.
+     *
+     * @return
+     */
     @Override
     public ITimePeriod getLast() {
         return (size() > 0) ? getPeriods().get(size() - 1) : null;
@@ -89,10 +100,16 @@ public class TimePeriodChain extends TimePeriodContainer implements ITimePeriodC
         return element;
     }
 
+    /**
+     * 기간을 추가합니다.
+     *
+     * @param period 추가할 기간
+     * @return 추가 여부
+     */
     @Override
     public boolean add(ITimePeriod period) {
         shouldNotBeNull(period, "period");
-        TimeTool.assertMutable(period);
+        Times.assertMutable(period);
 
         ITimePeriod last = getLast();
         if (last != null) {
@@ -105,6 +122,11 @@ public class TimePeriodChain extends TimePeriodContainer implements ITimePeriodC
         return getPeriods().add(period);
     }
 
+    /**
+     * 기간들을 모두 추가합니다.
+     *
+     * @param periods 추가할 기간들
+     */
     @Override
     public void addAll(Iterable<? extends ITimePeriod> periods) {
         shouldNotBeNull(periods, "periods");
@@ -123,7 +145,7 @@ public class TimePeriodChain extends TimePeriodContainer implements ITimePeriodC
     public void add(int index, ITimePeriod item) {
         shouldNotBeNull(item, "item");
         shouldBeInRange(index, 0, size(), "index");
-        TimeTool.assertMutable(item);
+        Times.assertMutable(item);
 
         if (log.isTraceEnabled())
             log.trace("Chain의 인덱스[{}]에 새로운 요소[{}]를 삽입합니다...", index, item);

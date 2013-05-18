@@ -40,13 +40,13 @@ import static kr.debop4j.core.Guard.shouldNotBeNull;
  * @author 배성혁 sunghyouk.bae@gmail.com
  * @since 13. 5. 11. 오후 2:44
  */
-public abstract class TimeTool {
+public abstract class Times {
 
-    private static final Logger log = LoggerFactory.getLogger(TimeTool.class);
+    private static final Logger log = LoggerFactory.getLogger(Times.class);
     @Getter( lazy = true ) private static final boolean traceEnabled = log.isTraceEnabled();
     @Getter( lazy = true ) private static final boolean debugEnabled = log.isDebugEnabled();
 
-    private TimeTool() {}
+    private Times() {}
 
     public static final String NullString = "<null>";
     public static final DateTime UnixEpoch = new DateTime(1970, 1, 1, 0, 0, 0, 0);

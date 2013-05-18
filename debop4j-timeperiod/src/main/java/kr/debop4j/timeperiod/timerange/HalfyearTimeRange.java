@@ -20,7 +20,7 @@ import com.google.common.collect.Lists;
 import kr.debop4j.core.tools.HashTool;
 import kr.debop4j.timeperiod.*;
 import kr.debop4j.timeperiod.tools.TimeSpec;
-import kr.debop4j.timeperiod.tools.TimeTool;
+import kr.debop4j.timeperiod.tools.Times;
 import lombok.Getter;
 import org.joda.time.DateTime;
 
@@ -44,7 +44,7 @@ public abstract class HalfyearTimeRange extends YearCalendarTimeRange {
 
         this.halfyearCount = halfyearCount;
 
-        YearAndHalfyear endYH = TimeTool.addHalfyear(startYear, startHalfyear, halfyearCount - 1);
+        YearAndHalfyear endYH = Times.addHalfyear(startYear, startHalfyear, halfyearCount - 1);
         this.endYear = endYH.getYear();
         this.endHalfyear = endYH.getHalfyear();
     }

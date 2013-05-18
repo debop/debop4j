@@ -19,7 +19,7 @@ package kr.debop4j.timeperiod;
 import com.google.common.base.Predicate;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
-import kr.debop4j.timeperiod.tools.TimeTool;
+import kr.debop4j.timeperiod.tools.Times;
 import lombok.extern.slf4j.Slf4j;
 import org.joda.time.DateTime;
 
@@ -53,7 +53,7 @@ public class TimePeriodCollection extends TimePeriodContainer implements ITimePe
     public boolean hasInsidePeriods(ITimePeriod target) {
         shouldNotBeNull(target, "target");
         for (ITimePeriod period : getPeriods())
-            if (TimeTool.hasInside(target, period))
+            if (Times.hasInside(target, period))
                 return true;
         return false;
     }
@@ -62,7 +62,7 @@ public class TimePeriodCollection extends TimePeriodContainer implements ITimePe
     public boolean hasOverlapPeriods(ITimePeriod target) {
         shouldNotBeNull(target, "target");
         for (ITimePeriod period : getPeriods())
-            if (TimeTool.overlapsWith(target, period))
+            if (Times.overlapsWith(target, period))
                 return true;
         return false;
     }
@@ -70,7 +70,7 @@ public class TimePeriodCollection extends TimePeriodContainer implements ITimePe
     @Override
     public boolean hasIntersectionPeriods(DateTime moment) {
         for (ITimePeriod period : getPeriods())
-            if (TimeTool.hasInside(period, moment))
+            if (Times.hasInside(period, moment))
                 return true;
         return false;
     }
@@ -79,7 +79,7 @@ public class TimePeriodCollection extends TimePeriodContainer implements ITimePe
     public boolean hasIntersectionPeriods(ITimePeriod target) {
         shouldNotBeNull(target, "target");
         for (ITimePeriod period : getPeriods())
-            if (TimeTool.intersectsWith(target, period))
+            if (Times.intersectsWith(target, period))
                 return true;
         return false;
     }
@@ -90,7 +90,7 @@ public class TimePeriodCollection extends TimePeriodContainer implements ITimePe
         return Iterables.filter(getPeriods(), new Predicate<ITimePeriod>() {
             @Override
             public boolean apply(@Nullable ITimePeriod input) {
-                return TimeTool.hasInside(target, input);
+                return Times.hasInside(target, input);
             }
         });
     }
@@ -101,7 +101,7 @@ public class TimePeriodCollection extends TimePeriodContainer implements ITimePe
         return Iterables.filter(getPeriods(), new Predicate<ITimePeriod>() {
             @Override
             public boolean apply(@Nullable ITimePeriod input) {
-                return TimeTool.overlapsWith(target, input);
+                return Times.overlapsWith(target, input);
             }
         });
     }
@@ -112,7 +112,7 @@ public class TimePeriodCollection extends TimePeriodContainer implements ITimePe
         return Iterables.filter(getPeriods(), new Predicate<ITimePeriod>() {
             @Override
             public boolean apply(@Nullable ITimePeriod input) {
-                return TimeTool.hasInside(input, moment);
+                return Times.hasInside(input, moment);
             }
         });
     }
@@ -123,7 +123,7 @@ public class TimePeriodCollection extends TimePeriodContainer implements ITimePe
         return Iterables.filter(getPeriods(), new Predicate<ITimePeriod>() {
             @Override
             public boolean apply(@Nullable ITimePeriod input) {
-                return TimeTool.intersectsWith(target, input);
+                return Times.intersectsWith(target, input);
             }
         });
     }
@@ -137,7 +137,7 @@ public class TimePeriodCollection extends TimePeriodContainer implements ITimePe
         return Iterables.filter(getPeriods(), new Predicate<ITimePeriod>() {
             @Override
             public boolean apply(@Nullable ITimePeriod input) {
-                PeriodRelation targetRelation = TimeTool.getRelation(input, target);
+                PeriodRelation targetRelation = Times.getRelation(input, target);
                 return filteringRelation.contains(targetRelation);
             }
         });

@@ -19,7 +19,7 @@ package kr.debop4j.timeperiod.timerange;
 import com.google.common.collect.Lists;
 import kr.debop4j.timeperiod.ITimeCalendar;
 import kr.debop4j.timeperiod.TimeCalendar;
-import kr.debop4j.timeperiod.tools.TimeTool;
+import kr.debop4j.timeperiod.tools.Times;
 import org.joda.time.DateTime;
 
 import java.util.List;
@@ -39,7 +39,7 @@ public class YearRangeCollection extends YearTimeRange {
     }
 
     public YearRangeCollection(DateTime moment, int yearCount, ITimeCalendar calendar) {
-        this(TimeTool.getYearOf(moment, calendar), yearCount, calendar);
+        this(Times.getYearOf(moment, calendar), yearCount, calendar);
     }
 
     public YearRangeCollection(int year, int yearCount) {

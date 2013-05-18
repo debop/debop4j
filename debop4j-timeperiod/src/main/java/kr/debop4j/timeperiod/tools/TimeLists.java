@@ -82,22 +82,22 @@ public abstract class TimeLists {
             return years;
         assertHasPeriod(period);
 
-        if (TimeTool.isSameYear(period.getStart(), period.getEnd())) {
+        if (Times.isSameYear(period.getStart(), period.getEnd())) {
             years.add(new TimeRange(period));
             return years;
         }
 
-        years.add(new TimeRange(period.getStart(), TimeTool.endTimeOfYear(period.getStart())));
+        years.add(new TimeRange(period.getStart(), Times.endTimeOfYear(period.getStart())));
 
-        DateTime current = TimeTool.startTimeOfYear(period.getStart()).plusYears(1);
+        DateTime current = Times.startTimeOfYear(period.getStart()).plusYears(1);
         int endYear = period.getEnd().getYear();
         while (current.getYear() < endYear) {
-            years.add(TimeTool.getYearRange(current, null));
+            years.add(Times.getYearRange(current, null));
             current = current.plusYears(1);
         }
 
         if (current.compareTo(period.getEnd()) < 0) {
-            years.add(new TimeRange(TimeTool.startTimeOfYear(current), period.getEnd()));
+            years.add(new TimeRange(Times.startTimeOfYear(current), period.getEnd()));
         }
 
         return years;
@@ -115,23 +115,23 @@ public abstract class TimeLists {
 
         assertHasPeriod(period);
 
-        if (TimeTool.isSameHalfyear(period.getStart(), period.getEnd())) {
+        if (Times.isSameHalfyear(period.getStart(), period.getEnd())) {
             halfyears.add(new TimeRange(period));
             return halfyears;
         }
 
-        DateTime current = TimeTool.endTimeOfHalfyear(period.getStart());
+        DateTime current = Times.endTimeOfHalfyear(period.getStart());
         halfyears.add(new TimeRange(period.getStart(), current));
 
-        int endHashCode = period.getEnd().getYear() * 10 + TimeTool.halfyearOf(period.getEnd()).getValue();
+        int endHashCode = period.getEnd().getYear() * 10 + Times.halfyearOf(period.getEnd()).getValue();
         current = current.plusDays(1);
-        while (current.getYear() * 10 + TimeTool.halfyearOf(current).getValue() < endHashCode) {
-            halfyears.add(TimeTool.getHalfyearRange(current, null));
+        while (current.getYear() * 10 + Times.halfyearOf(current).getValue() < endHashCode) {
+            halfyears.add(Times.getHalfyearRange(current, null));
             current = current.plusMonths(TimeSpec.MonthsPerHalfyear);
         }
 
         if (current.compareTo(period.getEnd()) < 0) {
-            halfyears.add(new TimeRange(TimeTool.startTimeOfHalfyear(current), period.getEnd()));
+            halfyears.add(new TimeRange(Times.startTimeOfHalfyear(current), period.getEnd()));
         }
 
         return halfyears;
@@ -149,23 +149,23 @@ public abstract class TimeLists {
 
         assertHasPeriod(period);
 
-        if (TimeTool.isSameQuarter(period.getStart(), period.getEnd())) {
+        if (Times.isSameQuarter(period.getStart(), period.getEnd())) {
             quarters.add(new TimeRange(period));
             return quarters;
         }
 
-        DateTime current = TimeTool.endTimeOfQuarter(period.getStart());
+        DateTime current = Times.endTimeOfQuarter(period.getStart());
         quarters.add(new TimeRange(period.getStart(), current));
 
-        int endHashCode = period.getEnd().getYear() * 10 + TimeTool.quarterOf(period.getEnd()).getValue();
+        int endHashCode = period.getEnd().getYear() * 10 + Times.quarterOf(period.getEnd()).getValue();
         current = current.plusDays(1);
-        while (current.getYear() * 10 + TimeTool.quarterOf(current).getValue() < endHashCode) {
-            quarters.add(TimeTool.getQuarterRange(current, null));
+        while (current.getYear() * 10 + Times.quarterOf(current).getValue() < endHashCode) {
+            quarters.add(Times.getQuarterRange(current, null));
             current = current.plusMonths(TimeSpec.MonthsPerQuarter);
         }
 
         if (current.compareTo(period.getEnd()) < 0)
-            quarters.add(new TimeRange(TimeTool.startTimeOfQuarter(current), period.getEnd()));
+            quarters.add(new TimeRange(Times.startTimeOfQuarter(current), period.getEnd()));
 
         return quarters;
     }
@@ -182,22 +182,22 @@ public abstract class TimeLists {
 
         assertHasPeriod(period);
 
-        if (TimeTool.isSameMonth(period.getStart(), period.getEnd())) {
+        if (Times.isSameMonth(period.getStart(), period.getEnd())) {
             months.add(new TimeRange(period));
             return months;
         }
 
-        DateTime current = TimeTool.endTimeOfMonth(period.getStart());
+        DateTime current = Times.endTimeOfMonth(period.getStart());
         months.add(new TimeRange(period.getStart(), current));
 
-        DateTime monthEnd = TimeTool.startTimeOfMonth(period.getEnd());
+        DateTime monthEnd = Times.startTimeOfMonth(period.getEnd());
         current = current.plusDays(1);
         while (current.compareTo(monthEnd) < 0) {
-            months.add(TimeTool.getMonthRange(current, null));
+            months.add(Times.getMonthRange(current, null));
             current = current.plusMonths(1);
         }
 
-        current = TimeTool.startTimeOfMonth(current);
+        current = Times.startTimeOfMonth(current);
         if (current.compareTo(period.getEnd()) < 0)
             months.add(new TimeRange(current, period.getEnd()));
 
@@ -216,13 +216,13 @@ public abstract class TimeLists {
 
         assertHasPeriod(period);
 
-        if (TimeTool.isSameWeek(period.getStart(), period.getEnd())) {
+        if (Times.isSameWeek(period.getStart(), period.getEnd())) {
             weeks.add(new TimeRange(period));
             return weeks;
         }
 
         DateTime current = period.getStart();
-        DateTime weekEnd = TimeTool.endTimeOfWeek(current);
+        DateTime weekEnd = Times.endTimeOfWeek(current);
         if (weekEnd.compareTo(period.getEnd()) >= 0) {
             weeks.add(new TimeRange(current, period.getEnd()));
             return weeks;
@@ -230,11 +230,11 @@ public abstract class TimeLists {
         weeks.add(new TimeRange(current, weekEnd));
         current = current.plusWeeks(1);
         while (current.compareTo(period.getEnd()) < 0) {
-            weeks.add(TimeTool.getWeekRange(current, null));
+            weeks.add(Times.getWeekRange(current, null));
             current = current.plusWeeks(1);
         }
 
-        current = TimeTool.startTimeOfWeek(current.minusWeeks(1));
+        current = Times.startTimeOfWeek(current.minusWeeks(1));
         if (current.compareTo(period.getEnd()) < 0) {
             weeks.add(new TimeRange(current, period.getEnd()));
         }
@@ -253,18 +253,18 @@ public abstract class TimeLists {
 
         assertHasPeriod(period);
 
-        if (TimeTool.isSameDay(period.getStart(), period.getEnd())) {
+        if (Times.isSameDay(period.getStart(), period.getEnd())) {
             days.add(new TimeRange(period));
             return days;
         }
 
-        days.add(new TimeRange(period.getStart(), TimeTool.endTimeOfDay(period.getStart())));
+        days.add(new TimeRange(period.getStart(), Times.endTimeOfDay(period.getStart())));
 
         DateTime endDay = period.getEnd();
         DateTime current = period.getStart().withTimeAtStartOfDay().plusDays(1);
 
         while (current.compareTo(endDay) < 0) {
-            days.add(TimeTool.getDayRange(current, null));
+            days.add(Times.getDayRange(current, null));
             current = current.plusDays(1);
         }
         if (endDay.getMillisOfDay() > 0)
@@ -285,22 +285,22 @@ public abstract class TimeLists {
 
         assertHasPeriod(period);
 
-        if (TimeTool.isSameHour(period.getStart(), period.getEnd())) {
+        if (Times.isSameHour(period.getStart(), period.getEnd())) {
             hours.add(new TimeRange(period));
             return hours;
         }
 
-        hours.add(new TimeRange(period.getStart(), TimeTool.endTimeOfHour(period.getStart())));
+        hours.add(new TimeRange(period.getStart(), Times.endTimeOfHour(period.getStart())));
 
         DateTime endHour = period.getEnd();
-        DateTime current = TimeTool.trimToHour(period.getStart(), period.getStart().getHourOfDay() + 1);
+        DateTime current = Times.trimToHour(period.getStart(), period.getStart().getHourOfDay() + 1);
 
         while (current.compareTo(endHour) < 0) {
-            hours.add(TimeTool.getHourRange(current, null));
+            hours.add(Times.getHourRange(current, null));
             current = current.plusHours(1);
         }
         if (endHour.minusHours(endHour.getHourOfDay()).getMillisOfDay() > 0) {
-            hours.add(new TimeRange(TimeTool.startTimeOfHour(endHour), endHour));
+            hours.add(new TimeRange(Times.startTimeOfHour(endHour), endHour));
         }
 
         return hours;
@@ -318,22 +318,22 @@ public abstract class TimeLists {
 
         assertHasPeriod(period);
 
-        if (TimeTool.isSameMinute(period.getStart(), period.getEnd())) {
+        if (Times.isSameMinute(period.getStart(), period.getEnd())) {
             minutes.add(new TimeRange(period));
             return minutes;
         }
 
-        minutes.add(new TimeRange(period.getStart(), TimeTool.endTimeOfMinute(period.getStart())));
+        minutes.add(new TimeRange(period.getStart(), Times.endTimeOfMinute(period.getStart())));
 
         DateTime endMinute = period.getEnd();
-        DateTime current = TimeTool.trimToMinute(period.getStart(), period.getStart().getMinuteOfHour() + 1);
+        DateTime current = Times.trimToMinute(period.getStart(), period.getStart().getMinuteOfHour() + 1);
 
         while (current.compareTo(endMinute) < 0) {
-            minutes.add(TimeTool.getMinuteRange(current, null));
+            minutes.add(Times.getMinuteRange(current, null));
             current = current.plusMinutes(1);
         }
         if (endMinute.minusMinutes(endMinute.getMinuteOfHour()).getMillisOfDay() > 0) {
-            minutes.add(new TimeRange(TimeTool.startTimeOfMinute(endMinute), endMinute));
+            minutes.add(new TimeRange(Times.startTimeOfMinute(endMinute), endMinute));
         }
 
         return minutes;

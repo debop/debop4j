@@ -19,7 +19,7 @@ package kr.debop4j.timeperiod.timerange;
 import kr.debop4j.timeperiod.ITimeCalendar;
 import kr.debop4j.timeperiod.TimeCalendar;
 import kr.debop4j.timeperiod.clock.ClockProxy;
-import kr.debop4j.timeperiod.tools.TimeTool;
+import kr.debop4j.timeperiod.tools.Times;
 import org.joda.time.DateTime;
 
 /**
@@ -68,6 +68,6 @@ public class MonthRange extends MonthTimeRange {
     }
 
     public MonthRange addMonths(int months) {
-        return new MonthRange(TimeTool.startTimeOfMonth(getStart()).plusMonths(months), getTimeCalendar());
+        return new MonthRange(Times.startTimeOfMonth(getStart()).plusMonths(months), getTimeCalendar());
     }
 }

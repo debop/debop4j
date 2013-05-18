@@ -19,7 +19,7 @@ package kr.debop4j.timeperiod;
 import com.google.common.base.Objects;
 import kr.debop4j.core.NotImplementedException;
 import kr.debop4j.timeperiod.tools.TimeSpec;
-import kr.debop4j.timeperiod.tools.TimeTool;
+import kr.debop4j.timeperiod.tools.Times;
 import lombok.extern.slf4j.Slf4j;
 import org.joda.time.DateTime;
 import org.joda.time.Duration;
@@ -201,12 +201,12 @@ public class TimeBlock extends TimePeriodBase implements ITimeBlock {
 
     public TimeBlock getIntersection(ITimePeriod other) {
         assert other != null;
-        return TimeTool.getIntersectionBlock(this, other);
+        return Times.getIntersectionBlock(this, other);
     }
 
     public TimeBlock getUnion(ITimePeriod other) {
         assert other != null;
-        return TimeTool.getUnionBlock(this, other);
+        return Times.getUnionBlock(this, other);
     }
 
     @Override

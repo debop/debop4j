@@ -20,10 +20,10 @@ import com.google.common.base.Objects;
 import com.google.common.collect.Lists;
 import kr.debop4j.core.tools.HashTool;
 import kr.debop4j.timeperiod.*;
-import kr.debop4j.timeperiod.tools.DurationTool;
+import kr.debop4j.timeperiod.tools.Durations;
 import kr.debop4j.timeperiod.tools.TimeSpec;
-import kr.debop4j.timeperiod.tools.TimeTool;
-import kr.debop4j.timeperiod.tools.WeekTool;
+import kr.debop4j.timeperiod.tools.Times;
+import kr.debop4j.timeperiod.tools.Weeks;
 import lombok.Getter;
 import org.joda.time.DateTime;
 
@@ -42,14 +42,14 @@ public abstract class WeekTimeRange extends CalendarTimeRange {
     protected WeekTimeRange(ITimePeriod period, ITimeCalendar timeCalendar) {
         super(period, timeCalendar);
         this.year = period.getStart().getYear();
-        this.startWeekOfYear = WeekTool.getYearAndWeek(period.getStart(), timeCalendar).getWeekOfYear();
+        this.startWeekOfYear = Weeks.getYearAndWeek(period.getStart(), timeCalendar).getWeekOfYear();
         this.weekCount = 1;
     }
 
     protected WeekTimeRange(DateTime moment, int weekCount, ITimeCalendar timeCalendar) {
         super(getPeriodOf(moment, weekCount, timeCalendar), timeCalendar);
 
-        YearAndWeek yw = WeekTool.getYearAndWeek(moment, timeCalendar);
+        YearAndWeek yw = Weeks.getYearAndWeek(moment, timeCalendar);
         this.year = yw.getYear();
         this.startWeekOfYear = yw.getWeekOfYear();
         this.weekCount = weekCount;
@@ -83,7 +83,7 @@ public abstract class WeekTimeRange extends CalendarTimeRange {
     }
 
     public List<DayRange> getDays() {
-        DateTime startDay = TimeTool.getStartOfYearWeek(year, startWeekOfYear, getTimeCalendar());
+        DateTime startDay = Times.getStartOfYearWeek(year, startWeekOfYear, getTimeCalendar());
         int dayCount = weekCount * TimeSpec.DaysPerWeek;
 
         List<DayRange> days = Lists.newArrayListWithCapacity(dayCount);
@@ -107,14 +107,14 @@ public abstract class WeekTimeRange extends CalendarTimeRange {
     }
 
     private static TimeRange getPeriodOf(DateTime moment, int weekCount, ITimeCalendar timeCalendar) {
-        DateTime startOfWeek = TimeTool.startTimeOfWeek(moment, timeCalendar.getFirstDayOfWeek());
-        return new TimeRange(startOfWeek, DurationTool.weeks(weekCount));
+        DateTime startOfWeek = Times.startTimeOfWeek(moment, timeCalendar.getFirstDayOfWeek());
+        return new TimeRange(startOfWeek, Durations.weeks(weekCount));
     }
 
     private static TimeRange getPeriodOf(int year, int weekOfYear, int weekCount, ITimeCalendar timeCalendar) {
         assert weekCount >= 0;
 
-        DateTime startWeek = TimeTool.startTimeOfWeek(year, weekOfYear, timeCalendar);
+        DateTime startWeek = Times.startTimeOfWeek(year, weekOfYear, timeCalendar);
         return new TimeRange(startWeek, startWeek.plusWeeks(1));
     }
 }

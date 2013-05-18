@@ -18,7 +18,7 @@ package kr.debop4j.timeperiod;
 
 import kr.debop4j.core.tools.HashTool;
 import kr.debop4j.timeperiod.tools.TimeSpec;
-import kr.debop4j.timeperiod.tools.TimeTool;
+import kr.debop4j.timeperiod.tools.Times;
 import lombok.extern.slf4j.Slf4j;
 import org.joda.time.DateTime;
 import org.joda.time.Duration;
@@ -230,7 +230,7 @@ public class TimeInterval extends TimePeriodBase implements ITimeInterval {
         if (log.isDebugEnabled())
             log.debug("기간을 새로 설정합니다. newStart=[{}], newEnd=[{}]", newStart, newEnd);
 
-        TimeTool.adjustPeriod(newStart, newEnd);
+        Times.adjustPeriod(newStart, newEnd);
         this.start = firstNotNull(newStart, TimeSpec.MinPeriodTime);
         this.end = firstNotNull(newEnd, TimeSpec.MaxPeriodTime);
     }
@@ -330,7 +330,7 @@ public class TimeInterval extends TimePeriodBase implements ITimeInterval {
     @Override
     public ITimeInterval getUnion(ITimePeriod other) {
         assert other != null;
-        ITimePeriod union = TimeTool.getUnionRange(this, other);
+        ITimePeriod union = Times.getUnionRange(this, other);
         return new TimeInterval(union.getStart(), union.getEnd());
     }
 

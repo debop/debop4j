@@ -22,7 +22,7 @@ import kr.debop4j.core.Guard;
 import kr.debop4j.core.ValueObjectBase;
 import kr.debop4j.core.tools.HashTool;
 import kr.debop4j.timeperiod.tools.TimeSpec;
-import kr.debop4j.timeperiod.tools.TimeTool;
+import kr.debop4j.timeperiod.tools.Times;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
@@ -66,7 +66,7 @@ public class TimePeriodBase extends ValueObjectBase implements ITimePeriod {
     protected TimePeriodBase(DateTime start, DateTime end, boolean readonly) {
         start = Guard.firstNotNull(start, TimeSpec.MinPeriodTime);
         end = Guard.firstNotNull(end, TimeSpec.MaxPeriodTime);
-        Tuple2<DateTime, DateTime> result = TimeTool.adjustPeriod(start, end);
+        Tuple2<DateTime, DateTime> result = Times.adjustPeriod(start, end);
         this.start = result.v1;
         this.end = result.v2;
         this.readonly = readonly;
@@ -77,7 +77,7 @@ public class TimePeriodBase extends ValueObjectBase implements ITimePeriod {
     }
 
     protected TimePeriodBase(DateTime start, Duration duration, boolean readonly) {
-        Tuple2<DateTime, Duration> result = TimeTool.adjustPeriod(start, duration);
+        Tuple2<DateTime, Duration> result = Times.adjustPeriod(start, duration);
         this.start = result.v1;
         setDuration(result.v2);
         this.readonly = readonly;
@@ -104,7 +104,7 @@ public class TimePeriodBase extends ValueObjectBase implements ITimePeriod {
     protected DateTime end;
 
     @Getter
-    @Setter( AccessLevel.PROTECTED )
+    @Setter(AccessLevel.PROTECTED)
     protected boolean readonly;
 
     /** 기간을 TimeSpan으료 표현, 기간이 정해지지 않았다면 <see cref="TimeSpec.MaxPeriodTime"/> 을 반환합니다. */
@@ -202,22 +202,22 @@ public class TimePeriodBase extends ValueObjectBase implements ITimePeriod {
 
     @Override
     public boolean hasInside(DateTime moment) {
-        return TimeTool.hasInside(this, moment);
+        return Times.hasInside(this, moment);
     }
 
     @Override
     public boolean hasInside(ITimePeriod other) {
-        return TimeTool.hasInside(this, other);
+        return Times.hasInside(this, other);
     }
 
     @Override
     public boolean intersectsWith(ITimePeriod other) {
-        return TimeTool.intersectsWith(this, other);
+        return Times.intersectsWith(this, other);
     }
 
     @Override
     public boolean overlapsWith(ITimePeriod other) {
-        return TimeTool.overlapsWith(this, other);
+        return Times.overlapsWith(this, other);
     }
 
     @Override
@@ -231,17 +231,17 @@ public class TimePeriodBase extends ValueObjectBase implements ITimePeriod {
 
     @Override
     public PeriodRelation getRelation(ITimePeriod other) {
-        return TimeTool.getRelation(this, other);
+        return Times.getRelation(this, other);
     }
 
     @Override
     public ITimePeriod getIntersection(ITimePeriod other) {
-        return TimeTool.getIntersectionRange(this, other);
+        return Times.getIntersectionRange(this, other);
     }
 
     @Override
     public ITimePeriod getUnion(ITimePeriod other) {
-        return TimeTool.getUnionRange(this, other);
+        return Times.getUnionRange(this, other);
     }
 
     protected final void assertMutable() {

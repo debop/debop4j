@@ -19,7 +19,7 @@ package kr.debop4j.timeperiod.timerange;
 import com.google.common.base.Objects;
 import kr.debop4j.core.tools.HashTool;
 import kr.debop4j.timeperiod.*;
-import kr.debop4j.timeperiod.tools.TimeTool;
+import kr.debop4j.timeperiod.tools.Times;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.joda.time.DateTime;
@@ -43,7 +43,7 @@ public class CalendarTimeRange extends TimeRange implements ICalendarTimeRange {
         DateTime mappedStart = mapper.mapStart(period.getStart());
         DateTime mappedEnd = mapper.mapEnd(period.getEnd());
 
-        TimeTool.assertValidPeriod(mappedStart, mappedEnd);
+        Times.assertValidPeriod(mappedStart, mappedEnd);
         TimeRange mapped = new TimeRange(mappedStart, mappedEnd);
 
         if (log.isDebugEnabled())
@@ -121,47 +121,47 @@ public class CalendarTimeRange extends TimeRange implements ICalendarTimeRange {
     }
 
     public DateTime getStartMonthStart() {
-        return TimeTool.trimToDay(getStart());
+        return Times.trimToDay(getStart());
     }
 
     public DateTime getEndMonthStart() {
-        return TimeTool.trimToDay(getEnd());
+        return Times.trimToDay(getEnd());
     }
 
     public DateTime getStartDayStart() {
-        return TimeTool.trimToHour(getStart());
+        return Times.trimToHour(getStart());
     }
 
     public DateTime getEndDayStart() {
-        return TimeTool.trimToHour(getEnd());
+        return Times.trimToHour(getEnd());
     }
 
     public DateTime getStartHourStart() {
-        return TimeTool.trimToMinute(getStart());
+        return Times.trimToMinute(getStart());
     }
 
     public DateTime getEndHourStart() {
-        return TimeTool.trimToMinute(getEnd());
+        return Times.trimToMinute(getEnd());
     }
 
     public DateTime getStartMinuteStart() {
-        return TimeTool.trimToSecond(getStart());
+        return Times.trimToSecond(getStart());
     }
 
     public DateTime getEndMinuteStart() {
-        return TimeTool.trimToSecond(getEnd());
+        return Times.trimToSecond(getEnd());
     }
 
     public DateTime getStartSecondStart() {
-        return TimeTool.trimToMillis(getStart());
+        return Times.trimToMillis(getStart());
     }
 
     public DateTime getEndSecondStart() {
-        return TimeTool.trimToMillis(getEnd());
+        return Times.trimToMillis(getEnd());
     }
 
     @Override
-    public ITimePeriod copy(Duration offset) {
+    public TimeRange copy(Duration offset) {
         return toCalendarTimeRange(super.copy(offset), timeCalendar);
     }
 

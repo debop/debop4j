@@ -19,7 +19,7 @@ package kr.debop4j.timeperiod.timerange;
 import kr.debop4j.timeperiod.ITimeCalendar;
 import kr.debop4j.timeperiod.TimeCalendar;
 import kr.debop4j.timeperiod.clock.ClockProxy;
-import kr.debop4j.timeperiod.tools.TimeTool;
+import kr.debop4j.timeperiod.tools.Times;
 import org.joda.time.DateTime;
 
 /**
@@ -77,7 +77,7 @@ public class HourRange extends HourTimeRange {
     }
 
     public HourRange addHours(int hours) {
-        DateTime startHour = TimeTool.trimToHour(getStart(), getStartHourOfDay());
+        DateTime startHour = Times.trimToHour(getStart(), getStartHourOfDay());
         return new HourRange(startHour.plusHours(hours), getTimeCalendar());
     }
 }

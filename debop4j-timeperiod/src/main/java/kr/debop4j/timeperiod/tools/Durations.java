@@ -31,9 +31,9 @@ import java.util.Locale;
  * @since 13. 5. 10. 오후 11:58
  */
 @Slf4j
-public abstract class DurationTool {
+public abstract class Durations {
 
-    private DurationTool() {}
+    private Durations() {}
 
     public static Locale getCurrentLocale() {
         return Locale.getDefault();
@@ -41,12 +41,17 @@ public abstract class DurationTool {
 
     public static final Duration Zero = Duration.ZERO;
 
+    /** 지정한 duration의 부호를 변경한 값을 반환합니다. */
+    public static Duration negate(Duration duration) {
+        return Duration.millis(-duration.getMillis());
+    }
+
     public static Duration year(int year) {
         return days(DateTime.now().withDate(year, 12, 31).getDayOfYear());
     }
 
     public static Duration halfyear(int year, HalfyearKind halfyear) {
-        int[] monthsOfHalfyear = TimeTool.getMonthsOfHalfyear(halfyear);
+        int[] monthsOfHalfyear = Times.getMonthsOfHalfyear(halfyear);
         Duration duration = Duration.millis(0);
         for (int month : monthsOfHalfyear) {
             duration = duration.plus(month(year, month));
@@ -55,7 +60,7 @@ public abstract class DurationTool {
     }
 
     public static Duration quarter(int year, QuarterKind quarter) {
-        int[] monthsOfQuarter = TimeTool.getMonthsOfQuarter(quarter);
+        int[] monthsOfQuarter = Times.getMonthsOfQuarter(quarter);
         Duration duration = Duration.millis(0);
         for (int month : monthsOfQuarter) {
             duration = duration.plus(month(year, month));

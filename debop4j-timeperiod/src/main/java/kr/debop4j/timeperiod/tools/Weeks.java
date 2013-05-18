@@ -35,13 +35,13 @@ import java.util.Locale;
  * @author 배성혁 sunghyouk.bae@gmail.com
  * @since 13. 5. 13. 오후 2:34
  */
-public abstract class WeekTool {
+public abstract class Weeks {
 
-    private static final Logger log = LoggerFactory.getLogger(WeekTool.class);
+    private static final Logger log = LoggerFactory.getLogger(Weeks.class);
     @Getter( lazy = true ) private static final boolean traceEnabled = log.isTraceEnabled();
     @Getter( lazy = true ) private static final boolean debugEnabled = log.isDebugEnabled();
 
-    private WeekTool() {}
+    private Weeks() {}
 
     public static DayOfWeek getFirstDayOfWeek() {
         return TimeSpec.FirstDayOfWeek;
@@ -72,7 +72,7 @@ public abstract class WeekTool {
 
     /** 해당년도의 마지막 주차를 산정합니다. */
     public static YearAndWeek getEndYearAndWeek(int year, ITimeCalendar timeCalendar) {
-        return new YearAndWeek(TimeTool.endTimeOfYear(year));
+        return new YearAndWeek(Times.endTimeOfYear(year));
     }
 
     public static WeekRange getWeekRange(YearAndWeek yearAndWeek) {
