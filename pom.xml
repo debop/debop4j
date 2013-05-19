@@ -113,6 +113,11 @@
                 <enabled>false</enabled>
             </snapshots>
         </repository>
+        <repository>
+            <id>lambdaj</id>
+            <name>Lambdaj Repository</name>
+            <url>http://lambdaj.googlecode.com/svn/repo/releases/</url>
+        </repository>
     </repositories>
 
     <build>
@@ -212,7 +217,7 @@
         <commons.lang3.version>3.1</commons.lang3.version>
         <commons.validator.version>1.4.0</commons.validator.version>
 
-        <httpclient.version>4.2.3</httpclient.version>
+        <httpclient.version>4.2.4</httpclient.version>
         <httpcore.version>4.2.4</httpcore.version>
         <httpasyncclient.version>4.0-beta3</httpasyncclient.version>
         <async.http.client.version>1.7.5</async.http.client.version>
@@ -237,7 +242,7 @@
 
         <jasypt.version>1.9.0</jasypt.version>
 
-        <lambdaj.version>2.3.3</lambdaj.version>
+        <lambdaj.version>2.4</lambdaj.version>
 
         <joda.time.version>2.2</joda.time.version>
         <joda.convert.version>1.2</joda.convert.version>

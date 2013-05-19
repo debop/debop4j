@@ -114,6 +114,22 @@ public final class Guard {
         return arg;
     }
 
+    public static int shouldBePositiveOrZeroNumber(int arg, final String argName) {
+        return shouldNotBeNegativeNumber(arg, argName);
+    }
+
+    public static long shouldBePositiveOrZeroNumber(long arg, final String argName) {
+        return shouldNotBeNegativeNumber(arg, argName);
+    }
+
+    public static float shouldBePositiveOrZeroNumber(float arg, final String argName) {
+        return shouldNotBeNegativeNumber(arg, argName);
+    }
+
+    public static double shouldBePositiveOrZeroNumber(double arg, final String argName) {
+        return shouldNotBeNegativeNumber(arg, argName);
+    }
+
     public static int shouldNotBePositiveNumber(int arg, final String argName) {
         assert arg <= 0 : format(SR.ShouldNotBePositiveNumber, argName);
         return arg;
@@ -152,6 +168,22 @@ public final class Guard {
     public static double shouldBeNegativeNumber(double arg, final String argName) {
         assert arg < 0.0 : format(SR.ShouldBeNegativeNumber, argName);
         return arg;
+    }
+
+    public static int shouldBeNegativeOrZeroNumber(int arg, final String argName) {
+        return shouldNotBePositiveNumber(arg, argName);
+    }
+
+    public static long shouldBeNegativeOrZeroNumber(long arg, final String argName) {
+        return shouldNotBePositiveNumber(arg, argName);
+    }
+
+    public static float shouldBeNegativeOrZeroNumber(float arg, final String argName) {
+        return shouldNotBePositiveNumber(arg, argName);
+    }
+
+    public static double shouldBeNegativeOrZeroNumber(double arg, final String argName) {
+        return shouldNotBePositiveNumber(arg, argName);
     }
 
     public static int shouldNotBeNegativeNumber(int arg, final String argName) {
