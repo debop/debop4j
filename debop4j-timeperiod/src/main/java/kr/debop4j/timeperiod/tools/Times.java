@@ -30,6 +30,7 @@ import org.joda.time.Duration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.Comparator;
 import java.util.Iterator;
 
 import static kr.debop4j.core.Guard.shouldNotBeNull;
@@ -1296,4 +1297,63 @@ public abstract class Times {
     }
 
     // endregion << Validation >>
+
+    // region << Comparator >>
+
+    @Getter( lazy = true )
+    private static final StartComparator startComparator = new StartComparator();
+    @Getter( lazy = true )
+    private static final StartDescComparator startDescComparator = new StartDescComparator();
+    @Getter( lazy = true )
+    private static final EndComparator endComparator = new EndComparator();
+    @Getter( lazy = true )
+    private static final EndDescComparator endDescComparator = new EndDescComparator();
+    @Getter( lazy = true )
+    private static final DurationComparator durationComparator = new DurationComparator();
+    @Getter( lazy = true )
+    private static final DurationDescComparator durationDescComparator = new DurationDescComparator();
+
+    public static class StartComparator implements Comparator<ITimePeriod> {
+        @Override
+        public int compare(ITimePeriod o1, ITimePeriod o2) {
+            return o1.getStart().compareTo(o2.getStart());
+        }
+    }
+
+    public static class StartDescComparator implements Comparator<ITimePeriod> {
+        @Override
+        public int compare(ITimePeriod o1, ITimePeriod o2) {
+            return o2.getStart().compareTo(o1.getStart());
+        }
+    }
+
+    public static class EndComparator implements Comparator<ITimePeriod> {
+        @Override
+        public int compare(ITimePeriod o1, ITimePeriod o2) {
+            return o1.getEnd().compareTo(o2.getEnd());
+        }
+    }
+
+    public static class EndDescComparator implements Comparator<ITimePeriod> {
+        @Override
+        public int compare(ITimePeriod o1, ITimePeriod o2) {
+            return o2.getEnd().compareTo(o1.getEnd());
+        }
+    }
+
+    public static class DurationComparator implements Comparator<ITimePeriod> {
+        @Override
+        public int compare(ITimePeriod o1, ITimePeriod o2) {
+            return o1.getDuration().compareTo(o2.getDuration());
+        }
+    }
+
+    public static class DurationDescComparator implements Comparator<ITimePeriod> {
+        @Override
+        public int compare(ITimePeriod o1, ITimePeriod o2) {
+            return o2.getDuration().compareTo(o1.getDuration());
+        }
+    }
+
+    // endregion
 }

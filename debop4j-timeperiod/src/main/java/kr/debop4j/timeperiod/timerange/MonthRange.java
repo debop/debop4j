@@ -59,6 +59,18 @@ public class MonthRange extends MonthTimeRange {
 
     // endregion
 
+    public int getYear() { return getStartYear(); }
+
+    public int getMonthOfYear() { return getStartMonthOfYear(); }
+
+    public String getMonthName() { return getStartMonthName(); }
+
+    public String getMonthOfYearName() { return getStartMonthOfYearName(); }
+
+    public int getDaysInMonth() {
+        return Times.getDaysInMonth(getStartYear(), getStartMonthOfYear());
+    }
+
     public MonthRange getPreviousMonth() {
         return addMonths(-1);
     }
