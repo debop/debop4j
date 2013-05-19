@@ -36,6 +36,8 @@ import java.util.List;
 @Slf4j
 public class CalendarVisitorFilter implements ICalendarVisitorFilter {
 
+    private static final long serialVersionUID = 3032428178497692848L;
+
     @Getter private final ITimePeriodCollection excludePeriods = new TimePeriodCollection();
     @Getter private final List<Integer> years = new ArrayList<Integer>();
     @Getter private final List<Integer> monthOfYears = new ArrayList<Integer>();

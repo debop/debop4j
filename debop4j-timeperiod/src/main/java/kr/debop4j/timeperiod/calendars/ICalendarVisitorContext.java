@@ -16,11 +16,13 @@
 
 package kr.debop4j.timeperiod.calendars;
 
+import java.io.Serializable;
+
 /**
  * kr.debop4j.timeperiod.calendars.ICalendarVisitorContext
  *
  * @author 배성혁 sunghyouk.bae@gmail.com
  * @since 13. 5. 17. 오전 1:37
  */
-public interface ICalendarVisitorContext {
+public interface ICalendarVisitorContext extends Serializable {
 }

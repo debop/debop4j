@@ -18,8 +18,10 @@ package kr.debop4j.timeperiod;
 
 import com.google.common.base.Objects;
 import kr.debop4j.core.ValueObjectBase;
-import kr.debop4j.core.tools.HashTool;
 import lombok.Getter;
+
+import static kr.debop4j.core.Guard.shouldBe;
+import static kr.debop4j.core.Guard.shouldBeBetween;
 
 /**
  * 한해의 월단위 기간을 표현합니다. (예: 4월 ~ 6월)
@@ -35,7 +37,11 @@ public class MonthRangeInYear extends ValueObjectBase implements Comparable<Mont
     @Getter private final int endMonthOfYear;
 
     public MonthRangeInYear(int startMonthOfYear, int endMonthOfYear) {
-        assert startMonthOfYear <= endMonthOfYear;
+        shouldBeBetween(startMonthOfYear, 1, 12, "startMonthOfYear");
+        shouldBeBetween(endMonthOfYear, 1, 12, "endMonthOfYear");
+        shouldBe(startMonthOfYear <= endMonthOfYear, "minMonth <= maxMonth 여야합니다. startMonthOfYear=[%d], endMonthOfYear=[%d]",
+                 startMonthOfYear, endMonthOfYear);
+
         this.startMonthOfYear = startMonthOfYear;
         this.endMonthOfYear = endMonthOfYear;
     }
@@ -45,18 +51,17 @@ public class MonthRangeInYear extends ValueObjectBase implements Comparable<Mont
     }
 
     public boolean hasInside(int monthOfYear) {
-        return this.startMonthOfYear <= monthOfYear &&
-                monthOfYear <= this.endMonthOfYear;
+        return this.startMonthOfYear <= monthOfYear && monthOfYear <= this.endMonthOfYear;
     }
 
     @Override
     public int compareTo(MonthRangeInYear o) {
-        return this.startMonthOfYear - o.getStartMonthOfYear();
+        return hashCode() - o.hashCode();
     }
 
     @Override
     public int hashCode() {
-        return HashTool.compute(startMonthOfYear, endMonthOfYear);
+        return startMonthOfYear * 100 + endMonthOfYear;
     }
 
     @Override

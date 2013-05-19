@@ -29,7 +29,7 @@ import java.util.List;
  */
 public interface ICalendarPeriodCollectionFilter extends ICalendarVisitorFilter {
 
-    List<MonthRangeInYear> colletingMonths();
+    List<MonthRangeInYear> getCollectingMonths();
 
-    List<DayRangeInMonth> collectingDays();
+    List<DayRangeInMonth> getCollectingDays();
 }

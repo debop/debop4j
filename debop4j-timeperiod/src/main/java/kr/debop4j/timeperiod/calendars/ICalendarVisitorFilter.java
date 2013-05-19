@@ -19,6 +19,7 @@ package kr.debop4j.timeperiod.calendars;
 import kr.debop4j.timeperiod.DayOfWeek;
 import kr.debop4j.timeperiod.ITimePeriodCollection;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -27,7 +28,7 @@ import java.util.List;
  * @author 배성혁 sunghyouk.bae@gmail.com
  * @since 13. 5. 17. 오전 1:37
  */
-public interface ICalendarVisitorFilter {
+public interface ICalendarVisitorFilter extends Serializable {
 
     /** 탐색 시 제외해야 할 기간들 */
     ITimePeriodCollection getExcludePeriods();
