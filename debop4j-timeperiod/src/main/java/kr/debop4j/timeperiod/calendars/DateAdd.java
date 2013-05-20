@@ -16,7 +16,7 @@
 
 package kr.debop4j.timeperiod.calendars;
 
-import jodd.util.Tuple2;
+import kr.debop4j.core.Tuple2;
 import kr.debop4j.timeperiod.ITimePeriodCollection;
 import kr.debop4j.timeperiod.SeekBoundaryMode;
 import kr.debop4j.timeperiod.SeekDirection;
@@ -68,8 +68,8 @@ public class DateAdd implements Serializable {
                 ? calculateEnd(start, Durations.negate(offset), SeekDirection.Backward, seekBoundary)
                 : calculateEnd(start, offset, SeekDirection.Forward, seekBoundary);
 
-        DateTime end = (results != null) ? results.v1 : null;
-        Duration remaining = (results != null) ? results.v2 : null;
+        DateTime end = (results != null) ? results.getV1() : null;
+        Duration remaining = (results != null) ? results.getV2() : null;
 
         if (isDebugEnable)
             log.debug("Add. start=[{}] + offset=[{}] 의 결과 end=[{}], remaining=[{}]입니다. seekBoundaryMode=[{}]",
@@ -92,8 +92,8 @@ public class DateAdd implements Serializable {
                 ? calculateEnd(start, Durations.negate(offset), SeekDirection.Forward, seekBoundary)
                 : calculateEnd(start, offset, SeekDirection.Backward, seekBoundary);
 
-        DateTime end = (results != null) ? results.v1 : null;
-        Duration remaining = (results != null) ? results.v2 : null;
+        DateTime end = (results != null) ? results.getV1() : null;
+        Duration remaining = (results != null) ? results.getV2() : null;
 
         if (isDebugEnable)
             log.debug("Subtract. start=[{}] - offset=[{}] 의 결과 end=[{}], remaining=[{}]입니다. seekBoundaryMode=[{}]",

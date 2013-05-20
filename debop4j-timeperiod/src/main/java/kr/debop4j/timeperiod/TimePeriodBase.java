@@ -17,8 +17,8 @@
 package kr.debop4j.timeperiod;
 
 import com.google.common.base.Objects;
-import jodd.util.Tuple2;
 import kr.debop4j.core.Guard;
+import kr.debop4j.core.Tuple2;
 import kr.debop4j.core.ValueObjectBase;
 import kr.debop4j.core.tools.HashTool;
 import kr.debop4j.timeperiod.tools.TimeSpec;
@@ -67,8 +67,8 @@ public class TimePeriodBase extends ValueObjectBase implements ITimePeriod {
         start = Guard.firstNotNull(start, TimeSpec.MinPeriodTime);
         end = Guard.firstNotNull(end, TimeSpec.MaxPeriodTime);
         Tuple2<DateTime, DateTime> result = Times.adjustPeriod(start, end);
-        this.start = result.v1;
-        this.end = result.v2;
+        this.start = result.getV1();
+        this.end = result.getV2();
         this.readonly = readonly;
     }
 
@@ -78,8 +78,8 @@ public class TimePeriodBase extends ValueObjectBase implements ITimePeriod {
 
     protected TimePeriodBase(DateTime start, Duration duration, boolean readonly) {
         Tuple2<DateTime, Duration> result = Times.adjustPeriod(start, duration);
-        this.start = result.v1;
-        setDuration(result.v2);
+        this.start = result.getV1();
+        setDuration(result.getV2());
         this.readonly = readonly;
     }
 

@@ -18,8 +18,8 @@ package kr.debop4j.timeperiod.tools;
 
 import com.google.common.base.Objects;
 import com.google.common.collect.Iterables;
-import jodd.util.Tuple2;
 import kr.debop4j.core.NotSupportException;
+import kr.debop4j.core.Tuple2;
 import kr.debop4j.core.tools.ArrayTool;
 import kr.debop4j.timeperiod.*;
 import kr.debop4j.timeperiod.clock.ClockProxy;
@@ -44,8 +44,8 @@ import static kr.debop4j.core.Guard.shouldNotBeNull;
 public abstract class Times {
 
     private static final Logger log = LoggerFactory.getLogger(Times.class);
-    @Getter( lazy = true ) private static final boolean traceEnabled = log.isTraceEnabled();
-    @Getter( lazy = true ) private static final boolean debugEnabled = log.isDebugEnabled();
+    @Getter(lazy = true) private static final boolean traceEnabled = log.isTraceEnabled();
+    @Getter(lazy = true) private static final boolean debugEnabled = log.isDebugEnabled();
 
     private Times() {}
 
@@ -772,14 +772,14 @@ public abstract class Times {
 
     public static Tuple2<DateTime, DateTime> adjustPeriod(DateTime start, DateTime end) {
         return (start.compareTo(end) < 0)
-                ? Tuple2.tuple(start, end)
-                : Tuple2.tuple(end, start);
+                ? Tuple2.create(start, end)
+                : Tuple2.create(end, start);
     }
 
     public static Tuple2<DateTime, Duration> adjustPeriod(DateTime start, Duration duration) {
         return (duration.getMillis() < 0)
-                ? Tuple2.tuple(start.plus(duration), new Duration(-duration.getMillis()))
-                : Tuple2.tuple(start, duration);
+                ? Tuple2.create(start.plus(duration), new Duration(-duration.getMillis()))
+                : Tuple2.create(start, duration);
     }
 
     // endregion
@@ -837,13 +837,7 @@ public abstract class Times {
         return getTimeRange(start, start.plusSeconds(seconds));
     }
 
-    /**
-     * moment가 속한 특정 종류의 기간
-     *
-     * @param moment
-     * @param periodKind
-     * @return
-     */
+    /** moment가 속한 특정 종류의 기간 */
     public static ITimePeriod getPeriodOf(DateTime moment, PeriodKind periodKind) {
         return getPeriodOf(moment, periodKind, TimeCalendar.getDefault());
     }
@@ -876,27 +870,12 @@ public abstract class Times {
         }
     }
 
-    /**
-     * moment 가 속한 특정 종류의 기간에 대해 periodCount 갯수만큼의 기간 정보를 컬렉션으로 반환한다.
-     *
-     * @param moment
-     * @param periodKind
-     * @param periodCount
-     * @return
-     */
+    /** moment 가 속한 특정 종류의 기간에 대해 periodCount 갯수만큼의 기간 정보를 컬렉션으로 반환한다. */
     public static ICalendarTimeRange getPeriodsOf(DateTime moment, PeriodKind periodKind, int periodCount) {
         return getPeriodsOf(moment, periodKind, periodCount, TimeCalendar.getDefault());
     }
 
-    /**
-     * moment 가 속한 특정 종류의 기간에 대해 periodCount 갯수만큼의 기간 정보를 컬렉션으로 반환한다.
-     *
-     * @param moment
-     * @param periodKind
-     * @param periodCount
-     * @param timeCalendar
-     * @return
-     */
+    /** moment 가 속한 특정 종류의 기간에 대해 periodCount 갯수만큼의 기간 정보를 컬렉션으로 반환한다. */
     public static ICalendarTimeRange getPeriodsOf(DateTime moment, PeriodKind periodKind, int periodCount, ITimeCalendar timeCalendar) {
         if (isTraceEnabled())
             log.trace("일자[{}]가 속한 기간 종류[{}]의 기간을 구합니다.", moment, periodKind);
@@ -1043,13 +1022,7 @@ public abstract class Times {
         return period != null && !period.isAnytime();
     }
 
-    /**
-     * 기준 기간과 대상 기간의 관계를 파악합니다.
-     *
-     * @param period
-     * @param target
-     * @return
-     */
+    /** 기준 기간과 대상 기간의 관계를 파악합니다. */
     public static PeriodRelation getRelation(ITimePeriod period, ITimePeriod target) {
         shouldNotBeNull(period, "period");
         shouldNotBeNull(target, "target");
@@ -1112,9 +1085,9 @@ public abstract class Times {
     /**
      * 두 구간이 겹치는 구간이 있으면 true를 반환합니다.
      *
-     * @param period
-     * @param target
-     * @return
+     * @param period 기준 기간
+     * @param target 대상 기간
+     * @return 겹치는지 여부
      */
     public static boolean overlapsWith(ITimePeriod period, ITimePeriod target) {
         shouldNotBeNull(period, "period");
@@ -1300,17 +1273,17 @@ public abstract class Times {
 
     // region << Comparator >>
 
-    @Getter( lazy = true )
+    @Getter(lazy = true)
     private static final StartComparator startComparator = new StartComparator();
-    @Getter( lazy = true )
+    @Getter(lazy = true)
     private static final StartDescComparator startDescComparator = new StartDescComparator();
-    @Getter( lazy = true )
+    @Getter(lazy = true)
     private static final EndComparator endComparator = new EndComparator();
-    @Getter( lazy = true )
+    @Getter(lazy = true)
     private static final EndDescComparator endDescComparator = new EndDescComparator();
-    @Getter( lazy = true )
+    @Getter(lazy = true)
     private static final DurationComparator durationComparator = new DurationComparator();
-    @Getter( lazy = true )
+    @Getter(lazy = true)
     private static final DurationDescComparator durationDescComparator = new DurationDescComparator();
 
     public static class StartComparator implements Comparator<ITimePeriod> {
