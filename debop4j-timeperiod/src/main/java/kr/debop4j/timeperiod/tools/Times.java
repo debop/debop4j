@@ -44,8 +44,8 @@ import static kr.debop4j.core.Guard.shouldNotBeNull;
 public abstract class Times {
 
     private static final Logger log = LoggerFactory.getLogger(Times.class);
-    @Getter(lazy = true) private static final boolean traceEnabled = log.isTraceEnabled();
-    @Getter(lazy = true) private static final boolean debugEnabled = log.isDebugEnabled();
+    private static final boolean isTraceEnabled = log.isTraceEnabled();
+    private static final boolean isDebugEnabled = log.isDebugEnabled();
 
     private Times() {}
 
@@ -844,7 +844,7 @@ public abstract class Times {
 
     /** moment가 속한 특정 종류의 기간 */
     public static ITimePeriod getPeriodOf(DateTime moment, PeriodKind periodKind, ITimeCalendar timeCalendar) {
-        if (isTraceEnabled())
+        if (isTraceEnabled)
             log.trace("일자[{}]가 속한 기간 종류[{}]의 기간을 구합니다.", moment, periodKind);
 
         switch (periodKind) {
@@ -877,7 +877,7 @@ public abstract class Times {
 
     /** moment 가 속한 특정 종류의 기간에 대해 periodCount 갯수만큼의 기간 정보를 컬렉션으로 반환한다. */
     public static ICalendarTimeRange getPeriodsOf(DateTime moment, PeriodKind periodKind, int periodCount, ITimeCalendar timeCalendar) {
-        if (isTraceEnabled())
+        if (isTraceEnabled)
             log.trace("일자[{}]가 속한 기간 종류[{}]의 기간을 구합니다.", moment, periodKind);
 
         switch (periodKind) {
@@ -977,7 +977,7 @@ public abstract class Times {
         shouldNotBeNull(period, "period");
         boolean isInside = target.compareTo(period.getStart()) >= 0 && target.compareTo(period.getEnd()) <= 0;
 
-        if (isTraceEnabled()) log.trace("기간 [{}] 안에 target[{}]이 포함되는가? [{}]", isInside);
+        if (isTraceEnabled) log.trace("기간 [{}] 안에 target[{}]이 포함되는가? [{}]", isInside);
 
         return isInside;
     }
@@ -988,7 +988,7 @@ public abstract class Times {
         shouldNotBeNull(target, "target");
         boolean isInside = hasInside(period, target.getStart()) && hasInside(period, target.getEnd());
 
-        if (isTraceEnabled()) log.trace("기간 [{}] 안에 target[{}]이 포함되는가? [{}]", isInside);
+        if (isTraceEnabled) log.trace("기간 [{}] 안에 target[{}]이 포함되는가? [{}]", isInside);
 
         return isInside;
     }
@@ -998,7 +998,7 @@ public abstract class Times {
 
         boolean isInside = target.compareTo(period.getStart()) > 0 && target.compareTo(period.getEnd()) < 0;
 
-        if (isTraceEnabled()) log.trace("기간 [{}] 안에 target[{}]이 경계를 제외하고, 포함되는가? [{}]", isInside);
+        if (isTraceEnabled) log.trace("기간 [{}] 안에 target[{}]이 경계를 제외하고, 포함되는가? [{}]", isInside);
 
         return isInside;
     }
@@ -1009,7 +1009,7 @@ public abstract class Times {
 
         boolean isInside = hasPureInside(period, target.getStart()) && hasPureInside(period, target.getEnd());
 
-        if (isTraceEnabled()) log.trace("기간 [{}] 안에 target[{}]이 경계를 제외하고, 포함되는가? [{}]", isInside);
+        if (isTraceEnabled) log.trace("기간 [{}] 안에 target[{}]이 경계를 제외하고, 포함되는가? [{}]", isInside);
 
         return isInside;
     }
@@ -1062,8 +1062,8 @@ public abstract class Times {
             }
         }
 
-        if (isDebugEnabled())
-            log.debug("period [{}], target [{}]의 관계는 [{}] 입니다.", period, target, relation);
+        if (isDebugEnabled)
+            log.debug("period [{}], target [{}]의 관계는 [{}]입니다.", period, target, relation);
 
         return relation;
     }
@@ -1077,7 +1077,7 @@ public abstract class Times {
                 hasInside(period, target.getEnd()) ||
                 hasPureInside(target, period);
 
-        if (isTraceEnabled())
+        if (isTraceEnabled)
             log.trace("period[{}]와 target[{}]이 교차 구간인가? result=[{}]", period, target, isIntersected);
         return isIntersected;
     }
@@ -1100,7 +1100,7 @@ public abstract class Times {
                 relation != PeriodRelation.EndTouching &&
                 relation != PeriodRelation.Before;
 
-        if (isTraceEnabled())
+        if (isTraceEnabled)
             log.trace("period[{}]와 target[{}]이 overlap 되는가? [{}]", period, target, isOverlaps);
 
         return isOverlaps;
@@ -1117,7 +1117,7 @@ public abstract class Times {
             DateTime end = min(period.getEnd(), target.getEnd());
             intersection = new TimeBlock(start, end, period.isReadonly());
         }
-        if (isTraceEnabled())
+        if (isTraceEnabled)
             log.trace("period[{}], target[{}]의 교집합 [{}]", period, target, intersection);
 
         return intersection;
@@ -1132,7 +1132,7 @@ public abstract class Times {
         DateTime end = max(period.getEnd(), target.getEnd());
         TimeBlock union = new TimeBlock(start, end, period.isReadonly());
 
-        if (isTraceEnabled())
+        if (isTraceEnabled)
             log.trace("period[{}], target[{}]의 합집합 [{}]", period, target, union);
 
         return union;
@@ -1149,7 +1149,7 @@ public abstract class Times {
             DateTime end = min(period.getEnd(), target.getEnd());
             intersection = new TimeRange(start, end, period.isReadonly());
         }
-        if (isTraceEnabled())
+        if (isTraceEnabled)
             log.trace("period[{}], target[{}]의 교집합 [{}]", period, target, intersection);
 
         return intersection;
@@ -1164,7 +1164,7 @@ public abstract class Times {
         DateTime end = max(period.getEnd(), target.getEnd());
         TimeRange union = new TimeRange(start, end, period.isReadonly());
 
-        if (isTraceEnabled())
+        if (isTraceEnabled)
             log.trace("period[{}], target[{}]의 합집합 [{}]", period, target, union);
 
         return union;
@@ -1273,17 +1273,17 @@ public abstract class Times {
 
     // region << Comparator >>
 
-    @Getter(lazy = true)
+    @Getter( lazy = true )
     private static final StartComparator startComparator = new StartComparator();
-    @Getter(lazy = true)
+    @Getter( lazy = true )
     private static final StartDescComparator startDescComparator = new StartDescComparator();
-    @Getter(lazy = true)
+    @Getter( lazy = true )
     private static final EndComparator endComparator = new EndComparator();
-    @Getter(lazy = true)
+    @Getter( lazy = true )
     private static final EndDescComparator endDescComparator = new EndDescComparator();
-    @Getter(lazy = true)
+    @Getter( lazy = true )
     private static final DurationComparator durationComparator = new DurationComparator();
-    @Getter(lazy = true)
+    @Getter( lazy = true )
     private static final DurationDescComparator durationDescComparator = new DurationDescComparator();
 
     public static class StartComparator implements Comparator<ITimePeriod> {
