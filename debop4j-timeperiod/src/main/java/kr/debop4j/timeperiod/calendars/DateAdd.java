@@ -17,6 +17,7 @@
 package kr.debop4j.timeperiod.calendars;
 
 import kr.debop4j.core.Tuple2;
+import kr.debop4j.core.ValueObjectBase;
 import kr.debop4j.core.tools.StringTool;
 import kr.debop4j.timeperiod.*;
 import kr.debop4j.timeperiod.timeline.TimeGapCalculator;
@@ -28,8 +29,6 @@ import org.joda.time.Duration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.Serializable;
-
 import static kr.debop4j.core.Guard.shouldBe;
 
 /**
@@ -38,9 +37,8 @@ import static kr.debop4j.core.Guard.shouldBe;
  * @author 배성혁 sunghyouk.bae@gmail.com
  * @since 13. 5. 19. 오후 11:39
  */
-public class DateAdd implements Serializable {
+public class DateAdd extends ValueObjectBase {
 
-    private static final long serialVersionUID = 2352433294158169198L;
     private static final Logger log = LoggerFactory.getLogger(DateAdd.class);
     private static final boolean isTraceEnable = log.isTraceEnabled();
     private static final boolean isDebugEnable = log.isDebugEnabled();
@@ -50,7 +48,6 @@ public class DateAdd implements Serializable {
 
     /** 기본 생성자 */
     public DateAdd() { }
-
 
     /** start 시각으로부터 offset 기간이 지난 시각을 계산합니다. */
     public DateTime add(DateTime start, Duration offset) {
@@ -307,4 +304,5 @@ public class DateAdd implements Serializable {
         return Tuple2.create(nearest, moment);
     }
 
+    private static final long serialVersionUID = 2352433294158169198L;
 }
