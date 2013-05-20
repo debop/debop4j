@@ -37,7 +37,7 @@ import java.util.List;
  */
 public abstract class DayTimeRange extends CalendarTimeRange {
 
-    private static final long serialVersionUID = 3989374355981125247L;
+    @Getter private final int dayCount;
 
     // region << Constructor >>
 
@@ -60,22 +60,12 @@ public abstract class DayTimeRange extends CalendarTimeRange {
 
     // endregion
 
-    @Getter private final int dayCount;
-
     public DayOfWeek getStartDayOfWeek() {
         return getTimeCalendar().getDayOfWeek(getStart());
     }
 
-    public String getStartDayName() {
-        return getTimeCalendar().getDayName(getStartDayOfWeek());
-    }
-
     public DayOfWeek getEndDayOfWeek() {
         return getTimeCalendar().getDayOfWeek(getEnd());
-    }
-
-    public String getEndDayName() {
-        return getTimeCalendar().getDayName(getEndDayOfWeek());
     }
 
     /** 일(Day) 단위의 기간에 속한 시간 단위의 기간 정보 (<see cref="HourRange"/>)의 컬렉션을 반환합니다. */
@@ -111,4 +101,6 @@ public abstract class DayTimeRange extends CalendarTimeRange {
         return super.buildStringHelper()
                 .add("dayCount", dayCount);
     }
+
+    private static final long serialVersionUID = 3989374355981125247L;
 }

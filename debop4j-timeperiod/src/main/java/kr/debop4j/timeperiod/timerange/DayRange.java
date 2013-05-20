@@ -20,6 +20,7 @@ import kr.debop4j.timeperiod.DayOfWeek;
 import kr.debop4j.timeperiod.ITimeCalendar;
 import kr.debop4j.timeperiod.TimeCalendar;
 import kr.debop4j.timeperiod.clock.ClockProxy;
+import lombok.extern.slf4j.Slf4j;
 import org.joda.time.DateTime;
 
 /**
@@ -28,9 +29,8 @@ import org.joda.time.DateTime;
  * @author 배성혁 sunghyouk.bae@gmail.com
  * @since 13. 5. 13. 오후 2:08
  */
+@Slf4j
 public class DayRange extends DayTimeRange {
-
-    private static final long serialVersionUID = 7993201574147735665L;
 
     // region << Constructor >>
 
@@ -72,8 +72,6 @@ public class DayRange extends DayTimeRange {
 
     public DayOfWeek getDayOfWeek() { return getStartDayOfWeek(); }
 
-    public String getDayName() { return getStartDayName(); }
-
     public DayRange getPreviousDay() {
         return addDays(-1);
     }
@@ -85,4 +83,6 @@ public class DayRange extends DayTimeRange {
     public DayRange addDays(int days) {
         return new DayRange(getStart().withTimeAtStartOfDay().plusDays(days), getTimeCalendar());
     }
+
+    private static final long serialVersionUID = 7993201574147735665L;
 }

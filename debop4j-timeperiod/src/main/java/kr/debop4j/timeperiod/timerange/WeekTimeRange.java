@@ -74,14 +74,6 @@ public abstract class WeekTimeRange extends CalendarTimeRange {
         return startWeekOfYear + weekCount - 1;
     }
 
-    public String getStartWeekOfYearName() {
-        return getTimeCalendar().getWeekOfYearName(year, startWeekOfYear);
-    }
-
-    public String getEndWeekOfYearName() {
-        return getTimeCalendar().getWeekOfYearName(year, getEndWeekOfYear());
-    }
-
     public List<DayRange> getDays() {
         DateTime startDay = Times.getStartOfYearWeek(year, startWeekOfYear, getTimeCalendar());
         int dayCount = weekCount * TimeSpec.DaysPerWeek;

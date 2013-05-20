@@ -22,6 +22,7 @@ import kr.debop4j.timeperiod.TimeCalendar;
 import kr.debop4j.timeperiod.YearAndQuarter;
 import kr.debop4j.timeperiod.clock.ClockProxy;
 import kr.debop4j.timeperiod.tools.Times;
+import lombok.extern.slf4j.Slf4j;
 import org.joda.time.DateTime;
 
 /**
@@ -30,9 +31,8 @@ import org.joda.time.DateTime;
  * @author 배성혁 sunghyouk.bae@gmail.com
  * @since 13. 5. 13. 오후 10:09
  */
+@Slf4j
 public class QuarterRange extends QuarterTimeRange {
-
-    private static final long serialVersionUID = -5373404703149628573L;
 
     // region << Constructor >>
 
@@ -71,14 +71,6 @@ public class QuarterRange extends QuarterTimeRange {
         return getStartQuarter();
     }
 
-    public String getQuarterName() {
-        return getStartQuarterName();
-    }
-
-    public String getQuarterOfYearName() {
-        return getStartQuarterOfYearName();
-    }
-
     public QuarterRange getPreviousQuarter() {
         return addQuarters(-1);
     }
@@ -91,4 +83,6 @@ public class QuarterRange extends QuarterTimeRange {
         YearAndQuarter yq = Times.addQuarter(getStartYear(), getStartQuarter(), quarters);
         return new QuarterRange(yq.getYear(), yq.getQuarter(), getTimeCalendar());
     }
+
+    private static final long serialVersionUID = -5373404703149628573L;
 }

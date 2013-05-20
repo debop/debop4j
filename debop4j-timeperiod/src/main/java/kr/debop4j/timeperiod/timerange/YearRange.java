@@ -19,6 +19,8 @@ package kr.debop4j.timeperiod.timerange;
 import kr.debop4j.timeperiod.ITimeCalendar;
 import kr.debop4j.timeperiod.TimeCalendar;
 import kr.debop4j.timeperiod.clock.ClockProxy;
+import kr.debop4j.timeperiod.tools.Times;
+import lombok.extern.slf4j.Slf4j;
 import org.joda.time.DateTime;
 
 /**
@@ -27,9 +29,8 @@ import org.joda.time.DateTime;
  * @author 배성혁 sunghyouk.bae@gmail.com
  * @since 13. 5. 14. 오전 12:02
  */
+@Slf4j
 public class YearRange extends YearTimeRange {
-
-    private static final long serialVersionUID = 709289105887324670L;
 
     // region << Constructor >>
 
@@ -63,10 +64,6 @@ public class YearRange extends YearTimeRange {
         return getStartYear();
     }
 
-    public String getYearName() {
-        return getStartYearName();
-    }
-
     public YearRange previousYear() {
         return addYears(-1);
     }
@@ -76,7 +73,9 @@ public class YearRange extends YearTimeRange {
     }
 
     public YearRange addYears(int years) {
-        DateTime baseTime = new DateTime(getStartYear(), 1, 1, 0, 0);
+        DateTime baseTime = Times.startTimeOfYear(getStartYear());
         return new YearRange(baseTime.plusYears(years), getTimeCalendar());
     }
+
+    private static final long serialVersionUID = 709289105887324670L;
 }

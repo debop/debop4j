@@ -23,6 +23,7 @@ import kr.debop4j.timeperiod.*;
 import kr.debop4j.timeperiod.tools.TimeSpec;
 import kr.debop4j.timeperiod.tools.Times;
 import lombok.Getter;
+import lombok.extern.slf4j.Slf4j;
 import org.joda.time.DateTime;
 
 import java.util.List;
@@ -33,9 +34,12 @@ import java.util.List;
  * @author 배성혁 sunghyouk.bae@gmail.com
  * @since 13. 5. 13. 오후 7:56
  */
+@Slf4j
 public abstract class MonthTimeRange extends CalendarTimeRange {
 
-    private static final long serialVersionUID = 8872234404060777601L;
+    @Getter private final int monthCount;
+    @Getter private final int endYear;
+    @Getter private final int endMonthOfYear;
 
     // region << Constructor >>
 
@@ -62,26 +66,7 @@ public abstract class MonthTimeRange extends CalendarTimeRange {
 
     // endregion
 
-    @Getter private final int monthCount;
-    @Getter private final int endYear;
-    @Getter private final int endMonthOfYear;
-
-    public String getStartMonthName() {
-        return getTimeCalendar().getMonthName(getStartMonthOfYear());
-    }
-
-    public String getStartMonthOfYearName() {
-        return getTimeCalendar().getMonthOfYearName(getStartYear(), getStartMonthOfYear());
-    }
-
-    public String getEndMonthName() {
-        return getTimeCalendar().getMonthName(getEndMonthOfYear());
-    }
-
-    public String getEndMonthOfYearName() {
-        return getTimeCalendar().getMonthOfYearName(getEndYear(), getEndMonthOfYear());
-    }
-
+    /** 현재 월(Month)에 속한 일단위 기간({@link DayRange}) 컬렉션을 빌드합니다. */
     public List<DayRange> getDays() {
         DateTime startMonth = Times.startTimeOfMonth(getStart());
         List<DayRange> days = Lists.newArrayListWithCapacity(monthCount * TimeSpec.MaxDaysPerMonth);
@@ -113,4 +98,6 @@ public abstract class MonthTimeRange extends CalendarTimeRange {
         DateTime start = new DateTime(year, month, 1, 0, 0);
         return new TimeRange(start, start.plusMonths(monthCount));
     }
+
+    private static final long serialVersionUID = 8872234404060777601L;
 }

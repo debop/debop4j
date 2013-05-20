@@ -29,7 +29,6 @@ import org.joda.time.DateTime;
  * @since 13. 5. 13. 오후 8:16
  */
 public class MonthRange extends MonthTimeRange {
-    private static final long serialVersionUID = 6337203416072219224L;
 
     // region << Constructor >>
 
@@ -63,10 +62,6 @@ public class MonthRange extends MonthTimeRange {
 
     public int getMonthOfYear() { return getStartMonthOfYear(); }
 
-    public String getMonthName() { return getStartMonthName(); }
-
-    public String getMonthOfYearName() { return getStartMonthOfYearName(); }
-
     public int getDaysInMonth() {
         return Times.getDaysInMonth(getStartYear(), getStartMonthOfYear());
     }
@@ -82,4 +77,6 @@ public class MonthRange extends MonthTimeRange {
     public MonthRange addMonths(int months) {
         return new MonthRange(Times.startTimeOfMonth(getStart()).plusMonths(months), getTimeCalendar());
     }
+
+    private static final long serialVersionUID = 6337203416072219224L;
 }

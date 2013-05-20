@@ -16,6 +16,7 @@
 
 package kr.debop4j.timeperiod.timerange;
 
+import com.google.common.base.Objects;
 import com.google.common.collect.Lists;
 import kr.debop4j.core.tools.HashTool;
 import kr.debop4j.timeperiod.*;
@@ -27,14 +28,18 @@ import org.joda.time.DateTime;
 import java.util.List;
 
 /**
- * kr.debop4j.timeperiod.timerange.QuarterTimeRange
+ * 분기단위의 기간을 표현합니다.
  *
  * @author 배성혁 sunghyouk.bae@gmail.com
  * @since 13. 5. 13. 오후 8:26
  */
 public abstract class QuarterTimeRange extends YearCalendarTimeRange {
 
-    private static final long serialVersionUID = -1642725884160403253L;
+    @Getter private int startYear;
+    @Getter private QuarterKind startQuarter;
+    @Getter private int endYear;
+    @Getter private QuarterKind endQuarter;
+    @Getter private int quarterCount;
 
     public QuarterTimeRange(int startYear, QuarterKind startQuarter, int quarterCount) {
         this(startYear, startQuarter, quarterCount, new TimeCalendar());
@@ -54,27 +59,6 @@ public abstract class QuarterTimeRange extends YearCalendarTimeRange {
         this.quarterCount = quarterCount;
     }
 
-    @Getter private int startYear;
-    @Getter private QuarterKind startQuarter;
-    @Getter private int endYear;
-    @Getter private QuarterKind endQuarter;
-    @Getter private int quarterCount;
-
-    public String getStartQuarterName() {
-        return getTimeCalendar().getQuarterName(startQuarter);
-    }
-
-    public String getStartQuarterOfYearName() {
-        return getTimeCalendar().getQuarterOfYearName(startYear, startQuarter);
-    }
-
-    public String getEndQuarterName() {
-        return getTimeCalendar().getQuarterName(endQuarter);
-    }
-
-    public String getEndQuarterOfYearName() {
-        return getTimeCalendar().getQuarterOfYearName(endYear, endQuarter);
-    }
 
     public int getStartMonthOfYear() {
         int months = (startQuarter.getValue() - 1) * TimeSpec.MonthsPerQuarter;
@@ -112,6 +96,15 @@ public abstract class QuarterTimeRange extends YearCalendarTimeRange {
         return HashTool.compute(super.hashCode(), startYear, startQuarter, quarterCount, endQuarter);
     }
 
+    @Override
+    protected Objects.ToStringHelper buildStringHelper() {
+        return super.buildStringHelper()
+                .add("startYear", startYear)
+                .add("startQuarter", startQuarter)
+                .add("quarterCount", quarterCount)
+                .add("endQuarter", endQuarter);
+    }
+
     private static ITimePeriod getPeriodOf(int year, QuarterKind quarterKind, int quarterCount, ITimeCalendar calendar) {
         assert quarterCount >= 0;
 
@@ -122,4 +115,6 @@ public abstract class QuarterTimeRange extends YearCalendarTimeRange {
 
         return new TimeRange(start, end);
     }
+
+    private static final long serialVersionUID = -1642725884160403253L;
 }

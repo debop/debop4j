@@ -118,7 +118,7 @@ public abstract class Times {
         int year = (targetHalfyearCount / TimeSpec.HalfyearsPerYear) - offsetYear;
         HalfyearKind halfyear = HalfyearKind.valueOf((targetHalfyearCount % TimeSpec.HalfyearsPerYear) + 1);
 
-        if (log.isTraceEnabled())
+        if (isTraceEnabled)
             log.trace("addHalfyear. startYear=[{}], startHalfyear=[{}], halfyearCount=[{}], year=[{}], halfyear=[{}]",
                       startYear, startHalfyear, halfyearCount, year, halfyear);
 
@@ -265,7 +265,7 @@ public abstract class Times {
 
     /** 두 일자의 값이 {@link PeriodKind} 단위까지 같은지 비교합니다. (상위값들도 같아야 합니다.) */
     public static boolean isSameTime(DateTime left, DateTime right, PeriodKind periodKind) {
-        if (log.isTraceEnabled())
+        if (isTraceEnabled)
             log.trace("두 일자가 값은지 비교합니다. left=[{}], right=[{}], periodKind=[{}]", left, right, periodKind);
 
         switch (periodKind) {
@@ -298,60 +298,69 @@ public abstract class Times {
         return left.getYear() == right.getYear();
     }
 
+    /** 두 일자가 반기(halfyear) 단위까지 같으면 true를 아니면 false를 반환합니다. */
     public static boolean isSameHalfyear(DateTime left, DateTime right) {
         return isSameYear(left, right) &&
                 getHalfyearOfMonth(left.getMonthOfYear()) == getHalfyearOfMonth(right.getMonthOfYear());
     }
 
+    /** 두 일자가 분기(quarter) 단위까지 같으면 true를 아니면 false를 반환합니다. */
     public static boolean isSameQuarter(DateTime left, DateTime right) {
         return isSameYear(left, right) &&
                 getQuarterOfMonth(left.getMonthOfYear()) == getQuarterOfMonth(right.getMonthOfYear());
     }
 
+    /** 두 일자가 월(Month) 단위까지 같으면 true를 아니면 false를 반환합니다. */
     public static boolean isSameMonth(DateTime left, DateTime right) {
         return isSameYear(left, right) &&
                 left.getMonthOfYear() == right.getMonthOfYear();
     }
 
+    /** 두 일자가 주(Week) 단위까지 같으면 true를 아니면 false를 반환합니다. */
     public static boolean isSameWeek(DateTime left, DateTime right) {
         return isSameYear(left, right) &&
                 left.getWeekOfWeekyear() == right.getWeekOfWeekyear();
     }
 
+    /** 두 일자가 일(Day) 단위까지 같으면 true를 아니면 false를 반환합니다. */
     public static boolean isSameDay(DateTime left, DateTime right) {
         return isSameMonth(left, right) &&
                 left.dayOfMonth() == right.dayOfMonth();
     }
 
+    /** 두 일자가 시(Hour) 단위까지 같으면 true를 아니면 false를 반환합니다. */
     public static boolean isSameHour(DateTime left, DateTime right) {
         return isSameDay(left, right) &&
                 left.getHourOfDay() == right.getHourOfDay();
     }
 
+    /** 두 일자가 분 단위까지 같으면 true를 아니면 false를 반환합니다. */
     public static boolean isSameMinute(DateTime left, DateTime right) {
         return isSameDay(left, right) &&
                 left.getMinuteOfDay() == right.getMinuteOfDay();
     }
 
+    /** 두 일자가 초 단위까지 같으면 true를 아니면 false를 반환합니다. */
     public static boolean isSameSecond(DateTime left, DateTime right) {
         return isSameDay(left, right) &&
                 left.getSecondOfDay() == right.getSecondOfDay();
     }
 
+    /** 두 일자가 같으면 true를 아니면 false를 반환합니다. */
     public static boolean isSameDateTime(DateTime left, DateTime right) {
         return (left != null) && left.equals(right);
     }
-
 
     // endregion
 
     // region << Current >>
 
+    /** 현재 시각이 속한 년도의 시작일 */
     public static DateTime currentYear() {
-        DateTime now = ClockProxy.getClock().now();
-        return new DateTime(now.getYear(), 1, 1, 0, 0);
+        return new DateTime(DateTime.now().getYear(), 1, 1, 0, 0);
     }
 
+    /** 현재 시각이 속한 반기의 시작일 */
     public static DateTime currentHalfyear() {
         DateTime now = ClockProxy.getClock().now();
         HalfyearKind halfyear = getHalfyearOfMonth(now.getMonthOfYear());
@@ -359,6 +368,7 @@ public abstract class Times {
         return new DateTime(now.getYear(), month, 1, 0, 0);
     }
 
+    /** 현재 시각이 속한 분기의 시작일 */
     public static DateTime currentQuarter() {
         DateTime now = ClockProxy.getClock().now();
         QuarterKind quarter = getQuarterOfMonth(now.getMonthOfYear());
@@ -366,63 +376,74 @@ public abstract class Times {
         return new DateTime(now.getYear(), month, 1, 0, 0);
     }
 
+    /** 현재 시각이 속한 월의 시작일 */
     public static DateTime currentMonth() {
-        return trimToDay(ClockProxy.getClock().now());
+        return trimToDay(now());
     }
 
+    /** 현재 시각이 속한 주의 시작일 */
     public static DateTime currentWeek() {
         return currentWeek(TimeSpec.FirstDayOfWeek);
     }
 
+    /** 현재 시각이 속한 주의 시작일 */
     public static DateTime currentWeek(DayOfWeek firstDayOfWeek) {
         return getStartOfWeek(ClockProxy.getClock().now(), firstDayOfWeek);
     }
 
+    /** 오늘 */
     public static DateTime currentDay() {
-        return ClockProxy.getClock().today();
+        return today();
     }
 
+    /** 현재 시각이 속한 시각의 처음 */
     public static DateTime currentHour() {
-        return trimToMinute(ClockProxy.getClock().now());
+        return trimToMinute(now());
     }
 
+    /** 현재 시각이 속한 분의 처음 */
     public static DateTime currentMinute() {
-        return trimToSecond(ClockProxy.getClock().now());
+        return trimToSecond(now());
     }
 
+    /** 현재 시각이 속한 초단위의 처음 */
     public static DateTime currentSecond() {
-        return trimToMillis(ClockProxy.getClock().now());
+        return trimToMillis(now());
     }
 
     // endregion << Current >>
 
     // region << DateTime >>
 
+    /** moment 가 속한 년도의 시작 시각 */
     public static DateTime startTimeOfYear(DateTime moment) {
         return new DateTime(moment.getYear(), 1, 1, 0, 0);
     }
 
+    /** 지정한 년도의 시작 시각 */
     public static DateTime startTimeOfYear(int year) {
         return new DateTime(year, 1, 1, 0, 0);
     }
 
+    /** moment가 속한 년도의 마지막 시각 */
     public static DateTime endTimeOfYear(DateTime moment) {
         return startTimeOfYear(moment.getYear() + 1).plusMillis(-1);
     }
 
+    /** 지정한 년도의 마지막 시각 */
     public static DateTime endTimeOfYear(int year) {
         return startTimeOfYear(year + 1).plusMillis(-1);
     }
 
-    /** 작년 시작일 */
+    /** 작년 시작 시각 */
     public static DateTime startTimeOfLastYear(DateTime moment) {
         return startTimeOfYear(moment.getYear() - 1);
     }
 
+    /** 작년 마지막 시각 */
     public static DateTime endTimeOfLastYear(DateTime moment) {
         return endTimeOfYear(moment.getYear() - 1);
     }
-
 
     public static DateTime startTimeOfHalfyear(DateTime moment) {
         return startTimeOfHalfyear(moment.getYear(), moment.getMonthOfYear());
@@ -694,8 +715,9 @@ public abstract class Times {
         return new Duration(moment.getMillisOfDay());
     }
 
+    /** 시각에 시간부분의 값이 존재하는지 여부 */
     public static boolean hasTimePart(DateTime moment) {
-        return moment.getMillisOfDay() > TimeSpec.ZeroMillis;
+        return moment.getMillisOfDay() > 0;
     }
 
     public static DateTime setTimePart(DateTime moment, DateTime timepart) {

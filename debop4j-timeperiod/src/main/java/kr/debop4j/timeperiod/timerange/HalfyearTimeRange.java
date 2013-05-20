@@ -16,6 +16,7 @@
 
 package kr.debop4j.timeperiod.timerange;
 
+import com.google.common.base.Objects;
 import com.google.common.collect.Lists;
 import kr.debop4j.core.tools.HashTool;
 import kr.debop4j.timeperiod.*;
@@ -55,22 +56,6 @@ public abstract class HalfyearTimeRange extends YearCalendarTimeRange {
     @Getter private final HalfyearKind endHalfyear;
     @Getter private final int halfyearCount;
 
-    public String getStartHalfyearName() {
-        return getTimeCalendar().getHalfyearName(this.startHalfyear);
-    }
-
-    public String getStartHalfyearOfYearName() {
-        return getTimeCalendar().getHalfyearOfYearName(this.startYear, this.startHalfyear);
-    }
-
-    public String getEndHalfyearName() {
-        return getTimeCalendar().getHalfyearName(this.endHalfyear);
-    }
-
-    public String getEndHalfyearOfYearName() {
-        return getTimeCalendar().getHalfyearOfYearName(this.endYear, this.endHalfyear);
-    }
-
     /** 반기(HalfYear) 기간의 시작 년도와 완료 년도가 다른가 여부 */
     public boolean isMultipleCalendarYears() {
         return startYear != endYear;
@@ -103,6 +88,16 @@ public abstract class HalfyearTimeRange extends YearCalendarTimeRange {
     @Override
     public int hashCode() {
         return HashTool.compute(super.hashCode(), startYear, startHalfyear, endYear, endHalfyear, halfyearCount);
+    }
+
+    @Override
+    protected Objects.ToStringHelper buildStringHelper() {
+        return super.buildStringHelper()
+                .add("startYear", startYear)
+                .add("startHalfyear", startHalfyear)
+                .add("endYear", endYear)
+                .add("endHalfyear", endHalfyear)
+                .add("halfyearCount", halfyearCount);
     }
 
     private static TimeRange getPeriodOf(int year, HalfyearKind halfyear, int halfyearCount) {

@@ -21,6 +21,7 @@ import kr.debop4j.timeperiod.ITimePeriod;
 import kr.debop4j.timeperiod.TimeCalendar;
 import kr.debop4j.timeperiod.clock.ClockProxy;
 import kr.debop4j.timeperiod.tools.Times;
+import lombok.extern.slf4j.Slf4j;
 import org.joda.time.DateTime;
 
 /**
@@ -29,9 +30,8 @@ import org.joda.time.DateTime;
  * @author 배성혁 sunghyouk.bae@gmail.com
  * @since 13. 5. 13. 오후 3:30
  */
+@Slf4j
 public class WeekRange extends WeekTimeRange {
-
-    private static final long serialVersionUID = 562359121625029972L;
 
     // region << Constructor >>
 
@@ -73,10 +73,6 @@ public class WeekRange extends WeekTimeRange {
         return getStartWeekOfYear();
     }
 
-    public String getWeekOfYearName() {
-        return getStartWeekOfYearName();
-    }
-
     public DateTime getFirstDayOfWeek() {
         return getStart();
     }
@@ -101,4 +97,6 @@ public class WeekRange extends WeekTimeRange {
         DateTime startOfWeek = Times.getStartOfYearWeek(getYear(), getStartWeekOfYear(), getTimeCalendar());
         return new WeekRange(startOfWeek.plusWeeks(weeks), getTimeCalendar());
     }
+
+    private static final long serialVersionUID = 562359121625029972L;
 }

@@ -71,14 +71,6 @@ public class HalfyearRange extends HalfyearTimeRange {
         return getStartHalfyear();
     }
 
-    public String getHalfyearName() {
-        return getTimeCalendar().getHalfyearName(getHalfyear());
-    }
-
-    public String getHalfyearOfYearName() {
-        return getTimeCalendar().getHalfyearOfYearName(getYear(), getHalfyear());
-    }
-
     public HalfyearRange previousHalfyear() {
         return addHalfyears(-1);
     }

@@ -16,25 +16,30 @@
 
 package kr.debop4j.timeperiod.timerange;
 
+import com.google.common.base.Objects;
 import com.google.common.collect.Lists;
+import kr.debop4j.core.tools.HashTool;
 import kr.debop4j.timeperiod.HalfyearKind;
 import kr.debop4j.timeperiod.ITimeCalendar;
 import kr.debop4j.timeperiod.QuarterKind;
 import kr.debop4j.timeperiod.TimeRange;
 import kr.debop4j.timeperiod.tools.TimeSpec;
 import lombok.Getter;
+import lombok.extern.slf4j.Slf4j;
 import org.joda.time.DateTime;
 
 import java.util.List;
 
 /**
- * kr.debop4j.timeperiod.timerange.YearTimeRange
+ * 년(Year) 단위의 기간을 표현합니다.
  *
  * @author 배성혁 sunghyouk.bae@gmail.com
  * @since 13. 5. 13. 오후 11:48
  */
+@Slf4j
 public class YearTimeRange extends YearCalendarTimeRange {
-    private static final long serialVersionUID = 1604523513628691621L;
+
+    @Getter private final int yearCount;
 
     public YearTimeRange(DateTime moment, int yearCount, ITimeCalendar calendar) {
         this(moment.getYear(), yearCount, calendar);
@@ -42,18 +47,7 @@ public class YearTimeRange extends YearCalendarTimeRange {
 
     public YearTimeRange(int startYear, int yearCount, ITimeCalendar calendar) {
         super(getPeriodOf(startYear, yearCount), calendar);
-
         this.yearCount = yearCount;
-    }
-
-    @Getter private final int yearCount;
-
-    public String getStartYearName() {
-        return getTimeCalendar().getYearName(getStartYear());
-    }
-
-    public String getEndYearName() {
-        return getTimeCalendar().getYearName(getEndYear());
     }
 
     public List<HalfyearRange> getHalfyears() {
@@ -93,6 +87,16 @@ public class YearTimeRange extends YearCalendarTimeRange {
         return months;
     }
 
+    @Override
+    public int hashCode() {
+        return HashTool.compute(super.hashCode(), yearCount);
+    }
+
+    @Override
+    protected Objects.ToStringHelper buildStringHelper() {
+        return super.buildStringHelper()
+                .add("yearCount", yearCount);
+    }
 
     private static TimeRange getPeriodOf(int year, int yearCount) {
         assert yearCount >= 0;
@@ -100,4 +104,6 @@ public class YearTimeRange extends YearCalendarTimeRange {
         DateTime startYear = new DateTime(year, 1, 1, 0, 0);
         return new TimeRange(startYear, startYear.plusYears(yearCount));
     }
+
+    private static final long serialVersionUID = 1604523513628691621L;
 }
