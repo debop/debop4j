@@ -42,15 +42,15 @@ public class DaySeeker extends CalendarVisitor<CalendarVisitorFilter, DaySeekerC
     // region << Constructor >>
 
     public DaySeeker() {
-        this(SeekDirection.Forward, TimeCalendar.getDefault());
+        this(SeekDirection.Forward, TimeCalendar.create());
     }
 
     public DaySeeker(CalendarVisitorFilter filter) {
-        this(filter, null, TimeCalendar.getDefault());
+        this(filter, null, TimeCalendar.create());
     }
 
     public DaySeeker(SeekDirection seekDir) {
-        this(new CalendarVisitorFilter(), seekDir, TimeCalendar.getDefault());
+        this(new CalendarVisitorFilter(), seekDir, TimeCalendar.create());
     }
 
     public DaySeeker(SeekDirection seekDir, ITimeCalendar calendar) {

@@ -16,7 +16,9 @@
 
 package kr.debop4j.timeperiod;
 
-import kr.debop4j.core.NotImplementedException;
+import com.google.common.base.Objects;
+import kr.debop4j.core.ValueObjectBase;
+import kr.debop4j.core.tools.HashTool;
 import kr.debop4j.timeperiod.tools.TimeSpec;
 import kr.debop4j.timeperiod.tools.Times;
 import lombok.Getter;
@@ -35,27 +37,39 @@ import static kr.debop4j.core.Guard.*;
  * @since 13. 5. 11. 오후 8:56
  */
 @Slf4j
-public class TimeCalendar implements ITimeCalendar {
+public class TimeCalendar extends ValueObjectBase implements ITimeCalendar {
 
-    public static final Duration DefaultStartOffset = TimeSpec.NoDuration;
+    public static final Duration DefaultStartOffset = TimeSpec.EmptyDuration;
     public static final Duration DefaultEndOffset = TimeSpec.MinNegativeDuration;
 
     // region << Static Methods >>
 
-    public static TimeCalendar getDefault() {
-        throw new NotImplementedException("구현 중");
+    /** 기본 {@link TimeCalendar} 를 반환합니다. */
+    public static TimeCalendar create() {
+        return create(Locale.getDefault());
     }
 
-    public static TimeCalendar getDefault(Locale locale) {
-        throw new NotImplementedException("구현 중");
+    /** 기본 {@link TimeCalendar} 를 반환합니다. */
+    public static TimeCalendar create(Locale locale) {
+        TimeCalendarConfig config = new TimeCalendarConfig(locale);
+        config.setStartOffset(DefaultStartOffset);
+        config.setEndOffset(DefaultEndOffset);
+
+        return new TimeCalendar(config);
     }
 
-    public static TimeCalendar getDefault(int yearBaseMonth) {
-        throw new NotImplementedException("구현 중");
+    /** Offset이 없는 {@link TimeCalendar}를 반환합니다. */
+    public static TimeCalendar createEmptyOffset() {
+        return createEmptyOffset(Locale.getDefault());
     }
 
-    public static TimeCalendar getEmptyOffset() {
-        throw new NotImplementedException("구현 중");
+    /** Offset이 없는 {@link TimeCalendar}를 반환합니다. */
+    public static TimeCalendar createEmptyOffset(Locale locale) {
+        TimeCalendarConfig config = new TimeCalendarConfig(locale);
+        config.setStartOffset(TimeSpec.EmptyDuration);
+        config.setEndOffset(TimeSpec.EmptyDuration);
+
+        return new TimeCalendar(config);
     }
 
     // endregion
@@ -150,6 +164,20 @@ public class TimeCalendar implements ITimeCalendar {
     public DateTime unmapEnd(DateTime moment) {
         shouldNotBeNull(moment, "moment");
         return moment.compareTo(TimeSpec.MaxPeriodTime) < 0 ? moment.minus(endOffset) : moment;
+    }
+
+    @Override
+    public int hashCode() {
+        return HashTool.compute(locale, startOffset, endOffset, firstDayOfWeek);
+    }
+
+    @Override
+    protected Objects.ToStringHelper buildStringHelper() {
+        return super.buildStringHelper()
+                .add("locale", locale)
+                .add("startOffset", startOffset)
+                .add("endOffset", endOffset)
+                .add("firstDayOfWeek", firstDayOfWeek);
     }
 
     private static final long serialVersionUID = -8731693901249037388L;

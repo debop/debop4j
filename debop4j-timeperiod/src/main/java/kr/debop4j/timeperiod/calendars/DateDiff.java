@@ -93,7 +93,7 @@ public class DateDiff extends ValueObjectBase implements Serializable {
     }
 
     public DateDiff(DateTime start, DateTime end) {
-        this(start, end, TimeCalendar.getDefault());
+        this(start, end, TimeCalendar.create());
     }
 
     public DateDiff(DateTime start, DateTime end, ITimeCalendar timeCalendar) {
@@ -101,7 +101,7 @@ public class DateDiff extends ValueObjectBase implements Serializable {
         this.start = start;
         this.end = end;
         this.difference = new Duration(start, end);
-        this.timeCalendar = (timeCalendar != null) ? timeCalendar : TimeCalendar.getDefault();
+        this.timeCalendar = (timeCalendar != null) ? timeCalendar : TimeCalendar.create();
     }
 
     public boolean isEmpty() {

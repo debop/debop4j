@@ -38,7 +38,7 @@ public class CalendarTimeRange extends TimeRange implements ICalendarTimeRange {
 
     public static TimeRange toCalendarTimeRange(ITimePeriod period, ITimePeriodMapper mapper) {
         assert period != null;
-        if (mapper == null) mapper = TimeCalendar.getDefault();
+        if (mapper == null) mapper = TimeCalendar.create();
 
         DateTime mappedStart = mapper.mapStart(period.getStart());
         DateTime mappedEnd = mapper.mapEnd(period.getEnd());
@@ -76,7 +76,7 @@ public class CalendarTimeRange extends TimeRange implements ICalendarTimeRange {
 
     public CalendarTimeRange(ITimePeriod period, ITimeCalendar timeCalendar) {
         super(toCalendarTimeRange(period, timeCalendar));
-        this.timeCalendar = (timeCalendar != null) ? timeCalendar : TimeCalendar.getDefault();
+        this.timeCalendar = (timeCalendar != null) ? timeCalendar : TimeCalendar.create();
     }
 
     // endregion

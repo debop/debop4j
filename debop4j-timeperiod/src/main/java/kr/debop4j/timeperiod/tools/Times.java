@@ -532,7 +532,7 @@ public abstract class Times {
     }
 
     public static DateTime startTimeOfWeek(int year, int weekOfYear) {
-        return startTimeOfWeek(year, weekOfYear, TimeCalendar.getDefault());
+        return startTimeOfWeek(year, weekOfYear, TimeCalendar.create());
     }
 
     public static DateTime startTimeOfWeek(int year, int weekOfYear, ITimeCalendar timeCalendar) {
@@ -555,7 +555,7 @@ public abstract class Times {
     }
 
     public static DateTime endTimeOfWeek(int year, int weekOfYear) {
-        return endTimeOfWeek(year, weekOfYear, TimeCalendar.getDefault());
+        return endTimeOfWeek(year, weekOfYear, TimeCalendar.create());
     }
 
     public static DateTime endTimeOfWeek(int year, int weekOfYear, ITimeCalendar timeCalendar) {
@@ -861,7 +861,7 @@ public abstract class Times {
 
     /** moment가 속한 특정 종류의 기간 */
     public static ITimePeriod getPeriodOf(DateTime moment, PeriodKind periodKind) {
-        return getPeriodOf(moment, periodKind, TimeCalendar.getDefault());
+        return getPeriodOf(moment, periodKind, TimeCalendar.create());
     }
 
     /** moment가 속한 특정 종류의 기간 */
@@ -894,7 +894,7 @@ public abstract class Times {
 
     /** moment 가 속한 특정 종류의 기간에 대해 periodCount 갯수만큼의 기간 정보를 컬렉션으로 반환한다. */
     public static ICalendarTimeRange getPeriodsOf(DateTime moment, PeriodKind periodKind, int periodCount) {
-        return getPeriodsOf(moment, periodKind, periodCount, TimeCalendar.getDefault());
+        return getPeriodsOf(moment, periodKind, periodCount, TimeCalendar.create());
     }
 
     /** moment 가 속한 특정 종류의 기간에 대해 periodCount 갯수만큼의 기간 정보를 컬렉션으로 반환한다. */
@@ -1295,17 +1295,17 @@ public abstract class Times {
 
     // region << Comparator >>
 
-    @Getter( lazy = true )
+    @Getter(lazy = true)
     private static final StartComparator startComparator = new StartComparator();
-    @Getter( lazy = true )
+    @Getter(lazy = true)
     private static final StartDescComparator startDescComparator = new StartDescComparator();
-    @Getter( lazy = true )
+    @Getter(lazy = true)
     private static final EndComparator endComparator = new EndComparator();
-    @Getter( lazy = true )
+    @Getter(lazy = true)
     private static final EndDescComparator endDescComparator = new EndDescComparator();
-    @Getter( lazy = true )
+    @Getter(lazy = true)
     private static final DurationComparator durationComparator = new DurationComparator();
-    @Getter( lazy = true )
+    @Getter(lazy = true)
     private static final DurationDescComparator durationDescComparator = new DurationDescComparator();
 
     public static class StartComparator implements Comparator<ITimePeriod> {

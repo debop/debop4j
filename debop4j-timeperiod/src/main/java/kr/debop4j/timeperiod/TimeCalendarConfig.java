@@ -42,7 +42,7 @@ public class TimeCalendarConfig extends ValueObjectBase {
     }
 
     public TimeCalendarConfig(Locale locale) {
-        this.locale = locale;
+        this.locale = (locale != null) ? locale : Locale.getDefault();
 
         firstDayOfWeek = TimeSpec.FirstDayOfWeek;
     }

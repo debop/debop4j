@@ -37,7 +37,7 @@ public class PeriodContext {
         public static ITimeCalendar getTimeCalendar() {
             ITimeCalendar calendar = Local.get(TimeCalendarKey, ITimeCalendar.class);
             if (calendar == null) {
-                calendar = TimeCalendar.getDefault();
+                calendar = TimeCalendar.create();
                 Local.put(TimeCalendarKey, calendar);
             }
             return calendar;

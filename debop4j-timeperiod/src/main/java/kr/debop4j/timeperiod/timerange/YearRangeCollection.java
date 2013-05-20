@@ -35,7 +35,7 @@ public class YearRangeCollection extends YearTimeRange {
     private static final long serialVersionUID = 6717411713272815855L;
 
     public YearRangeCollection(DateTime moment, int yearCount) {
-        this(moment, yearCount, TimeCalendar.getDefault());
+        this(moment, yearCount, TimeCalendar.create());
     }
 
     public YearRangeCollection(DateTime moment, int yearCount, ITimeCalendar calendar) {
@@ -43,7 +43,7 @@ public class YearRangeCollection extends YearTimeRange {
     }
 
     public YearRangeCollection(int year, int yearCount) {
-        this(year, yearCount, TimeCalendar.getDefault());
+        this(year, yearCount, TimeCalendar.create());
     }
 
     public YearRangeCollection(int year, int yearCount, ITimeCalendar calendar) {

@@ -37,7 +37,7 @@ public class CalendarDateAdd extends DateAdd {
     @Getter private final List<DayHourRange> workingDayHours = new ArrayList<>();
 
     public CalendarDateAdd() {
-        this(TimeCalendar.getDefault());
+        this(TimeCalendar.create());
     }
 
     public CalendarDateAdd(ITimeCalendar calendar) {

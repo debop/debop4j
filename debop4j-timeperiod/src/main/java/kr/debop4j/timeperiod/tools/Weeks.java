@@ -38,8 +38,8 @@ import java.util.Locale;
 public abstract class Weeks {
 
     private static final Logger log = LoggerFactory.getLogger(Weeks.class);
-    @Getter( lazy = true ) private static final boolean traceEnabled = log.isTraceEnabled();
-    @Getter( lazy = true ) private static final boolean debugEnabled = log.isDebugEnabled();
+    @Getter(lazy = true) private static final boolean traceEnabled = log.isTraceEnabled();
+    @Getter(lazy = true) private static final boolean debugEnabled = log.isDebugEnabled();
 
     private Weeks() {}
 
@@ -67,7 +67,7 @@ public abstract class Weeks {
 
     /** 해당년도의 마지막 주차를 산정합니다. */
     public static YearAndWeek getEndYearAndWeek(int year) {
-        return getEndYearAndWeek(year, TimeCalendar.getDefault());
+        return getEndYearAndWeek(year, TimeCalendar.create());
     }
 
     /** 해당년도의 마지막 주차를 산정합니다. */
@@ -76,7 +76,7 @@ public abstract class Weeks {
     }
 
     public static WeekRange getWeekRange(YearAndWeek yearAndWeek) {
-        return getWeekRange(yearAndWeek, TimeCalendar.getDefault());
+        return getWeekRange(yearAndWeek, TimeCalendar.create());
     }
 
     public static WeekRange getWeekRange(YearAndWeek yearAndWeek, ITimeCalendar timeCalendar) {
@@ -85,7 +85,7 @@ public abstract class Weeks {
 
     /** 해당년도의 시작 주의 기간 */
     public static WeekRange getStartWeekRangeOfYear(int year) {
-        return getStartWeekRangeOfYear(year, TimeCalendar.getDefault());
+        return getStartWeekRangeOfYear(year, TimeCalendar.create());
     }
 
     /** 해당년도의 시작 주의 기간 */
@@ -95,7 +95,7 @@ public abstract class Weeks {
 
     /** 해당년도의 마지막 주의 기간 */
     public static WeekRange getEndWeekRangeOfYear(int year) {
-        return getEndWeekRangeOfYear(year, TimeCalendar.getDefault());
+        return getEndWeekRangeOfYear(year, TimeCalendar.create());
     }
 
     /** 해당년도의 마지막 주의 기간 */
@@ -105,7 +105,7 @@ public abstract class Weeks {
     }
 
     public static YearAndWeek addWeekOfYears(int year, int weekOfYear, int weeks) {
-        return addWeekOfYears(year, weekOfYear, weeks, TimeCalendar.getDefault());
+        return addWeekOfYears(year, weekOfYear, weeks, TimeCalendar.create());
     }
 
     public static YearAndWeek addWeekOfYears(int year, int weekOfYear, int weeks, ITimeCalendar timeCalendar) {
@@ -113,7 +113,7 @@ public abstract class Weeks {
     }
 
     public static YearAndWeek addWeekOfYears(YearAndWeek yearAndWeek, int weeks) {
-        return addWeekOfYears(yearAndWeek, weeks, TimeCalendar.getDefault());
+        return addWeekOfYears(yearAndWeek, weeks, TimeCalendar.create());
     }
 
     public static YearAndWeek addWeekOfYears(YearAndWeek yearAndWeek, int weeks, ITimeCalendar timeCalendar) {
