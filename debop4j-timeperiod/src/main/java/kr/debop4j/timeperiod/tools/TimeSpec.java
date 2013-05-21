@@ -162,6 +162,9 @@ public final class TimeSpec {
     /** 기간 없음 Duration.ZERO) */
     public static final Duration EmptyDuration = Duration.ZERO;
 
+    /** 기간 없음 Duration.ZERO) */
+    public static final Duration ZeroDuration = Duration.ZERO;
+
     /** 양(Positive)의 최소 기간 (Duration.millis(1L)) */
     public static final Duration MinPositiveDuration = Duration.millis(1L);
 

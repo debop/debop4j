@@ -17,12 +17,14 @@
 package kr.debop4j.timeperiod;
 
 import com.google.common.base.Objects;
-import kr.debop4j.core.NotImplementedException;
 import kr.debop4j.timeperiod.tools.TimeSpec;
 import kr.debop4j.timeperiod.tools.Times;
 import lombok.extern.slf4j.Slf4j;
 import org.joda.time.DateTime;
 import org.joda.time.Duration;
+
+import static kr.debop4j.timeperiod.tools.TimeSpec.ZeroDuration;
+import static org.joda.time.Duration.ZERO;
 
 /**
  * 기준 일자의 시간 간격을 이용하여 기간을 표현합니다.
@@ -37,11 +39,11 @@ public class TimeBlock extends TimePeriodBase implements ITimeBlock {
     public static final TimeBlock Anytime = new TimeBlock(true);
 
     public static TimeRange toRange(TimeBlock block) {
-        throw new NotImplementedException("구현 중");
+        return new TimeRange(block.getStart(), block.getDuration(), block.isReadonly());
     }
 
     public static TimeInterval toInterval(TimeBlock block) {
-        throw new NotImplementedException("구현 중");
+        return new TimeInterval(block.getStart(), block.getEnd(), block.isReadonly());
     }
 
     // region << Constructor >>
@@ -108,7 +110,7 @@ public class TimeBlock extends TimePeriodBase implements ITimeBlock {
     private Duration duration;
 
     protected void assertValidDuration(Duration duration) {
-        assert duration.compareTo(TimeSpec.MinDuration) >= 0 : "duration은 0 이상이어야 합니다.";
+        assert duration.compareTo(ZeroDuration) >= 0 : "duration은 0 이상이어야 합니다.";
     }
 
     @Override
@@ -137,12 +139,12 @@ public class TimeBlock extends TimePeriodBase implements ITimeBlock {
 
     @Override
     public TimeBlock copy() {
-        return copy(Duration.ZERO);
+        return copy(ZERO);
     }
 
     @Override
     public TimeBlock copy(Duration offset) {
-        if (Duration.ZERO.equals(offset))
+        if (ZERO.isEqual(offset))
             return new TimeBlock(this);
 
         return new TimeBlock(hasStart() ? start.plus(offset) : start,
@@ -167,11 +169,16 @@ public class TimeBlock extends TimePeriodBase implements ITimeBlock {
         assertMutable();
         assertValidDuration(newDuration);
 
-        if (end != null)
-            assert this.end.plus(duration).compareTo(TimeSpec.MaxPeriodTime) <= 0 : "duration 이 너무 크네요.";
+        if (newDuration.isEqual(TimeSpec.MaxDuration)) {
+            this.duration = newDuration;
+            this.end = TimeSpec.MaxPeriodTime;
+        } else {
+            if (end != null)
+                assert this.end.plus(newDuration).compareTo(TimeSpec.MaxPeriodTime) <= 0 : "duration 이 너무 크네요.";
 
-        this.duration = newDuration;
-        this.end = this.start.plus(this.duration);
+            this.duration = newDuration;
+            this.end = this.start.plus(this.duration);
+        }
     }
 
     @Override
@@ -183,22 +190,22 @@ public class TimeBlock extends TimePeriodBase implements ITimeBlock {
     }
 
     public ITimeBlock getPreviousBlock() {
-        return getPreviousBlock(Duration.ZERO);
+        return getPreviousBlock(ZERO);
     }
 
     @Override
     public ITimeBlock getPreviousBlock(Duration offset) {
-        Duration endOffset = (offset.compareTo(Duration.ZERO) > 0) ? new Duration(-offset.getMillis()) : offset;
+        Duration endOffset = (offset.compareTo(ZERO) > 0) ? new Duration(-offset.getMillis()) : offset;
         return new TimeBlock(getDuration(), getStart().plus(endOffset), readonly);
     }
 
     public ITimeBlock getNextBlock() {
-        return getNextBlock(Duration.ZERO);
+        return getNextBlock(ZERO);
     }
 
     @Override
     public ITimeBlock getNextBlock(Duration offset) {
-        Duration startOffset = (offset.compareTo(Duration.ZERO) > 0) ? offset : new Duration(-offset.getMillis());
+        Duration startOffset = (offset.compareTo(ZERO) > 0) ? offset : new Duration(-offset.getMillis());
         return new TimeBlock(getEnd().plus(startOffset), getDuration(), readonly);
     }
 

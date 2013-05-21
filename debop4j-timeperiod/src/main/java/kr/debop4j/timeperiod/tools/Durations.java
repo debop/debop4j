@@ -24,6 +24,9 @@ import org.joda.time.Duration;
 
 import java.util.Locale;
 
+import static kr.debop4j.timeperiod.tools.Times.startTimeOfHalfyear;
+import static kr.debop4j.timeperiod.tools.Times.startTimeOfQuarter;
+
 /**
  * 기간에 대한 메소드를 제공합니다. 참고: {@link Duration}
  *
@@ -47,49 +50,45 @@ public abstract class Durations {
         return Duration.millis(-duration.getMillis());
     }
 
+    public static Duration create(DateTime start, DateTime end) {
+        return new Duration(start, end);
+    }
+
     /** 해당 년도의 기간 */
     public static Duration year(int year) {
-        return days(DateTime.now().withDate(year, 12, 31).getDayOfYear());
+        DateTime start = Times.startTimeOfYear(year);
+        DateTime end = start.plusYears(1);
+        return new Duration(start, end);
     }
 
     public static Duration halfyear(int year, HalfyearKind halfyear) {
-        int[] monthsOfHalfyear = Times.getMonthsOfHalfyear(halfyear);
-        Duration duration = Duration.millis(0);
-        for (int month : monthsOfHalfyear) {
-            duration = duration.plus(month(year, month));
-        }
-        return duration;
+        DateTime start = startTimeOfHalfyear(year, halfyear);
+        DateTime end = start.plusMonths(TimeSpec.MonthsPerHalfyear);
+        return new Duration(start, end);
     }
 
     public static Duration quarter(int year, QuarterKind quarter) {
-        int[] monthsOfQuarter = Times.getMonthsOfQuarter(quarter);
-        Duration duration = Duration.millis(0);
-        for (int month : monthsOfQuarter) {
-            duration = duration.plus(month(year, month));
-        }
-        return duration;
+        DateTime start = startTimeOfQuarter(year, quarter);
+        DateTime end = start.plusMonths(TimeSpec.MonthsPerQuarter);
+        return new Duration(start, end);
     }
 
-    public static Duration month(int year, int month) {
-        if (month == 12)
-            return days(31);
-
-        DateTime startDate = new DateTime(year, month, 1, 0, 0);
-        int days = startDate.getDayOfYear();
-        int nextDays = startDate.plusMonths(1).getDayOfYear();
-        return days(nextDays - days);
+    public static Duration month(int year, int monthOfYear) {
+        DateTime start = Times.startTimeOfMonth(year, monthOfYear);
+        DateTime end = start.plusMonths(1);
+        return new Duration(start, end);
     }
 
     public static final Duration Week = weeks(1);
 
     public static Duration weeks(int weeks) {
-        return days(weeks * TimeSpec.DaysPerWeek);
+        return (weeks == 0) ? Zero : days(weeks * TimeSpec.DaysPerWeek);
     }
 
-    public static final Duration Day = days(1);
+    public static final Duration Day = Duration.standardDays(1);
 
     public static Duration days(int days) {
-        return days(days, 0, 0, 0, 0);
+        return (days == 0) ? Zero : Duration.standardDays(days);
     }
 
     public static Duration days(int days, int hours) {
@@ -112,10 +111,10 @@ public abstract class Durations {
                                        millis);
     }
 
-    private static final Duration Hour = hours(1);
+    public static final Duration Hour = Duration.standardHours(1);
 
     public static Duration hours(int hours) {
-        return hours(hours, 0, 0, 0);
+        return Duration.standardHours(hours);
     }
 
     public static Duration hours(int hours, int minutes) {
@@ -144,9 +143,9 @@ public abstract class Durations {
     }
 
     public static Duration minutes(int minutes, int seconds, int millis) {
-        return Duration.millis(minutes * TimeSpec.MillisPerMinute +
-                                       seconds * TimeSpec.MillisPerSecond +
-                                       millis);
+        return Duration.millis(minutes * TimeSpec.MillisPerMinute
+                                       + seconds * TimeSpec.MillisPerSecond
+                                       + millis);
     }
 
 
@@ -157,8 +156,7 @@ public abstract class Durations {
     }
 
     public static Duration seconds(int seconds, int millis) {
-        return Duration.millis(seconds * TimeSpec.MillisPerSecond +
-                                       millis);
+        return Duration.millis(seconds * TimeSpec.MillisPerSecond + millis);
     }
 
     public static final Duration Millisecond = millis(1L);

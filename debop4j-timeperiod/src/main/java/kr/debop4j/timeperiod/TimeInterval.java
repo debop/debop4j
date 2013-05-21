@@ -78,6 +78,11 @@ public class TimeInterval extends TimePeriodBase implements ITimeInterval {
         this(moment, moment);
     }
 
+    public TimeInterval(DateTime moment, boolean readonly) {
+        this(moment, moment, readonly);
+    }
+
+
     public TimeInterval(DateTime moment, IntervalEdge startEdge, IntervalEdge endEdge) {
         this(moment, moment, startEdge, endEdge, true, false);
     }
@@ -89,6 +94,11 @@ public class TimeInterval extends TimePeriodBase implements ITimeInterval {
     public TimeInterval(DateTime start, DateTime end) {
         this(start, end, IntervalEdge.Closed, IntervalEdge.Closed, true, false);
     }
+
+    public TimeInterval(DateTime start, DateTime end, boolean readonly) {
+        this(start, end, IntervalEdge.Closed, IntervalEdge.Closed, true, readonly);
+    }
+
 
     public TimeInterval(DateTime start, DateTime end, IntervalEdge startEdge, IntervalEdge endEdge) {
         this(start, end, startEdge, endEdge, true, false);

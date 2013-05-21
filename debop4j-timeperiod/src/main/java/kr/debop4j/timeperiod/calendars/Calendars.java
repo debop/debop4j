@@ -43,7 +43,7 @@ public abstract class Calendars {
         builder.append("\n\t dayOfMonths=").append(StringTool.listToString(filter.getDayOfMonths()));
         builder.append("\n\t hourOfDays=").append(StringTool.listToString(filter.getHourOfDays()));
         builder.append("\n\t minuteOfHours=").append(StringTool.listToString(filter.getMinuteOfHours()));
-        builder.append("\n\t dayOfWeeks=").append(StringTool.listToString(filter.getDayOfWeeks()));
+        builder.append("\n\t dayOfWeeks=").append(StringTool.listToString(filter.getWeekDays()));
         builder.append("\n\t exclude periods=").append(StringTool.listToString(filter.getExcludePeriods()));
         builder.append("----------------------");
 

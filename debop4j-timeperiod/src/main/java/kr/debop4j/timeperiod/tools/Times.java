@@ -102,6 +102,10 @@ public abstract class Times {
         return monthOfYear >= 1 ? year : year - 1;
     }
 
+    public static int getDaysOfYear(int year) {
+        return startTimeOfYear(year + 1).minusMillis(1).getDayOfYear();
+    }
+
     public static YearAndHalfyear nextHalfyear(int startYear, HalfyearKind startHalfyear) {
         return addHalfyear(startYear, startHalfyear, 1);
     }
@@ -450,7 +454,10 @@ public abstract class Times {
     }
 
     public static DateTime startTimeOfHalfyear(int year, int monthOfYear) {
-        HalfyearKind halfyear = getHalfyearOfMonth(monthOfYear);
+        return startTimeOfHalfyear(year, getHalfyearOfMonth(monthOfYear));
+    }
+
+    public static DateTime startTimeOfHalfyear(int year, HalfyearKind halfyear) {
         return new DateTime(year, getMonthsOfHalfyear(halfyear)[0], 1, 0, 0);
     }
 
@@ -469,7 +476,10 @@ public abstract class Times {
     }
 
     public static DateTime startTimeOfQuarter(int year, int monthOfYear) {
-        QuarterKind quarter = getQuarterOfMonth(monthOfYear);
+        return startTimeOfQuarter(year, getQuarterOfMonth(monthOfYear));
+    }
+
+    public static DateTime startTimeOfQuarter(int year, QuarterKind quarter) {
         return new DateTime(year, getMonthsOfQuarter(quarter)[0], 1, 0, 0);
     }
 
