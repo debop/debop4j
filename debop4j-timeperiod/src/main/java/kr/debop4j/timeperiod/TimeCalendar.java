@@ -79,7 +79,6 @@ public class TimeCalendar extends ValueObjectBase implements ITimeCalendar {
     @Getter private final Duration endOffset;
     @Getter private final DayOfWeek firstDayOfWeek;
 
-
     public TimeCalendar() {
         this(new TimeCalendarConfig());
     }

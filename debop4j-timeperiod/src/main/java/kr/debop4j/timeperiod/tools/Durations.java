@@ -39,6 +39,7 @@ public abstract class Durations {
         return Locale.getDefault();
     }
 
+    /** 기간이 0 인 Duration */
     public static final Duration Zero = Duration.ZERO;
 
     /** 지정한 duration의 부호를 변경한 값을 반환합니다. */
@@ -46,6 +47,7 @@ public abstract class Durations {
         return Duration.millis(-duration.getMillis());
     }
 
+    /** 해당 년도의 기간 */
     public static Duration year(int year) {
         return days(DateTime.now().withDate(year, 12, 31).getDayOfYear());
     }

@@ -43,7 +43,7 @@ public interface ICalendarVisitorFilter extends Serializable {
     List<Integer> getDayOfMonths();
 
     /** 포함 요일 */
-    List<DayOfWeek> getDayOfWeeks();
+    List<DayOfWeek> getWeekDays();
 
     /** 포함 시 (Hour) */
     List<Integer> getHourOfDays();

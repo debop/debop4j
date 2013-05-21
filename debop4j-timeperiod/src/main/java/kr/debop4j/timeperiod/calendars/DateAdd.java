@@ -103,9 +103,9 @@ public class DateAdd extends ValueObjectBase {
 
 
     /**
-     * start 시각으로부터 offset 만큼 떨어진 시각을 구합니다.
+     * 기준 시각으로부터 offset 만큼 떨어진 시각을 구합니다.
      *
-     * @param start        시작 시각
+     * @param start        기준 시각
      * @param offset       기간
      * @param seekDir      탐색 방향
      * @param seekBoundary 경계 값 포함 여부

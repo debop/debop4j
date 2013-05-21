@@ -44,7 +44,7 @@ public class CalendarVisitorFilter implements ICalendarVisitorFilter {
     @Getter private final List<Integer> dayOfMonths = new ArrayList<Integer>();
     @Getter private final List<Integer> hourOfDays = new ArrayList<Integer>();
     @Getter private final List<Integer> minuteOfHours = new ArrayList<Integer>();
-    @Getter private final List<DayOfWeek> dayOfWeeks = new ArrayList<DayOfWeek>();
+    @Getter private final List<DayOfWeek> weekDays = new ArrayList<DayOfWeek>();
 
 
     @Override
@@ -59,7 +59,7 @@ public class CalendarVisitorFilter implements ICalendarVisitorFilter {
 
     @Override
     public void addWeekdays(DayOfWeek... dayOfWeeks) {
-        Collections.addAll(this.dayOfWeeks, dayOfWeeks);
+        Collections.addAll(this.weekDays, dayOfWeeks);
     }
 
     @Override
@@ -69,7 +69,7 @@ public class CalendarVisitorFilter implements ICalendarVisitorFilter {
         dayOfMonths.clear();
         hourOfDays.clear();
         minuteOfHours.clear();
-        dayOfWeeks.clear();
+        weekDays.clear();
     }
 
     @Override

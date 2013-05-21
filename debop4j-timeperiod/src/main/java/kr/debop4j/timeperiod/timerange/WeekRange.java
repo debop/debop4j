@@ -25,7 +25,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.joda.time.DateTime;
 
 /**
- * kr.debop4j.timeperiod.timerange.WeekRange
+ * 한 주(Week)를 표현합니다.
  *
  * @author 배성혁 sunghyouk.bae@gmail.com
  * @since 13. 5. 13. 오후 3:30
