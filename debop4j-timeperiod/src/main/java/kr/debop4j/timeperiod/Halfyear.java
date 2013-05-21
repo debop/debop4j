@@ -19,32 +19,31 @@ package kr.debop4j.timeperiod;
 import lombok.Getter;
 
 /**
- * 분기
+ * 반기 (Halfyear)
  *
  * @author 배성혁 sunghyouk.bae@gmail.com
- * @since 13. 5. 11. 오전 11:31
+ * @since 13. 5. 11. 오후 12:03
  */
-public enum QuarterKind {
-    First(1), Second(2), Third(3), Fourth(4);
+public enum Halfyear {
 
-    @Getter
-    private final int value;
+    /** 상반기 */
+    First(1),
 
-    QuarterKind(int value) {
+    /** 하반기 */
+    Second(2);
+
+    @Getter private final int value;
+
+    Halfyear(int value) {
         this.value = value;
     }
 
-    public static QuarterKind valueOf(int quarter) {
-        switch (quarter) {
-            case 1:
-                return First;
-            case 2:
-                return Second;
-            case 3:
-                return Third;
-            case 4:
-                return Fourth;
-        }
-        throw new IllegalArgumentException("Invalid quarter number. [1-4], quarter=" + quarter);
+    public static Halfyear valueOf(int halfyear) {
+        if (halfyear == 1)
+            return First;
+        else if (halfyear == 2)
+            return Second;
+        else
+            throw new IllegalArgumentException("Halfyear 는 1,2 값만 가질 수 있습니다. halfyear=" + halfyear);
     }
 }

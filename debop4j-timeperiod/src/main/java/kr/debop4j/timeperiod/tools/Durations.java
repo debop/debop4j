@@ -16,8 +16,8 @@
 
 package kr.debop4j.timeperiod.tools;
 
-import kr.debop4j.timeperiod.HalfyearKind;
-import kr.debop4j.timeperiod.QuarterKind;
+import kr.debop4j.timeperiod.Halfyear;
+import kr.debop4j.timeperiod.Quarter;
 import lombok.extern.slf4j.Slf4j;
 import org.joda.time.DateTime;
 import org.joda.time.Duration;
@@ -61,13 +61,13 @@ public abstract class Durations {
         return new Duration(start, end);
     }
 
-    public static Duration halfyear(int year, HalfyearKind halfyear) {
+    public static Duration halfyear(int year, Halfyear halfyear) {
         DateTime start = startTimeOfHalfyear(year, halfyear);
         DateTime end = start.plusMonths(TimeSpec.MonthsPerHalfyear);
         return new Duration(start, end);
     }
 
-    public static Duration quarter(int year, QuarterKind quarter) {
+    public static Duration quarter(int year, Quarter quarter) {
         DateTime start = startTimeOfQuarter(year, quarter);
         DateTime end = start.plusMonths(TimeSpec.MonthsPerQuarter);
         return new Duration(start, end);

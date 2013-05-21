@@ -19,9 +19,9 @@ package kr.debop4j.timeperiod.timerange;
 import com.google.common.base.Objects;
 import com.google.common.collect.Lists;
 import kr.debop4j.core.tools.HashTool;
-import kr.debop4j.timeperiod.HalfyearKind;
+import kr.debop4j.timeperiod.Halfyear;
 import kr.debop4j.timeperiod.ITimeCalendar;
-import kr.debop4j.timeperiod.QuarterKind;
+import kr.debop4j.timeperiod.Quarter;
 import kr.debop4j.timeperiod.TimeRange;
 import kr.debop4j.timeperiod.tools.TimeSpec;
 import lombok.Getter;
@@ -55,8 +55,8 @@ public class YearTimeRange extends YearCalendarTimeRange {
 
         List<HalfyearRange> halfyears = Lists.newArrayListWithCapacity(yearCount * TimeSpec.HalfyearsPerYear);
         for (int y = 0; y < yearCount; y++) {
-            halfyears.add(new HalfyearRange(startYear + y, HalfyearKind.First, getTimeCalendar()));
-            halfyears.add(new HalfyearRange(startYear + y, HalfyearKind.Second, getTimeCalendar()));
+            halfyears.add(new HalfyearRange(startYear + y, Halfyear.First, getTimeCalendar()));
+            halfyears.add(new HalfyearRange(startYear + y, Halfyear.Second, getTimeCalendar()));
         }
         return halfyears;
     }
@@ -65,9 +65,9 @@ public class YearTimeRange extends YearCalendarTimeRange {
         int startYear = getStartYear();
 
         List<QuarterRange> quarters = Lists.newArrayListWithCapacity(yearCount * TimeSpec.QuartersPerYear);
-        QuarterKind[] quarterKinds = QuarterKind.values();
+        Quarter[] quarterKinds = Quarter.values();
         for (int y = 0; y < yearCount; y++) {
-            for (QuarterKind quarter : quarterKinds) {
+            for (Quarter quarter : quarterKinds) {
                 quarters.add(new QuarterRange(startYear + y, quarter, getTimeCalendar()));
             }
         }

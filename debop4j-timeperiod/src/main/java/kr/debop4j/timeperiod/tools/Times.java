@@ -106,21 +106,21 @@ public abstract class Times {
         return startTimeOfYear(year + 1).minusMillis(1).getDayOfYear();
     }
 
-    public static YearAndHalfyear nextHalfyear(int startYear, HalfyearKind startHalfyear) {
+    public static YearAndHalfyear nextHalfyear(int startYear, Halfyear startHalfyear) {
         return addHalfyear(startYear, startHalfyear, 1);
     }
 
-    public static YearAndHalfyear previousHalfyear(int startYear, HalfyearKind startHalfyear) {
+    public static YearAndHalfyear previousHalfyear(int startYear, Halfyear startHalfyear) {
         return addHalfyear(startYear, startHalfyear, -1);
     }
 
-    public static YearAndHalfyear addHalfyear(int startYear, HalfyearKind startHalfyear, int halfyearCount) {
+    public static YearAndHalfyear addHalfyear(int startYear, Halfyear startHalfyear, int halfyearCount) {
         int offsetYear = (Math.abs(halfyearCount) / TimeSpec.HalfyearsPerYear) + 1;
         int startHalfyearCount = ((startYear + offsetYear) * TimeSpec.HalfyearsPerYear) + (startHalfyear.getValue() - 1);
         int targetHalfyearCount = startHalfyearCount + halfyearCount;
 
         int year = (targetHalfyearCount / TimeSpec.HalfyearsPerYear) - offsetYear;
-        HalfyearKind halfyear = HalfyearKind.valueOf((targetHalfyearCount % TimeSpec.HalfyearsPerYear) + 1);
+        Halfyear halfyear = Halfyear.valueOf((targetHalfyearCount % TimeSpec.HalfyearsPerYear) + 1);
 
         if (isTraceEnabled)
             log.trace("addHalfyear. startYear=[{}], startHalfyear=[{}], halfyearCount=[{}], year=[{}], halfyear=[{}]",
@@ -129,29 +129,29 @@ public abstract class Times {
         return new YearAndHalfyear(year, halfyear);
     }
 
-    public static HalfyearKind getHalfyearOfMonth(int monthOfYear) {
+    public static Halfyear getHalfyearOfMonth(int monthOfYear) {
         assert monthOfYear >= 1 && monthOfYear <= 12;
 
         return (monthOfYear <= TimeSpec.MonthsPerHalfyear)
-                ? HalfyearKind.First
-                : HalfyearKind.Second;
+                ? Halfyear.First
+                : Halfyear.Second;
     }
 
-    public static int[] getMonthsOfHalfyear(HalfyearKind halfyear) {
-        return (halfyear == HalfyearKind.First)
+    public static int[] getMonthsOfHalfyear(Halfyear halfyear) {
+        return (halfyear == Halfyear.First)
                 ? TimeSpec.FirstHalfyearMonths
                 : TimeSpec.SecondHalfyearMonths;
     }
 
-    public static YearAndQuarter nextQuarter(int year, QuarterKind quarter) {
+    public static YearAndQuarter nextQuarter(int year, Quarter quarter) {
         return addQuarter(year, quarter, 1);
     }
 
-    public static YearAndQuarter previousQuarter(int year, QuarterKind quarter) {
+    public static YearAndQuarter previousQuarter(int year, Quarter quarter) {
         return addQuarter(year, quarter, -1);
     }
 
-    public static YearAndQuarter addQuarter(int year, QuarterKind quarter, int count) {
+    public static YearAndQuarter addQuarter(int year, Quarter quarter, int count) {
         int offsetYear = Math.abs(count) / TimeSpec.QuartersPerYear + 1;
         int startQuarters = (year + offsetYear) * TimeSpec.QuartersPerYear + quarter.getValue() - 1;
         int targetQuarters = startQuarters + count;
@@ -162,12 +162,12 @@ public abstract class Times {
         return new YearAndQuarter(y, q);
     }
 
-    public static QuarterKind getQuarterOfMonth(int monthOfYear) {
+    public static Quarter getQuarterOfMonth(int monthOfYear) {
         int quarter = (monthOfYear - 1) / TimeSpec.MonthsPerQuarter + 1;
-        return QuarterKind.valueOf(quarter);
+        return Quarter.valueOf(quarter);
     }
 
-    public static int[] getMonthsOfQuarter(QuarterKind quarter) {
+    public static int[] getMonthsOfQuarter(Quarter quarter) {
         switch (quarter) {
             case First:
                 return TimeSpec.FirstQuarterMonths;
@@ -267,12 +267,12 @@ public abstract class Times {
 
     // region << Compare >>
 
-    /** 두 일자의 값이 {@link PeriodKind} 단위까지 같은지 비교합니다. (상위값들도 같아야 합니다.) */
-    public static boolean isSameTime(DateTime left, DateTime right, PeriodKind periodKind) {
+    /** 두 일자의 값이 {@link kr.debop4j.timeperiod.PeriodUnit} 단위까지 같은지 비교합니다. (상위값들도 같아야 합니다.) */
+    public static boolean isSameTime(DateTime left, DateTime right, PeriodUnit periodUnit) {
         if (isTraceEnabled)
-            log.trace("두 일자가 값은지 비교합니다. left=[{}], right=[{}], periodKind=[{}]", left, right, periodKind);
+            log.trace("두 일자가 값은지 비교합니다. left=[{}], right=[{}], periodUnit=[{}]", left, right, periodUnit);
 
-        switch (periodKind) {
+        switch (periodUnit) {
             case Year:
                 return isSameYear(left, right);
             case Halfyear:
@@ -367,7 +367,7 @@ public abstract class Times {
     /** 현재 시각이 속한 반기의 시작일 */
     public static DateTime currentHalfyear() {
         DateTime now = ClockProxy.getClock().now();
-        HalfyearKind halfyear = getHalfyearOfMonth(now.getMonthOfYear());
+        Halfyear halfyear = getHalfyearOfMonth(now.getMonthOfYear());
         int month = getMonthsOfHalfyear(halfyear)[0];
         return new DateTime(now.getYear(), month, 1, 0, 0);
     }
@@ -375,7 +375,7 @@ public abstract class Times {
     /** 현재 시각이 속한 분기의 시작일 */
     public static DateTime currentQuarter() {
         DateTime now = ClockProxy.getClock().now();
-        QuarterKind quarter = getQuarterOfMonth(now.getMonthOfYear());
+        Quarter quarter = getQuarterOfMonth(now.getMonthOfYear());
         int month = getMonthsOfQuarter(quarter)[0];
         return new DateTime(now.getYear(), month, 1, 0, 0);
     }
@@ -457,7 +457,7 @@ public abstract class Times {
         return startTimeOfHalfyear(year, getHalfyearOfMonth(monthOfYear));
     }
 
-    public static DateTime startTimeOfHalfyear(int year, HalfyearKind halfyear) {
+    public static DateTime startTimeOfHalfyear(int year, Halfyear halfyear) {
         return new DateTime(year, getMonthsOfHalfyear(halfyear)[0], 1, 0, 0);
     }
 
@@ -479,7 +479,7 @@ public abstract class Times {
         return startTimeOfQuarter(year, getQuarterOfMonth(monthOfYear));
     }
 
-    public static DateTime startTimeOfQuarter(int year, QuarterKind quarter) {
+    public static DateTime startTimeOfQuarter(int year, Quarter quarter) {
         return new DateTime(year, getMonthsOfQuarter(quarter)[0], 1, 0, 0);
     }
 
@@ -505,7 +505,7 @@ public abstract class Times {
         return new DateTime(moment.getYear(), moment.getMonthOfYear(), 1, 0, 0);
     }
 
-    public static DateTime startTimeOfMonth(int year, MonthKind month) {
+    public static DateTime startTimeOfMonth(int year, Month month) {
         return new DateTime(year, month.getValue(), 1, 0, 0);
     }
 
@@ -517,7 +517,7 @@ public abstract class Times {
         return startTimeOfMonth(moment).plusMonths(1).minus(TimeSpec.MinPositiveDuration);
     }
 
-    public static DateTime endTimeOfMonth(int year, MonthKind month) {
+    public static DateTime endTimeOfMonth(int year, Month month) {
         return startTimeOfMonth(year, month).plusMonths(1).minus(TimeSpec.MinPositiveDuration);
     }
 
@@ -620,31 +620,31 @@ public abstract class Times {
         return startTimeOfSecond(moment).plusSeconds(1).minus(TimeSpec.MinPositiveDuration);
     }
 
-    public static HalfyearKind halfyearOf(int monthOfYear) {
-        return (monthOfYear < 7) ? HalfyearKind.First : HalfyearKind.Second;
+    public static Halfyear halfyearOf(int monthOfYear) {
+        return (monthOfYear < 7) ? Halfyear.First : Halfyear.Second;
     }
 
-    public static HalfyearKind halfyearOf(DateTime moment) {
+    public static Halfyear halfyearOf(DateTime moment) {
         return halfyearOf(moment.getMonthOfYear());
     }
 
-    public static int startMonthOfQuarter(QuarterKind quarter) {
+    public static int startMonthOfQuarter(Quarter quarter) {
         return (quarter.getValue() - 1) * TimeSpec.MonthsPerQuarter + 1;
     }
 
-    public static int endMonthOfQuarter(QuarterKind quarter) {
+    public static int endMonthOfQuarter(Quarter quarter) {
         return quarter.getValue() * TimeSpec.MonthsPerQuarter;
     }
 
-    public static QuarterKind quarterOf(int monthOfYear) {
-        return QuarterKind.valueOf((monthOfYear - 1) / TimeSpec.MonthsPerQuarter + 1);
+    public static Quarter quarterOf(int monthOfYear) {
+        return Quarter.valueOf((monthOfYear - 1) / TimeSpec.MonthsPerQuarter + 1);
     }
 
-    public static QuarterKind quarterOf(DateTime moment) {
+    public static Quarter quarterOf(DateTime moment) {
         return quarterOf(moment.getMonthOfYear());
     }
 
-    public static QuarterKind previousQuarterOf(DateTime moment) {
+    public static Quarter previousQuarterOf(DateTime moment) {
         return previousQuarter(moment.getYear(), quarterOf(moment)).getQuarter();
     }
 
@@ -870,16 +870,16 @@ public abstract class Times {
     }
 
     /** moment가 속한 특정 종류의 기간 */
-    public static ITimePeriod getPeriodOf(DateTime moment, PeriodKind periodKind) {
-        return getPeriodOf(moment, periodKind, TimeCalendar.create());
+    public static ITimePeriod getPeriodOf(DateTime moment, PeriodUnit periodUnit) {
+        return getPeriodOf(moment, periodUnit, TimeCalendar.create());
     }
 
     /** moment가 속한 특정 종류의 기간 */
-    public static ITimePeriod getPeriodOf(DateTime moment, PeriodKind periodKind, ITimeCalendar timeCalendar) {
+    public static ITimePeriod getPeriodOf(DateTime moment, PeriodUnit periodUnit, ITimeCalendar timeCalendar) {
         if (isTraceEnabled)
-            log.trace("일자[{}]가 속한 기간 종류[{}]의 기간을 구합니다.", moment, periodKind);
+            log.trace("일자[{}]가 속한 기간 종류[{}]의 기간을 구합니다.", moment, periodUnit);
 
-        switch (periodKind) {
+        switch (periodUnit) {
             case Year:
                 return getYearRange(moment, timeCalendar);
             case Halfyear:
@@ -898,21 +898,21 @@ public abstract class Times {
                 return getMinuteRange(moment, timeCalendar);
 
             default:
-                throw new NotSupportException("지원하지 않는 Period 종류입니다. periodKind=" + periodKind);
+                throw new NotSupportException("지원하지 않는 Period 종류입니다. periodUnit=" + periodUnit);
         }
     }
 
     /** moment 가 속한 특정 종류의 기간에 대해 periodCount 갯수만큼의 기간 정보를 컬렉션으로 반환한다. */
-    public static ICalendarTimeRange getPeriodsOf(DateTime moment, PeriodKind periodKind, int periodCount) {
-        return getPeriodsOf(moment, periodKind, periodCount, TimeCalendar.create());
+    public static ICalendarTimeRange getPeriodsOf(DateTime moment, PeriodUnit periodUnit, int periodCount) {
+        return getPeriodsOf(moment, periodUnit, periodCount, TimeCalendar.create());
     }
 
     /** moment 가 속한 특정 종류의 기간에 대해 periodCount 갯수만큼의 기간 정보를 컬렉션으로 반환한다. */
-    public static ICalendarTimeRange getPeriodsOf(DateTime moment, PeriodKind periodKind, int periodCount, ITimeCalendar timeCalendar) {
+    public static ICalendarTimeRange getPeriodsOf(DateTime moment, PeriodUnit periodUnit, int periodCount, ITimeCalendar timeCalendar) {
         if (isTraceEnabled)
-            log.trace("일자[{}]가 속한 기간 종류[{}]의 기간을 구합니다.", moment, periodKind);
+            log.trace("일자[{}]가 속한 기간 종류[{}]의 기간을 구합니다.", moment, periodUnit);
 
-        switch (periodKind) {
+        switch (periodUnit) {
             case Year:
                 return getYearRanges(moment, periodCount, timeCalendar);
             case Halfyear:
@@ -931,7 +931,7 @@ public abstract class Times {
                 return getMinuteRanges(moment, periodCount, timeCalendar);
 
             default:
-                throw new NotSupportException("지원하지 않는 Period 종류입니다. periodKind=" + periodKind);
+                throw new NotSupportException("지원하지 않는 Period 종류입니다. periodUnit=" + periodUnit);
         }
     }
 
@@ -1232,7 +1232,7 @@ public abstract class Times {
     }
 
     public static DateTime trimToHour(DateTime moment, int hourOfDay) {
-        return trimToDay(moment).plusHours(hourOfDay);
+        return trimToMinute(moment, 0).withHourOfDay(hourOfDay);
     }
 
     public static DateTime trimToMinute(DateTime moment) {
@@ -1241,7 +1241,7 @@ public abstract class Times {
     }
 
     public static DateTime trimToMinute(DateTime moment, int minuteOfHour) {
-        return trimToHour(moment).plusMinutes(minuteOfHour);
+        return trimToSecond(moment, 0).withMinuteOfHour(minuteOfHour);
     }
 
     public static DateTime trimToSecond(DateTime moment) {
@@ -1250,7 +1250,7 @@ public abstract class Times {
     }
 
     public static DateTime trimToSecond(DateTime moment, int secondOfMinute) {
-        return trimToMinute(moment).plusSeconds(secondOfMinute);
+        return trimToMillis(moment, 0).withSecondOfMinute(secondOfMinute);
     }
 
     public static DateTime trimToMillis(DateTime moment) {
@@ -1259,7 +1259,7 @@ public abstract class Times {
     }
 
     public static DateTime trimToMillis(DateTime moment, int millisOfSecond) {
-        return trimToSecond(moment).plusMillis(millisOfSecond);
+        return moment.withMillisOfSecond(millisOfSecond);
     }
 
     // endregion << Trim >>

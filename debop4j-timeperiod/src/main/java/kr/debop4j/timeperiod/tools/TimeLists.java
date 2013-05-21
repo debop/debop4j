@@ -21,7 +21,7 @@ import kr.debop4j.core.Function1;
 import kr.debop4j.core.Guard;
 import kr.debop4j.core.parallelism.Parallels;
 import kr.debop4j.timeperiod.ITimePeriod;
-import kr.debop4j.timeperiod.PeriodKind;
+import kr.debop4j.timeperiod.PeriodUnit;
 import kr.debop4j.timeperiod.TimeRange;
 import lombok.extern.slf4j.Slf4j;
 import org.joda.time.DateTime;
@@ -40,8 +40,8 @@ public abstract class TimeLists {
     private TimeLists() {}
 
     /** 지정된 기간을 기간 단위별로 세분하여 컬렉션을 빌드합니다. */
-    public static List<ITimePeriod> foreachPeriods(ITimePeriod period, PeriodKind periodKind) {
-        switch (periodKind) {
+    public static List<ITimePeriod> foreachPeriods(ITimePeriod period, PeriodUnit periodUnit) {
+        switch (periodUnit) {
             case Year:
                 return foreachYears(period);
 
@@ -67,7 +67,7 @@ public abstract class TimeLists {
                 return foreachMinutes(period);
 
             default:
-                throw new IllegalArgumentException("지원하지 않는 PeriodKind입니다. PeriodKind=" + periodKind);
+                throw new IllegalArgumentException("지원하지 않는 PeriodKind입니다. PeriodUnit=" + periodUnit);
         }
     }
 
@@ -344,16 +344,16 @@ public abstract class TimeLists {
     }
 
     /** 기간을 특정 단위로 열거한 값을 이용하여 특정 코드를 수행하여 결과값을 반환합니다. */
-    public static <T> List<T> runPeriods(ITimePeriod period, PeriodKind periodKind, Function1<ITimePeriod, T> runner) {
+    public static <T> List<T> runPeriods(ITimePeriod period, PeriodUnit periodUnit, Function1<ITimePeriod, T> runner) {
         Guard.shouldNotBeNull(period, "period");
         Guard.shouldNotBeNull(runner, "runner");
         Guard.shouldBe(period.hasPeriod(), "period는 기간을 가져야합니다. period=%s", period);
 
         if (log.isDebugEnabled())
-            log.debug("기간[{}]을 [{}] 단위로 열거하여, 메소드르 실행시켜 결과를 반환합니다.", period, periodKind);
+            log.debug("기간[{}]을 [{}] 단위로 열거하여, 메소드르 실행시켜 결과를 반환합니다.", period, periodUnit);
 
         List<T> results = Lists.newArrayList();
-        for (ITimePeriod item : foreachPeriods(period, periodKind)) {
+        for (ITimePeriod item : foreachPeriods(period, periodUnit)) {
             results.add(runner.execute(item));
         }
 
@@ -361,15 +361,15 @@ public abstract class TimeLists {
     }
 
     /** 기간을 특정 단위로 열거한 값을 이용하여 특정 코드를 병렬로 수행하여 결과값을 반환합니다. */
-    public static <T> List<T> runPeriodsAsParallel(ITimePeriod period, PeriodKind periodKind, Function1<ITimePeriod, T> runner) {
+    public static <T> List<T> runPeriodsAsParallel(ITimePeriod period, PeriodUnit periodUnit, Function1<ITimePeriod, T> runner) {
         Guard.shouldNotBeNull(period, "period");
         Guard.shouldNotBeNull(runner, "runner");
         Guard.shouldBe(period.hasPeriod(), "period는 기간을 가져야합니다. period=%s", period);
 
         if (log.isDebugEnabled())
-            log.debug("기간[{}]을 [{}] 단위로 열거하여, 병렬로 메소드르 실행시켜 결과를 반환합니다.", period, periodKind);
+            log.debug("기간[{}]을 [{}] 단위로 열거하여, 병렬로 메소드르 실행시켜 결과를 반환합니다.", period, periodUnit);
 
-        return Parallels.runEach(foreachPeriods(period, periodKind), runner);
+        return Parallels.runEach(foreachPeriods(period, periodUnit), runner);
     }
 
 }

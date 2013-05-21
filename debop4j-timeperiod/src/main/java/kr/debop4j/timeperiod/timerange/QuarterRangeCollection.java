@@ -18,7 +18,7 @@ package kr.debop4j.timeperiod.timerange;
 
 import com.google.common.collect.Lists;
 import kr.debop4j.timeperiod.ITimeCalendar;
-import kr.debop4j.timeperiod.QuarterKind;
+import kr.debop4j.timeperiod.Quarter;
 import kr.debop4j.timeperiod.TimeCalendar;
 import kr.debop4j.timeperiod.YearAndQuarter;
 import kr.debop4j.timeperiod.tools.Times;
@@ -47,18 +47,18 @@ public class QuarterRangeCollection extends QuarterTimeRange {
              timeCalendar);
     }
 
-    public QuarterRangeCollection(int year, QuarterKind quarter, int quarterCount) {
+    public QuarterRangeCollection(int year, Quarter quarter, int quarterCount) {
         this(year, quarter, quarterCount, new TimeCalendar());
     }
 
-    public QuarterRangeCollection(int year, QuarterKind quarter, int quarterCount, ITimeCalendar timeCalendar) {
+    public QuarterRangeCollection(int year, Quarter quarter, int quarterCount, ITimeCalendar timeCalendar) {
         super(year, quarter, quarterCount, timeCalendar);
     }
 
 
     public List<QuarterRange> getQuarters() {
         int baseYear = getStartYear();
-        QuarterKind baseQuarter = getStartQuarter();
+        Quarter baseQuarter = getStartQuarter();
 
         List<QuarterRange> quarters = Lists.newArrayListWithCapacity(getQuarterCount());
         for (int q = 0; q < getQuarterCount(); q++) {

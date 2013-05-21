@@ -33,9 +33,9 @@ public class YearAndHalfyear extends ValueObjectBase implements Comparable<YearA
     private static final long serialVersionUID = 1419206569889564461L;
 
     private Integer year;
-    private HalfyearKind halfyear;
+    private Halfyear halfyear;
 
-    public YearAndHalfyear(Integer year, HalfyearKind halfyear) {
+    public YearAndHalfyear(Integer year, Halfyear halfyear) {
         this.year = year;
         this.halfyear = halfyear;
     }
@@ -43,7 +43,7 @@ public class YearAndHalfyear extends ValueObjectBase implements Comparable<YearA
     public YearAndHalfyear(Integer year, Integer halfyear) {
         this.year = year;
         if (halfyear != null)
-            this.halfyear = (halfyear == 1) ? HalfyearKind.First : HalfyearKind.Second;
+            this.halfyear = (halfyear == 1) ? Halfyear.First : Halfyear.Second;
     }
 
     @Override

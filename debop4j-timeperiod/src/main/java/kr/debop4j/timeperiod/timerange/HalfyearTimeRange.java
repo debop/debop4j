@@ -37,7 +37,7 @@ public abstract class HalfyearTimeRange extends YearCalendarTimeRange {
 
     private static final long serialVersionUID = -1813124170996786502L;
 
-    public HalfyearTimeRange(int startYear, HalfyearKind startHalfyear, int halfyearCount, ITimeCalendar calendar) {
+    public HalfyearTimeRange(int startYear, Halfyear startHalfyear, int halfyearCount, ITimeCalendar calendar) {
         super(getPeriodOf(startYear, startHalfyear, halfyearCount), calendar);
 
         this.startYear = startYear;
@@ -51,9 +51,9 @@ public abstract class HalfyearTimeRange extends YearCalendarTimeRange {
     }
 
     @Getter private final int startYear;
-    @Getter private final HalfyearKind startHalfyear;
+    @Getter private final Halfyear startHalfyear;
     @Getter private final int endYear;
-    @Getter private final HalfyearKind endHalfyear;
+    @Getter private final Halfyear endHalfyear;
     @Getter private final int halfyearCount;
 
     /** 반기(HalfYear) 기간의 시작 년도와 완료 년도가 다른가 여부 */
@@ -69,7 +69,7 @@ public abstract class HalfyearTimeRange extends YearCalendarTimeRange {
         for (int q = 0; q < quarterCount; q++) {
             int targetQuarter = (startQuarter + q) % TimeSpec.QuartersPerYear;
             int year = 1 + (targetQuarter / TimeSpec.QuartersPerYear);
-            quarters.add(new QuarterRange(year, QuarterKind.valueOf(targetQuarter + 1), getTimeCalendar()));
+            quarters.add(new QuarterRange(year, Quarter.valueOf(targetQuarter + 1), getTimeCalendar()));
         }
         return quarters;
     }
@@ -100,7 +100,7 @@ public abstract class HalfyearTimeRange extends YearCalendarTimeRange {
                 .add("halfyearCount", halfyearCount);
     }
 
-    private static TimeRange getPeriodOf(int year, HalfyearKind halfyear, int halfyearCount) {
+    private static TimeRange getPeriodOf(int year, Halfyear halfyear, int halfyearCount) {
         assert halfyearCount >= 0;
 
         DateTime yearStart = new DateTime(year, 1, 1, 0, 0);

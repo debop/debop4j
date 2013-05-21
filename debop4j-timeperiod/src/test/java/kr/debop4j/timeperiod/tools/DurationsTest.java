@@ -16,8 +16,8 @@
 
 package kr.debop4j.timeperiod.tools;
 
-import kr.debop4j.timeperiod.HalfyearKind;
-import kr.debop4j.timeperiod.QuarterKind;
+import kr.debop4j.timeperiod.Halfyear;
+import kr.debop4j.timeperiod.Quarter;
 import lombok.extern.slf4j.Slf4j;
 import org.joda.time.DateTime;
 import org.joda.time.Duration;
@@ -53,7 +53,7 @@ public class DurationsTest {
 
     @Test
     public void halfyearTest() {
-        for (HalfyearKind halfyear : HalfyearKind.values()) {
+        for (Halfyear halfyear : Halfyear.values()) {
             int[] months = Times.getMonthsOfHalfyear(halfyear);
             Duration duration = Durations.Zero;
 
@@ -67,7 +67,7 @@ public class DurationsTest {
 
     @Test
     public void quarterTest() {
-        for (QuarterKind quarter : QuarterKind.values()) {
+        for (Quarter quarter : Quarter.values()) {
             int[] months = Times.getMonthsOfQuarter(quarter);
             Duration duration = Durations.Zero;
 

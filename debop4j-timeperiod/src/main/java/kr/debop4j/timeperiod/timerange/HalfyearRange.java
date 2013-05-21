@@ -16,7 +16,7 @@
 
 package kr.debop4j.timeperiod.timerange;
 
-import kr.debop4j.timeperiod.HalfyearKind;
+import kr.debop4j.timeperiod.Halfyear;
 import kr.debop4j.timeperiod.ITimeCalendar;
 import kr.debop4j.timeperiod.TimeCalendar;
 import kr.debop4j.timeperiod.YearAndHalfyear;
@@ -53,11 +53,11 @@ public class HalfyearRange extends HalfyearTimeRange {
              Times.getHalfyearOfMonth(moment.getMonthOfYear()), calendar);
     }
 
-    public HalfyearRange(int startYear, HalfyearKind startHalfyear) {
+    public HalfyearRange(int startYear, Halfyear startHalfyear) {
         super(startYear, startHalfyear, 1, new TimeCalendar());
     }
 
-    public HalfyearRange(int startYear, HalfyearKind startHalfyear, ITimeCalendar calendar) {
+    public HalfyearRange(int startYear, Halfyear startHalfyear, ITimeCalendar calendar) {
         super(startYear, startHalfyear, 1, calendar);
     }
 
@@ -67,7 +67,7 @@ public class HalfyearRange extends HalfyearTimeRange {
         return getStartYear();
     }
 
-    public HalfyearKind getHalfyear() {
+    public Halfyear getHalfyear() {
         return getStartHalfyear();
     }
 

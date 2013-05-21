@@ -36,16 +36,16 @@ import java.util.List;
 public abstract class QuarterTimeRange extends YearCalendarTimeRange {
 
     @Getter private int startYear;
-    @Getter private QuarterKind startQuarter;
+    @Getter private Quarter startQuarter;
     @Getter private int endYear;
-    @Getter private QuarterKind endQuarter;
+    @Getter private Quarter endQuarter;
     @Getter private int quarterCount;
 
-    public QuarterTimeRange(int startYear, QuarterKind startQuarter, int quarterCount) {
+    public QuarterTimeRange(int startYear, Quarter startQuarter, int quarterCount) {
         this(startYear, startQuarter, quarterCount, new TimeCalendar());
     }
 
-    public QuarterTimeRange(int startYear, QuarterKind startQuarter, int quarterCount, ITimeCalendar calendar) {
+    public QuarterTimeRange(int startYear, Quarter startQuarter, int quarterCount, ITimeCalendar calendar) {
         super(getPeriodOf(startYear, startQuarter, quarterCount, calendar), calendar);
 
         this.startYear = startYear;
@@ -105,7 +105,7 @@ public abstract class QuarterTimeRange extends YearCalendarTimeRange {
                 .add("endQuarter", endQuarter);
     }
 
-    private static ITimePeriod getPeriodOf(int year, QuarterKind quarterKind, int quarterCount, ITimeCalendar calendar) {
+    private static ITimePeriod getPeriodOf(int year, Quarter quarterKind, int quarterCount, ITimeCalendar calendar) {
         assert quarterCount >= 0;
 
         int quarter = quarterKind.getValue();

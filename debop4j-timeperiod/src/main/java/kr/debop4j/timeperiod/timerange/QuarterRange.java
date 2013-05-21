@@ -17,7 +17,7 @@
 package kr.debop4j.timeperiod.timerange;
 
 import kr.debop4j.timeperiod.ITimeCalendar;
-import kr.debop4j.timeperiod.QuarterKind;
+import kr.debop4j.timeperiod.Quarter;
 import kr.debop4j.timeperiod.TimeCalendar;
 import kr.debop4j.timeperiod.YearAndQuarter;
 import kr.debop4j.timeperiod.clock.ClockProxy;
@@ -53,11 +53,11 @@ public class QuarterRange extends QuarterTimeRange {
              Times.getQuarterOfMonth(moment.getMonthOfYear()), calendar);
     }
 
-    public QuarterRange(int startYear, QuarterKind startQuarter) {
+    public QuarterRange(int startYear, Quarter startQuarter) {
         super(startYear, startQuarter, 1);
     }
 
-    public QuarterRange(int startYear, QuarterKind startQuarter, ITimeCalendar calendar) {
+    public QuarterRange(int startYear, Quarter startQuarter, ITimeCalendar calendar) {
         super(startYear, startQuarter, 1, calendar);
     }
 
@@ -67,7 +67,7 @@ public class QuarterRange extends QuarterTimeRange {
         return getStartYear();
     }
 
-    public QuarterKind getQuarter() {
+    public Quarter getQuarter() {
         return getStartQuarter();
     }
 

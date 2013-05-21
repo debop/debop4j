@@ -19,7 +19,7 @@ package kr.debop4j.timeperiod;
 import java.util.EnumSet;
 
 /**
- * 기간에 대한 여러가지 복합체를 만들어 냅니다. {@link PeriodKind} 와는 달리 Bit 연산을 수행합니다.<br/>
+ * 기간에 대한 여러가지 복합체를 만들어 냅니다. {@link PeriodUnit} 와는 달리 Bit 연산을 수행합니다.<br/>
  * Gantt Chart 등에서 기간을 축 (Axis) 로 나타낼때, 여러 단위로 지정할 때 사용합니다.
  *
  * @author 배성혁 sunghyouk.bae@gmail.com

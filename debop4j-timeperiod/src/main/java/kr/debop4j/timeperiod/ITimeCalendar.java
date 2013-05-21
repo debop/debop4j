@@ -66,16 +66,16 @@ public interface ITimeCalendar extends ITimePeriodMapper {
 //    String getYearName(int year);
 //
 //    /** 반기를 표현하는 문자열을 반환합니다. */
-//    String getHalfyearName(HalfyearKind halfyear);
+//    String getHalfyearName(Halfyear halfyear);
 //
 //    /** 지정한 년도의 반기를 표현하는 문자열을 반환합니다. */
-//    String getHalfyearOfYearName(int year, HalfyearKind halfyear);
+//    String getHalfyearOfYearName(int year, Halfyear halfyear);
 //
 //    /** 분기를 표현하는 문자열을 반환합니다. (2사분기) */
-//    String getQuarterName(QuarterKind quarter);
+//    String getQuarterName(Quarter quarter);
 //
 //    /** 특정년도의 분기를 표현하는 문자열을 반환합니다. (2011년 2사분기) */
-//    String getQuarterOfYearName(int year, QuarterKind quarter);
+//    String getQuarterOfYearName(int year, Quarter quarter);
 //
 //    /** 월을 표현하는 문자열을 반환합니다. */
 //    String getMonthName(int month);

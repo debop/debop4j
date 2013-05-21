@@ -16,7 +16,9 @@
 
 package kr.debop4j.timeperiod;
 
+import kr.debop4j.timeperiod.tools.Times;
 import lombok.extern.slf4j.Slf4j;
+import org.joda.time.DateTime;
 
 /**
  * kr.debop4j.timeperiod.TimePeriodTestBase
@@ -26,4 +28,7 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Slf4j
 public class TimePeriodTestBase {
+
+    public static DateTime date = new DateTime(2000, 10, 2, 13, 45, 53, 673);
+    public static final DateTime nowTime = Times.now();
 }

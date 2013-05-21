@@ -17,7 +17,7 @@
 package kr.debop4j.timeperiod.timerange;
 
 import com.google.common.collect.Lists;
-import kr.debop4j.timeperiod.HalfyearKind;
+import kr.debop4j.timeperiod.Halfyear;
 import kr.debop4j.timeperiod.ITimeCalendar;
 import kr.debop4j.timeperiod.TimeCalendar;
 import kr.debop4j.timeperiod.YearAndHalfyear;
@@ -46,11 +46,11 @@ public class HalfyearRangeCollection extends HalfyearTimeRange {
              timeCalendar);
     }
 
-    public HalfyearRangeCollection(int year, HalfyearKind halfyear, int halfyearCount) {
+    public HalfyearRangeCollection(int year, Halfyear halfyear, int halfyearCount) {
         this(year, halfyear, halfyearCount, new TimeCalendar());
     }
 
-    public HalfyearRangeCollection(int year, HalfyearKind halfyear, int halfyearCount, ITimeCalendar timeCalendar) {
+    public HalfyearRangeCollection(int year, Halfyear halfyear, int halfyearCount, ITimeCalendar timeCalendar) {
         super(year, halfyear, halfyearCount, timeCalendar);
     }
 

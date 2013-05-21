@@ -33,18 +33,18 @@ public class YearAndQuarter extends ValueObjectBase implements Comparable<YearAn
     private static final long serialVersionUID = 9040933427227142560L;
 
     private Integer year;
-    private QuarterKind quarter;
+    private Quarter quarter;
 
     public YearAndQuarter() {}
 
-    public YearAndQuarter(Integer year, QuarterKind quarter) {
+    public YearAndQuarter(Integer year, Quarter quarter) {
         this.year = year;
         this.quarter = quarter;
     }
 
     public YearAndQuarter(Integer year, int quarter) {
         this.year = year;
-        this.quarter = QuarterKind.valueOf(quarter);
+        this.quarter = Quarter.valueOf(quarter);
     }
 
     @Override

@@ -19,7 +19,7 @@ package kr.debop4j.timeperiod.calendars;
 import kr.debop4j.core.ValueObjectBase;
 import kr.debop4j.core.tools.HashTool;
 import kr.debop4j.timeperiod.ITimeCalendar;
-import kr.debop4j.timeperiod.QuarterKind;
+import kr.debop4j.timeperiod.Quarter;
 import kr.debop4j.timeperiod.TimeCalendar;
 import kr.debop4j.timeperiod.clock.ClockProxy;
 import kr.debop4j.timeperiod.tools.TimeSpec;
@@ -147,10 +147,10 @@ public class DateDiff extends ValueObjectBase implements Serializable {
         if (Objects.equals(start, end)) return 0;
 
         int year1 = Times.getYearOf(getStartYear(), getStartMonthOfYear());
-        QuarterKind quarter1 = Times.getQuarterOfMonth(getStartMonthOfYear());
+        Quarter quarter1 = Times.getQuarterOfMonth(getStartMonthOfYear());
 
         int year2 = Times.getYearOf(getEndYear(), getEndMonthOfYear());
-        QuarterKind quarter2 = Times.getQuarterOfMonth(getEndMonthOfYear());
+        Quarter quarter2 = Times.getQuarterOfMonth(getEndMonthOfYear());
 
         return (year2 * TimeSpec.QuartersPerYear + quarter2.getValue())
                 - (year1 * TimeSpec.QuartersPerYear + quarter1.getValue());

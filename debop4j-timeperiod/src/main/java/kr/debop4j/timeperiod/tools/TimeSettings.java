@@ -1,7 +1,23 @@
+/*
+ * Copyright 2011-2013 the original author or authors.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package kr.debop4j.timeperiod.tools;
 
-import kr.debop4j.timeperiod.HalfyearKind;
-import kr.debop4j.timeperiod.QuarterKind;
+import kr.debop4j.timeperiod.Halfyear;
+import kr.debop4j.timeperiod.Quarter;
 
 import java.util.Locale;
 
@@ -50,35 +66,35 @@ public class TimeSettings {
     public static final String FiscalHalfyearOfYearNameFormat = "FHY%s %s";
     public static final String SchoolHalfyearOfYearNameFormat = "SHY%s %s";
 
-    public static String SystemHalfyearName(HalfyearKind halfyear) {
+    public static String SystemHalfyearName(Halfyear halfyear) {
         return format(SystemHalfYearNameFormat, halfyear);
     }
 
-    public static String CalendarHalfyearName(HalfyearKind halfyear) {
+    public static String CalendarHalfyearName(Halfyear halfyear) {
         return format(CalendarHalfYearNameFormat, halfyear);
     }
 
-    public static String FiscalHalfyearName(HalfyearKind halfyear) {
+    public static String FiscalHalfyearName(Halfyear halfyear) {
         return format(FiscalHalfYearNameFormat, halfyear);
     }
 
-    public static String SchoolHalfyearName(HalfyearKind halfyear) {
+    public static String SchoolHalfyearName(Halfyear halfyear) {
         return format(SchoolHalfYearNameFormat, halfyear);
     }
 
-    public static String SystemHalfyearOfYearName(HalfyearKind halfyear, int year) {
+    public static String SystemHalfyearOfYearName(Halfyear halfyear, int year) {
         return format(SystemHalfyearOfYearNameFormat, halfyear, year);
     }
 
-    public static String CalendarHalfyearOfYearName(HalfyearKind halfyear, int year) {
+    public static String CalendarHalfyearOfYearName(Halfyear halfyear, int year) {
         return format(CalendarHalfyearOfYearNameFormat, halfyear, year);
     }
 
-    public static String FiscalHalfyearOfYearName(HalfyearKind halfyear, int year) {
+    public static String FiscalHalfyearOfYearName(Halfyear halfyear, int year) {
         return format(FiscalHalfyearOfYearNameFormat, halfyear, year);
     }
 
-    public static String SchoolHalfyearOfYearName(HalfyearKind halfyear, int year) {
+    public static String SchoolHalfyearOfYearName(Halfyear halfyear, int year) {
         return format(SchoolHalfyearOfYearNameFormat, halfyear, year);
     }
 
@@ -96,35 +112,35 @@ public class TimeSettings {
     public static final String FiscalQuarterOfYearNameFormat = "FQ%s %s";
     public static final String SchoolQuarterOfYearNameFormat = "SQ%s %s";
 
-    public static String SystemQuarterName(QuarterKind quarter) {
+    public static String SystemQuarterName(Quarter quarter) {
         return format(SystemQuarterNameFormat, quarter);
     }
 
-    public static String CalendarQuarterName(QuarterKind quarter) {
+    public static String CalendarQuarterName(Quarter quarter) {
         return format(CalendarQuarterNameFormat, quarter);
     }
 
-    public static String FiscalQuarterName(QuarterKind quarter) {
+    public static String FiscalQuarterName(Quarter quarter) {
         return format(FiscalQuarterNameFormat, quarter);
     }
 
-    public static String SchoolQuarterName(QuarterKind quarter) {
+    public static String SchoolQuarterName(Quarter quarter) {
         return format(SchoolQuarterNameFormat, quarter);
     }
 
-    public static String SystemQuarterOfYearName(QuarterKind quarter, int year) {
+    public static String SystemQuarterOfYearName(Quarter quarter, int year) {
         return format(SystemQuarterOfYearNameFormat, quarter, year);
     }
 
-    public static String CalendarQuarterOfYearName(QuarterKind quarter, int year) {
+    public static String CalendarQuarterOfYearName(Quarter quarter, int year) {
         return format(CalendarQuarterOfYearNameFormat, quarter, year);
     }
 
-    public static String FiscalQuarterOfYearName(QuarterKind quarter, int year) {
+    public static String FiscalQuarterOfYearName(Quarter quarter, int year) {
         return format(FiscalQuarterOfYearNameFormat, quarter, year);
     }
 
-    public static String SchoolQuarterOfYearName(QuarterKind quarter, int year) {
+    public static String SchoolQuarterOfYearName(Quarter quarter, int year) {
         return format(SchoolQuarterOfYearNameFormat, quarter, year);
     }
 
