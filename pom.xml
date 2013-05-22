@@ -169,7 +169,6 @@
                     </execution>
                 </executions>
             </plugin>
-
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
@@ -313,6 +312,11 @@
             <dependency>
                 <groupId>debop4j</groupId>
                 <artifactId>debop4j-core</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>debop4j</groupId>
+                <artifactId>debop4j-timeperiod</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
