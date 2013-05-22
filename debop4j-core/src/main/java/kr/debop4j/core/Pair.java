@@ -28,19 +28,19 @@ import java.io.Serializable;
  * @author 배성혁 sunghyouk.bae@gmail.com
  * @since 13. 5. 20. 오전 11:03
  */
-public class Tuple2<V1, V2> extends ValueObjectBase implements Serializable {
+public class Pair<V1, V2> extends ValueObjectBase implements Serializable {
 
     private static final long serialVersionUID = 4213705024392671643L;
 
-    public static <V1, V2> Tuple2<V1, V2> create(V1 v1, V2 v2) {
-        return new Tuple2<V1, V2>(v1, v2);
+    public static <V1, V2> Pair<V1, V2> create(V1 v1, V2 v2) {
+        return new Pair<V1, V2>(v1, v2);
     }
 
     @Getter public final V1 v1;
     @Getter public final V2 v2;
     private final int hash;
 
-    public Tuple2(V1 v1, V2 v2) {
+    public Pair(V1 v1, V2 v2) {
         this.v1 = v1;
         this.v2 = v2;
         hash = HashTool.compute(v1, v2);

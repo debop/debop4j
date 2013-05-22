@@ -28,12 +28,12 @@ import java.io.Serializable;
  * @author 배성혁 sunghyouk.bae@gmail.com
  * @since 13. 5. 20. 오전 11:09
  */
-public class Tuple3<V1, V2, V3> extends ValueObjectBase implements Serializable {
+public class Triple<V1, V2, V3> extends ValueObjectBase implements Serializable {
 
     private static final long serialVersionUID = 6306564808094409454L;
 
-    public static <V1, V2, V3> Tuple3<V1, V2, V3> create(V1 v1, V2 v2, V3 v3) {
-        return new Tuple3<V1, V2, V3>(v1, v2, v3);
+    public static <V1, V2, V3> Triple<V1, V2, V3> create(V1 v1, V2 v2, V3 v3) {
+        return new Triple<V1, V2, V3>(v1, v2, v3);
     }
 
     @Getter public final V1 v1;
@@ -41,7 +41,7 @@ public class Tuple3<V1, V2, V3> extends ValueObjectBase implements Serializable 
     @Getter public final V3 v3;
     private final int hash;
 
-    public Tuple3(V1 v1, V2 v2, V3 v3) {
+    public Triple(V1 v1, V2 v2, V3 v3) {
         this.v1 = v1;
         this.v2 = v2;
         this.v3 = v3;

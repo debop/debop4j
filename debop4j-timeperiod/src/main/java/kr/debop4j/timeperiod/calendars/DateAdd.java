@@ -16,7 +16,7 @@
 
 package kr.debop4j.timeperiod.calendars;
 
-import kr.debop4j.core.Tuple2;
+import kr.debop4j.core.Pair;
 import kr.debop4j.core.ValueObjectBase;
 import kr.debop4j.core.tools.StringTool;
 import kr.debop4j.timeperiod.*;
@@ -63,7 +63,7 @@ public class DateAdd extends ValueObjectBase {
             return start.plus(offset);
 
 
-        Tuple2<DateTime, Duration> results = offset.compareTo(Duration.ZERO) < 0
+        Pair<DateTime, Duration> results = offset.compareTo(Duration.ZERO) < 0
                 ? calculateEnd(start, Durations.negate(offset), SeekDirection.Backward, seekBoundary)
                 : calculateEnd(start, offset, SeekDirection.Forward, seekBoundary);
 
@@ -87,7 +87,7 @@ public class DateAdd extends ValueObjectBase {
         if (isTraceEnable)
             log.trace("Subtract. start=[{}] - offset=[{}]의 시각을 계산합니다. seekBoundaryMode=[{}]", start, offset, seekBoundary);
 
-        Tuple2<DateTime, Duration> results = offset.compareTo(Duration.ZERO) < 0
+        Pair<DateTime, Duration> results = offset.compareTo(Duration.ZERO) < 0
                 ? calculateEnd(start, Durations.negate(offset), SeekDirection.Forward, seekBoundary)
                 : calculateEnd(start, offset, SeekDirection.Backward, seekBoundary);
 
@@ -111,7 +111,7 @@ public class DateAdd extends ValueObjectBase {
      * @param seekBoundary 경계 값 포함 여부
      * @return 계산된 시각, 짜투리 시
      */
-    protected Tuple2<DateTime, Duration> calculateEnd(DateTime start, Duration offset, SeekDirection seekDir, SeekBoundaryMode seekBoundary) {
+    protected Pair<DateTime, Duration> calculateEnd(DateTime start, Duration offset, SeekDirection seekDir, SeekBoundaryMode seekBoundary) {
         if (isTraceEnable)
             log.trace("기준시각으로부터 오프셋만큼 떨어진 시각을 구합니다... start=[{}], offset=[{}], seekDir=[{}], seekBoundary=[{}]",
                       start, offset, seekDir, seekBoundary);
@@ -145,7 +145,7 @@ public class DateAdd extends ValueObjectBase {
 
         if (availablePeriods.size() == 0) {
             if (isTraceEnable) log.trace("유효한 period 가 없다면 중단합니다.");
-            return Tuple2.create(null, remaining);
+            return Pair.create(null, remaining);
         }
 
         if (isTraceEnable) log.trace("유효기간 중 중복된 부분을 제거하기 위해 기간들을 결합니다...");
@@ -153,7 +153,7 @@ public class DateAdd extends ValueObjectBase {
         availablePeriods = periodCombiner.combinePeriods(availablePeriods);
 
         if (isTraceEnable) log.trace("첫 시작을 찾습니다.");
-        Tuple2<ITimePeriod, DateTime> result =
+        Pair<ITimePeriod, DateTime> result =
                 (seekDir == SeekDirection.Forward)
                         ? findNextPeriod(start, availablePeriods)
                         : findPrevPeriod(start, availablePeriods);
@@ -163,7 +163,7 @@ public class DateAdd extends ValueObjectBase {
         // 첫 시작 기간이 없다면 중단합니다.
         if (startPeriod == null) return null;
         // offset 값이 0 이라면, 바로 다음 값이므로 seekMoment 를 반환합니다.
-        if (offset.isEqual(Duration.ZERO)) return Tuple2.create(seekMoment, remaining);
+        if (offset.isEqual(Duration.ZERO)) return Pair.create(seekMoment, remaining);
 
         if (seekDir == SeekDirection.Forward) {
 
@@ -181,12 +181,12 @@ public class DateAdd extends ValueObjectBase {
                 if (isTargetPeriod) {
                     end = seekMoment.plus(remaining);
                     remaining = null;
-                    return Tuple2.create(end, remaining);
+                    return Pair.create(end, remaining);
                 }
 
                 remaining = remaining.minus(gapRemaining);
                 if (i == availablePeriods.size() - 1)
-                    return Tuple2.create(null, remaining);
+                    return Pair.create(null, remaining);
 
                 seekMoment = availablePeriods.get(i + 1).getStart(); // next period
             }
@@ -205,16 +205,16 @@ public class DateAdd extends ValueObjectBase {
                 if (isTargetPeriod) {
                     end = seekMoment.minus(remaining);
                     remaining = null;
-                    return Tuple2.create(end, remaining);
+                    return Pair.create(end, remaining);
                 }
                 remaining = remaining.minus(gapRemaining);
-                if (i == 0) return Tuple2.create(null, remaining);
+                if (i == 0) return Pair.create(null, remaining);
 
                 seekMoment = availablePeriods.get(i - 1).getEnd();
             }
         }
 
-        return Tuple2.create(null, remaining);
+        return Pair.create(null, remaining);
     }
 
 
@@ -225,7 +225,7 @@ public class DateAdd extends ValueObjectBase {
      * @param periods 대상 기간들
      * @return period와 후행 기간의 시작 일자
      */
-    private static Tuple2<ITimePeriod, DateTime> findNextPeriod(DateTime start, Iterable<? extends ITimePeriod> periods) {
+    private static Pair<ITimePeriod, DateTime> findNextPeriod(DateTime start, Iterable<? extends ITimePeriod> periods) {
         if (isTraceEnable)
             log.trace("시작시각의 이후 기간을 찾습니다... start=[{}], periods=[{}]", start, StringTool.listToString(periods));
 
@@ -258,7 +258,7 @@ public class DateAdd extends ValueObjectBase {
         if (isTraceEnable)
             log.trace("시작시각의 이후 기간을 찾았습니다. start=[{}], moment=[{}], neearest=[{}]", start, moment, nearest);
 
-        return Tuple2.create(nearest, moment);
+        return Pair.create(nearest, moment);
     }
 
     /**
@@ -268,7 +268,7 @@ public class DateAdd extends ValueObjectBase {
      * @param periods 대상 기간들
      * @return period와 선행 기간의 완료 일자
      */
-    private static Tuple2<ITimePeriod, DateTime> findPrevPeriod(DateTime start, Iterable<? extends ITimePeriod> periods) {
+    private static Pair<ITimePeriod, DateTime> findPrevPeriod(DateTime start, Iterable<? extends ITimePeriod> periods) {
         if (isTraceEnable)
             log.trace("시작시각의 이전 기간을 찾습니다... start=[{}], periods=[{}]", start, StringTool.listToString(periods));
 
@@ -301,7 +301,7 @@ public class DateAdd extends ValueObjectBase {
         if (isTraceEnable)
             log.trace("시작시각의 이전 기간을 찾았습니다. start=[{}], moment=[{}], neearest=[{}]", start, moment, nearest);
 
-        return Tuple2.create(nearest, moment);
+        return Pair.create(nearest, moment);
     }
 
     private static final long serialVersionUID = 2352433294158169198L;

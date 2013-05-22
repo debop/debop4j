@@ -19,7 +19,7 @@ package kr.debop4j.timeperiod.tools;
 import com.google.common.base.Objects;
 import com.google.common.collect.Iterables;
 import kr.debop4j.core.NotSupportException;
-import kr.debop4j.core.Tuple2;
+import kr.debop4j.core.Pair;
 import kr.debop4j.core.tools.ArrayTool;
 import kr.debop4j.timeperiod.*;
 import kr.debop4j.timeperiod.clock.ClockProxy;
@@ -802,16 +802,16 @@ public abstract class Times {
         return a.compareTo(b) > 0 ? a : b;
     }
 
-    public static Tuple2<DateTime, DateTime> adjustPeriod(DateTime start, DateTime end) {
+    public static Pair<DateTime, DateTime> adjustPeriod(DateTime start, DateTime end) {
         return (start.compareTo(end) < 0)
-                ? Tuple2.create(start, end)
-                : Tuple2.create(end, start);
+                ? Pair.create(start, end)
+                : Pair.create(end, start);
     }
 
-    public static Tuple2<DateTime, Duration> adjustPeriod(DateTime start, Duration duration) {
+    public static Pair<DateTime, Duration> adjustPeriod(DateTime start, Duration duration) {
         return (duration.getMillis() < 0)
-                ? Tuple2.create(start.plus(duration), new Duration(-duration.getMillis()))
-                : Tuple2.create(start, duration);
+                ? Pair.create(start.plus(duration), new Duration(-duration.getMillis()))
+                : Pair.create(start, duration);
     }
 
     // endregion

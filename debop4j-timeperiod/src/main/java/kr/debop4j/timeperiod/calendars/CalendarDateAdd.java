@@ -18,7 +18,7 @@ package kr.debop4j.timeperiod.calendars;
 
 import kr.debop4j.core.Guard;
 import kr.debop4j.core.NotSupportException;
-import kr.debop4j.core.Tuple2;
+import kr.debop4j.core.Pair;
 import kr.debop4j.core.tools.StringTool;
 import kr.debop4j.timeperiod.*;
 import kr.debop4j.timeperiod.timeline.TimeGapCalculator;
@@ -98,7 +98,7 @@ public class CalendarDateAdd extends DateAdd {
         if (getWeekDays().size() == 0 && getExcludePeriods().size() == 0 && getWorkingHours().size() == 0)
             return start.plus(offset);
 
-        Tuple2<DateTime, Duration> endTuple = (offset.compareTo(ZERO) < 0)
+        Pair<DateTime, Duration> endTuple = (offset.compareTo(ZERO) < 0)
                 ? calculateEnd(start, Durations.negate(offset), SeekDirection.Backward, seekBoundary)
                 : calculateEnd(start, offset, SeekDirection.Forward, seekBoundary);
 
@@ -118,7 +118,7 @@ public class CalendarDateAdd extends DateAdd {
         if (getWeekDays().size() == 0 && getExcludePeriods().size() == 0 && getWorkingHours().size() == 0)
             return start.minus(offset);
 
-        Tuple2<DateTime, Duration> endTuple = (offset.compareTo(ZERO) < 0)
+        Pair<DateTime, Duration> endTuple = (offset.compareTo(ZERO) < 0)
                 ? calculateEnd(start, Durations.negate(offset), SeekDirection.Forward, seekBoundary)
                 : calculateEnd(start, offset, SeekDirection.Backward, seekBoundary);
 
@@ -140,7 +140,7 @@ public class CalendarDateAdd extends DateAdd {
      * @return 기준 시각으로터 오프셋만큼 떨어진 시각, 짜투리 시
      */
     @Override
-    protected Tuple2<DateTime, Duration> calculateEnd(DateTime start, Duration offset, SeekDirection seekDir, SeekBoundaryMode seekBoundary) {
+    protected Pair<DateTime, Duration> calculateEnd(DateTime start, Duration offset, SeekDirection seekDir, SeekBoundaryMode seekBoundary) {
         if (log.isTraceEnabled())
             log.trace("기준시각으로부터 offset 기간만큼 떨어진 시각을 구합니다... start=[{}], offset=[{}], seekDir=[{}], seekBoundary=[{}]",
                       start, offset, seekDir, seekBoundary);
@@ -159,7 +159,7 @@ public class CalendarDateAdd extends DateAdd {
             if (log.isTraceEnabled())
                 log.trace("가능한 기간=[{}]", StringTool.listToString(super.getIncludePeriods()));
 
-            Tuple2<DateTime, Duration> result = super.calculateEnd(moment, remaining, seekDir, seekBoundary);
+            Pair<DateTime, Duration> result = super.calculateEnd(moment, remaining, seekDir, seekBoundary);
             end = result.getV1();
             remaining = result.getV2();
 
@@ -181,7 +181,7 @@ public class CalendarDateAdd extends DateAdd {
             log.trace("기준시각으로부터 offset 기간만큼 떨어진 시각을 구했습니다. start=[{}], offset=[{}], seekDir=[{}], seekBoundary=[{}], end=[{}], remaining=[{}]",
                       start, offset, seekDir, seekBoundary, end, remaining);
 
-        return Tuple2.create(end, remaining);
+        return Pair.create(end, remaining);
     }
 
     /**
