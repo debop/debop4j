@@ -17,6 +17,7 @@
 package kr.debop4j.timeperiod.tools;
 
 import kr.debop4j.timeperiod.Halfyear;
+import kr.debop4j.timeperiod.Quarter;
 import kr.debop4j.timeperiod.TimePeriodTestBase;
 import kr.debop4j.timeperiod.YearAndHalfyear;
 import lombok.extern.slf4j.Slf4j;
@@ -83,5 +84,89 @@ public class TimesCalendarTest extends TimePeriodTestBase {
 
         assertThat(Times.addHalfyear(2008, Halfyear.First, 3).getYear()).isEqualTo(2009);
         assertThat(Times.addHalfyear(2008, Halfyear.Second, 3).getYear()).isEqualTo(2010);
+    }
+
+    @Test
+    public void getHalfyearOfMonthTest() {
+        for (int month : TimeSpec.FirstHalfyearMonths)
+            assertThat(Times.getHalfyearOfMonth(month)).isEqualTo(Halfyear.First);
+
+        for (int month : TimeSpec.SecondHalfyearMonths)
+            assertThat(Times.getHalfyearOfMonth(month)).isEqualTo(Halfyear.Second);
+    }
+
+    @Test
+    public void getonthsOfHalfyear() {
+        assertThat(Times.getMonthsOfHalfyear(Halfyear.First)).isEqualTo(TimeSpec.FirstHalfyearMonths);
+        assertThat(Times.getMonthsOfHalfyear(Halfyear.Second)).isEqualTo(TimeSpec.SecondHalfyearMonths);
+    }
+
+    @Test
+    public void nextQuarterTest() {
+        assertThat(Times.nextQuarter(2000, Quarter.First).getQuarter()).isEqualTo(Quarter.Second);
+        assertThat(Times.nextQuarter(2000, Quarter.Second).getQuarter()).isEqualTo(Quarter.Third);
+        assertThat(Times.nextQuarter(2000, Quarter.Third).getQuarter()).isEqualTo(Quarter.Fourth);
+        assertThat(Times.nextQuarter(2000, Quarter.Fourth).getQuarter()).isEqualTo(Quarter.First);
+    }
+
+    @Test
+    public void previousQuarterTest() {
+        assertThat(Times.previousQuarter(2000, Quarter.First).getQuarter()).isEqualTo(Quarter.Fourth);
+        assertThat(Times.previousQuarter(2000, Quarter.Second).getQuarter()).isEqualTo(Quarter.First);
+        assertThat(Times.previousQuarter(2000, Quarter.Third).getQuarter()).isEqualTo(Quarter.Second);
+        assertThat(Times.previousQuarter(2000, Quarter.Fourth).getQuarter()).isEqualTo(Quarter.Third);
+    }
+
+    @Test
+    public void addQuarterTest() {
+
+        assertThat(Times.addQuarter(2000, Quarter.First, 1).getQuarter()).isEqualTo(Quarter.Second);
+        assertThat(Times.addQuarter(2000, Quarter.Second, 1).getQuarter()).isEqualTo(Quarter.Third);
+        assertThat(Times.addQuarter(2000, Quarter.Third, 1).getQuarter()).isEqualTo(Quarter.Fourth);
+        assertThat(Times.addQuarter(2000, Quarter.Fourth, 1).getQuarter()).isEqualTo(Quarter.First);
+
+        assertThat(Times.addQuarter(2000, Quarter.First, -1).getQuarter()).isEqualTo(Quarter.Fourth);
+        assertThat(Times.addQuarter(2000, Quarter.Second, -1).getQuarter()).isEqualTo(Quarter.First);
+        assertThat(Times.addQuarter(2000, Quarter.Third, -1).getQuarter()).isEqualTo(Quarter.Second);
+        assertThat(Times.addQuarter(2000, Quarter.Fourth, -1).getQuarter()).isEqualTo(Quarter.Third);
+
+        assertThat(Times.addQuarter(2000, Quarter.First, 2).getQuarter()).isEqualTo(Quarter.Third);
+        assertThat(Times.addQuarter(2000, Quarter.Second, 2).getQuarter()).isEqualTo(Quarter.Fourth);
+        assertThat(Times.addQuarter(2000, Quarter.Third, 2).getQuarter()).isEqualTo(Quarter.First);
+        assertThat(Times.addQuarter(2000, Quarter.Fourth, 2).getQuarter()).isEqualTo(Quarter.Second);
+
+        assertThat(Times.addQuarter(2000, Quarter.First, -2).getQuarter()).isEqualTo(Quarter.Third);
+        assertThat(Times.addQuarter(2000, Quarter.Second, -2).getQuarter()).isEqualTo(Quarter.Fourth);
+        assertThat(Times.addQuarter(2000, Quarter.Third, -2).getQuarter()).isEqualTo(Quarter.First);
+        assertThat(Times.addQuarter(2000, Quarter.Fourth, -2).getQuarter()).isEqualTo(Quarter.Second);
+    }
+
+    @Test
+    public void getQuarterOfMonthTest() {
+        for (int m : TimeSpec.FirstQuarterMonths)
+            assertThat(Times.getQuarterOfMonth(m)).isEqualTo(Quarter.First);
+
+        for (int m : TimeSpec.SecondQuarterMonths)
+            assertThat(Times.getQuarterOfMonth(m)).isEqualTo(Quarter.Second);
+
+        for (int m : TimeSpec.ThirdQuarterMonths)
+            assertThat(Times.getQuarterOfMonth(m)).isEqualTo(Quarter.Third);
+
+        for (int m : TimeSpec.FourthQuarterMonths)
+            assertThat(Times.getQuarterOfMonth(m)).isEqualTo(Quarter.Fourth);
+    }
+
+    @Test
+    public void getMonthsOfQuarterTest() {
+        assertThat(Times.getMonthsOfQuarter(Quarter.First)).isEqualTo(TimeSpec.FirstQuarterMonths);
+        assertThat(Times.getMonthsOfQuarter(Quarter.Second)).isEqualTo(TimeSpec.SecondQuarterMonths);
+        assertThat(Times.getMonthsOfQuarter(Quarter.Third)).isEqualTo(TimeSpec.ThirdQuarterMonths);
+        assertThat(Times.getMonthsOfQuarter(Quarter.Fourth)).isEqualTo(TimeSpec.FourthQuarterMonths);
+    }
+
+    @Test
+    public void nextMonthTest() {
+        for (int i = 1; i <= TimeSpec.MonthsPerYear; i++)
+            assertThat(Times.nextMonth(2000, i).getMonthOfYear()).isEqualTo(i % TimeSpec.MonthsPerYear + 1);
     }
 }
