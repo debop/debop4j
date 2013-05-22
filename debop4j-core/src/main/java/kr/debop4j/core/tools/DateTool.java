@@ -27,40 +27,40 @@ import org.joda.time.DateTimeConstants;
  * @since 13. 1. 27.
  */
 @Slf4j
-public class DateTool {
+public abstract class DateTool {
 
     private DateTool() {}
 
-    /** 지정된 DateTime 에서 time-part를 제외한 date-part만을 제공합니다. */
-    public static DateTime getStartOfDay(DateTime time) {
-        return time.withTimeAtStartOfDay();
+    /** 지정된 DateTime 에서 moment-part를 제외한 date-part만을 제공합니다. */
+    public static DateTime getStartOfDay(DateTime moment) {
+        return moment.withTimeAtStartOfDay();
     }
 
-    public static DateTime getEndOfDay(DateTime time) {
-        return getStartOfDay(time).minus(1);
+    public static DateTime getEndOfDay(DateTime moment) {
+        return getStartOfDay(moment).minus(1);
     }
 
-    public static DateTime getStartOfWeek(DateTime time) {
-        int add = DateTimeConstants.MONDAY - time.getDayOfWeek();
+    public static DateTime getStartOfWeek(DateTime moment) {
+        int add = DateTimeConstants.MONDAY - moment.getDayOfWeek();
         if (add > 0)
             add -= 7;
-        return time.withTimeAtStartOfDay().plusDays(add);
+        return moment.withTimeAtStartOfDay().plusDays(add);
     }
 
-    public static DateTime getEndOfWeek(DateTime time) {
-        return getStartOfWeek(time).plusDays(DateTimeConstants.DAYS_PER_WEEK).minus(1);
+    public static DateTime getEndOfWeek(DateTime moment) {
+        return getStartOfWeek(moment).plusDays(DateTimeConstants.DAYS_PER_WEEK).minus(1);
     }
 
-    public static DateTime getStartOfMonth(DateTime time) {
-        return new DateTime().withDate(time.getYear(), time.getMonthOfYear(), 1);
+    public static DateTime getStartOfMonth(DateTime moment) {
+        return new DateTime().withDate(moment.getYear(), moment.getMonthOfYear(), 1);
     }
 
-    public static DateTime getEndOfMonth(DateTime time) {
-        return getStartOfMonth(time).plusMonths(1).minus(1);
+    public static DateTime getEndOfMonth(DateTime moment) {
+        return getStartOfMonth(moment).plusMonths(1).minus(1);
     }
 
     public static DateTime getStartOfYear(int year) {
-        return new DateTime().withDate(year, 1, 1);
+        return new DateTime(year, 1, 1, 0, 0);
     }
 
     public static DateTime getEndOfYear(int year) {

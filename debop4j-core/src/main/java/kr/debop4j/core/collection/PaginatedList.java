@@ -23,7 +23,7 @@ import java.util.List;
 import static kr.debop4j.core.Guard.*;
 
 /**
- * kr.debop4j.core.collection.PaginatedList
+ * 페이징된 컬렉션을 표현합니다.
  *
  * @author 배성혁 sunghyouk.bae@gmail.com
  * @since 13. 5. 9. 오후 11:27
@@ -31,15 +31,22 @@ import static kr.debop4j.core.Guard.*;
 @Getter
 public class PaginatedList<E> implements IPagedList<E> {
 
-    private static final long serialVersionUID = -7313208498181738658L;
-
     private final List<E> list;
     private final int pageNo;
     private final int pageSize;
     private final long itemCount;
     private final long pageCount;
 
+    /**
+     * 생성자
+     *
+     * @param list      컬렉션
+     * @param pageNo    페이지 번호 (1부터 시작)
+     * @param pageSize  페이지 크기
+     * @param itemCount 전체 아이템의 크기
+     */
     public PaginatedList(List<E> list, int pageNo, int pageSize, long itemCount) {
+
         this.list = shouldNotBeNull(list, "list");
         this.pageNo = shouldBePositiveNumber(pageNo, "pageNo");
         this.pageSize = shouldBePositiveNumber(pageSize, "pageSize");
@@ -47,4 +54,6 @@ public class PaginatedList<E> implements IPagedList<E> {
 
         this.pageCount = (long) (itemCount / pageSize) + ((itemCount % pageSize) > 0 ? 1 : 0);
     }
+
+    private static final long serialVersionUID = -7313208498181738658L;
 }

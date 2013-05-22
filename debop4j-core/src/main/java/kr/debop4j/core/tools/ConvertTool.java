@@ -22,7 +22,7 @@ import java.util.Date;
 
 
 /**
- * pudding.pudding.commons.core.tool.ConvertTool
+ * 객체를 다른 수형으로 변환합니다.
  *
  * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 12. 9. 26.

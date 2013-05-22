@@ -36,6 +36,7 @@ import static kr.debop4j.core.Guard.shouldNotBeNull;
 @Slf4j
 public final class StreamTool {
 
+    /** 기본 버퍼 크기 (4096) */
     public static final int BUFFER_SIZE = 4096;
 
     private StreamTool() { }
@@ -63,7 +64,11 @@ public final class StreamTool {
         return size;
     }
 
-    /** {@link java.io.InputStream} 내용을 읽어 바이트 배열로 반환합니다. */
+    /**
+     * {@link java.io.InputStream} 내용을 읽어 바이트 배열로 반환합니다.
+     *
+     * @param inputStream 읽어드릴 스트림
+     */
     public static byte[] toByteArray(InputStream inputStream) throws IOException {
         shouldNotBeNull(inputStream, "inputStream");
 
@@ -110,7 +115,7 @@ public final class StreamTool {
     }
 
     /**
-     * UTF-8 문자열을 {@link java.io.OutputStream} 에 씁니다.
+     * 문자열을 UTF-8 인코딩 방식으로 {@link java.io.OutputStream} 에 씁니다.
      *
      * @param str 변환할 UTF-8 문자열
      * @return 데이터를 복사한 {@link java.io.OutputStream}

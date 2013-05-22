@@ -28,7 +28,6 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.concurrent.Callable;
 import java.util.concurrent.Future;
-import java.util.concurrent.FutureTask;
 
 import static kr.debop4j.core.Guard.shouldNotBeNull;
 import static kr.debop4j.core.tools.StringTool.getBytesFromHexString;
@@ -45,8 +44,7 @@ public final class SerializeTool {
 
     private static final BinarySerializer binarySerializer = new BinarySerializer();
 
-    private SerializeTool() {
-    }
+    private SerializeTool() { }
 
     /** 객체를 직렬화하여 문자열로 반환합니다. */
     public static String serializeAsString(ISerializer serializer, Object graph) {
@@ -117,6 +115,12 @@ public final class SerializeTool {
         return (T) deserializeObject(serializeObject(graph), graph.getClass());
     }
 
+    /**
+     * 비동기 방식으로 객체를 직렬화합니다.
+     *
+     * @param graph 객체
+     * @return 직렬화 결과
+     */
     public static Future<byte[]> serializeObjectAsync(final Object graph) {
         return
                 AsyncTool.startNew(new Callable<byte[]>() {
@@ -127,6 +131,13 @@ public final class SerializeTool {
                 });
     }
 
+    /**
+     * 직렬화한 정보를 역직렬화하여 객체로 변환합니다.
+     *
+     * @param bytes 직렬화된 정보
+     * @param clazz 역직렬화할 객체의 수형
+     * @return 역직렬화한 객체
+     */
     public static <T> Future<T> deserializeObjectAsync(final byte[] bytes, final Class<T> clazz) {
         return
                 AsyncTool.startNew(new Callable<T>() {
@@ -137,22 +148,22 @@ public final class SerializeTool {
                 });
     }
 
-    @SuppressWarnings("unchecked")
+    /**
+     * 객체를 비동기 방식으로 복사합니다.
+     *
+     * @param graph 원본 인스턴스
+     * @return 복사한 인스턴스
+     */
+    @SuppressWarnings( "unchecked" )
     public static <T> Future<T> copyObjectAsync(final T graph) {
         if (graph == null) {
-            return new FutureTask<T>(new Callable<T>() {
-                @Override
-                public T call() throws Exception {
-                    return null;
-                }
-            });
+            return AsyncTool.getTaskHasResult(graph);
         }
 
         return AsyncTool.startNew(new Callable<T>() {
             @Override
             public T call() throws Exception {
-                return (T) binarySerializer.deserialize(binarySerializer.serialize(graph),
-                                                        graph.getClass());
+                return (T) binarySerializer.deserialize(binarySerializer.serialize(graph), graph.getClass());
             }
         });
     }

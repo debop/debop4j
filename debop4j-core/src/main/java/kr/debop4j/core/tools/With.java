@@ -36,18 +36,42 @@ public final class With {
 
     private With() { }
 
+    /**
+     * try/catch/finally 구문으로 지정된 action을 수행합니다.
+     *
+     * @param action 실행할 action
+     */
     public static void tryAction(Action action) {
         tryAction(action, null, null);
     }
 
+    /**
+     * try/catch/finally 구문으로 지정된 action을 수행합니다.
+     *
+     * @param action          실행할 action
+     * @param exceptionAction 예외 처리용 action
+     */
     public static void tryAction(Action action, Action1<Exception> exceptionAction) {
         tryAction(action, exceptionAction, null);
     }
 
+    /**
+     * try/catch/finally 구문으로 지정된 action을 수행합니다.
+     *
+     * @param action        실행할 action
+     * @param finallyAction 정리 시 수행할 action
+     */
     public static void tryAction(Action action, Action finallyAction) {
         tryAction(action, null, finallyAction);
     }
 
+    /**
+     * try/catch/finally 구문으로 지정된 action을 수행합니다.
+     *
+     * @param action          실행할 action
+     * @param exceptionAction 예외 처리용 action
+     * @param finallyAction   정리 시 수행할 action
+     */
     public static void tryAction(Action action, Action1<Exception> exceptionAction, Action finallyAction) {
         assert action != null;
         try {
@@ -64,18 +88,42 @@ public final class With {
         }
     }
 
+    /**
+     * try/catch/finally 구문으로 지정된 action 들을 수행합니다.
+     *
+     * @param action 실행할 action
+     */
     public static <T> void tryAction(Action1<T> action, final T arg) {
         tryAction(action, arg, null, null);
     }
 
+    /**
+     * try/catch/finally 구문으로 지정된 action 들을 수행합니다.
+     *
+     * @param action          실행할 action
+     * @param exceptionAction 예외 처리용 action
+     */
     public static <T> void tryAction(Action1<T> action, final T arg, Action1<Exception> exceptionAction) {
         tryAction(action, arg, exceptionAction, null);
     }
 
+    /**
+     * try/catch/finally 구문으로 지정된 action 들을 수행합니다.
+     *
+     * @param action        실행할 action
+     * @param finallyAction 정리 시 수행할 action
+     */
     public static <T> void tryAction(Action1<T> action, final T arg, Action finallyAction) {
         tryAction(action, arg, null, finallyAction);
     }
 
+    /**
+     * try/catch/finally 구문으로 지정된 action 들을 수행합니다.
+     *
+     * @param action          실행할 action
+     * @param exceptionAction 예외 처리용 action
+     * @param finallyAction   정리 시 수행할 action
+     */
     public static <T> void tryAction(Action1<T> action, final T arg, Action1<Exception> exceptionAction, Action finallyAction) {
         assert action != null;
         try {
@@ -92,14 +140,36 @@ public final class With {
         }
     }
 
+    /**
+     * try/catch/finally 구문으로 지정된 action 들을 수행합니다.
+     *
+     * @param func 실행할 function
+     * @return 수행한 결과
+     */
     public static <R> R tryFunction(Function<R> func) {
         return tryFunction(func, null, null, null);
     }
 
+    /**
+     * try/catch/finally 구문으로 지정된 action 들을 수행합니다.
+     *
+     * @param func         실행할 function
+     * @param valueFactory 작업 실패 시에 제공할 값 생성 factory
+     * @return 수행한 결과
+     */
     public static <R> R tryFunction(Function<R> func, Function<R> valueFactory) {
         return tryFunction(func, valueFactory, null, null);
     }
 
+    /**
+     * try/catch/finally 구문으로 지정된 action 들을 수행합니다.
+     *
+     * @param func            실행할 function
+     * @param valueFactory    작업 실패 시에 제공할 값 생성 factory
+     * @param exceptionAction 예외 처리용 action
+     * @param finallyAction   정리 시 수행할 action
+     * @return 수행한 결과
+     */
     public static <R> R tryFunction(Function<R> func,
                                     Function<R> valueFactory,
                                     Action1<Exception> exceptionAction,
@@ -120,10 +190,22 @@ public final class With {
         return (valueFactory != null) ? valueFactory.execute() : null;
     }
 
+    /**
+     * 비동기 방식으로 try/catch/finally 구문으로 지정된 action 들을 수행합니다.
+     *
+     * @param action 실행할 action
+     */
     public static Future<Void> tryActionAsync(final Action action) {
         return tryActionAsync(action, null, null);
     }
 
+    /**
+     * 비동기 방식으로 try/catch/finally 구문으로 지정된 action 들을 수행합니다.
+     *
+     * @param action          실행할 action
+     * @param exceptionAction 예외 처리용 action
+     * @param finallyAction   정리 시 수행할 action
+     */
     public static Future<Void> tryActionAsync(final Action action,
                                               final Action1<Exception> exceptionAction,
                                               final Action finallyAction) {
@@ -148,10 +230,25 @@ public final class With {
         });
     }
 
+    /**
+     * 비동기 방식으로 try/catch/finally 구문으로 지정된 func 을 수행합니다.
+     *
+     * @param func 실행할 function
+     * @return 수행한 결과
+     */
     public static <R> Future<R> tryFunctionAsync(final Function<R> func) {
         return tryFunctionAsync(func, null, null, null);
     }
 
+    /**
+     * 비동기 방식으로 try/catch/finally 구문으로 지정된 func 을 수행합니다.
+     *
+     * @param func            실행할 function
+     * @param valueFactory    작업 실패 시에 제공할 값 생성 factory
+     * @param exceptionAction 예외 처리용 action
+     * @param finallyAction   정리 시 수행할 action
+     * @return 수행한 결과
+     */
     public static <R> Future<R> tryFunctionAsync(final Function<R> func,
                                                  final Function<R> valueFactory,
                                                  final Action1<Exception> exceptionAction,
