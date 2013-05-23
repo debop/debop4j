@@ -18,12 +18,15 @@ package kr.debop4j.core.tools;
 
 import kr.debop4j.core.Action;
 import kr.debop4j.core.Action1;
+import kr.debop4j.core.AutoStopwatch;
 import kr.debop4j.core.Function;
 import kr.debop4j.core.parallelism.AsyncTool;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.concurrent.Callable;
 import java.util.concurrent.Future;
+
+import static kr.debop4j.core.Guard.shouldNotBeNull;
 
 /**
  * kr.debop4j.core.tool.With
@@ -272,6 +275,29 @@ public final class With {
                 return (valueFactory != null) ? valueFactory.execute() : null;
             }
         });
+    }
 
+    /**
+     * {@link AutoStopwatch} 를 이용하여, 주어진 action을 수행하는데 들어간 시간을 측정합니다.
+     *
+     * @param action 실행할 action
+     */
+    public static void stopwatch(final Action action) {
+        shouldNotBeNull(action, "action");
+        try (AutoStopwatch sw = new AutoStopwatch()) {
+            action.perform();
+        }
+    }
+
+    /**
+     * {@link AutoStopwatch} 를 이용하여, 주어진 action을 수행하는데 들어간 시간을 측정합니다.
+     *
+     * @param action 실행할 action
+     */
+    public static void stopwatch(final String msg, final Action action) {
+        shouldNotBeNull(action, "action");
+        try (AutoStopwatch sw = new AutoStopwatch(msg)) {
+            action.perform();
+        }
     }
 }
