@@ -36,8 +36,7 @@ public class DynamicAccessorFactory {
     private static final LoadingCache<Class<?>, DynamicAccessor> cache;
 
     static {
-        if (log.isInfoEnabled())
-            log.debug("DynamicAccessor 캐시를 생성합니다.");
+        log.info("DynamicAccessor 캐시를 생성합니다.");
 
         loader = new CacheLoader<Class<?>, DynamicAccessor>() {
             @Override
@@ -49,8 +48,7 @@ public class DynamicAccessorFactory {
 
         cache = CacheBuilder.newBuilder().weakValues().maximumSize(2000).build(loader);
 
-        if (log.isInfoEnabled())
-            log.debug("DynamicAccessor 캐시를 생성했습니다.");
+        log.info("DynamicAccessor 캐시를 생성했습니다.");
     }
 
     @SuppressWarnings("unchecked")
@@ -58,15 +56,12 @@ public class DynamicAccessorFactory {
         try {
             return (DynamicAccessor<T>) cache.get(targetType);
         } catch (ExecutionException e) {
-
             log.error("DynamicAccessor 를 생성하는데 실패했습니다. targetType=" + targetType.getName(), e);
             return null;
         }
     }
 
-    public static void clear() {
-        synchronized (cache) {
-            cache.cleanUp();
-        }
+    public static synchronized void clear() {
+        cache.cleanUp();
     }
 }

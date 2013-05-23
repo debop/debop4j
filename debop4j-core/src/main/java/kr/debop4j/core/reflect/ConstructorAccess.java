@@ -16,7 +16,6 @@
 
 package kr.debop4j.core.reflect;
 
-import kr.debop4j.core.Guard;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.objectweb.asm.ClassWriter;
@@ -24,6 +23,7 @@ import org.objectweb.asm.MethodVisitor;
 
 import java.lang.reflect.Modifier;
 
+import static kr.debop4j.core.Guard.shouldNotBeNull;
 import static org.objectweb.asm.Opcodes.*;
 
 /**
@@ -47,7 +47,7 @@ public abstract class ConstructorAccess<T> {
     /** 지정한 수형의 생성자에 대한 접근자를 생성합니다. */
     @SuppressWarnings("unchecked")
     static public <T> ConstructorAccess<T> get(Class<T> type) {
-        Guard.shouldNotBeNull(type, "type");
+        shouldNotBeNull(type, "type");
         if (log.isTraceEnabled())
             log.trace("수형[{}]의 생성자에 대한 접근자를 조회합니다.", type.getName());
 
@@ -61,6 +61,7 @@ public abstract class ConstructorAccess<T> {
 
         Class accessClass = null;
         AccessClassLoader loader = AccessClassLoader.get(type);
+        shouldNotBeNull(loader, "loader");
 
         synchronized (loader) {
             try {
@@ -109,6 +110,7 @@ public abstract class ConstructorAccess<T> {
         }
     }
 
+    /** 생성자를 추가한다. */
     static private void insertConstructor(ClassWriter cw) {
         MethodVisitor mv = cw.visitMethod(ACC_PUBLIC, "<init>", "()V", null, null);
         mv.visitCode();
@@ -119,6 +121,7 @@ public abstract class ConstructorAccess<T> {
         mv.visitEnd();
     }
 
+    /** 새로운 인스턴스를 추가합니다. */
     static void insertNewInstance(ClassWriter cw, String classNameInternal) {
         MethodVisitor mv = cw.visitMethod(ACC_PUBLIC, "newInstance", "()Ljava/lang/Object;", null, null);
         mv.visitCode();
@@ -130,6 +133,7 @@ public abstract class ConstructorAccess<T> {
         mv.visitEnd();
     }
 
+    /** inner 인스턴스를 추가한다 */
     static void insertNewInstanceInner(ClassWriter cw, String classNameInternal, String enclosingClassNameInternal) {
         MethodVisitor mv = cw.visitMethod(ACC_PUBLIC, "newInstance", "(Ljava/lang/Object;)Ljava/lang/Object;", null, null);
         mv.visitCode();

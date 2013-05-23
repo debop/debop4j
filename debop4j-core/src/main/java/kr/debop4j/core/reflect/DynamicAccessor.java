@@ -19,6 +19,7 @@ package kr.debop4j.core.reflect;
 import com.google.common.collect.Lists;
 import kr.debop4j.core.Guard;
 import kr.debop4j.core.tools.StringTool;
+import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.List;
@@ -32,7 +33,7 @@ import java.util.List;
 @Slf4j
 public class DynamicAccessor<T> {
 
-    private final Class<T> targetType;
+    @Getter private final Class<T> targetType;
     private final ConstructorAccess<T> ctorAccessor;
     private final FieldAccess fieldAccessor;
     private final MethodAccess methodAccessor;
@@ -42,8 +43,8 @@ public class DynamicAccessor<T> {
 
     public DynamicAccessor(Class<T> targetType) {
         Guard.shouldNotBeNull(targetType, "targetType");
-        if (log.isTraceEnabled())
-            log.trace("수형 [{}]에 대한 DynamicAccessor 를 생성합니다...", targetType);
+        if (log.isDebugEnabled())
+            log.debug("수형 [{}]에 대한 DynamicAccessor 를 생성합니다...", targetType);
 
         this.targetType = targetType;
         this.ctorAccessor = ConstructorAccess.get(this.targetType);
@@ -67,12 +68,12 @@ public class DynamicAccessor<T> {
         return (T) ctorAccessor.newInstance(enclosingInstance);
     }
 
-    public String[] getFieldNames() {
-        return fieldAccessor.getFieldNames();
+    public List<String> getFieldNames() {
+        return fieldNames;
     }
 
-    public String[] getMethodNames() {
-        return methodAccessor.getMethodNames();
+    public List<String> getMethodNames() {
+        return methodNames;
     }
 
     public Object getField(Object instance, String fieldName) {

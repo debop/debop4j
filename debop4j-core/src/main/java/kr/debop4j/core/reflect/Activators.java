@@ -17,13 +17,14 @@
 package kr.debop4j.core.reflect;
 
 import com.google.common.collect.Lists;
-import kr.debop4j.core.Guard;
 import kr.debop4j.core.tools.ArrayTool;
 import kr.debop4j.core.tools.StringTool;
 import lombok.extern.slf4j.Slf4j;
 
 import java.lang.reflect.Constructor;
 import java.util.List;
+
+import static kr.debop4j.core.Guard.shouldNotBeNull;
 
 /**
  * 리플렉션을 이용하여, 객체를 생성시키는 Utility Class 입니다.
@@ -36,7 +37,16 @@ public final class Activators {
 
     private Activators() { }
 
+    /**
+     * className에 해당하는 클래스를 인스턴싱합니다.
+     *
+     * @param className 클래스 명
+     * @return 인스턴스
+     */
     public static Object createInstance(String className) {
+        if (log.isTraceEnabled())
+            log.trace("create instance... className=[{}]", className);
+
         try {
             return createInstance(Class.forName(className));
         } catch (Exception e) {
@@ -52,7 +62,7 @@ public final class Activators {
      * @return 지정한 수형의 새로운 인스턴스, 생성 실패시에는 null을 반환합니다.
      */
     public static <T> T createInstance(Class<T> clazz) {
-        Guard.shouldNotBeNull(clazz, "clazz");
+        shouldNotBeNull(clazz, "clazz");
         if (log.isTraceEnabled())
             log.trace("수형 [{}] 의 새로운 인스턴스를 생성합니다...", clazz.getName());
 
@@ -67,9 +77,10 @@ public final class Activators {
 
     @SuppressWarnings("unchecked")
     public static <T> T createInstance(Class<T> clazz, Object... initArgs) {
-        Guard.shouldNotBeNull(clazz, "clazz");
+        shouldNotBeNull(clazz, "clazz");
         if (log.isTraceEnabled())
             log.trace("[{}] 수형의 객체를 생성합니다. initArgs=[{}]", clazz.getName(), StringTool.listToString(initArgs));
+
         if (initArgs == null || initArgs.length == 0)
             return createInstance(clazz);
 
@@ -102,10 +113,18 @@ public final class Activators {
         return null;
     }
 
+    /**
+     * 지정한 수형의 생성자 정보를 반환합니다.
+     *
+     * @param clazz          수형
+     * @param parameterTypes 생성자에 제공할 인자의 수형들
+     * @param <T>            수형
+     * @return 생성자 정보
+     */
     public static <T> Constructor<T> getConstructor(Class<T> clazz, Class<?>... parameterTypes) {
         if (log.isTraceEnabled())
-            log.trace("[{}] 수형의 생성자를 구합니다. parameterTypes=[{}]",
-                      clazz.getName(), StringTool.listToString(parameterTypes));
+            log.trace("[{}] 수형의 생성자를 구합니다. parameterTypes=[{}]", clazz.getName(), StringTool.listToString(parameterTypes));
+
         try {
             return clazz.getDeclaredConstructor(parameterTypes);
         } catch (Exception e) {
