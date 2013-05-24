@@ -31,7 +31,7 @@ public abstract class YearCalendarTimeRange extends CalendarTimeRange {
     private static final long serialVersionUID = -7922671338410846872L;
 
     public YearCalendarTimeRange(ITimePeriod period, ITimeCalendar calendar) {
-        super(period, (calendar != null) ? calendar : TimeCalendar.create());
+        super(period, (calendar != null) ? calendar : TimeCalendar.getDefault());
     }
 
     public int getYearBaseMonth() {

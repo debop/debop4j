@@ -67,7 +67,7 @@ public abstract class TestTool {
     }
 
     /** 지정된 횟수만큼 멀티스레드를 이용하여 작업을 수행합니다. */
-    @SuppressWarnings( "unchecked" )
+    @SuppressWarnings("unchecked")
     public static <T> void runTasks(int count, Callable<T> callables) {
         ExecutorService executor = newExecutorService();
         try {
@@ -90,17 +90,17 @@ public abstract class TestTool {
     }
 
     /** 지정된 횟수만큼 멀티스레드를 이용하여 작업을 수행합니다. */
-    @SuppressWarnings( "unchecked" )
+    @SuppressWarnings("unchecked")
     public static void runTasks(int count, final Action1<Integer> action) {
         ExecutorService executor = newExecutorService();
         final CountDownLatch latch = new CountDownLatch(count);
         try {
-
             for (int i = 0; i < count; i++) {
                 final int index = i;
                 executor.execute(new Runnable() {
                     @Override
                     public void run() {
+                        if (log.isTraceEnabled()) log.trace("run task... index=[{}]", index);
                         action.perform(index);
                         latch.countDown();
                     }

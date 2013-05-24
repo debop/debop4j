@@ -59,7 +59,7 @@ public class CalendarDateAdd extends DateAdd {
     @Getter private final List<DayHourRange> workingDayHours = new ArrayList<>();
 
     public CalendarDateAdd() {
-        this(TimeCalendar.create());
+        this(TimeCalendar.getDefault());
     }
 
     public CalendarDateAdd(ITimeCalendar calendar) {
@@ -197,7 +197,7 @@ public class CalendarDateAdd extends DateAdd {
         WeekRange next = null;
 
         if (getExcludePeriods().size() == 0) {
-            next = current.getNextWeek();
+            next = current.nextWeek();
         } else {
             TimeRange limits = new TimeRange(current.getEnd().plusMillis(1), TimeSpec.MaxPeriodTime);
             TimeGapCalculator<TimeRange> gapCalculator = new TimeGapCalculator<>(getTimeCalendar());
@@ -225,7 +225,7 @@ public class CalendarDateAdd extends DateAdd {
         WeekRange previous = null;
 
         if (getExcludePeriods().size() == 0) {
-            previous = current.getPreviousWeek();
+            previous = current.previousWeek();
         } else {
             TimeRange limits = new TimeRange(TimeSpec.MinPeriodTime, current.getStart().plusMillis(-1));
             TimeGapCalculator<TimeRange> gapCalculator = new TimeGapCalculator<>(getTimeCalendar());

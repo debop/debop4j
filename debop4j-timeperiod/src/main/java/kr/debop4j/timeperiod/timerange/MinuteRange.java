@@ -69,11 +69,11 @@ public class MinuteRange extends MinuteTimeRange {
 
     public int getMinuteOfHour() { return getStartMinuteOfHour(); }
 
-    public MinuteRange getPreviousMinute() {
+    public MinuteRange previousMinute() {
         return addMinutes(-1);
     }
 
-    public MinuteRange getNextMinute() {
+    public MinuteRange nextMinute() {
         return addMinutes(1);
     }
 

@@ -71,11 +71,11 @@ public class QuarterRange extends QuarterTimeRange {
         return getStartQuarter();
     }
 
-    public QuarterRange getPreviousQuarter() {
+    public QuarterRange previousQuarter() {
         return addQuarters(-1);
     }
 
-    public QuarterRange getNextQuarter() {
+    public QuarterRange nextQuarter() {
         return addQuarters(1);
     }
 

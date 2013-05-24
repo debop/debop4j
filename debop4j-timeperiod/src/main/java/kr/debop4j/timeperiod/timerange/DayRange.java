@@ -72,11 +72,11 @@ public class DayRange extends DayTimeRange {
 
     public DayOfWeek getDayOfWeek() { return getStartDayOfWeek(); }
 
-    public DayRange getPreviousDay() {
+    public DayRange previousDay() {
         return addDays(-1);
     }
 
-    public DayRange getNextDay() {
+    public DayRange nextDay() {
         return addDays(1);
     }
 

@@ -36,7 +36,7 @@ public class TimesTest extends TimePeriodTestBase {
 
     @Test
     public void asStringTest() {
-        ITimePeriod period = new TimeRange(date, nowTime);
+        ITimePeriod period = new TimeRange(testDate, testNow);
         String periodString = Times.asString(period);
 
         log.debug("periodString=[{}]", periodString);
@@ -45,14 +45,14 @@ public class TimesTest extends TimePeriodTestBase {
 
     @Test
     public void toDateTimeTest() {
-        String dateString = date.toString();
+        String dateString = testDate.toString();
         log.debug("dateString=[{}]", dateString);
 
         DateTime parsedTime = Times.toDateTime(dateString);
 
-        assertThat(parsedTime.isEqual(date)).isTrue();
+        assertThat(parsedTime.isEqual(testDate)).isTrue();
 
-        parsedTime = Times.toDateTime("", nowTime);
-        assertThat(parsedTime).isEqualTo(nowTime);
+        parsedTime = Times.toDateTime("", testNow);
+        assertThat(parsedTime).isEqualTo(testNow);
     }
 }

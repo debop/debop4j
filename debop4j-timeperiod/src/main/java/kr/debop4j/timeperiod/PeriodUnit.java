@@ -25,9 +25,6 @@ import lombok.Getter;
  * @since 13. 5. 11. 오전 12:02
  */
 public enum PeriodUnit {
-
-    /** 알 수 없음 */
-    Unkonwn("Unknown"),
     /** 년 */
     Year("Year"),
     /** 반기 */

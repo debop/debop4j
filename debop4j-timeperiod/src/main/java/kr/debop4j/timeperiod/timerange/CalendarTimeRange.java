@@ -38,7 +38,7 @@ public class CalendarTimeRange extends TimeRange implements ICalendarTimeRange {
 
     public static TimeRange toCalendarTimeRange(ITimePeriod period, ITimePeriodMapper mapper) {
         assert period != null;
-        if (mapper == null) mapper = TimeCalendar.create();
+        if (mapper == null) mapper = TimeCalendar.getDefault();
 
         DateTime mappedStart = mapper.mapStart(period.getStart());
         DateTime mappedEnd = mapper.mapEnd(period.getEnd());
@@ -46,9 +46,8 @@ public class CalendarTimeRange extends TimeRange implements ICalendarTimeRange {
         Times.assertValidPeriod(mappedStart, mappedEnd);
         TimeRange mapped = new TimeRange(mappedStart, mappedEnd);
 
-        if (log.isDebugEnabled())
-            log.debug("TimeCalendar 기준의 기간으로 매핑했습니다. period=[{}], mapper=[{}], mapped=[{}]", period, mapper, mapped);
-
+//        if (log.isTraceEnabled())
+//            log.trace("TimeCalendar 기준의 기간으로 매핑했습니다. period=[{}], mapper=[{}], mapped=[{}]", period, mapper, mapped);
         return mapped;
     }
 
@@ -76,7 +75,7 @@ public class CalendarTimeRange extends TimeRange implements ICalendarTimeRange {
 
     public CalendarTimeRange(ITimePeriod period, ITimeCalendar timeCalendar) {
         super(toCalendarTimeRange(period, timeCalendar));
-        this.timeCalendar = (timeCalendar != null) ? timeCalendar : TimeCalendar.create();
+        this.timeCalendar = (timeCalendar != null) ? timeCalendar : TimeCalendar.getDefault();
     }
 
     // endregion
@@ -94,7 +93,7 @@ public class CalendarTimeRange extends TimeRange implements ICalendarTimeRange {
 
     public int getStartMinuteOfHour() { return getStart().getMinuteOfHour(); }
 
-    public int getEndYear() { return getStart().getYear(); }
+    public int getEndYear() { return getEnd().getYear(); }
 
     public int getEndMonthOfYear() { return getEnd().getMonthOfYear(); }
 

@@ -66,11 +66,11 @@ public class MonthRange extends MonthTimeRange {
         return Times.getDaysInMonth(getStartYear(), getStartMonthOfYear());
     }
 
-    public MonthRange getPreviousMonth() {
+    public MonthRange previousMonth() {
         return addMonths(-1);
     }
 
-    public MonthRange getNextMonth() {
+    public MonthRange nextMonth() {
         return addMonths(1);
     }
 

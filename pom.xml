@@ -118,6 +118,11 @@
             <name>Lambdaj Repository</name>
             <url>http://lambdaj.googlecode.com/svn/repo/releases/</url>
         </repository>
+        <repository>
+            <id>maven2-repository.dev.java.net</id>
+            <name>Java.net Repository for Maven</name>
+            <url>http://download.java.net/maven/2/</url>
+        </repository>
     </repositories>
 
     <build>
@@ -229,6 +234,8 @@
         <javaee.api.version>6.0</javaee.api.version>
         <javax.servlet.jstl.version>1.2</javax.servlet.jstl.version>
         <taglibs.standard.version>1.1.2</taglibs.standard.version>
+
+        <jyield.version>0.0.6</jyield.version>
 
         <google.guava.version>14.0.1</google.guava.version>
         <google.gson.version>2.2.2</google.gson.version>
@@ -459,6 +466,13 @@
                 <artifactId>guava-testlib</artifactId>
                 <version>${google.guava.version}</version>
                 <scope>test</scope>
+            </dependency>
+
+            <!-- jYield -->
+            <dependency>
+                <groupId>com.googlecode</groupId>
+                <artifactId>jyield</artifactId>
+                <version>${jyield.version}</version>
             </dependency>
 
             <!-- GSON -->
@@ -1103,6 +1117,12 @@
             <groupId>com.google.guava</groupId>
             <artifactId>guava-testlib</artifactId>
             <scope>test</scope>
+        </dependency>
+
+        <!-- jYield -->
+        <dependency>
+            <groupId>com.googlecode</groupId>
+            <artifactId>jyield</artifactId>
         </dependency>
 
         <!-- Reflections -->

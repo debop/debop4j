@@ -49,7 +49,7 @@ public class CalendarDateDiff {
     @Getter private final ITimeCalendar calendar;
 
     public CalendarDateDiff() {
-        this(TimeCalendar.createEmptyOffset());
+        this(TimeCalendar.getEmptyOffset());
     }
 
     public CalendarDateDiff(ITimeCalendar calendar) {

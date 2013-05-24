@@ -46,41 +46,41 @@ public class DateDiff extends ValueObjectBase implements Serializable {
     @Getter private final Duration difference;
     @Getter private final ITimeCalendar timeCalendar;
 
-    @Getter( lazy = true ) private final int years = calcYears();
-    @Getter( lazy = true ) private final int quarters = calcQuarters();
-    @Getter( lazy = true ) private final int months = calcMonths();
-    @Getter( lazy = true ) private final int weeks = calcWeeks();
-    @Getter( lazy = true ) private final int days = (int) Math.round(roundEx(getDifference().getStandardDays()));
-    @Getter( lazy = true ) private final int hours = (int) Math.round(roundEx(getDifference().getStandardHours()));
-    @Getter( lazy = true ) private final int minutes = (int) Math.round(roundEx(getDifference().getStandardMinutes()));
-    @Getter( lazy = true ) private final int seconds = (int) Math.round(roundEx(getDifference().getStandardSeconds()));
+    @Getter(lazy = true) private final int years = calcYears();
+    @Getter(lazy = true) private final int quarters = calcQuarters();
+    @Getter(lazy = true) private final int months = calcMonths();
+    @Getter(lazy = true) private final int weeks = calcWeeks();
+    @Getter(lazy = true) private final int days = (int) Math.round(roundEx(getDifference().getStandardDays()));
+    @Getter(lazy = true) private final int hours = (int) Math.round(roundEx(getDifference().getStandardHours()));
+    @Getter(lazy = true) private final int minutes = (int) Math.round(roundEx(getDifference().getStandardMinutes()));
+    @Getter(lazy = true) private final int seconds = (int) Math.round(roundEx(getDifference().getStandardSeconds()));
 
-    @Getter( lazy = true ) private final int elapsedYears = getYears();
-    @Getter( lazy = true ) private final int elapsedQuarters = getQuarters();
-    @Getter( lazy = true ) private final int elapsedMonths = getMonths() - getElapsedYears() * TimeSpec.MonthsPerYear;
+    @Getter(lazy = true) private final int elapsedYears = getYears();
+    @Getter(lazy = true) private final int elapsedQuarters = getQuarters();
+    @Getter(lazy = true) private final int elapsedMonths = getMonths() - getElapsedYears() * TimeSpec.MonthsPerYear;
 
-    @Getter( lazy = true )
+    @Getter(lazy = true)
     private final DateTime elapsedStartDays = getStart().plusYears(getElapsedYears()).plusMonths(getElapsedMonths());
-    @Getter( lazy = true )
+    @Getter(lazy = true)
     private final int elapsedDays = (int) new Duration(getElapsedStartDays(), getEnd()).getStandardDays();
 
-    @Getter( lazy = true )
+    @Getter(lazy = true)
     private final DateTime elapsedStartHours = getStart().plusYears(getElapsedYears())
             .plusMonths(getElapsedMonths()).plusDays(getElapsedDays());
-    @Getter( lazy = true )
+    @Getter(lazy = true)
     private final int elapsedHours = (int) new Duration(getElapsedStartHours(), getEnd()).getStandardHours();
 
-    @Getter( lazy = true )
+    @Getter(lazy = true)
     private final DateTime elapsedStartMinutes = getStart().plusYears(getElapsedYears())
             .plusMonths(getElapsedMonths()).plusDays(getElapsedDays()).plusHours(getElapsedHours());
-    @Getter( lazy = true )
+    @Getter(lazy = true)
     private final int elapsedMinutes = (int) new Duration(getElapsedStartMinutes(), getEnd()).getStandardMinutes();
 
-    @Getter( lazy = true )
+    @Getter(lazy = true)
     private final DateTime elapsedStartSeconds = getStart().plusYears(getElapsedYears())
             .plusMonths(getElapsedMonths()).plusDays(getElapsedDays())
             .plusHours(getElapsedHours()).plusMinutes(getElapsedMinutes());
-    @Getter( lazy = true )
+    @Getter(lazy = true)
     private final int elapsedSeconds = (int) new Duration(getElapsedStartSeconds(), getEnd()).getStandardSeconds();
 
 
@@ -93,7 +93,7 @@ public class DateDiff extends ValueObjectBase implements Serializable {
     }
 
     public DateDiff(DateTime start, DateTime end) {
-        this(start, end, TimeCalendar.create());
+        this(start, end, TimeCalendar.getDefault());
     }
 
     public DateDiff(DateTime start, DateTime end, ITimeCalendar timeCalendar) {
@@ -101,7 +101,7 @@ public class DateDiff extends ValueObjectBase implements Serializable {
         this.start = start;
         this.end = end;
         this.difference = new Duration(start, end);
-        this.timeCalendar = (timeCalendar != null) ? timeCalendar : TimeCalendar.create();
+        this.timeCalendar = (timeCalendar != null) ? timeCalendar : TimeCalendar.getDefault();
     }
 
     public boolean isEmpty() {

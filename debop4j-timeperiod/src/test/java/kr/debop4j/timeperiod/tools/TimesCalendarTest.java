@@ -16,14 +16,12 @@
 
 package kr.debop4j.timeperiod.tools;
 
-import kr.debop4j.timeperiod.Halfyear;
-import kr.debop4j.timeperiod.Quarter;
-import kr.debop4j.timeperiod.TimePeriodTestBase;
-import kr.debop4j.timeperiod.YearAndHalfyear;
+import kr.debop4j.timeperiod.*;
 import lombok.extern.slf4j.Slf4j;
 import org.joda.time.DateTime;
 import org.junit.Test;
 
+import static kr.debop4j.timeperiod.DayOfWeek.*;
 import static org.fest.assertions.Assertions.assertThat;
 
 /**
@@ -41,7 +39,7 @@ public class TimesCalendarTest extends TimePeriodTestBase {
         assertThat(Times.getYearOf(new DateTime(2000, 4, 1, 0, 0))).isEqualTo(2000);
         assertThat(Times.getYearOf(2000, 12)).isEqualTo(2000);
 
-        assertThat(Times.getYearOf(nowTime)).isEqualTo(nowTime.getYear());
+        assertThat(Times.getYearOf(testNow)).isEqualTo(testNow.getYear());
     }
 
     @Test
@@ -168,5 +166,87 @@ public class TimesCalendarTest extends TimePeriodTestBase {
     public void nextMonthTest() {
         for (int i = 1; i <= TimeSpec.MonthsPerYear; i++)
             assertThat(Times.nextMonth(2000, i).getMonthOfYear()).isEqualTo(i % TimeSpec.MonthsPerYear + 1);
+    }
+
+    @Test
+    public void prevMonthTest() {
+        for (int i = 1; i <= TimeSpec.MonthsPerYear; i++)
+            assertThat(Times.previousMonth(2000, i).getMonthOfYear()).isEqualTo((i - 1) <= 0 ? TimeSpec.MonthsPerYear + i - 1 : i - 1);
+    }
+
+    @Test
+    public void addMonthTest() {
+
+        for (int i = 1; i <= TimeSpec.MonthsPerYear; i++)
+            assertThat(Times.addMonth(2000, i, 1).getMonthOfYear()).isEqualTo(i % TimeSpec.MonthsPerYear + 1);
+
+        for (int i = 1; i <= TimeSpec.MonthsPerYear; i++)
+            assertThat(Times.addMonth(2000, i, -1).getMonthOfYear()).isEqualTo((i - 1) <= 0 ? TimeSpec.MonthsPerYear + i - 1 : i - 1);
+
+        final int threeYears = 3 * TimeSpec.MonthsPerYear;
+
+        for (int i = 1; i <= threeYears; i++) {
+            YearAndMonth ym = Times.addMonth(2013, 1, i);
+            assertThat(ym.getYear()).isEqualTo(2013 + i / TimeSpec.MonthsPerYear);
+            assertThat(ym.getMonthOfYear()).isEqualTo(i % TimeSpec.MonthsPerYear + 1);
+        }
+    }
+
+    @Test
+    public void weekOfYearTest() {
+
+        ITimePeriod period = new TimeRange(Times.asDate(2007, 12, 31), Times.asDate(2009, 12, 31));
+
+        for (ITimePeriod p : Times.foreachDays(period)) {
+            DateTime moment = p.getStart();
+            YearAndWeek expected = new YearAndWeek(moment.getWeekyear(), moment.getWeekOfWeekyear());
+            YearAndWeek actual = Times.getWeekOfYear(moment);
+
+            assertThat(actual).isEqualTo(expected);
+        }
+    }
+
+    @Test
+    public void dayStartTest() {
+        assertThat(Times.dayStart(testDate)).isEqualTo(testDate.withTimeAtStartOfDay());
+        assertThat(Times.dayStart(testDate).getMillisOfDay()).isEqualTo(0);
+
+        assertThat(Times.dayStart(testNow)).isEqualTo(testNow.withTimeAtStartOfDay());
+        assertThat(Times.dayStart(testNow).getMillisOfDay()).isEqualTo(0);
+    }
+
+    @Test
+    public void nextDayOfWeekTest() {
+        assertThat(Times.nextDayOfWeek(Monday)).isEqualTo(ThuesDay);
+        assertThat(Times.nextDayOfWeek(ThuesDay)).isEqualTo(WednesDay);
+        assertThat(Times.nextDayOfWeek(WednesDay)).isEqualTo(ThursDay);
+        assertThat(Times.nextDayOfWeek(ThursDay)).isEqualTo(FriDay);
+        assertThat(Times.nextDayOfWeek(FriDay)).isEqualTo(Saturday);
+        assertThat(Times.nextDayOfWeek(Saturday)).isEqualTo(Sunday);
+        assertThat(Times.nextDayOfWeek(Sunday)).isEqualTo(Monday);
+    }
+
+    @Test
+    public void previousDayOfWeekTest() {
+        assertThat(Times.previousDayOfWeek(Monday)).isEqualTo(Sunday);
+        assertThat(Times.previousDayOfWeek(ThuesDay)).isEqualTo(Monday);
+        assertThat(Times.previousDayOfWeek(WednesDay)).isEqualTo(ThuesDay);
+        assertThat(Times.previousDayOfWeek(ThursDay)).isEqualTo(WednesDay);
+        assertThat(Times.previousDayOfWeek(FriDay)).isEqualTo(ThursDay);
+        assertThat(Times.previousDayOfWeek(Saturday)).isEqualTo(FriDay);
+        assertThat(Times.previousDayOfWeek(Sunday)).isEqualTo(Saturday);
+    }
+
+    @Test
+    public void addDayOfWeektest() {
+        assertThat(Times.addDayOfWeek(Monday, 6)).isEqualTo(Sunday);
+        assertThat(Times.addDayOfWeek(Monday, 7)).isEqualTo(Monday);
+        assertThat(Times.addDayOfWeek(Monday, 8)).isEqualTo(ThuesDay);
+
+        assertThat(Times.addDayOfWeek(Monday, 14)).isEqualTo(Monday);
+        assertThat(Times.addDayOfWeek(ThuesDay, 14)).isEqualTo(ThuesDay);
+
+        assertThat(Times.addDayOfWeek(Monday, -14)).isEqualTo(Monday);
+        assertThat(Times.addDayOfWeek(ThuesDay, -14)).isEqualTo(ThuesDay);
     }
 }

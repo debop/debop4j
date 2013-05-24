@@ -85,11 +85,11 @@ public class WeekRange extends WeekTimeRange {
         return getTimeCalendar().getYear(getFirstDayOfWeek()) != getTimeCalendar().getYear(getLastDayOfWeek());
     }
 
-    public WeekRange getPreviousWeek() {
+    public WeekRange previousWeek() {
         return addWeeks(-1);
     }
 
-    public WeekRange getNextWeek() {
+    public WeekRange nextWeek() {
         return addWeeks(1);
     }
 

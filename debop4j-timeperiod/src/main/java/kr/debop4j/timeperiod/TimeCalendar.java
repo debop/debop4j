@@ -45,12 +45,12 @@ public class TimeCalendar extends ValueObjectBase implements ITimeCalendar {
     // region << Static Methods >>
 
     /** 기본 {@link TimeCalendar} 를 반환합니다. */
-    public static TimeCalendar create() {
-        return create(Locale.getDefault());
+    public static TimeCalendar getDefault() {
+        return getDefault(Locale.getDefault());
     }
 
     /** 기본 {@link TimeCalendar} 를 반환합니다. */
-    public static TimeCalendar create(Locale locale) {
+    public static TimeCalendar getDefault(Locale locale) {
         TimeCalendarConfig config = new TimeCalendarConfig(locale);
         config.setStartOffset(DefaultStartOffset);
         config.setEndOffset(DefaultEndOffset);
@@ -59,12 +59,12 @@ public class TimeCalendar extends ValueObjectBase implements ITimeCalendar {
     }
 
     /** Offset이 없는 {@link TimeCalendar}를 반환합니다. */
-    public static TimeCalendar createEmptyOffset() {
-        return createEmptyOffset(Locale.getDefault());
+    public static TimeCalendar getEmptyOffset() {
+        return getEmptyOffset(Locale.getDefault());
     }
 
     /** Offset이 없는 {@link TimeCalendar}를 반환합니다. */
-    public static TimeCalendar createEmptyOffset(Locale locale) {
+    public static TimeCalendar getEmptyOffset(Locale locale) {
         TimeCalendarConfig config = new TimeCalendarConfig(locale);
         config.setStartOffset(TimeSpec.EmptyDuration);
         config.setEndOffset(TimeSpec.EmptyDuration);
@@ -86,9 +86,9 @@ public class TimeCalendar extends ValueObjectBase implements ITimeCalendar {
     public TimeCalendar(TimeCalendarConfig config) {
         shouldNotBeNull(config, "config");
         if (config.getStartOffset() != null)
-            shouldBe(config.getStartOffset().compareTo(Duration.ZERO) >= 0, "startOffset should be positive or zero");
+            shouldBePositiveOrZeroNumber(config.getStartOffset().getMillis(), "startOffset");
         if (config.getEndOffset() != null)
-            shouldBe(config.getEndOffset().compareTo(Duration.ZERO) >= 0, "endOffset should be positive or zero.");
+            shouldBeNegativeOrZeroNumber(config.getEndOffset().getMillis(), "endOffset");
 
         this.locale = firstNotNull(config.getLocale(), Locale.getDefault());
         this.startOffset = firstNotNull(config.getStartOffset(), DefaultStartOffset);
@@ -98,7 +98,7 @@ public class TimeCalendar extends ValueObjectBase implements ITimeCalendar {
 
     @Override
     public int getYear(DateTime time) {
-        return Times.getYearOf(time, this);
+        return time.getYear();
     }
 
     @Override

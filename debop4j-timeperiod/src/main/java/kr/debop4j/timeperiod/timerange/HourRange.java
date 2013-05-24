@@ -68,11 +68,11 @@ public class HourRange extends HourTimeRange {
 
     public int getHourOfDay() { return getStartHourOfDay(); }
 
-    public HourRange getPreviousHour() {
+    public HourRange previousHour() {
         return addHours(-1);
     }
 
-    public HourRange getNextHour() {
+    public HourRange nextHour() {
         return addHours(1);
     }
 

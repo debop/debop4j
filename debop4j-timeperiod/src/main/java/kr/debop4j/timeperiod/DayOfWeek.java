@@ -55,7 +55,7 @@ public enum DayOfWeek {
             case 6:
                 return Saturday;
             case 7:
-                return Saturday;
+                return Sunday;
         }
         throw new IllegalArgumentException("요일에 해당하는 숫자가 아닙니다. (1~7), dayOfWeek=" + dayOfWeek);
     }
