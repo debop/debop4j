@@ -50,10 +50,11 @@ public class HourRangeCollection extends HourTimeRange {
     }
 
     public List<HourRange> getHours() {
-        DateTime startHour = Times.trimToHour(getStart(), getStartHourOfDay());
+        DateTime startHour = Times.trimToMinute(getStart());
 
-        List<HourRange> hours = Lists.newArrayListWithCapacity(getHourCount());
-        for (int h = 0; h < getHourCount(); h++)
+        int hourCount = getHourCount();
+        List<HourRange> hours = Lists.newArrayListWithCapacity(hourCount);
+        for (int h = 0; h < hourCount; h++)
             hours.add(new HourRange(startHour.plusHours(h), getTimeCalendar()));
 
         return hours;

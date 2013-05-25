@@ -18,6 +18,7 @@ package kr.debop4j.timeperiod.timerange;
 
 import com.google.common.base.Objects;
 import com.google.common.collect.Lists;
+import kr.debop4j.core.Guard;
 import kr.debop4j.core.tools.HashTool;
 import kr.debop4j.timeperiod.*;
 import kr.debop4j.timeperiod.tools.TimeSpec;
@@ -57,6 +58,8 @@ public abstract class MonthTimeRange extends CalendarTimeRange {
 
     public MonthTimeRange(int year, int monthOfYear, int monthCount, ITimeCalendar calendar) {
         super(getPeriodOf(year, monthOfYear, monthCount), calendar);
+        Guard.shouldBePositiveNumber(monthCount, "monthCount");
+
         this.monthCount = monthCount;
 
         YearAndMonth ym = Times.addMonth(year, monthOfYear, monthCount - 1);
@@ -95,6 +98,7 @@ public abstract class MonthTimeRange extends CalendarTimeRange {
     }
 
     private static ITimePeriod getPeriodOf(int year, int month, int monthCount) {
+        assert monthCount > 0;
         DateTime start = new DateTime(year, month, 1, 0, 0);
         return new TimeRange(start, start.plusMonths(monthCount));
     }

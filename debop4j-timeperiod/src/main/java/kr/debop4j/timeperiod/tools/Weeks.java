@@ -72,7 +72,7 @@ public abstract class Weeks {
 
     /** 해당년도의 마지막 주차를 산정합니다. */
     public static YearAndWeek getEndYearAndWeek(int year, ITimeCalendar timeCalendar) {
-        return new YearAndWeek(Times.endTimeOfYear(year));
+        return new YearAndWeek(Times.asDate(year, 12, 28));
     }
 
     public static WeekRange getWeekRange(YearAndWeek yearAndWeek) {
@@ -118,10 +118,9 @@ public abstract class Weeks {
 
     public static YearAndWeek addWeekOfYears(YearAndWeek yearAndWeek, int weeks, ITimeCalendar timeCalendar) {
         Guard.shouldNotBeNull(yearAndWeek, "yearAndWeek");
-        Guard.shouldNotBeNull(timeCalendar, "timeCalendar");
 
-        if (isDebugEnabled())
-            log.debug("주차 연산을 수행합니다. year=[{}], weekOfYear=[{}], weeks=[{}], timeCalendar=[{}]",
+        if (isTraceEnabled())
+            log.trace("주차 연산을 수행합니다. year=[{}], weekOfYear=[{}], weeks=[{}], timeCalendar=[{}]",
                       yearAndWeek.getYear(), yearAndWeek.getWeekOfYear(), weeks, timeCalendar);
 
         YearAndWeek result = new YearAndWeek(yearAndWeek.getYear(), yearAndWeek.getWeekOfYear());
@@ -133,17 +132,17 @@ public abstract class Weeks {
                 ? plusWeeks(yearAndWeek, weeks, timeCalendar)
                 : minusWeeks(yearAndWeek, weeks, timeCalendar);
 
-        if (isDebugEnabled())
-            log.debug("주차 연산을 수행합니다. year=[{}], weekOfYear=[{}], weeks=[{}], result=[{}]",
+        if (isTraceEnabled())
+            log.trace("주차 연산을 수행했습니다. year=[{}], weekOfYear=[{}], weeks=[{}], result=[{}]",
                       yearAndWeek.getYear(), yearAndWeek.getWeekOfYear(), weeks, result);
 
         return result;
     }
 
     private static YearAndWeek plusWeeks(YearAndWeek yearAndWeek, int weeks, ITimeCalendar timeCalendar) {
-        YearAndWeek result = yearAndWeek;
-
+        YearAndWeek result = new YearAndWeek(yearAndWeek);
         weeks += result.getWeekOfYear();
+
         if (weeks < getEndYearAndWeek(result.getYear(), timeCalendar).getWeekOfYear()) {
             result.setWeekOfYear(weeks);
             return result;
@@ -162,7 +161,7 @@ public abstract class Weeks {
     }
 
     private static YearAndWeek minusWeeks(YearAndWeek yearAndWeek, int weeks, ITimeCalendar timeCalendar) {
-        YearAndWeek result = yearAndWeek;
+        YearAndWeek result = new YearAndWeek(yearAndWeek);
 
         weeks += result.getWeekOfYear();
         if (weeks == 0) {

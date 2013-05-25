@@ -27,6 +27,8 @@ import org.joda.time.DateTime;
 
 import java.util.List;
 
+import static kr.debop4j.core.Guard.shouldBePositiveNumber;
+
 /**
  * 반기(Halfyear) 단위의 기간을 표현합니다.
  *
@@ -39,6 +41,7 @@ public abstract class HalfyearTimeRange extends YearCalendarTimeRange {
 
     public HalfyearTimeRange(int startYear, Halfyear startHalfyear, int halfyearCount, ITimeCalendar calendar) {
         super(getPeriodOf(startYear, startHalfyear, halfyearCount), calendar);
+        shouldBePositiveNumber(halfyearCount, "halfyearCount");
 
         this.startYear = startYear;
         this.startHalfyear = startHalfyear;
@@ -68,19 +71,19 @@ public abstract class HalfyearTimeRange extends YearCalendarTimeRange {
         List<QuarterRange> quarters = Lists.newArrayListWithCapacity(quarterCount);
         for (int q = 0; q < quarterCount; q++) {
             int targetQuarter = (startQuarter + q) % TimeSpec.QuartersPerYear;
-            int year = 1 + (targetQuarter / TimeSpec.QuartersPerYear);
+            int year = startYear + (targetQuarter / TimeSpec.QuartersPerYear);
             quarters.add(new QuarterRange(year, Quarter.valueOf(targetQuarter + 1), getTimeCalendar()));
         }
         return quarters;
     }
 
     public List<MonthRange> getMonths() {
-        DateTime baseMonth = new DateTime(getStartYear(), 1, 1, 0, 0);
+        DateTime startMonth = Times.asDate(getStartYear(), 1, 1);
         int monthCount = getHalfyearCount() * TimeSpec.MonthsPerHalfyear;
 
         List<MonthRange> months = Lists.newArrayListWithCapacity(monthCount);
         for (int m = 0; m < monthCount; m++) {
-            months.add(new MonthRange(baseMonth.plusMonths(m), getTimeCalendar()));
+            months.add(new MonthRange(startMonth.plusMonths(m), getTimeCalendar()));
         }
         return months;
     }
@@ -101,9 +104,9 @@ public abstract class HalfyearTimeRange extends YearCalendarTimeRange {
     }
 
     private static TimeRange getPeriodOf(int year, Halfyear halfyear, int halfyearCount) {
-        assert halfyearCount >= 0;
+        assert halfyearCount > 0;
 
-        DateTime yearStart = new DateTime(year, 1, 1, 0, 0);
+        DateTime yearStart = Times.startTimeOfYear(year);
         DateTime start = yearStart.plusMonths((halfyear.getValue() - 1) * TimeSpec.MonthsPerHalfyear);
         DateTime end = start.plusMonths(halfyearCount * TimeSpec.MonthsPerHalfyear);
 

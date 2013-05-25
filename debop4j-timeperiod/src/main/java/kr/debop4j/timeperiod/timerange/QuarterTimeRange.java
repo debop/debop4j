@@ -18,6 +18,7 @@ package kr.debop4j.timeperiod.timerange;
 
 import com.google.common.base.Objects;
 import com.google.common.collect.Lists;
+import kr.debop4j.core.Guard;
 import kr.debop4j.core.tools.HashTool;
 import kr.debop4j.timeperiod.*;
 import kr.debop4j.timeperiod.tools.TimeSpec;
@@ -47,6 +48,7 @@ public abstract class QuarterTimeRange extends YearCalendarTimeRange {
 
     public QuarterTimeRange(int startYear, Quarter startQuarter, int quarterCount, ITimeCalendar calendar) {
         super(getPeriodOf(startYear, startQuarter, quarterCount, calendar), calendar);
+        Guard.shouldBePositiveNumber(quarterCount, "quarterCount");
 
         this.startYear = startYear;
         this.startQuarter = startQuarter;

@@ -18,6 +18,7 @@ package kr.debop4j.timeperiod.timerange;
 
 import com.google.common.base.Objects;
 import com.google.common.collect.Lists;
+import kr.debop4j.core.Guard;
 import kr.debop4j.core.tools.HashTool;
 import kr.debop4j.timeperiod.Halfyear;
 import kr.debop4j.timeperiod.ITimeCalendar;
@@ -47,6 +48,8 @@ public class YearTimeRange extends YearCalendarTimeRange {
 
     public YearTimeRange(int startYear, int yearCount, ITimeCalendar calendar) {
         super(getPeriodOf(startYear, yearCount), calendar);
+        Guard.shouldBePositiveNumber(yearCount, "yearCount");
+
         this.yearCount = yearCount;
     }
 
@@ -99,7 +102,7 @@ public class YearTimeRange extends YearCalendarTimeRange {
     }
 
     private static TimeRange getPeriodOf(int year, int yearCount) {
-        assert yearCount >= 0;
+        assert yearCount > 0;
 
         DateTime startYear = new DateTime(year, 1, 1, 0, 0);
         return new TimeRange(startYear, startYear.plusYears(yearCount));

@@ -28,6 +28,8 @@ import org.joda.time.DateTime;
 
 import java.util.List;
 
+import static kr.debop4j.core.Guard.shouldBePositiveNumber;
+
 /**
  * 시간(Hour) 단위로 기간을 표현합니다. (예: 5시 ~ 10시)
  *
@@ -54,6 +56,7 @@ public abstract class HourTimeRange extends CalendarTimeRange {
 
     protected HourTimeRange(int year, int monthOfYear, int dayOfMonth, int hourOfDay, int hourCount, ITimeCalendar calendar) {
         super(getPeriodOf(year, monthOfYear, dayOfMonth, hourOfDay, hourCount), calendar);
+        shouldBePositiveNumber(hourCount, "hourCount");
 
         this.hourCount = hourCount;
         this.endHour = getStart().plusHours(hourCount).getHourOfDay();
@@ -81,6 +84,8 @@ public abstract class HourTimeRange extends CalendarTimeRange {
     }
 
     private static TimeRange getPeriodOf(int year, int month, int day, int hour, int hourCount) {
+        assert hourCount > 0;
+
         DateTime start = new DateTime(year, month, day, hour, 0, 0);
         DateTime end = start.plusHours(hourCount);
 

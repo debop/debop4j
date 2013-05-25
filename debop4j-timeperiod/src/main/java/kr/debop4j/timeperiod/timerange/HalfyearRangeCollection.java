@@ -36,7 +36,7 @@ public class HalfyearRangeCollection extends HalfyearTimeRange {
     private static final long serialVersionUID = 425689128251222210L;
 
     public HalfyearRangeCollection(DateTime moment, int halfyearCount) {
-        this(moment, halfyearCount, new TimeCalendar());
+        this(moment, halfyearCount, TimeCalendar.getDefault());
     }
 
     public HalfyearRangeCollection(DateTime moment, int halfyearCount, ITimeCalendar timeCalendar) {
@@ -47,7 +47,7 @@ public class HalfyearRangeCollection extends HalfyearTimeRange {
     }
 
     public HalfyearRangeCollection(int year, Halfyear halfyear, int halfyearCount) {
-        this(year, halfyear, halfyearCount, new TimeCalendar());
+        this(year, halfyear, halfyearCount, TimeCalendar.getDefault());
     }
 
     public HalfyearRangeCollection(int year, Halfyear halfyear, int halfyearCount, ITimeCalendar timeCalendar) {

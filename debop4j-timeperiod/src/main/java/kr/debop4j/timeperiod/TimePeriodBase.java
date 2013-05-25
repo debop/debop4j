@@ -92,6 +92,10 @@ public class TimePeriodBase extends ValueObjectBase implements ITimePeriod {
     }
 
     protected TimePeriodBase(ITimePeriod source, boolean readonly) {
+        Guard.shouldNotBeNull(source, "source");
+
+        this.start = source.getStart();
+        this.end = source.getEnd();
         this.readonly = readonly;
     }
 

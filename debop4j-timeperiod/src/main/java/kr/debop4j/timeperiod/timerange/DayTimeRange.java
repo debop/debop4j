@@ -29,6 +29,8 @@ import org.joda.time.DateTime;
 
 import java.util.List;
 
+import static kr.debop4j.core.Guard.shouldBePositiveNumber;
+
 /**
  * 일(Day) 단위로 기간을 표현합니다.
  *
@@ -55,6 +57,8 @@ public abstract class DayTimeRange extends CalendarTimeRange {
 
     protected DayTimeRange(int year, int monthOfYear, int dayOfMonth, int dayCount, ITimeCalendar calendar) {
         super(getPeriodOf(year, monthOfYear, dayOfMonth, dayCount), calendar);
+        shouldBePositiveNumber(dayCount, "dayCount");
+
         this.dayCount = dayCount;
     }
 
@@ -83,7 +87,7 @@ public abstract class DayTimeRange extends CalendarTimeRange {
     }
 
     private static TimeRange getPeriodOf(int year, int month, int day, int dayCount) {
-        assert dayCount >= 0;
+        assert dayCount > 0;
 
         DateTime start = new DateTime(year, month, day, 0, 0);
         DateTime end = start.plusDays(dayCount);

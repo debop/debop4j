@@ -27,6 +27,8 @@ import lombok.Getter;
 import org.joda.time.DateTime;
 import org.joda.time.Duration;
 
+import static kr.debop4j.core.Guard.shouldBePositiveNumber;
+
 /**
  * 분(Minute) 단위로 기간을 표현합니다.
  *
@@ -50,6 +52,7 @@ public abstract class MinuteTimeRange extends CalendarTimeRange {
 
     public MinuteTimeRange(int year, int monthOfYear, int dayOfMonth, int hourOfDay, int minuteOfHour, int minuteCount, ITimeCalendar calendar) {
         super(getPeriodOf(year, monthOfYear, dayOfMonth, hourOfDay, minuteOfHour, minuteCount), calendar);
+        shouldBePositiveNumber(minuteCount, "minuteCount");
 
         this.minuteCount = minuteCount;
         this.endMinute = getStart().plusMinutes(minuteCount).getMinuteOfHour();
@@ -59,6 +62,7 @@ public abstract class MinuteTimeRange extends CalendarTimeRange {
     @Getter private final int endMinute;
 
     private static ITimePeriod getPeriodOf(int year, int monthOfYear, int dayOfMonth, int hourOfDay, int minuteOfHour, int minuteCount) {
+        assert minuteCount > 0;
         DateTime start = new DateTime(year, monthOfYear, dayOfMonth, hourOfDay, minuteOfHour, 0);
         return new TimeRange(start, Duration.millis(minuteCount * TimeSpec.MillisPerMinute));
     }

@@ -563,7 +563,7 @@ public abstract class Times {
 
     public static DateTime startTimeOfWeek(int year, int weekOfYear, ITimeCalendar timeCalendar) {
 
-        DateTime current = new DateTime(year, 1, 1, 0, 0).minusWeeks(1);
+        DateTime current = startTimeOfYear(year).minusWeeks(1);
         while (current.getYear() < year + 2) {
             if (current.getWeekyear() == year && current.getWeekOfWeekyear() == weekOfYear)
                 break;

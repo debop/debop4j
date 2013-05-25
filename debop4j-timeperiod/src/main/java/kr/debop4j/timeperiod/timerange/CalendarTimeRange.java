@@ -74,7 +74,7 @@ public class CalendarTimeRange extends TimeRange implements ICalendarTimeRange {
     }
 
     public CalendarTimeRange(ITimePeriod period, ITimeCalendar timeCalendar) {
-        super(toCalendarTimeRange(period, timeCalendar));
+        super(toCalendarTimeRange(period, timeCalendar), true);
         this.timeCalendar = (timeCalendar != null) ? timeCalendar : TimeCalendar.getDefault();
     }
 

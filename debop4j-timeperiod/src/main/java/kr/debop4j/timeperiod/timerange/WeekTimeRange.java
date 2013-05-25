@@ -18,6 +18,7 @@ package kr.debop4j.timeperiod.timerange;
 
 import com.google.common.base.Objects;
 import com.google.common.collect.Lists;
+import kr.debop4j.core.Guard;
 import kr.debop4j.core.tools.HashTool;
 import kr.debop4j.timeperiod.*;
 import kr.debop4j.timeperiod.tools.Durations;
@@ -61,6 +62,8 @@ public abstract class WeekTimeRange extends CalendarTimeRange {
 
     protected WeekTimeRange(int year, int weekOfYear, int weekCount, ITimeCalendar timeCalendar) {
         super(getPeriodOf(year, weekOfYear, weekCount, timeCalendar), timeCalendar);
+        Guard.shouldBePositiveNumber(weekCount, "weekCount");
+
         this.year = year;
         this.startWeekOfYear = weekOfYear;
         this.weekCount = weekCount;
@@ -99,12 +102,13 @@ public abstract class WeekTimeRange extends CalendarTimeRange {
     }
 
     private static TimeRange getPeriodOf(DateTime moment, int weekCount, ITimeCalendar timeCalendar) {
+        assert weekCount > 0;
         DateTime startOfWeek = Times.startTimeOfWeek(moment, timeCalendar.getFirstDayOfWeek());
         return new TimeRange(startOfWeek, Durations.weeks(weekCount));
     }
 
     private static TimeRange getPeriodOf(int year, int weekOfYear, int weekCount, ITimeCalendar timeCalendar) {
-        assert weekCount >= 0;
+        assert weekCount > 0;
 
         DateTime startWeek = Times.startTimeOfWeek(year, weekOfYear, timeCalendar);
         return new TimeRange(startWeek, startWeek.plusWeeks(1));

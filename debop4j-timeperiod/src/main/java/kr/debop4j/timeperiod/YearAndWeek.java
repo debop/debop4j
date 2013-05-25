@@ -49,6 +49,13 @@ public class YearAndWeek extends ValueObjectBase implements Comparable<YearAndWe
         this.weekOfYear = weekOfYear;
     }
 
+    public YearAndWeek(YearAndWeek source) {
+        if (source != null) {
+            this.year = source.getYear();
+            this.weekOfYear = source.getWeekOfYear();
+        }
+    }
+
     @Override
     public int compareTo(YearAndWeek o) {
         return hashCode() - o.hashCode();

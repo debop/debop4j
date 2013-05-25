@@ -34,10 +34,12 @@ public abstract class YearCalendarTimeRange extends CalendarTimeRange {
         super(period, (calendar != null) ? calendar : TimeCalendar.getDefault());
     }
 
+    /** TimeCalendar의 시작 월 */
     public int getYearBaseMonth() {
         return 1;
     }
 
+    /** Calendar의 시작 년(Year) */
     public int getBaseYear() {
         return getStartYear();
     }
