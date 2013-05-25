@@ -147,7 +147,7 @@ public class TimesPeriodTest extends TimePeriodTestBase {
 
     @Test
     public void getYearRangesTest() {
-        for (int i = 0; i < PeriodCount; i++) {
+        for (int i = 1; i < PeriodCount; i++) {
             YearRangeCollection yearRanges = getYearRanges(startTime, i, TimeCalendar.getEmptyOffset());
             DateTime start = startTimeOfYear(startTime);
 
@@ -170,7 +170,7 @@ public class TimesPeriodTest extends TimePeriodTestBase {
     @Test
     public void getHalfyearRangesTest() {
 
-        for (int i = 0; i < PeriodCount; i++) {
+        for (int i = 1; i < PeriodCount; i++) {
             HalfyearRangeCollection hys = getHalfyearRanges(startTime, i, TimeCalendar.getEmptyOffset());
 
             DateTime start = startTimeOfHalfyear(startTime);
@@ -191,7 +191,7 @@ public class TimesPeriodTest extends TimePeriodTestBase {
 
     @Test
     public void getQuarterRangesTest() {
-        for (int i = 0; i < PeriodCount; i++) {
+        for (int i = 1; i < PeriodCount; i++) {
             QuarterRangeCollection quarters = getQuarterRanges(startTime, i, TimeCalendar.getEmptyOffset());
             DateTime start = startTimeOfQuarter(startTime);
 
@@ -212,7 +212,7 @@ public class TimesPeriodTest extends TimePeriodTestBase {
 
     @Test
     public void getMonthRangesTest() {
-        for (int i = 0; i < PeriodCount; i++) {
+        for (int i = 1; i < PeriodCount; i++) {
             MonthRangeCollection mrs = getMonthRanges(startTime, i, TimeCalendar.getEmptyOffset());
             DateTime start = startTimeOfMonth(startTime);
 
@@ -233,7 +233,7 @@ public class TimesPeriodTest extends TimePeriodTestBase {
 
     @Test
     public void getWeekRangesTest() {
-        for (int i = 0; i < PeriodCount; i++) {
+        for (int i = 1; i < PeriodCount; i++) {
             WeekRangeCollection wks = getWeekRanges(startTime, i, TimeCalendar.getEmptyOffset());
             DateTime start = startTimeOfWeek(startTime);
 
@@ -254,7 +254,7 @@ public class TimesPeriodTest extends TimePeriodTestBase {
 
     @Test
     public void getDayRangesTest() {
-        for (int i = 0; i < PeriodCount; i++) {
+        for (int i = 1; i < PeriodCount; i++) {
             DayRangeCollection drs = getDayRanges(startTime, i, TimeCalendar.getEmptyOffset());
             DateTime start = startTimeOfDay(startTime);
 
@@ -275,7 +275,7 @@ public class TimesPeriodTest extends TimePeriodTestBase {
 
     @Test
     public void getHourRangesTest() {
-        for (int i = 0; i < PeriodCount; i++) {
+        for (int i = 1; i < PeriodCount; i++) {
             HourRangeCollection drs = getHourRanges(startTime, i, TimeCalendar.getEmptyOffset());
             DateTime start = startTimeOfHour(startTime);
 
@@ -296,7 +296,7 @@ public class TimesPeriodTest extends TimePeriodTestBase {
 
     @Test
     public void getMinuteRangesTest() {
-        for (int i = 0; i < PeriodCount; i++) {
+        for (int i = 1; i < PeriodCount; i++) {
             MinuteRangeCollection drs = getMinuteRanges(startTime, i, TimeCalendar.getEmptyOffset());
             DateTime start = startTimeOfMinute(startTime);
 

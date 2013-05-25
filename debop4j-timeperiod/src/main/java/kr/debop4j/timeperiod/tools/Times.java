@@ -26,7 +26,6 @@ import kr.debop4j.core.Pair;
 import kr.debop4j.core.parallelism.Parallels;
 import kr.debop4j.core.tools.ArrayTool;
 import kr.debop4j.timeperiod.*;
-import kr.debop4j.timeperiod.clock.ClockProxy;
 import kr.debop4j.timeperiod.timerange.*;
 import lombok.Getter;
 import org.joda.time.DateTime;
@@ -249,7 +248,7 @@ public abstract class Times {
     }
 
     public static int getWeeksOfYear(int year, ITimeCalendar timeCalendar) {
-        return asDate(year, 12, 31).getWeekOfWeekyear();
+        return asDate(year, 12, 28).getWeekOfWeekyear();
     }
 
     public static DateTime getStartOfYearWeek(int year, int weekOfYear) {
@@ -377,23 +376,25 @@ public abstract class Times {
 
     /** 현재 시각이 속한 년도의 시작일 */
     public static DateTime currentYear() {
-        return new DateTime(DateTime.now().getYear(), 1, 1, 0, 0);
+        return asDate(now().getYear(), 1, 1);
     }
 
     /** 현재 시각이 속한 반기의 시작일 */
     public static DateTime currentHalfyear() {
-        DateTime now = ClockProxy.getClock().now();
+        DateTime now = now();
         Halfyear halfyear = getHalfyearOfMonth(now.getMonthOfYear());
         int month = getMonthsOfHalfyear(halfyear)[0];
-        return new DateTime(now.getYear(), month, 1, 0, 0);
+
+        return asDate(now.getYear(), month, 1);
     }
 
     /** 현재 시각이 속한 분기의 시작일 */
     public static DateTime currentQuarter() {
-        DateTime now = ClockProxy.getClock().now();
+        DateTime now = now();
         Quarter quarter = getQuarterOfMonth(now.getMonthOfYear());
         int month = getMonthsOfQuarter(quarter)[0];
-        return new DateTime(now.getYear(), month, 1, 0, 0);
+
+        return asDate(now.getYear(), month, 1);
     }
 
     /** 현재 시각이 속한 월의 시작일 */
@@ -408,7 +409,7 @@ public abstract class Times {
 
     /** 현재 시각이 속한 주의 시작일 */
     public static DateTime currentWeek(DayOfWeek firstDayOfWeek) {
-        return getStartOfWeek(ClockProxy.getClock().now(), firstDayOfWeek);
+        return getStartOfWeek(now(), firstDayOfWeek);
     }
 
     /** 오늘 */

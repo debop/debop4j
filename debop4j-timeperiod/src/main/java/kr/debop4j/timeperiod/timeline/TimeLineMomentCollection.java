@@ -37,7 +37,7 @@ public class TimeLineMomentCollection implements ITimeLineMomentCollection {
 
     private static final long serialVersionUID = -5739605965754152358L;
 
-    @Getter( lazy = true )
+    @Getter(lazy = true)
     private static final TimeLineMomentComparer defaultComparer = new TimeLineMomentComparer();
 
     private final SortedArrayList<ITimeLineMoment> timeLineMoments = new SortedArrayList<>(getDefaultComparer());
@@ -49,7 +49,7 @@ public class TimeLineMomentCollection implements ITimeLineMomentCollection {
 
     @Override
     public boolean isEmpty() {
-        return size() != 0;
+        return size() == 0;
     }
 
     @Override
@@ -78,7 +78,8 @@ public class TimeLineMomentCollection implements ITimeLineMomentCollection {
     @Override
     public synchronized void addAll(Iterable<? extends ITimePeriod> periods) {
         for (ITimePeriod period : periods) {
-            add(period);
+            if (period != null)
+                add(period);
         }
     }
 

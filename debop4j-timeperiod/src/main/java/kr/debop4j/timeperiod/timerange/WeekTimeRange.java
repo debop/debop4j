@@ -78,7 +78,7 @@ public abstract class WeekTimeRange extends CalendarTimeRange {
     }
 
     public List<DayRange> getDays() {
-        DateTime startDay = Times.getStartOfYearWeek(year, startWeekOfYear, getTimeCalendar());
+        DateTime startDay = getStartDayStart();
         int dayCount = weekCount * TimeSpec.DaysPerWeek;
 
         List<DayRange> days = Lists.newArrayListWithCapacity(dayCount);

@@ -34,8 +34,6 @@ import java.util.Collection;
 @Slf4j
 public class TimeLine<T extends ITimePeriod> implements ITimeLine {
 
-    private static final long serialVersionUID = 8784228432548497611L;
-
     public TimeLine(ITimePeriodContainer periods) {
         this(periods, null, null);
     }
@@ -49,7 +47,7 @@ public class TimeLine<T extends ITimePeriod> implements ITimeLine {
 
         this.periods = periods;
         this.limits = (limits != null) ? new TimeRange(limits) : new TimeRange(periods);
-        this.periodMapper = periodMapper;
+        this.periodMapper = Guard.firstNotNull(periodMapper, TimeCalendar.getDefault());
     }
 
     @Getter private final ITimePeriodContainer periods;
@@ -85,9 +83,6 @@ public class TimeLine<T extends ITimePeriod> implements ITimeLine {
     /** Periods의 기간들의 여집합에 해당하는 기간들을 반환합니다. */
     @Override
     public ITimePeriodCollection calculateGaps() {
-        if (periods.size() == 0)
-            return new TimePeriodCollection();
-
         ITimePeriodCollection gapPeriods = new TimePeriodCollection();
 
         for (ITimePeriod period : periods) {
@@ -95,13 +90,12 @@ public class TimeLine<T extends ITimePeriod> implements ITimeLine {
                 gapPeriods.add(new TimeRange(period));
             }
         }
-
-        ITimeLineMomentCollection moments = getTimeLineMoments();
+        ITimeLineMomentCollection moments = getTimeLineMoments(gapPeriods);
         if (moments == null || moments.size() == 0)
             return new TimePeriodCollection(limits);
 
         ITimePeriod range = new TimeRange(mapPeriodStart(getLimits().getStart()),
-                                          mapPeriodStart(getLimits().getEnd()));
+                                          mapPeriodEnd(getLimits().getEnd()));
 
         return TimeLines.calculateGap(moments, range);
     }
@@ -127,9 +121,10 @@ public class TimeLine<T extends ITimePeriod> implements ITimeLine {
             if (!mp.isMoment()) {
                 ITimePeriod intersection = limits.getIntersection(mp);
                 if (intersection != null && !intersection.isMoment()) {
-                    if (periodMapper != null)
+                    if (periodMapper != null) {
                         intersection.setup(mapPeriodStart(intersection.getStart()),
                                            mapPeriodEnd(intersection.getEnd()));
+                    }
                     intersections.add(intersection);
                 }
             }
@@ -149,4 +144,6 @@ public class TimeLine<T extends ITimePeriod> implements ITimeLine {
     private DateTime mapPeriodEnd(DateTime moment) {
         return (periodMapper != null) ? periodMapper.unmapEnd(moment) : moment;
     }
+
+    private static final long serialVersionUID = 8784228432548497611L;
 }

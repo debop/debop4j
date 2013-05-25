@@ -284,7 +284,7 @@ public class TimePeriodContainer implements ITimePeriodContainer {
 
     @Override
     public Object[] toArray() {
-        return toArray(new TimeRange[periods.size()]);
+        return toArray(new TimeRange[size()]);
     }
 
     @Override
@@ -308,13 +308,20 @@ public class TimePeriodContainer implements ITimePeriodContainer {
     }
 
     @Override
-    public boolean addAll(Collection<? extends ITimePeriod> c) {
-        return periods.addAll(c);
+    public synchronized boolean addAll(Collection<? extends ITimePeriod> c) {
+        for (ITimePeriod item : c)
+            periods.add(item);
+        return true;
     }
 
     @Override
-    public boolean addAll(int index, Collection<? extends ITimePeriod> c) {
-        return periods.addAll(index, c);
+    public synchronized boolean addAll(int index, Collection<? extends ITimePeriod> c) {
+        int start = index;
+        for (ITimePeriod item : c) {
+            periods.add(start, item);
+            start++;
+        }
+        return true;
     }
 
     @Override

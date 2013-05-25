@@ -151,7 +151,7 @@ public abstract class TimeLines {
             startingGap.setup(range.getStart(), periodStart.getMoment());
 
             if (log.isTraceEnabled())
-                log.trace("starting gap을 추가합니다... startingGap=[{}]", startingGap);
+                log.trace("starting gap을 추가합니다... startingGap=[{}~{}]", startingGap.getStart(), startingGap.getEnd());
 
             gaps.add(startingGap);
         }
@@ -186,7 +186,7 @@ public abstract class TimeLines {
                 gap.setup(gapStart.getMoment(), timeLineMoments.get(itemIndex + 1).getMoment());
 
                 if (log.isTraceEnabled())
-                    log.trace("intermediated gap을 추가합니다. gap=[{}]", gap);
+                    log.trace("intermediated gap을 추가합니다. gap=[{}~{}]", gap.getStart(), gap.getEnd());
 
                 gaps.add(gap);
             }
@@ -201,7 +201,7 @@ public abstract class TimeLines {
             endingGap.setup(periodEnd.getMoment(), range.getEnd());
 
             if (log.isTraceEnabled())
-                log.trace("ending gap을 추가합니다. endingGap=[{}]", endingGap);
+                log.trace("ending gap을 추가합니다. endingGap=[{}~{}]", endingGap.getStart(), endingGap.getEnd());
 
             gaps.add(endingGap);
         }

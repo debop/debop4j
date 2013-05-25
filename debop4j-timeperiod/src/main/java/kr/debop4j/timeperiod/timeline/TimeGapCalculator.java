@@ -17,10 +17,10 @@
 package kr.debop4j.timeperiod.timeline;
 
 import kr.debop4j.core.Guard;
+import kr.debop4j.timeperiod.ITimeCalendar;
 import kr.debop4j.timeperiod.ITimePeriod;
 import kr.debop4j.timeperiod.ITimePeriodCollection;
 import kr.debop4j.timeperiod.ITimePeriodContainer;
-import kr.debop4j.timeperiod.ITimePeriodMapper;
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -32,13 +32,13 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class TimeGapCalculator<T extends ITimePeriod> {
 
-    private final ITimePeriodMapper periodMapper;
+    private final ITimeCalendar periodMapper;
 
     public TimeGapCalculator() {
         this(null);
     }
 
-    public TimeGapCalculator(ITimePeriodMapper mapper) {
+    public TimeGapCalculator(ITimeCalendar mapper) {
         this.periodMapper = mapper;
     }
 
