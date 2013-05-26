@@ -20,8 +20,8 @@ import com.google.common.base.Objects;
 import com.google.common.collect.Lists;
 import kr.debop4j.core.tools.HashTool;
 import kr.debop4j.timeperiod.*;
-import kr.debop4j.timeperiod.tools.TimeSpec;
-import kr.debop4j.timeperiod.tools.Times;
+import kr.debop4j.timeperiod.test.tools.TimeSpec;
+import kr.debop4j.timeperiod.test.tools.Times;
 import lombok.Getter;
 import org.joda.time.DateTime;
 

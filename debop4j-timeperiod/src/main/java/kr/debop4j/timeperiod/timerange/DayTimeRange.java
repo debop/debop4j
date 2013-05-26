@@ -23,7 +23,7 @@ import kr.debop4j.timeperiod.DayOfWeek;
 import kr.debop4j.timeperiod.ITimeCalendar;
 import kr.debop4j.timeperiod.TimeCalendar;
 import kr.debop4j.timeperiod.TimeRange;
-import kr.debop4j.timeperiod.tools.TimeSpec;
+import kr.debop4j.timeperiod.test.tools.TimeSpec;
 import lombok.Getter;
 import org.joda.time.DateTime;
 

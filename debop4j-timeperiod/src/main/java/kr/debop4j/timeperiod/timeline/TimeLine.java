@@ -47,7 +47,7 @@ public class TimeLine<T extends ITimePeriod> implements ITimeLine {
 
         this.periods = periods;
         this.limits = (limits != null) ? new TimeRange(limits) : new TimeRange(periods);
-        this.periodMapper = Guard.firstNotNull(periodMapper, TimeCalendar.getDefault());
+        this.periodMapper = periodMapper;
     }
 
     @Getter private final ITimePeriodContainer periods;

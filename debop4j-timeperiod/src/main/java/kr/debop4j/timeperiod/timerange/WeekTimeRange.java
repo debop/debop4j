@@ -21,10 +21,10 @@ import com.google.common.collect.Lists;
 import kr.debop4j.core.Guard;
 import kr.debop4j.core.tools.HashTool;
 import kr.debop4j.timeperiod.*;
-import kr.debop4j.timeperiod.tools.Durations;
-import kr.debop4j.timeperiod.tools.TimeSpec;
-import kr.debop4j.timeperiod.tools.Times;
-import kr.debop4j.timeperiod.tools.Weeks;
+import kr.debop4j.timeperiod.test.tools.Durations;
+import kr.debop4j.timeperiod.test.tools.TimeSpec;
+import kr.debop4j.timeperiod.test.tools.Times;
+import kr.debop4j.timeperiod.test.tools.Weeks;
 import lombok.Getter;
 import org.joda.time.DateTime;
 

@@ -18,7 +18,7 @@ package kr.debop4j.timeperiod;
 
 import com.google.common.collect.Lists;
 import kr.debop4j.core.Guard;
-import kr.debop4j.timeperiod.tools.TimeSpec;
+import kr.debop4j.timeperiod.test.tools.TimeSpec;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.joda.time.DateTime;
@@ -37,7 +37,7 @@ public class DateTimeSet extends TreeSet<DateTime> implements IDateTimeSet {
 
     private static final long serialVersionUID = -1067490053852738541L;
 
-    @Getter( lazy = true )
+    @Getter(lazy = true)
     private static final Comparator<? super DateTime> defaultComparator = new Comparator<DateTime>() {
         @Override
         public int compare(DateTime o1, DateTime o2) {

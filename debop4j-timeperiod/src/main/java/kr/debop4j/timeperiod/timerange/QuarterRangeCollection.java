@@ -21,7 +21,7 @@ import kr.debop4j.timeperiod.ITimeCalendar;
 import kr.debop4j.timeperiod.Quarter;
 import kr.debop4j.timeperiod.TimeCalendar;
 import kr.debop4j.timeperiod.YearAndQuarter;
-import kr.debop4j.timeperiod.tools.Times;
+import kr.debop4j.timeperiod.test.tools.Times;
 import org.joda.time.DateTime;
 
 import java.util.List;

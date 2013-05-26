@@ -18,7 +18,7 @@ package kr.debop4j.timeperiod.timerange;
 
 import kr.debop4j.timeperiod.ITimeCalendar;
 import kr.debop4j.timeperiod.TimeCalendar;
-import kr.debop4j.timeperiod.tools.Times;
+import kr.debop4j.timeperiod.test.tools.Times;
 import org.joda.time.DateTime;
 
 /**

@@ -18,7 +18,7 @@ package kr.debop4j.timeperiod;
 
 import com.google.common.base.Objects;
 import kr.debop4j.core.ValueObjectBase;
-import kr.debop4j.timeperiod.tools.TimeSpec;
+import kr.debop4j.timeperiod.test.tools.TimeSpec;
 import lombok.Getter;
 import org.joda.time.DateTime;
 

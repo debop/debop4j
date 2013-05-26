@@ -24,7 +24,7 @@ import kr.debop4j.timeperiod.Halfyear;
 import kr.debop4j.timeperiod.ITimeCalendar;
 import kr.debop4j.timeperiod.Quarter;
 import kr.debop4j.timeperiod.TimeRange;
-import kr.debop4j.timeperiod.tools.TimeSpec;
+import kr.debop4j.timeperiod.test.tools.TimeSpec;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.joda.time.DateTime;
