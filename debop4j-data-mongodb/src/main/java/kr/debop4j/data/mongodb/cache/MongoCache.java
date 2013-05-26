@@ -66,9 +66,7 @@ public class MongoCache implements Cache {
     public ValueWrapper get(Object key) {
         assert key != null;
 
-        CacheItem item = mongoTemplate.findOne(new Query(Criteria.where("key").is(key)),
-                                               CacheItem.class,
-                                               name);
+        CacheItem item = mongoTemplate.findOne(new Query(Criteria.where("key").is(key)), CacheItem.class, name);
 
         Object result = null;
         if (item != null) {

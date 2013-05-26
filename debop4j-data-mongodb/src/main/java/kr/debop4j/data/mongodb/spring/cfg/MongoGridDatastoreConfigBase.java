@@ -111,21 +111,30 @@ public abstract class MongoGridDatastoreConfigBase extends GridDatastoreConfigBa
         return dao;
     }
 
-    @Bean
-    @Scope("prototype")
-    public MongoClient mongoClient() {
-        try {
-            return new MongoClient(serverAddress());
-        } catch (Exception e) {
-            log.error("MongoDB 접속에 예외가 발생했습니다.", e);
-            throw new RuntimeException(e);
-        }
-    }
+    private static final String MONGO_CLIENT_CLASS_NAME = MongoClient.class.getName();
 
     @Bean
     @Scope("prototype")
+    public MongoClient mongoClient() {
+        MongoClient client = Local.get(MONGO_CLIENT_CLASS_NAME, MongoClient.class);
+        if (client == null) {
+            client = new MongoClient(serverAddress());
+            Local.put(MONGO_CLIENT_CLASS_NAME, client);
+        }
+        return client;
+    }
+
+    private static final String MONGO_TEMPLATE_CLASS_NAME = MongoTemplate.class.getName();
+
+    @Bean
+    @Scope( "prototype" )
     public MongoTemplate mongoTemplate() {
-        return new MongoTemplate(mongoClient(), getDatabaseName());
+        MongoTemplate template = Local.get(MONGO_TEMPLATE_CLASS_NAME, MongoTemplate.class);
+        if (template == null) {
+            template = new MongoTemplate(mongoClient(), getDatabaseName());
+            Local.put(MONGO_TEMPLATE_CLASS_NAME, template);
+        }
+        return template;
     }
 
     @Bean

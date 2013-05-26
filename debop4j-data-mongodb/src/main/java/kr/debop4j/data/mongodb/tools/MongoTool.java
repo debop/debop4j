@@ -16,6 +16,8 @@
 
 package kr.debop4j.data.mongodb.tools;
 
+import kr.debop4j.core.Guard;
+import kr.debop4j.core.tools.StringTool;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
@@ -44,10 +46,11 @@ import java.util.List;
 @Setter
 public class MongoTool {
 
-    @Autowired
-    GridDialect gridDialect;
-    @Autowired
-    DatastoreProvider datastoreProvider;
+    /** MongoDB Dialect */
+    @Autowired GridDialect gridDialect;
+
+    /** Datastore provider */
+    @Autowired DatastoreProvider datastoreProvider;
 
     public MongoTool() {}
 
@@ -58,9 +61,14 @@ public class MongoTool {
     }
 
     public Tuple getTuple(String collectionName, String id, List<String> selectedColumns) {
-        EntityKey key = new EntityKey(new EntityKeyMetadata(collectionName,
-                                                            new String[] { MongoDBDialect.ID_FIELDNAME }),
-                                      new Object[] { id });
+        Guard.shouldNotBeNull(gridDialect, "gridDialect");
+
+        if (log.isTraceEnabled())
+            log.trace("getTuple... collectionName=[{}], id=[{}], selectedColumns=[{}]",
+                      collectionName, id, StringTool.listToString(selectedColumns));
+
+        EntityKeyMetadata metadata = new EntityKeyMetadata(collectionName, new String[] { MongoDBDialect.ID_FIELDNAME });
+        EntityKey key = new EntityKey(metadata, new Object[] { id });
         TupleContext tupleContext = new TupleContext(selectedColumns);
         return gridDialect.getTuple(key, tupleContext);
     }
