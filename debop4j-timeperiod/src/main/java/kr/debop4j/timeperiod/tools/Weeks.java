@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package kr.debop4j.timeperiod.test.tools;
+package kr.debop4j.timeperiod.tools;
 
 import kr.debop4j.core.Guard;
 import kr.debop4j.timeperiod.DayOfWeek;
@@ -38,8 +38,8 @@ import java.util.Locale;
 public abstract class Weeks {
 
     private static final Logger log = LoggerFactory.getLogger(Weeks.class);
-    @Getter( lazy = true ) private static final boolean traceEnabled = log.isTraceEnabled();
-    @Getter( lazy = true ) private static final boolean debugEnabled = log.isDebugEnabled();
+    @Getter(lazy = true) private static final boolean traceEnabled = log.isTraceEnabled();
+    @Getter(lazy = true) private static final boolean debugEnabled = log.isDebugEnabled();
 
     private Weeks() {}
 

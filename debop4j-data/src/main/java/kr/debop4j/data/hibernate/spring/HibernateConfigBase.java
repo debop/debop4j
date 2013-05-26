@@ -54,7 +54,7 @@ import java.util.Properties;
  * @since 13. 2. 21.
  */
 @Slf4j
-@ComponentScan( basePackageClasses = { UnitOfWorks.class, HibernateTool.class } )
+@ComponentScan(basePackageClasses = { UnitOfWorks.class, HibernateTool.class })
 public abstract class HibernateConfigBase {
 
     @Getter
@@ -91,7 +91,7 @@ public abstract class HibernateConfigBase {
         props.put(Environment.RELEASE_CONNECTIONS, ConnectionReleaseMode.ON_CLOSE);
         props.put(Environment.AUTOCOMMIT, "true");
         props.put(Environment.CURRENT_SESSION_CONTEXT_CLASS, "thread");
-        props.put(Environment.STATEMENT_BATCH_SIZE, "50");
+        props.put(Environment.STATEMENT_BATCH_SIZE, "30");
 
         return props;
     }
@@ -104,7 +104,7 @@ public abstract class HibernateConfigBase {
         return JdbcTool.getEmbeddedHsqlDataSource();
     }
 
-    @Bean( destroyMethod = "close" )
+    @Bean(destroyMethod = "close")
     abstract public DataSource dataSource();
 
     /** factoryBean 에 추가 설정을 지정할 수 있습니다. */
@@ -151,16 +151,18 @@ public abstract class HibernateConfigBase {
 
     @Bean
     public MultiInterceptor hibernateInterceptor() {
-        MultiInterceptor interceptor = new MultiInterceptor();
 
+        MultiInterceptor interceptor = new MultiInterceptor();
         interceptor.getInterceptors().add(new StatefulEntityInterceptor());
         interceptor.getInterceptors().add(new UpdateTimestampedInterceptor());
 
         return interceptor;
     }
 
+    /** {@link IUnitOfWorkFactory} 를 생성합니다. */
     @Bean
     public IUnitOfWorkFactory unitOfWorkFactory() {
+        log.info("UnitOfWorkFactory를 생성합니다.");
         UnitOfWorkFactory factory = new UnitOfWorkFactory();
         factory.setSessionFactory(sessionFactory());
         return factory;
@@ -168,8 +170,13 @@ public abstract class HibernateConfigBase {
 
     private static final String HIBERNATE_DAO_KEY = HibernateDao.class.getName() + ".Current";
 
+    /**
+     * {@link IHibernateDao}를 Transaction Context별로 제공합니다.
+     *
+     * @return
+     */
     @Bean
-    @Scope( "prototype" )
+    @Scope("prototype")
     public IHibernateDao hibernateDao() {
         IHibernateDao hibernateDao = Local.get(HIBERNATE_DAO_KEY, IHibernateDao.class);
         if (hibernateDao == null) {

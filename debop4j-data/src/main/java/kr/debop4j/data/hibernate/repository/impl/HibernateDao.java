@@ -92,6 +92,7 @@ public class HibernateDao implements IHibernateDao {
         return (T) getSession().load(clazz, id, lockOptions);
     }
 
+    /** {@inheritDoc} */
     @Override
     public <T> T get(Class<T> clazz, Serializable id) {
         if (isTraceEnabled)
@@ -100,6 +101,7 @@ public class HibernateDao implements IHibernateDao {
         return (T) getSession().get(clazz, id);
     }
 
+    /** {@inheritDoc} */
     @Override
     public <T> T get(Class<T> clazz, Serializable id, LockOptions lockOptions) {
         if (isTraceEnabled)
@@ -108,8 +110,9 @@ public class HibernateDao implements IHibernateDao {
         return (T) getSession().get(clazz, id, lockOptions);
     }
 
+    /** {@inheritDoc} */
     @Override
-    public <T> List<T> getIn(Class<T> clazz, Collection ids) {
+    public <T> List<T> getIn(Class<T> clazz, Collection<? extends Serializable> ids) {
         if (ArrayTool.isEmpty(ids))
             return Lists.newArrayList();
 

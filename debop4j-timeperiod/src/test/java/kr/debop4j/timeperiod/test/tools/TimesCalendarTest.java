@@ -18,6 +18,8 @@ package kr.debop4j.timeperiod.test.tools;
 
 import kr.debop4j.timeperiod.*;
 import kr.debop4j.timeperiod.test.TimePeriodTestBase;
+import kr.debop4j.timeperiod.tools.TimeSpec;
+import kr.debop4j.timeperiod.tools.Times;
 import lombok.extern.slf4j.Slf4j;
 import org.joda.time.DateTime;
 import org.junit.Test;

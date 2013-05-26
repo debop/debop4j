@@ -19,7 +19,7 @@ package kr.debop4j.timeperiod.test.samples;
 import kr.debop4j.timeperiod.TimePeriodChain;
 import kr.debop4j.timeperiod.clock.ClockProxy;
 import kr.debop4j.timeperiod.clock.IClock;
-import kr.debop4j.timeperiod.test.tools.Times;
+import kr.debop4j.timeperiod.tools.Times;
 import lombok.Getter;
 import org.joda.time.DateTime;
 

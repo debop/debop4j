@@ -16,15 +16,14 @@
 
 package kr.debop4j.timeperiod.timerange;
 
-import com.google.common.base.Objects;
 import com.google.common.collect.Lists;
 import kr.debop4j.core.Guard;
 import kr.debop4j.core.tools.HashTool;
 import kr.debop4j.timeperiod.*;
-import kr.debop4j.timeperiod.test.tools.Durations;
-import kr.debop4j.timeperiod.test.tools.TimeSpec;
-import kr.debop4j.timeperiod.test.tools.Times;
-import kr.debop4j.timeperiod.test.tools.Weeks;
+import kr.debop4j.timeperiod.tools.Durations;
+import kr.debop4j.timeperiod.tools.TimeSpec;
+import kr.debop4j.timeperiod.tools.Times;
+import kr.debop4j.timeperiod.tools.Weeks;
 import lombok.Getter;
 import org.joda.time.DateTime;
 
@@ -93,13 +92,13 @@ public abstract class WeekTimeRange extends CalendarTimeRange {
         return HashTool.compute(super.hashCode(), year, startWeekOfYear, weekCount);
     }
 
-    @Override
-    protected Objects.ToStringHelper buildStringHelper() {
-        return super.buildStringHelper()
-                .add("year", year)
-                .add("startWeekOfYear", startWeekOfYear)
-                .add("weekCount", weekCount);
-    }
+//    @Override
+//    protected Objects.ToStringHelper buildStringHelper() {
+//        return super.buildStringHelper()
+//                .add("year", year)
+//                .add("startWeekOfYear", startWeekOfYear)
+//                .add("weekCount", weekCount);
+//    }
 
     private static TimeRange getPeriodOf(DateTime moment, int weekCount, ITimeCalendar timeCalendar) {
         assert weekCount > 0;

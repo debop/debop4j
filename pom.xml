@@ -268,7 +268,7 @@
         <spring.data.redis.version>1.0.4.RELEASE</spring.data.redis.version>
         <spring.data.mongo.version>1.2.1.RELEASE</spring.data.mongo.version>
 
-        <hibernate.version>4.2.1.Final</hibernate.version>
+        <hibernate.version>4.2.2.Final</hibernate.version>
         <hibernate.validator.version>4.3.1.Final</hibernate.validator.version>
 
         <hibernate.search.version>4.2.0.Final</hibernate.search.version>
@@ -287,7 +287,7 @@
         <lucene.version>3.6.2</lucene.version>
         <io.netty.version>3.6.3.Final</io.netty.version>
 
-        <querydsl.version>3.1.0</querydsl.version>
+        <querydsl.version>3.1.1</querydsl.version>
 
         <mybatis.version>3.2.2</mybatis.version>
         <couchbase.client.version>1.1.4</couchbase.client.version>
@@ -836,6 +836,11 @@
             <dependency>
                 <groupId>com.mysema.querydsl</groupId>
                 <artifactId>querydsl-hibernate-search</artifactId>
+                <version>${querydsl.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.mysema.querydsl</groupId>
+                <artifactId>querydsl-sql</artifactId>
                 <version>${querydsl.version}</version>
             </dependency>
 

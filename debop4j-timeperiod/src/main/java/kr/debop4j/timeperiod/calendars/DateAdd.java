@@ -14,15 +14,15 @@
  * limitations under the License.
  */
 
-package kr.debop4j.timeperiod.test.calendars;
+package kr.debop4j.timeperiod.calendars;
 
 import kr.debop4j.core.Pair;
 import kr.debop4j.core.ValueObjectBase;
 import kr.debop4j.core.tools.StringTool;
 import kr.debop4j.timeperiod.*;
-import kr.debop4j.timeperiod.test.tools.Durations;
-import kr.debop4j.timeperiod.test.tools.TimeSpec;
 import kr.debop4j.timeperiod.timeline.TimeGapCalculator;
+import kr.debop4j.timeperiod.tools.Durations;
+import kr.debop4j.timeperiod.tools.TimeSpec;
 import lombok.Getter;
 import org.joda.time.DateTime;
 import org.joda.time.Duration;
@@ -135,7 +135,7 @@ public class DateAdd extends ValueObjectBase {
             for (ITimePeriod p : searchPeriods) {
                 if (excludePeriods.hasOverlapPeriods(p)) {
                     if (isTraceEnable) log.trace("예외 기간에 속하지 않는 부분만을 추려냅니다");
-                    for (ITimePeriod gap : gapCalculator.getGaps(excludePeriods, searchPeriods))
+                    for (ITimePeriod gap : gapCalculator.getGaps(excludePeriods, p))
                         availablePeriods.add(gap);
                 } else {
                     availablePeriods.add(p);
@@ -148,7 +148,7 @@ public class DateAdd extends ValueObjectBase {
             return Pair.create(null, remaining);
         }
 
-        if (isTraceEnable) log.trace("유효기간 중 중복된 부분을 제거하기 위해 기간들을 결합니다...");
+        if (isTraceEnable) log.trace("유효기간 중 중복된 부분을 제거하기 위해 기간들을 결합합니다...");
         TimePeriodCombiner periodCombiner = new TimePeriodCombiner<TimeRange>();
         availablePeriods = periodCombiner.combinePeriods(availablePeriods);
 
@@ -214,6 +214,7 @@ public class DateAdd extends ValueObjectBase {
             }
         }
 
+        if (isTraceEnable) log.trace("해당하는 일자를 찾지 못했습니다.");
         return Pair.create(null, remaining);
     }
 

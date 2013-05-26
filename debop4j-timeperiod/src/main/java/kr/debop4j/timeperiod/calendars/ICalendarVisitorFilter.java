@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package kr.debop4j.timeperiod.test.calendars;
+package kr.debop4j.timeperiod.calendars;
 
 import kr.debop4j.timeperiod.DayOfWeek;
 import kr.debop4j.timeperiod.ITimePeriodCollection;

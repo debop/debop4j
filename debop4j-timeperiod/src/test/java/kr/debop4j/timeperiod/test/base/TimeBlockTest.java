@@ -20,9 +20,9 @@ import kr.debop4j.timeperiod.PeriodRelation;
 import kr.debop4j.timeperiod.TimeBlock;
 import kr.debop4j.timeperiod.clock.ClockProxy;
 import kr.debop4j.timeperiod.test.samples.TimeBlockPeriodRelationTestData;
-import kr.debop4j.timeperiod.test.tools.Durations;
-import kr.debop4j.timeperiod.test.tools.TimeSpec;
-import kr.debop4j.timeperiod.test.tools.Times;
+import kr.debop4j.timeperiod.tools.Durations;
+import kr.debop4j.timeperiod.tools.TimeSpec;
+import kr.debop4j.timeperiod.tools.Times;
 import lombok.extern.slf4j.Slf4j;
 import org.joda.time.DateTime;
 import org.joda.time.Duration;
@@ -161,7 +161,7 @@ public class TimeBlockTest {
         assertThat(range.isReadonly()).isFalse();
     }
 
-    @Test( expected = AssertionError.class )
+    @Test(expected = AssertionError.class)
     public void startAndNegateDurationTest() {
         TimeBlock block = new TimeBlock(start, Durations.negate(duration));
     }
@@ -193,7 +193,7 @@ public class TimeBlockTest {
         assertThat(block.getStart()).isEqualTo(chanedStart);
     }
 
-    @Test( expected = AssertionError.class )
+    @Test(expected = AssertionError.class)
     public void startReadonlyTest() {
         TimeBlock block = new TimeBlock(ClockProxy.getClock().now(), Durations.hours(1), true);
         block.setStart(block.getStart().minusHours(1));
@@ -209,7 +209,7 @@ public class TimeBlockTest {
         assertThat(block.getEnd()).isEqualTo(changedEnd);
     }
 
-    @Test( expected = AssertionError.class )
+    @Test(expected = AssertionError.class)
     public void endReadonlyTest() {
         TimeBlock range = new TimeBlock(ClockProxy.getClock().now(), Durations.hours(1), true);
         range.setEnd(range.getEnd().plusHours(1));
@@ -234,7 +234,7 @@ public class TimeBlockTest {
         assertThat(block.getDuration()).isEqualTo(TimeSpec.MinDuration);
     }
 
-    @Test( expected = AssertionError.class )
+    @Test(expected = AssertionError.class)
     public void durationOutOfRangeTest() {
         TimeBlock block = new TimeBlock(start, duration);
         block.setDuration(Durations.negate(Durations.millis(1)));

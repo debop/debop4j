@@ -14,13 +14,13 @@
  * limitations under the License.
  */
 
-package kr.debop4j.timeperiod.test.calendars;
+package kr.debop4j.timeperiod.calendars;
 
 import kr.debop4j.core.tools.StringTool;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * kr.debop4j.timeperiod.test.calendars.Calendars
+ * Calendars
  *
  * @author 배성혁 sunghyouk.bae@gmail.com
  * @since 13. 5. 19. 오전 2:59

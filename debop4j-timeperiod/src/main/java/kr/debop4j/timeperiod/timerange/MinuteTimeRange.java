@@ -16,13 +16,12 @@
 
 package kr.debop4j.timeperiod.timerange;
 
-import com.google.common.base.Objects;
 import kr.debop4j.core.tools.HashTool;
 import kr.debop4j.timeperiod.ITimeCalendar;
 import kr.debop4j.timeperiod.ITimePeriod;
 import kr.debop4j.timeperiod.TimeCalendar;
 import kr.debop4j.timeperiod.TimeRange;
-import kr.debop4j.timeperiod.test.tools.TimeSpec;
+import kr.debop4j.timeperiod.tools.TimeSpec;
 import lombok.Getter;
 import org.joda.time.DateTime;
 import org.joda.time.Duration;
@@ -72,10 +71,10 @@ public abstract class MinuteTimeRange extends CalendarTimeRange {
         return HashTool.compute(super.hashCode(), endMinute);
     }
 
-    @Override
-    protected Objects.ToStringHelper buildStringHelper() {
-        return super.buildStringHelper()
-                .add("minuteCount", minuteCount)
-                .add("endMinute", endMinute);
-    }
+//    @Override
+//    protected Objects.ToStringHelper buildStringHelper() {
+//        return super.buildStringHelper()
+//                .add("minuteCount", minuteCount)
+//                .add("endMinute", endMinute);
+//    }
 }

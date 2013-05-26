@@ -17,13 +17,13 @@
 package kr.debop4j.timeperiod;
 
 import com.google.common.base.Objects;
-import kr.debop4j.timeperiod.test.tools.TimeSpec;
-import kr.debop4j.timeperiod.test.tools.Times;
+import kr.debop4j.timeperiod.tools.TimeSpec;
+import kr.debop4j.timeperiod.tools.Times;
 import lombok.extern.slf4j.Slf4j;
 import org.joda.time.DateTime;
 import org.joda.time.Duration;
 
-import static kr.debop4j.timeperiod.test.tools.TimeSpec.ZeroDuration;
+import static kr.debop4j.timeperiod.tools.TimeSpec.ZeroDuration;
 import static org.joda.time.Duration.ZERO;
 
 /**
@@ -221,7 +221,7 @@ public class TimeBlock extends TimePeriodBase implements ITimeBlock {
 
     @Override
     protected Objects.ToStringHelper buildStringHelper() {
-        return super.buildStringHelper()
-                .add("duration", duration);
+        return super.buildStringHelper();
+        //.add("duration", duration);
     }
 }

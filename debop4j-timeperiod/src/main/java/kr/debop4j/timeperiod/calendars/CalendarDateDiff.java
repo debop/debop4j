@@ -14,12 +14,12 @@
  * limitations under the License.
  */
 
-package kr.debop4j.timeperiod.test.calendars;
+package kr.debop4j.timeperiod.calendars;
 
 import kr.debop4j.timeperiod.*;
-import kr.debop4j.timeperiod.test.tools.TimeSpec;
-import kr.debop4j.timeperiod.test.tools.Times;
 import kr.debop4j.timeperiod.timeline.TimeGapCalculator;
+import kr.debop4j.timeperiod.tools.TimeSpec;
+import kr.debop4j.timeperiod.tools.Times;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.joda.time.DateTime;
@@ -31,9 +31,9 @@ import java.util.Objects;
 
 import static kr.debop4j.core.Guard.shouldBe;
 import static kr.debop4j.core.Guard.shouldNotBeNull;
-import static kr.debop4j.timeperiod.test.tools.Durations.Zero;
-import static kr.debop4j.timeperiod.test.tools.Durations.negate;
-import static kr.debop4j.timeperiod.test.tools.Times.startTimeOfDay;
+import static kr.debop4j.timeperiod.tools.Durations.Zero;
+import static kr.debop4j.timeperiod.tools.Durations.negate;
+import static kr.debop4j.timeperiod.tools.Times.startTimeOfDay;
 import static org.joda.time.Duration.ZERO;
 
 /**
@@ -105,8 +105,8 @@ public class CalendarDateDiff {
      * @return 시작 시각 ~ 완료 시각 사이의 Working Hours
      */
     public Duration difference(DateTime fromTime, DateTime toTime) {
-        if (log.isTraceEnabled())
-            log.trace("fromTime[{}] ~ toTime[{}]의 Working Time을 구합니다.", fromTime, toTime);
+        if (CalendarDateDiff.log.isTraceEnabled())
+            CalendarDateDiff.log.trace("fromTime[{}] ~ toTime[{}]의 Working Time을 구합니다.", fromTime, toTime);
 
         if (Objects.equals(fromTime, toTime))
             return Zero;
@@ -135,8 +135,8 @@ public class CalendarDateDiff {
             difference.plus(gap.getDuration());
         }
 
-        if (log.isTraceEnabled())
-            log.trace("fromTime[{}] ~ toTime[{}]의 Working Time을 구했습니다. differece=[{}]", fromTime, toTime, difference);
+        if (CalendarDateDiff.log.isTraceEnabled())
+            CalendarDateDiff.log.trace("fromTime[{}] ~ toTime[{}]의 Working Time을 구했습니다. differece=[{}]", fromTime, toTime, difference);
 
         return (fromTime.compareTo(toTime) <= 0) ? difference : negate(difference);
     }

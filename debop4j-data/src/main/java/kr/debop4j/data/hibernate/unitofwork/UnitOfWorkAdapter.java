@@ -131,7 +131,9 @@ public class UnitOfWorkAdapter extends UnitOfWorkAdapterBase {
             }
 
             if (factory != null) {
-                try { factory.closeUnitOfWork(this);} catch (Exception ignored) {}
+                try {
+                    factory.closeUnitOfWork(this);
+                } catch (Exception ignored) {}
             }
             if (session != null) {
                 try {session.close();} catch (Exception ignored) {}

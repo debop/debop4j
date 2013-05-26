@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package kr.debop4j.timeperiod.test.calendars;
+package kr.debop4j.timeperiod.calendars;
 
 import kr.debop4j.timeperiod.DayRangeInMonth;
 import kr.debop4j.timeperiod.MonthRangeInYear;
@@ -22,7 +22,7 @@ import kr.debop4j.timeperiod.MonthRangeInYear;
 import java.util.List;
 
 /**
- * kr.debop4j.timeperiod.test.calendars.ICalendarPeriodCollectionFilter
+ * ICalendarPeriodCollectionFilter
  *
  * @author 배성혁 sunghyouk.bae@gmail.com
  * @since 13. 5. 19. 오전 2:47

@@ -14,15 +14,16 @@
  * limitations under the License.
  */
 
-package kr.debop4j.timeperiod.test.calendars;
+package kr.debop4j.timeperiod.calendars;
 
 import com.google.common.collect.Iterables;
+import kr.debop4j.timeperiod.DayOfWeek;
 import kr.debop4j.timeperiod.ITimeCalendar;
 import kr.debop4j.timeperiod.ITimePeriod;
 import kr.debop4j.timeperiod.SeekDirection;
-import kr.debop4j.timeperiod.test.tools.TimeSpec;
-import kr.debop4j.timeperiod.test.tools.Times;
 import kr.debop4j.timeperiod.timerange.*;
+import kr.debop4j.timeperiod.tools.TimeSpec;
+import kr.debop4j.timeperiod.tools.Times;
 import lombok.Getter;
 import org.joda.time.DateTime;
 import org.slf4j.Logger;
@@ -96,7 +97,7 @@ public abstract class CalendarVisitor<F extends ICalendarVisitorFilter, C extend
                 Collections.sort(yearsToVisit, Times.getEndComparator());
 
             for (YearRange year : yearsToVisit) {
-                if (isTraceEnabled) log.trace("year[{}] 를 탐색합니다...", year.getYear());
+                if (isTraceEnabled) log.trace("year를 탐색합니다... year=[{}]", year.getYear());
 
                 if (!year.overlapsWith(period) || !onVisitYear(year, context))
                     continue;
@@ -109,7 +110,7 @@ public abstract class CalendarVisitor<F extends ICalendarVisitorFilter, C extend
 
                 // TODO: Parallels.runEach(); 를 이용해 병렬로 수행하는 것 테스트 할 것
                 for (MonthRange month : monthsToVisit) {
-                    if (isTraceEnabled) log.trace("month [{}]를 탐색합니다...", month);
+                    if (isTraceEnabled) log.trace("month를 탐색합니다... month=[{}]", month);
 
                     if (!month.overlapsWith(period) || !onVisitMonth(month, context))
                         continue;
@@ -117,26 +118,31 @@ public abstract class CalendarVisitor<F extends ICalendarVisitorFilter, C extend
                         continue;
 
                     List<DayRange> daysToVisit = month.getDays();
+
                     if (seekDirection == SeekDirection.Backward)
                         Collections.sort(daysToVisit, Times.getEndComparator());
 
                     for (DayRange day : daysToVisit) {
-                        if (isTraceEnabled) log.trace("day [{}]를 탐색합니다...", day);
+                        if (isTraceEnabled) log.trace("day를 탐색합니다... day=[{}]", day);
 
-                        if (!day.overlapsWith(period) || !onVisitDay(day, context))
+                        if (!day.overlapsWith(period))
+                            continue;
+                        if (!onVisitDay(day, context))
                             continue;
                         if (!enterHours(day, context))
                             continue;
 
                         List<HourRange> hoursToVisit = day.getHours();
+
                         if (seekDirection == SeekDirection.Backward)
                             Collections.sort(hoursToVisit, Times.getEndComparator());
 
                         for (HourRange hour : hoursToVisit) {
-                            if (log.isTraceEnabled()) log.trace("hour [{}]를 탐색합니다...", hour);
+                            if (log.isTraceEnabled()) log.trace("hour를 탐색합니다... hour=[{}]", hour);
 
                             if (!hour.overlapsWith(period) || !onVisitHour(hour, context))
                                 continue;
+
                             enterMinutes(hour, context);
                         }
                     }
@@ -319,6 +325,7 @@ public abstract class CalendarVisitor<F extends ICalendarVisitorFilter, C extend
     }
 
     protected boolean isMatchingYear(YearRange year, C context) {
+
         if (filter.getYears().size() > 0 && !filter.getYears().contains(year.getYear()))
             return false;
 
@@ -326,6 +333,7 @@ public abstract class CalendarVisitor<F extends ICalendarVisitorFilter, C extend
     }
 
     protected boolean isMatchingMonth(MonthRange month, C context) {
+
         if (filter.getYears().size() > 0 && !filter.getYears().contains(month.getYear()))
             return false;
         if (filter.getMonthOfYears().size() > 0 && !filter.getMonthOfYears().contains(month.getMonthOfYear()))
@@ -339,10 +347,10 @@ public abstract class CalendarVisitor<F extends ICalendarVisitorFilter, C extend
             return false;
         if (filter.getMonthOfYears().size() > 0 && !filter.getMonthOfYears().contains(day.getMonthOfYear()))
             return false;
-
         if (filter.getDayOfMonths().size() > 0 && !filter.getDayOfMonths().contains(day.getDayOfMonth()))
             return false;
-
+        if (filter.getWeekDays().size() > 0 && !filter.getWeekDays().contains(day.getDayOfWeek()))
+            return false;
         return checkExcludePeriods(day);
     }
 
@@ -354,6 +362,8 @@ public abstract class CalendarVisitor<F extends ICalendarVisitorFilter, C extend
         if (filter.getDayOfMonths().size() > 0 && !filter.getDayOfMonths().contains(hour.getDayOfMonth()))
             return false;
         if (filter.getHourOfDays().size() > 0 && !filter.getHourOfDays().contains(hour.getHourOfDay()))
+            return false;
+        if (filter.getWeekDays().size() > 0 && !filter.getWeekDays().contains(DayOfWeek.valueOf(hour.getStart().getDayOfWeek())))
             return false;
 
         return checkExcludePeriods(hour);

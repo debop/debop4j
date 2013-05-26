@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package kr.debop4j.timeperiod.test.tools;
+package kr.debop4j.timeperiod.tools;
 
 import kr.debop4j.timeperiod.Halfyear;
 import kr.debop4j.timeperiod.Quarter;
@@ -22,7 +22,7 @@ import kr.debop4j.timeperiod.Quarter;
 import java.util.Locale;
 
 /**
- * kr.debop4j.timeperiod.test.tools.TimeSettings
+ * TimeSettings
  *
  * @author 배성혁 sunghyouk.bae@gmail.com
  * @since 13. 5. 11. 오후 8:03

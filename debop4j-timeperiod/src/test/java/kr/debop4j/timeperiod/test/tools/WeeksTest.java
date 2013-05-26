@@ -21,12 +21,15 @@ import kr.debop4j.core.parallelism.Parallels;
 import kr.debop4j.timeperiod.YearAndWeek;
 import kr.debop4j.timeperiod.test.TimePeriodTestBase;
 import kr.debop4j.timeperiod.timerange.WeekRange;
+import kr.debop4j.timeperiod.tools.TimeSpec;
+import kr.debop4j.timeperiod.tools.Times;
+import kr.debop4j.timeperiod.tools.Weeks;
 import lombok.extern.slf4j.Slf4j;
 import org.joda.time.DateTime;
 import org.joda.time.Duration;
 import org.junit.Test;
 
-import static kr.debop4j.timeperiod.test.tools.Times.asDate;
+import static kr.debop4j.timeperiod.tools.Times.asDate;
 import static org.fest.assertions.Assertions.assertThat;
 
 /**

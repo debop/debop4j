@@ -30,8 +30,8 @@ import lombok.Getter;
 public class HourRangeInDay extends ValueObjectBase implements Comparable<HourRangeInDay> {
     private static final long serialVersionUID = 6958950354517975186L;
 
-    @Getter private final Timepart startHourOfDay;
-    @Getter private final Timepart endHourOfDay;
+    @Getter private final Timepart start;
+    @Getter private final Timepart end;
 
     public HourRangeInDay(int hourOfDay) {
         this(hourOfDay, hourOfDay);
@@ -43,29 +43,29 @@ public class HourRangeInDay extends ValueObjectBase implements Comparable<HourRa
 
     public HourRangeInDay(Timepart start, Timepart end) {
         if (start.compareTo(end) <= 0) {
-            this.startHourOfDay = start;
-            this.endHourOfDay = end;
+            this.start = start;
+            this.end = end;
         } else {
-            this.startHourOfDay = end;
-            this.endHourOfDay = start;
+            this.start = end;
+            this.end = start;
         }
     }
 
     /** start 값으로 비교합니다. */
     @Override
     public int compareTo(HourRangeInDay o) {
-        return startHourOfDay.compareTo(o.getStartHourOfDay());
+        return start.compareTo(o.getStart());
     }
 
     @Override
     public int hashCode() {
-        return HashTool.compute(startHourOfDay, endHourOfDay);
+        return HashTool.compute(start, end);
     }
 
     @Override
     protected Objects.ToStringHelper buildStringHelper() {
         return super.buildStringHelper()
-                .add("startHourOfDay", startHourOfDay)
-                .add("endHourOfDay", endHourOfDay);
+                .add("start", start)
+                .add("end", end);
     }
 }

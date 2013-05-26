@@ -20,8 +20,8 @@ import kr.debop4j.timeperiod.ITimeCalendar;
 import kr.debop4j.timeperiod.TimeCalendar;
 import kr.debop4j.timeperiod.TimeRange;
 import kr.debop4j.timeperiod.test.TimePeriodTestBase;
-import kr.debop4j.timeperiod.test.tools.Times;
 import kr.debop4j.timeperiod.timerange.CalendarTimeRange;
+import kr.debop4j.timeperiod.tools.Times;
 import lombok.extern.slf4j.Slf4j;
 import org.joda.time.DateTime;
 import org.junit.Test;
@@ -46,7 +46,7 @@ public class CalendarTimeRangeTest extends TimePeriodTestBase {
         assertThat(timeRange.isAnytime()).isTrue();
     }
 
-    @Test( expected = AssertionError.class )
+    @Test(expected = AssertionError.class)
     public void momentTest() {
         DateTime today = Times.today();
         new CalendarTimeRange(today, today);

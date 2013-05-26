@@ -20,17 +20,17 @@ import kr.debop4j.core.Action1;
 import kr.debop4j.core.parallelism.Parallels;
 import kr.debop4j.timeperiod.TimeCalendar;
 import kr.debop4j.timeperiod.test.TimePeriodTestBase;
-import kr.debop4j.timeperiod.test.tools.TimeSpec;
-import kr.debop4j.timeperiod.test.tools.Times;
 import kr.debop4j.timeperiod.timerange.DayRange;
 import kr.debop4j.timeperiod.timerange.HourRange;
+import kr.debop4j.timeperiod.tools.TimeSpec;
+import kr.debop4j.timeperiod.tools.Times;
 import lombok.extern.slf4j.Slf4j;
 import org.joda.time.DateTime;
 import org.junit.Test;
 
 import java.util.List;
 
-import static kr.debop4j.timeperiod.test.tools.Times.*;
+import static kr.debop4j.timeperiod.tools.Times.*;
 import static org.fest.assertions.Assertions.assertThat;
 
 /**

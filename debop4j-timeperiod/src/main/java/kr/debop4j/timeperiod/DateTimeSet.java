@@ -18,7 +18,7 @@ package kr.debop4j.timeperiod;
 
 import com.google.common.collect.Lists;
 import kr.debop4j.core.Guard;
-import kr.debop4j.timeperiod.test.tools.TimeSpec;
+import kr.debop4j.timeperiod.tools.TimeSpec;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.joda.time.DateTime;

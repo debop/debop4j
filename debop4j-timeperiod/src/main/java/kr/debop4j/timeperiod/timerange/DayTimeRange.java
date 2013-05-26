@@ -23,7 +23,7 @@ import kr.debop4j.timeperiod.DayOfWeek;
 import kr.debop4j.timeperiod.ITimeCalendar;
 import kr.debop4j.timeperiod.TimeCalendar;
 import kr.debop4j.timeperiod.TimeRange;
-import kr.debop4j.timeperiod.test.tools.TimeSpec;
+import kr.debop4j.timeperiod.tools.TimeSpec;
 import lombok.Getter;
 import org.joda.time.DateTime;
 
@@ -102,8 +102,7 @@ public abstract class DayTimeRange extends CalendarTimeRange {
 
     @Override
     protected Objects.ToStringHelper buildStringHelper() {
-        return super.buildStringHelper()
-                .add("dayCount", dayCount);
+        return super.buildStringHelper(); //.add("dayCount", dayCount);
     }
 
     private static final long serialVersionUID = 3989374355981125247L;

@@ -19,18 +19,18 @@ package kr.debop4j.timeperiod.test.timelines;
 import kr.debop4j.timeperiod.*;
 import kr.debop4j.timeperiod.test.TimePeriodTestBase;
 import kr.debop4j.timeperiod.test.samples.SchoolDay;
-import kr.debop4j.timeperiod.test.tools.Durations;
-import kr.debop4j.timeperiod.test.tools.Times;
 import kr.debop4j.timeperiod.timeline.TimeGapCalculator;
 import kr.debop4j.timeperiod.timerange.CalendarTimeRange;
 import kr.debop4j.timeperiod.timerange.DayRange;
 import kr.debop4j.timeperiod.timerange.DayRangeCollection;
 import kr.debop4j.timeperiod.timerange.MonthRange;
+import kr.debop4j.timeperiod.tools.Durations;
+import kr.debop4j.timeperiod.tools.Times;
 import lombok.extern.slf4j.Slf4j;
 import org.joda.time.DateTime;
 import org.junit.Test;
 
-import static kr.debop4j.timeperiod.test.tools.Times.asDate;
+import static kr.debop4j.timeperiod.tools.Times.asDate;
 import static org.fest.assertions.Assertions.assertThat;
 
 /**

@@ -14,12 +14,12 @@
  * limitations under the License.
  */
 
-package kr.debop4j.timeperiod.test.calendars;
+package kr.debop4j.timeperiod.calendars;
 
 import kr.debop4j.timeperiod.DayOfWeek;
 import kr.debop4j.timeperiod.ITimePeriodCollection;
 import kr.debop4j.timeperiod.TimePeriodCollection;
-import kr.debop4j.timeperiod.test.tools.TimeSpec;
+import kr.debop4j.timeperiod.tools.TimeSpec;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package kr.debop4j.timeperiod.test.tools;
+package kr.debop4j.timeperiod.tools;
 
 import com.google.common.base.Objects;
 import com.google.common.collect.Iterables;

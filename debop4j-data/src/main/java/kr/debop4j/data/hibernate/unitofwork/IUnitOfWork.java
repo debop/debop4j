@@ -49,6 +49,7 @@ public interface IUnitOfWork extends AutoCloseable {
     /** 현 {@link org.hibernate.Session} 의 변경 내용을 {@link org.springframework.transaction.TransactionDefinition} 설정을 가지는 Transaction을 이용하여 flush 를 수행합니다. */
     void transactionalFlush(TransactionDefinition transactionDefinition);
 
+    /** 현 UnitOfWork를 종료합니다. */
     @Override
     void close();
 }

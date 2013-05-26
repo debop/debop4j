@@ -16,12 +16,11 @@
 
 package kr.debop4j.timeperiod.timerange;
 
-import com.google.common.base.Objects;
 import com.google.common.collect.Lists;
 import kr.debop4j.core.tools.HashTool;
 import kr.debop4j.timeperiod.*;
-import kr.debop4j.timeperiod.test.tools.TimeSpec;
-import kr.debop4j.timeperiod.test.tools.Times;
+import kr.debop4j.timeperiod.tools.TimeSpec;
+import kr.debop4j.timeperiod.tools.Times;
 import lombok.Getter;
 import org.joda.time.DateTime;
 
@@ -93,15 +92,15 @@ public abstract class HalfyearTimeRange extends YearCalendarTimeRange {
         return HashTool.compute(super.hashCode(), startYear, startHalfyear, endYear, endHalfyear, halfyearCount);
     }
 
-    @Override
-    protected Objects.ToStringHelper buildStringHelper() {
-        return super.buildStringHelper()
-                .add("startYear", startYear)
-                .add("startHalfyear", startHalfyear)
-                .add("endYear", endYear)
-                .add("endHalfyear", endHalfyear)
-                .add("halfyearCount", halfyearCount);
-    }
+//    @Override
+//    protected Objects.ToStringHelper buildStringHelper() {
+//        return super.buildStringHelper()
+//                .add("startYear", startYear)
+//                .add("startHalfyear", startHalfyear)
+//                .add("endYear", endYear)
+//                .add("endHalfyear", endHalfyear)
+//                .add("halfyearCount", halfyearCount);
+//    }
 
     private static TimeRange getPeriodOf(int year, Halfyear halfyear, int halfyearCount) {
         assert halfyearCount > 0;

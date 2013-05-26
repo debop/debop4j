@@ -14,14 +14,14 @@
  * limitations under the License.
  */
 
-package kr.debop4j.timeperiod.test.tools;
+package kr.debop4j.timeperiod.tools;
 
 import kr.debop4j.timeperiod.DayOfWeek;
 import org.joda.time.DateTime;
 import org.joda.time.Duration;
 
 /**
- * kr.debop4j.timeperiod.test.tools.TimeSpec
+ * TimeSpec
  *
  * @author 배성혁 sunghyouk.bae@gmail.com
  * @since 13. 5. 11. 오후 12:41

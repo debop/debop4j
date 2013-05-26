@@ -19,7 +19,7 @@ package kr.debop4j.timeperiod.timerange;
 import kr.debop4j.timeperiod.ITimeCalendar;
 import kr.debop4j.timeperiod.TimeCalendar;
 import kr.debop4j.timeperiod.clock.ClockProxy;
-import kr.debop4j.timeperiod.test.tools.Times;
+import kr.debop4j.timeperiod.tools.Times;
 import lombok.extern.slf4j.Slf4j;
 import org.joda.time.DateTime;
 

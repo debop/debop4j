@@ -14,12 +14,12 @@
  * limitations under the License.
  */
 
-package kr.debop4j.timeperiod.test.calendars;
+package kr.debop4j.timeperiod.calendars;
 
 import java.io.Serializable;
 
 /**
- * kr.debop4j.timeperiod.test.calendars.ICalendarVisitorContext
+ * ICalendarVisitorContext
  *
  * @author 배성혁 sunghyouk.bae@gmail.com
  * @since 13. 5. 17. 오전 1:37

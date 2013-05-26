@@ -20,9 +20,9 @@ import kr.debop4j.timeperiod.PeriodRelation;
 import kr.debop4j.timeperiod.TimeRange;
 import kr.debop4j.timeperiod.clock.ClockProxy;
 import kr.debop4j.timeperiod.test.samples.TimeRangePeriodRelationTestData;
-import kr.debop4j.timeperiod.test.tools.Durations;
-import kr.debop4j.timeperiod.test.tools.TimeSpec;
-import kr.debop4j.timeperiod.test.tools.Times;
+import kr.debop4j.timeperiod.tools.Durations;
+import kr.debop4j.timeperiod.tools.TimeSpec;
+import kr.debop4j.timeperiod.tools.Times;
 import lombok.extern.slf4j.Slf4j;
 import org.joda.time.DateTime;
 import org.joda.time.Duration;
@@ -201,13 +201,13 @@ public class TimeRangeTest {
         assertThat(range.getStart()).isEqualTo(chanedStart);
     }
 
-    @Test( expected = AssertionError.class )
+    @Test(expected = AssertionError.class)
     public void startReadonlyTest() {
         TimeRange range = new TimeRange(ClockProxy.getClock().now(), Durations.hours(1), true);
         range.setStart(range.getStart().minusHours(2));
     }
 
-    @Test( expected = AssertionError.class )
+    @Test(expected = AssertionError.class)
     public void startOutOfRangeTest() {
         TimeRange range = new TimeRange(ClockProxy.getClock().now(), Durations.hours(1), false);
         range.setStart(range.getStart().plusHours(2));
@@ -223,13 +223,13 @@ public class TimeRangeTest {
         assertThat(range.getEnd()).isEqualTo(changedEnd);
     }
 
-    @Test( expected = AssertionError.class )
+    @Test(expected = AssertionError.class)
     public void endReadonlyTest() {
         TimeRange range = new TimeRange(ClockProxy.getClock().now(), Durations.hours(1), true);
         range.setEnd(range.getEnd().plusHours(1));
     }
 
-    @Test( expected = AssertionError.class )
+    @Test(expected = AssertionError.class)
     public void endOutOfRangeTest() {
         TimeRange range = new TimeRange(ClockProxy.getClock().now(), Durations.hours(1), false);
         range.setEnd(range.getEnd().minusHours(2));

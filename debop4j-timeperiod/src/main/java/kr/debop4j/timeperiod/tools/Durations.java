@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package kr.debop4j.timeperiod.test.tools;
+package kr.debop4j.timeperiod.tools;
 
 import kr.debop4j.timeperiod.Halfyear;
 import kr.debop4j.timeperiod.Quarter;
@@ -24,8 +24,8 @@ import org.joda.time.Duration;
 
 import java.util.Locale;
 
-import static kr.debop4j.timeperiod.test.tools.Times.startTimeOfHalfyear;
-import static kr.debop4j.timeperiod.test.tools.Times.startTimeOfQuarter;
+import static kr.debop4j.timeperiod.tools.Times.startTimeOfHalfyear;
+import static kr.debop4j.timeperiod.tools.Times.startTimeOfQuarter;
 
 /**
  * 기간에 대한 메소드를 제공합니다. 참고: {@link Duration}
@@ -85,6 +85,7 @@ public abstract class Durations {
         return (weeks == 0) ? Zero : days(weeks * TimeSpec.DaysPerWeek);
     }
 
+    /** 1일 (하루) */
     public static final Duration Day = Duration.standardDays(1);
 
     public static Duration days(int days) {
@@ -111,6 +112,7 @@ public abstract class Durations {
                                        millis);
     }
 
+    /** 한 시간 */
     public static final Duration Hour = Duration.standardHours(1);
 
     public static Duration hours(int hours) {

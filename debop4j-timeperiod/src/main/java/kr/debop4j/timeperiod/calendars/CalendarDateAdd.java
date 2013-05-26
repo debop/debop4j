@@ -14,17 +14,17 @@
  * limitations under the License.
  */
 
-package kr.debop4j.timeperiod.test.calendars;
+package kr.debop4j.timeperiod.calendars;
 
 import kr.debop4j.core.Guard;
 import kr.debop4j.core.NotSupportException;
 import kr.debop4j.core.Pair;
 import kr.debop4j.core.tools.StringTool;
 import kr.debop4j.timeperiod.*;
-import kr.debop4j.timeperiod.test.tools.Durations;
-import kr.debop4j.timeperiod.test.tools.TimeSpec;
 import kr.debop4j.timeperiod.timeline.TimeGapCalculator;
 import kr.debop4j.timeperiod.timerange.WeekRange;
+import kr.debop4j.timeperiod.tools.Durations;
+import kr.debop4j.timeperiod.tools.TimeSpec;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.joda.time.DateTime;
@@ -59,7 +59,7 @@ public class CalendarDateAdd extends DateAdd {
     @Getter private final List<DayHourRange> workingDayHours = new ArrayList<>();
 
     public CalendarDateAdd() {
-        this(TimeCalendar.getDefault());
+        this(TimeCalendar.getEmptyOffset());
     }
 
     public CalendarDateAdd(ITimeCalendar calendar) {
@@ -77,17 +77,22 @@ public class CalendarDateAdd extends DateAdd {
     }
 
     /** 주중 (월-금)을 working day로 추가합니다. */
-    public void addWorkingDays() {
+    public void addWorkingWeekDays() {
         addWeekDays(TimeSpec.Weekdays);
     }
 
     /** 주말 (토-일)을 working day로 추가합니다. */
-    public void addWeekendDays() {
+    public void addWeekendWeekDays() {
         addWeekDays(TimeSpec.Weekends);
     }
 
     private void addWeekDays(DayOfWeek... dayOfWeeks) {
         Collections.addAll(weekDays, dayOfWeeks);
+    }
+
+    /** start 시각으로부터 offset 기간이 지난 시각을 계산합니다. */
+    public DateTime add(DateTime start, Duration offset) {
+        return add(start, offset, SeekBoundaryMode.Next);
     }
 
     @Override
@@ -98,11 +103,12 @@ public class CalendarDateAdd extends DateAdd {
         if (getWeekDays().size() == 0 && getExcludePeriods().size() == 0 && getWorkingHours().size() == 0)
             return start.plus(offset);
 
-        Pair<DateTime, Duration> endTuple = (offset.compareTo(ZERO) < 0)
-                ? calculateEnd(start, Durations.negate(offset), SeekDirection.Backward, seekBoundary)
-                : calculateEnd(start, offset, SeekDirection.Forward, seekBoundary);
+        Pair<DateTime, Duration> endPair =
+                (offset.compareTo(ZERO) < 0)
+                        ? calculateEnd(start, Durations.negate(offset), SeekDirection.Backward, seekBoundary)
+                        : calculateEnd(start, offset, SeekDirection.Forward, seekBoundary);
 
-        DateTime end = endTuple.getV1();
+        DateTime end = endPair.getV1();
 
         if (log.isTraceEnabled())
             log.trace("add. start [{}] + offset [{}] => end=[{}] seekBoundary=[{}]", start, offset, end, seekBoundary);
@@ -163,6 +169,8 @@ public class CalendarDateAdd extends DateAdd {
             end = result.getV1();
             remaining = result.getV2();
 
+            log.trace("완료기간을 구했습니다. end=[{}], remaining=[{}]", end, remaining);
+
             if (end != null || remaining == null)
                 break;
 
@@ -199,12 +207,13 @@ public class CalendarDateAdd extends DateAdd {
         if (getExcludePeriods().size() == 0) {
             next = current.nextWeek();
         } else {
-            TimeRange limits = new TimeRange(current.getEnd().plusMillis(1), TimeSpec.MaxPeriodTime);
+            TimeRange limits = new TimeRange(current.getEnd().plusMillis(1), (DateTime) null);
             TimeGapCalculator<TimeRange> gapCalculator = new TimeGapCalculator<>(getTimeCalendar());
             ITimePeriodCollection remainingPeriods = gapCalculator.getGaps(getExcludePeriods(), limits);
 
-            if (remainingPeriods.size() > 0)
-                next = new WeekRange(remainingPeriods.get(0).getEnd(), getTimeCalendar());
+            next = (remainingPeriods.size() > 0)
+                    ? new WeekRange(remainingPeriods.get(0).getStart(), getTimeCalendar())
+                    : null;
         }
         if (log.isTraceEnabled())
             log.trace("현 week[{}]의 이후 week 는 [{}] ", current, next);
@@ -231,9 +240,9 @@ public class CalendarDateAdd extends DateAdd {
             TimeGapCalculator<TimeRange> gapCalculator = new TimeGapCalculator<>(getTimeCalendar());
             ITimePeriodCollection remainingPeriods = gapCalculator.getGaps(getExcludePeriods(), limits);
 
-            if (remainingPeriods.size() > 0)
-                previous = new WeekRange(remainingPeriods.get(remainingPeriods.size() - 1).getEnd(),
-                                         getTimeCalendar());
+            previous = (remainingPeriods.size() > 0)
+                    ? new WeekRange(remainingPeriods.get(remainingPeriods.size() - 1).getEnd(), getTimeCalendar())
+                    : null;
         }
         if (log.isTraceEnabled())
             log.trace("현 week[{}]의 이전 week 는 [{}] ", current, previous);
@@ -244,15 +253,17 @@ public class CalendarDateAdd extends DateAdd {
     /**
      * 지정한 기간 내에서 예외 기간등을 제외한 기간들을 HourRange 컬렉션으로 단위로 반환합니다.
      *
-     * @param period 전체 기간
+     * @param limits 전체 기간
      * @return 제외할 기간을 뺀 기간들
      */
-    private Iterable<ITimePeriod> getAvailableWeekPeriods(ITimePeriod period) {
-        shouldNotBeNull(period, "period");
+    private Iterable<ITimePeriod> getAvailableWeekPeriods(ITimePeriod limits) {
+        shouldNotBeNull(limits, "limits");
+
+        if (log.isTraceEnabled()) log.trace("가능한 기간을 추출합니다... 전체 기간=[{}]", limits);
 
         if (weekDays.size() == 0 && workingHours.size() == 0 && workingDayHours.size() == 0) {
             TimePeriodCollection result = new TimePeriodCollection();
-            result.add(period);
+            result.add(limits);
             return result;
         }
 
@@ -261,7 +272,7 @@ public class CalendarDateAdd extends DateAdd {
         filter.getCollectingHours().addAll(workingHours);
         filter.getCollectingDayHours().addAll(workingDayHours);
 
-        CalendarPeriodCollector weekCollector = new CalendarPeriodCollector(filter, period, SeekDirection.Forward, getTimeCalendar());
+        CalendarPeriodCollector weekCollector = new CalendarPeriodCollector(filter, limits, SeekDirection.Forward, getTimeCalendar());
         weekCollector.collectHours();
 
         return weekCollector.getPeriods();

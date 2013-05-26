@@ -14,11 +14,11 @@
  * limitations under the License.
  */
 
-package kr.debop4j.timeperiod.test.calendars.seeker;
+package kr.debop4j.timeperiod.calendars.seeker;
 
 import kr.debop4j.timeperiod.*;
-import kr.debop4j.timeperiod.test.calendars.CalendarVisitor;
-import kr.debop4j.timeperiod.test.calendars.CalendarVisitorFilter;
+import kr.debop4j.timeperiod.calendars.CalendarVisitor;
+import kr.debop4j.timeperiod.calendars.CalendarVisitorFilter;
 import kr.debop4j.timeperiod.timerange.DayRange;
 import kr.debop4j.timeperiod.timerange.MonthRange;
 import kr.debop4j.timeperiod.timerange.YearRange;
@@ -71,8 +71,8 @@ public class DaySeeker extends CalendarVisitor<CalendarVisitorFilter, DaySeekerC
      * @return 기준일로부터 dayCount 만큼 떨어진 일자
      */
     public DayRange findDay(DayRange startDay, int dayCount) {
-        if (log.isTraceEnabled())
-            log.trace("Day 찾기... startDay=[{}], dayCount=[{}]", startDay, dayCount);
+        if (DaySeeker.log.isTraceEnabled())
+            DaySeeker.log.trace("Day 찾기... startDay=[{}], dayCount=[{}]", startDay, dayCount);
 
         if (dayCount == 0) return startDay;
 
@@ -84,8 +84,8 @@ public class DaySeeker extends CalendarVisitor<CalendarVisitorFilter, DaySeekerC
 
         startDayVisit(startDay, context, visitDir);
 
-        if (log.isTraceEnabled())
-            log.trace("Day 찾기... startDay=[{}], dayCount=[{}], foundDay=[{}]", startDay, dayCount, context.getFoundDay());
+        if (DaySeeker.log.isTraceEnabled())
+            DaySeeker.log.trace("Day 찾기... startDay=[{}], dayCount=[{}], foundDay=[{}]", startDay, dayCount, context.getFoundDay());
 
         return context.getFoundDay();
     }

@@ -16,7 +16,6 @@
 
 package kr.debop4j.timeperiod.timerange;
 
-import com.google.common.base.Objects;
 import com.google.common.collect.Lists;
 import kr.debop4j.core.Guard;
 import kr.debop4j.core.tools.HashTool;
@@ -24,7 +23,8 @@ import kr.debop4j.timeperiod.Halfyear;
 import kr.debop4j.timeperiod.ITimeCalendar;
 import kr.debop4j.timeperiod.Quarter;
 import kr.debop4j.timeperiod.TimeRange;
-import kr.debop4j.timeperiod.test.tools.TimeSpec;
+import kr.debop4j.timeperiod.tools.TimeSpec;
+import kr.debop4j.timeperiod.tools.Times;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.joda.time.DateTime;
@@ -79,13 +79,13 @@ public class YearTimeRange extends YearCalendarTimeRange {
 
     public List<MonthRange> getMonths() {
         int startYear = getStartYear();
-
         List<MonthRange> months = Lists.newArrayListWithCapacity(yearCount * TimeSpec.MonthsPerYear);
+        int monthCount = getYearCount() * TimeSpec.MonthsPerYear;
 
-        for (int y = 0; y < yearCount; y++) {
-            for (int m = 0; m < TimeSpec.MonthsPerYear; m++) {
-                months.add(new MonthRange(startYear + y, m, getTimeCalendar()));
-            }
+        DateTime startDate = Times.startTimeOfYear(getStartYear());
+
+        for (int m = 0; m < monthCount; m++) {
+            months.add(new MonthRange(startDate.plusMonths(m), getTimeCalendar()));
         }
         return months;
     }
@@ -95,11 +95,11 @@ public class YearTimeRange extends YearCalendarTimeRange {
         return HashTool.compute(super.hashCode(), yearCount);
     }
 
-    @Override
-    protected Objects.ToStringHelper buildStringHelper() {
-        return super.buildStringHelper()
-                .add("yearCount", yearCount);
-    }
+//    @Override
+//    protected Objects.ToStringHelper buildStringHelper() {
+//        return super.buildStringHelper()
+//                .add("yearCount", yearCount);
+//    }
 
     private static TimeRange getPeriodOf(int year, int yearCount) {
         assert yearCount > 0;

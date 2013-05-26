@@ -19,7 +19,7 @@ package kr.debop4j.timeperiod.timerange;
 import com.google.common.base.Objects;
 import kr.debop4j.core.tools.HashTool;
 import kr.debop4j.timeperiod.*;
-import kr.debop4j.timeperiod.test.tools.Times;
+import kr.debop4j.timeperiod.tools.Times;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.joda.time.DateTime;
@@ -171,7 +171,6 @@ public class CalendarTimeRange extends TimeRange implements ICalendarTimeRange {
 
     @Override
     protected Objects.ToStringHelper buildStringHelper() {
-        return super.buildStringHelper()
-                .add("timeCalendar", timeCalendar);
+        return super.buildStringHelper(); //.add("timeCalendar", timeCalendar);
     }
 }

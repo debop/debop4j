@@ -17,7 +17,7 @@
 package kr.debop4j.timeperiod.test.samples;
 
 import kr.debop4j.timeperiod.TimeBlock;
-import kr.debop4j.timeperiod.test.tools.Durations;
+import kr.debop4j.timeperiod.tools.Durations;
 import org.joda.time.DateTime;
 import org.joda.time.Duration;
 

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package kr.debop4j.timeperiod.test.calendars;
+package kr.debop4j.timeperiod.calendars;
 
 import com.google.common.base.Predicate;
 import com.google.common.collect.Iterables;
@@ -25,8 +25,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.joda.time.DateTime;
 
 import javax.annotation.Nullable;
-
-import static kr.debop4j.timeperiod.test.calendars.CalendarPeriodCollectorContext.CollectKind.*;
 
 /**
  * 칼렌다 기준으로 특정 기간(limits)에서 필터(filter)에 해당하는 기간을 추출합니다.
@@ -61,7 +59,7 @@ public class CalendarPeriodCollector extends CalendarVisitor<CalendarPeriodColle
         if (log.isTraceEnabled()) log.trace("collect years...");
 
         CalendarPeriodCollectorContext context = new CalendarPeriodCollectorContext();
-        context.setScope(Year);
+        context.setScope(CalendarPeriodCollectorContext.CollectKind.Year);
         startPeriodVisit(context);
     }
 
@@ -70,7 +68,7 @@ public class CalendarPeriodCollector extends CalendarVisitor<CalendarPeriodColle
         if (log.isTraceEnabled()) log.trace("collect months...");
 
         CalendarPeriodCollectorContext context = new CalendarPeriodCollectorContext();
-        context.setScope(Month);
+        context.setScope(CalendarPeriodCollectorContext.CollectKind.Month);
         startPeriodVisit(context);
     }
 
@@ -79,7 +77,7 @@ public class CalendarPeriodCollector extends CalendarVisitor<CalendarPeriodColle
         if (log.isTraceEnabled()) log.trace("collect days...");
 
         CalendarPeriodCollectorContext context = new CalendarPeriodCollectorContext();
-        context.setScope(Day);
+        context.setScope(CalendarPeriodCollectorContext.CollectKind.Day);
         startPeriodVisit(context);
     }
 
@@ -88,7 +86,7 @@ public class CalendarPeriodCollector extends CalendarVisitor<CalendarPeriodColle
         if (log.isTraceEnabled()) log.trace("collect hours...");
 
         CalendarPeriodCollectorContext context = new CalendarPeriodCollectorContext();
-        context.setScope(Hour);
+        context.setScope(CalendarPeriodCollectorContext.CollectKind.Hour);
         startPeriodVisit(context);
     }
 
@@ -97,33 +95,33 @@ public class CalendarPeriodCollector extends CalendarVisitor<CalendarPeriodColle
         if (log.isTraceEnabled()) log.trace("collect minutes...");
 
         CalendarPeriodCollectorContext context = new CalendarPeriodCollectorContext();
-        context.setScope(Minute);
+        context.setScope(CalendarPeriodCollectorContext.CollectKind.Minute);
         startPeriodVisit(context);
     }
 
     @Override
     protected boolean enterYears(YearRangeCollection yearRangeCollection, CalendarPeriodCollectorContext context) {
-        return context.getScope().getValue() > Year.getValue();
+        return context.getScope().getValue() > CalendarPeriodCollectorContext.CollectKind.Year.getValue();
     }
 
     @Override
     protected boolean enterMonths(YearRange yearRange, CalendarPeriodCollectorContext context) {
-        return context.getScope().getValue() > Month.getValue();
+        return context.getScope().getValue() > CalendarPeriodCollectorContext.CollectKind.Month.getValue();
     }
 
     @Override
     protected boolean enterDays(MonthRange month, CalendarPeriodCollectorContext context) {
-        return context.getScope().getValue() > Day.getValue();
+        return context.getScope().getValue() > CalendarPeriodCollectorContext.CollectKind.Day.getValue();
     }
 
     @Override
     protected boolean enterHours(DayRange day, CalendarPeriodCollectorContext context) {
-        return context.getScope().getValue() > Hour.getValue();
+        return context.getScope().getValue() > CalendarPeriodCollectorContext.CollectKind.Hour.getValue();
     }
 
     @Override
     protected boolean enterMinutes(HourRange hour, CalendarPeriodCollectorContext context) {
-        return context.getScope().getValue() > Minute.getValue();
+        return context.getScope().getValue() > CalendarPeriodCollectorContext.CollectKind.Minute.getValue();
     }
 
     @Override
@@ -131,12 +129,12 @@ public class CalendarPeriodCollector extends CalendarVisitor<CalendarPeriodColle
         if (log.isTraceEnabled())
             log.trace("visit years... years=[{}]", years);
 
-        if (context.getScope() != Year)
+        if (context.getScope() != CalendarPeriodCollectorContext.CollectKind.Year)
             return true;    // continue
 
         for (YearRange year : years.getYears()) {
             if (isMatchingYear(year, context) && checkLimits(year)) {
-                getPeriods().add(year);
+                periods.add(year);
             }
         }
         return false;  // abort
@@ -145,15 +143,15 @@ public class CalendarPeriodCollector extends CalendarVisitor<CalendarPeriodColle
     @Override
     protected boolean onVisitYear(YearRange year, final CalendarPeriodCollectorContext context) {
         if (log.isTraceEnabled())
-            log.trace("visit year... year=[{}]", year);
+            log.trace("visit year... year=[{}]", year.getYear());
 
-        if (context.getScope() != Month)
+        if (context.getScope() != CalendarPeriodCollectorContext.CollectKind.Month)
             return true;
 
         if (getFilter().getCollectingMonths().size() == 0) {
             for (MonthRange month : year.getMonths()) {
                 if (isMatchingMonth(month, context) && checkLimits(month)) {
-                    getPeriods().add(month);
+                    periods.add(month);
                 }
             }
         } else {
@@ -163,7 +161,7 @@ public class CalendarPeriodCollector extends CalendarVisitor<CalendarPeriodColle
                                                       m.getStartMonthOfYear(),
                                                       year.getTimeCalendar());
                     if (isMatchingMonth(month, context) && checkLimits(month))
-                        getPeriods().add(month);
+                        periods.add(month);
                 } else {
                     MonthRangeCollection months =
                             new MonthRangeCollection(year.getYear(),
@@ -177,7 +175,7 @@ public class CalendarPeriodCollector extends CalendarVisitor<CalendarPeriodColle
                         }
                     });
                     if (isMatching && checkLimits(months))
-                        getPeriods().add(months);
+                        periods.addAll(months.getMonths());
                 }
             }
         }
@@ -189,13 +187,13 @@ public class CalendarPeriodCollector extends CalendarVisitor<CalendarPeriodColle
         if (log.isTraceEnabled())
             log.trace("visit month... month=[{}]", month);
 
-        if (context.getScope() != Day)
+        if (context.getScope() != CalendarPeriodCollectorContext.CollectKind.Day)
             return true;
 
         if (getFilter().getCollectingDays().size() == 0) {
             for (DayRange day : month.getDays()) {
                 if (isMatchingDay(day, context) && checkLimits(day)) {
-                    getPeriods().add(day);
+                    periods.add(day);
                 }
             }
         } else {
@@ -206,7 +204,7 @@ public class CalendarPeriodCollector extends CalendarVisitor<CalendarPeriodColle
                                                      day.getStartDayOfMonth(),
                                                      month.getTimeCalendar());
                     if (isMatchingDay(dayRange, context) && checkLimits(dayRange)) {
-                        getPeriods().add(dayRange);
+                        periods.add(dayRange);
                     }
                 } else {
                     DayRangeCollection days =
@@ -222,7 +220,7 @@ public class CalendarPeriodCollector extends CalendarVisitor<CalendarPeriodColle
                         }
                     });
                     if (isMatching && checkLimits(days))
-                        getPeriods().add(days);
+                        periods.addAll(days.getDays());
                 }
             }
         }
@@ -234,23 +232,23 @@ public class CalendarPeriodCollector extends CalendarVisitor<CalendarPeriodColle
         if (log.isTraceEnabled())
             log.trace("visit day... day=[{}]", day);
 
-        if (context.getScope() != Hour)
+        if (context.getScope().getValue() != CalendarPeriodCollectorContext.CollectKind.Hour.getValue())
             return true;
 
-        if (getFilter().getCollectingDays().size() == 0) {
+        if (getFilter().getCollectingHours().size() == 0) {
             for (HourRange hour : day.getHours()) {
                 if (isMatchingHour(hour, context) && checkLimits(hour)) {
-                    getPeriods().add(hour);
+                    periods.add(hour);
                 }
             }
         } else if (isMatchingDay(day, context)) {
             for (HourRangeInDay hour : getFilter().getCollectingHours()) {
-                DateTime startTime = hour.getStartHourOfDay().getDateTime(day.getStart());
-                DateTime endTime = hour.getEndHourOfDay().getDateTime(day.getStart());
+                DateTime startTime = hour.getStart().getDateTime(day.getStart());
+                DateTime endTime = hour.getEnd().getDateTime(day.getStart());
                 CalendarTimeRange hours = new CalendarTimeRange(startTime, endTime, day.getTimeCalendar());
 
                 if (checkExcludePeriods(hours) && checkLimits(hours)) {
-                    getPeriods().add(hours);
+                    periods.add(hours);
                 }
             }
         }

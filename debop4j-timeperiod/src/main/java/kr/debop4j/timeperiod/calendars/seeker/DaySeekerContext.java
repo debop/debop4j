@@ -14,17 +14,17 @@
  * limitations under the License.
  */
 
-package kr.debop4j.timeperiod.test.calendars.seeker;
+package kr.debop4j.timeperiod.calendars.seeker;
 
 import kr.debop4j.core.Guard;
-import kr.debop4j.timeperiod.test.calendars.ICalendarVisitorContext;
+import kr.debop4j.timeperiod.calendars.ICalendarVisitorContext;
 import kr.debop4j.timeperiod.timerange.DayRange;
 import lombok.Getter;
 
 import java.io.Serializable;
 
 /**
- * kr.debop4j.timeperiod.test.calendars.seeker.DaySeekerContext
+ * DaySeekerContext
  *
  * @author 배성혁 sunghyouk.bae@gmail.com
  * @since 13. 5. 20. 오후 8:47

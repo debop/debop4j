@@ -19,7 +19,7 @@ package kr.debop4j.timeperiod.timerange;
 import com.google.common.collect.Lists;
 import kr.debop4j.timeperiod.ITimeCalendar;
 import kr.debop4j.timeperiod.TimeCalendar;
-import kr.debop4j.timeperiod.test.tools.Times;
+import kr.debop4j.timeperiod.tools.Times;
 import org.joda.time.DateTime;
 
 import java.util.List;

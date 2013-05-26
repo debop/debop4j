@@ -17,6 +17,7 @@
 package kr.debop4j.timeperiod.test.tools;
 
 import kr.debop4j.timeperiod.test.TimePeriodTestBase;
+import kr.debop4j.timeperiod.tools.TimeSpec;
 import lombok.extern.slf4j.Slf4j;
 import org.joda.time.Duration;
 import org.junit.Test;

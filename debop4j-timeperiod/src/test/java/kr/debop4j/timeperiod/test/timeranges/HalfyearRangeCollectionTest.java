@@ -26,8 +26,8 @@ import org.junit.Test;
 
 import java.util.List;
 
-import static kr.debop4j.timeperiod.test.tools.Times.asDate;
-import static kr.debop4j.timeperiod.test.tools.Times.getYearOf;
+import static kr.debop4j.timeperiod.tools.Times.asDate;
+import static kr.debop4j.timeperiod.tools.Times.getYearOf;
 import static org.fest.assertions.Assertions.assertThat;
 
 /**

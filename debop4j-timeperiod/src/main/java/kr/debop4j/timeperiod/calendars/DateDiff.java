@@ -14,23 +14,23 @@
  * limitations under the License.
  */
 
-package kr.debop4j.timeperiod.test.calendars;
+package kr.debop4j.timeperiod.calendars;
 
+import com.google.common.base.Objects;
 import kr.debop4j.core.ValueObjectBase;
 import kr.debop4j.core.tools.HashTool;
 import kr.debop4j.timeperiod.ITimeCalendar;
 import kr.debop4j.timeperiod.Quarter;
 import kr.debop4j.timeperiod.TimeCalendar;
 import kr.debop4j.timeperiod.clock.ClockProxy;
-import kr.debop4j.timeperiod.test.tools.TimeSpec;
-import kr.debop4j.timeperiod.test.tools.Times;
+import kr.debop4j.timeperiod.tools.TimeSpec;
+import kr.debop4j.timeperiod.tools.Times;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.joda.time.DateTime;
 import org.joda.time.Duration;
 
 import java.io.Serializable;
-import java.util.Objects;
 
 /**
  * 특정한 두 시각 사이에 {@link ITimeCalendar}, 예외 기간등을 고려한 기간을 계산합니다.
@@ -46,41 +46,41 @@ public class DateDiff extends ValueObjectBase implements Serializable {
     @Getter private final Duration difference;
     @Getter private final ITimeCalendar timeCalendar;
 
-    @Getter( lazy = true ) private final int years = calcYears();
-    @Getter( lazy = true ) private final int quarters = calcQuarters();
-    @Getter( lazy = true ) private final int months = calcMonths();
-    @Getter( lazy = true ) private final int weeks = calcWeeks();
-    @Getter( lazy = true ) private final int days = (int) Math.round(roundEx(getDifference().getStandardDays()));
-    @Getter( lazy = true ) private final int hours = (int) Math.round(roundEx(getDifference().getStandardHours()));
-    @Getter( lazy = true ) private final int minutes = (int) Math.round(roundEx(getDifference().getStandardMinutes()));
-    @Getter( lazy = true ) private final int seconds = (int) Math.round(roundEx(getDifference().getStandardSeconds()));
+    @Getter(lazy = true) private final int years = calcYears();
+    @Getter(lazy = true) private final int quarters = calcQuarters();
+    @Getter(lazy = true) private final int months = calcMonths();
+    @Getter(lazy = true) private final int weeks = calcWeeks();
+    @Getter(lazy = true) private final int days = (int) Math.round(roundEx(getDifference().getStandardDays()));
+    @Getter(lazy = true) private final int hours = (int) Math.round(roundEx(getDifference().getStandardHours()));
+    @Getter(lazy = true) private final int minutes = (int) Math.round(roundEx(getDifference().getStandardMinutes()));
+    @Getter(lazy = true) private final int seconds = (int) Math.round(roundEx(getDifference().getStandardSeconds()));
 
-    @Getter( lazy = true ) private final int elapsedYears = getYears();
-    @Getter( lazy = true ) private final int elapsedQuarters = getQuarters();
-    @Getter( lazy = true ) private final int elapsedMonths = getMonths() - getElapsedYears() * TimeSpec.MonthsPerYear;
+    @Getter(lazy = true) private final int elapsedYears = getYears();
+    @Getter(lazy = true) private final int elapsedQuarters = getQuarters();
+    @Getter(lazy = true) private final int elapsedMonths = getMonths() - getElapsedYears() * TimeSpec.MonthsPerYear;
 
-    @Getter( lazy = true )
+    @Getter(lazy = true)
     private final DateTime elapsedStartDays = getStart().plusYears(getElapsedYears()).plusMonths(getElapsedMonths());
-    @Getter( lazy = true )
+    @Getter(lazy = true)
     private final int elapsedDays = (int) new Duration(getElapsedStartDays(), getEnd()).getStandardDays();
 
-    @Getter( lazy = true )
+    @Getter(lazy = true)
     private final DateTime elapsedStartHours = getStart().plusYears(getElapsedYears())
             .plusMonths(getElapsedMonths()).plusDays(getElapsedDays());
-    @Getter( lazy = true )
+    @Getter(lazy = true)
     private final int elapsedHours = (int) new Duration(getElapsedStartHours(), getEnd()).getStandardHours();
 
-    @Getter( lazy = true )
+    @Getter(lazy = true)
     private final DateTime elapsedStartMinutes = getStart().plusYears(getElapsedYears())
             .plusMonths(getElapsedMonths()).plusDays(getElapsedDays()).plusHours(getElapsedHours());
-    @Getter( lazy = true )
+    @Getter(lazy = true)
     private final int elapsedMinutes = (int) new Duration(getElapsedStartMinutes(), getEnd()).getStandardMinutes();
 
-    @Getter( lazy = true )
+    @Getter(lazy = true)
     private final DateTime elapsedStartSeconds = getStart().plusYears(getElapsedYears())
             .plusMonths(getElapsedMonths()).plusDays(getElapsedDays())
             .plusHours(getElapsedHours()).plusMinutes(getElapsedMinutes());
-    @Getter( lazy = true )
+    @Getter(lazy = true)
     private final int elapsedSeconds = (int) new Duration(getElapsedStartSeconds(), getEnd()).getStandardSeconds();
 
 
@@ -126,8 +126,7 @@ public class DateDiff extends ValueObjectBase implements Serializable {
 
 
     private int calcYears() {
-        if (log.isTraceEnabled()) log.trace("calc years...");
-        if (Objects.equals(start, end)) return 0;
+        if (Objects.equal(start, end)) return 0;
 
         int compareDay = Math.min(end.getDayOfMonth(), timeCalendar.getDaysInMonth(getStartYear(), getEndMonthOfYear()));
         DateTime compareDate = new DateTime(getStartYear(), getEndMonthOfYear(), compareDay, 0, 0).plusMillis(end.getMillisOfDay());
@@ -143,8 +142,7 @@ public class DateDiff extends ValueObjectBase implements Serializable {
     }
 
     private int calcQuarters() {
-        if (log.isTraceEnabled()) log.trace("calc quarters...");
-        if (Objects.equals(start, end)) return 0;
+        if (Objects.equal(start, end)) return 0;
 
         int year1 = Times.getYearOf(getStartYear(), getStartMonthOfYear());
         Quarter quarter1 = Times.getQuarterOfMonth(getStartMonthOfYear());
@@ -157,11 +155,13 @@ public class DateDiff extends ValueObjectBase implements Serializable {
     }
 
     private int calcMonths() {
-        if (log.isTraceEnabled()) log.trace("calc months...");
-        if (Objects.equals(start, end)) return 0;
+        if (Objects.equal(start, end))
+            return 0;
 
         int compareDay = Math.min(end.getDayOfMonth(), timeCalendar.getDaysInMonth(getStartYear(), getStartMonthOfYear()));
-        DateTime compareDate = new DateTime(getStartYear(), getStartMonthOfYear(), compareDay, 0, 0).plus(end.getMillisOfDay());
+        DateTime compareDate = Times.asDate(getStartYear(), getStartMonthOfYear(), compareDay).plusMillis(end.getMillisOfDay());
+
+        // log.trace("compareDay=[{}], compareDate=[{}]", compareDay, compareDate);
 
         if (end.compareTo(start) > 0) {
             if (compareDate.compareTo(start) < 0)
@@ -169,18 +169,26 @@ public class DateDiff extends ValueObjectBase implements Serializable {
         } else if (compareDate.compareTo(start) > 0) {
             compareDate = compareDate.plusMonths(-1);
         }
-        return (getEndYear() * TimeSpec.MonthsPerYear + getEndMonthOfYear())
+
+        int month = (getEndYear() * TimeSpec.MonthsPerYear + getEndMonthOfYear())
                 - (timeCalendar.getYear(compareDate) * TimeSpec.MonthsPerYear + timeCalendar.getMonthOfYear(compareDate));
+
+        // log.trace("calc month=[{}]", month);
+
+        return month;
     }
 
     private int calcWeeks() {
-        if (log.isTraceEnabled()) log.trace("calc weeks...");
-        if (Objects.equals(start, end)) return 0;
+        if (Objects.equal(start, end))
+            return 0;
 
         DateTime week1 = Times.getStartOfWeek(start, timeCalendar.getFirstDayOfWeek());
         DateTime week2 = Times.getStartOfWeek(end, timeCalendar.getFirstDayOfWeek());
 
-        if (Objects.equals(week1, week2)) return 0;
+        DateDiff.log.trace("week1=[{}], week2=[{}]", week1, week2);
+
+        if (Objects.equal(week1, week2))
+            return 0;
 
         return (int) (new Duration(week1, week2).getStandardDays() / TimeSpec.DaysPerWeek);
     }
@@ -191,7 +199,7 @@ public class DateDiff extends ValueObjectBase implements Serializable {
     }
 
     @Override
-    protected com.google.common.base.Objects.ToStringHelper buildStringHelper() {
+    protected Objects.ToStringHelper buildStringHelper() {
         return super.buildStringHelper()
                 .add("start", start)
                 .add("end", end)

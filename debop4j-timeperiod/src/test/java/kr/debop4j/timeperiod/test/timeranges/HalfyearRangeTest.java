@@ -22,19 +22,19 @@ import kr.debop4j.timeperiod.Halfyear;
 import kr.debop4j.timeperiod.Quarter;
 import kr.debop4j.timeperiod.TimeCalendar;
 import kr.debop4j.timeperiod.test.TimePeriodTestBase;
-import kr.debop4j.timeperiod.test.tools.TimeSpec;
-import kr.debop4j.timeperiod.test.tools.Times;
 import kr.debop4j.timeperiod.timerange.HalfyearRange;
 import kr.debop4j.timeperiod.timerange.MonthRange;
 import kr.debop4j.timeperiod.timerange.QuarterRange;
+import kr.debop4j.timeperiod.tools.TimeSpec;
+import kr.debop4j.timeperiod.tools.Times;
 import lombok.extern.slf4j.Slf4j;
 import org.joda.time.DateTime;
 import org.junit.Test;
 
 import java.util.List;
 
-import static kr.debop4j.timeperiod.test.tools.Times.asDate;
-import static kr.debop4j.timeperiod.test.tools.Times.startTimeOfHalfyear;
+import static kr.debop4j.timeperiod.tools.Times.asDate;
+import static kr.debop4j.timeperiod.tools.Times.startTimeOfHalfyear;
 import static org.fest.assertions.Assertions.assertThat;
 
 /**

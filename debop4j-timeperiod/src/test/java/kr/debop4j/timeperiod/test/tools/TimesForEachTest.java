@@ -21,6 +21,8 @@ import kr.debop4j.timeperiod.ITimePeriod;
 import kr.debop4j.timeperiod.PeriodUnit;
 import kr.debop4j.timeperiod.TimeRange;
 import kr.debop4j.timeperiod.test.TimePeriodTestBase;
+import kr.debop4j.timeperiod.tools.TimeSpec;
+import kr.debop4j.timeperiod.tools.Times;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.joda.time.DateTime;

@@ -21,8 +21,8 @@ import kr.debop4j.core.Guard;
 import kr.debop4j.core.Pair;
 import kr.debop4j.core.ValueObjectBase;
 import kr.debop4j.core.tools.HashTool;
-import kr.debop4j.timeperiod.test.tools.TimeSpec;
-import kr.debop4j.timeperiod.test.tools.Times;
+import kr.debop4j.timeperiod.tools.TimeSpec;
+import kr.debop4j.timeperiod.tools.Times;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
@@ -273,7 +273,7 @@ public class TimePeriodBase extends ValueObjectBase implements ITimePeriod {
     protected Objects.ToStringHelper buildStringHelper() {
         return super.buildStringHelper()
                 .add("start", start)
-                .add("end", end)
-                .add("readonly", readonly);
+                .add("end", end);
+        //.add("readonly", readonly);
     }
 }

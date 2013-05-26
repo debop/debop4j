@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package kr.debop4j.timeperiod.test.calendars;
+package kr.debop4j.timeperiod.calendars;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -28,6 +28,10 @@ import lombok.Setter;
 public class CalendarPeriodCollectorContext implements ICalendarVisitorContext {
 
     private static final long serialVersionUID = -673206065311487129L;
+
+    @Getter
+    @Setter
+    public CollectKind scope;
 
     public enum CollectKind {
         Year(0),
@@ -59,8 +63,4 @@ public class CalendarPeriodCollectorContext implements ICalendarVisitorContext {
             }
         }
     }
-
-    @Getter
-    @Setter
-    public CollectKind scope;
 }

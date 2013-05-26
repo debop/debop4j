@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package kr.debop4j.timeperiod.test.calendars;
+package kr.debop4j.timeperiod.calendars;
 
 import com.google.common.collect.Lists;
 import kr.debop4j.timeperiod.DayHourRange;
@@ -27,7 +27,7 @@ import lombok.extern.slf4j.Slf4j;
 import java.util.List;
 
 /**
- * kr.debop4j.timeperiod.test.calendars.CalendarPeriodCollectorFilter
+ * CalendarPeriodCollectorFilter
  *
  * @author 배성혁 sunghyouk.bae@gmail.com
  * @since 13. 5. 19. 오후 9:56

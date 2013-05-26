@@ -20,7 +20,7 @@ import kr.debop4j.timeperiod.test.TimePeriodTestBase;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 
-import static kr.debop4j.timeperiod.test.tools.Times.*;
+import static kr.debop4j.timeperiod.tools.Times.*;
 import static org.fest.assertions.Assertions.assertThat;
 
 /**

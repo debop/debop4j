@@ -36,22 +36,52 @@ import java.util.List;
  */
 public interface IHibernateDao {
 
+    /**
+     * Current thread context 에서 사용하는 Session을 반환합니다.
+     * {@link kr.debop4j.data.hibernate.unitofwork.UnitOfWorks#start} 가 먼저 수행되어 있어야 합니다.
+     */
     Session getSession();
 
+    /** Session의 변경을 DB에 적용합니다. */
     void flushSession();
 
+    /** Session의 변경을 Transaction을 이용하여 DB에 적용합니다. */
     void transactionalFlush();
 
+    /**
+     * 특정 수형의 해당 id 값을 가지는 엔티티를 로드합니다. (실제 로드하는 것이 아니라, proxy로 로드하는 것이다)
+     * 주의: 실제 데이터가 없을 때에는 예외가 발생합니다.
+     */
     <T> T load(Class clazz, Serializable id);
 
+    /**
+     * 특정 수형의 해당 id 값을 가지는 엔티티를 로드합니다. (실제 로드하는 것이 아니라, proxy로 로드하는 것이다)
+     * 주의: 실제 데이터가 없을 때에는 예외가 발생합니다.
+     */
     <T> T load(Class clazz, Serializable id, LockOptions lockOptions);
 
+    /**
+     * 특정 수형의 해당 id 값을 가지는 엔티티를 로드합니다. 없을 때에는 null을 반환합니다.
+     *
+     * @param clazz 엔티티 수형
+     * @param id    identifier 값
+     * @return 엔티티, 없으면 null
+     */
     <T> T get(Class<T> clazz, Serializable id);
 
+    /**
+     * 특정 수형의 해당 id 값을 가지는 엔티티를 로드합니다. 없을 때에는 null을 반환합니다.
+     *
+     * @param clazz 엔티티 수형
+     * @param id    identifier 값
+     * @return 엔티티, 없으면 null
+     */
     <T> T get(Class<T> clazz, Serializable id, LockOptions lockOptions);
 
-    <T> List<T> getIn(Class<T> clazz, Collection ids);
+    /** 특정 수형의 해당 id 들을 가지는 엔티티들을 로드합니다. */
+    <T> List<T> getIn(Class<T> clazz, Collection<? extends Serializable> ids);
 
+    /** 특정 수형의 해당 id 들을 가지는 엔티티들을 로드합니다. */
     <T> List<T> getIn(Class<T> clazz, Serializable[] ids);
 
     ScrollableResults getScroll(DetachedCriteria dc);

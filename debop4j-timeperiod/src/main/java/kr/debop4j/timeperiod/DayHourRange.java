@@ -44,7 +44,7 @@ public class DayHourRange extends HourRangeInDay {
 
     @Override
     public int hashCode() {
-        return HashTool.compute(dayOfWeek, getStartHourOfDay(), getEndHourOfDay());
+        return HashTool.compute(dayOfWeek, getStart(), getEnd());
     }
 
     @Override
