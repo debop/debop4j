@@ -21,8 +21,9 @@ import com.google.common.collect.Iterables;
 import kr.debop4j.timeperiod.*;
 import kr.debop4j.timeperiod.timerange.*;
 import lombok.Getter;
-import lombok.extern.slf4j.Slf4j;
 import org.joda.time.DateTime;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.annotation.Nullable;
 
@@ -32,8 +33,11 @@ import javax.annotation.Nullable;
  * @author 배성혁 sunghyouk.bae@gmail.com
  * @since 13. 5. 19. 오후 10:04
  */
-@Slf4j
 public class CalendarPeriodCollector extends CalendarVisitor<CalendarPeriodCollectorFilter, CalendarPeriodCollectorContext> {
+
+    private static final Logger log = LoggerFactory.getLogger(CalendarPeriodCollector.class);
+    private static final boolean isTraceEnabled = log.isTraceEnabled();
+    private static final boolean isDebugEnabled = log.isDebugEnabled();
 
     public CalendarPeriodCollector(CalendarPeriodCollectorFilter filter, ITimePeriod limits) {
         super(filter, limits);
@@ -56,7 +60,7 @@ public class CalendarPeriodCollector extends CalendarVisitor<CalendarPeriodColle
 
     /** 필터에 해당하는 Year 단위의 기간({@link kr.debop4j.timeperiod.timerange.YearRange})를 수집합니다. */
     public void collectYears() {
-        if (log.isTraceEnabled()) log.trace("collect years...");
+        if (isTraceEnabled) log.trace("collect years...");
 
         CalendarPeriodCollectorContext context = new CalendarPeriodCollectorContext();
         context.setScope(CalendarPeriodCollectorContext.CollectKind.Year);
@@ -65,7 +69,7 @@ public class CalendarPeriodCollector extends CalendarVisitor<CalendarPeriodColle
 
     /** 필터에 해당하는 Month 단위의 기간({@link kr.debop4j.timeperiod.timerange.MonthRange})를 수집합니다. */
     public void collectMonths() {
-        if (log.isTraceEnabled()) log.trace("collect months...");
+        if (isTraceEnabled) log.trace("collect months...");
 
         CalendarPeriodCollectorContext context = new CalendarPeriodCollectorContext();
         context.setScope(CalendarPeriodCollectorContext.CollectKind.Month);
@@ -74,7 +78,7 @@ public class CalendarPeriodCollector extends CalendarVisitor<CalendarPeriodColle
 
     /** 필터에 해당하는 Day 단위의 기간({@link kr.debop4j.timeperiod.timerange.DayRange})를 수집합니다. */
     public void collectDays() {
-        if (log.isTraceEnabled()) log.trace("collect days...");
+        if (isTraceEnabled) log.trace("collect days...");
 
         CalendarPeriodCollectorContext context = new CalendarPeriodCollectorContext();
         context.setScope(CalendarPeriodCollectorContext.CollectKind.Day);
@@ -83,7 +87,7 @@ public class CalendarPeriodCollector extends CalendarVisitor<CalendarPeriodColle
 
     /** 필터에 해당하는 Hour 단위의 기간({@link kr.debop4j.timeperiod.timerange.HourRange})를 수집합니다. */
     public void collectHours() {
-        if (log.isTraceEnabled()) log.trace("collect hours...");
+        if (isTraceEnabled) log.trace("collect hours...");
 
         CalendarPeriodCollectorContext context = new CalendarPeriodCollectorContext();
         context.setScope(CalendarPeriodCollectorContext.CollectKind.Hour);
@@ -92,7 +96,7 @@ public class CalendarPeriodCollector extends CalendarVisitor<CalendarPeriodColle
 
     /** 필터에 해당하는 Minute 단위의 기간({@link kr.debop4j.timeperiod.timerange.MinuteRange})를 수집합니다. */
     public void collectMinutes() {
-        if (log.isTraceEnabled()) log.trace("collect minutes...");
+        if (isTraceEnabled) log.trace("collect minutes...");
 
         CalendarPeriodCollectorContext context = new CalendarPeriodCollectorContext();
         context.setScope(CalendarPeriodCollectorContext.CollectKind.Minute);
@@ -126,8 +130,7 @@ public class CalendarPeriodCollector extends CalendarVisitor<CalendarPeriodColle
 
     @Override
     protected boolean onVisitYears(YearRangeCollection years, CalendarPeriodCollectorContext context) {
-        if (log.isTraceEnabled())
-            log.trace("visit years... years=[{}]", years);
+        if (isTraceEnabled) log.trace("visit years... years=[{}]", years);
 
         if (context.getScope() != CalendarPeriodCollectorContext.CollectKind.Year)
             return true;    // continue
@@ -142,8 +145,7 @@ public class CalendarPeriodCollector extends CalendarVisitor<CalendarPeriodColle
 
     @Override
     protected boolean onVisitYear(YearRange year, final CalendarPeriodCollectorContext context) {
-        if (log.isTraceEnabled())
-            log.trace("visit year... year=[{}]", year.getYear());
+        if (isTraceEnabled) log.trace("visit year... year=[{}]", year.getYear());
 
         if (context.getScope() != CalendarPeriodCollectorContext.CollectKind.Month)
             return true;
@@ -157,11 +159,10 @@ public class CalendarPeriodCollector extends CalendarVisitor<CalendarPeriodColle
         } else {
             for (MonthRangeInYear m : getFilter().getCollectingMonths()) {
                 if (m.isSingleMonth()) {
-                    MonthRange month = new MonthRange(year.getYear(),
-                                                      m.getStartMonthOfYear(),
-                                                      year.getTimeCalendar());
-                    if (isMatchingMonth(month, context) && checkLimits(month))
+                    MonthRange month = new MonthRange(year.getYear(), m.getStartMonthOfYear(), year.getTimeCalendar());
+                    if (isMatchingMonth(month, context) && checkLimits(month)) {
                         periods.add(month);
+                    }
                 } else {
                     MonthRangeCollection months =
                             new MonthRangeCollection(year.getYear(),
@@ -184,7 +185,7 @@ public class CalendarPeriodCollector extends CalendarVisitor<CalendarPeriodColle
 
     @Override
     protected boolean onVisitMonth(MonthRange month, final CalendarPeriodCollectorContext context) {
-        if (log.isTraceEnabled())
+        if (isTraceEnabled)
             log.trace("visit month... month=[{}]", month);
 
         if (context.getScope() != CalendarPeriodCollectorContext.CollectKind.Day)
@@ -199,10 +200,7 @@ public class CalendarPeriodCollector extends CalendarVisitor<CalendarPeriodColle
         } else {
             for (DayRangeInMonth day : getFilter().getCollectingDays()) {
                 if (day.isSingleDay()) {
-                    DayRange dayRange = new DayRange(month.getYear(),
-                                                     month.getMonthOfYear(),
-                                                     day.getStartDayOfMonth(),
-                                                     month.getTimeCalendar());
+                    DayRange dayRange = new DayRange(month.getYear(), month.getMonthOfYear(), day.getStartDayOfMonth(), month.getTimeCalendar());
                     if (isMatchingDay(dayRange, context) && checkLimits(dayRange)) {
                         periods.add(dayRange);
                     }
@@ -213,6 +211,7 @@ public class CalendarPeriodCollector extends CalendarVisitor<CalendarPeriodColle
                                                    day.getStartDayOfMonth(),
                                                    day.getEndDayOfMonth() - day.getStartDayOfMonth(),
                                                    month.getTimeCalendar());
+
                     boolean isMatching = Iterables.all(days.getDays(), new Predicate<DayRange>() {
                         @Override
                         public boolean apply(@Nullable DayRange input) {
@@ -229,8 +228,7 @@ public class CalendarPeriodCollector extends CalendarVisitor<CalendarPeriodColle
 
     @Override
     protected boolean onVisitDay(DayRange day, CalendarPeriodCollectorContext context) {
-        if (log.isTraceEnabled())
-            log.trace("visit day... day=[{}]", day);
+        if (isTraceEnabled) log.trace("visit day... day=[{}]", day);
 
         if (context.getScope().getValue() != CalendarPeriodCollectorContext.CollectKind.Hour.getValue())
             return true;
@@ -253,15 +251,5 @@ public class CalendarPeriodCollector extends CalendarVisitor<CalendarPeriodColle
             }
         }
         return false;
-    }
-
-
-    //
-    // 분(Minute) 단위까지 탐색하는 것은 부하만 초래합니다. DayRange 안에 getMillisOfDay()가 있으므로 굳이 할 필요 없습니다.
-    //
-
-    @Override
-    protected boolean onVisitHour(HourRange hour, CalendarPeriodCollectorContext context) {
-        return super.onVisitHour(hour, context);
     }
 }

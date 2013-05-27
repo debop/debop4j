@@ -1,6 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
-
 <!--
   ~ Copyright 2011-2013 the original author or authors.
   ~
@@ -37,7 +35,7 @@
         </encoder>
     </appender>
     -->
-    <logger name="kr.debop4j.timeperiod" level="TRACE"/>
+    <logger name="kr.debop4j.timeperiod" level="DEBUG"/>
     <logger name="kr.debop4j" level="DEBUG"/>
     <root level="INFO">
         <appender-ref ref="console"/>
