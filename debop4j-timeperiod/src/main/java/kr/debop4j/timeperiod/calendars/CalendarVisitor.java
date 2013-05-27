@@ -17,10 +17,7 @@
 package kr.debop4j.timeperiod.calendars;
 
 import com.google.common.collect.Iterables;
-import kr.debop4j.timeperiod.DayOfWeek;
-import kr.debop4j.timeperiod.ITimeCalendar;
-import kr.debop4j.timeperiod.ITimePeriod;
-import kr.debop4j.timeperiod.SeekDirection;
+import kr.debop4j.timeperiod.*;
 import kr.debop4j.timeperiod.timerange.*;
 import kr.debop4j.timeperiod.tools.TimeSpec;
 import kr.debop4j.timeperiod.tools.Times;
@@ -69,8 +66,8 @@ public abstract class CalendarVisitor<F extends ICalendarVisitorFilter, C extend
 
         this.filter = filter;
         this.limits = limits;
-        this.seekDirection = seekDir;
-        this.calendar = calendar;
+        this.seekDirection = (seekDir != null) ? seekDir : SeekDirection.Forward;
+        this.calendar = (calendar != null) ? calendar : TimeCalendar.getDefault();
     }
 
     protected final void startPeriodVisit(C context) {
@@ -99,7 +96,9 @@ public abstract class CalendarVisitor<F extends ICalendarVisitorFilter, C extend
             for (YearRange year : yearsToVisit) {
                 if (isTraceEnabled) log.trace("year를 탐색합니다... year=[{}]", year.getYear());
 
-                if (!year.overlapsWith(period) || !onVisitYear(year, context))
+                if (!year.overlapsWith(period))
+                    continue;
+                if (!onVisitYear(year, context))
                     continue;
                 if (!enterMonths(year, context))
                     continue;
@@ -112,7 +111,9 @@ public abstract class CalendarVisitor<F extends ICalendarVisitorFilter, C extend
                 for (MonthRange month : monthsToVisit) {
                     if (isTraceEnabled) log.trace("month를 탐색합니다... month=[{}]", month);
 
-                    if (!month.overlapsWith(period) || !onVisitMonth(month, context))
+                    if (!month.overlapsWith(period))
+                        continue;
+                    if (!onVisitMonth(month, context))
                         continue;
                     if (!enterDays(month, context))
                         continue;
@@ -140,7 +141,9 @@ public abstract class CalendarVisitor<F extends ICalendarVisitorFilter, C extend
                         for (HourRange hour : hoursToVisit) {
                             if (log.isTraceEnabled()) log.trace("hour를 탐색합니다... hour=[{}]", hour);
 
-                            if (!hour.overlapsWith(period) || !onVisitHour(hour, context))
+                            if (!hour.overlapsWith(period))
+                                continue;
+                            if (!onVisitHour(hour, context))
                                 continue;
 
                             enterMinutes(hour, context);
@@ -274,10 +277,10 @@ public abstract class CalendarVisitor<F extends ICalendarVisitorFilter, C extend
     }
 
     protected boolean checkExcludePeriods(ITimePeriod target) {
-        if (!this.filter.getExcludePeriods().containsPeriod(target))
+        if (filter.getExcludePeriods().size() == 0)
             return true;
 
-        return Iterables.isEmpty(this.filter.getExcludePeriods().overlapPeriods(target));
+        return Iterables.size(filter.getExcludePeriods().overlapPeriods(target)) == 0;
     }
 
     protected boolean enterYears(YearRangeCollection yearRangeCollection, C context) {

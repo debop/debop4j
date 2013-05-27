@@ -32,26 +32,32 @@ public class MonthRange extends MonthTimeRange {
 
     // region << Constructor >>
 
+    /** 생성자 */
     public MonthRange() {
         this(new TimeCalendar());
     }
 
+    /** 생성자 */
     public MonthRange(ITimeCalendar calendar) {
         this(ClockProxy.getClock().today(), calendar);
     }
 
+    /** 생성자 */
     public MonthRange(DateTime moment) {
         super(moment, 1);
     }
 
+    /** 생성자 */
     public MonthRange(DateTime moment, ITimeCalendar calendar) {
         super(moment, 1, calendar);
     }
 
+    /** 생성자 */
     public MonthRange(int year, int monthOfYear) {
         super(year, monthOfYear, 1);
     }
 
+    /** 생성자 */
     public MonthRange(int year, int monthOfYear, ITimeCalendar calendar) {
         super(year, monthOfYear, 1, calendar);
     }

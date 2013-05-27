@@ -40,9 +40,11 @@ public abstract class WeekTimeRange extends CalendarTimeRange {
     private static final long serialVersionUID = -1899389597363540458L;
 
     protected WeekTimeRange(ITimePeriod period, ITimeCalendar timeCalendar) {
-        super(period, timeCalendar);
-        this.year = period.getStart().getYear();
-        this.startWeekOfYear = Weeks.getYearAndWeek(period.getStart(), timeCalendar).getWeekOfYear();
+        super(getPeriodOf(period.getStart(), 1, timeCalendar), timeCalendar);
+
+        YearAndWeek yw = Weeks.getYearAndWeek(period.getStart(), timeCalendar);
+        this.year = yw.getYear();
+        this.startWeekOfYear = yw.getWeekOfYear();
         this.weekCount = 1;
     }
 
@@ -110,6 +112,6 @@ public abstract class WeekTimeRange extends CalendarTimeRange {
         assert weekCount > 0;
 
         DateTime startWeek = Times.startTimeOfWeek(year, weekOfYear, timeCalendar);
-        return new TimeRange(startWeek, startWeek.plusWeeks(1));
+        return new TimeRange(startWeek, startWeek.plusWeeks(weekCount));
     }
 }

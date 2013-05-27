@@ -144,7 +144,7 @@ public class DateAdd extends ValueObjectBase {
         }
 
         if (availablePeriods.size() == 0) {
-            if (isTraceEnable) log.trace("유효한 period 가 없다면 중단합니다.");
+            if (isTraceEnable) log.trace("유효한 period 가 없어서 중단합니다.");
             return Pair.create(null, remaining);
         }
 
@@ -153,17 +153,25 @@ public class DateAdd extends ValueObjectBase {
         availablePeriods = periodCombiner.combinePeriods(availablePeriods);
 
         if (isTraceEnable) log.trace("첫 시작을 찾습니다.");
-        Pair<ITimePeriod, DateTime> result =
-                (seekDir == SeekDirection.Forward)
-                        ? findNextPeriod(start, availablePeriods)
-                        : findPrevPeriod(start, availablePeriods);
+
+        Pair<ITimePeriod, DateTime> result = (seekDir == SeekDirection.Forward)
+                ? findNextPeriod(start, availablePeriods)
+                : findPrevPeriod(start, availablePeriods);
+
         ITimePeriod startPeriod = result.getV1();
         DateTime seekMoment = result.getV2();
 
         // 첫 시작 기간이 없다면 중단합니다.
-        if (startPeriod == null) return null;
+        if (startPeriod == null) {
+            if (isTraceEnable) log.trace("첫 시작 기간이 없어서 중단합니다.");
+            return Pair.create(null, remaining);
+        }
+
         // offset 값이 0 이라면, 바로 다음 값이므로 seekMoment 를 반환합니다.
-        if (offset.isEqual(Duration.ZERO)) return Pair.create(seekMoment, remaining);
+        if (offset.isEqual(Duration.ZERO)) {
+            if (isTraceEnable) log.trace("offset 값이 0이므로, 바로 다음 값인 seekMoment를 반환합니다.");
+            return Pair.create(seekMoment, remaining);
+        }
 
         if (seekDir == SeekDirection.Forward) {
 

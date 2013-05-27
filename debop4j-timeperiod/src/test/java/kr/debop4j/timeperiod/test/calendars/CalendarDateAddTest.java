@@ -18,10 +18,7 @@ package kr.debop4j.timeperiod.test.calendars;
 
 import kr.debop4j.core.Action1;
 import kr.debop4j.core.parallelism.Parallels;
-import kr.debop4j.timeperiod.HourRangeInDay;
-import kr.debop4j.timeperiod.ITimePeriod;
-import kr.debop4j.timeperiod.SeekBoundaryMode;
-import kr.debop4j.timeperiod.TimeRange;
+import kr.debop4j.timeperiod.*;
 import kr.debop4j.timeperiod.calendars.CalendarDateAdd;
 import kr.debop4j.timeperiod.test.TimePeriodTestBase;
 import kr.debop4j.timeperiod.timerange.DayRange;
@@ -29,6 +26,7 @@ import kr.debop4j.timeperiod.tools.Durations;
 import kr.debop4j.timeperiod.tools.Times;
 import lombok.extern.slf4j.Slf4j;
 import org.joda.time.DateTime;
+import org.joda.time.Duration;
 import org.junit.Test;
 
 import static kr.debop4j.timeperiod.tools.Times.asDate;
@@ -187,8 +185,45 @@ public class CalendarDateAddTest extends TimePeriodTestBase {
 
         DateTime start = new DateTime(2011, 4, 1, 9, 0);
 
-        assertThat(dateAdd.add(start, Durations.hours(3))).isEqualTo(new DateTime(2011, 4, 6, 11, 0, 0));
-        assertThat(dateAdd.add(start, Durations.hours(4), SeekBoundaryMode.Fill)).isEqualTo(new DateTime(2011, 4, 1, 14, 0, 0));
-        assertThat(dateAdd.add(start, Durations.hours(8), SeekBoundaryMode.Fill)).isEqualTo(new DateTime(2011, 4, 5, 8, 0, 0));
+        assertThat(dateAdd.add(start, Durations.hours(3))).isEqualTo(new DateTime(2011, 4, 1, 13, 0, 0));
+        assertThat(dateAdd.add(start, Durations.hours(4))).isEqualTo(new DateTime(2011, 4, 1, 14, 0, 0));
+        assertThat(dateAdd.add(start, Durations.hours(8))).isEqualTo(new DateTime(2011, 4, 5, 8, 0, 0));
     }
+
+    @Test
+    public void calendarDateAdd3() {
+        CalendarDateAdd dateAdd = new CalendarDateAdd();
+
+        dateAdd.addWorkingWeekDays();
+        dateAdd.getExcludePeriods().add(new DayRange(2011, 4, 4, dateAdd.getTimeCalendar()));
+        dateAdd.getWorkingHours().add(new HourRangeInDay(new Timepart(8, 30), new Timepart(12)));
+        dateAdd.getWorkingHours().add(new HourRangeInDay(new Timepart(13, 30), new Timepart(18)));
+
+        DateTime start = new DateTime(2011, 4, 1, 9, 0);
+
+        assertThat(dateAdd.add(start, Durations.hours(3))).isEqualTo(new DateTime(2011, 4, 1, 13, 30, 0));
+        assertThat(dateAdd.add(start, Durations.hours(4))).isEqualTo(new DateTime(2011, 4, 1, 14, 30, 0));
+        assertThat(dateAdd.add(start, Durations.hours(8))).isEqualTo(new DateTime(2011, 4, 5, 9, 0, 0));
+    }
+
+    @Test
+    public void emptyStartWeek() {
+        CalendarDateAdd dateAdd = new CalendarDateAdd();
+
+        // 주중(월~금)을 working time 으로 추가
+        dateAdd.addWorkingWeekDays();
+
+        DateTime start = new DateTime(2011, 4, 2, 13, 0, 0);
+        Duration offset = Durations.hours(20);
+
+        // 4월 2일(토), 4월 3일(일) 제외하면 4월 4일 0시부터 20시간
+        assertThat(dateAdd.add(start, Durations.hours(20))).isEqualTo(new DateTime(2011, 4, 4, 20, 0, 0));
+
+        // 4월 2일(토), 4월 3일(일) 제외하면 4월 4일 0시부터 24시간
+        assertThat(dateAdd.add(start, Durations.hours(24))).isEqualTo(new DateTime(2011, 4, 5, 0, 0, 0));
+
+        // 4월 2일(토), 4월 3일(일) 제외하면, 4월 4일부터 5일이면 주말인 4월 9일(토), 4월 10일(일) 제외한 4월 11일!!!
+        assertThat(dateAdd.add(start, Durations.days(5))).isEqualTo(new DateTime(2011, 4, 11, 0, 0, 0));
+    }
+
 }

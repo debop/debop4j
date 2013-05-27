@@ -98,10 +98,12 @@ public class TimePeriodCollection extends TimePeriodContainer implements ITimePe
     @Override
     public Iterable<ITimePeriod> overlapPeriods(final ITimePeriod target) {
         shouldNotBeNull(target, "target");
+
         return Iterables.filter(getPeriods(), new Predicate<ITimePeriod>() {
             @Override
             public boolean apply(@Nullable ITimePeriod input) {
-                return Times.overlapsWith(target, input);
+                return target.overlapsWith(input);
+                // return Times.overlapsWith(target, input);
             }
         });
     }

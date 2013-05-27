@@ -46,7 +46,7 @@ public class DaySeeker extends CalendarVisitor<CalendarVisitorFilter, DaySeekerC
     }
 
     public DaySeeker(CalendarVisitorFilter filter) {
-        this(filter, null, TimeCalendar.getDefault());
+        this(filter, SeekDirection.Forward, TimeCalendar.getDefault());
     }
 
     public DaySeeker(SeekDirection seekDir) {
