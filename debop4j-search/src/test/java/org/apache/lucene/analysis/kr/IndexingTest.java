@@ -18,12 +18,15 @@ package org.apache.lucene.analysis.kr;
 
 import junit.framework.TestCase;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.lucene.analysis.kr.freq.HighFreqTerms;
+import org.apache.lucene.analysis.kr.freq.TermFreq;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.document.Field;
+import org.apache.lucene.index.IndexReader;
 import org.apache.lucene.index.IndexWriter;
+import org.apache.lucene.index.Term;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.FSDirectory;
-import org.junit.Test;
 
 import java.io.File;
 import java.io.IOException;
@@ -41,7 +44,6 @@ public class IndexingTest extends TestCase {
         return new IndexWriter(directory, new KoreanAnalyzer(), IndexWriter.MaxFieldLength.UNLIMITED);
     }
 
-    @Test
     public void testIndexWriter() throws IOException {
 
         IndexWriter writer = getWriter();
@@ -59,7 +61,57 @@ public class IndexingTest extends TestCase {
         writer.addDocument(doc);
 
         writer.close();
-
     }
 
+    private IndexReader getReader() throws IOException {
+        return IndexReader.open(directory);
+    }
+
+    public void testIndexReader() throws Exception {
+
+        testIndexWriter();
+
+        IndexReader reader = getReader();
+        try {
+            int freq = reader.docFreq(new Term("description", "entry"));
+            log.debug("freq=[{}]", freq);
+
+        } finally {
+            reader.close();
+        }
+    }
+
+    public void testHigiFreqTerms() throws Exception {
+        IndexReader reader = getReader();
+
+        try {
+            TermFreq[] termFreqs = HighFreqTerms.getHighFreqTerms(reader, 100, "description");
+            for (TermFreq termFreq : termFreqs) {
+                log.debug("term=[{}]", termFreq);
+            }
+        } finally {
+            reader.close();
+        }
+    }
+
+    public void testHigiFreqTermsWithSharding() throws Exception {
+        final String prefix = ".lucene/indexes/kr.debop4j.search.twitter.Twit";
+        final int numShard = 4;
+
+        IndexReader[] readers = new IndexReader[numShard];
+        for (int i = 0; i < numShard; i++) {
+            readers[i] = IndexReader.open(FSDirectory.open(new File(prefix + "." + i)));
+        }
+
+        try {
+            TermFreq[] termFreqs = HighFreqTerms.getHighFreqTerms(readers, 100, "text");
+            for (TermFreq termFreq : termFreqs) {
+                log.debug("term=[{}]", termFreq);
+            }
+
+        } finally {
+            for (IndexReader reader : readers)
+                reader.close();
+        }
+    }
 }

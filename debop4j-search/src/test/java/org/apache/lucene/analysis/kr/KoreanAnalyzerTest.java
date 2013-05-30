@@ -29,6 +29,8 @@ import org.apache.lucene.analysis.tokenattributes.TypeAttribute;
 import org.apache.lucene.util.Version;
 
 import java.io.StringReader;
+import java.util.ArrayList;
+import java.util.List;
 
 public class KoreanAnalyzerTest extends TestCase {
 
@@ -42,27 +44,42 @@ public class KoreanAnalyzerTest extends TestCase {
      */
     public void testKoreanTokenizer() throws Exception {
 
-        String source = "우리나라라면에서부터 일본라면이 파생되었잖니?";
-//		source = "呵呵大笑 가교복합체와 가공액을 포함하였다.";
-//        source = "아딸떡볶이";
-        source = "너는 너는 다시 내게 돌아 올거야. school is a good place 呵呵大笑 呵呵大笑";
+        List<String> sources = new ArrayList<>();
+        sources.add("우리나라라면에서부터 일본라면이 파생되었잖니?");
+        sources.add("呵呵大笑 가교복합체와 가공액을 포함하였다.");
+        sources.add("아딸떡볶이");
+        sources.add("너는 너는 다시 내게 돌아 올거야. school is a good place 呵呵大笑 呵呵大笑");
+        sources.add(" \"ASP.NET 웹 어플리케이션은 어플리케이션 Lifecycle, Page의 Lifecycle 에 상세한 event 를 정의하고 있어, event handler를 정의하면, 여러가지 선처리나 후처리를 수행할 수 있습니다.\\n\" +\n" +
+                            "            \"Spring MVC 에서는 어떻게 하나 봤더니 Controller 에 Interceptor 를 등록하면 되더군요.\\n\" +\n" +
+                            "            \"단계를 요약하자면...\\n\" +\n" +
+                            "            \"org.springframework.web.servlet.HandlerInterceptor 또는 org.springframework.web.servlet.handler.HandlerInterceptorAdapter 를 상속받아 preHandler, postHandler, afterComletion 등에 원하는 작업을 구현합니다.\\n\" +\n" +
+                            "            \"servlet.xml 에 위에서 작성한 Interceptor 를 등록합니다.\\n\" +\n" +
+                            "            \"아주 쉽죠?\\n\" +\n" +
+                            "            \"그럼 실제 예제와 함께 보시죠. 예제는 Spring Framework 3.2.1.RELEASE 와 Hibernate 4.1.9 Final 로 제작했습니다.\\n\" +\n" +
+                            "            \"UnitOfWorkInterceptor 는 사용자 요청이 있으면 Start 하고, 요청 작업이 완료되면 Close 하도록 합니다. 이는 Hibernate 를 이용하여 Unit Of Work 패턴을 구현하여, 하나의 요청 중에 모든 작업을 하나의 Transaction으로 묶을 수 있고, 웹 개발자에게는 Unit Of Work 자체를 사용하기만 하면 되고, 실제 Lifecycle 은 Spring MVC 에서 관리하도록 하기 위해서입니다.\"");
 
-        long start = System.currentTimeMillis();
-
-        KoreanAnalyzer analyzer = new KoreanAnalyzer();
+        KoreanAnalyzer analyzer = new KoreanAnalyzer(Version.LUCENE_36);
         analyzer.setHasOrigin(false);
-        TokenStream stream = analyzer.tokenStream("s", new StringReader(source));
 
-        while (stream.incrementToken()) {
-            CharTermAttribute termAttr = stream.getAttribute(CharTermAttribute.class);
-            OffsetAttribute offAttr = stream.getAttribute(OffsetAttribute.class);
-            PositionIncrementAttribute posAttr = stream.getAttribute(PositionIncrementAttribute.class);
-            TypeAttribute typeAttr = stream.getAttribute(TypeAttribute.class);
+        for (String source : sources) {
+            System.out.println("--------------------------");
+            System.out.println("Analyze source : " + source);
+            System.out.println("--------------------------");
+            TokenStream stream = analyzer.tokenStream("s", new StringReader(source));
 
-            System.out.println(new String(termAttr.buffer(), 0, termAttr.length()));
+            long start = System.currentTimeMillis();
+
+            while (stream.incrementToken()) {
+                CharTermAttribute termAttr = stream.getAttribute(CharTermAttribute.class);
+                OffsetAttribute offAttr = stream.getAttribute(OffsetAttribute.class);
+                PositionIncrementAttribute posAttr = stream.getAttribute(PositionIncrementAttribute.class);
+                TypeAttribute typeAttr = stream.getAttribute(TypeAttribute.class);
+
+                System.out.println(new String(termAttr.buffer(), 0, termAttr.length()));
+            }
+
+            System.out.println((System.currentTimeMillis() - start) + "ms");
         }
-
-        System.out.println((System.currentTimeMillis() - start) + "ms");
     }
 
     public void testStandardTokenizer() throws Exception {

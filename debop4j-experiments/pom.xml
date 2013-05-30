@@ -38,6 +38,7 @@
         <netty.version>3.6.3.Final</netty.version>
 
         <infinispan.version>5.2.6.Final</infinispan.version>
+        <infinispan.lucene3.version>5.3.0.Beta2</infinispan.lucene3.version>
 
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
@@ -203,7 +204,17 @@
             <artifactId>infinispan-server-memcached</artifactId>
             <version>${infinispan.version}</version>
         </dependency>
-
+        <dependency>
+            <groupId>org.infinispan</groupId>
+            <artifactId>infinispan-lucene-directory</artifactId>
+            <version>${infinispan.version}</version>
+        </dependency>
+        <!-- lucene 3x 인덱스를 infinispan 에 저장합니다. -->
+        <dependency>
+            <groupId>org.infinispan</groupId>
+            <artifactId>infinispan-lucene-v3</artifactId>
+            <version>${infinispan.lucene3.version}</version>
+        </dependency>
 
     </dependencies>
 </project>

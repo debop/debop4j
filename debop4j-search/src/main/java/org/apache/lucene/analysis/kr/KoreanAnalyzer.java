@@ -76,7 +76,8 @@ public class KoreanAnalyzer extends StopwordAnalyzerBase {
                 "a", "an", "and", "are", "as", "at", "be", "but", "by",
                 "for", "if", "in", "into", "is", "it", "no", "not", "of", "on", "or", "such", "that", "the",
                 "their", "then", "there", "these", "they", "this", "to", "was", "will", "with",
-                "이", "그", "저", "것", "수", "등", "들", "및", "에서", "그리고", "그래서", "또", "또는");
+                "이", "그", "저", "요", "것", "수", "등", "들", "및", "에", "에서", "그리고", "그래서", "또", "또는", "꼭", "잘",
+                "?", "!", ";", ".", "-");
 
         CharArraySet stopSet = new CharArraySet(Version.LUCENE_36, stopWords.size(), false);
         stopSet.addAll(stopWords);
