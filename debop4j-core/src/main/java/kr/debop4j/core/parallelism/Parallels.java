@@ -13,6 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package kr.debop4j.core.parallelism;
 
 import com.google.common.collect.Iterables;
@@ -22,7 +23,8 @@ import kr.debop4j.core.Action1;
 import kr.debop4j.core.Function1;
 import kr.debop4j.core.collection.NumberRange;
 import lombok.Getter;
-import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.List;
 import java.util.Map;
@@ -37,16 +39,19 @@ import static kr.debop4j.core.Guard.shouldNotBeNull;
  * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 12. 9. 26.
  */
-@Slf4j
-public class Parallels {
+public abstract class Parallels {
+
+    private static final Logger log = LoggerFactory.getLogger(Parallels.class);
+    private static final boolean isTraceEnabled = log.isTraceEnabled();
+    private static final boolean isDebugEnabled = log.isDebugEnabled();
 
     private Parallels() { }
 
-    @Getter(lazy = true)
+    @Getter( lazy = true )
     private static final ThreadLocalRandom random = ThreadLocalRandom.current();
-    @Getter(lazy = true)
+    @Getter( lazy = true )
     private static final int processCount = Runtime.getRuntime().availableProcessors();
-    @Getter(lazy = true)
+    @Getter( lazy = true )
     private static final int workerCount = getProcessCount() * 2;
 
     public static ExecutorService createExecutor() {
@@ -275,12 +280,18 @@ public class Parallels {
         }
     }
 
+    /**
+     * 지정한 컬렉션을 분할하여, 멀티스레드 환경하에서 작업을 수행합니다.
+     *
+     * @param elements
+     * @param action
+     * @param <T>
+     */
     public static <T> void runEach(final Iterable<T> elements, final Action1<T> action) {
-        assert elements != null;
-        assert action != null;
+        shouldNotBeNull(elements, "elements");
+        shouldNotBeNull(action, "action");
+        if (log.isDebugEnabled()) log.debug("병렬로 작업을 수행합니다... workerCount=[{}]", getWorkerCount());
 
-        if (log.isDebugEnabled())
-            log.debug("병렬로 작업을 수행합니다... workerCount=[{}]", getWorkerCount());
         ExecutorService executor = Executors.newFixedThreadPool(getWorkerCount());
 
         try {
@@ -318,11 +329,10 @@ public class Parallels {
     }
 
     public static <T, V> List<V> runEach(final Iterable<T> elements, final Function1<T, V> function) {
-        assert elements != null;
-        assert function != null;
+        shouldNotBeNull(elements, "elements");
+        shouldNotBeNull(function, "function");
+        if (isDebugEnabled) log.debug("병렬로 작업을 수행합니다... workerCount=[{}]", getWorkerCount());
 
-        if (log.isDebugEnabled())
-            log.debug("병렬로 작업을 수행합니다... workerCount=[{}]", getWorkerCount());
         ExecutorService executor = Executors.newFixedThreadPool(getWorkerCount());
 
         try {
@@ -357,8 +367,7 @@ public class Parallels {
                 results.addAll(localResults.get(i));
             }
 
-            if (log.isDebugEnabled())
-                log.debug("모든 작업을 병렬로 완료했습니다. workerCount=[{}]", getWorkerCount());
+            if (isDebugEnabled) log.debug("모든 작업을 병렬로 완료했습니다. workerCount=[{}]", getWorkerCount());
 
             return results;
 
@@ -369,4 +378,99 @@ public class Parallels {
             executor.shutdown();
         }
     }
+
+    /**
+     * 지정한 컬렉션을 분할하여, 병렬로 작업을 수행합니다.
+     *
+     * @param elements 처리할 데이터
+     * @param action   수행할 코드
+     */
+    public static <T> void runPartitions(final Iterable<T> elements, final Action1<List<T>> action) {
+        shouldNotBeNull(elements, "elements");
+        shouldNotBeNull(action, "action");
+        if (log.isDebugEnabled()) log.debug("병렬로 작업을 수행합니다... workerCount=[{}]", getWorkerCount());
+
+        ExecutorService executor = Executors.newFixedThreadPool(getWorkerCount());
+
+        try {
+            List<T> elemList = Lists.newArrayList(elements);
+            int partitionSize = getPartitionSize(elemList.size(), getWorkerCount());
+            Iterable<List<T>> partitions = Iterables.partition(elemList, partitionSize);
+            List<Callable<Void>> tasks = Lists.newLinkedList();
+
+            for (final List<T> partition : partitions) {
+                Callable<Void> task = new Callable<Void>() {
+                    @Override
+                    public Void call() throws Exception {
+                        action.perform(partition);
+                        return null;
+                    }
+                };
+                tasks.add(task);
+            }
+
+            List<Future<Void>> results = executor.invokeAll(tasks);
+            for (Future<Void> result : results)
+                result.get();
+
+            if (isDebugEnabled)
+                log.debug("모든 작업을 병렬로 수행했습니다. workCount=[{}]");
+        } catch (Exception e) {
+            log.error("데이터에 대한 병렬작업중 예외가 발생했습니다.", e);
+            throw new RuntimeException(e);
+        } finally {
+            executor.shutdown();
+        }
+    }
+
+    /**
+     * 지정한 컬렉션을 분할하여, 병렬로 작업을 수행합니다.
+     *
+     * @param elements 처리할 데이터
+     * @param function 수행할 코드
+     * @return 수행한 결과
+     */
+    public static <T, V> List<V> runPartitions(final Iterable<T> elements, final Function1<List<T>, List<V>> function) {
+        shouldNotBeNull(elements, "elements");
+        shouldNotBeNull(function, "function");
+        if (isDebugEnabled) log.debug("병렬로 작업을 수행합니다... workerCount=[{}]", getWorkerCount());
+
+        ExecutorService executor = Executors.newFixedThreadPool(getWorkerCount());
+
+        try {
+            List<T> elemList = Lists.newArrayList(elements);
+            int partitionSize = getPartitionSize(elemList.size(), getWorkerCount());
+            List<List<T>> partitions = Lists.partition(elemList, partitionSize);
+            final Map<Integer, List<V>> localResults = Maps.newLinkedHashMap();
+
+            List<Callable<List<V>>> tasks = Lists.newLinkedList(); // False Sharing을 방지하기 위해
+
+            for (final List<T> partition : partitions) {
+                Callable<List<V>> task = new Callable<List<V>>() {
+                    @Override
+                    public List<V> call() throws Exception {
+                        return function.execute(partition);
+                    }
+                };
+                tasks.add(task);
+            }
+
+            List<Future<List<V>>> futures = executor.invokeAll(tasks);
+
+            List<V> results = Lists.newArrayListWithCapacity(elemList.size());
+            for (Future<List<V>> future : futures)
+                results.addAll(future.get());
+
+            if (isDebugEnabled) log.debug("모든 작업을 병렬로 완료했습니다. workerCount=[{}]", getWorkerCount());
+
+            return results;
+
+        } catch (Exception e) {
+            log.error("데이터에 대한 병렬 작업 중 예외가 발생했습니다.", e);
+            throw new RuntimeException(e);
+        } finally {
+            executor.shutdown();
+        }
+    }
+
 }

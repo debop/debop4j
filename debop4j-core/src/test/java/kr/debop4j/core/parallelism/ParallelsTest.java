@@ -1,5 +1,22 @@
+/*
+ * Copyright 2011-2013 the original author or authors.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package kr.debop4j.core.parallelism;
 
+import com.google.common.collect.Lists;
 import kr.debop4j.core.Action1;
 import kr.debop4j.core.AutoStopwatch;
 import kr.debop4j.core.Function1;
@@ -143,6 +160,54 @@ public class ParallelsTest {
         @Cleanup
         AutoStopwatch stopwatch = new AutoStopwatch();
         List<Double> results = Parallels.runEach(NumberRange.range(0, 100), function1);
+        Assert.assertNotNull(results);
+        Assert.assertEquals(100, results.size());
+    }
+
+    @Test
+    public void runPartitionsAction() throws Exception {
+        final Action1<List<Integer>> action1 =
+                new Action1<List<Integer>>() {
+                    @Override
+                    public void perform(List<Integer> xs) {
+                        for (int x : xs) {
+                            for (int i = LowerBound; i < UpperBound; i++) {
+                                Hero.findRoot(i);
+                            }
+                            if (log.isDebugEnabled())
+                                log.debug("FindRoot({}) returns [{}]", UpperBound, Hero.findRoot(UpperBound));
+                        }
+                    }
+                };
+
+        @Cleanup
+        AutoStopwatch stopwatch = new AutoStopwatch();
+        Parallels.runPartitions(NumberRange.range(0, 100), action1);
+    }
+
+    @Test
+    public void runPartitionsFunction() {
+        final Function1<List<Integer>, List<Double>> function1 =
+                new Function1<List<Integer>, List<Double>>() {
+                    @Override
+                    public List<Double> execute(List<Integer> xs) {
+                        List<Double> results = Lists.newArrayListWithCapacity(xs.size());
+                        for (int x : xs) {
+                            for (int i = LowerBound; i < UpperBound; i++) {
+                                Hero.findRoot(i);
+                            }
+                            if (log.isDebugEnabled())
+                                log.debug("FindRoot({}) returns [{}]", UpperBound, Hero.findRoot(UpperBound));
+
+                            results.add(Hero.findRoot(UpperBound));
+                        }
+                        return results;
+                    }
+                };
+
+        @Cleanup
+        AutoStopwatch stopwatch = new AutoStopwatch();
+        List<Double> results = Parallels.runPartitions(NumberRange.range(0, 100), function1);
         Assert.assertNotNull(results);
         Assert.assertEquals(100, results.size());
     }
