@@ -30,6 +30,7 @@ import java.util.concurrent.ExecutionException;
 @Slf4j
 public abstract class CacheRepositoryBase implements ICacheRepository {
 
+    /** 유효기간 (분단위). */
     private long expiry = 0;
 
     /**
@@ -57,8 +58,9 @@ public abstract class CacheRepositoryBase implements ICacheRepository {
      *
      * @param key 캐시 키
      * @return 캐시 항목, 없으면 null 반환
+     * @throws ExecutionException 예외
      */
-    abstract public Object get(final String key) throws ExecutionException;
+    public abstract Object get(final String key) throws ExecutionException;
 
     /**
      * 캐시에 항목을 저장합니다.
@@ -67,14 +69,14 @@ public abstract class CacheRepositoryBase implements ICacheRepository {
      * @param value    캐시 항목
      * @param validFor 캐시 유효 기간 (단위 : minutes), 0 이하인 경우는 유효기간이 없다.
      */
-    abstract public void set(final String key, final Object value, long validFor);
+    public abstract void set(final String key, final Object value, long validFor);
 
     /**
      * 해당 키의 캐시 항목을 삭제합니다.
      *
      * @param key 캐시 키
      */
-    abstract public void remove(final String key);
+    public abstract void remove(final String key);
 
     /**
      * 여러개의 키를 모두 삭제합니다.
@@ -104,10 +106,10 @@ public abstract class CacheRepositoryBase implements ICacheRepository {
      * @param key 캐시 키
      * @return 캐시 항목 존재 여부
      */
-    abstract public boolean exists(final String key);
+    public abstract boolean exists(final String key);
 
     /** 캐시의 모든 항목을 삭제합니다. */
-    abstract public void clear();
+    public abstract void clear();
 
     @Override
     public String toString() {
