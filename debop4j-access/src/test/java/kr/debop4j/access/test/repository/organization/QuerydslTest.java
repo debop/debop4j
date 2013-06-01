@@ -54,7 +54,7 @@ public class QuerydslTest extends RepositoryTestBase {
 
         HibernateQuery query = new HibernateQuery(UnitOfWorks.getCurrentSession());
         List<Company> loaded = query.from(qCompany)
-                .where(qCompany.active.isTrue().and(qCompany.name.isNotEmpty()))
+                .where(qCompany.active.isTrue().and(qCompany.name.isNotEmpty()).and(qCompany.code.in("KTH", "KT")))
                 .list(qCompany);
 
         log.debug("company={}", StringTool.listToString(loaded));
