@@ -26,7 +26,7 @@ import static com.mysema.query.types.PathMetadataFactory.forVariable;
 
 
 /** QLocaleMetaEntityBase is a Querydsl query type for LocaleMetaEntityBase */
-@Generated( "com.mysema.query.codegen.SupertypeSerializer" )
+@Generated("com.mysema.query.codegen.SupertypeSerializer")
 public class QLocaleMetaEntityBase extends EntityPathBase<LocaleMetaEntityBase<? extends java.io.Serializable, ? extends ILocaleValue>> {
 
     private static final long serialVersionUID = -376732385;
@@ -60,17 +60,17 @@ public class QLocaleMetaEntityBase extends EntityPathBase<LocaleMetaEntityBase<?
     //inherited
     public final BooleanPath persisted = _super.persisted;
 
-    @SuppressWarnings( "all" )
+    @SuppressWarnings("all")
     public QLocaleMetaEntityBase(String variable) {
         super((Class) LocaleMetaEntityBase.class, forVariable(variable));
     }
 
-    @SuppressWarnings( "all" )
+    @SuppressWarnings("all")
     public QLocaleMetaEntityBase(Path<? extends LocaleMetaEntityBase> path) {
         super((Class) path.getType(), path.getMetadata());
     }
 
-    @SuppressWarnings( "all" )
+    @SuppressWarnings("all")
     public QLocaleMetaEntityBase(PathMetadata<?> metadata) {
         super((Class) LocaleMetaEntityBase.class, metadata);
     }

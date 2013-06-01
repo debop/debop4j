@@ -1,3 +1,19 @@
+/*
+ * Copyright 2011-2013 the original author or authors.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package kr.debop4j.data.mongodb.dao;
 
 import com.google.common.collect.Lists;
@@ -138,7 +154,7 @@ public class MongoOgmDaoTest extends MongoGridDatastoreTestBase {
             public void perform(IHibernateOgmDao dao) {
 
                 // findAll
-                List<Player> loadedPlayers = dao.findAll(Player.class);
+                List<Player> loadedPlayers = dao.find(Player.class);
                 assertThat(loadedPlayers).isNotNull();
                 assertThat(loadedPlayers.size()).isGreaterThan(0);
                 log.debug("findAll seach result = [{}]", loadedPlayers.size());
@@ -200,7 +216,7 @@ public class MongoOgmDaoTest extends MongoGridDatastoreTestBase {
             action.perform(dao);
         } finally {
             log.debug("Player 엔티티를 삭제합니다...");
-            List<Player> players = dao.findAll(Player.class);
+            List<Player> players = dao.find(Player.class);
             assertThat(players.size()).isGreaterThan(0);
             dao.deleteAll(players);
             UnitOfWorks.getCurrent().flushSession();
@@ -242,7 +258,7 @@ public class MongoOgmDaoTest extends MongoGridDatastoreTestBase {
             action.perform(dao);
         } finally {
             log.debug("Player 엔티티를 삭제합니다...");
-            List<Player> players = dao.findAll(Player.class);
+            List<Player> players = dao.find(Player.class);
             assertThat(players.size()).isGreaterThan(0);
             dao.deleteAll(players);
             dao.getFullTextSession().flush();

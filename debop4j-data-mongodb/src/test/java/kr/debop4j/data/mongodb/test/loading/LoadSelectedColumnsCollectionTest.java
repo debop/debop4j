@@ -1,3 +1,19 @@
+/*
+ * Copyright 2011-2013 the original author or authors.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package kr.debop4j.data.mongodb.test.loading;
 
 import com.mongodb.BasicDBObject;
@@ -16,22 +32,18 @@ import org.hibernate.ogm.datastore.impl.DatastoreServices;
 import org.hibernate.ogm.datastore.mongodb.AssociationStorage;
 import org.hibernate.ogm.datastore.mongodb.Environment;
 import org.hibernate.ogm.datastore.mongodb.impl.MongoDBDatastoreProvider;
-import org.hibernate.ogm.datastore.spi.*;
+import org.hibernate.ogm.datastore.spi.DatastoreProvider;
 import org.hibernate.ogm.dialect.GridDialect;
-import org.hibernate.ogm.dialect.mongodb.MongoDBAssociationSnapshot;
 import org.hibernate.ogm.dialect.mongodb.MongoDBDialect;
-import org.hibernate.ogm.grid.*;
 import org.hibernate.service.Service;
 import org.hibernate.service.spi.ServiceRegistryImplementor;
 import org.junit.Test;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 
 import static org.fest.assertions.Assertions.assertThat;
-import static org.junit.Assert.*;
 
 /**
  * org.hibernate.ogm.test.mongodb.loading.LoadSelectedColumnsCollectionTest
@@ -56,19 +68,19 @@ public class LoadSelectedColumnsCollectionTest extends OgmTestBase {
         water.put("volume", "1L");
         collection.insert(water);
 
-        List<String> selectedColumns = new ArrayList<String>();
-        selectedColumns.add("name");
-        Tuple tuple = this.getTuple(collectionName, "1234", selectedColumns);
-
-        assertNotNull(tuple);
-        Set<String> retrievedColumn = tuple.getColumnNames();
-
-		/*
-          *The dialect will return all columns (which include _id field) so we have to substract 1 to check if
-		  *the right number of columns has been loaded.
-		 */
-        assertEquals(selectedColumns.size(), retrievedColumn.size() - 1);
-        assertTrue(retrievedColumn.containsAll(selectedColumns));
+//        List<String> selectedColumns = new ArrayList<String>();
+//        selectedColumns.add("name");
+//        Tuple tuple = this.getTuple(collectionName, "1234", selectedColumns);
+//
+//        assertNotNull(tuple);
+//        Set<String> retrievedColumn = tuple.getColumnNames();
+//
+//		/*
+//          *The dialect will return all columns (which include _id field) so we have to substract 1 to check if
+//		  *the right number of columns has been loaded.
+//		 */
+//        assertEquals(selectedColumns.size(), retrievedColumn.size() - 1);
+//        assertTrue(retrievedColumn.containsAll(selectedColumns));
 
         collection.remove(water);
     }
@@ -99,23 +111,23 @@ public class LoadSelectedColumnsCollectionTest extends OgmTestBase {
         session.persist(hibernateOGM);
         transaction.commit();
 
-        this.addExtraColumn();
-        GridDialect gridDialect = this.getGridDialect();
-        AssociationKeyMetadata metadata = new AssociationKeyMetadata("Project_Module", new String[] { "Project_id" });
-        metadata.setRowKeyColumnNames(new String[] { "Project_id", "module_id" });
-        AssociationKey associationKey = new AssociationKey(
-                metadata,
-                new Object[] { "projectID" }
-        );
-        associationKey.setAssociationKind(AssociationKind.ASSOCIATION);
-        associationKey.setCollectionRole("modules");
-        associationKey.setOwnerEntityKey(new EntityKey(new EntityKeyMetadata("Project", new String[] { "id" }), new String[] { "projectID" }));
-
-        AssociationContext associationContext = new AssociationContext(Arrays.asList(associationKey.getRowKeyColumnNames()));
-        final Association association = gridDialect.getAssociation(associationKey, associationContext);
-        final MongoDBAssociationSnapshot associationSnapshot = (MongoDBAssociationSnapshot) association.getSnapshot();
-        final DBObject assocObject = associationSnapshot.getDBObject();
-        this.checkLoading(assocObject);
+//        this.addExtraColumn();
+//        GridDialect gridDialect = this.getGridDialect();
+//        AssociationKeyMetadata metadata = new AssociationKeyMetadata("Project_Module", new String[] { "Project_id" });
+//        metadata.setRowKeyColumnNames(new String[] { "Project_id", "module_id" });
+//        AssociationKey associationKey = new AssociationKey(
+//                metadata,
+//                new Object[] { "projectID" }
+//        );
+//        associationKey.setAssociationKind(AssociationKind.ASSOCIATION);
+//        associationKey.setCollectionRole("modules");
+//        associationKey.setOwnerEntityKey(new EntityKey(new EntityKeyMetadata("Project", new String[] { "id" }), new String[] { "projectID" }));
+//
+//        AssociationContext associationContext = new AssociationContext(Arrays.asList(associationKey.getRowKeyColumnNames()));
+//        final Association association = gridDialect.getAssociation(associationKey, associationContext);
+//        final MongoDBAssociationSnapshot associationSnapshot = (MongoDBAssociationSnapshot) association.getSnapshot();
+//        final DBObject assocObject = associationSnapshot.getDBObject();
+//        this.checkLoading(assocObject);
 
         session.delete(mongodb);
         session.delete(infinispan);
@@ -123,11 +135,11 @@ public class LoadSelectedColumnsCollectionTest extends OgmTestBase {
         session.close();
     }
 
-    public Tuple getTuple(String collectionName, String id, List<String> selectedColumns) {
-        EntityKey key = new EntityKey(new EntityKeyMetadata(collectionName, new String[] { MongoDBDialect.ID_FIELDNAME }), new Object[] { id });
-        TupleContext tupleContext = new TupleContext(selectedColumns);
-        return this.getGridDialect().getTuple(key, tupleContext);
-    }
+//    public Tuple getTuple(String collectionName, String id, List<String> selectedColumns) {
+//        EntityKey key = new EntityKey(new EntityKeyMetadata(collectionName, new String[] { MongoDBDialect.ID_FIELDNAME }), new Object[] { id });
+//        TupleContext tupleContext = new TupleContext(selectedColumns);
+//        return this.getGridDialect().getTuple(key, tupleContext);
+//    }
 
     protected Service getService(Class<? extends Service> serviceImpl) {
         SessionFactoryImplementor factory = super.sfi();

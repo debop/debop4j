@@ -24,11 +24,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.hibernate.ogm.datastore.mongodb.impl.MongoDBDatastoreProvider;
 import org.hibernate.ogm.datastore.spi.DatastoreProvider;
 import org.hibernate.ogm.datastore.spi.Tuple;
-import org.hibernate.ogm.datastore.spi.TupleContext;
 import org.hibernate.ogm.dialect.GridDialect;
-import org.hibernate.ogm.dialect.mongodb.MongoDBDialect;
-import org.hibernate.ogm.grid.EntityKey;
-import org.hibernate.ogm.grid.EntityKeyMetadata;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -67,10 +63,11 @@ public class MongoTool {
             log.trace("getTuple... collectionName=[{}], id=[{}], selectedColumns=[{}]",
                       collectionName, id, StringTool.listToString(selectedColumns));
 
-        EntityKeyMetadata metadata = new EntityKeyMetadata(collectionName, new String[] { MongoDBDialect.ID_FIELDNAME });
-        EntityKey key = new EntityKey(metadata, new Object[] { id });
-        TupleContext tupleContext = new TupleContext(selectedColumns);
-        return gridDialect.getTuple(key, tupleContext);
+//        EntityKeyMetadata metadata = new EntityKeyMetadata(collectionName, new String[] { MongoDBDialect.ID_FIELDNAME });
+//        EntityKey key = new EntityKey(metadata, new Object[] { id });
+//        TupleContext tupleContext = new TupleContext(selectedColumns);
+//        return gridDialect.getTuple(key, tupleContext);
+        return null;
     }
 
     public MongoDBDatastoreProvider getProvider() {

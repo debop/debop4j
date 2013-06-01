@@ -23,7 +23,6 @@ import kr.debop4j.timeperiod.tools.Times;
 import lombok.extern.slf4j.Slf4j;
 import org.joda.time.DateTime;
 
-import javax.annotation.Nullable;
 import java.util.List;
 
 import static kr.debop4j.core.Guard.shouldNotBeNull;
@@ -89,7 +88,7 @@ public class TimePeriodCollection extends TimePeriodContainer implements ITimePe
         shouldNotBeNull(target, "target");
         return Iterables.filter(getPeriods(), new Predicate<ITimePeriod>() {
             @Override
-            public boolean apply(@Nullable ITimePeriod input) {
+            public boolean apply(ITimePeriod input) {
                 return Times.hasInside(target, input);
             }
         });
@@ -101,7 +100,7 @@ public class TimePeriodCollection extends TimePeriodContainer implements ITimePe
 
         return Iterables.filter(getPeriods(), new Predicate<ITimePeriod>() {
             @Override
-            public boolean apply(@Nullable ITimePeriod input) {
+            public boolean apply(ITimePeriod input) {
                 return target.overlapsWith(input);
                 // return Times.overlapsWith(target, input);
             }
@@ -113,7 +112,7 @@ public class TimePeriodCollection extends TimePeriodContainer implements ITimePe
         shouldNotBeNull(moment, "moment");
         return Iterables.filter(getPeriods(), new Predicate<ITimePeriod>() {
             @Override
-            public boolean apply(@Nullable ITimePeriod input) {
+            public boolean apply(ITimePeriod input) {
                 return Times.hasInside(input, moment);
             }
         });
@@ -124,7 +123,7 @@ public class TimePeriodCollection extends TimePeriodContainer implements ITimePe
         shouldNotBeNull(target, "target");
         return Iterables.filter(getPeriods(), new Predicate<ITimePeriod>() {
             @Override
-            public boolean apply(@Nullable ITimePeriod input) {
+            public boolean apply(ITimePeriod input) {
                 return Times.intersectsWith(target, input);
             }
         });
@@ -138,7 +137,7 @@ public class TimePeriodCollection extends TimePeriodContainer implements ITimePe
 
         return Iterables.filter(getPeriods(), new Predicate<ITimePeriod>() {
             @Override
-            public boolean apply(@Nullable ITimePeriod input) {
+            public boolean apply(ITimePeriod input) {
                 PeriodRelation targetRelation = Times.getRelation(input, target);
                 return filteringRelation.contains(targetRelation);
             }

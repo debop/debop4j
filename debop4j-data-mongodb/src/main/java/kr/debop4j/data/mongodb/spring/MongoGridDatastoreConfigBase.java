@@ -14,14 +14,14 @@
  * limitations under the License.
  */
 
-package kr.debop4j.data.mongodb.spring.cfg;
+package kr.debop4j.data.mongodb.spring;
 
 import com.mongodb.MongoClient;
 import com.mongodb.ServerAddress;
 import kr.debop4j.core.Local;
 import kr.debop4j.data.mongodb.dao.MongoOgmDao;
 import kr.debop4j.data.mongodb.tools.MongoTool;
-import kr.debop4j.data.ogm.spring.cfg.GridDatastoreConfigBase;
+import kr.debop4j.data.ogm.spring.GridDatastoreConfigBase;
 import lombok.extern.slf4j.Slf4j;
 import org.hibernate.ogm.datastore.mongodb.AssociationStorage;
 import org.hibernate.ogm.datastore.mongodb.Environment;
@@ -54,7 +54,7 @@ public abstract class MongoGridDatastoreConfigBase extends GridDatastoreConfigBa
         try {
             return new ServerAddress("localhost");
         } catch (UnknownHostException e) {
-            log.error("서버를 찾지 못했습니다.", e);
+            MongoGridDatastoreConfigBase.log.error("서버를 찾지 못했습니다.", e);
             throw new RuntimeException(e);
         }
     }
@@ -84,8 +84,8 @@ public abstract class MongoGridDatastoreConfigBase extends GridDatastoreConfigBa
         // 엔티티 저장 방식
         props.put(Environment.MONGODB_ASSOCIATIONS_STORE, getAssociationStorage().name());
 
-        if (log.isDebugEnabled())
-            log.debug("hibernate-ogm 환경설정 정보를 지정했습니다. props=\n{}", props.toString());
+        if (MongoGridDatastoreConfigBase.log.isDebugEnabled())
+            MongoGridDatastoreConfigBase.log.debug("hibernate-ogm 환경설정 정보를 지정했습니다. props=\n{}", props.toString());
 
         return props;
     }
@@ -105,8 +105,8 @@ public abstract class MongoGridDatastoreConfigBase extends GridDatastoreConfigBa
             dao = new MongoOgmDao(sessionFactory());
             Local.put(MONGO_OGM_DAO_CLASS_NAME, dao);
 
-            if (log.isDebugEnabled())
-                log.debug("현 스레드에서 새로운 MongoOgmDao 인스턴스를 생성했습니다. ThreadId=[{}]", Thread.currentThread().getId());
+            if (MongoGridDatastoreConfigBase.log.isDebugEnabled())
+                MongoGridDatastoreConfigBase.log.debug("현 스레드에서 새로운 MongoOgmDao 인스턴스를 생성했습니다. ThreadId=[{}]", Thread.currentThread().getId());
         }
         return dao;
     }
@@ -127,7 +127,7 @@ public abstract class MongoGridDatastoreConfigBase extends GridDatastoreConfigBa
     private static final String MONGO_TEMPLATE_CLASS_NAME = MongoTemplate.class.getName();
 
     @Bean
-    @Scope( "prototype" )
+    @Scope("prototype")
     public MongoTemplate mongoTemplate() {
         MongoTemplate template = Local.get(MONGO_TEMPLATE_CLASS_NAME, MongoTemplate.class);
         if (template == null) {

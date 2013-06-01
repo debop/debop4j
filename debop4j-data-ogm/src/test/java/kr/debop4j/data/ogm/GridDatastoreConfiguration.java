@@ -17,7 +17,7 @@
 package kr.debop4j.data.ogm;
 
 import kr.debop4j.data.ogm.dao.Player;
-import kr.debop4j.data.ogm.spring.cfg.GridDatastoreConfigBase;
+import kr.debop4j.data.ogm.spring.GridDatastoreConfigBase;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Configuration;
 

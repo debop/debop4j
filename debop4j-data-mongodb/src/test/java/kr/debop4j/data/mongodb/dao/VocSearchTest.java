@@ -96,7 +96,7 @@ public class VocSearchTest extends MongoGridDatastoreTestBase {
             public void perform(IHibernateOgmDao dao) {
 
                 // findAll
-                List<Voc> loadedVocs = dao.findAll(Voc.class);
+                List<Voc> loadedVocs = dao.find(Voc.class);
                 assertThat(loadedVocs).isNotNull();
                 assertThat(loadedVocs.size()).isGreaterThan(0);
                 log.debug("findAll seach result = [{}]", loadedVocs.size());
@@ -145,7 +145,7 @@ public class VocSearchTest extends MongoGridDatastoreTestBase {
             action.perform(dao);
         } finally {
             log.debug("Voc 엔티티를 삭제합니다...");
-            List<Voc> vocs = dao.findAll(Voc.class);
+            List<Voc> vocs = dao.find(Voc.class);
             assertThat(vocs.size()).isGreaterThan(0);
             dao.deleteAll(vocs);
             dao.getFullTextSession().flush();

@@ -16,7 +16,6 @@
 
 package kr.debop4j.data.mongodb.dao;
 
-import kr.debop4j.data.hibernate.unitofwork.UnitOfWorks;
 import kr.debop4j.data.ogm.dao.HibernateOgmDao;
 import org.apache.lucene.search.Query;
 import org.hibernate.SessionFactory;
@@ -39,10 +38,6 @@ public class MongoOgmDao extends HibernateOgmDao {
     private static final boolean isTraceEnabled = log.isTraceEnabled();
     private static final boolean isDebugEnabled = log.isDebugEnabled();
 
-    public MongoOgmDao() {
-        this(UnitOfWorks.getCurrentSessionFactory());
-    }
-
     public MongoOgmDao(SessionFactory sessionFactory) {
         super(sessionFactory);
     }
@@ -59,11 +54,5 @@ public class MongoOgmDao extends HibernateOgmDao {
 
         FullTextQuery ftq = getFullTextQuery(luceneQuery, clazz);
         return ftq.getResultSize();
-    }
-
-    /** 지정된 수형의 엔티티를 모두 삭제합니다. */
-    @Override
-    public void deleteAll(Class<?> clazz) {
-        deleteAll(findAll(clazz));
     }
 }

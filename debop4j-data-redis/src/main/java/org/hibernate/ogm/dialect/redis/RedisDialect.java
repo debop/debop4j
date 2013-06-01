@@ -32,9 +32,7 @@ import org.hibernate.ogm.datastore.spi.TupleContext;
 import org.hibernate.ogm.dialect.GridDialect;
 import org.hibernate.ogm.grid.AssociationKey;
 import org.hibernate.ogm.grid.EntityKey;
-import org.hibernate.ogm.grid.EntityKeyMetadata;
 import org.hibernate.ogm.grid.RowKey;
-import org.hibernate.ogm.massindex.batchindexing.Consumer;
 import org.hibernate.ogm.type.ByteStringType;
 import org.hibernate.ogm.type.GridType;
 import org.hibernate.ogm.type.StringCalendarDateType;
@@ -151,8 +149,8 @@ public class RedisDialect implements GridDialect {
         return null; // all other types handled as in hibernate-ogm-core
     }
 
-    @Override
-    public void forEachTuple(Consumer consumer, EntityKeyMetadata... entityKeyMetadatas) {
-        throw new NotImplementedException("구현 중");
-    }
+//    @Override
+//    public void forEachTuple(Consumer consumer, EntityKeyMetadata... entityKeyMetadatas) {
+//        throw new NotImplementedException("구현 중");
+//    }
 }

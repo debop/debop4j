@@ -27,7 +27,7 @@ import static com.mysema.query.types.PathMetadataFactory.forVariable;
 
 
 /** QAnnotatedEntityBase is a Querydsl query type for AnnotatedEntityBase */
-@Generated( "com.mysema.query.codegen.SupertypeSerializer" )
+@Generated("com.mysema.query.codegen.SupertypeSerializer")
 public class QAnnotatedEntityBase extends EntityPathBase<AnnotatedEntityBase> {
 
     private static final long serialVersionUID = 2041099168;
@@ -43,7 +43,7 @@ public class QAnnotatedEntityBase extends EntityPathBase<AnnotatedEntityBase> {
         super(AnnotatedEntityBase.class, forVariable(variable));
     }
 
-    @SuppressWarnings( "all" )
+    @SuppressWarnings("all")
     public QAnnotatedEntityBase(Path<? extends AnnotatedEntityBase> path) {
         super((Class) path.getType(), path.getMetadata());
     }

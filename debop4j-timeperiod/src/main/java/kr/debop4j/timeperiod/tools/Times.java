@@ -19,7 +19,6 @@ package kr.debop4j.timeperiod.tools;
 import com.google.common.base.Objects;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
-import jyield.Continuable;
 import kr.debop4j.core.Function1;
 import kr.debop4j.core.NotSupportException;
 import kr.debop4j.core.Pair;
@@ -1357,17 +1356,17 @@ public abstract class Times {
 
     // region << Comparator >>
 
-    @Getter(lazy = true)
+    @Getter( lazy = true )
     private static final StartComparator startComparator = new StartComparator();
-    @Getter(lazy = true)
+    @Getter( lazy = true )
     private static final StartDescComparator startDescComparator = new StartDescComparator();
-    @Getter(lazy = true)
+    @Getter( lazy = true )
     private static final EndComparator endComparator = new EndComparator();
-    @Getter(lazy = true)
+    @Getter( lazy = true )
     private static final EndDescComparator endDescComparator = new EndDescComparator();
-    @Getter(lazy = true)
+    @Getter( lazy = true )
     private static final DurationComparator durationComparator = new DurationComparator();
-    @Getter(lazy = true)
+    @Getter( lazy = true )
     private static final DurationDescComparator durationDescComparator = new DurationDescComparator();
 
     public static class StartComparator implements Comparator<ITimePeriod> {
@@ -1451,7 +1450,7 @@ public abstract class Times {
     /** 지정된 기간을 년단위로 컬렉션을 만듭니다. */
     public static List<ITimePeriod> foreachYears(ITimePeriod period) {
         assert period != null;
-        if (log.isTraceEnabled())
+        if (isTraceEnabled)
             log.trace("기간[{}]에 대해 Year 단위로 열거합니다...", period);
 
         List<ITimePeriod> years = Lists.newArrayList();
@@ -1485,7 +1484,7 @@ public abstract class Times {
     /** 지정된 기간을 반기 단위로 열거합니다. */
     public static List<ITimePeriod> foreachHalfyears(ITimePeriod period) {
         assert period != null;
-        if (log.isTraceEnabled())
+        if (isTraceEnabled)
             log.trace("기간[{}]에 대해 Halfyear 단위로 열거합니다...", period);
 
         List<ITimePeriod> halfyears = Lists.newArrayList();
@@ -1520,7 +1519,7 @@ public abstract class Times {
     /** 지정된 기간을 분기단위로 열거합니다. */
     public static List<ITimePeriod> foreachQuarters(ITimePeriod period) {
         assert period != null;
-        if (log.isTraceEnabled())
+        if (isTraceEnabled)
             log.trace("기간[{}]에 대해 Quarter 단위로 열거합니다...", period);
 
         List<ITimePeriod> quarters = Lists.newArrayList();
@@ -1555,7 +1554,7 @@ public abstract class Times {
     /** 지정된 기간을 월(Month) 단위로 열거합니다. */
     public static List<ITimePeriod> foreachMonths(ITimePeriod period) {
         assert period != null;
-        if (log.isTraceEnabled())
+        if (isTraceEnabled)
             log.trace("기간[{}]에 대해 월(Month) 단위로 열거합니다...", period);
 
         List<ITimePeriod> months = Lists.newArrayList();
@@ -1591,7 +1590,7 @@ public abstract class Times {
     /** 지정된 기간을 주(Week) 단위로 열거합니다. */
     public static List<ITimePeriod> foreachWeeks(ITimePeriod period) {
         assert period != null;
-        if (log.isTraceEnabled())
+        if (isTraceEnabled)
             log.trace("기간[{}]에 대해 주(Week) 단위로 열거합니다...", period);
 
         List<ITimePeriod> weeks = Lists.newArrayList();
@@ -1630,8 +1629,8 @@ public abstract class Times {
 
     /** 지정한 기간을 일(Day)단위로 열거합니다. */
     public static List<ITimePeriod> foreachDays(ITimePeriod period) {
-        assert period != null;
-        if (log.isTraceEnabled()) log.trace("기간[{}]에 대해 일(Day) 단위로 열거합니다...", period);
+        shouldNotBeNull(period, "period");
+        if (isTraceEnabled) log.trace("기간[{}]에 대해 일(Day) 단위로 열거합니다...", period);
 
         List<ITimePeriod> days = Lists.newArrayList();
         if (period.isAnytime())
@@ -1661,11 +1660,10 @@ public abstract class Times {
     }
 
     /** 지정한 기간을 시(Hour) 단위로 열거합니다. */
-    @Continuable
     public static List<ITimePeriod> foreachHours(ITimePeriod period) {
-        assert period != null;
-        if (log.isTraceEnabled())
-            log.trace("기간[{}]에 대해 시간(Hour) 단위로 열거합니다...", period);
+        shouldNotBeNull(period, "period");
+
+        if (isTraceEnabled) log.trace("기간[{}]에 대해 시간(Hour) 단위로 열거합니다...", period);
 
         List<ITimePeriod> hours = Lists.newArrayList();
         if (period.isAnytime())
@@ -1699,9 +1697,8 @@ public abstract class Times {
 
     /** 지정한 기간을 분(Minute) 단위로 열거합니다. */
     public static List<ITimePeriod> foreachMinutes(ITimePeriod period) {
-        assert period != null;
-        if (log.isTraceEnabled())
-            log.trace("기간[{}]에 대해 분(Minute) 단위로 열거합니다...", period);
+        shouldNotBeNull(period, "period");
+        if (isTraceEnabled) log.trace("기간[{}]에 대해 분(Minute) 단위로 열거합니다...", period);
 
         List<ITimePeriod> minutes = Lists.newArrayList();
         if (period.isAnytime())
@@ -1743,7 +1740,7 @@ public abstract class Times {
         shouldNotBeNull(runner, "runner");
         shouldBe(period.hasPeriod(), "period는 기간을 가져야합니다. period=%s", period);
 
-        if (log.isDebugEnabled())
+        if (isDebugEnabled)
             log.debug("기간[{}]을 [{}] 단위로 열거하여, 메소드르 실행시켜 결과를 반환합니다.", period, periodUnit);
 
         List<T> results = Lists.newArrayList();
