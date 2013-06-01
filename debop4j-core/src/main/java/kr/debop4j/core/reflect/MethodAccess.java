@@ -19,7 +19,6 @@ package kr.debop4j.core.reflect;
 import com.google.common.collect.Lists;
 import kr.debop4j.core.Guard;
 import kr.debop4j.core.tools.StringTool;
-import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.objectweb.asm.*;
 
@@ -37,12 +36,19 @@ import static org.objectweb.asm.Opcodes.*;
  * @since 13. 1. 21
  */
 @Slf4j
-abstract public class MethodAccess {
+public abstract class MethodAccess {
 
-    @Getter
     private String[] methodNames;
-    @Getter
     private Class[][] parameterTypes;
+
+
+    public String[] getMethodNames() {
+        return Arrays.copyOf(methodNames, methodNames.length);
+    }
+
+    public Class[][] getParameterTypes() {
+        return Arrays.copyOf(parameterTypes, parameterTypes.length);
+    }
 
     abstract public Object invoke(Object instance, int methodIndex, Object... args);
 
@@ -68,8 +74,12 @@ abstract public class MethodAccess {
         throw new IllegalArgumentException("Unable to find public method: " + methodName + " " + Arrays.toString(parameterTypes));
     }
 
-    /** 지정한 수형의 메소드에 동적으로 접근하기 위한 MethodAccess를 빌드합니다. */
-    static public MethodAccess get(Class type) {
+    /**
+     * 지정한 수형의 메소드에 동적으로 접근하기 위한 MethodAccess를 빌드합니다.
+     *
+     * @param type 수형
+     */
+    public static MethodAccess get(final Class type) {
         Guard.shouldNotBeNull(type, "type");
 
         List<Method> methods = Lists.newArrayList();
@@ -97,9 +107,10 @@ abstract public class MethodAccess {
         String accessClassName = className + "MethodAccess";
         if (accessClassName.startsWith("java."))
             accessClassName = ReflectConsts.BASE_PACKAGE + "." + accessClassName;
-        Class accessClass = null;
 
+        Class accessClass;
         AccessClassLoader loader = AccessClassLoader.get(type);
+
         synchronized (loader) {
             try {
                 accessClass = loader.loadClass(accessClassName);

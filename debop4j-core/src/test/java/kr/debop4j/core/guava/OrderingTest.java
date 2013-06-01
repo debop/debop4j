@@ -1,8 +1,25 @@
+/*
+ * Copyright 2011-2013 the original author or authors.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package kr.debop4j.core.guava;
 
 import com.google.common.base.Objects;
 import com.google.common.collect.Ordering;
 import kr.debop4j.core.AbstractTest;
+import kr.debop4j.core.tools.StringTool;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Assert;
@@ -20,6 +37,7 @@ import static com.google.common.collect.Lists.newArrayList;
  * @since 13. 1. 22.
  */
 @Slf4j
+@SuppressWarnings( "unchecked" )
 public class OrderingTest extends AbstractTest {
 
     private static final Comparator<Employee> yearsComparator =
@@ -45,7 +63,7 @@ public class OrderingTest extends AbstractTest {
 
         List<Employee> employeeList = newArrayList(anakinSk, hanSolo, darthVader);
 
-        log.debug("employee list=[{}]", employeeList);
+        log.debug("employee list=[{}]", StringTool.listToString(employeeList));
 
 
         Ordering<Employee> orderUsingYearsComparator = Ordering.from(yearsComparator);

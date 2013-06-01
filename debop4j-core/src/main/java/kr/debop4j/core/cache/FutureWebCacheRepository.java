@@ -33,7 +33,8 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 
 /**
- * Google Guava 의 {@link com.google.common.cache.LoadingCache} 를 이용하여, 캐시 값을 구하는 방법을 미리 지정하여, 쉽게 캐시를 운영할 수 있도록 캐시입니다.
+ * Google Guava 의 {@link com.google.common.cache.LoadingCache} 를 이용하여,
+ * 캐시 값을 구하는 방법을 미리 지정하여, 쉽게 캐시를 운영할 수 있도록 캐시입니다.
  *
  * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 12. 12. 5.
@@ -44,44 +45,37 @@ public class FutureWebCacheRepository extends CacheRepositoryBase {
     private final LoadingCache<String, String> cache;
 
     public FutureWebCacheRepository() {
-        if (log.isDebugEnabled())
-            log.debug("FutureWebCacheRepository 인스턴스를 생성합니다.");
-
         cache = CacheBuilder.newBuilder().weakValues().build(getCacheLoader());
     }
 
     @Override
-    public Object get(String key) {
-        try {
-            return cache.get(key);
-        } catch (ExecutionException e) {
-            throw new RuntimeException(e);
-        }
+    public Object get(final String key) throws ExecutionException {
+        return cache.get(key);
     }
 
     @Override
-    public void set(String key, Object value, long validFor) {
+    public void set(final String key, final Object value, long validFor) {
         String str = (value != null) ? value.toString() : "";
         cache.put(key, str);
     }
 
     @Override
-    public void remove(String key) {
+    public void remove(final String key) {
         cache.invalidate(key);
     }
 
     @Override
-    public void removeAll(String... keys) {
+    public void removeAll(final String... keys) {
         cache.invalidateAll(Arrays.asList(keys));
     }
 
     @Override
-    public void removeAll(Iterable<String> keys) {
+    public void removeAll(final Iterable<String> keys) {
         cache.invalidateAll(keys);
     }
 
     @Override
-    public boolean exists(String key) {
+    public boolean exists(final String key) {
         return cache.getIfPresent(key) != null;
     }
 
@@ -95,8 +89,8 @@ public class FutureWebCacheRepository extends CacheRepositoryBase {
             @Override
             public String load(String key) throws Exception {
 
-                if (log.isDebugEnabled())
-                    log.debug("URI=[{}] 의 웹 컨텐츠를 비동기 방식으로 다운로드 받아 캐시합니다.", key);
+                if (log.isTraceEnabled())
+                    log.trace("URI=[{}] 의 웹 컨텐츠를 비동기 방식으로 다운로드 받아 캐시합니다.", key);
 
                 String responseStr = "";
                 HttpAsyncClient httpClient = new DefaultHttpAsyncClient();
@@ -110,7 +104,7 @@ public class FutureWebCacheRepository extends CacheRepositoryBase {
 
                     if (log.isDebugEnabled())
                         log.debug("URI=[{}]로부터 웹 컨텐츠를 다운로드 받았습니다. responseStr=[{}]",
-                                  key, StringTool.ellipsisChar(responseStr, 255));
+                                  key, StringTool.ellipsisChar(responseStr, 80));
                 } finally {
                     httpClient.shutdown();
                 }

@@ -33,6 +33,7 @@ import static kr.debop4j.core.Guard.shouldNotBeNull;
 @Slf4j
 public final class ReflectTool {
 
+    /** 생성자 */
     private ReflectTool() {}
 
     /**
@@ -41,7 +42,7 @@ public final class ReflectTool {
      * @param x 검사할 객체
      * @return 객체가 Generic 형식인 경우, 형식인자의 배열, Generic이 아니면 빈 배열을 반환
      */
-    public static Type[] getParameterTypes(Object x) {
+    public static Type[] getParameterTypes(final Object x) {
         shouldNotBeNull(x, "x");
 
         if (log.isDebugEnabled())
@@ -56,14 +57,27 @@ public final class ReflectTool {
         }
     }
 
-    /** 인스턴스가 Generic 형식이라면 첫번째 Type parameter의 수형을 반환한다. */
-    public static <T> Class<T> getGenericParameterType(Object x) {
+    /**
+     * 인스턴스가 Generic 형식이라면 첫번째 Type parameter의 수형을 반환한다.
+     *
+     * @param x   the x
+     * @param <T> 수형
+     * @return the generic parameter type
+     */
+    public static <T> Class<T> getGenericParameterType(final Object x) {
         return getGenericParameterType(x, 0);
     }
 
-    /** 인스턴스가 Generic 형식이라면 index+1 번째 Type parameter의 수형을 반환한다. */
-    @SuppressWarnings("unchecked")
-    public static <T> Class<T> getGenericParameterType(Object x, int index) {
+    /**
+     * 인스턴스가 Generic 형식이라면 index+1 번째 Type parameter의 수형을 반환한다.
+     *
+     * @param x     the x
+     * @param index the index
+     * @param <T>   반환할 수형
+     * @return the generic parameter type
+     */
+    @SuppressWarnings( "unchecked" )
+    public static <T> Class<T> getGenericParameterType(final Object x, final int index) {
         shouldNotBeNull(x, "x");
 
         if (log.isDebugEnabled())
@@ -71,8 +85,9 @@ public final class ReflectTool {
 
         Type[] types = getParameterTypes(x);
 
-        if (types != null && types.length > index)
+        if (types != null && types.length > index) {
             return (Class<T>) types[index];
+        }
 
         throw new UnsupportedOperationException("Generic 형식의 객체로부터 인자 수형들을 추출하는데 실패했습니다.");
     }
@@ -80,27 +95,35 @@ public final class ReflectTool {
     /**
      * 수형이 primitive type 과 호환된다면 Primitive type으로 변경합니다.
      *
-     * @param clazz
-     * @return
+     * @param clazz the clazz
+     * @return class
      */
-    public static Class toPrimitiveType(Class<?> clazz) {
-        if (clazz == Boolean.class)
+    public static Class toPrimitiveType(final Class<?> clazz) {
+        if (clazz == Boolean.class) {
             return Boolean.TYPE;
-        else if (clazz == Character.class)
+        }
+        if (clazz == Character.class) {
             return Character.TYPE;
-        else if (clazz == Byte.class)
+        }
+        if (clazz == Byte.class) {
             return Byte.TYPE;
-        else if (clazz == Short.class)
+        }
+        if (clazz == Short.class) {
             return Short.TYPE;
-        else if (clazz == Integer.class)
+        }
+        if (clazz == Integer.class) {
             return Integer.TYPE;
-        else if (clazz == Long.class)
+        }
+        if (clazz == Long.class) {
             return Long.TYPE;
-        else if (clazz == Float.class)
+        }
+        if (clazz == Float.class) {
             return Float.TYPE;
-        else if (clazz == Double.class)
+        }
+        if (clazz == Double.class) {
             return Double.TYPE;
-        else
-            return clazz;
+        }
+
+        return clazz;
     }
 }

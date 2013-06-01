@@ -27,6 +27,7 @@ import org.apache.commons.pool.impl.GenericObjectPool;
  * @since 13. 4. 8. 오전 12:41
  */
 @Slf4j
+@SuppressWarnings( "unchecked" )
 public abstract class AbstractPool<T> implements AutoCloseable {
 
     protected GenericObjectPool pool;
@@ -34,20 +35,21 @@ public abstract class AbstractPool<T> implements AutoCloseable {
     protected AbstractPool() { }
 
     public AbstractPool(final GenericObjectPool.Config poolConfig, PoolableObjectFactory<T> factory) {
+        log.info("새로운 pool 을 생성합니다... config=[{}]", poolConfig);
+
         pool = new GenericObjectPool<T>(factory, poolConfig);
     }
 
     /** 풀에서 리소스를 얻습니다. */
-    @SuppressWarnings("unchecked")
     public T getResource() {
-        if (log.isDebugEnabled())
-            log.debug("Pool에서 resource 를 얻습니다...");
-        try {
+        if (log.isTraceEnabled())
+            log.trace("Pool에서 resource 를 얻습니다...");
 
+        try {
             T result = (T) pool.borrowObject();
 
-            if (log.isDebugEnabled())
-                log.debug("Pool에서 resource 를 얻었습니다. resource=[{}]", result);
+            if (log.isTraceEnabled())
+                log.trace("Pool에서 resource 를 얻었습니다. resource=[{}]", result);
 
             return result;
 
@@ -65,7 +67,7 @@ public abstract class AbstractPool<T> implements AutoCloseable {
     @SuppressWarnings("unchecked")
     protected void returnResourceObject(final Object resource) {
         if (log.isTraceEnabled())
-            log.trace("Pool에 resource 를 반환합니다. resource=[{}]", resource);
+            log.trace("Pool에 resource 를 반환합니다... resource=[{}]", resource);
         try {
             pool.returnObject(resource);
         } catch (Exception e) {
@@ -91,8 +93,7 @@ public abstract class AbstractPool<T> implements AutoCloseable {
 
     /** 풀을 제거합니다. 내부의 남아있는 모든 리소스를 제거합니다. */
     public void destroy() {
-        if (log.isTraceEnabled())
-            log.trace("Pool을 제거합니다...");
+        if (log.isTraceEnabled()) log.trace("Pool을 제거합니다...");
         try {
             pool.close();
             pool = null;
@@ -100,8 +101,7 @@ public abstract class AbstractPool<T> implements AutoCloseable {
             log.error("pool을 제거하는데 실패했습니다.", e);
             throw new RuntimeException(e);
         }
-        if (log.isTraceEnabled())
-            log.trace("Pool을 제거했습니다.");
+        log.info("Pool을 제거했습니다.");
     }
 
     public void close() throws Exception {

@@ -29,15 +29,15 @@ public interface IAsyncCacheRepository {
 
     Future<Object> getAsync(final String key);
 
-    Future<Map> getsAsync(String... key);
+    Future<Map> getsAsync(final String... key);
 
     Future<Void> setAsync(final String key, Object value, long validFor);
 
     Future<Void> removeAsync(final String key);
 
-    Future<Void> removeAllAsync(String... keys);
+    Future<Void> removeAllAsync(final String... keys);
 
-    Future<Void> removeAllAsync(Iterable<String>... keys);
+    Future<Void> removeAllAsync(final Iterable<String> keys);
 
     Future<Void> clearAsync();
 }

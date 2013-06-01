@@ -16,6 +16,8 @@
 
 package kr.debop4j.core.cache;
 
+import java.util.concurrent.ExecutionException;
+
 /**
  * Cache 시스템에 정보를 관리하는 ICacheRepository 의 인터페이스입니다.
  *
@@ -44,7 +46,7 @@ public interface ICacheRepository {
      * @param key 캐시 키
      * @return 캐시 항목, 없으면 null 반환
      */
-    Object get(final String key);
+    Object get(final String key) throws ExecutionException;
 
     /**
      * 캐시에 항목을 저장합니다.
@@ -67,14 +69,14 @@ public interface ICacheRepository {
      *
      * @param keys 삭제할 키들
      */
-    void removeAll(String... keys);
+    void removeAll(final String... keys);
 
     /**
      * 여러 개의 키를 한번에 삭제합니다.
      *
      * @param keys 삭제할 키들
      */
-    void removeAll(Iterable<String> keys);
+    void removeAll(final Iterable<String> keys);
 
     /**
      * 해당 키의 캐시 항목의 존재 여부를 알아봅니다.

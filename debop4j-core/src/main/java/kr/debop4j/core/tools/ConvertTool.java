@@ -30,20 +30,38 @@ import java.util.Date;
 @Slf4j
 public class ConvertTool {
 
-    private ConvertTool() {
-    }
+    private ConvertTool() { }
 
-    public static String toString(Object value) {
+    /**
+     * To string.
+     *
+     * @param value the value
+     * @return the string
+     */
+    public static String toString(final Object value) {
         if (value == null)
             return "";
         return String.valueOf(value);
     }
 
-    public static Boolean toBoolean(Object value) {
+    /**
+     * To boolean.
+     *
+     * @param value the value
+     * @return the boolean
+     */
+    public static Boolean toBoolean(final Object value) {
         return toBoolean(value, false);
     }
 
-    public static Boolean toBoolean(Object value, boolean defaultValue) {
+    /**
+     * To boolean.
+     *
+     * @param value        the value
+     * @param defaultValue the default value
+     * @return the boolean
+     */
+    public static Boolean toBoolean(final Object value, final boolean defaultValue) {
         try {
             return Boolean.valueOf(toString(value));
         } catch (Throwable t) {
@@ -51,11 +69,24 @@ public class ConvertTool {
         }
     }
 
-    public static Character toCharacter(Object value) {
+    /**
+     * To character.
+     *
+     * @param value the value
+     * @return the character
+     */
+    public static Character toCharacter(final Object value) {
         return toCharacter(value, Character.MIN_VALUE);
     }
 
-    public static Character toCharacter(Object value, Character defaultValue) {
+    /**
+     * To character.
+     *
+     * @param value        the value
+     * @param defaultValue the default value
+     * @return the character
+     */
+    public static Character toCharacter(final Object value, final Character defaultValue) {
         try {
             return toString(value).charAt(0);
         } catch (Throwable t) {
@@ -63,11 +94,24 @@ public class ConvertTool {
         }
     }
 
-    public static Byte toByte(Object value) {
+    /**
+     * To byte.
+     *
+     * @param value the value
+     * @return the byte
+     */
+    public static Byte toByte(final Object value) {
         return toByte(value, Byte.MIN_VALUE);
     }
 
-    public static Byte toByte(Object value, Byte defaultValue) {
+    /**
+     * To byte.
+     *
+     * @param value        the value
+     * @param defaultValue the default value
+     * @return the byte
+     */
+    public static Byte toByte(final Object value, final byte defaultValue) {
         try {
             return Byte.valueOf(toString(value));
         } catch (Throwable t) {
@@ -75,11 +119,24 @@ public class ConvertTool {
         }
     }
 
-    public static Short toShort(Object value) {
+    /**
+     * To short.
+     *
+     * @param value the value
+     * @return the short
+     */
+    public static Short toShort(final Object value) {
         return toShort(value, (short) 0);
     }
 
-    public static Short toShort(Object value, short defaultValue) {
+    /**
+     * To short.
+     *
+     * @param value        the value
+     * @param defaultValue the default value
+     * @return the short
+     */
+    public static Short toShort(final Object value, final short defaultValue) {
         try {
             return Short.valueOf(toString(value));
         } catch (Exception e) {
@@ -87,11 +144,24 @@ public class ConvertTool {
         }
     }
 
-    public static Integer toInteger(Object value) {
+    /**
+     * To integer.
+     *
+     * @param value the value
+     * @return the integer
+     */
+    public static Integer toInteger(final Object value) {
         return toInteger(value, 0);
     }
 
-    public static Integer toInteger(Object value, int defaultValue) {
+    /**
+     * To integer.
+     *
+     * @param value        the value
+     * @param defaultValue the default value
+     * @return the integer
+     */
+    public static Integer toInteger(final Object value, final int defaultValue) {
         try {
             return Integer.valueOf(toString(value));
         } catch (Exception e) {
@@ -99,11 +169,24 @@ public class ConvertTool {
         }
     }
 
-    public static Date toDate(Object value) {
+    /**
+     * To date.
+     *
+     * @param value the value
+     * @return the date
+     */
+    public static Date toDate(final Object value) {
         return toDate(value, null);
     }
 
-    public static Date toDate(Object value, Date defaultValue) {
+    /**
+     * To date.
+     *
+     * @param value        the value
+     * @param defaultValue the default value
+     * @return the date
+     */
+    public static Date toDate(final Object value, final Date defaultValue) {
         try {
             if (value instanceof String) {
                 return java.sql.Date.valueOf((String) value);

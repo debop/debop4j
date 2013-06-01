@@ -49,7 +49,7 @@ public final class StreamTool {
      * @return 복사한 데이터 길이
      * @throws java.io.IOException
      */
-    public static long copy(InputStream inputStream, OutputStream outputStream) throws IOException {
+    public static long copy(final InputStream inputStream, final OutputStream outputStream) throws IOException {
         shouldNotBeNull(inputStream, "inputStream");
         shouldNotBeNull(outputStream, "outputStream");
 
@@ -69,7 +69,7 @@ public final class StreamTool {
      *
      * @param inputStream 읽어드릴 스트림
      */
-    public static byte[] toByteArray(InputStream inputStream) throws IOException {
+    public static byte[] toByteArray(final InputStream inputStream) throws IOException {
         shouldNotBeNull(inputStream, "inputStream");
 
         if (log.isTraceEnabled())
@@ -89,7 +89,7 @@ public final class StreamTool {
      * @return 바이트 배열 정보가 쓰여진 {@link java.io.OutputStream}
      * @throws java.io.IOException
      */
-    public static OutputStream toOutputStream(byte[] bytes) throws IOException {
+    public static OutputStream toOutputStream(final byte[] bytes) throws IOException {
         if (bytes == null || bytes.length == 0)
             return new ByteArrayOutputStream();
 
@@ -109,7 +109,7 @@ public final class StreamTool {
      * @return 읽은 UTF-8 문자열
      * @throws java.io.IOException
      */
-    public static String toString(InputStream inputStream) throws IOException {
+    public static String toString(final InputStream inputStream) throws IOException {
         byte[] bytes = toByteArray(inputStream);
         return StringTool.getUtf8String(bytes);
     }
@@ -121,7 +121,7 @@ public final class StreamTool {
      * @return 데이터를 복사한 {@link java.io.OutputStream}
      * @throws java.io.IOException
      */
-    public static OutputStream toOutputStream(String str) throws IOException {
+    public static OutputStream toOutputStream(final String str) throws IOException {
         if (StringTool.isEmpty(str))
             return new ByteArrayOutputStream();
 

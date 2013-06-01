@@ -24,12 +24,21 @@ package kr.debop4j.core.tools;
  */
 public class HashTool {
 
-    public static final int NullValue = 0;
-    public static final int OneValue = 1;
-    public static final int Factor = 31;
+    /** The constant NULL_VALUE. */
+    public static final int NULL_VALUE = 0;
+    /** The constant ONE_VALUE. */
+    public static final int ONE_VALUE = 1;
+    /** The constant FACTOR. */
+    public static final int FACTOR = 31;
 
-    private static int computeInternal(Object x) {
-        return (x != null) ? x.hashCode() : NullValue;
+    /**
+     * 해시코드를 생성합니다.
+     *
+     * @param x 해시코드를 생성할 객체
+     * @return 해시코드
+     */
+    private static int computeInternal(final Object x) {
+        return (x != null) ? x.hashCode() : NULL_VALUE;
     }
 
     /**
@@ -38,13 +47,13 @@ public class HashTool {
      * @param objs 해쉬코드를 생성할 객체 배열
      * @return 조합된 Hash code
      */
-    public static int compute(Object... objs) {
+    public static int compute(final Object... objs) {
         if (objs == null || objs.length == 0)
-            return NullValue;
+            return NULL_VALUE;
 
-        int hash = NullValue;
+        int hash = NULL_VALUE;
         for (Object x : objs) {
-            hash = hash * Factor + computeInternal(x);
+            hash = hash * FACTOR + computeInternal(x);
         }
         return hash;
     }

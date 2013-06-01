@@ -39,8 +39,7 @@ import static kr.debop4j.core.Guard.shouldNotBeNull;
 @Slf4j
 public final class MapperTool {
 
-    private MapperTool() {
-    }
+    private MapperTool() { }
 
     private static final ModelMapper mapper;
 
@@ -55,21 +54,41 @@ public final class MapperTool {
             log.info("ModelMapper를 초기화했습니다.");
     }
 
-    public static <T> T map(Object source, Class<T> destinationClass) {
+    /**
+     * Map t.
+     *
+     * @param source           the source
+     * @param destinationClass the destination class
+     * @return the t
+     */
+    public static <T> T map(final Object source, final Class<T> destinationClass) {
         shouldNotBeNull(source, "source");
         shouldNotBeNull(destinationClass, "destinationClass");
 
         return mapper.map(source, destinationClass);
     }
 
-    public static void map(Object source, Object destination) {
+    /**
+     * Map void.
+     *
+     * @param source      the source
+     * @param destination the destination
+     */
+    public static void map(final Object source, final Object destination) {
         shouldNotBeNull(source, "source");
         shouldNotBeNull(destination, "destination");
 
         mapper.map(source, destination);
     }
 
-    public static <S, T> List<T> mapList(Iterable<S> sources, Class<T> destinationClass) {
+    /**
+     * Map list.
+     *
+     * @param sources          the sources
+     * @param destinationClass the destination class
+     * @return the list
+     */
+    public static <S, T> List<T> mapList(final Iterable<S> sources, final Class<T> destinationClass) {
         List<T> destinations = Lists.newArrayList();
 
         for (S source : sources) {
@@ -78,6 +97,13 @@ public final class MapperTool {
         return destinations;
     }
 
+    /**
+     * Map async.
+     *
+     * @param source           the source
+     * @param destinationClass the destination class
+     * @return the future
+     */
     public static <T> Future<T> mapAsync(final Object source, final Class<T> destinationClass) {
         return AsyncTool.startNew(new Callable<T>() {
             @Override
@@ -87,8 +113,14 @@ public final class MapperTool {
         });
     }
 
+    /**
+     * Map list async.
+     *
+     * @param sources          the sources
+     * @param destinationClass the destination class
+     * @return the future
+     */
     public static <S, T> Future<List<T>> mapListAsync(final Iterable<S> sources, final Class<T> destinationClass) {
-
         return AsyncTool.startNew(new Callable<List<T>>() {
             @Override
             public List<T> call() throws Exception {

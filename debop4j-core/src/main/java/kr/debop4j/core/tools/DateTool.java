@@ -31,39 +31,86 @@ public abstract class DateTool {
 
     private DateTool() {}
 
-    /** 지정된 DateTime 에서 moment-part를 제외한 date-part만을 제공합니다. */
-    public static DateTime getStartOfDay(DateTime moment) {
+    /**
+     * 지정된 DateTime 에서 moment-part를 제외한 date-part만을 제공합니다.
+     *
+     * @param moment the moment
+     * @return the start of day
+     */
+    public static DateTime getStartOfDay(final DateTime moment) {
         return moment.withTimeAtStartOfDay();
     }
 
-    public static DateTime getEndOfDay(DateTime moment) {
+    /**
+     * Gets end of day.
+     *
+     * @param moment the moment
+     * @return the end of day
+     */
+    public static DateTime getEndOfDay(final DateTime moment) {
         return getStartOfDay(moment).minus(1);
     }
 
-    public static DateTime getStartOfWeek(DateTime moment) {
+    /**
+     * Gets start of week.
+     *
+     * @param moment the moment
+     * @return the start of week
+     */
+    public static DateTime getStartOfWeek(final DateTime moment) {
         int add = DateTimeConstants.MONDAY - moment.getDayOfWeek();
         if (add > 0)
             add -= 7;
         return moment.withTimeAtStartOfDay().plusDays(add);
     }
 
-    public static DateTime getEndOfWeek(DateTime moment) {
+    /**
+     * Gets end of week.
+     *
+     * @param moment the moment
+     * @return the end of week
+     */
+    public static DateTime getEndOfWeek(final DateTime moment) {
         return getStartOfWeek(moment).plusDays(DateTimeConstants.DAYS_PER_WEEK).minus(1);
     }
 
-    public static DateTime getStartOfMonth(DateTime moment) {
+    /**
+     * Gets start of month.
+     *
+     * @param moment the moment
+     * @return the start of month
+     */
+    public static DateTime getStartOfMonth(final DateTime moment) {
         return new DateTime().withDate(moment.getYear(), moment.getMonthOfYear(), 1);
     }
 
-    public static DateTime getEndOfMonth(DateTime moment) {
+    /**
+     * Gets end of month.
+     *
+     * @param moment the moment
+     * @return the end of month
+     */
+    public static DateTime getEndOfMonth(final DateTime moment) {
         return getStartOfMonth(moment).plusMonths(1).minus(1);
     }
 
-    public static DateTime getStartOfYear(int year) {
+    /**
+     * Gets start of year.
+     *
+     * @param year the year
+     * @return the start of year
+     */
+    public static DateTime getStartOfYear(final int year) {
         return new DateTime(year, 1, 1, 0, 0);
     }
 
-    public static DateTime getEndOfYear(int year) {
+    /**
+     * Gets end of year.
+     *
+     * @param year the year
+     * @return the end of year
+     */
+    public static DateTime getEndOfYear(final int year) {
         return getStartOfYear(year + 1).minus(1);
     }
 }

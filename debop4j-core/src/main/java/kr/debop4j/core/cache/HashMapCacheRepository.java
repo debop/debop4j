@@ -77,18 +77,18 @@ public class HashMapCacheRepository extends CacheRepositoryBase {
         return cache.get(key, valueLoader);
     }
 
-    public ImmutableMap getAllPresent(Iterable<?> keys) {
+    public ImmutableMap getAllPresent(final Iterable<?> keys) {
         return cache.getAllPresent(keys);
     }
 
     /** {@inheritDoc} */
     @Override
-    public void set(final String key, final Object value, final long validFor) {
+    public void set(final String key, final Object value, long validFor) {
         shouldNotBeWhiteSpace(key, "key");
         cache.put(key, value);
     }
 
-    public void setAll(Map m) {
+    public void setAll(final Map m) {
         cache.putAll(m);
     }
 
@@ -101,12 +101,12 @@ public class HashMapCacheRepository extends CacheRepositoryBase {
 
     /** {@inheritDoc} */
     @Override
-    public void removeAll(String... keys) {
+    public void removeAll(final String... keys) {
         cache.invalidateAll(Arrays.asList(keys));
     }
 
     @Override
-    public void removeAll(Iterable<String> keys) {
+    public void removeAll(final Iterable<String> keys) {
         cache.invalidateAll(keys);
     }
 

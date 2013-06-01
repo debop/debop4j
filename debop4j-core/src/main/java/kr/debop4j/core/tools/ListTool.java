@@ -20,28 +20,43 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 
+import static kr.debop4j.core.Guard.shouldNotBeNull;
+
 /**
- * kr.debop4j.core.tool.ListTool
+ * 리스크 관련 Utility class
  *
  * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 12. 12. 23.
  */
 public final class ListTool {
 
+    /** 생성자 */
     private ListTool() { }
 
-    /** 컬렉션에서 최소값을 가지는 요소를 구합니다. */
-    public static <T> T min(Collection<? extends T> coll, Comparator<? super T> comp) {
-        assert comp != null;
-        if (coll == null) return null;
-        return Collections.max(coll, comp);
+    /**
+     * 컬렉션에서 최소값을 가지는 요소를 구합니다.
+     *
+     * @param collection 컬렉션
+     * @param comparator 비교자
+     * @return 최소값
+     */
+    public static <T> T min(final Collection<? extends T> collection, final Comparator<? super T> comparator) {
+        shouldNotBeNull(comparator, "comparator");
+        if (collection == null) return null;
+        return Collections.max(collection, comparator);
     }
 
-    /** 컬렉션에서 최대값을 구합니다. */
-    public static <T> T max(Collection<? extends T> coll, Comparator<? super T> comp) {
-        assert comp != null;
-        if (coll == null) return null;
+    /**
+     * 컬렉션에서 최대값을 구합니다.
+     *
+     * @param collection 컬렉션
+     * @param comparator 비교자
+     * @return 최대값
+     */
+    public static <T> T max(final Collection<? extends T> collection, final Comparator<? super T> comparator) {
+        shouldNotBeNull(comparator, "comparator");
+        if (collection == null) return null;
 
-        return Collections.max(coll, comp);
+        return Collections.max(collection, comparator);
     }
 }

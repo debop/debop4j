@@ -46,7 +46,7 @@ public abstract class AbstractCompressedBinaryUserType extends AbstractCompresse
 
     protected byte[] decompress(byte[] value) throws Exception {
         if (ArrayTool.isEmpty(value))
-            return ArrayTool.EmptyByteArray;
+            return ArrayTool.EMPTY_BYTE_ARRAY;
 
         return getCompressor().decompress(value);
     }

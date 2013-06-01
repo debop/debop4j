@@ -17,6 +17,7 @@
 package kr.debop4j.core.tools;
 
 import com.google.common.base.*;
+import com.google.common.base.Objects;
 import com.google.common.collect.Lists;
 import com.google.common.primitives.Chars;
 import kr.debop4j.core.BinaryStringFormat;
@@ -29,10 +30,7 @@ import org.apache.commons.codec.binary.StringUtils;
 import javax.annotation.Nullable;
 import java.lang.reflect.Field;
 import java.nio.charset.Charset;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import static java.lang.String.format;
 
@@ -49,49 +47,109 @@ public final class StringTool {
      * 멀티바이트 문자열을 바이트 배열로 변환 시에 선두번지에 접두사로 넣는 값입니다.
      * 이 값이 있으면 꼭 UTF-8 으로 변환해야 한다는 뜻입니다.
      */
-    public static final byte[] MULTI_BYTES_PREFIX = new byte[] { (byte) 0xEF, (byte) 0xBB, (byte) 0xBF };
+    protected static final byte[] MULTI_BYTES_PREFIX = new byte[] { (byte) 0xEF, (byte) 0xBB, (byte) 0xBF };
+    /** The constant TRIMMING_STR. */
     public static final String TRIMMING_STR = "...";
+    /** The constant NULL_STR. */
     public static final String NULL_STR = "NULL";
+    /** The constant EMPTY_STR. */
     public static final String EMPTY_STR = "";
 
+    /** The constant UTF8. */
     public static final Charset UTF8 = Charsets.UTF_8;
 
     private StringTool() { }
 
     //region << isNull / isEmpty / isWhiteSpace / isMultiByteString >>
 
+    /**
+     * Is null.
+     *
+     * @param str the str
+     * @return the boolean
+     */
     public static boolean isNull(final String str) {
         return (str == null);
     }
 
+    /**
+     * Is not null.
+     *
+     * @param str the str
+     * @return the boolean
+     */
     public static boolean isNotNull(final String str) {
         return (str != null);
     }
 
+    /**
+     * Is empty.
+     *
+     * @param str the str
+     * @return the boolean
+     */
     public static boolean isEmpty(final String str) {
         return isEmpty(str, false);
     }
 
-    public static boolean isEmpty(final String str, boolean withTrim) {
+    /**
+     * Is empty.
+     *
+     * @param str      the str
+     * @param withTrim the with trim
+     * @return the boolean
+     */
+    public static boolean isEmpty(final String str, final boolean withTrim) {
         return isNull(str) || (((withTrim) ? str.trim() : str).length() == 0);
     }
 
+    /**
+     * Is not empty.
+     *
+     * @param str the str
+     * @return the boolean
+     */
     public static boolean isNotEmpty(final String str) {
         return !isEmpty(str);
     }
 
-    public static boolean isNotEmpty(final String str, boolean withTrim) {
+    /**
+     * Is not empty.
+     *
+     * @param str      the str
+     * @param withTrim the with trim
+     * @return the boolean
+     */
+    public static boolean isNotEmpty(final String str, final boolean withTrim) {
         return !isEmpty(str, withTrim);
     }
 
+    /**
+     * Is white space.
+     *
+     * @param str the str
+     * @return the boolean
+     */
     public static boolean isWhiteSpace(final String str) {
         return isEmpty(str, true);
     }
 
+    /**
+     * Is not white space.
+     *
+     * @param str the str
+     * @return the boolean
+     */
     public static boolean isNotWhiteSpace(final String str) {
         return !isEmpty(str, true);
     }
 
+    /**
+     * Is multi byte string.
+     *
+     * @param bytes the bytes
+     * @return the boolean
+     */
     public static boolean isMultiByteString(final byte[] bytes) {
         if (bytes == null || bytes.length < MULTI_BYTES_PREFIX.length)
             return false;
@@ -100,6 +158,12 @@ public final class StringTool {
                              Arrays.copyOf(bytes, MULTI_BYTES_PREFIX.length));
     }
 
+    /**
+     * Is multi byte string.
+     *
+     * @param str the str
+     * @return the boolean
+     */
     public static boolean isMultiByteString(final String str) {
         if (!isWhiteSpace(str))
             return false;
@@ -114,6 +178,13 @@ public final class StringTool {
         }
     }
 
+    /**
+     * Contains boolean.
+     *
+     * @param str    the str
+     * @param subStr the sub str
+     * @return the boolean
+     */
     public static boolean contains(final String str, final String subStr) {
         return str.contains(subStr);
     }
@@ -122,18 +193,40 @@ public final class StringTool {
 
     // region << ellipsis >>
 
-    static boolean needEllipsis(String str, int maxLength) {
+
+    /**
+     * Need ellipsis.
+     *
+     * @param str       the str
+     * @param maxLength the max length
+     * @return the boolean
+     */
+    public static boolean needEllipsis(final String str, final int maxLength) {
         return isNotEmpty(str) && str.length() > maxLength;
     }
 
-    public static String ellipsisChar(String str, int maxLength) {
+    /**
+     * Ellipsis char.
+     *
+     * @param str       the str
+     * @param maxLength the max length
+     * @return the string
+     */
+    public static String ellipsisChar(final String str, final int maxLength) {
         if (str.isEmpty() || !needEllipsis(str, maxLength))
             return str;
 
         return str.substring(0, maxLength - TRIMMING_STR.length()) + TRIMMING_STR;
     }
 
-    public static String ellipsisPath(String str, int maxLength) {
+    /**
+     * Ellipsis path.
+     *
+     * @param str       the str
+     * @param maxLength the max length
+     * @return the string
+     */
+    public static String ellipsisPath(final String str, final int maxLength) {
         if (str.isEmpty() || !needEllipsis(str, maxLength))
             return str;
 
@@ -151,7 +244,14 @@ public final class StringTool {
         return builder.toString();
     }
 
-    public static String ellipsisFirst(String str, int maxLength) {
+    /**
+     * Ellipsis first.
+     *
+     * @param str       the str
+     * @param maxLength the max length
+     * @return the string
+     */
+    public static String ellipsisFirst(final String str, final int maxLength) {
         if (str.isEmpty() || !needEllipsis(str, maxLength))
             return str;
 
@@ -162,12 +262,24 @@ public final class StringTool {
 
     //region << encoding string - hex decimal / base64 >>
 
+    /**
+     * Int to hex.
+     *
+     * @param n the n
+     * @return the char
+     */
     public static char intToHex(final int n) {
         if (n <= 9)
             return (char) (n + 48);
         return (char) (n - 10 + 97);
     }
 
+    /**
+     * Hex to int.
+     *
+     * @param h the h
+     * @return the int
+     */
     public static int hexToInt(final char h) {
         if (h >= '0' && h <= '9')
             return h - '0';
@@ -208,52 +320,121 @@ public final class StringTool {
         return Hex.encodeHexString(bytes);
     }
 
+    /**
+     * Encode base 64.
+     *
+     * @param input the input
+     * @return the byte [ ]
+     */
     public static byte[] encodeBase64(final byte[] input) {
         return Base64.encodeBase64URLSafe(input);
     }
 
+    /**
+     * Encode base 64 string.
+     *
+     * @param input the input
+     * @return the string
+     */
     public static String encodeBase64String(final byte[] input) {
         return StringUtils.newStringUtf8(encodeBase64(input));
     }
 
+    /**
+     * Decode base 64.
+     *
+     * @param base64Data the base 64 data
+     * @return the byte [ ]
+     */
     public static byte[] decodeBase64(final byte[] base64Data) {
         return Base64.decodeBase64(base64Data);
     }
 
+    /**
+     * Decode base 64.
+     *
+     * @param base64String the base 64 string
+     * @return the byte [ ]
+     */
     public static byte[] decodeBase64(String base64String) {
         return Base64.decodeBase64(base64String);
     }
 
+    /**
+     * Decode base 64 string.
+     *
+     * @param base64Data the base 64 data
+     * @return the string
+     */
     public static String decodeBase64String(final byte[] base64Data) {
         return StringUtils.newStringUtf8(Base64.decodeBase64(base64Data));
     }
 
+    /**
+     * Decode base 64 string.
+     *
+     * @param base64String the base 64 string
+     * @return the string
+     */
     public static String decodeBase64String(final String base64String) {
         return StringUtils.newStringUtf8(Base64.decodeBase64(base64String));
     }
 
+    /**
+     * Get utf 8 bytes.
+     *
+     * @param str the str
+     * @return the byte [ ]
+     */
     public static byte[] getUtf8Bytes(final String str) {
         return StringUtils.getBytesUtf8(str);
     }
 
+    /**
+     * Gets utf 8 string.
+     *
+     * @param bytes the bytes
+     * @return the utf 8 string
+     */
     public static String getUtf8String(final byte[] bytes) {
         return StringUtils.newStringUtf8(bytes);
     }
 
-    public static String getString(final byte[] bytes, String charsetName) {
+    /**
+     * Gets string.
+     *
+     * @param bytes       the bytes
+     * @param charsetName the charset name
+     * @return the string
+     */
+    public static String getString(final byte[] bytes, final String charsetName) {
         if (isEmpty(charsetName))
             return StringUtils.newStringUtf8(bytes);
 
         return StringUtils.newString(bytes, charsetName);
     }
 
-    public static String getStringFromBytes(byte[] bytes, final BinaryStringFormat format) {
+    /**
+     * Gets string from bytes.
+     *
+     * @param bytes  the bytes
+     * @param format the format
+     * @return the string from bytes
+     */
+    public static String getStringFromBytes(final byte[] bytes, final BinaryStringFormat format) {
         return format == BinaryStringFormat.HexDecimal
                 ? getHexString(bytes)
                 : encodeBase64String(bytes);
 
     }
 
+    /**
+     * Get bytes from string.
+     *
+     * @param str    the str
+     * @param format the format
+     * @return the byte [ ]
+     */
     public static byte[] getBytesFromString(final String str, final BinaryStringFormat format) {
         try {
             return format == BinaryStringFormat.HexDecimal
@@ -270,7 +451,14 @@ public final class StringTool {
 
     // region << String manipulation >>
 
-    public static String deleteCharAny(final String str, char... chars) {
+    /**
+     * Delete char any.
+     *
+     * @param str   the str
+     * @param chars the chars
+     * @return the string
+     */
+    public static String deleteCharAny(final String str, final char... chars) {
         if (isEmpty(str))
             return str;
 
@@ -285,7 +473,14 @@ public final class StringTool {
         return builder.toString();
     }
 
-    public static String deleteChar(final String str, char[] chars) {
+    /**
+     * Delete char.
+     *
+     * @param str   the str
+     * @param chars the chars
+     * @return the string
+     */
+    public static String deleteChar(final String str, final char[] chars) {
         if (isEmpty(str))
             return str;
 
@@ -300,7 +495,14 @@ public final class StringTool {
         return builder.toString();
     }
 
-    public static String deleteChar(final String str, char dc) {
+    /**
+     * Delete char.
+     *
+     * @param str the str
+     * @param dc  the dc
+     * @return the string
+     */
+    public static String deleteChar(final String str, final char dc) {
         if (isEmpty(str))
             return str;
 
@@ -314,7 +516,13 @@ public final class StringTool {
         return builder.toString();
     }
 
-    public static String join(Object... items) {
+    /**
+     * Join string.
+     *
+     * @param items the items
+     * @return the string
+     */
+    public static String join(final Object... items) {
         return join(items, ",");
     }
 
@@ -322,24 +530,44 @@ public final class StringTool {
 //        return join(items, ",");
 //    }
 
-    public static String join(Object[] items, String separator) {
+    /**
+     * Join string.
+     *
+     * @param items     the items
+     * @param separator the separator
+     * @return the string
+     */
+    public static String join(final Object[] items, final String separator) {
         if (items == null || items.length == 0) return "";
         List<Object> strings =
                 Lists.transform(Lists.newArrayList(items), new Function<Object, Object>() {
                     @Nullable
                     @Override
-                    public Object apply(@Nullable Object input) {
+                    public Object apply(final @Nullable Object input) {
                         return (input != null) ? input : NULL_STR;
                     }
                 });
         return Joiner.on(separator).join(strings);
     }
 
-    public static String join(Iterable<?> strs) {
+    /**
+     * Join string.
+     *
+     * @param strs the strs
+     * @return the string
+     */
+    public static String join(final Iterable<?> strs) {
         return join(strs, ",");
     }
 
-    public static String join(Iterable<?> items, String separator) {
+    /**
+     * Join string.
+     *
+     * @param items     the items
+     * @param separator the separator
+     * @return the string
+     */
+    public static String join(final Iterable<?> items, final String separator) {
         if (items == null) return "";
 
         try {
@@ -357,14 +585,33 @@ public final class StringTool {
         }
     }
 
+    /**
+     * Quoted str.
+     *
+     * @param str the str
+     * @return the string
+     */
     public static String quotedStr(final String str) {
         return isNull(str) ? NULL_STR : format("\'%s\'", str.replace("\'", "\'\'"));
     }
 
+    /**
+     * Quoted str.
+     *
+     * @param str        the str
+     * @param defaultStr the default str
+     * @return the string
+     */
     public static String quotedStr(final String str, final String defaultStr) {
         return isWhiteSpace(str) ? quotedStr(defaultStr) : quotedStr(str);
     }
 
+    /**
+     * Reverse string.
+     *
+     * @param str the str
+     * @return the string
+     */
     public static String reverse(final String str) {
         if (isEmpty(str))
             return str;
@@ -376,10 +623,24 @@ public final class StringTool {
         return new String(cs);
     }
 
+    /**
+     * Replicate string.
+     *
+     * @param str the str
+     * @param n   the n
+     * @return the string
+     */
     public static String replicate(final String str, int n) {
         return Strings.repeat(str, n);
     }
 
+    /**
+     * Split iterable.
+     *
+     * @param str        the str
+     * @param separators the separators
+     * @return the iterable
+     */
     public static Iterable<String> split(final String str, final char... separators) {
         if (isEmpty(str))
             return Lists.newArrayList();
@@ -401,15 +662,38 @@ public final class StringTool {
         return result;
     }
 
+    /**
+     * Split list.
+     *
+     * @param str        the str
+     * @param separators the separators
+     * @return the list
+     */
     public static List<String> split(final String str, final String... separators) {
         return split(str, true, separators);
     }
 
+    /**
+     * Split list.
+     *
+     * @param str        the str
+     * @param ignoreCase the ignore case
+     * @param separators the separators
+     * @return the list
+     */
     public static List<String> split(final String str, boolean ignoreCase, final String... separators) {
         return split(str, ignoreCase, true, separators);
     }
 
-    /** 지정된 문자열을 구분자로 분리하여 배열로 반환합니다. */
+    /**
+     * 지정된 문자열을 구분자로 분리하여 배열로 반환합니다.  @param str the str
+     *
+     * @param str                the str
+     * @param ignoreCase         the ignore case
+     * @param removeEmptyEntries the remove empty entries
+     * @param separators         the separators
+     * @return the list
+     */
     public static List<String> split(final String str, boolean ignoreCase, boolean removeEmptyEntries, final String... separators) {
         if (isEmpty(str))
             return Lists.newArrayList();
@@ -460,10 +744,25 @@ public final class StringTool {
 
     // region << WordCount, FirstOf, LastOf >>
 
+    /**
+     * Word count.
+     *
+     * @param str  the str
+     * @param word the word
+     * @return the int
+     */
     public static int wordCount(final String str, final String word) {
         return wordCount(str, word, false);
     }
 
+    /**
+     * Word count.
+     *
+     * @param str        the str
+     * @param word       the word
+     * @param ignoreCase the ignore case
+     * @return the int
+     */
     public static int wordCount(final String str, final String word, final boolean ignoreCase) {
 
         if (isEmpty(str) || isEmpty(word))
@@ -489,6 +788,12 @@ public final class StringTool {
         return count;
     }
 
+    /**
+     * Gets first line.
+     *
+     * @param str the str
+     * @return the first line
+     */
     public static String getFirstLine(final String str) {
         if (isEmpty(str))
             return str;
@@ -500,6 +805,14 @@ public final class StringTool {
         return str;
     }
 
+    /**
+     * Gets between.
+     *
+     * @param text  the text
+     * @param start the start
+     * @param end   the end
+     * @return the between
+     */
     public static String getBetween(final String text, final String start, final String end) {
         if (isEmpty(text))
             return text;
@@ -529,7 +842,12 @@ public final class StringTool {
 
     // region  << objectToString, listToString, mapToString >>
 
-    /** 객체의 필드 정보를 이용하여, 객체를 문자열로 표현합니다. */
+    /**
+     * 객체의 필드 정보를 이용하여, 객체를 문자열로 표현합니다.  @param obj the obj
+     *
+     * @param obj the obj
+     * @return the string
+     */
     public static String objectToString(Object obj) {
         if (obj == null)
             return NULL_STR;
@@ -548,26 +866,54 @@ public final class StringTool {
         return helper.toString();
     }
 
-    /** {@link Iterable} 정보를 문자열로 표현합니다. */
+    /**
+     * {@link Iterable} 정보를 문자열로 표현합니다.  @param items the items
+     *
+     * @param items the items
+     * @return the string
+     */
     public static <T> String listToString(Iterable<? extends T> items) {
         return items == null ? NULL_STR : join(items, ",");
     }
 
+    /**
+     * 객체 배열 정보를 문자열로 표현합니다.
+     *
+     * @param items the items
+     * @return the string
+     */
     public static String listToString(Object[] items) {
         return items == null || items.length == 0 ? NULL_STR : join(items, ",");
     }
 
-    /** {@link java.util.Map} 정보를 문자열로 표현합니다. */
+    /**
+     * {@link java.util.Map} 정보를 문자열로 표현합니다.
+     *
+     * @param map the map
+     * @return map 정보를 표현한 문자열
+     */
     public static String mapToString(final Map map) {
         return map == null ? NULL_STR : "{" + join(mapToEntryList(map), ",") + "}";
     }
 
+    /**
+     * {@link Map}의 항목들을 key=value 형태의 문자열의 컬렉션으로 빌드합니다.
+     *
+     * @param map Map
+     * @return Map 내용을 문자열로 표현한 컬렉션
+     */
+    @SuppressWarnings( "unchecked" )
     private static List<String> mapToEntryList(final Map map) {
         List<String> list = new ArrayList<String>();
-        if (map == null) return list;
-        for (Object key : map.keySet()) {
-            list.add(key + "=" + map.get(key));
+        if (map == null) {
+            return list;
         }
+
+        Set<Map.Entry> entrySet = (Set<Map.Entry>) map.entrySet();
+        for (Map.Entry entry : entrySet) {
+            list.add(entry.getKey() + "=" + entry.getValue());
+        }
+
         return list;
     }
 

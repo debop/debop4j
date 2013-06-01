@@ -22,7 +22,6 @@ import kr.debop4j.core.Guard;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 
-import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
 /**
@@ -55,18 +54,15 @@ public class TimedExecutor {
      * @param checkMilliSeconds 완료 여부 검사 시간 주기 (Milliseconds 딘위)
      */
     private TimedExecutor(long timeout, long checkMilliSeconds) {
-        if (log.isDebugEnabled())
-            log.debug("TimedExecutor 생성. timeout=[{}] msecs, checkMilliSeconds=[{}] msecs", timeout, checkMilliSeconds);
-
         this.timeout = timeout;
         this.checkMilliSeconds = Math.max(1, Math.min(timeout, checkMilliSeconds));
     }
 
-    public void execute(Executable executable) throws TimeoutException {
+    public void execute(final Executable executable) throws TimeoutException {
         Guard.shouldNotBeNull(executable, "executable");
 
         if (log.isDebugEnabled())
-            log.debug("제한된 시간[{}] (seconds) 동안 Executable 인스턴스를 수행합니다.", TimeUnit.SECONDS.toSeconds(timeout));
+            log.debug("제한된 시간[{}](milliSeconds) 동안 Executable 인스턴스를 수행합니다.", timeout);
 
         final ExecutableAdapter adapter = new ExecutableAdapter(executable);
         final Thread separateThread = new Thread(adapter);
@@ -77,17 +73,18 @@ public class TimedExecutor {
             if (runningTime > timeout) {
                 try {
                     executable.timedOut();
-                } catch (Exception ignored) {
-                }
+                } catch (Exception ignored) {}
                 throw new TimeoutException();
             }
             try {
                 Thread.sleep(checkMilliSeconds);
                 runningTime += checkMilliSeconds;
-            } catch (InterruptedException ignored) {
-            }
+            } catch (InterruptedException ignored) { }
         } while (!adapter.isDone());
 
         adapter.reThrowAnyErrrors();
+
+        if (log.isDebugEnabled())
+            log.debug("제한된 시간[{}](milliSeconds) 동안 executable을 수행했습니다.", timeout);
     }
 }

@@ -26,6 +26,7 @@ import org.objectweb.asm.Type;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
+import java.util.Arrays;
 import java.util.List;
 
 import static org.objectweb.asm.Opcodes.*;
@@ -37,7 +38,7 @@ import static org.objectweb.asm.Opcodes.*;
  * @since 13. 1. 21
  */
 @Slf4j
-abstract public class FieldAccess {
+public abstract class FieldAccess {
 
     private String[] fieldNames;
 
@@ -60,7 +61,7 @@ abstract public class FieldAccess {
     }
 
     public String[] getFieldNames() {
-        return fieldNames;
+        return Arrays.copyOf(fieldNames, fieldNames.length);
     }
 
     abstract public void set(Object instance, int fieldIndex, Object value);
@@ -243,6 +244,7 @@ abstract public class FieldAccess {
                     case Type.OBJECT:
                         mv.visitTypeInsn(CHECKCAST, fieldType.getInternalName());
                         break;
+                    default:
                 }
 
                 mv.visitFieldInsn(PUTFIELD, classNameInternal, field.getName(), fieldType.getDescriptor());
@@ -281,6 +283,7 @@ abstract public class FieldAccess {
                 mv.visitFieldInsn(GETFIELD, classNameInternal, field.getName(), Type.getDescriptor(field.getType()));
 
                 Type fieldType = Type.getType(field.getType());
+
                 switch (fieldType.getSort()) {
                     case Type.BOOLEAN:
                         mv.visitMethodInsn(INVOKESTATIC, "java/lang/Boolean", "valueOf", "(Z)Ljava/lang/Boolean;");
@@ -306,6 +309,7 @@ abstract public class FieldAccess {
                     case Type.DOUBLE:
                         mv.visitMethodInsn(INVOKESTATIC, "java/lang/Double", "valueOf", "(D)Ljava/lang/Double;");
                         break;
+                    default:
                 }
 
                 mv.visitInsn(ARETURN);

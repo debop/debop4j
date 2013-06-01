@@ -43,9 +43,6 @@ public class ConcurrentHashMapCacheRepository extends CacheRepositoryBase {
     private final Cache<String, Object> cache;
 
     public ConcurrentHashMapCacheRepository(long validFor) {
-        if (log.isDebugEnabled())
-            log.debug("ConcurrentHashMapCacheRepository 인스턴스를 생성합니다. validFor=[{}]", validFor);
-
         if (validFor > 0)
             setExpiry(validFor);
 
@@ -117,12 +114,12 @@ public class ConcurrentHashMapCacheRepository extends CacheRepositoryBase {
      * @param keys 캐시 키 시퀀스
      */
     @Override
-    public void removeAll(String... keys) {
+    public void removeAll(final String... keys) {
         cache.invalidateAll(Arrays.asList(keys));
     }
 
     @Override
-    public void removeAll(Iterable<String> keys) {
+    public void removeAll(final Iterable<String> keys) {
         cache.invalidateAll(keys);
     }
 

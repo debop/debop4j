@@ -19,6 +19,8 @@ package kr.debop4j.core.cache;
 import com.google.common.base.Objects;
 import lombok.extern.slf4j.Slf4j;
 
+import java.util.concurrent.ExecutionException;
+
 /**
  * Cache 시스템에 정보를 관리하는 ICacheRepository 의 기본 추상화 클래스입니다.
  *
@@ -56,7 +58,7 @@ public abstract class CacheRepositoryBase implements ICacheRepository {
      * @param key 캐시 키
      * @return 캐시 항목, 없으면 null 반환
      */
-    abstract public Object get(final String key);
+    abstract public Object get(final String key) throws ExecutionException;
 
     /**
      * 캐시에 항목을 저장합니다.
@@ -65,7 +67,7 @@ public abstract class CacheRepositoryBase implements ICacheRepository {
      * @param value    캐시 항목
      * @param validFor 캐시 유효 기간 (단위 : minutes), 0 이하인 경우는 유효기간이 없다.
      */
-    abstract public void set(String key, Object value, long validFor);
+    abstract public void set(final String key, final Object value, long validFor);
 
     /**
      * 해당 키의 캐시 항목을 삭제합니다.
@@ -79,7 +81,7 @@ public abstract class CacheRepositoryBase implements ICacheRepository {
      *
      * @param keys 캐시 키 시퀀스
      */
-    public void removeAll(String... keys) {
+    public void removeAll(final String... keys) {
         for (final String key : keys) {
             remove(key);
         }
@@ -90,7 +92,7 @@ public abstract class CacheRepositoryBase implements ICacheRepository {
      *
      * @param keys 캐시 키 시퀀스
      */
-    public void removeAll(Iterable<String> keys) {
+    public void removeAll(final Iterable<String> keys) {
         for (final String key : keys) {
             remove(key);
         }

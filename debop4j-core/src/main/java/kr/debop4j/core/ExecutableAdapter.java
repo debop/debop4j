@@ -38,6 +38,7 @@ public class ExecutableAdapter implements Runnable {
         this.executable = executable;
     }
 
+    /** Re throw any errrors. */
     public void reThrowAnyErrrors() {
         if (error == null)
             return;
@@ -53,18 +54,16 @@ public class ExecutableAdapter implements Runnable {
 
     @Override
     public void run() {
-        if (ExecutableAdapter.log.isDebugEnabled())
-            ExecutableAdapter.log.debug("Executable 인스턴스 실행을 시작합니다...");
+        log.trace("Executable 인스턴스 실행을 시작합니다...");
 
         done = false;
         error = null;
         try {
             executable.execute();
-            if (ExecutableAdapter.log.isDebugEnabled())
-                ExecutableAdapter.log.debug("Executable 인스턴스 실행을 완료했습니다!!!");
+            log.trace("Executable 인스턴스 실행을 완료했습니다!!!");
         } catch (Throwable t) {
-            if (ExecutableAdapter.log.isDebugEnabled())
-                ExecutableAdapter.log.debug("Executable 인스턴스 실행에 실패했습니다!!!", t);
+            if (log.isDebugEnabled())
+                log.debug("Executable 인스턴스 실행에 실패했습니다!!!", t);
             error = t;
         } finally {
             done = true;
@@ -73,6 +72,7 @@ public class ExecutableAdapter implements Runnable {
 
 
     public static class ExceptionWrapper extends RuntimeException {
+        private static final long serialVersionUID = 7550028515694121476L;
 
         public ExceptionWrapper(Throwable cause) {
             super(cause);

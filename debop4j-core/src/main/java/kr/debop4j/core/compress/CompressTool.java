@@ -19,7 +19,6 @@ package kr.debop4j.core.compress;
 import kr.debop4j.core.BinaryStringFormat;
 import kr.debop4j.core.parallelism.AsyncTool;
 import kr.debop4j.core.tools.StreamTool;
-import lombok.Getter;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -44,25 +43,23 @@ public abstract class CompressTool {
 
     private CompressTool() {}
 
-    @Getter
     private static final byte[] buffer = new byte[ICompressor.BUFFER_SIZE];
 
-    public static String compressString(ICompressor compressor,
-                                        String plainText) {
+    public static String compressString(final ICompressor compressor,
+                                        final String plainText) {
         return compressString(compressor,
                               plainText,
                               BinaryStringFormat.HexDecimal);
     }
 
-    public static String compressString(ICompressor compressor,
-                                        String plainText,
-                                        BinaryStringFormat stringFormat) {
+    public static String compressString(final ICompressor compressor,
+                                        final String plainText,
+                                        final BinaryStringFormat stringFormat) {
         shouldNotBeNull(compressor, "compressor");
-        if (isEmpty(plainText))
-            return "";
+        if (isEmpty(plainText)) return "";
 
-        if (log.isDebugEnabled())
-            log.debug("다음 문자열을 압축합니다... plainText=[{}]", ellipsisChar(plainText, 80));
+        if (log.isTraceEnabled())
+            log.trace("다음 문자열을 압축합니다... plainText=[{}]", ellipsisChar(plainText, 80));
 
         byte[] compressedBytes = compressor.compress(getUtf8Bytes(plainText));
         return getStringFromBytes(compressedBytes, stringFormat);
@@ -83,42 +80,40 @@ public abstract class CompressTool {
             AsyncTool.getTaskHasResult("");
         }
 
-        if (log.isDebugEnabled())
-            log.debug("다음 문자열을 압축합니다... plainText=[{}]", ellipsisChar(plainText, 80));
+        if (log.isTraceEnabled())
+            log.trace("다음 문자열을 압축합니다... plainText=[{}]", ellipsisChar(plainText, 80));
 
-        return
-                AsyncTool.startNew(new Callable<String>() {
-                    @Override
-                    public String call() throws Exception {
-                        byte[] compressedBytes = compressor.compress(getUtf8Bytes(plainText));
-                        return getStringFromBytes(compressedBytes, stringFormat);
-                    }
-                });
+        return AsyncTool.startNew(new Callable<String>() {
+            @Override
+            public String call() throws Exception {
+                byte[] compressedBytes = compressor.compress(getUtf8Bytes(plainText));
+                return getStringFromBytes(compressedBytes, stringFormat);
+            }
+        });
     }
 
-    public static String decompressString(ICompressor compressor,
-                                          String compressedText) {
+    public static String decompressString(final ICompressor compressor,
+                                          final String compressedText) {
         return decompressString(compressor,
                                 compressedText,
                                 BinaryStringFormat.HexDecimal);
     }
 
-    public static String decompressString(ICompressor compressor,
-                                          String compressedText,
-                                          BinaryStringFormat stringFormat) {
+    public static String decompressString(final ICompressor compressor,
+                                          final String compressedText,
+                                          final BinaryStringFormat stringFormat) {
         shouldNotBeNull(compressor, "compressor");
-        if (isEmpty(compressedText))
-            return "";
+        if (isEmpty(compressedText)) return "";
 
-        if (log.isDebugEnabled())
-            log.debug("압축된 문자열을 복원합니다... compressedText=[{}]", ellipsisChar(compressedText, 80));
+        if (log.isTraceEnabled())
+            log.trace("압축된 문자열을 복원합니다... compressedText=[{}]", ellipsisChar(compressedText, 80));
 
         byte[] plainBytes = compressor.decompress(getBytesFromString(compressedText, stringFormat));
 
         String plainText = getUtf8String(plainBytes);
 
-        if (log.isDebugEnabled())
-            log.debug("압축 복원한 문자열입니다... plainText=[{}]", ellipsisChar(plainText, 80));
+        if (log.isTraceEnabled())
+            log.trace("압축 복원한 문자열입니다... plainText=[{}]", ellipsisChar(plainText, 80));
 
         return plainText;
     }
@@ -139,28 +134,26 @@ public abstract class CompressTool {
             return AsyncTool.getTaskHasResult("");
         }
 
-        if (log.isDebugEnabled())
-            log.debug("압축된 문자열을 복원합니다... compressedText=" +
-                              ellipsisChar(compressedText, 80));
-        return
-                AsyncTool.startNew(new Callable<String>() {
-                    @Override
-                    public String call() throws Exception {
-                        byte[] plainBytes = compressor.decompress(getBytesFromString(compressedText,
-                                                                                     stringFormat));
-                        String plainText = getUtf8String(plainBytes);
+        if (log.isTraceEnabled())
+            log.trace("압축된 문자열을 복원합니다... compressedText=[{}]", ellipsisChar(compressedText, 80));
 
-                        if (log.isDebugEnabled())
-                            log.debug("압축 복원한 문자열입니다... plainText=[{}]", ellipsisChar(plainText, 80));
+        return AsyncTool.startNew(new Callable<String>() {
+            @Override
+            public String call() throws Exception {
+                byte[] plainBytes = compressor.decompress(getBytesFromString(compressedText,
+                                                                             stringFormat));
+                String plainText = getUtf8String(plainBytes);
 
-                        return plainText;
-                    }
-                });
+                if (log.isTraceEnabled())
+                    log.trace("압축 복원한 문자열입니다... plainText=[{}]", ellipsisChar(plainText, 80));
 
+                return plainText;
+            }
+        });
     }
 
-    public static OutputStream compressStream(ICompressor compressor,
-                                              InputStream inputStream) throws IOException {
+    public static OutputStream compressStream(final ICompressor compressor,
+                                              final InputStream inputStream) throws IOException {
         shouldNotBeNull(compressor, "compressor");
         shouldNotBeNull(inputStream, "inputStream");
 
@@ -170,8 +163,8 @@ public abstract class CompressTool {
         return StreamTool.toOutputStream(compressedBytes);
     }
 
-    public static OutputStream decompressStream(ICompressor compressor,
-                                                InputStream inputStream) throws IOException {
+    public static OutputStream decompressStream(final ICompressor compressor,
+                                                final InputStream inputStream) throws IOException {
         shouldNotBeNull(compressor, "compressor");
         shouldNotBeNull(inputStream, "inputStream");
 
@@ -186,13 +179,12 @@ public abstract class CompressTool {
         shouldNotBeNull(compressor, "compressor");
         shouldNotBeNull(inputStream, "inputStream");
 
-        return
-                AsyncTool.startNew(new Callable<OutputStream>() {
-                    @Override
-                    public OutputStream call() throws Exception {
-                        return compressStream(compressor, inputStream);
-                    }
-                });
+        return AsyncTool.startNew(new Callable<OutputStream>() {
+            @Override
+            public OutputStream call() throws Exception {
+                return compressStream(compressor, inputStream);
+            }
+        });
     }
 
     public static Future<OutputStream> decompressStreamAsync(final ICompressor compressor,
