@@ -128,7 +128,7 @@ public abstract class Parallels {
     }
 
     public static void run(int fromInclude, int toExclude, int step, final Action1<Integer> action) {
-        shouldNotBeNull(action, "action");
+        shouldNotBeNull(action, "function");
 
         if (log.isDebugEnabled())
             log.debug("병렬로 작업을 수행합니다... fromInclude=[{}], toExclude=[{}], step=[{}], workerCount=[{}]",
@@ -178,11 +178,11 @@ public abstract class Parallels {
     }
 
     public static <V> List<V> run(int fromInclude, int toExclude, int step, final Callable<V> callable) {
-        assert callable != null;
-
-        if (log.isDebugEnabled())
+        shouldNotBeNull(callable, "callable");
+        if (isDebugEnabled)
             log.debug("병렬로 작업을 수행합니다... fromInclude=[{}], toExclude=[{}], step=[{}], workerCount=[{}]",
                       fromInclude, toExclude, step, getWorkerCount());
+
         ExecutorService executor = Executors.newFixedThreadPool(getWorkerCount());
 
         try {
@@ -212,8 +212,8 @@ public abstract class Parallels {
             for (int i = 0; i < partitions.size(); i++) {
                 results.addAll(localResults.get(i));
             }
-            if (log.isDebugEnabled())
-                log.debug("모든 작업을 병렬로 완료했습니다. workerCount=[{}]", getWorkerCount());
+
+            if (isDebugEnabled) log.debug("모든 작업을 병렬로 완료했습니다. workerCount=[{}]", getWorkerCount());
 
             return results;
         } catch (Exception e) {
@@ -224,21 +224,39 @@ public abstract class Parallels {
         }
     }
 
-    public static <V> List<V> run(int count, final Function1<Integer, V> action) {
-        return run(0, count, action);
+    public static <V> List<V> run(int count, final Function1<Integer, V> function) {
+        return run(0, count, function);
     }
 
-    public static <V> List<V> run(int fromInclude, int toExclude, final Function1<Integer, V> action) {
+    /**
+     * 지정한 범위의 정보를 수행합니다.
+     *
+     * @param fromInclude 시작 인덱스 (하한)
+     * @param toExclude   종료 인덱스 (상한)
+     * @param <V>         결과 값의 수형
+     * @return 결과 값 컬렉션
+     */
+    public static <V> List<V> run(int fromInclude, int toExclude, final Function1<Integer, V> function) {
         int step = (fromInclude <= toExclude) ? 1 : -1;
-        return run(fromInclude, toExclude, step, action);
+        return run(fromInclude, toExclude, step, function);
     }
 
+    /**
+     * 지정한 범위의 정보를 수행합니다.
+     *
+     * @param fromInclude 시작 인덱스 (하한)
+     * @param toExclude   종료 인덱스 (상한)
+     * @param step        Step
+     * @param function    수행할 함수
+     * @param <V>         결과 값의 수형
+     * @return 결과 값 컬렉션
+     */
     public static <V> List<V> run(int fromInclude, int toExclude, int step, final Function1<Integer, V> function) {
         shouldNotBeNull(function, "function");
-
-        if (log.isDebugEnabled())
+        if (isDebugEnabled)
             log.debug("병렬로 작업을 수행합니다... fromInclude=[{}], toExclude=[{}], step=[{}], workerCount=[{}]",
                       fromInclude, toExclude, step, getWorkerCount());
+
         ExecutorService executor = Executors.newFixedThreadPool(getWorkerCount());
 
         try {
@@ -268,8 +286,7 @@ public abstract class Parallels {
             for (int i = 0; i < partitions.size(); i++) {
                 results.addAll(localResults.get(i));
             }
-            if (log.isDebugEnabled())
-                log.debug("모든 작업을 병렬로 완료했습니다. workerCount=[{}]", getWorkerCount());
+            if (isDebugEnabled) log.debug("모든 작업을 병렬로 완료했습니다. workerCount=[{}]", getWorkerCount());
 
             return results;
         } catch (Exception e) {
@@ -283,14 +300,13 @@ public abstract class Parallels {
     /**
      * 지정한 컬렉션을 분할하여, 멀티스레드 환경하에서 작업을 수행합니다.
      *
-     * @param elements
-     * @param action
-     * @param <T>
+     * @param elements action을 입력 인자로 사용할 컬렉션
+     * @param action   수행할 function
      */
     public static <T> void runEach(final Iterable<T> elements, final Action1<T> action) {
         shouldNotBeNull(elements, "elements");
-        shouldNotBeNull(action, "action");
-        if (log.isDebugEnabled()) log.debug("병렬로 작업을 수행합니다... workerCount=[{}]", getWorkerCount());
+        shouldNotBeNull(action, "function");
+        if (isDebugEnabled) log.debug("병렬로 작업을 수행합니다... workerCount=[{}]", getWorkerCount());
 
         ExecutorService executor = Executors.newFixedThreadPool(getWorkerCount());
 
@@ -317,7 +333,7 @@ public abstract class Parallels {
                 result.get();
             }
 
-            if (log.isDebugEnabled())
+            if (isDebugEnabled)
                 log.debug("모든 작업을 병렬로 수행하였습니다. workerCount=[{}]", getWorkerCount());
 
         } catch (Exception e) {
@@ -328,6 +344,15 @@ public abstract class Parallels {
         }
     }
 
+    /**
+     * 지정한 컬렉션을 분할해서, 병렬로 function을 수행하고, 결과를 반환합니다.
+     *
+     * @param elements function의 입력 정보
+     * @param function 수행할 함수
+     * @param <T>      입력 인자 수형
+     * @param <V>      결과 수형
+     * @return 수행 결과의 컬렉션
+     */
     public static <T, V> List<V> runEach(final Iterable<T> elements, final Function1<T, V> function) {
         shouldNotBeNull(elements, "elements");
         shouldNotBeNull(function, "function");
@@ -380,6 +405,154 @@ public abstract class Parallels {
     }
 
     /**
+     * 지정한 범위의 정보를 수행합니다.
+     *
+     * @param count  수행할 횟수
+     * @param action 수행할 함수
+     */
+    public static void runPartitions(int count, final Action1<List<Integer>> action) {
+        runPartitions(0, count, action);
+    }
+
+    /**
+     * 지정한 범위의 정보를 수행합니다.
+     *
+     * @param fromInclude 시작 인덱스 (하한)
+     * @param toExclude   종료 인덱스 (상한)
+     * @param action      수행할 함수
+     */
+    public static void runPartitions(int fromInclude, int toExclude, final Action1<List<Integer>> action) {
+        int step = (fromInclude <= toExclude) ? 1 : -1;
+        runPartitions(fromInclude, toExclude, step, action);
+    }
+
+    /**
+     * 지정한 범위의 정보를 수행합니다.
+     *
+     * @param fromInclude 시작 인덱스 (하한)
+     * @param toExclude   종료 인덱스 (상한)
+     * @param step        Step
+     * @param action      수행할 함수
+     */
+    public static void runPartitions(int fromInclude, int toExclude, int step, final Action1<List<Integer>> action) {
+        shouldNotBeNull(action, "function");
+        if (isDebugEnabled)
+            log.debug("병렬로 작업을 수행합니다... fromInclude=[{}], toExclude=[{}], step=[{}], workerCount=[{}]",
+                      fromInclude, toExclude, step, getWorkerCount());
+
+        ExecutorService executor = Executors.newFixedThreadPool(getWorkerCount());
+
+        try {
+            List<NumberRange.IntRange> partitions = NumberRange.partition(fromInclude, toExclude, step, getWorkerCount());
+            List<Callable<Void>> tasks = Lists.newLinkedList();
+
+            for (NumberRange.IntRange partition : partitions) {
+                final List<Integer> inputs = Lists.newArrayList(partition.iterator());
+                Callable<Void> task =
+                        new Callable<Void>() {
+                            @Override
+                            public Void call() throws Exception {
+                                action.perform(inputs);
+                                return null;
+                            }
+                        };
+                tasks.add(task);
+            }
+
+            List<Future<Void>> results = executor.invokeAll(tasks);
+            for (Future<Void> result : results) {
+                result.get();
+            }
+
+            if (log.isDebugEnabled())
+                log.debug("모든 작업을 병렬로 수행하였습니다!");
+
+        } catch (Exception e) {
+            log.error("데이터에 대한 병렬 작업 중 예외가 발생했습니다.", e);
+            throw new RuntimeException(e);
+        } finally {
+            executor.shutdown();
+        }
+    }
+
+    /**
+     * 지정한 범위의 정보를 수행합니다.
+     *
+     * @param count    수행할 횟수
+     * @param function 수행할 함수
+     * @param <V>      결과 값의 수형
+     * @return 결과 값 컬렉션
+     */
+    public static <V> List<V> runPartitions(int count, final Function1<List<Integer>, List<V>> function) {
+        return runPartitions(0, count, function);
+    }
+
+    /**
+     * 지정한 범위의 정보를 수행합니다.
+     *
+     * @param fromInclude 시작 인덱스 (하한)
+     * @param toExclude   종료 인덱스 (상한)
+     * @param function    수행할 함수
+     * @param <V>         결과 값의 수형
+     * @return 결과 값 컬렉션
+     */
+    public static <V> List<V> runPartitions(int fromInclude, int toExclude, final Function1<List<Integer>, List<V>> function) {
+        int step = (fromInclude <= toExclude) ? 1 : -1;
+        return runPartitions(fromInclude, toExclude, step, function);
+    }
+
+    /**
+     * 지정한 범위의 정보를 수행합니다.
+     *
+     * @param fromInclude 시작 인덱스 (하한)
+     * @param toExclude   종료 인덱스 (상한)
+     * @param step        Step
+     * @param function    수행할 함수
+     * @param <V>         결과 값의 수형
+     * @return 결과 값 컬렉션
+     */
+    public static <V> List<V> runPartitions(int fromInclude, int toExclude, int step, final Function1<List<Integer>, List<V>> function) {
+        shouldNotBeNull(function, "function");
+        if (isDebugEnabled)
+            log.debug("병렬로 작업을 수행합니다... fromInclude=[{}], toExclude=[{}], step=[{}], workerCount=[{}]",
+                      fromInclude, toExclude, step, getWorkerCount());
+
+        ExecutorService executor = Executors.newFixedThreadPool(getWorkerCount());
+
+        try {
+            List<NumberRange.IntRange> partitions = NumberRange.partition(fromInclude, toExclude, step, getWorkerCount());
+            List<Callable<List<V>>> tasks = Lists.newLinkedList(); // False Sharing을 방지하기 위해
+
+            for (final NumberRange.IntRange partition : partitions) {
+                final List<Integer> inputs = Lists.newArrayList(partition.iterator());
+                Callable<List<V>> task = new Callable<List<V>>() {
+                    @Override
+                    public List<V> call() throws Exception {
+                        return function.execute(inputs);
+                    }
+                };
+            }
+            // 작업 시작
+            List<Future<List<V>>> outputs = executor.invokeAll(tasks);
+
+            List<V> results = Lists.newArrayList();
+            for (Future<List<V>> output : outputs) {
+                results.addAll(output.get());
+            }
+
+            if (isDebugEnabled) log.debug("모든 작업을 병렬로 완료했습니다. workerCount=[{}]", getWorkerCount());
+
+            return results;
+
+        } catch (Exception e) {
+            log.error("데이터에 대한 병렬 작업 중 예외가 발생했습니다.", e);
+            throw new RuntimeException(e);
+        } finally {
+            executor.shutdown();
+        }
+    }
+
+    /**
      * 지정한 컬렉션을 분할하여, 병렬로 작업을 수행합니다.
      *
      * @param elements 처리할 데이터
@@ -387,8 +560,8 @@ public abstract class Parallels {
      */
     public static <T> void runPartitions(final Iterable<T> elements, final Action1<List<T>> action) {
         shouldNotBeNull(elements, "elements");
-        shouldNotBeNull(action, "action");
-        if (log.isDebugEnabled()) log.debug("병렬로 작업을 수행합니다... workerCount=[{}]", getWorkerCount());
+        shouldNotBeNull(action, "function");
+        if (isDebugEnabled) log.debug("병렬로 작업을 수행합니다... workerCount=[{}]", getWorkerCount());
 
         ExecutorService executor = Executors.newFixedThreadPool(getWorkerCount());
 
@@ -408,8 +581,9 @@ public abstract class Parallels {
                 };
                 tasks.add(task);
             }
-
+            // 작업 시작
             List<Future<Void>> results = executor.invokeAll(tasks);
+
             for (Future<Void> result : results)
                 result.get();
 
@@ -454,7 +628,7 @@ public abstract class Parallels {
                 };
                 tasks.add(task);
             }
-
+            // 작업 시작
             List<Future<List<V>>> futures = executor.invokeAll(tasks);
 
             List<V> results = Lists.newArrayListWithCapacity(elemList.size());
