@@ -36,6 +36,12 @@ public class MonthRangeInYear extends ValueObjectBase implements Comparable<Mont
     @Getter private final int startMonthOfYear;
     @Getter private final int endMonthOfYear;
 
+    /**
+     * Instantiates a new Month range in year.
+     *
+     * @param startMonthOfYear the start month of year
+     * @param endMonthOfYear   the end month of year
+     */
     public MonthRangeInYear(int startMonthOfYear, int endMonthOfYear) {
         shouldBeBetween(startMonthOfYear, 1, 12, "startMonthOfYear");
         shouldBeBetween(endMonthOfYear, 1, 12, "endMonthOfYear");
@@ -46,10 +52,21 @@ public class MonthRangeInYear extends ValueObjectBase implements Comparable<Mont
         this.endMonthOfYear = endMonthOfYear;
     }
 
+    /**
+     * Is single month.
+     *
+     * @return the boolean
+     */
     public boolean isSingleMonth() {
         return startMonthOfYear == endMonthOfYear;
     }
 
+    /**
+     * Has inside.
+     *
+     * @param monthOfYear the month of year
+     * @return the boolean
+     */
     public boolean hasInside(int monthOfYear) {
         return this.startMonthOfYear <= monthOfYear && monthOfYear <= this.endMonthOfYear;
     }

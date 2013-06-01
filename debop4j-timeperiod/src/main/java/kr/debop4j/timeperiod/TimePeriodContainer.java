@@ -211,7 +211,7 @@ public class TimePeriodContainer implements ITimePeriodContainer {
      * @param periods 추가할 기간들
      */
     @Override
-    public void addAll(Iterable<? extends ITimePeriod> periods) {
+    public void addAll(final Iterable<? extends ITimePeriod> periods) {
         Iterables.addAll(this.periods, periods);
     }
 

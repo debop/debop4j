@@ -62,33 +62,6 @@ public interface ITimeCalendar extends ITimePeriodMapper {
     /** 지정된 년,월의 날짜수 */
     int getDaysInMonth(int year, int month);
 
-//    /** 년도 이름 */
-//    String getYearName(int year);
-//
-//    /** 반기를 표현하는 문자열을 반환합니다. */
-//    String getHalfyearName(Halfyear halfyear);
-//
-//    /** 지정한 년도의 반기를 표현하는 문자열을 반환합니다. */
-//    String getHalfyearOfYearName(int year, Halfyear halfyear);
-//
-//    /** 분기를 표현하는 문자열을 반환합니다. (2사분기) */
-//    String getQuarterName(Quarter quarter);
-//
-//    /** 특정년도의 분기를 표현하는 문자열을 반환합니다. (2011년 2사분기) */
-//    String getQuarterOfYearName(int year, Quarter quarter);
-//
-//    /** 월을 표현하는 문자열을 반환합니다. */
-//    String getMonthName(int month);
-//
-//    /** 특정 년, 월을 표현하는 문자열을 반환합니다. */
-//    String getMonthOfYearName(int year, int month);
-//
-//    /** 년,주차를 문자열로 표현합니다. */
-//    String getWeekOfYearName(int year, int weekOfYear);
-//
-//    /** 지정한 요일을 문자열로 표현합니다. */
-//    String getDayName(DayOfWeek dayOfWeek);
-
     /** 지정된 일자의 주차(Week of Year)를 반환합니다. */
     int getWeekOfYear(DateTime time);
 

@@ -19,6 +19,7 @@ package kr.debop4j.timeperiod;
 import com.google.common.base.Objects;
 import kr.debop4j.core.ValueObjectBase;
 import kr.debop4j.timeperiod.tools.TimeSpec;
+import kr.debop4j.timeperiod.tools.Times;
 import lombok.Getter;
 import org.joda.time.DateTime;
 
@@ -38,46 +39,108 @@ public class Datepart extends ValueObjectBase implements Comparable<Datepart> {
     @Getter
     private DateTime datepart;
 
+    /** Instantiates a new Datepart. */
     public Datepart() {
         this.datepart = new DateTime(0).withTimeAtStartOfDay();
     }
 
+    /**
+     * Instantiates a new Datepart.
+     *
+     * @param datetime the datetime
+     */
     public Datepart(DateTime datetime) {
         this.datepart = datetime.withTimeAtStartOfDay();
     }
 
+    /**
+     * Instantiates a new Datepart.
+     *
+     * @param year the year
+     */
     public Datepart(int year) {
         this(year, 1, 1);
     }
 
+    /**
+     * Instantiates a new Datepart.
+     *
+     * @param year        the year
+     * @param monthOfYear the month of year
+     */
     public Datepart(int year, int monthOfYear) {
         this(year, monthOfYear, 1);
     }
 
+    /**
+     * Instantiates a new Datepart.
+     *
+     * @param year        the year
+     * @param monthOfYear the month of year
+     * @param dayOfMonth  the day of month
+     */
     public Datepart(int year, int monthOfYear, int dayOfMonth) {
-        this.datepart = new DateTime().withDate(year, monthOfYear, dayOfMonth);
+        this.datepart = Times.asDate(year, monthOfYear, dayOfMonth);
     }
 
+    /**
+     * Gets year.
+     *
+     * @return the year
+     */
     public int getYear() {
         return datepart.getYear();
     }
 
+    /**
+     * Gets month of year.
+     *
+     * @return the month of year
+     */
     public int getMonthOfYear() {
         return datepart.getMonthOfYear();
     }
 
+    /**
+     * Gets day of month.
+     *
+     * @return the day of month
+     */
     public int getDayOfMonth() {
         return datepart.getDayOfMonth();
     }
 
+    /**
+     * Gets date time.
+     *
+     * @param time the time
+     * @return the date time
+     */
     public DateTime getDateTime(Timepart time) {
         return datepart.plus(time.getMillis());
     }
 
+    /**
+     * Gets date time.
+     *
+     * @param hourOfDay      the hour of day
+     * @param minuteOfHour   the minute of hour
+     * @param secondOfMinute the second of minute
+     * @return the date time
+     */
     public DateTime getDateTime(int hourOfDay, int minuteOfHour, int secondOfMinute) {
         return getDateTime(hourOfDay, minuteOfHour, secondOfMinute, 0);
     }
 
+    /**
+     * Gets date time.
+     *
+     * @param hourOfDay      the hour of day
+     * @param minuteOfHour   the minute of hour
+     * @param secondOfMinute the second of minute
+     * @param millisOfSecond the millis of second
+     * @return the date time
+     */
     public DateTime getDateTime(int hourOfDay, int minuteOfHour, int secondOfMinute, int millisOfSecond) {
         return getDateTime(new Timepart(hourOfDay, minuteOfHour, secondOfMinute, millisOfSecond));
     }

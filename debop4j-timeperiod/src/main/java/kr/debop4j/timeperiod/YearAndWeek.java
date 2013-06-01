@@ -37,18 +37,35 @@ public class YearAndWeek extends ValueObjectBase implements Comparable<YearAndWe
     private Integer year;
     private Integer weekOfYear;
 
+    /** Instantiates a new Year and week. */
     protected YearAndWeek() { }
 
+    /**
+     * Instantiates a new Year and week.
+     *
+     * @param moment the moment
+     */
     public YearAndWeek(DateTime moment) {
         this.year = moment.getWeekyear();
         this.weekOfYear = moment.getWeekOfWeekyear();
     }
 
+    /**
+     * Instantiates a new Year and week.
+     *
+     * @param year       the year
+     * @param weekOfYear the week of year
+     */
     public YearAndWeek(Integer year, Integer weekOfYear) {
         this.year = year;
         this.weekOfYear = weekOfYear;
     }
 
+    /**
+     * Instantiates a new Year and week.
+     *
+     * @param source the source
+     */
     public YearAndWeek(YearAndWeek source) {
         if (source != null) {
             this.year = source.getYear();

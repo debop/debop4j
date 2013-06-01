@@ -26,10 +26,25 @@ import java.io.Serializable;
  */
 public interface ITimeLine extends Serializable {
 
+    /**
+     * Gets periods.
+     *
+     * @return the periods
+     */
     ITimePeriodContainer getPeriods();
 
+    /**
+     * Gets limits.
+     *
+     * @return the limits
+     */
     ITimePeriod getLimits();
 
+    /**
+     * Gets period mapper.
+     *
+     * @return the period mapper
+     */
     ITimePeriodMapper getPeriodMapper();
 
     /** 기간들의 합집합을 구합니다. */

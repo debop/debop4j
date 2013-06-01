@@ -31,7 +31,7 @@ import java.util.Locale;
 import static kr.debop4j.core.Guard.*;
 
 /**
- * 문화권에 따른 날짜 표현, 날짜 계산 등을 제공하는 Calendar 입니다. (ISO 8601, Korean 등)
+ * 문화권에 따른 날짜 표현, 날짜 계산 등을 제공하는 Calendar 입니다. (ISO 8601, Korean 등).
  *
  * @author 배성혁 sunghyouk.bae@gmail.com
  * @since 13. 5. 11. 오후 8:56
@@ -79,10 +79,16 @@ public class TimeCalendar extends ValueObjectBase implements ITimeCalendar {
     @Getter private final Duration endOffset;
     @Getter private final DayOfWeek firstDayOfWeek;
 
+    /** 기본 생성자 */
     public TimeCalendar() {
         this(new TimeCalendarConfig());
     }
 
+    /**
+     * 생성자
+     *
+     * @param config 설정 정보
+     */
     public TimeCalendar(TimeCalendarConfig config) {
         shouldNotBeNull(config, "config");
         if (config.getStartOffset() != null)
@@ -142,25 +148,25 @@ public class TimeCalendar extends ValueObjectBase implements ITimeCalendar {
     }
 
     @Override
-    public DateTime mapStart(DateTime moment) {
+    public DateTime mapStart(final DateTime moment) {
         shouldNotBeNull(moment, "moment");
         return moment.compareTo(TimeSpec.MinPeriodTime) > 0 ? moment.plus(startOffset) : moment;
     }
 
     @Override
-    public DateTime mapEnd(DateTime moment) {
+    public DateTime mapEnd(final DateTime moment) {
         shouldNotBeNull(moment, "moment");
         return moment.compareTo(TimeSpec.MaxPeriodTime) < 0 ? moment.plus(endOffset) : moment;
     }
 
     @Override
-    public DateTime unmapStart(DateTime moment) {
+    public DateTime unmapStart(final DateTime moment) {
         shouldNotBeNull(moment, "moment");
         return moment.compareTo(TimeSpec.MinPeriodTime) > 0 ? moment.minus(startOffset) : moment;
     }
 
     @Override
-    public DateTime unmapEnd(DateTime moment) {
+    public DateTime unmapEnd(final DateTime moment) {
         shouldNotBeNull(moment, "moment");
         return moment.compareTo(TimeSpec.MaxPeriodTime) < 0 ? moment.minus(endOffset) : moment;
     }

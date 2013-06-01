@@ -37,10 +37,16 @@ import java.util.Locale;
 @Slf4j
 public class TimeCalendarConfig extends ValueObjectBase {
 
+    /** Instantiates a new Time calendar config. */
     public TimeCalendarConfig() {
         this(Locale.getDefault());
     }
 
+    /**
+     * Instantiates a new Time calendar config.
+     *
+     * @param locale the locale
+     */
     public TimeCalendarConfig(Locale locale) {
         this.locale = (locale != null) ? locale : Locale.getDefault();
 

@@ -128,7 +128,7 @@ public class TimePeriodChain extends TimePeriodContainer implements ITimePeriodC
      * @param periods 추가할 기간들
      */
     @Override
-    public void addAll(Iterable<? extends ITimePeriod> periods) {
+    public void addAll(final Iterable<? extends ITimePeriod> periods) {
         shouldNotBeNull(periods, "periods");
 
         for (ITimePeriod period : periods)

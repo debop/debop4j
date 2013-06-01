@@ -32,48 +32,109 @@ public class TimeRange extends TimePeriodBase implements ITimeRange {
 
     private static final long serialVersionUID = -5665345604375538630L;
 
+    /** The constant Anytime. */
     public static final TimeRange Anytime = new TimeRange(true);
 
+    /**
+     * To time block.
+     *
+     * @param range the range
+     * @return the i time block
+     */
     public static ITimeBlock toTimeBlock(ITimeRange range) {
         return new TimeBlock(range.getStart(), range.getEnd());
     }
 
+    /**
+     * To time interval.
+     *
+     * @param range the range
+     * @return the i time interval
+     */
     public static ITimeInterval toTimeInterval(ITimeRange range) {
         return new TimeInterval(range.getStart(), range.getEnd());
     }
 
     // region << Constructor >>
 
+    /** Instantiates a new Time range. */
     public TimeRange() {}
 
+    /**
+     * Instantiates a new Time range.
+     *
+     * @param readonly the readonly
+     */
     public TimeRange(boolean readonly) {
         super(readonly);
     }
 
+    /**
+     * Instantiates a new Time range.
+     *
+     * @param moment the moment
+     */
     public TimeRange(DateTime moment) {
         super(moment);
     }
 
+    /**
+     * Instantiates a new Time range.
+     *
+     * @param start the start
+     * @param end   the end
+     */
     public TimeRange(DateTime start, DateTime end) {
         super(start, end);
     }
 
+    /**
+     * Instantiates a new Time range.
+     *
+     * @param start    the start
+     * @param end      the end
+     * @param readonly the readonly
+     */
     public TimeRange(DateTime start, DateTime end, boolean readonly) {
         super(start, end, readonly);
     }
 
+    /**
+     * Instantiates a new Time range.
+     *
+     * @param start    the start
+     * @param duration the duration
+     */
     public TimeRange(DateTime start, Duration duration) {
         super(start, duration);
     }
 
+    /**
+     * Instantiates a new Time range.
+     *
+     * @param start    the start
+     * @param duration the duration
+     * @param readonly the readonly
+     */
     public TimeRange(DateTime start, Duration duration, boolean readonly) {
         super(start, duration, readonly);
     }
 
+    /**
+     * Instantiates a new Time range.
+     *
+     * @param source the source
+     */
     public TimeRange(ITimePeriod source) {
         super(source);
     }
 
+    /**
+     * Instantiates a new Time range.
+     *
+     * @param source   the source
+     * @param readonly the readonly
+     */
     public TimeRange(ITimePeriod source, boolean readonly) {
         super(source, readonly);
     }

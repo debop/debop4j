@@ -40,7 +40,7 @@ import static kr.debop4j.core.Guard.shouldBe;
 import static kr.debop4j.core.Guard.shouldNotBeNull;
 
 /**
- * {@link DateTime} 관련 Utility Class
+ * {@link DateTime} 관련 Utility Class 입니다.
  *
  * @author 배성혁 sunghyouk.bae@gmail.com
  * @since 13. 5. 11. 오후 2:44
@@ -56,42 +56,83 @@ public abstract class Times {
     public static final String NullString = "<null>";
     public static final DateTime UnixEpoch = new DateTime(1970, 1, 1, 0, 0, 0, 0);
 
+    /**
+     * Now date time.
+     *
+     * @return the date time
+     */
     public static DateTime now() {
         return DateTime.now();
     }
 
+    /**
+     * Today date time.
+     *
+     * @return the date time
+     */
     public static DateTime today() {
         return DateTime.now().withTimeAtStartOfDay();
     }
 
+    /**
+     * Datepart datepart.
+     *
+     * @param moment the moment
+     * @return the datepart
+     */
     public static Datepart datepart(DateTime moment) {
         return new Datepart(moment);
     }
 
+    /**
+     * Timepart timepart.
+     *
+     * @param moment the moment
+     * @return the timepart
+     */
     public static Timepart timepart(DateTime moment) {
         return new Timepart(moment);
     }
 
     /**
-     * 날짜 부분만
+     * 날짜 부분만 가진 {@link DateTime} 을 만듭니다.
      *
      * @param year        년도
      * @param monthOfYear 월
      * @param dayOfMonth  일
-     * @return 년/월/일을 가진 DateTime
+     * @return 년 /월/일을 가진 DateTime
      */
     public static DateTime asDate(int year, int monthOfYear, int dayOfMonth) {
         return new DateTime(year, monthOfYear, dayOfMonth, 0, 0);
     }
 
+    /**
+     * As string.
+     *
+     * @param period the period
+     * @return the string
+     */
     public static String asString(ITimePeriod period) {
         return (period == null) ? NullString : period.toString();
     }
 
+    /**
+     * To date time.
+     *
+     * @param value the value
+     * @return the date time
+     */
     public static DateTime toDateTime(String value) {
         return toDateTime(value, new DateTime(0));
     }
 
+    /**
+     * To date time.
+     *
+     * @param value        the value
+     * @param defaultValue the default value
+     * @return the date time
+     */
     public static DateTime toDateTime(String value, DateTime defaultValue) {
         try {
             return DateTime.parse(value);
@@ -100,36 +141,90 @@ public abstract class Times {
         }
     }
 
+    /**
+     * To time period collection.
+     *
+     * @param sequence the sequence
+     * @return the i time period collection
+     */
     public static <T extends ITimePeriod> ITimePeriodCollection toTimePeriodCollection(Iterable<T> sequence) {
         return new TimePeriodCollection(sequence);
     }
 
     // region << Calendar >>
 
+    /**
+     * Gets year of.
+     *
+     * @param moment the moment
+     * @return the year of
+     */
     public static int getYearOf(DateTime moment) {
         return getYearOf(moment.getYear(), moment.getMonthOfYear());
     }
 
+    /**
+     * Gets year of.
+     *
+     * @param moment   the moment
+     * @param calendar the calendar
+     * @return the year of
+     */
     public static int getYearOf(DateTime moment, ITimeCalendar calendar) {
         return getYearOf(calendar.getYear(moment), calendar.getMonthOfYear(moment));
     }
 
+    /**
+     * Gets year of.
+     *
+     * @param year        the year
+     * @param monthOfYear the month of year
+     * @return the year of
+     */
     public static int getYearOf(int year, int monthOfYear) {
         return monthOfYear >= 1 ? year : year - 1;
     }
 
+    /**
+     * Gets days of year.
+     *
+     * @param year the year
+     * @return the days of year
+     */
     public static int getDaysOfYear(int year) {
         return startTimeOfYear(year + 1).minusMillis(1).getDayOfYear();
     }
 
+    /**
+     * Next halfyear.
+     *
+     * @param startYear     the start year
+     * @param startHalfyear the start halfyear
+     * @return the year and halfyear
+     */
     public static YearAndHalfyear nextHalfyear(int startYear, Halfyear startHalfyear) {
         return addHalfyear(startYear, startHalfyear, 1);
     }
 
+    /**
+     * Previous halfyear.
+     *
+     * @param startYear     the start year
+     * @param startHalfyear the start halfyear
+     * @return the year and halfyear
+     */
     public static YearAndHalfyear previousHalfyear(int startYear, Halfyear startHalfyear) {
         return addHalfyear(startYear, startHalfyear, -1);
     }
 
+    /**
+     * Add halfyear.
+     *
+     * @param startYear     the start year
+     * @param startHalfyear the start halfyear
+     * @param halfyearCount the halfyear count
+     * @return the year and halfyear
+     */
     public static YearAndHalfyear addHalfyear(int startYear, Halfyear startHalfyear, int halfyearCount) {
         int offsetYear = (Math.abs(halfyearCount) / TimeSpec.HalfyearsPerYear) + 1;
         int startHalfyearCount = ((startYear + offsetYear) * TimeSpec.HalfyearsPerYear) + (startHalfyear.getValue() - 1);
@@ -145,6 +240,12 @@ public abstract class Times {
         return new YearAndHalfyear(year, halfyear);
     }
 
+    /**
+     * Gets halfyear of month.
+     *
+     * @param monthOfYear the month of year
+     * @return the halfyear of month
+     */
     public static Halfyear getHalfyearOfMonth(int monthOfYear) {
         assert monthOfYear >= 1 && monthOfYear <= 12;
 
@@ -153,20 +254,48 @@ public abstract class Times {
                 : Halfyear.Second;
     }
 
+    /**
+     * Get months of halfyear.
+     *
+     * @param halfyear the halfyear
+     * @return the int [ ]
+     */
     public static int[] getMonthsOfHalfyear(Halfyear halfyear) {
         return (halfyear == Halfyear.First)
                 ? TimeSpec.FirstHalfyearMonths
                 : TimeSpec.SecondHalfyearMonths;
     }
 
+    /**
+     * Next quarter.
+     *
+     * @param year    the year
+     * @param quarter the quarter
+     * @return the year and quarter
+     */
     public static YearAndQuarter nextQuarter(int year, Quarter quarter) {
         return addQuarter(year, quarter, 1);
     }
 
+    /**
+     * Previous quarter.
+     *
+     * @param year    the year
+     * @param quarter the quarter
+     * @return the year and quarter
+     */
     public static YearAndQuarter previousQuarter(int year, Quarter quarter) {
         return addQuarter(year, quarter, -1);
     }
 
+    /**
+     * Add quarter.
+     *
+     * @param year    the year
+     * @param quarter the quarter
+     * @param count   the count
+     * @return the year and quarter
+     */
     public static YearAndQuarter addQuarter(int year, Quarter quarter, int count) {
         int offsetYear = Math.abs(count) / TimeSpec.QuartersPerYear + 1;
         int startQuarters = (year + offsetYear) * TimeSpec.QuartersPerYear + quarter.getValue() - 1;
@@ -178,11 +307,23 @@ public abstract class Times {
         return new YearAndQuarter(y, q);
     }
 
+    /**
+     * Gets quarter of month.
+     *
+     * @param monthOfYear the month of year
+     * @return the quarter of month
+     */
     public static Quarter getQuarterOfMonth(int monthOfYear) {
         int quarter = (monthOfYear - 1) / TimeSpec.MonthsPerQuarter + 1;
         return Quarter.valueOf(quarter);
     }
 
+    /**
+     * Get months of quarter.
+     *
+     * @param quarter the quarter
+     * @return the int [ ]
+     */
     public static int[] getMonthsOfQuarter(Quarter quarter) {
         switch (quarter) {
             case First:
@@ -198,14 +339,36 @@ public abstract class Times {
         }
     }
 
+    /**
+     * Next month.
+     *
+     * @param year        the year
+     * @param monthOfYear the month of year
+     * @return the year and month
+     */
     public static YearAndMonth nextMonth(int year, int monthOfYear) {
         return addMonth(year, monthOfYear, 1);
     }
 
+    /**
+     * Previous month.
+     *
+     * @param year        the year
+     * @param monthOfYear the month of year
+     * @return the year and month
+     */
     public static YearAndMonth previousMonth(int year, int monthOfYear) {
         return addMonth(year, monthOfYear, -1);
     }
 
+    /**
+     * Add month.
+     *
+     * @param year        the year
+     * @param monthOfYear the month of year
+     * @param count       the count
+     * @return the year and month
+     */
     public static YearAndMonth addMonth(int year, int monthOfYear, int count) {
         int offset = Math.abs(count) / TimeSpec.MonthsPerYear + 1;
         int startMonths = (year + offset) * TimeSpec.MonthsPerYear + monthOfYear - 1;
@@ -217,15 +380,35 @@ public abstract class Times {
         return new YearAndMonth(y, m);
     }
 
+    /**
+     * Gets days in month.
+     *
+     * @param year  the year
+     * @param month the month
+     * @return the days in month
+     */
     public static int getDaysInMonth(int year, int month) {
         DateTime firstDay = new DateTime(year, month, 1, 0, 0);
         return firstDay.plusMonths(1).plusDays(-1).getDayOfMonth();
     }
 
+    /**
+     * Gets start of week.
+     *
+     * @param time the time
+     * @return the start of week
+     */
     public static DateTime getStartOfWeek(DateTime time) {
         return getStartOfWeek(time, TimeSpec.FirstDayOfWeek);
     }
 
+    /**
+     * Gets start of week.
+     *
+     * @param time           the time
+     * @param firstDayOfWeek the first day of week
+     * @return the start of week
+     */
     public static DateTime getStartOfWeek(DateTime time, DayOfWeek firstDayOfWeek) {
         DateTime current = time.withTimeAtStartOfDay();
         while (current.getDayOfWeek() != firstDayOfWeek.getValue()) {
@@ -234,42 +417,108 @@ public abstract class Times {
         return current;
     }
 
+    /**
+     * Gets week of year.
+     *
+     * @param moment the moment
+     * @return the week of year
+     */
     public static YearAndWeek getWeekOfYear(DateTime moment) {
         return getWeekOfYear(moment, TimeCalendar.getDefault());
     }
 
+    /**
+     * Gets week of year.
+     *
+     * @param moment       the moment
+     * @param timeCalendar the time calendar
+     * @return the week of year
+     */
     public static YearAndWeek getWeekOfYear(DateTime moment, ITimeCalendar timeCalendar) {
         return new YearAndWeek(moment.getWeekyear(), moment.getWeekOfWeekyear());
     }
 
+    /**
+     * Gets weeks of year.
+     *
+     * @param year the year
+     * @return the weeks of year
+     */
     public static int getWeeksOfYear(int year) {
         return getWeeksOfYear(year, TimeCalendar.getDefault());
     }
 
+    /**
+     * Gets weeks of year.
+     *
+     * @param year         the year
+     * @param timeCalendar the time calendar
+     * @return the weeks of year
+     */
     public static int getWeeksOfYear(int year, ITimeCalendar timeCalendar) {
         return asDate(year, 12, 28).getWeekOfWeekyear();
     }
 
+    /**
+     * Gets start of year week.
+     *
+     * @param year       the year
+     * @param weekOfYear the week of year
+     * @return the start of year week
+     */
     public static DateTime getStartOfYearWeek(int year, int weekOfYear) {
         return getStartOfYearWeek(year, weekOfYear, null);
     }
 
+    /**
+     * Gets start of year week.
+     *
+     * @param year         the year
+     * @param weekOfYear   the week of year
+     * @param timeCalendar the time calendar
+     * @return the start of year week
+     */
     public static DateTime getStartOfYearWeek(int year, int weekOfYear, ITimeCalendar timeCalendar) {
         return new DateTime().withYear(year).withWeekOfWeekyear(weekOfYear);
     }
 
+    /**
+     * Day start.
+     *
+     * @param moment the moment
+     * @return the date time
+     */
     public static DateTime dayStart(DateTime moment) {
         return moment.withTimeAtStartOfDay();
     }
 
+    /**
+     * Next day of week.
+     *
+     * @param day the day
+     * @return the day of week
+     */
     public static DayOfWeek nextDayOfWeek(DayOfWeek day) {
         return addDayOfWeek(day, 1);
     }
 
+    /**
+     * Previous day of week.
+     *
+     * @param day the day
+     * @return the day of week
+     */
     public static DayOfWeek previousDayOfWeek(DayOfWeek day) {
         return addDayOfWeek(day, -1);
     }
 
+    /**
+     * Add day of week.
+     *
+     * @param day  the day
+     * @param days the days
+     * @return the day of week
+     */
     public static DayOfWeek addDayOfWeek(DayOfWeek day, int days) {
         if (days == 0)
             return day;
@@ -283,7 +532,14 @@ public abstract class Times {
 
     // region << Compare >>
 
-    /** 두 일자의 값이 {@link kr.debop4j.timeperiod.PeriodUnit} 단위까지 같은지 비교합니다. (상위값들도 같아야 합니다.) */
+    /**
+     * 두 일자의 값이 {@link kr.debop4j.timeperiod.PeriodUnit} 단위까지 같은지 비교합니다. (상위값들도 같아야 합니다.)
+     *
+     * @param left       the left
+     * @param right      the right
+     * @param periodUnit the period unit
+     * @return the boolean
+     */
     public static boolean isSameTime(DateTime left, DateTime right, PeriodUnit periodUnit) {
         if (isTraceEnabled)
             log.trace("두 일자가 값은지 비교합니다. left=[{}], right=[{}], periodUnit=[{}]", left, right, periodUnit);
@@ -313,58 +569,118 @@ public abstract class Times {
         }
     }
 
-    /** 두 일자의 년(Year) 단위까지 같은지 비교합니다. */
+    /**
+     * 두 일자의 년(Year) 단위까지 같은지 비교합니다.
+     *
+     * @param left  the left
+     * @param right the right
+     * @return the boolean
+     */
     public static boolean isSameYear(DateTime left, DateTime right) {
         return left.getYear() == right.getYear();
     }
 
-    /** 두 일자가 반기(halfyear) 단위까지 같으면 true를 아니면 false를 반환합니다. */
+    /**
+     * 두 일자가 반기(halfyear) 단위까지 같으면 true를 아니면 false를 반환합니다.
+     *
+     * @param left  the left
+     * @param right the right
+     * @return the boolean
+     */
     public static boolean isSameHalfyear(DateTime left, DateTime right) {
         return isSameYear(left, right) &&
                 getHalfyearOfMonth(left.getMonthOfYear()) == getHalfyearOfMonth(right.getMonthOfYear());
     }
 
-    /** 두 일자가 분기(quarter) 단위까지 같으면 true를 아니면 false를 반환합니다. */
+    /**
+     * 두 일자가 분기(quarter) 단위까지 같으면 true를 아니면 false를 반환합니다.
+     *
+     * @param left  the left
+     * @param right the right
+     * @return the boolean
+     */
     public static boolean isSameQuarter(DateTime left, DateTime right) {
         return isSameYear(left, right) &&
                 getQuarterOfMonth(left.getMonthOfYear()) == getQuarterOfMonth(right.getMonthOfYear());
     }
 
-    /** 두 일자가 월(Month) 단위까지 같으면 true를 아니면 false를 반환합니다. */
+    /**
+     * 두 일자가 월(Month) 단위까지 같으면 true를 아니면 false를 반환합니다.
+     *
+     * @param left  the left
+     * @param right the right
+     * @return the boolean
+     */
     public static boolean isSameMonth(DateTime left, DateTime right) {
         return isSameYear(left, right) &&
                 left.getMonthOfYear() == right.getMonthOfYear();
     }
 
-    /** 두 일자가 주(Week) 단위까지 같으면 true를 아니면 false를 반환합니다. */
+    /**
+     * 두 일자가 주(Week) 단위까지 같으면 true를 아니면 false를 반환합니다.
+     *
+     * @param left  the left
+     * @param right the right
+     * @return the boolean
+     */
     public static boolean isSameWeek(DateTime left, DateTime right) {
         return isSameYear(left, right) && left.getWeekOfWeekyear() == right.getWeekOfWeekyear();
     }
 
-    /** 두 일자가 일(Day) 단위까지 같으면 true를 아니면 false를 반환합니다. */
+    /**
+     * 두 일자가 일(Day) 단위까지 같으면 true를 아니면 false를 반환합니다.
+     *
+     * @param left  the left
+     * @param right the right
+     * @return the boolean
+     */
     public static boolean isSameDay(DateTime left, DateTime right) {
         return isSameMonth(left, right) && left.getDayOfMonth() == right.getDayOfMonth();
     }
 
-    /** 두 일자가 시(Hour) 단위까지 같으면 true를 아니면 false를 반환합니다. */
+    /**
+     * 두 일자가 시(Hour) 단위까지 같으면 true를 아니면 false를 반환합니다.
+     *
+     * @param left  the left
+     * @param right the right
+     * @return the boolean
+     */
     public static boolean isSameHour(DateTime left, DateTime right) {
         return isSameDay(left, right) &&
                 left.getHourOfDay() == right.getHourOfDay();
     }
 
-    /** 두 일자가 분 단위까지 같으면 true를 아니면 false를 반환합니다. */
+    /**
+     * 두 일자가 분 단위까지 같으면 true를 아니면 false를 반환합니다.
+     *
+     * @param left  the left
+     * @param right the right
+     * @return the boolean
+     */
     public static boolean isSameMinute(DateTime left, DateTime right) {
         return isSameDay(left, right) &&
                 left.getMinuteOfDay() == right.getMinuteOfDay();
     }
 
-    /** 두 일자가 초 단위까지 같으면 true를 아니면 false를 반환합니다. */
+    /**
+     * 두 일자가 초 단위까지 같으면 true를 아니면 false를 반환합니다.
+     *
+     * @param left  the left
+     * @param right the right
+     * @return the boolean
+     */
     public static boolean isSameSecond(DateTime left, DateTime right) {
         return isSameDay(left, right) &&
                 left.getSecondOfDay() == right.getSecondOfDay();
     }
 
-    /** 두 일자가 같으면 true를 아니면 false를 반환합니다. */
+    /**
+     * 두 일자가 같으면 true를 아니면 false를 반환합니다.
+     *
+     * @param left  the left
+     * @param right the right
+     * @return the boolean
+     */
     public static boolean isSameDateTime(DateTime left, DateTime right) {
         return (left != null) && left.equals(right);
     }
@@ -465,14 +781,34 @@ public abstract class Times {
         return endTimeOfYear(moment.getYear() - 1);
     }
 
+    /**
+     * 해당 일자가 속한 반기의 시작 시각
+     *
+     * @param moment
+     * @return
+     */
     public static DateTime startTimeOfHalfyear(DateTime moment) {
         return startTimeOfHalfyear(moment.getYear(), moment.getMonthOfYear());
     }
 
+    /**
+     * 해당 일자가 속한 반기의 시작 시각
+     *
+     * @param year
+     * @param monthOfYear
+     * @return
+     */
     public static DateTime startTimeOfHalfyear(int year, int monthOfYear) {
         return startTimeOfHalfyear(year, getHalfyearOfMonth(monthOfYear));
     }
 
+    /**
+     * 해당 년 / 반기의 시작 시각
+     *
+     * @param year
+     * @param halfyear
+     * @return
+     */
     public static DateTime startTimeOfHalfyear(int year, Halfyear halfyear) {
         return new DateTime(year, getMonthsOfHalfyear(halfyear)[0], 1, 0, 0);
     }
@@ -562,7 +898,6 @@ public abstract class Times {
     }
 
     public static DateTime startTimeOfWeek(int year, int weekOfYear, ITimeCalendar timeCalendar) {
-
         DateTime current = startTimeOfYear(year).minusWeeks(1);
         while (current.getYear() < year + 2) {
             if (current.getWeekyear() == year && current.getWeekOfWeekyear() == weekOfYear)
@@ -664,12 +999,21 @@ public abstract class Times {
         return previousQuarter(moment.getYear(), quarterOf(moment)).getQuarter();
     }
 
-    /** 지정한 일자의 다음 주 같은 요일을 반환합니다. */
+    /**
+     * 지정한 일자의 다음 주 같은 요일을 반환합니다.
+     *
+     * @param moment 기준 일자
+     */
     public static DateTime nextDayOfWeek(DateTime moment) {
         return nextDayOfWeek(moment, DayOfWeek.valueOf(moment.getDayOfWeek()));
     }
 
-    /** 기준일 이후로 지정한 요일에 해당하는 일자를 반환합니다. */
+    /**
+     * 기준일 이후로 지정한 요일에 해당하는 일자를 반환합니다.
+     *
+     * @param moment    기준 일자
+     * @param dayOfWeek 원하는 요일
+     */
     public static DateTime nextDayOfWeek(DateTime moment, DayOfWeek dayOfWeek) {
         int dow = dayOfWeek.getValue();
         DateTime next = moment.plusDays(1);
@@ -680,12 +1024,21 @@ public abstract class Times {
         return next;
     }
 
-    /** 지정한 일자의 전주의 같은 요일을 반환합니다. */
+    /**
+     * 지정한 일자의 전주의 같은 요일을 반환합니다.
+     *
+     * @param moment 기준 일자
+     */
     public static DateTime previousDayOfWeek(DateTime moment) {
         return previousDayOfWeek(moment, DayOfWeek.valueOf(moment.getDayOfWeek()));
     }
 
-    /** 지정한 일자 이전에 지정한 요일에 해당하는 일자를 반환한다. */
+    /**
+     * 지정한 일자 이전에 지정한 요일에 해당하는 일자를 반환한다.
+     *
+     * @param moment    기준 일자
+     * @param dayOfWeek 원하는 요일
+     */
     public static DateTime previousDayOfWeek(DateTime moment, DayOfWeek dayOfWeek) {
         int dow = dayOfWeek.getValue();
         DateTime prev = moment.minusDays(1);
@@ -746,6 +1099,13 @@ public abstract class Times {
         return moment.getMillisOfDay() > 0;
     }
 
+    /**
+     * 해당 일자의 시간 부분을 지정한 값으로 설정합니다.
+     *
+     * @param moment   기준 일자
+     * @param timepart 지정할 시간 부분
+     * @return 계산한 일자
+     */
     public static DateTime setTime(DateTime moment, DateTime timepart) {
         return setTime(moment, timepart.getMillisOfDay());
     }
@@ -1369,6 +1729,7 @@ public abstract class Times {
     @Getter( lazy = true )
     private static final DurationDescComparator durationDescComparator = new DurationDescComparator();
 
+    /** The type Start comparator. */
     public static class StartComparator implements Comparator<ITimePeriod> {
         @Override
         public int compare(ITimePeriod o1, ITimePeriod o2) {
@@ -1376,6 +1737,7 @@ public abstract class Times {
         }
     }
 
+    /** The type Start desc comparator. */
     public static class StartDescComparator implements Comparator<ITimePeriod> {
         @Override
         public int compare(ITimePeriod o1, ITimePeriod o2) {
@@ -1383,6 +1745,7 @@ public abstract class Times {
         }
     }
 
+    /** The type End comparator. */
     public static class EndComparator implements Comparator<ITimePeriod> {
         @Override
         public int compare(ITimePeriod o1, ITimePeriod o2) {
@@ -1390,6 +1753,7 @@ public abstract class Times {
         }
     }
 
+    /** The type End desc comparator. */
     public static class EndDescComparator implements Comparator<ITimePeriod> {
         @Override
         public int compare(ITimePeriod o1, ITimePeriod o2) {
@@ -1397,6 +1761,7 @@ public abstract class Times {
         }
     }
 
+    /** The type Duration comparator. */
     public static class DurationComparator implements Comparator<ITimePeriod> {
         @Override
         public int compare(ITimePeriod o1, ITimePeriod o2) {
@@ -1404,6 +1769,7 @@ public abstract class Times {
         }
     }
 
+    /** The type Duration desc comparator. */
     public static class DurationDescComparator implements Comparator<ITimePeriod> {
         @Override
         public int compare(ITimePeriod o1, ITimePeriod o2) {

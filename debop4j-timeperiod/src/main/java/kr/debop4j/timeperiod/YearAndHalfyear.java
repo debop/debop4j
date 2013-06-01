@@ -35,11 +35,23 @@ public class YearAndHalfyear extends ValueObjectBase implements Comparable<YearA
     private Integer year;
     private Halfyear halfyear;
 
+    /**
+     * Instantiates a new Year and halfyear.
+     *
+     * @param year     the year
+     * @param halfyear the halfyear
+     */
     public YearAndHalfyear(Integer year, Halfyear halfyear) {
         this.year = year;
         this.halfyear = halfyear;
     }
 
+    /**
+     * Instantiates a new Year and halfyear.
+     *
+     * @param year     the year
+     * @param halfyear the halfyear
+     */
     public YearAndHalfyear(Integer year, Integer halfyear) {
         this.year = year;
         if (halfyear != null)

@@ -22,7 +22,7 @@ import kr.debop4j.core.tools.HashTool;
 import lombok.Getter;
 
 /**
- * 1일 범위 내에서의 시간 단위의 범위를 표현합니다. (예: 09시 ~ 17시)
+ * 1일 범위 내에서의 시간 단위의 범위를 표현합니다. (예: 09시 ~ 17시).
  *
  * @author 배성혁 sunghyouk.bae@gmail.com
  * @since 13. 5. 12. 오후 2:21
@@ -33,14 +33,31 @@ public class HourRangeInDay extends ValueObjectBase implements Comparable<HourRa
     @Getter private final Timepart start;
     @Getter private final Timepart end;
 
+    /**
+     * Instantiates a new Hour range in day.
+     *
+     * @param hourOfDay the hour of day
+     */
     public HourRangeInDay(int hourOfDay) {
         this(hourOfDay, hourOfDay);
     }
 
+    /**
+     * Instantiates a new Hour range in day.
+     *
+     * @param startHourOfDay the start hour of day
+     * @param endHourOfDay   the end hour of day
+     */
     public HourRangeInDay(int startHourOfDay, int endHourOfDay) {
         this(new Timepart(startHourOfDay), new Timepart(endHourOfDay));
     }
 
+    /**
+     * Instantiates a new Hour range in day.
+     *
+     * @param start the start
+     * @param end   the end
+     */
     public HourRangeInDay(Timepart start, Timepart end) {
         if (start.compareTo(end) <= 0) {
             this.start = start;

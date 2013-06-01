@@ -34,6 +34,12 @@ public class DayRangeInMonth extends ValueObjectBase implements Comparable<DayRa
     @Getter private final int startDayOfMonth;
     @Getter private int endDayOfMonth;
 
+    /**
+     * Instantiates a new Day range in month.
+     *
+     * @param startDayOfMonth the start day of month
+     * @param endDayOfMonth   the end day of month
+     */
     public DayRangeInMonth(int startDayOfMonth, int endDayOfMonth) {
         assertValidDayRange(startDayOfMonth);
         assertValidDayRange(endDayOfMonth);
@@ -46,10 +52,21 @@ public class DayRangeInMonth extends ValueObjectBase implements Comparable<DayRa
         }
     }
 
+    /**
+     * Is single day.
+     *
+     * @return the boolean
+     */
     public boolean isSingleDay() {
         return startDayOfMonth == endDayOfMonth;
     }
 
+    /**
+     * Has inside.
+     *
+     * @param dayOfMonth the day of month
+     * @return the boolean
+     */
     public boolean hasInside(int dayOfMonth) {
         return startDayOfMonth <= dayOfMonth && dayOfMonth <= endDayOfMonth;
     }

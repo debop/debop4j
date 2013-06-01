@@ -45,7 +45,7 @@ public interface ITimePeriodContainer extends List<ITimePeriod>, ITimePeriod {
      *
      * @param periods 추가할 기간들
      */
-    void addAll(Iterable<? extends ITimePeriod> periods);
+    void addAll(final Iterable<? extends ITimePeriod> periods);
 
     /**
      * 시작시각으로 정렬을 수행합니다.

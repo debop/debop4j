@@ -16,6 +16,8 @@
 
 package kr.debop4j.timeperiod;
 
+import lombok.Getter;
+
 import java.util.EnumSet;
 
 /**
@@ -81,10 +83,10 @@ public class PeriodFlag {
         Day(0x20),
         Hour(0x40);
 
-        private final int flag;
+        @Getter private final int value;
 
-        Flag(int flag) {
-            this.flag = flag;
+        Flag(int value) {
+            this.value = value;
         }
     }
 }

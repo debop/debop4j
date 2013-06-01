@@ -32,11 +32,24 @@ public class DayHourRange extends HourRangeInDay {
 
     @Getter private final DayOfWeek dayOfWeek;
 
+    /**
+     * Instantiates a new Day hour range.
+     *
+     * @param dayOfWeek the day of week
+     * @param hourOfDay the hour of day
+     */
     public DayHourRange(DayOfWeek dayOfWeek, int hourOfDay) {
         super(hourOfDay);
         this.dayOfWeek = dayOfWeek;
     }
 
+    /**
+     * Instantiates a new Day hour range.
+     *
+     * @param dayOfWeek      the day of week
+     * @param startHourOfDay the start hour of day
+     * @param endHOurOfDay   the end h our of day
+     */
     public DayHourRange(DayOfWeek dayOfWeek, int startHourOfDay, int endHOurOfDay) {
         super(startHourOfDay, endHOurOfDay);
         this.dayOfWeek = dayOfWeek;

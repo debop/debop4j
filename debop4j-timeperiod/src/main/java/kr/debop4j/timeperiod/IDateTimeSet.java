@@ -31,33 +31,77 @@ import java.util.List;
 public interface IDateTimeSet extends Collection<DateTime> {
 
 
-    /// 최소값, 요소가 없으면 null을 반환한다.
+    /**
+     * 최소값, 요소가 없으면 null을 반환한다.
+     *
+     * @return the min
+     */
     DateTime getMin();
 
-    /// 최대값, 요소가 없으면 null을 반환한다.
+    /**
+     * 최대값, 요소가 없으면 null을 반환한다.
+     *
+     * @return the max
+     */
     DateTime getMax();
 
-    /// Min~Max의 기간을 나타낸다. 둘 중 하나라도 null이면 null을 반환한다.
+    /**
+     * Min~Max의 기간을 나타낸다. 둘 중 하나라도 null이면 null을 반환한다.
+     *
+     * @return the duration
+     */
     Duration getDuration();
 
-    /// 요소가 없는 컬렉션인가?
+    /**
+     * 요소가 없는 컬렉션인가 여부.
+     *
+     * @return <tt>true</tt> if this collection contains no elements
+     */
     boolean isEmpty();
 
-    /// 모든 요소가 같은 시각을 나타내는가?
+    /**
+     * 모든 요소가 같은 시각을 나타내는가 여부.
+     *
+     * @return the boolean
+     */
     boolean isMoment();
 
-    /// 요소가 모든 시각을 나타내는가?
+    /**
+     * 요소가 모든 시각을 나타내는가 여부.
+     *
+     * @return the boolean
+     */
     boolean isAnytime();
 
-    /// 지정된 컬렉션의 요소들을 모두 추가합니다.
+    /**
+     * 지정된 컬렉션의 요소들을 모두 추가합니다.
+     *
+     * @param moments the moments
+     */
     void addAll(Iterable<DateTime> moments);
 
-    /// 순번에 해당하는 시각들의 Duration을 구합니다.
+    /**
+     * 순번에 해당하는 시각들의 Duration을 구합니다.
+     *
+     * @param startIndex the start index
+     * @param count      the count
+     * @return the durations
+     */
     List<Duration> getDurations(int startIndex, int count);
 
-    /// 지정된 시각의 바로 전의 시각을 찾습니다. 없으면 null을 반환합니다.
+    /**
+     * 지정된 시각의 바로 전의 시각을 찾습니다. 없으면 null을 반환합니다.
+     *
+     * @param moment the moment
+     * @return the date time
+     */
     DateTime findPrevious(DateTime moment);
 
-    /// 지정된 시각의 바로 후의 시각을 찾습니다. 없으면 null을 반환합니다.
+    /**
+     * 지정된 시각의 바로 후의 시각을 찾습니다. 없으면 null을 반환합니다.
+     *
+     * @param moment the moment
+     * @return the date time
+     */
     DateTime findNext(DateTime moment);
 }

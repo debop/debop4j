@@ -28,23 +28,76 @@ import java.io.Serializable;
  */
 public interface ITimeLineMomentCollection extends Iterable<ITimeLineMoment>, Serializable {
 
+    /**
+     * get size of collection.
+     *
+     * @return size
+     */
     int size();
 
+    /**
+     * Is empty.
+     *
+     * @return the boolean
+     */
     boolean isEmpty();
 
+    /**
+     * Gets min.
+     *
+     * @return the min
+     */
     ITimeLineMoment getMin();
 
+    /**
+     * Gets max.
+     *
+     * @return the max
+     */
     ITimeLineMoment getMax();
 
+    /**
+     * Get i time line moment.
+     *
+     * @param index the index
+     * @return the i time line moment
+     */
     ITimeLineMoment get(int index);
 
+    /**
+     * Add void.
+     *
+     * @param period the period
+     */
     void add(ITimePeriod period);
 
+    /**
+     * Add all.
+     *
+     * @param periods the periods
+     */
     void addAll(Iterable<? extends ITimePeriod> periods);
 
+    /**
+     * Remove void.
+     *
+     * @param period the period
+     */
     void remove(ITimePeriod period);
 
+    /**
+     * Find i time line moment.
+     *
+     * @param moment the moment
+     * @return the i time line moment
+     */
     ITimeLineMoment find(DateTime moment);
 
+    /**
+     * Contains boolean.
+     *
+     * @param moment the moment
+     * @return the boolean
+     */
     boolean contains(DateTime moment);
 }

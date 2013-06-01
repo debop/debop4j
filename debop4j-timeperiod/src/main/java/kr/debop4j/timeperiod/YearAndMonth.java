@@ -33,6 +33,12 @@ public class YearAndMonth extends ValueObjectBase implements Comparable<YearAndM
     @Getter @Setter private Integer year;
     @Getter @Setter private Integer monthOfYear;
 
+    /**
+     * Instantiates a new Year and month.
+     *
+     * @param year        the year
+     * @param monthOfYear the month of year
+     */
     public YearAndMonth(Integer year, Integer monthOfYear) {
         this.year = year;
         this.monthOfYear = monthOfYear;

@@ -28,23 +28,23 @@ import java.util.Locale;
  */
 public class PeriodContext {
 
-    private static final String TimeCalendarKey = PeriodContext.class.getName() + ".Current";
+    private static final String TIME_CALENDAR_KEY = PeriodContext.class.getName() + ".Current";
 
     /** 현 Thread Context 하에서 설정된 TimeCalendar 관련 설정 정보 */
     public static class Current {
 
         /** 현재 Thread Context하에서 사용할 TimeCalendar입니다. */
         public static ITimeCalendar getTimeCalendar() {
-            ITimeCalendar calendar = Local.get(TimeCalendarKey, ITimeCalendar.class);
+            ITimeCalendar calendar = Local.get(TIME_CALENDAR_KEY, ITimeCalendar.class);
             if (calendar == null) {
                 calendar = TimeCalendar.getDefault();
-                Local.put(TimeCalendarKey, calendar);
+                Local.put(TIME_CALENDAR_KEY, calendar);
             }
             return calendar;
         }
 
         public static void setTimeCalendar(ITimeCalendar calendar) {
-            Local.put(TimeCalendarKey, calendar);
+            Local.put(TIME_CALENDAR_KEY, calendar);
         }
 
         /** 현 Thread context의 {@link Locale} 정보 */
