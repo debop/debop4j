@@ -26,7 +26,7 @@ import static com.mysema.query.types.PathMetadataFactory.forVariable;
 
 
 /** QMenu is a Querydsl query type for Menu */
-@Generated("com.mysema.query.codegen.EntitySerializer")
+@Generated( "com.mysema.query.codegen.EntitySerializer" )
 public class QMenu extends EntityPathBase<Menu> {
 
     private static final long serialVersionUID = 821609776;
@@ -71,7 +71,7 @@ public class QMenu extends EntityPathBase<Menu> {
         this(Menu.class, forVariable(variable), INITS);
     }
 
-    @SuppressWarnings("all")
+    @SuppressWarnings( "all" )
     public QMenu(Path<? extends Menu> path) {
         this((Class) path.getType(), path.getMetadata(), path.getMetadata().isRoot() ? INITS : PathInits.DEFAULT);
     }

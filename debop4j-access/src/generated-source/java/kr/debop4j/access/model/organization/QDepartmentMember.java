@@ -26,7 +26,7 @@ import static com.mysema.query.types.PathMetadataFactory.forVariable;
 
 
 /** QDepartmentMember is a Querydsl query type for DepartmentMember */
-@Generated("com.mysema.query.codegen.EntitySerializer")
+@Generated( "com.mysema.query.codegen.EntitySerializer" )
 public class QDepartmentMember extends EntityPathBase<DepartmentMember> {
 
     private static final long serialVersionUID = 1741123637;
@@ -60,7 +60,7 @@ public class QDepartmentMember extends EntityPathBase<DepartmentMember> {
         this(DepartmentMember.class, forVariable(variable), INITS);
     }
 
-    @SuppressWarnings("all")
+    @SuppressWarnings( "all" )
     public QDepartmentMember(Path<? extends DepartmentMember> path) {
         this((Class) path.getType(), path.getMetadata(), path.getMetadata().isRoot() ? INITS : PathInits.DEFAULT);
     }

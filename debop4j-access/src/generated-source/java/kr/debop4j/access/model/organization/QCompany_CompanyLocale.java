@@ -27,7 +27,7 @@ import static com.mysema.query.types.PathMetadataFactory.forVariable;
 
 
 /** QCompany_CompanyLocale is a Querydsl query type for CompanyLocale */
-@Generated("com.mysema.query.codegen.EmbeddableSerializer")
+@Generated( "com.mysema.query.codegen.EmbeddableSerializer" )
 public class QCompany_CompanyLocale extends BeanPath<Company.CompanyLocale> {
 
     private static final long serialVersionUID = -1273916579;
@@ -42,7 +42,7 @@ public class QCompany_CompanyLocale extends BeanPath<Company.CompanyLocale> {
         super(Company.CompanyLocale.class, forVariable(variable));
     }
 
-    @SuppressWarnings("all")
+    @SuppressWarnings( "all" )
     public QCompany_CompanyLocale(Path<? extends Company.CompanyLocale> path) {
         super((Class) path.getType(), path.getMetadata());
     }

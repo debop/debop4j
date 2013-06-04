@@ -26,7 +26,7 @@ import static com.mysema.query.types.PathMetadataFactory.forVariable;
 
 
 /** QUser is a Querydsl query type for User */
-@Generated("com.mysema.query.codegen.EntitySerializer")
+@Generated( "com.mysema.query.codegen.EntitySerializer" )
 public class QUser extends EntityPathBase<User> {
 
     private static final long serialVersionUID = 821861276;
@@ -66,7 +66,7 @@ public class QUser extends EntityPathBase<User> {
         this(User.class, forVariable(variable), INITS);
     }
 
-    @SuppressWarnings("all")
+    @SuppressWarnings( "all" )
     public QUser(Path<? extends User> path) {
         this((Class) path.getType(), path.getMetadata(), path.getMetadata().isRoot() ? INITS : PathInits.DEFAULT);
     }

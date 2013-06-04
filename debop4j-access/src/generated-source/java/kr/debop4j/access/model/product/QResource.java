@@ -26,7 +26,7 @@ import static com.mysema.query.types.PathMetadataFactory.forVariable;
 
 
 /** QResource is a Querydsl query type for Resource */
-@Generated("com.mysema.query.codegen.EntitySerializer")
+@Generated( "com.mysema.query.codegen.EntitySerializer" )
 public class QResource extends EntityPathBase<Resource> {
 
     private static final long serialVersionUID = -545053857;
@@ -58,7 +58,7 @@ public class QResource extends EntityPathBase<Resource> {
         this(Resource.class, forVariable(variable), INITS);
     }
 
-    @SuppressWarnings("all")
+    @SuppressWarnings( "all" )
     public QResource(Path<? extends Resource> path) {
         this((Class) path.getType(), path.getMetadata(), path.getMetadata().isRoot() ? INITS : PathInits.DEFAULT);
     }

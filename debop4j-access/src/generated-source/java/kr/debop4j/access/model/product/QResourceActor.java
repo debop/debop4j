@@ -26,7 +26,7 @@ import static com.mysema.query.types.PathMetadataFactory.forVariable;
 
 
 /** QResourceActor is a Querydsl query type for ResourceActor */
-@Generated("com.mysema.query.codegen.EntitySerializer")
+@Generated( "com.mysema.query.codegen.EntitySerializer" )
 public class QResourceActor extends EntityPathBase<ResourceActor> {
 
     private static final long serialVersionUID = -1176905258;
@@ -58,7 +58,7 @@ public class QResourceActor extends EntityPathBase<ResourceActor> {
         this(ResourceActor.class, forVariable(variable), INITS);
     }
 
-    @SuppressWarnings("all")
+    @SuppressWarnings( "all" )
     public QResourceActor(Path<? extends ResourceActor> path) {
         this((Class) path.getType(), path.getMetadata(), path.getMetadata().isRoot() ? INITS : PathInits.DEFAULT);
     }

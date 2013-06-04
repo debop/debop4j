@@ -29,7 +29,7 @@ import static com.mysema.query.types.PathMetadataFactory.forVariable;
 
 
 /** QProduct is a Querydsl query type for Product */
-@Generated("com.mysema.query.codegen.EntitySerializer")
+@Generated( "com.mysema.query.codegen.EntitySerializer" )
 public class QProduct extends EntityPathBase<Product> {
 
     private static final long serialVersionUID = -1701527682;
@@ -59,7 +59,7 @@ public class QProduct extends EntityPathBase<Product> {
         super(Product.class, forVariable(variable));
     }
 
-    @SuppressWarnings("all")
+    @SuppressWarnings( "all" )
     public QProduct(Path<? extends Product> path) {
         super((Class) path.getType(), path.getMetadata());
     }

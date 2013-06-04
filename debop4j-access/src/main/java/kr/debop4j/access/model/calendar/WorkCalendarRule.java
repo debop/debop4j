@@ -39,8 +39,8 @@ import java.util.Set;
  * @since 13. 3. 11.
  */
 @Entity
-@Table( name = "WorkCalendarRule" )
-@org.hibernate.annotations.Cache( region = "Calendar", usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE )
+@Table(name = "WorkCalendarRule")
+@org.hibernate.annotations.Cache(region = "Calendar", usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 @DynamicInsert
 @DynamicUpdate
 @Getter
@@ -51,17 +51,17 @@ public class WorkCalendarRule extends AccessEntityBase {
 
     @Id
     @GeneratedValue
-    @Column( name = "RuleId" )
+    @Column(name = "RuleId")
     private Long id;
 
     @ManyToOne
-    @JoinColumn( name = "WorkCalendarId" )
-    @Index( name = "ix_WorkCalendarRule" )
+    @JoinColumn(name = "WorkCalendarId")
+    @Index(name = "ix_WorkCalendarRule")
     @NaturalId
     private WorkCalendar workCalendar;
 
-    @Column( name = "RuleName", nullable = false )
-    @Index( name = "ix_WorkCalendarRule" )
+    @Column(name = "RuleName", nullable = false)
+    @Index(name = "ix_WorkCalendarRule")
     @NaturalId
     private String name;
 
@@ -80,23 +80,23 @@ public class WorkCalendarRule extends AccessEntityBase {
     /** 예외를 규정할 클래스 명 (동적으로 로드해서 계산하도록 한다) */
     private String exceptionClassName;
 
-    @Type( type = "kr.debop4j.data.hibernate.usertype.TimeRangeUserType" )
-    @Columns( columns = { @Column( name = "StartTime" ), @Column( name = "EndTime" ) } )
-    @Setter( AccessLevel.PROTECTED )
+    @Type(type = "kr.debop4j.data.hibernate.usertype.TimeRangeUserType")
+    @Columns(columns = { @Column(name = "StartTime"), @Column(name = "EndTime") })
+    @Setter(AccessLevel.PROTECTED)
     private ITimePeriod rulePeriod = new TimeRange();
 
-    @CollectionTable( name = "WorkCalendarRulePeriod", joinColumns = { @JoinColumn( name = "RuleId" ) } )
-    @ElementCollection( targetClass = ITimePeriod.class, fetch = FetchType.EAGER )
-    @Type( type = "kr.debop4j.data.hibernate.usertype.TimeRangeUserType" )
-    @Columns( columns = { @Column( name = "StartTime" ), @Column( name = "EndTime" ) } )
+    @CollectionTable(name = "WorkCalendarRulePeriod", joinColumns = { @JoinColumn(name = "RuleId") })
+    @ElementCollection(targetClass = ITimePeriod.class, fetch = FetchType.EAGER)
+    @Type(type = "kr.debop4j.data.hibernate.usertype.TimeRangeUserType")
+    @Columns(columns = { @Column(name = "StartTime"), @Column(name = "EndTime") })
     private final Set<ITimePeriod> rulePeriods = Sets.newHashSet();
 
     private Integer viewOrder;
 
-    @Column( length = 2000 )
+    @Column(length = 2000)
     private String description;
 
-    @Column( length = 2000 )
+    @Column(length = 2000)
     private String exAttr;
 
     @Override

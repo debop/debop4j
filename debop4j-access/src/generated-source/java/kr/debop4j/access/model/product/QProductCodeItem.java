@@ -26,7 +26,7 @@ import static com.mysema.query.types.PathMetadataFactory.forVariable;
 
 
 /** QProductCodeItem is a Querydsl query type for ProductCodeItem */
-@Generated("com.mysema.query.codegen.EntitySerializer")
+@Generated( "com.mysema.query.codegen.EntitySerializer" )
 public class QProductCodeItem extends EntityPathBase<ProductCodeItem> {
 
     private static final long serialVersionUID = -1624398786;
@@ -56,7 +56,7 @@ public class QProductCodeItem extends EntityPathBase<ProductCodeItem> {
         this(ProductCodeItem.class, forVariable(variable), INITS);
     }
 
-    @SuppressWarnings("all")
+    @SuppressWarnings( "all" )
     public QProductCodeItem(Path<? extends ProductCodeItem> path) {
         this((Class) path.getType(), path.getMetadata(), path.getMetadata().isRoot() ? INITS : PathInits.DEFAULT);
     }

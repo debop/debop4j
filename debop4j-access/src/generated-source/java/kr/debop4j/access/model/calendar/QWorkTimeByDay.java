@@ -26,7 +26,7 @@ import static com.mysema.query.types.PathMetadataFactory.forVariable;
 
 
 /** QWorkTimeByDay is a Querydsl query type for WorkTimeByDay */
-@Generated("com.mysema.query.codegen.EntitySerializer")
+@Generated( "com.mysema.query.codegen.EntitySerializer" )
 public class QWorkTimeByDay extends EntityPathBase<WorkTimeByDay> {
 
     private static final long serialVersionUID = 924205481;
@@ -63,7 +63,7 @@ public class QWorkTimeByDay extends EntityPathBase<WorkTimeByDay> {
         this(WorkTimeByDay.class, forVariable(variable), INITS);
     }
 
-    @SuppressWarnings("all")
+    @SuppressWarnings( "all" )
     public QWorkTimeByDay(Path<? extends WorkTimeByDay> path) {
         this((Class) path.getType(), path.getMetadata(), path.getMetadata().isRoot() ? INITS : PathInits.DEFAULT);
     }

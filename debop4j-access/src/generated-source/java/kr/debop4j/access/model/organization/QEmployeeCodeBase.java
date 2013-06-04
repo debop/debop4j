@@ -26,7 +26,7 @@ import static com.mysema.query.types.PathMetadataFactory.forVariable;
 
 
 /** QEmployeeCodeBase is a Querydsl query type for EmployeeCodeBase */
-@Generated("com.mysema.query.codegen.SupertypeSerializer")
+@Generated( "com.mysema.query.codegen.SupertypeSerializer" )
 public class QEmployeeCodeBase extends EntityPathBase<EmployeeCodeBase> {
 
     private static final long serialVersionUID = 851911381;
@@ -56,7 +56,7 @@ public class QEmployeeCodeBase extends EntityPathBase<EmployeeCodeBase> {
         this(EmployeeCodeBase.class, forVariable(variable), INITS);
     }
 
-    @SuppressWarnings("all")
+    @SuppressWarnings( "all" )
     public QEmployeeCodeBase(Path<? extends EmployeeCodeBase> path) {
         this((Class) path.getType(), path.getMetadata(), path.getMetadata().isRoot() ? INITS : PathInits.DEFAULT);
     }

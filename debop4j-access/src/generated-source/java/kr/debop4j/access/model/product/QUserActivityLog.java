@@ -26,7 +26,7 @@ import static com.mysema.query.types.PathMetadataFactory.forVariable;
 
 
 /** QUserActivityLog is a Querydsl query type for UserActivityLog */
-@Generated("com.mysema.query.codegen.EntitySerializer")
+@Generated( "com.mysema.query.codegen.EntitySerializer" )
 public class QUserActivityLog extends EntityPathBase<UserActivityLog> {
 
     private static final long serialVersionUID = 94510201;
@@ -70,7 +70,7 @@ public class QUserActivityLog extends EntityPathBase<UserActivityLog> {
         super(UserActivityLog.class, forVariable(variable));
     }
 
-    @SuppressWarnings("all")
+    @SuppressWarnings( "all" )
     public QUserActivityLog(Path<? extends UserActivityLog> path) {
         super((Class) path.getType(), path.getMetadata());
     }

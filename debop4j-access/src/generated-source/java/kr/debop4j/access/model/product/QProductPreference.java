@@ -26,7 +26,7 @@ import static com.mysema.query.types.PathMetadataFactory.forVariable;
 
 
 /** QProductPreference is a Querydsl query type for ProductPreference */
-@Generated("com.mysema.query.codegen.EntitySerializer")
+@Generated( "com.mysema.query.codegen.EntitySerializer" )
 public class QProductPreference extends EntityPathBase<ProductPreference> {
 
     private static final long serialVersionUID = 2068878073;
@@ -63,7 +63,7 @@ public class QProductPreference extends EntityPathBase<ProductPreference> {
         this(ProductPreference.class, forVariable(variable), INITS);
     }
 
-    @SuppressWarnings("all")
+    @SuppressWarnings( "all" )
     public QProductPreference(Path<? extends ProductPreference> path) {
         this((Class) path.getType(), path.getMetadata(), path.getMetadata().isRoot() ? INITS : PathInits.DEFAULT);
     }
