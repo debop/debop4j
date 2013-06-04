@@ -67,9 +67,10 @@
 
         <module>debop4j-data-ogm</module>
         <module>debop4j-data-ehcache</module>
+        <module>debop4j-data-infinispan</module>
         <module>debop4j-data-mongodb</module>
         <module>debop4j-data-redis</module>
-        <module>debop4j-data-couchbase</module>
+        <!--<module>debop4j-data-couchbase</module>-->
 
         <module>debop4j-access</module>
         <module>debop4j-graph</module>
@@ -292,6 +293,9 @@
         <mongo.driver.version>2.11.0</mongo.driver.version>
         <ehcache.version>2.6.5</ehcache.version>
         <jedis.version>2.1.0</jedis.version>
+
+        <infinispan.version>5.2.6.Final</infinispan.version>
+        <infinispan.lucene3.version>5.3.0.Beta2</infinispan.lucene3.version>
 
         <tomcat.jdbc.version>7.0.37</tomcat.jdbc.version>
         <bonecp.version>0.7.1.RELEASE</bonecp.version>
@@ -865,6 +869,31 @@
                 <artifactId>jedis</artifactId>
                 <version>${jedis.version}</version>
             </dependency>
+
+            <!-- Infinispan -->
+            <dependency>
+                <groupId>org.infinispan</groupId>
+                <artifactId>infinispan-core</artifactId>
+                <version>${infinispan.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.infinispan</groupId>
+                <artifactId>infinispan-server-memcached</artifactId>
+                <version>${infinispan.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.infinispan</groupId>
+                <artifactId>infinispan-lucene-directory</artifactId>
+                <version>${infinispan.version}</version>
+            </dependency>
+
+            <!-- lucene 3x 인덱스를 infinispan 에 저장합니다. -->
+            <dependency>
+                <groupId>org.infinispan</groupId>
+                <artifactId>infinispan-lucene-v3</artifactId>
+                <version>${infinispan.lucene3.version}</version>
+            </dependency>
+
 
             <!-- Netty -->
             <dependency>
