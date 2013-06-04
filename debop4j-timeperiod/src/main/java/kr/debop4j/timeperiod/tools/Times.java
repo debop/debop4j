@@ -792,7 +792,7 @@ public abstract class Times {
     }
 
     /**
-     * 해당 일자가 속한 반기의 시작 시각
+     * 해당 년/월이 속한 반기의 시작 시각
      *
      * @param year
      * @param monthOfYear

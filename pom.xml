@@ -217,7 +217,6 @@
         <commons.compress.version>1.4.1</commons.compress.version>
         <commons.pool.version>1.6</commons.pool.version>
         <commons.collections.version>3.2.1</commons.collections.version>
-        <commons.lang.version>2.6</commons.lang.version>
         <commons.lang3.version>3.1</commons.lang3.version>
         <commons.validator.version>1.4.0</commons.validator.version>
 
@@ -386,11 +385,6 @@
             </dependency>
             <dependency>
                 <groupId>org.apache.commons</groupId>
-                <artifactId>commons-lang</artifactId>
-                <version>${commons.lang.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.apache.commons</groupId>
                 <artifactId>commons-lang3</artifactId>
                 <version>${commons.lang3.version}</version>
             </dependency>
@@ -465,13 +459,6 @@
                 <artifactId>guava-testlib</artifactId>
                 <version>${google.guava.version}</version>
                 <scope>test</scope>
-            </dependency>
-
-            <!-- jYield -->
-            <dependency>
-                <groupId>com.googlecode</groupId>
-                <artifactId>jyield</artifactId>
-                <version>${jyield.version}</version>
             </dependency>
 
             <!-- GSON -->
@@ -1076,6 +1063,12 @@
     </dependencyManagement>
 
     <dependencies>
+
+        <!-- Apache Commons -->
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+        </dependency>
 
         <!-- Spring framework -->
         <dependency>
