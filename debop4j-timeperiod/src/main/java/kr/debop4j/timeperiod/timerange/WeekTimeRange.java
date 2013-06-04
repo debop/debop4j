@@ -39,6 +39,12 @@ public abstract class WeekTimeRange extends CalendarTimeRange {
 
     private static final long serialVersionUID = -1899389597363540458L;
 
+    /**
+     * Instantiates a new Week time range.
+     *
+     * @param period       the period
+     * @param timeCalendar the time calendar
+     */
     protected WeekTimeRange(ITimePeriod period, ITimeCalendar timeCalendar) {
         super(getPeriodOf(period.getStart(), 1, timeCalendar), timeCalendar);
 
@@ -48,6 +54,13 @@ public abstract class WeekTimeRange extends CalendarTimeRange {
         this.weekCount = 1;
     }
 
+    /**
+     * Instantiates a new Week time range.
+     *
+     * @param moment       the moment
+     * @param weekCount    the week count
+     * @param timeCalendar the time calendar
+     */
     protected WeekTimeRange(DateTime moment, int weekCount, ITimeCalendar timeCalendar) {
         super(getPeriodOf(moment, weekCount, timeCalendar), timeCalendar);
 
@@ -57,10 +70,25 @@ public abstract class WeekTimeRange extends CalendarTimeRange {
         this.weekCount = weekCount;
     }
 
+    /**
+     * Instantiates a new Week time range.
+     *
+     * @param year       the year
+     * @param weekOfYear the week of year
+     * @param weekCount  the week count
+     */
     protected WeekTimeRange(int year, int weekOfYear, int weekCount) {
         this(year, weekOfYear, weekCount, new TimeCalendar());
     }
 
+    /**
+     * Instantiates a new Week time range.
+     *
+     * @param year         the year
+     * @param weekOfYear   the week of year
+     * @param weekCount    the week count
+     * @param timeCalendar the time calendar
+     */
     protected WeekTimeRange(int year, int weekOfYear, int weekCount, ITimeCalendar timeCalendar) {
         super(getPeriodOf(year, weekOfYear, weekCount, timeCalendar), timeCalendar);
         Guard.shouldBePositiveNumber(weekCount, "weekCount");
@@ -74,10 +102,20 @@ public abstract class WeekTimeRange extends CalendarTimeRange {
     @Getter private final int startWeekOfYear;
     @Getter private final int weekCount;
 
+    /**
+     * Gets end week of year.
+     *
+     * @return the end week of year
+     */
     public int getEndWeekOfYear() {
         return startWeekOfYear + weekCount - 1;
     }
 
+    /**
+     * Gets days.
+     *
+     * @return the days
+     */
     public List<DayRange> getDays() {
         DateTime startDay = getStartDayStart();
         int dayCount = weekCount * TimeSpec.DaysPerWeek;

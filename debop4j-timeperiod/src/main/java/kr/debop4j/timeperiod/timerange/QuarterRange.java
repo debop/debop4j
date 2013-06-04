@@ -36,49 +36,105 @@ public class QuarterRange extends QuarterTimeRange {
 
     // region << Constructor >>
 
+    /** Instantiates a new Quarter range. */
     public QuarterRange() {
         this(new TimeCalendar());
     }
 
+    /**
+     * Instantiates a new Quarter range.
+     *
+     * @param calendar the calendar
+     */
     public QuarterRange(ITimeCalendar calendar) {
         this(ClockProxy.getClock().now().withTimeAtStartOfDay(), calendar);
     }
 
+    /**
+     * Instantiates a new Quarter range.
+     *
+     * @param moment the moment
+     */
     public QuarterRange(DateTime moment) {
         this(moment, new TimeCalendar());
     }
 
+    /**
+     * Instantiates a new Quarter range.
+     *
+     * @param moment   the moment
+     * @param calendar the calendar
+     */
     public QuarterRange(DateTime moment, ITimeCalendar calendar) {
         this(Times.getYearOf(calendar.getYear(moment), calendar.getMonthOfYear(moment)),
              Times.getQuarterOfMonth(moment.getMonthOfYear()), calendar);
     }
 
+    /**
+     * Instantiates a new Quarter range.
+     *
+     * @param startYear    the start year
+     * @param startQuarter the start quarter
+     */
     public QuarterRange(int startYear, Quarter startQuarter) {
         super(startYear, startQuarter, 1);
     }
 
+    /**
+     * Instantiates a new Quarter range.
+     *
+     * @param startYear    the start year
+     * @param startQuarter the start quarter
+     * @param calendar     the calendar
+     */
     public QuarterRange(int startYear, Quarter startQuarter, ITimeCalendar calendar) {
         super(startYear, startQuarter, 1, calendar);
     }
 
     // endregion
 
-    public int getYeaer() {
+    /**
+     * Gets year.
+     *
+     * @return the yeaer
+     */
+    public int getYear() {
         return getStartYear();
     }
 
+    /**
+     * Gets quarter.
+     *
+     * @return the quarter
+     */
     public Quarter getQuarter() {
         return getStartQuarter();
     }
 
+    /**
+     * Previous quarter.
+     *
+     * @return the quarter range
+     */
     public QuarterRange previousQuarter() {
         return addQuarters(-1);
     }
 
+    /**
+     * Next quarter.
+     *
+     * @return the quarter range
+     */
     public QuarterRange nextQuarter() {
         return addQuarters(1);
     }
 
+    /**
+     * Add quarters.
+     *
+     * @param quarters the quarters
+     * @return the quarter range
+     */
     public QuarterRange addQuarters(int quarters) {
         YearAndQuarter yq = Times.addQuarter(getStartYear(), getStartQuarter(), quarters);
         return new QuarterRange(yq.getYear(), yq.getQuarter(), getTimeCalendar());

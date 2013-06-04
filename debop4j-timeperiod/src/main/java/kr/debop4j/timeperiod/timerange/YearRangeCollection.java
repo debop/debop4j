@@ -34,18 +34,44 @@ public class YearRangeCollection extends YearTimeRange {
 
     private static final long serialVersionUID = 6717411713272815855L;
 
+    /**
+     * Instantiates a new Year range collection.
+     *
+     * @param moment    the moment
+     * @param yearCount the year count
+     */
     public YearRangeCollection(DateTime moment, int yearCount) {
         this(moment, yearCount, TimeCalendar.getDefault());
     }
 
+    /**
+     * Instantiates a new Year range collection.
+     *
+     * @param moment    the moment
+     * @param yearCount the year count
+     * @param calendar  the calendar
+     */
     public YearRangeCollection(DateTime moment, int yearCount, ITimeCalendar calendar) {
         this(Times.getYearOf(moment, calendar), yearCount, calendar);
     }
 
+    /**
+     * Instantiates a new Year range collection.
+     *
+     * @param year      the year
+     * @param yearCount the year count
+     */
     public YearRangeCollection(int year, int yearCount) {
         this(year, yearCount, TimeCalendar.getDefault());
     }
 
+    /**
+     * Instantiates a new Year range collection.
+     *
+     * @param year      the year
+     * @param yearCount the year count
+     * @param calendar  the calendar
+     */
     public YearRangeCollection(int year, int yearCount, ITimeCalendar calendar) {
         super(year, yearCount, calendar);
     }

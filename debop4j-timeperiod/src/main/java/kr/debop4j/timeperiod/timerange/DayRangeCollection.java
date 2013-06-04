@@ -34,24 +34,59 @@ public class DayRangeCollection extends DayTimeRange {
 
     // region << Constructor >>
 
+    /**
+     * Instantiates a new Day range collection.
+     *
+     * @param moment   the moment
+     * @param dayCount the day count
+     */
     public DayRangeCollection(DateTime moment, int dayCount) {
         super(moment, dayCount);
     }
 
+    /**
+     * Instantiates a new Day range collection.
+     *
+     * @param moment   the moment
+     * @param dayCount the day count
+     * @param calendar the calendar
+     */
     public DayRangeCollection(DateTime moment, int dayCount, ITimeCalendar calendar) {
         super(moment, dayCount, calendar);
     }
 
+    /**
+     * Instantiates a new Day range collection.
+     *
+     * @param year        the year
+     * @param monthOfYear the month of year
+     * @param dayOfMonth  the day of month
+     * @param dayCount    the day count
+     */
     public DayRangeCollection(int year, int monthOfYear, int dayOfMonth, int dayCount) {
         super(year, monthOfYear, dayOfMonth, dayCount);
     }
 
+    /**
+     * Instantiates a new Day range collection.
+     *
+     * @param year        the year
+     * @param monthOfYear the month of year
+     * @param dayOfMonth  the day of month
+     * @param dayCount    the day count
+     * @param calendar    the calendar
+     */
     public DayRangeCollection(int year, int monthOfYear, int dayOfMonth, int dayCount, ITimeCalendar calendar) {
         super(year, monthOfYear, dayOfMonth, dayCount, calendar);
     }
 
     // endregion
 
+    /**
+     * Gets days.
+     *
+     * @return the days
+     */
     public List<DayRange> getDays() {
         DateTime startDay = getStart();
 

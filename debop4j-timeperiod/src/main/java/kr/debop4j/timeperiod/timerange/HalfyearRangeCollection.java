@@ -35,10 +35,23 @@ import java.util.List;
 public class HalfyearRangeCollection extends HalfyearTimeRange {
     private static final long serialVersionUID = 425689128251222210L;
 
+    /**
+     * Instantiates a new Halfyear range collection.
+     *
+     * @param moment        the moment
+     * @param halfyearCount the halfyear count
+     */
     public HalfyearRangeCollection(DateTime moment, int halfyearCount) {
         this(moment, halfyearCount, TimeCalendar.getDefault());
     }
 
+    /**
+     * Instantiates a new Halfyear range collection.
+     *
+     * @param moment        the moment
+     * @param halfyearCount the halfyear count
+     * @param timeCalendar  the time calendar
+     */
     public HalfyearRangeCollection(DateTime moment, int halfyearCount, ITimeCalendar timeCalendar) {
         this(Times.getYearOf(timeCalendar.getYear(moment), timeCalendar.getMonthOfYear(moment)),
              Times.halfyearOf(timeCalendar.getMonthOfYear(moment)),
@@ -46,15 +59,35 @@ public class HalfyearRangeCollection extends HalfyearTimeRange {
              timeCalendar);
     }
 
+    /**
+     * Instantiates a new Halfyear range collection.
+     *
+     * @param year          the year
+     * @param halfyear      the halfyear
+     * @param halfyearCount the halfyear count
+     */
     public HalfyearRangeCollection(int year, Halfyear halfyear, int halfyearCount) {
         this(year, halfyear, halfyearCount, TimeCalendar.getDefault());
     }
 
+    /**
+     * Instantiates a new Halfyear range collection.
+     *
+     * @param year          the year
+     * @param halfyear      the halfyear
+     * @param halfyearCount the halfyear count
+     * @param timeCalendar  the time calendar
+     */
     public HalfyearRangeCollection(int year, Halfyear halfyear, int halfyearCount, ITimeCalendar timeCalendar) {
         super(year, halfyear, halfyearCount, timeCalendar);
     }
 
 
+    /**
+     * Gets halfyears.
+     *
+     * @return the halfyears
+     */
     public List<HalfyearRange> getHalfyears() {
         int halfyearCount = getHalfyearCount();
         List<HalfyearRange> halfyears = Lists.newArrayListWithCapacity(halfyearCount);

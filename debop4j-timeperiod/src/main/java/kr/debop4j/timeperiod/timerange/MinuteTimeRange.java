@@ -35,20 +35,53 @@ import static kr.debop4j.core.Guard.shouldBePositiveNumber;
  * @since 13. 5. 12. 오후 9:51
  */
 public abstract class MinuteTimeRange extends CalendarTimeRange {
-    private static final long serialVersionUID = -5669915582907325590L;
 
+    /**
+     * Instantiates a new Minute time range.
+     *
+     * @param moment      the moment
+     * @param minuteCount the minute count
+     */
     public MinuteTimeRange(DateTime moment, int minuteCount) {
         this(moment, minuteCount, new TimeCalendar());
     }
 
+    /**
+     * Instantiates a new Minute time range.
+     *
+     * @param moment      the moment
+     * @param minuteCount the minute count
+     * @param calendar    the calendar
+     */
     public MinuteTimeRange(DateTime moment, int minuteCount, ITimeCalendar calendar) {
         this(calendar.getYear(moment), calendar.getMonthOfYear(moment), calendar.getDayOfMonth(moment), calendar.getHourOfDay(moment), calendar.getMinuteOfHour(moment), minuteCount, calendar);
     }
 
+    /**
+     * Instantiates a new Minute time range.
+     *
+     * @param year         the year
+     * @param monthOfYear  the month of year
+     * @param dayOfMonth   the day of month
+     * @param hourOfDay    the hour of day
+     * @param minuteOfHour the minute of hour
+     * @param minuteCount  the minute count
+     */
     public MinuteTimeRange(int year, int monthOfYear, int dayOfMonth, int hourOfDay, int minuteOfHour, int minuteCount) {
         this(year, monthOfYear, dayOfMonth, hourOfDay, minuteOfHour, minuteCount, new TimeCalendar());
     }
 
+    /**
+     * Instantiates a new Minute time range.
+     *
+     * @param year         the year
+     * @param monthOfYear  the month of year
+     * @param dayOfMonth   the day of month
+     * @param hourOfDay    the hour of day
+     * @param minuteOfHour the minute of hour
+     * @param minuteCount  the minute count
+     * @param calendar     the calendar
+     */
     public MinuteTimeRange(int year, int monthOfYear, int dayOfMonth, int hourOfDay, int minuteOfHour, int minuteCount, ITimeCalendar calendar) {
         super(getPeriodOf(year, monthOfYear, dayOfMonth, hourOfDay, minuteOfHour, minuteCount), calendar);
         shouldBePositiveNumber(minuteCount, "minuteCount");
@@ -62,7 +95,7 @@ public abstract class MinuteTimeRange extends CalendarTimeRange {
 
     private static ITimePeriod getPeriodOf(int year, int monthOfYear, int dayOfMonth, int hourOfDay, int minuteOfHour, int minuteCount) {
         assert minuteCount > 0;
-        DateTime start = new DateTime(year, monthOfYear, dayOfMonth, hourOfDay, minuteOfHour, 0);
+        final DateTime start = new DateTime(year, monthOfYear, dayOfMonth, hourOfDay, minuteOfHour, 0);
         return new TimeRange(start, Duration.millis(minuteCount * TimeSpec.MillisPerMinute));
     }
 
@@ -71,10 +104,5 @@ public abstract class MinuteTimeRange extends CalendarTimeRange {
         return HashTool.compute(super.hashCode(), endMinute);
     }
 
-//    @Override
-//    protected Objects.ToStringHelper buildStringHelper() {
-//        return super.buildStringHelper()
-//                .add("minuteCount", minuteCount)
-//                .add("endMinute", endMinute);
-//    }
+    private static final long serialVersionUID = -5669915582907325590L;
 }

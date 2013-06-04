@@ -42,10 +42,24 @@ public class YearTimeRange extends YearCalendarTimeRange {
 
     @Getter private final int yearCount;
 
+    /**
+     * Instantiates a new Year time range.
+     *
+     * @param moment    the moment
+     * @param yearCount the year count
+     * @param calendar  the calendar
+     */
     public YearTimeRange(DateTime moment, int yearCount, ITimeCalendar calendar) {
         this(moment.getYear(), yearCount, calendar);
     }
 
+    /**
+     * Instantiates a new Year time range.
+     *
+     * @param startYear the start year
+     * @param yearCount the year count
+     * @param calendar  the calendar
+     */
     public YearTimeRange(int startYear, int yearCount, ITimeCalendar calendar) {
         super(getPeriodOf(startYear, yearCount), calendar);
         Guard.shouldBePositiveNumber(yearCount, "yearCount");
@@ -53,6 +67,11 @@ public class YearTimeRange extends YearCalendarTimeRange {
         this.yearCount = yearCount;
     }
 
+    /**
+     * Gets halfyears.
+     *
+     * @return the halfyears
+     */
     public List<HalfyearRange> getHalfyears() {
         int startYear = getStartYear();
 
@@ -64,6 +83,11 @@ public class YearTimeRange extends YearCalendarTimeRange {
         return halfyears;
     }
 
+    /**
+     * Gets quarters.
+     *
+     * @return the quarters
+     */
     public List<QuarterRange> getQuarters() {
         int startYear = getStartYear();
 
@@ -77,6 +101,11 @@ public class YearTimeRange extends YearCalendarTimeRange {
         return quarters;
     }
 
+    /**
+     * Gets months.
+     *
+     * @return the months
+     */
     public List<MonthRange> getMonths() {
         int startYear = getStartYear();
         List<MonthRange> months = Lists.newArrayListWithCapacity(yearCount * TimeSpec.MonthsPerYear);
@@ -95,16 +124,10 @@ public class YearTimeRange extends YearCalendarTimeRange {
         return HashTool.compute(super.hashCode(), yearCount);
     }
 
-//    @Override
-//    protected Objects.ToStringHelper buildStringHelper() {
-//        return super.buildStringHelper()
-//                .add("yearCount", yearCount);
-//    }
-
     private static TimeRange getPeriodOf(int year, int yearCount) {
         assert yearCount > 0;
 
-        DateTime startYear = new DateTime(year, 1, 1, 0, 0);
+        DateTime startYear = Times.startTimeOfYear(year);
         return new TimeRange(startYear, startYear.plusYears(yearCount));
     }
 

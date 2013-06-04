@@ -18,6 +18,7 @@ package kr.debop4j.timeperiod.timerange;
 
 import com.google.common.collect.Lists;
 import kr.debop4j.timeperiod.ITimeCalendar;
+import kr.debop4j.timeperiod.tools.Times;
 import lombok.Getter;
 import org.joda.time.DateTime;
 
@@ -33,18 +34,52 @@ public class MinuteRangeCollection extends MinuteTimeRange {
 
     private static final long serialVersionUID = -5566298718095890768L;
 
+    /**
+     * Instantiates a new Minute range collection.
+     *
+     * @param moment      the moment
+     * @param minuteCount the minute count
+     */
     public MinuteRangeCollection(DateTime moment, int minuteCount) {
         super(moment, minuteCount);
     }
 
+    /**
+     * Instantiates a new Minute range collection.
+     *
+     * @param moment      the moment
+     * @param minuteCount the minute count
+     * @param calendar    the calendar
+     */
     public MinuteRangeCollection(DateTime moment, int minuteCount, ITimeCalendar calendar) {
         super(moment, minuteCount, calendar);
     }
 
+    /**
+     * Instantiates a new Minute range collection.
+     *
+     * @param year         the year
+     * @param monthOfYear  the month of year
+     * @param dayOfMonth   the day of month
+     * @param hourOfDay    the hour of day
+     * @param minuteOfHour the minute of hour
+     * @param minuteCount  the minute count
+     */
     public MinuteRangeCollection(int year, int monthOfYear, int dayOfMonth, int hourOfDay, int minuteOfHour, int minuteCount) {
         super(year, monthOfYear, dayOfMonth, hourOfDay, minuteOfHour, minuteCount);
     }
 
+    /**
+     * Instantiates a new Minute range collection.
+     *
+     * @param year         the year
+     * @param monthOfYear  the month of year
+     * @param dayOfMonth   the day of month
+     * @param hourOfDay    the hour of day
+     * @param minuteOfHour the minute of hour
+     * @param minuteCount  the minute count
+     * @param calendar     the calendar
+     */
     public MinuteRangeCollection(int year, int monthOfYear, int dayOfMonth, int hourOfDay, int minuteOfHour, int minuteCount, ITimeCalendar calendar) {
         super(year, monthOfYear, dayOfMonth, hourOfDay, minuteOfHour, minuteCount, calendar);
     }
@@ -54,10 +89,11 @@ public class MinuteRangeCollection extends MinuteTimeRange {
 
     /** 기간을 분단위의 기간으로 표현한 클래스인 {@link MinuteRange}의 열거자를 반환합니다. */
     public List<MinuteRange> createMinutes() {
-        List<MinuteRange> minutes = Lists.newArrayListWithCapacity(getMinuteCount());
-        DateTime startMinute = getStart().withTimeAtStartOfDay().withTime(getStartHourOfDay(), getStartMinuteOfHour(), 0, 0);
+        int minuteCount = getMinuteCount();
+        final List<MinuteRange> minutes = Lists.newArrayListWithCapacity(minuteCount);
+        final DateTime startMinute = Times.trimToSecond(getStart());
 
-        for (int i = 0; i < getMinuteCount(); i++) {
+        for (int i = 0; i < minuteCount; i++) {
             minutes.add(new MinuteRange(startMinute.plusMinutes(i), getTimeCalendar()));
         }
         return minutes;

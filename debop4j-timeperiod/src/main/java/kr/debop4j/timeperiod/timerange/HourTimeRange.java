@@ -41,18 +41,50 @@ public abstract class HourTimeRange extends CalendarTimeRange {
 
     // region << Constructor >>
 
+    /**
+     * Instantiates a new Hour time range.
+     *
+     * @param moment    the moment
+     * @param hourCount the hour count
+     */
     protected HourTimeRange(DateTime moment, int hourCount) {
         this(moment, hourCount, new TimeCalendar());
     }
 
+    /**
+     * Instantiates a new Hour time range.
+     *
+     * @param moment    the moment
+     * @param hourCount the hour count
+     * @param calendar  the calendar
+     */
     protected HourTimeRange(DateTime moment, int hourCount, ITimeCalendar calendar) {
         this(calendar.getYear(moment), calendar.getMonthOfYear(moment), calendar.getDayOfMonth(moment), calendar.getHourOfDay(moment), hourCount, calendar);
     }
 
+    /**
+     * Instantiates a new Hour time range.
+     *
+     * @param year        the year
+     * @param monthOfYear the month of year
+     * @param dayOfMonth  the day of month
+     * @param hourOfDay   the hour of day
+     * @param hourCount   the hour count
+     */
     protected HourTimeRange(int year, int monthOfYear, int dayOfMonth, int hourOfDay, int hourCount) {
         this(year, monthOfYear, dayOfMonth, hourOfDay, hourCount, new TimeCalendar());
     }
 
+    /**
+     * Instantiates a new Hour time range.
+     *
+     * @param year        the year
+     * @param monthOfYear the month of year
+     * @param dayOfMonth  the day of month
+     * @param hourOfDay   the hour of day
+     * @param hourCount   the hour count
+     * @param calendar    the calendar
+     */
     protected HourTimeRange(int year, int monthOfYear, int dayOfMonth, int hourOfDay, int hourCount, ITimeCalendar calendar) {
         super(getPeriodOf(year, monthOfYear, dayOfMonth, hourOfDay, hourCount), calendar);
         shouldBePositiveNumber(hourCount, "hourCount");
@@ -67,7 +99,11 @@ public abstract class HourTimeRange extends CalendarTimeRange {
 
     @Getter private final int endHour;
 
-    /** 시작 시각 ~ 완료 시각 사이의 모든 분단위의 기간을 컬렉션으로 반환합니다. */
+    /**
+     * 시작 시각 ~ 완료 시각 사이의 모든 분(Minute) 단위의 기간을 컬렉션으로 반환합니다.
+     *
+     * @return 분 단위 기간({@link MinuteRange}의 컬렉션
+     */
     public List<MinuteRange> getMinutes() {
         DateTime start = getStart();
         ITimeCalendar timeCalendar = getTimeCalendar();
@@ -95,11 +131,4 @@ public abstract class HourTimeRange extends CalendarTimeRange {
     public int hashCode() {
         return HashTool.compute(super.hashCode(), hourCount);
     }
-
-//    @Override
-//    protected Objects.ToStringHelper buildStringHelper() {
-//        return super.buildStringHelper()
-//                .add("hourCount", hourCount)
-//                .add("endHour", endHour);
-//    }
 }

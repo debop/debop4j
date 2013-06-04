@@ -36,8 +36,14 @@ import static kr.debop4j.core.Guard.shouldBePositiveNumber;
  */
 public abstract class HalfyearTimeRange extends YearCalendarTimeRange {
 
-    private static final long serialVersionUID = -1813124170996786502L;
-
+    /**
+     * Instantiates a new Halfyear time range.
+     *
+     * @param startYear     the start year
+     * @param startHalfyear the start halfyear
+     * @param halfyearCount the halfyear count
+     * @param calendar      the calendar
+     */
     public HalfyearTimeRange(int startYear, Halfyear startHalfyear, int halfyearCount, ITimeCalendar calendar) {
         super(getPeriodOf(startYear, startHalfyear, halfyearCount), calendar);
         shouldBePositiveNumber(halfyearCount, "halfyearCount");
@@ -63,6 +69,11 @@ public abstract class HalfyearTimeRange extends YearCalendarTimeRange {
         return startYear != endYear;
     }
 
+    /**
+     * Gets quarters.
+     *
+     * @return the quarters
+     */
     public List<QuarterRange> getQuarters() {
         int quarterCount = this.halfyearCount * TimeSpec.QuartersPerHalfyear;
         int startQuarter = (startHalfyear.getValue() - 1) * TimeSpec.QuartersPerHalfyear;
@@ -76,6 +87,11 @@ public abstract class HalfyearTimeRange extends YearCalendarTimeRange {
         return quarters;
     }
 
+    /**
+     * Gets months.
+     *
+     * @return the months
+     */
     public List<MonthRange> getMonths() {
         DateTime startMonth = Times.asDate(getStartYear(), 1, 1);
         int monthCount = getHalfyearCount() * TimeSpec.MonthsPerHalfyear;
@@ -92,16 +108,6 @@ public abstract class HalfyearTimeRange extends YearCalendarTimeRange {
         return HashTool.compute(super.hashCode(), startYear, startHalfyear, endYear, endHalfyear, halfyearCount);
     }
 
-//    @Override
-//    protected Objects.ToStringHelper buildStringHelper() {
-//        return super.buildStringHelper()
-//                .add("startYear", startYear)
-//                .add("startHalfyear", startHalfyear)
-//                .add("endYear", endYear)
-//                .add("endHalfyear", endHalfyear)
-//                .add("halfyearCount", halfyearCount);
-//    }
-
     private static TimeRange getPeriodOf(int year, Halfyear halfyear, int halfyearCount) {
         assert halfyearCount > 0;
 
@@ -111,4 +117,6 @@ public abstract class HalfyearTimeRange extends YearCalendarTimeRange {
 
         return new TimeRange(start, end);
     }
+
+    private static final long serialVersionUID = -1813124170996786502L;
 }

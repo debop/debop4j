@@ -32,22 +32,55 @@ public class MonthRangeCollection extends MonthTimeRange {
 
     private static final long serialVersionUID = -3955343194292107018L;
 
+    /**
+     * Instantiates a new Month range collection.
+     *
+     * @param moment     the moment
+     * @param monthCount the month count
+     */
     public MonthRangeCollection(DateTime moment, int monthCount) {
         super(moment, monthCount);
     }
 
+    /**
+     * Instantiates a new Month range collection.
+     *
+     * @param moment     the moment
+     * @param monthCount the month count
+     * @param calendar   the calendar
+     */
     public MonthRangeCollection(DateTime moment, int monthCount, ITimeCalendar calendar) {
         super(moment, monthCount, calendar);
     }
 
+    /**
+     * Instantiates a new Month range collection.
+     *
+     * @param year        the year
+     * @param monthOfYear the month of year
+     * @param monthCount  the month count
+     */
     public MonthRangeCollection(int year, int monthOfYear, int monthCount) {
         super(year, monthOfYear, monthCount);
     }
 
+    /**
+     * Instantiates a new Month range collection.
+     *
+     * @param year        the year
+     * @param monthOfYear the month of year
+     * @param monthCount  the month count
+     * @param calendar    the calendar
+     */
     public MonthRangeCollection(int year, int monthOfYear, int monthCount, ITimeCalendar calendar) {
         super(year, monthOfYear, monthCount, calendar);
     }
 
+    /**
+     * Gets months.
+     *
+     * @return the months
+     */
     public List<MonthRange> getMonths() {
         DateTime startTime = this.getStart();
         List<MonthRange> months = Lists.newArrayListWithCapacity(getMonthCount());

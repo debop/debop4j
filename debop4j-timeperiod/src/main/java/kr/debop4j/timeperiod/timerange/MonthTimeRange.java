@@ -43,18 +43,46 @@ public abstract class MonthTimeRange extends CalendarTimeRange {
 
     // region << Constructor >>
 
+    /**
+     * Instantiates a new Month time range.
+     *
+     * @param moment     the moment
+     * @param monthCount the month count
+     */
     public MonthTimeRange(DateTime moment, int monthCount) {
         this(moment, monthCount, new TimeCalendar());
     }
 
+    /**
+     * Instantiates a new Month time range.
+     *
+     * @param moment     the moment
+     * @param monthCount the month count
+     * @param calendar   the calendar
+     */
     public MonthTimeRange(DateTime moment, int monthCount, ITimeCalendar calendar) {
         this(calendar.getYear(moment), calendar.getMonthOfYear(moment), monthCount, calendar);
     }
 
+    /**
+     * Instantiates a new Month time range.
+     *
+     * @param year        the year
+     * @param monthOfYear the month of year
+     * @param monthCount  the month count
+     */
     public MonthTimeRange(int year, int monthOfYear, int monthCount) {
         this(year, monthOfYear, monthCount, new TimeCalendar());
     }
 
+    /**
+     * Instantiates a new Month time range.
+     *
+     * @param year        the year
+     * @param monthOfYear the month of year
+     * @param monthCount  the month count
+     * @param calendar    the calendar
+     */
     public MonthTimeRange(int year, int monthOfYear, int monthCount, ITimeCalendar calendar) {
         super(getPeriodOf(year, monthOfYear, monthCount), calendar);
         Guard.shouldBePositiveNumber(monthCount, "monthCount");
@@ -87,14 +115,6 @@ public abstract class MonthTimeRange extends CalendarTimeRange {
     public int hashCode() {
         return HashTool.compute(super.hashCode(), monthCount, endYear, endMonthOfYear);
     }
-
-//    @Override
-//    protected Objects.ToStringHelper buildStringHelper() {
-//        return super.buildStringHelper()
-//                .add("monthCount", monthCount)
-//                .add("endYear", endYear)
-//                .add("endMonthOfYear", endMonthOfYear);
-//    }
 
     private static ITimePeriod getPeriodOf(int year, int month, int monthCount) {
         assert monthCount > 0;

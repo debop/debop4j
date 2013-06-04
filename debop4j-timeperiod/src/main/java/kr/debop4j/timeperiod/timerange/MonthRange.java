@@ -32,54 +32,109 @@ public class MonthRange extends MonthTimeRange {
 
     // region << Constructor >>
 
-    /** 생성자 */
+    /** Instantiates a new Month range. */
     public MonthRange() {
         this(new TimeCalendar());
     }
 
-    /** 생성자 */
+    /**
+     * Instantiates a new Month range.
+     *
+     * @param calendar the calendar
+     */
     public MonthRange(ITimeCalendar calendar) {
         this(ClockProxy.getClock().today(), calendar);
     }
 
-    /** 생성자 */
+    /**
+     * Instantiates a new Month range.
+     *
+     * @param moment the moment
+     */
     public MonthRange(DateTime moment) {
         super(moment, 1);
     }
 
-    /** 생성자 */
+    /**
+     * Instantiates a new Month range.
+     *
+     * @param moment   the moment
+     * @param calendar the calendar
+     */
     public MonthRange(DateTime moment, ITimeCalendar calendar) {
         super(moment, 1, calendar);
     }
 
-    /** 생성자 */
+    /**
+     * Instantiates a new Month range.
+     *
+     * @param year        the year
+     * @param monthOfYear the month of year
+     */
     public MonthRange(int year, int monthOfYear) {
         super(year, monthOfYear, 1);
     }
 
-    /** 생성자 */
+    /**
+     * Instantiates a new Month range.
+     *
+     * @param year        the year
+     * @param monthOfYear the month of year
+     * @param calendar    the calendar
+     */
     public MonthRange(int year, int monthOfYear, ITimeCalendar calendar) {
         super(year, monthOfYear, 1, calendar);
     }
 
     // endregion
 
+    /**
+     * Gets year.
+     *
+     * @return the year
+     */
     public int getYear() { return getStartYear(); }
 
+    /**
+     * Gets month of year.
+     *
+     * @return the month of year
+     */
     public int getMonthOfYear() { return getStartMonthOfYear(); }
 
+    /**
+     * Gets days in month.
+     *
+     * @return the days in month
+     */
     public int getDaysInMonth() {
         return Times.getDaysInMonth(getStartYear(), getStartMonthOfYear());
     }
 
+    /**
+     * Previous month.
+     *
+     * @return the month range
+     */
     public MonthRange previousMonth() {
         return addMonths(-1);
     }
 
+    /**
+     * Next month.
+     *
+     * @return the month range
+     */
     public MonthRange nextMonth() {
         return addMonths(1);
     }
 
+    /**
+     * Add months.
+     *
+     * @param months the months
+     * @return the month range
+     */
     public MonthRange addMonths(int months) {
         return new MonthRange(Times.startTimeOfMonth(getStart()).plusMonths(months), getTimeCalendar());
     }

@@ -31,24 +31,59 @@ import java.util.List;
  */
 public class HourRangeCollection extends HourTimeRange {
 
-    private static final long serialVersionUID = 8973240176036662074L;
-
+    /**
+     * Instantiates a new Hour range collection.
+     *
+     * @param moment    the moment
+     * @param hourCount the hour count
+     */
     public HourRangeCollection(DateTime moment, int hourCount) {
         super(moment, hourCount);
     }
 
+    /**
+     * Instantiates a new Hour range collection.
+     *
+     * @param moment    the moment
+     * @param hourCount the hour count
+     * @param calendar  the calendar
+     */
     public HourRangeCollection(DateTime moment, int hourCount, ITimeCalendar calendar) {
         super(moment, hourCount, calendar);
     }
 
+    /**
+     * Instantiates a new Hour range collection.
+     *
+     * @param year        the year
+     * @param monthOfYear the month of year
+     * @param dayOfMonth  the day of month
+     * @param hourOfDay   the hour of day
+     * @param hourCount   the hour count
+     */
     public HourRangeCollection(int year, int monthOfYear, int dayOfMonth, int hourOfDay, int hourCount) {
         super(year, monthOfYear, dayOfMonth, hourOfDay, hourCount);
     }
 
+    /**
+     * Instantiates a new Hour range collection.
+     *
+     * @param year        the year
+     * @param monthOfYear the month of year
+     * @param dayOfMonth  the day of month
+     * @param hourOfDay   the hour of day
+     * @param hourCount   the hour count
+     * @param calendar    the calendar
+     */
     public HourRangeCollection(int year, int monthOfYear, int dayOfMonth, int hourOfDay, int hourCount, ITimeCalendar calendar) {
         super(year, monthOfYear, dayOfMonth, hourOfDay, hourCount, calendar);
     }
 
+    /**
+     * Gets hours.
+     *
+     * @return the hours
+     */
     public List<HourRange> getHours() {
         DateTime startHour = Times.trimToMinute(getStart());
 
@@ -59,4 +94,6 @@ public class HourRangeCollection extends HourTimeRange {
 
         return hours;
     }
+
+    private static final long serialVersionUID = 8973240176036662074L;
 }

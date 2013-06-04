@@ -36,10 +36,23 @@ public class QuarterRangeCollection extends QuarterTimeRange {
 
     private static final long serialVersionUID = -1191375103809489196L;
 
+    /**
+     * Instantiates a new Quarter range collection.
+     *
+     * @param moment       the moment
+     * @param quarterCount the quarter count
+     */
     public QuarterRangeCollection(DateTime moment, int quarterCount) {
         this(moment, quarterCount, new TimeCalendar());
     }
 
+    /**
+     * Instantiates a new Quarter range collection.
+     *
+     * @param moment       the moment
+     * @param quarterCount the quarter count
+     * @param timeCalendar the time calendar
+     */
     public QuarterRangeCollection(DateTime moment, int quarterCount, ITimeCalendar timeCalendar) {
         this(Times.getYearOf(timeCalendar.getYear(moment), timeCalendar.getMonthOfYear(moment)),
              Times.quarterOf(timeCalendar.getMonthOfYear(moment)),
@@ -47,15 +60,35 @@ public class QuarterRangeCollection extends QuarterTimeRange {
              timeCalendar);
     }
 
+    /**
+     * Instantiates a new Quarter range collection.
+     *
+     * @param year         the year
+     * @param quarter      the quarter
+     * @param quarterCount the quarter count
+     */
     public QuarterRangeCollection(int year, Quarter quarter, int quarterCount) {
         this(year, quarter, quarterCount, new TimeCalendar());
     }
 
+    /**
+     * Instantiates a new Quarter range collection.
+     *
+     * @param year         the year
+     * @param quarter      the quarter
+     * @param quarterCount the quarter count
+     * @param timeCalendar the time calendar
+     */
     public QuarterRangeCollection(int year, Quarter quarter, int quarterCount, ITimeCalendar timeCalendar) {
         super(year, quarter, quarterCount, timeCalendar);
     }
 
 
+    /**
+     * Gets quarters.
+     *
+     * @return the quarters
+     */
     public List<QuarterRange> getQuarters() {
         int baseYear = getStartYear();
         Quarter baseQuarter = getStartQuarter();

@@ -30,6 +30,12 @@ public abstract class YearCalendarTimeRange extends CalendarTimeRange {
 
     private static final long serialVersionUID = -7922671338410846872L;
 
+    /**
+     * Instantiates a new Year calendar time range.
+     *
+     * @param period   the period
+     * @param calendar the calendar
+     */
     public YearCalendarTimeRange(ITimePeriod period, ITimeCalendar calendar) {
         super(period, (calendar != null) ? calendar : TimeCalendar.getDefault());
     }

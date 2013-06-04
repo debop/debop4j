@@ -34,52 +34,134 @@ public class DayRange extends DayTimeRange {
 
     // region << Constructor >>
 
+    /** Instantiates a new Day range. */
     public DayRange() {
         this(new TimeCalendar());
     }
 
+    /**
+     * Instantiates a new Day range.
+     *
+     * @param calendar the calendar
+     */
     public DayRange(ITimeCalendar calendar) {
         this(Times.today(), calendar);
     }
 
+    /**
+     * Instantiates a new Day range.
+     *
+     * @param moment the moment
+     */
     public DayRange(DateTime moment) {
         super(moment, 1);
     }
 
+    /**
+     * Instantiates a new Day range.
+     *
+     * @param moment   the moment
+     * @param calendar the calendar
+     */
     public DayRange(DateTime moment, ITimeCalendar calendar) {
         super(moment, 1, calendar);
     }
 
+    /**
+     * Instantiates a new Day range.
+     *
+     * @param year        the year
+     * @param monthOfYear the month of year
+     */
     public DayRange(int year, int monthOfYear) {
         super(year, monthOfYear, 1, 1);
     }
 
+    /**
+     * Instantiates a new Day range.
+     *
+     * @param year        the year
+     * @param monthOfYear the month of year
+     * @param dayOfMonth  the day of month
+     */
     public DayRange(int year, int monthOfYear, int dayOfMonth) {
         super(year, monthOfYear, dayOfMonth, 1);
     }
 
+    /**
+     * Instantiates a new Day range.
+     *
+     * @param year        the year
+     * @param monthOfYear the month of year
+     * @param dayOfMonth  the day of month
+     * @param calendar    the calendar
+     */
     public DayRange(int year, int monthOfYear, int dayOfMonth, ITimeCalendar calendar) {
         super(year, monthOfYear, dayOfMonth, 1, calendar);
     }
 
     // endregion
 
-    public int getYear() { return getStartYear(); }
+    /**
+     * Gets year.
+     *
+     * @return the year
+     */
+    public int getYear() {
+        return getStartYear();
+    }
 
-    public int getMonthOfYear() { return getStartMonthOfYear(); }
+    /**
+     * Gets month of year.
+     *
+     * @return the month of year
+     */
+    public int getMonthOfYear() {
+        return getStartMonthOfYear();
+    }
 
-    public int getDayOfMonth() { return getStartDayOfMonth(); }
+    /**
+     * Gets day of month.
+     *
+     * @return the day of month
+     */
+    public int getDayOfMonth() {
+        return getStartDayOfMonth();
+    }
 
-    public DayOfWeek getDayOfWeek() { return getStartDayOfWeek(); }
+    /**
+     * Gets day of week.
+     *
+     * @return the day of week
+     */
+    public DayOfWeek getDayOfWeek() {
+        return getStartDayOfWeek();
+    }
 
+    /**
+     * Previous day.
+     *
+     * @return the day range
+     */
     public DayRange previousDay() {
         return addDays(-1);
     }
 
+    /**
+     * Next day.
+     *
+     * @return the day range
+     */
     public DayRange nextDay() {
         return addDays(1);
     }
 
+    /**
+     * Add days.
+     *
+     * @param days the days
+     * @return the day range
+     */
     public DayRange addDays(int days) {
         return new DayRange(getStart().withTimeAtStartOfDay().plusDays(days), getTimeCalendar());
     }

@@ -34,44 +34,93 @@ public class YearRange extends YearTimeRange {
 
     // region << Constructor >>
 
+    /** Instantiates a new Year range. */
     public YearRange() {
         this(new TimeCalendar());
     }
 
+    /**
+     * Instantiates a new Year range.
+     *
+     * @param calendar the calendar
+     */
     public YearRange(ITimeCalendar calendar) {
         this(ClockProxy.getClock().now().withTimeAtStartOfDay(), calendar);
     }
 
+    /**
+     * Instantiates a new Year range.
+     *
+     * @param moment the moment
+     */
     public YearRange(DateTime moment) {
         this(moment, new TimeCalendar());
     }
 
+    /**
+     * Instantiates a new Year range.
+     *
+     * @param moment   the moment
+     * @param calendar the calendar
+     */
     public YearRange(DateTime moment, ITimeCalendar calendar) {
         this(moment.getYear(), calendar);
     }
 
+    /**
+     * Instantiates a new Year range.
+     *
+     * @param startYear the start year
+     */
     public YearRange(int startYear) {
         super(startYear, 1, new TimeCalendar());
     }
 
+    /**
+     * Instantiates a new Year range.
+     *
+     * @param startYear the start year
+     * @param calendar  the calendar
+     */
     public YearRange(int startYear, ITimeCalendar calendar) {
         super(startYear, 1, calendar);
     }
 
     // endregion
 
+    /**
+     * Gets year.
+     *
+     * @return the year
+     */
     public int getYear() {
         return getStartYear();
     }
 
+    /**
+     * Previous year.
+     *
+     * @return the year range
+     */
     public YearRange previousYear() {
         return addYears(-1);
     }
 
+    /**
+     * Next year.
+     *
+     * @return the year range
+     */
     public YearRange nextYear() {
         return addYears(1);
     }
 
+    /**
+     * Add years.
+     *
+     * @param years the years
+     * @return the year range
+     */
     public YearRange addYears(int years) {
         DateTime baseTime = Times.startTimeOfYear(getStartYear());
         return new YearRange(baseTime.plusYears(years), getTimeCalendar());

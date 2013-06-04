@@ -35,64 +35,143 @@ public class WeekRange extends WeekTimeRange {
 
     // region << Constructor >>
 
+    /** Instantiates a new Week range. */
     public WeekRange() {
         this(new TimeCalendar());
     }
 
+    /**
+     * Instantiates a new Week range.
+     *
+     * @param timeCalendar the time calendar
+     */
     public WeekRange(ITimeCalendar timeCalendar) {
         this(ClockProxy.getClock().now(), timeCalendar);
     }
 
+    /**
+     * Instantiates a new Week range.
+     *
+     * @param moment the moment
+     */
     public WeekRange(DateTime moment) {
         this(moment, new TimeCalendar());
     }
 
+    /**
+     * Instantiates a new Week range.
+     *
+     * @param moment       the moment
+     * @param timeCalendar the time calendar
+     */
     public WeekRange(DateTime moment, ITimeCalendar timeCalendar) {
         super(moment, 1, timeCalendar);
     }
 
+    /**
+     * Instantiates a new Week range.
+     *
+     * @param period       the period
+     * @param timeCalendar the time calendar
+     */
     public WeekRange(ITimePeriod period, ITimeCalendar timeCalendar) {
         super(period, timeCalendar);
     }
 
+    /**
+     * Instantiates a new Week range.
+     *
+     * @param moment       the moment
+     * @param weekCount    the week count
+     * @param timeCalendar the time calendar
+     */
     public WeekRange(DateTime moment, int weekCount, ITimeCalendar timeCalendar) {
         super(moment, weekCount, timeCalendar);
     }
 
+    /**
+     * Instantiates a new Week range.
+     *
+     * @param year       the year
+     * @param weekOfYear the week of year
+     */
     public WeekRange(int year, int weekOfYear) {
         super(year, weekOfYear, 1);
     }
 
+    /**
+     * Instantiates a new Week range.
+     *
+     * @param year         the year
+     * @param weekOfYear   the week of year
+     * @param timeCalendar the time calendar
+     */
     public WeekRange(int year, int weekOfYear, ITimeCalendar timeCalendar) {
         super(year, weekOfYear, 1, timeCalendar);
     }
 
     // endregion
 
+    /**
+     * Gets week of year.
+     *
+     * @return the week of year
+     */
     public int getWeekOfYear() {
         return getStartWeekOfYear();
     }
 
+    /**
+     * Gets first day of week.
+     *
+     * @return the first day of week
+     */
     public DateTime getFirstDayOfWeek() {
         return getStart();
     }
 
+    /**
+     * Gets last day of week.
+     *
+     * @return the last day of week
+     */
     public DateTime getLastDayOfWeek() {
         return getStart().plusDays(6);
     }
 
+    /**
+     * Is multiple calendar years.
+     *
+     * @return the boolean
+     */
     public boolean isMultipleCalendarYears() {
         return getTimeCalendar().getYear(getFirstDayOfWeek()) != getTimeCalendar().getYear(getLastDayOfWeek());
     }
 
+    /**
+     * Previous week.
+     *
+     * @return the week range
+     */
     public WeekRange previousWeek() {
         return addWeeks(-1);
     }
 
+    /**
+     * Next week.
+     *
+     * @return the week range
+     */
     public WeekRange nextWeek() {
         return addWeeks(1);
     }
 
+    /**
+     * Add weeks.
+     *
+     * @param weeks the weeks
+     * @return the week range
+     */
     public WeekRange addWeeks(int weeks) {
         DateTime startOfWeek = Times.getStartOfYearWeek(getYear(), getStartWeekOfYear(), getTimeCalendar());
         return new WeekRange(startOfWeek.plusWeeks(weeks), getTimeCalendar());

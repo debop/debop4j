@@ -33,22 +33,55 @@ public class WeekRangeCollection extends WeekTimeRange {
 
     private static final long serialVersionUID = 1010532943814278022L;
 
+    /**
+     * Instantiates a new Week range collection.
+     *
+     * @param moment    the moment
+     * @param weekCount the week count
+     */
     public WeekRangeCollection(DateTime moment, int weekCount) {
         this(moment, weekCount, new TimeCalendar());
     }
 
+    /**
+     * Instantiates a new Week range collection.
+     *
+     * @param moment       the moment
+     * @param weekCount    the week count
+     * @param timeCalendar the time calendar
+     */
     public WeekRangeCollection(DateTime moment, int weekCount, ITimeCalendar timeCalendar) {
         super(moment, weekCount, timeCalendar);
     }
 
+    /**
+     * Instantiates a new Week range collection.
+     *
+     * @param year       the year
+     * @param weekOfYear the week of year
+     * @param weekCount  the week count
+     */
     public WeekRangeCollection(int year, int weekOfYear, int weekCount) {
         super(year, weekOfYear, weekCount);
     }
 
+    /**
+     * Instantiates a new Week range collection.
+     *
+     * @param year         the year
+     * @param weekOfYear   the week of year
+     * @param weekCount    the week count
+     * @param timeCalendar the time calendar
+     */
     public WeekRangeCollection(int year, int weekOfYear, int weekCount, ITimeCalendar timeCalendar) {
         super(year, weekOfYear, weekCount, timeCalendar);
     }
 
+    /**
+     * Gets weeks.
+     *
+     * @return the weeks
+     */
     public List<WeekRange> getWeeks() {
         DateTime startWeek = getStart();
         List<WeekRange> weeks = Lists.newArrayListWithCapacity(getWeekCount());

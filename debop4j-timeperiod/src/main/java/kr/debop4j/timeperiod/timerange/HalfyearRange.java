@@ -36,49 +36,105 @@ public class HalfyearRange extends HalfyearTimeRange {
 
     // region << Constructor >>
 
+    /** Instantiates a new Halfyear range. */
     public HalfyearRange() {
         this(new TimeCalendar());
     }
 
+    /**
+     * Instantiates a new Halfyear range.
+     *
+     * @param calendar the calendar
+     */
     public HalfyearRange(ITimeCalendar calendar) {
         this(ClockProxy.getClock().now().withTimeAtStartOfDay(), calendar);
     }
 
+    /**
+     * Instantiates a new Halfyear range.
+     *
+     * @param moment the moment
+     */
     public HalfyearRange(DateTime moment) {
         this(moment, new TimeCalendar());
     }
 
+    /**
+     * Instantiates a new Halfyear range.
+     *
+     * @param moment   the moment
+     * @param calendar the calendar
+     */
     public HalfyearRange(DateTime moment, ITimeCalendar calendar) {
         this(Times.getYearOf(calendar.getYear(moment), calendar.getMonthOfYear(moment)),
              Times.getHalfyearOfMonth(moment.getMonthOfYear()), calendar);
     }
 
+    /**
+     * Instantiates a new Halfyear range.
+     *
+     * @param startYear     the start year
+     * @param startHalfyear the start halfyear
+     */
     public HalfyearRange(int startYear, Halfyear startHalfyear) {
         super(startYear, startHalfyear, 1, new TimeCalendar());
     }
 
+    /**
+     * Instantiates a new Halfyear range.
+     *
+     * @param startYear     the start year
+     * @param startHalfyear the start halfyear
+     * @param calendar      the calendar
+     */
     public HalfyearRange(int startYear, Halfyear startHalfyear, ITimeCalendar calendar) {
         super(startYear, startHalfyear, 1, calendar);
     }
 
     // endregion
 
+    /**
+     * Gets year.
+     *
+     * @return the year
+     */
     public int getYear() {
         return getStartYear();
     }
 
+    /**
+     * Gets halfyear.
+     *
+     * @return the halfyear
+     */
     public Halfyear getHalfyear() {
         return getStartHalfyear();
     }
 
+    /**
+     * Previous halfyear.
+     *
+     * @return the halfyear range
+     */
     public HalfyearRange previousHalfyear() {
         return addHalfyears(-1);
     }
 
+    /**
+     * Next halfyear.
+     *
+     * @return the halfyear range
+     */
     public HalfyearRange nextHalfyear() {
         return addHalfyears(1);
     }
 
+    /**
+     * Add halfyears.
+     *
+     * @param count the count
+     * @return the halfyear range
+     */
     public HalfyearRange addHalfyears(int count) {
         YearAndHalfyear yhy = Times.addHalfyear(getYear(), getHalfyear(), count);
         return new HalfyearRange(yhy.getYear(), yhy.getHalfyear(), getTimeCalendar());

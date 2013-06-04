@@ -41,10 +41,25 @@ public abstract class QuarterTimeRange extends YearCalendarTimeRange {
     @Getter private Quarter endQuarter;
     @Getter private int quarterCount;
 
+    /**
+     * Instantiates a new Quarter time range.
+     *
+     * @param startYear    the start year
+     * @param startQuarter the start quarter
+     * @param quarterCount the quarter count
+     */
     public QuarterTimeRange(int startYear, Quarter startQuarter, int quarterCount) {
         this(startYear, startQuarter, quarterCount, new TimeCalendar());
     }
 
+    /**
+     * Instantiates a new Quarter time range.
+     *
+     * @param startYear    the start year
+     * @param startQuarter the start quarter
+     * @param quarterCount the quarter count
+     * @param calendar     the calendar
+     */
     public QuarterTimeRange(int startYear, Quarter startQuarter, int quarterCount, ITimeCalendar calendar) {
         super(getPeriodOf(startYear, startQuarter, quarterCount, calendar), calendar);
         Guard.shouldBePositiveNumber(quarterCount, "quarterCount");
@@ -71,6 +86,11 @@ public abstract class QuarterTimeRange extends YearCalendarTimeRange {
         return Times.addMonth(endYear, 1, months).getMonthOfYear();
     }
 
+    /**
+     * Is multiple calendar years.
+     *
+     * @return the boolean
+     */
     public boolean isMultipleCalendarYears() {
         int months = (startQuarter.getValue() - 1) * TimeSpec.MonthsPerQuarter;
         YearAndMonth startYM = Times.addMonth(startYear, 1, months);
@@ -81,6 +101,11 @@ public abstract class QuarterTimeRange extends YearCalendarTimeRange {
         return !startYM.getYear().equals(endYM.getYear());
     }
 
+    /**
+     * Gets months.
+     *
+     * @return the months
+     */
     public List<MonthRange> getMonths() {
         DateTime startMonth = new DateTime(startYear, 1, 1, 0, 0);
         int monthCount = quarterCount * TimeSpec.MonthsPerQuarter;

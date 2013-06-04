@@ -43,18 +43,48 @@ public abstract class DayTimeRange extends CalendarTimeRange {
 
     // region << Constructor >>
 
+    /**
+     * Instantiates a new Day time range.
+     *
+     * @param moment   the moment
+     * @param dayCount the day count
+     */
     protected DayTimeRange(DateTime moment, int dayCount) {
         this(moment, dayCount, new TimeCalendar());
     }
 
+    /**
+     * Instantiates a new Day time range.
+     *
+     * @param moment   the moment
+     * @param dayCount the day count
+     * @param calendar the calendar
+     */
     protected DayTimeRange(DateTime moment, int dayCount, ITimeCalendar calendar) {
         this(calendar.getYear(moment), calendar.getMonthOfYear(moment), calendar.getDayOfMonth(moment), dayCount, calendar);
     }
 
+    /**
+     * Instantiates a new Day time range.
+     *
+     * @param year        the year
+     * @param monthOfYear the month of year
+     * @param dayOfMonth  the day of month
+     * @param dayCount    the day count
+     */
     protected DayTimeRange(int year, int monthOfYear, int dayOfMonth, int dayCount) {
         this(year, monthOfYear, dayOfMonth, dayCount, new TimeCalendar());
     }
 
+    /**
+     * Instantiates a new Day time range.
+     *
+     * @param year        the year
+     * @param monthOfYear the month of year
+     * @param dayOfMonth  the day of month
+     * @param dayCount    the day count
+     * @param calendar    the calendar
+     */
     protected DayTimeRange(int year, int monthOfYear, int dayOfMonth, int dayCount, ITimeCalendar calendar) {
         super(getPeriodOf(year, monthOfYear, dayOfMonth, dayCount), calendar);
         shouldBePositiveNumber(dayCount, "dayCount");
@@ -64,10 +94,20 @@ public abstract class DayTimeRange extends CalendarTimeRange {
 
     // endregion
 
+    /**
+     * Gets start day of week.
+     *
+     * @return the start day of week
+     */
     public DayOfWeek getStartDayOfWeek() {
         return getTimeCalendar().getDayOfWeek(getStart());
     }
 
+    /**
+     * Gets end day of week.
+     *
+     * @return the end day of week
+     */
     public DayOfWeek getEndDayOfWeek() {
         return getTimeCalendar().getDayOfWeek(getEnd());
     }

@@ -33,50 +33,127 @@ public class MinuteRange extends MinuteTimeRange {
 
     // region << Constructor >>
 
+    /** Instantiates a new Minute range. */
     public MinuteRange() {
         this(new TimeCalendar());
     }
 
+    /**
+     * Instantiates a new Minute range.
+     *
+     * @param timeCalendar the time calendar
+     */
     public MinuteRange(ITimeCalendar timeCalendar) {
         this(ClockProxy.getClock().now(), timeCalendar);
     }
 
+    /**
+     * Instantiates a new Minute range.
+     *
+     * @param moment the moment
+     */
     public MinuteRange(DateTime moment) {
         this(moment, new TimeCalendar());
     }
 
+    /**
+     * Instantiates a new Minute range.
+     *
+     * @param moment   the moment
+     * @param calendar the calendar
+     */
     public MinuteRange(DateTime moment, ITimeCalendar calendar) {
         super(moment, 1, calendar);
     }
 
+    /**
+     * Instantiates a new Minute range.
+     *
+     * @param year         the year
+     * @param monthOfYear  the month of year
+     * @param dayOfMonth   the day of month
+     * @param hourOfDay    the hour of day
+     * @param minuteOfHour the minute of hour
+     */
     public MinuteRange(int year, int monthOfYear, int dayOfMonth, int hourOfDay, int minuteOfHour) {
         super(year, monthOfYear, dayOfMonth, hourOfDay, minuteOfHour, 1);
     }
 
+    /**
+     * Instantiates a new Minute range.
+     *
+     * @param year         the year
+     * @param monthOfYear  the month of year
+     * @param dayOfMonth   the day of month
+     * @param hourOfDay    the hour of day
+     * @param minuteOfHour the minute of hour
+     * @param timeCalendar the time calendar
+     */
     public MinuteRange(int year, int monthOfYear, int dayOfMonth, int hourOfDay, int minuteOfHour, ITimeCalendar timeCalendar) {
         super(year, monthOfYear, dayOfMonth, hourOfDay, minuteOfHour, 1, timeCalendar);
     }
 
     // endregion
 
+    /**
+     * Gets year.
+     *
+     * @return the year
+     */
     public int getYear() { return getStartYear(); }
 
+    /**
+     * Gets month of year.
+     *
+     * @return the month of year
+     */
     public int getMonthOfYear() { return getStartMonthOfYear(); }
 
+    /**
+     * Gets day of month.
+     *
+     * @return the day of month
+     */
     public int getDayOfMonth() { return getStartDayOfMonth(); }
 
+    /**
+     * Gets hour of day.
+     *
+     * @return the hour of day
+     */
     public int getHourOfDay() { return getStartHourOfDay(); }
 
+    /**
+     * Gets minute of hour.
+     *
+     * @return the minute of hour
+     */
     public int getMinuteOfHour() { return getStartMinuteOfHour(); }
 
+    /**
+     * Previous minute.
+     *
+     * @return the minute range
+     */
     public MinuteRange previousMinute() {
         return addMinutes(-1);
     }
 
+    /**
+     * Next minute.
+     *
+     * @return the minute range
+     */
     public MinuteRange nextMinute() {
         return addMinutes(1);
     }
 
+    /**
+     * Add minutes.
+     *
+     * @param minutes the minutes
+     * @return the minute range
+     */
     public MinuteRange addMinutes(int minutes) {
         DateTime start = getStart().withTimeAtStartOfDay().withTime(getStartHourOfDay(), getStartMinuteOfHour(), 0, 0);
         return new MinuteRange(start.plusMinutes(minutes), getTimeCalendar());
