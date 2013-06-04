@@ -22,7 +22,6 @@ import kr.debop4j.core.tools.HashTool;
 import kr.debop4j.timeperiod.ITimeCalendar;
 import kr.debop4j.timeperiod.Quarter;
 import kr.debop4j.timeperiod.TimeCalendar;
-import kr.debop4j.timeperiod.clock.ClockProxy;
 import kr.debop4j.timeperiod.tools.TimeSpec;
 import kr.debop4j.timeperiod.tools.Times;
 import lombok.Getter;
@@ -85,11 +84,11 @@ public class DateDiff extends ValueObjectBase implements Serializable {
 
 
     public DateDiff(DateTime moment) {
-        this(moment, ClockProxy.getClock().now());
+        this(moment, Times.now());
     }
 
     public DateDiff(DateTime moment, ITimeCalendar timeCalendar) {
-        this(moment, ClockProxy.getClock().now(), timeCalendar);
+        this(moment, Times.now(), timeCalendar);
     }
 
     public DateDiff(DateTime start, DateTime end) {

@@ -20,7 +20,6 @@ import kr.debop4j.timeperiod.Halfyear;
 import kr.debop4j.timeperiod.ITimeCalendar;
 import kr.debop4j.timeperiod.TimeCalendar;
 import kr.debop4j.timeperiod.YearAndHalfyear;
-import kr.debop4j.timeperiod.clock.ClockProxy;
 import kr.debop4j.timeperiod.tools.Times;
 import org.joda.time.DateTime;
 
@@ -47,7 +46,7 @@ public class HalfyearRange extends HalfyearTimeRange {
      * @param calendar the calendar
      */
     public HalfyearRange(ITimeCalendar calendar) {
-        this(ClockProxy.getClock().now().withTimeAtStartOfDay(), calendar);
+        this(Times.now().withTimeAtStartOfDay(), calendar);
     }
 
     /**

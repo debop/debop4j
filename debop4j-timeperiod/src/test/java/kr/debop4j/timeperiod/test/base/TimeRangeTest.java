@@ -18,7 +18,6 @@ package kr.debop4j.timeperiod.test.base;
 
 import kr.debop4j.timeperiod.PeriodRelation;
 import kr.debop4j.timeperiod.TimeRange;
-import kr.debop4j.timeperiod.clock.ClockProxy;
 import kr.debop4j.timeperiod.test.samples.TimeRangePeriodRelationTestData;
 import kr.debop4j.timeperiod.tools.Durations;
 import kr.debop4j.timeperiod.tools.TimeSpec;
@@ -78,7 +77,7 @@ public class TimeRangeTest {
 
     @Test
     public void momentTest() throws Exception {
-        DateTime moment = ClockProxy.getClock().now();
+        DateTime moment = Times.now();
         TimeRange range = new TimeRange(moment);
 
         assertThat(range.hasStart()).isTrue();
@@ -92,13 +91,13 @@ public class TimeRangeTest {
 
     @Test
     public void momentByPeriod() {
-        TimeRange range = new TimeRange(ClockProxy.getClock().now(), Duration.ZERO);
+        TimeRange range = new TimeRange(Times.now(), Duration.ZERO);
         assertThat(range.isMoment()).isTrue();
     }
 
     @Test
     public void nonMomentTest() {
-        TimeRange range = new TimeRange(ClockProxy.getClock().now(), TimeSpec.MinPositiveDuration);
+        TimeRange range = new TimeRange(Times.now(), TimeSpec.MinPositiveDuration);
         assertThat(range.isMoment()).isFalse();
         assertThat(range.getDuration()).isEqualTo(TimeSpec.MinPositiveDuration);
     }
@@ -106,7 +105,7 @@ public class TimeRangeTest {
     @Test
     public void hasStartTest() {
         // 현재부터 ~
-        TimeRange range = new TimeRange(ClockProxy.getClock().now(), (DateTime) null);
+        TimeRange range = new TimeRange(Times.now(), (DateTime) null);
         assertThat(range.hasStart()).isTrue();
         assertThat(range.hasEnd()).isFalse();
     }
@@ -114,7 +113,7 @@ public class TimeRangeTest {
     @Test
     public void hasEndTest() {
         //  ~ 현재까지
-        TimeRange range = new TimeRange(null, ClockProxy.getClock().now());
+        TimeRange range = new TimeRange(null, Times.now());
         assertThat(range.hasStart()).isFalse();
         assertThat(range.hasEnd()).isTrue();
     }
@@ -203,13 +202,13 @@ public class TimeRangeTest {
 
     @Test(expected = AssertionError.class)
     public void startReadonlyTest() {
-        TimeRange range = new TimeRange(ClockProxy.getClock().now(), Durations.hours(1), true);
+        TimeRange range = new TimeRange(Times.now(), Durations.hours(1), true);
         range.setStart(range.getStart().minusHours(2));
     }
 
     @Test(expected = AssertionError.class)
     public void startOutOfRangeTest() {
-        TimeRange range = new TimeRange(ClockProxy.getClock().now(), Durations.hours(1), false);
+        TimeRange range = new TimeRange(Times.now(), Durations.hours(1), false);
         range.setStart(range.getStart().plusHours(2));
     }
 
@@ -225,13 +224,13 @@ public class TimeRangeTest {
 
     @Test(expected = AssertionError.class)
     public void endReadonlyTest() {
-        TimeRange range = new TimeRange(ClockProxy.getClock().now(), Durations.hours(1), true);
+        TimeRange range = new TimeRange(Times.now(), Durations.hours(1), true);
         range.setEnd(range.getEnd().plusHours(1));
     }
 
     @Test(expected = AssertionError.class)
     public void endOutOfRangeTest() {
-        TimeRange range = new TimeRange(ClockProxy.getClock().now(), Durations.hours(1), false);
+        TimeRange range = new TimeRange(Times.now(), Durations.hours(1), false);
         range.setEnd(range.getEnd().minusHours(2));
     }
 

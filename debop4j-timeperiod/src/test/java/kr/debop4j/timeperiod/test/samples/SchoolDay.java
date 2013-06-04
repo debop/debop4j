@@ -17,8 +17,6 @@
 package kr.debop4j.timeperiod.test.samples;
 
 import kr.debop4j.timeperiod.TimePeriodChain;
-import kr.debop4j.timeperiod.clock.ClockProxy;
-import kr.debop4j.timeperiod.clock.IClock;
 import kr.debop4j.timeperiod.tools.Times;
 import lombok.Getter;
 import org.joda.time.DateTime;
@@ -42,11 +40,7 @@ public class SchoolDay extends TimePeriodChain {
     @Getter private final Lesson lesson4;
 
     public SchoolDay() {
-        this(getDefaultStartDate(null));
-    }
-
-    public SchoolDay(IClock clock) {
-        this(getDefaultStartDate(clock));
+        this(getDefaultStartDate());
     }
 
     public SchoolDay(DateTime moment) {
@@ -67,11 +61,7 @@ public class SchoolDay extends TimePeriodChain {
         super.add(lesson4);
     }
 
-    private static DateTime getDefaultStartDate(IClock clock) {
-        if (clock == null)
-            clock = ClockProxy.getClock();
-        DateTime now = clock.now();
-
-        return Times.trimToHour(now, 8);
+    private static DateTime getDefaultStartDate() {
+        return Times.trimToHour(Times.now(), 8);
     }
 }

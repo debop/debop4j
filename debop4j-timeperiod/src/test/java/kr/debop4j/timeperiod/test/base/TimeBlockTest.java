@@ -18,7 +18,6 @@ package kr.debop4j.timeperiod.test.base;
 
 import kr.debop4j.timeperiod.PeriodRelation;
 import kr.debop4j.timeperiod.TimeBlock;
-import kr.debop4j.timeperiod.clock.ClockProxy;
 import kr.debop4j.timeperiod.test.samples.TimeBlockPeriodRelationTestData;
 import kr.debop4j.timeperiod.tools.Durations;
 import kr.debop4j.timeperiod.tools.TimeSpec;
@@ -78,7 +77,7 @@ public class TimeBlockTest {
 
     @Test
     public void momentTest() throws Exception {
-        DateTime moment = ClockProxy.getClock().now();
+        DateTime moment = Times.now();
         TimeBlock block = new TimeBlock(moment);
 
         assertThat(block.hasStart()).isTrue();
@@ -92,13 +91,13 @@ public class TimeBlockTest {
 
     @Test
     public void momentByPeriod() {
-        TimeBlock block = new TimeBlock(ClockProxy.getClock().now(), Duration.ZERO);
+        TimeBlock block = new TimeBlock(Times.now(), Duration.ZERO);
         assertThat(block.isMoment()).isTrue();
     }
 
     @Test
     public void nonMomentTest() {
-        TimeBlock block = new TimeBlock(ClockProxy.getClock().now(), TimeSpec.MinPositiveDuration);
+        TimeBlock block = new TimeBlock(Times.now(), TimeSpec.MinPositiveDuration);
         assertThat(block.isMoment()).isFalse();
         assertThat(block.getDuration()).isEqualTo(TimeSpec.MinPositiveDuration);
     }
@@ -106,7 +105,7 @@ public class TimeBlockTest {
     @Test
     public void hasStartTest() {
         // 현재부터 ~
-        TimeBlock block = new TimeBlock(ClockProxy.getClock().now(), (DateTime) null);
+        TimeBlock block = new TimeBlock(Times.now(), (DateTime) null);
         assertThat(block.hasStart()).isTrue();
         assertThat(block.hasEnd()).isFalse();
     }
@@ -114,7 +113,7 @@ public class TimeBlockTest {
     @Test
     public void hasEndTest() {
         //  ~ 현재까지
-        TimeBlock range = new TimeBlock((DateTime) null, ClockProxy.getClock().now());
+        TimeBlock range = new TimeBlock((DateTime) null, Times.now());
         assertThat(range.hasStart()).isFalse();
         assertThat(range.hasEnd()).isTrue();
     }
@@ -195,7 +194,7 @@ public class TimeBlockTest {
 
     @Test(expected = AssertionError.class)
     public void startReadonlyTest() {
-        TimeBlock block = new TimeBlock(ClockProxy.getClock().now(), Durations.hours(1), true);
+        TimeBlock block = new TimeBlock(Times.now(), Durations.hours(1), true);
         block.setStart(block.getStart().minusHours(1));
     }
 
@@ -211,7 +210,7 @@ public class TimeBlockTest {
 
     @Test(expected = AssertionError.class)
     public void endReadonlyTest() {
-        TimeBlock range = new TimeBlock(ClockProxy.getClock().now(), Durations.hours(1), true);
+        TimeBlock range = new TimeBlock(Times.now(), Durations.hours(1), true);
         range.setEnd(range.getEnd().plusHours(1));
     }
 

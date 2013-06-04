@@ -20,7 +20,6 @@ import kr.debop4j.timeperiod.ITimeCalendar;
 import kr.debop4j.timeperiod.Quarter;
 import kr.debop4j.timeperiod.TimeCalendar;
 import kr.debop4j.timeperiod.YearAndQuarter;
-import kr.debop4j.timeperiod.clock.ClockProxy;
 import kr.debop4j.timeperiod.tools.Times;
 import lombok.extern.slf4j.Slf4j;
 import org.joda.time.DateTime;
@@ -47,7 +46,7 @@ public class QuarterRange extends QuarterTimeRange {
      * @param calendar the calendar
      */
     public QuarterRange(ITimeCalendar calendar) {
-        this(ClockProxy.getClock().now().withTimeAtStartOfDay(), calendar);
+        this(Times.now().withTimeAtStartOfDay(), calendar);
     }
 
     /**

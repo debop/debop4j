@@ -18,7 +18,6 @@ package kr.debop4j.timeperiod.timerange;
 
 import kr.debop4j.timeperiod.ITimeCalendar;
 import kr.debop4j.timeperiod.TimeCalendar;
-import kr.debop4j.timeperiod.clock.ClockProxy;
 import kr.debop4j.timeperiod.tools.Times;
 import org.joda.time.DateTime;
 
@@ -43,7 +42,7 @@ public class MonthRange extends MonthTimeRange {
      * @param calendar the calendar
      */
     public MonthRange(ITimeCalendar calendar) {
-        this(ClockProxy.getClock().today(), calendar);
+        this(Times.today(), calendar);
     }
 
     /**

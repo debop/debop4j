@@ -18,7 +18,6 @@ package kr.debop4j.timeperiod.timerange;
 
 import kr.debop4j.timeperiod.ITimeCalendar;
 import kr.debop4j.timeperiod.TimeCalendar;
-import kr.debop4j.timeperiod.clock.ClockProxy;
 import kr.debop4j.timeperiod.tools.Times;
 import lombok.extern.slf4j.Slf4j;
 import org.joda.time.DateTime;
@@ -45,7 +44,7 @@ public class YearRange extends YearTimeRange {
      * @param calendar the calendar
      */
     public YearRange(ITimeCalendar calendar) {
-        this(ClockProxy.getClock().now().withTimeAtStartOfDay(), calendar);
+        this(Times.now().withTimeAtStartOfDay(), calendar);
     }
 
     /**
