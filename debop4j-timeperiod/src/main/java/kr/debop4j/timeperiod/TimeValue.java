@@ -29,39 +29,39 @@ import org.joda.time.Duration;
  * @author 배성혁 sunghyouk.bae@gmail.com
  * @since 13. 5. 12. 오후 2:23
  */
-public class Timepart extends ValueObjectBase implements Comparable<Timepart> {
+public class TimeValue extends ValueObjectBase implements Comparable<TimeValue> {
 
     private static final long serialVersionUID = -4029003873537088627L;
 
-    public static Timepart now() {
-        return new Timepart(DateTime.now());
+    public static TimeValue now() {
+        return new TimeValue(DateTime.now());
     }
 
-    public Timepart() {
+    public TimeValue() {
         this(new DateTime().withTimeAtStartOfDay());
     }
 
-    public Timepart(Duration duration) {
+    public TimeValue(Duration duration) {
         this.timepart = new DateTime(0).withMillisOfDay((int) duration.getMillis());
     }
 
-    public Timepart(DateTime time) {
+    public TimeValue(DateTime time) {
         this.timepart = new DateTime(0).withMillisOfDay(time.getMillisOfDay());
     }
 
-    public Timepart(int hourOfDay) {
+    public TimeValue(int hourOfDay) {
         this(hourOfDay, 0, 0, 0);
     }
 
-    public Timepart(int hourOfDay, int minuteOfHour) {
+    public TimeValue(int hourOfDay, int minuteOfHour) {
         this(hourOfDay, minuteOfHour, 0, 0);
     }
 
-    public Timepart(int hourOfDay, int minuteOfHour, int secondOfMinute) {
+    public TimeValue(int hourOfDay, int minuteOfHour, int secondOfMinute) {
         this(hourOfDay, minuteOfHour, secondOfMinute, 0);
     }
 
-    public Timepart(int hourOfDay, int minuteOfHour, int secondOfMinute, int millisOfSecond) {
+    public TimeValue(int hourOfDay, int minuteOfHour, int secondOfMinute, int millisOfSecond) {
         this(new DateTime().withTime(hourOfDay, minuteOfHour, secondOfMinute, millisOfSecond));
     }
 
@@ -108,12 +108,12 @@ public class Timepart extends ValueObjectBase implements Comparable<Timepart> {
         return moment.withTimeAtStartOfDay().plus(getMillis());
     }
 
-    public DateTime getDateTime(Datepart datepart) {
-        return datepart.getDateTime(this);
+    public DateTime getDateTime(DateValue dateValue) {
+        return dateValue.getDateTime(this);
     }
 
     @Override
-    public int compareTo(Timepart o) {
+    public int compareTo(TimeValue o) {
         return hashCode() - o.hashCode();
     }
 

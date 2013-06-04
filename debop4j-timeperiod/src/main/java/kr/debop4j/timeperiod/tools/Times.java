@@ -51,7 +51,8 @@ public abstract class Times {
     private static final boolean isTraceEnabled = log.isTraceEnabled();
     private static final boolean isDebugEnabled = log.isDebugEnabled();
 
-    private Times() {}
+    private Times() {
+    }
 
     public static final String NullString = "<null>";
     public static final DateTime UnixEpoch = new DateTime(1970, 1, 1, 0, 0, 0, 0);
@@ -75,23 +76,23 @@ public abstract class Times {
     }
 
     /**
-     * Datepart datepart.
+     * DateValue datepart.
      *
      * @param moment the moment
      * @return the datepart
      */
-    public static Datepart datepart(DateTime moment) {
-        return new Datepart(moment);
+    public static DateValue datepart(DateTime moment) {
+        return new DateValue(moment);
     }
 
     /**
-     * Timepart timepart.
+     * TimeValue timepart.
      *
      * @param moment the moment
      * @return the timepart
      */
-    public static Timepart timepart(DateTime moment) {
-        return new Timepart(moment);
+    public static TimeValue timepart(DateTime moment) {
+        return new TimeValue(moment);
     }
 
     /**
@@ -235,7 +236,7 @@ public abstract class Times {
 
         if (isTraceEnabled)
             log.trace("addHalfyear. startYear=[{}], startHalfyear=[{}], halfyearCount=[{}], year=[{}], halfyear=[{}]",
-                      startYear, startHalfyear, halfyearCount, year, halfyear);
+                    startYear, startHalfyear, halfyearCount, year, halfyear);
 
         return new YearAndHalfyear(year, halfyear);
     }
@@ -689,12 +690,16 @@ public abstract class Times {
 
     // region << Current >>
 
-    /** 현재 시각이 속한 년도의 시작일 */
+    /**
+     * 현재 시각이 속한 년도의 시작일
+     */
     public static DateTime currentYear() {
         return asDate(now().getYear(), 1, 1);
     }
 
-    /** 현재 시각이 속한 반기의 시작일 */
+    /**
+     * 현재 시각이 속한 반기의 시작일
+     */
     public static DateTime currentHalfyear() {
         DateTime now = now();
         Halfyear halfyear = getHalfyearOfMonth(now.getMonthOfYear());
@@ -703,7 +708,9 @@ public abstract class Times {
         return asDate(now.getYear(), month, 1);
     }
 
-    /** 현재 시각이 속한 분기의 시작일 */
+    /**
+     * 현재 시각이 속한 분기의 시작일
+     */
     public static DateTime currentQuarter() {
         DateTime now = now();
         Quarter quarter = getQuarterOfMonth(now.getMonthOfYear());
@@ -712,37 +719,51 @@ public abstract class Times {
         return asDate(now.getYear(), month, 1);
     }
 
-    /** 현재 시각이 속한 월의 시작일 */
+    /**
+     * 현재 시각이 속한 월의 시작일
+     */
     public static DateTime currentMonth() {
         return trimToDay(now());
     }
 
-    /** 현재 시각이 속한 주의 시작일 */
+    /**
+     * 현재 시각이 속한 주의 시작일
+     */
     public static DateTime currentWeek() {
         return currentWeek(TimeSpec.FirstDayOfWeek);
     }
 
-    /** 현재 시각이 속한 주의 시작일 */
+    /**
+     * 현재 시각이 속한 주의 시작일
+     */
     public static DateTime currentWeek(DayOfWeek firstDayOfWeek) {
         return getStartOfWeek(now(), firstDayOfWeek);
     }
 
-    /** 오늘 */
+    /**
+     * 오늘
+     */
     public static DateTime currentDay() {
         return today();
     }
 
-    /** 현재 시각이 속한 시각의 처음 */
+    /**
+     * 현재 시각이 속한 시각의 처음
+     */
     public static DateTime currentHour() {
         return trimToMinute(now());
     }
 
-    /** 현재 시각이 속한 분의 처음 */
+    /**
+     * 현재 시각이 속한 분의 처음
+     */
     public static DateTime currentMinute() {
         return trimToSecond(now());
     }
 
-    /** 현재 시각이 속한 초단위의 처음 */
+    /**
+     * 현재 시각이 속한 초단위의 처음
+     */
     public static DateTime currentSecond() {
         return trimToMillis(now());
     }
@@ -751,32 +772,44 @@ public abstract class Times {
 
     // region << DateTime >>
 
-    /** moment 가 속한 년도의 시작 시각 */
+    /**
+     * moment 가 속한 년도의 시작 시각
+     */
     public static DateTime startTimeOfYear(DateTime moment) {
         return new DateTime(moment.getYear(), 1, 1, 0, 0);
     }
 
-    /** 지정한 년도의 시작 시각 */
+    /**
+     * 지정한 년도의 시작 시각
+     */
     public static DateTime startTimeOfYear(int year) {
         return new DateTime(year, 1, 1, 0, 0);
     }
 
-    /** moment가 속한 년도의 마지막 시각 */
+    /**
+     * moment가 속한 년도의 마지막 시각
+     */
     public static DateTime endTimeOfYear(DateTime moment) {
         return startTimeOfYear(moment.getYear() + 1).plusMillis(-1);
     }
 
-    /** 지정한 년도의 마지막 시각 */
+    /**
+     * 지정한 년도의 마지막 시각
+     */
     public static DateTime endTimeOfYear(int year) {
         return startTimeOfYear(year + 1).plusMillis(-1);
     }
 
-    /** 작년 시작 시각 */
+    /**
+     * 작년 시작 시각
+     */
     public static DateTime startTimeOfLastYear(DateTime moment) {
         return startTimeOfYear(moment.getYear() - 1);
     }
 
-    /** 작년 마지막 시각 */
+    /**
+     * 작년 마지막 시각
+     */
     public static DateTime endTimeOfLastYear(DateTime moment) {
         return endTimeOfYear(moment.getYear() - 1);
     }
@@ -805,46 +838,98 @@ public abstract class Times {
     /**
      * 해당 년 / 반기의 시작 시각
      *
-     * @param year
-     * @param halfyear
-     * @return
+     * @param year     year
+     * @param halfyear halfyear
+     * @return start time of half year
      */
     public static DateTime startTimeOfHalfyear(int year, Halfyear halfyear) {
         return new DateTime(year, getMonthsOfHalfyear(halfyear)[0], 1, 0, 0);
     }
 
+    /**
+     * End time of halfyear.
+     *
+     * @param moment the moment
+     * @return the date time
+     */
     public static DateTime endTimeOfHalfyear(DateTime moment) {
         return endTimeOfHalfyear(moment.getYear(), moment.getMonthOfYear());
     }
 
+    /**
+     * End time of halfyear.
+     *
+     * @param year        the year
+     * @param monthOfYear the month of year
+     * @return the date time
+     */
     public static DateTime endTimeOfHalfyear(int year, int monthOfYear) {
         return startTimeOfHalfyear(year, monthOfYear)
                 .plusMonths(TimeSpec.MonthsPerHalfyear)
                 .minus(TimeSpec.MinPositiveDuration);
     }
 
+    /**
+     * Start time of quarter.
+     *
+     * @param moment the moment
+     * @return the date time
+     */
     public static DateTime startTimeOfQuarter(DateTime moment) {
         return startTimeOfQuarter(moment.getYear(), moment.getMonthOfYear());
     }
 
+    /**
+     * Start time of quarter.
+     *
+     * @param year        the year
+     * @param monthOfYear the month of year
+     * @return the date time
+     */
     public static DateTime startTimeOfQuarter(int year, int monthOfYear) {
         return startTimeOfQuarter(year, getQuarterOfMonth(monthOfYear));
     }
 
+    /**
+     * Start time of quarter.
+     *
+     * @param year    the year
+     * @param quarter the quarter
+     * @return the date time
+     */
     public static DateTime startTimeOfQuarter(int year, Quarter quarter) {
         return new DateTime(year, getMonthsOfQuarter(quarter)[0], 1, 0, 0);
     }
 
+    /**
+     * End time of quarter.
+     *
+     * @param moment the moment
+     * @return the date time
+     */
     public static DateTime endTimeOfQuarter(DateTime moment) {
         return endTimeOfQuarter(moment.getYear(), moment.getMonthOfYear());
     }
 
+    /**
+     * End time of quarter.
+     *
+     * @param year        the year
+     * @param monthOfYear the month of year
+     * @return the date time
+     */
     public static DateTime endTimeOfQuarter(int year, int monthOfYear) {
         return startTimeOfQuarter(year, monthOfYear)
                 .plusMonths(TimeSpec.MonthsPerQuarter)
                 .minus(TimeSpec.MinPositiveDuration);
     }
 
+    /**
+     * Start time of last quarter.
+     *
+     * @param moment the moment
+     * @return the date time
+     */
     public static DateTime startTimeOfLastQuarter(DateTime moment) {
         return startTimeOfQuarter(moment.minusMonths(TimeSpec.MonthsPerQuarter));
     }
@@ -1049,52 +1134,72 @@ public abstract class Times {
         return prev;
     }
 
-    /** 시간부분을 제외한 날짜 부분만 반환한다 */
+    /**
+     * 시간부분을 제외한 날짜 부분만 반환한다
+     */
     public static DateTime getDate(DateTime moment) {
         return moment.withTimeAtStartOfDay();
     }
 
-    /** 일자부분이 존재하는지 */
+    /**
+     * 일자부분이 존재하는지
+     */
     public static boolean hasDate(DateTime moment) {
         return moment.withTimeAtStartOfDay().getMillis() > 0;
     }
 
-    /** 지정한 날짜에 알자(년/월/일) 부분을 지정한 datePart로 설정합니다. */
+    /**
+     * 지정한 날짜에 알자(년/월/일) 부분을 지정한 datePart로 설정합니다.
+     */
     public static DateTime setDate(DateTime moment, DateTime datepart) {
-        return new Datepart(datepart).getDateTime(new Timepart(moment));
+        return new DateValue(datepart).getDateTime(new TimeValue(moment));
     }
 
-    /** 지정한 날짜의 년, 월, 일을 수정합니다. */
+    /**
+     * 지정한 날짜의 년, 월, 일을 수정합니다.
+     */
     public static DateTime setDate(DateTime moment, int year, int month, int day) {
         return setDate(moment, new DateTime(year, month, day, 0, 0));
     }
 
-    /** 지정한 일자의 년도만 수정합니다. */
+    /**
+     * 지정한 일자의 년도만 수정합니다.
+     */
     public static DateTime setYear(DateTime moment, int year) {
         return setDate(moment, year, moment.getMonthOfYear(), moment.getDayOfMonth());
     }
 
-    /** 지정한 일자의 월만 수정합니다. */
+    /**
+     * 지정한 일자의 월만 수정합니다.
+     */
     public static DateTime setMonth(DateTime moment, int monthOfYear) {
         return setDate(moment, moment.getYear(), monthOfYear, moment.getDayOfMonth());
     }
 
-    /** 지정한 일자의 일만 수정합니다. */
+    /**
+     * 지정한 일자의 일만 수정합니다.
+     */
     public static DateTime setDay(DateTime moment, int dayOfMonth) {
         return setDate(moment, moment.getYear(), moment.getMonthOfYear(), dayOfMonth);
     }
 
-    /** 일자 부분과 시간 부분을 조합합니다. */
+    /**
+     * 일자 부분과 시간 부분을 조합합니다.
+     */
     public static DateTime combine(DateTime datepart, DateTime timepart) {
         return setTime(datepart, timepart);
     }
 
-    /** 일자의 시간 부분만을 반환합니다. */
+    /**
+     * 일자의 시간 부분만을 반환합니다.
+     */
     public static Duration getTime(DateTime moment) {
         return new Duration(moment.getMillisOfDay());
     }
 
-    /** 시각에 시간부분의 값이 존재하는지 여부 */
+    /**
+     * 시각에 시간부분의 값이 존재하는지 여부
+     */
     public static boolean hasTime(DateTime moment) {
         return moment.getMillisOfDay() > 0;
     }
@@ -1142,17 +1247,23 @@ public abstract class Times {
         return setTime(moment, moment.getHourOfDay(), moment.getMinuteOfHour(), moment.getSecondOfMinute(), millisOfSecond);
     }
 
-    /** 정오 */
+    /**
+     * 정오
+     */
     public static DateTime noon(DateTime moment) {
         return moment.withTimeAtStartOfDay().plusHours(12);
     }
 
-    /** 지정한 시각에서 지정한 기간 이전의 시각 */
+    /**
+     * 지정한 시각에서 지정한 기간 이전의 시각
+     */
     public static DateTime ago(DateTime moment, Duration duration) {
         return moment.minus(duration);
     }
 
-    /** 지정한 시각에서 지정한 기간 이후의 시각 */
+    /**
+     * 지정한 시각에서 지정한 기간 이후의 시각
+     */
     public static DateTime from(DateTime moment, Duration duration) {
         return moment.plus(duration);
     }
@@ -1161,7 +1272,9 @@ public abstract class Times {
         return from(DateTime.now(), duration);
     }
 
-    /** 지정한 시각에서 지정한 기간 이후의 시각 */
+    /**
+     * 지정한 시각에서 지정한 기간 이후의 시각
+     */
     public static DateTime since(DateTime moment, Duration duration) {
         return moment.plus(duration);
     }
@@ -1230,47 +1343,65 @@ public abstract class Times {
         return new TimeRange(start, end);
     }
 
-    /** 시작 시각으로부터 지정한 년도(years) 이후의 기간 */
+    /**
+     * 시작 시각으로부터 지정한 년도(years) 이후의 기간
+     */
     public static TimeRange getRelativeYearPeriod(DateTime start, int years) {
         return getTimeRange(start, start.plusYears(years));
     }
 
-    /** 시작 시각으로부터 지정한 개월(months) 이후의 기간 */
+    /**
+     * 시작 시각으로부터 지정한 개월(months) 이후의 기간
+     */
     public static TimeRange getRelativeMonthPeriod(DateTime start, int months) {
         return getTimeRange(start, start.plusMonths(months));
     }
 
-    /** 시작 시각으로부터 지정한 주(weeks) 이후의 기간 */
+    /**
+     * 시작 시각으로부터 지정한 주(weeks) 이후의 기간
+     */
     public static TimeRange getRelativeWeekPeriod(DateTime start, int weeks) {
         return getTimeRange(start, start.plusWeeks(weeks));
     }
 
-    /** 시작 시각으로부터 지정한 일(days) 이후의 기간 */
+    /**
+     * 시작 시각으로부터 지정한 일(days) 이후의 기간
+     */
     public static TimeRange getRelativeDayPeriod(DateTime start, int days) {
         return getTimeRange(start, start.plusDays(days));
     }
 
-    /** 시작 시각으로부터 지정한 시간(hours) 이후의 기간 */
+    /**
+     * 시작 시각으로부터 지정한 시간(hours) 이후의 기간
+     */
     public static TimeRange getRelativeHourPeriod(DateTime start, int hours) {
         return getTimeRange(start, start.plusHours(hours));
     }
 
-    /** 시작 시각으로부터 지정한 분(minutes) 이후의 기간 */
+    /**
+     * 시작 시각으로부터 지정한 분(minutes) 이후의 기간
+     */
     public static TimeRange getRelativeMinutePeriod(DateTime start, int minutes) {
         return getTimeRange(start, start.plusMinutes(minutes));
     }
 
-    /** 시작 시각으로부터 지정한 초(seconds) 이후의 기간 */
+    /**
+     * 시작 시각으로부터 지정한 초(seconds) 이후의 기간
+     */
     public static TimeRange getRelativeSecondPeriod(DateTime start, int seconds) {
         return getTimeRange(start, start.plusSeconds(seconds));
     }
 
-    /** moment가 속한 특정 종류의 기간 */
+    /**
+     * moment가 속한 특정 종류의 기간
+     */
     public static ITimePeriod getPeriodOf(DateTime moment, PeriodUnit periodUnit) {
         return getPeriodOf(moment, periodUnit, TimeCalendar.getDefault());
     }
 
-    /** moment가 속한 특정 종류의 기간 */
+    /**
+     * moment가 속한 특정 종류의 기간
+     */
     public static ITimePeriod getPeriodOf(DateTime moment, PeriodUnit periodUnit, ITimeCalendar timeCalendar) {
         if (isTraceEnabled)
             log.trace("일자[{}]가 속한 기간 종류[{}]의 기간을 구합니다.", moment, periodUnit);
@@ -1303,12 +1434,16 @@ public abstract class Times {
         }
     }
 
-    /** moment 가 속한 특정 종류의 기간에 대해 periodCount 갯수만큼의 기간 정보를 컬렉션으로 반환한다. */
+    /**
+     * moment 가 속한 특정 종류의 기간에 대해 periodCount 갯수만큼의 기간 정보를 컬렉션으로 반환한다.
+     */
     public static ICalendarTimeRange getPeriodsOf(DateTime moment, PeriodUnit periodUnit, int periodCount) {
         return getPeriodsOf(moment, periodUnit, periodCount, TimeCalendar.getDefault());
     }
 
-    /** moment 가 속한 특정 종류의 기간에 대해 periodCount 갯수만큼의 기간 정보를 컬렉션으로 반환한다. */
+    /**
+     * moment 가 속한 특정 종류의 기간에 대해 periodCount 갯수만큼의 기간 정보를 컬렉션으로 반환한다.
+     */
     public static ICalendarTimeRange getPeriodsOf(DateTime moment, PeriodUnit periodUnit, int periodCount, ITimeCalendar timeCalendar) {
         if (isTraceEnabled)
             log.trace("일자[{}]가 속한 기간 종류[{}]의 기간을 구합니다.", moment, periodUnit);
@@ -1410,7 +1545,9 @@ public abstract class Times {
 
     // region << Relation >>
 
-    /** 지정된 기간 안에 일자(target)이 있는지 여부 */
+    /**
+     * 지정된 기간 안에 일자(target)이 있는지 여부
+     */
     public static boolean hasInside(ITimePeriod period, DateTime target) {
         shouldNotBeNull(period, "period");
         boolean isInside = target.compareTo(period.getStart()) >= 0 && target.compareTo(period.getEnd()) <= 0;
@@ -1421,7 +1558,9 @@ public abstract class Times {
         return isInside;
     }
 
-    /** 지정된 기간 안에 대상 기간이 있는지 여부 */
+    /**
+     * 지정된 기간 안에 대상 기간이 있는지 여부
+     */
     public static boolean hasInside(ITimePeriod period, ITimePeriod target) {
         shouldNotBeNull(period, "period");
         shouldNotBeNull(target, "target");
@@ -1464,7 +1603,9 @@ public abstract class Times {
         return period != null && !period.isAnytime();
     }
 
-    /** 기준 기간과 대상 기간의 관계를 파악합니다. */
+    /**
+     * 기준 기간과 대상 기간의 관계를 파악합니다.
+     */
     public static PeriodRelation getRelation(ITimePeriod period, ITimePeriod target) {
         shouldNotBeNull(period, "period");
         shouldNotBeNull(target, "target");
@@ -1510,7 +1651,9 @@ public abstract class Times {
         return relation;
     }
 
-    /** 두 기간이 교차하거나, period가 target의 내부 구간이면 true를 반환합니다. */
+    /**
+     * 두 기간이 교차하거나, period가 target의 내부 구간이면 true를 반환합니다.
+     */
     public static boolean intersectsWith(ITimePeriod period, ITimePeriod target) {
         shouldNotBeNull(period, "period");
         shouldNotBeNull(target, "target");
@@ -1548,7 +1691,9 @@ public abstract class Times {
         return isOverlaps;
     }
 
-    /** 두 기간의 교집합 (교차 구간)을 구합니다. */
+    /**
+     * 두 기간의 교집합 (교차 구간)을 구합니다.
+     */
     public static TimeBlock getIntersectionBlock(ITimePeriod period, ITimePeriod target) {
         shouldNotBeNull(period, "period");
         shouldNotBeNull(target, "target");
@@ -1565,7 +1710,9 @@ public abstract class Times {
         return intersection;
     }
 
-    /** 두 기간의 합집합 구간을 구합니다. */
+    /**
+     * 두 기간의 합집합 구간을 구합니다.
+     */
     public static TimeBlock getUnionBlock(ITimePeriod period, ITimePeriod target) {
         shouldNotBeNull(period, "period");
         shouldNotBeNull(target, "target");
@@ -1580,7 +1727,9 @@ public abstract class Times {
         return union;
     }
 
-    /** 두 기간의 교집합 (교차 구간)을 구합니다. */
+    /**
+     * 두 기간의 교집합 (교차 구간)을 구합니다.
+     */
     public static TimeRange getIntersectionRange(ITimePeriod period, ITimePeriod target) {
         shouldNotBeNull(period, "period");
         shouldNotBeNull(target, "target");
@@ -1597,7 +1746,9 @@ public abstract class Times {
         return intersection;
     }
 
-    /** 두 기간의 합집합 구간을 구합니다. */
+    /**
+     * 두 기간의 합집합 구간을 구합니다.
+     */
     public static TimeRange getUnionRange(ITimePeriod period, ITimePeriod target) {
         shouldNotBeNull(period, "period");
         shouldNotBeNull(target, "target");
@@ -1716,20 +1867,22 @@ public abstract class Times {
 
     // region << Comparator >>
 
-    @Getter( lazy = true )
+    @Getter(lazy = true)
     private static final StartComparator startComparator = new StartComparator();
-    @Getter( lazy = true )
+    @Getter(lazy = true)
     private static final StartDescComparator startDescComparator = new StartDescComparator();
-    @Getter( lazy = true )
+    @Getter(lazy = true)
     private static final EndComparator endComparator = new EndComparator();
-    @Getter( lazy = true )
+    @Getter(lazy = true)
     private static final EndDescComparator endDescComparator = new EndDescComparator();
-    @Getter( lazy = true )
+    @Getter(lazy = true)
     private static final DurationComparator durationComparator = new DurationComparator();
-    @Getter( lazy = true )
+    @Getter(lazy = true)
     private static final DurationDescComparator durationDescComparator = new DurationDescComparator();
 
-    /** The type Start comparator. */
+    /**
+     * The type Start comparator.
+     */
     public static class StartComparator implements Comparator<ITimePeriod> {
         @Override
         public int compare(ITimePeriod o1, ITimePeriod o2) {
@@ -1737,7 +1890,9 @@ public abstract class Times {
         }
     }
 
-    /** The type Start desc comparator. */
+    /**
+     * The type Start desc comparator.
+     */
     public static class StartDescComparator implements Comparator<ITimePeriod> {
         @Override
         public int compare(ITimePeriod o1, ITimePeriod o2) {
@@ -1745,7 +1900,9 @@ public abstract class Times {
         }
     }
 
-    /** The type End comparator. */
+    /**
+     * The type End comparator.
+     */
     public static class EndComparator implements Comparator<ITimePeriod> {
         @Override
         public int compare(ITimePeriod o1, ITimePeriod o2) {
@@ -1753,7 +1910,9 @@ public abstract class Times {
         }
     }
 
-    /** The type End desc comparator. */
+    /**
+     * The type End desc comparator.
+     */
     public static class EndDescComparator implements Comparator<ITimePeriod> {
         @Override
         public int compare(ITimePeriod o1, ITimePeriod o2) {
@@ -1761,7 +1920,9 @@ public abstract class Times {
         }
     }
 
-    /** The type Duration comparator. */
+    /**
+     * The type Duration comparator.
+     */
     public static class DurationComparator implements Comparator<ITimePeriod> {
         @Override
         public int compare(ITimePeriod o1, ITimePeriod o2) {
@@ -1769,7 +1930,9 @@ public abstract class Times {
         }
     }
 
-    /** The type Duration desc comparator. */
+    /**
+     * The type Duration desc comparator.
+     */
     public static class DurationDescComparator implements Comparator<ITimePeriod> {
         @Override
         public int compare(ITimePeriod o1, ITimePeriod o2) {
@@ -1781,7 +1944,9 @@ public abstract class Times {
 
     // region << ForEach >>
 
-    /** 지정된 기간을 기간 단위별로 세분하여 컬렉션을 빌드합니다. */
+    /**
+     * 지정된 기간을 기간 단위별로 세분하여 컬렉션을 빌드합니다.
+     */
     public static List<ITimePeriod> foreachPeriods(ITimePeriod period, PeriodUnit periodUnit) {
         switch (periodUnit) {
             case Year:
@@ -1813,7 +1978,9 @@ public abstract class Times {
         }
     }
 
-    /** 지정된 기간을 년단위로 컬렉션을 만듭니다. */
+    /**
+     * 지정된 기간을 년단위로 컬렉션을 만듭니다.
+     */
     public static List<ITimePeriod> foreachYears(ITimePeriod period) {
         assert period != null;
         if (isTraceEnabled)
@@ -1847,7 +2014,9 @@ public abstract class Times {
         return years;
     }
 
-    /** 지정된 기간을 반기 단위로 열거합니다. */
+    /**
+     * 지정된 기간을 반기 단위로 열거합니다.
+     */
     public static List<ITimePeriod> foreachHalfyears(ITimePeriod period) {
         assert period != null;
         if (isTraceEnabled)
@@ -1882,7 +2051,9 @@ public abstract class Times {
         return halfyears;
     }
 
-    /** 지정된 기간을 분기단위로 열거합니다. */
+    /**
+     * 지정된 기간을 분기단위로 열거합니다.
+     */
     public static List<ITimePeriod> foreachQuarters(ITimePeriod period) {
         assert period != null;
         if (isTraceEnabled)
@@ -1917,7 +2088,9 @@ public abstract class Times {
         return quarters;
     }
 
-    /** 지정된 기간을 월(Month) 단위로 열거합니다. */
+    /**
+     * 지정된 기간을 월(Month) 단위로 열거합니다.
+     */
     public static List<ITimePeriod> foreachMonths(ITimePeriod period) {
         assert period != null;
         if (isTraceEnabled)
@@ -1953,7 +2126,9 @@ public abstract class Times {
         return months;
     }
 
-    /** 지정된 기간을 주(Week) 단위로 열거합니다. */
+    /**
+     * 지정된 기간을 주(Week) 단위로 열거합니다.
+     */
     public static List<ITimePeriod> foreachWeeks(ITimePeriod period) {
         assert period != null;
         if (isTraceEnabled)
@@ -1993,7 +2168,9 @@ public abstract class Times {
         return weeks;
     }
 
-    /** 지정한 기간을 일(Day)단위로 열거합니다. */
+    /**
+     * 지정한 기간을 일(Day)단위로 열거합니다.
+     */
     public static List<ITimePeriod> foreachDays(ITimePeriod period) {
         shouldNotBeNull(period, "period");
         if (isTraceEnabled) log.trace("기간[{}]에 대해 일(Day) 단위로 열거합니다...", period);
@@ -2025,7 +2202,9 @@ public abstract class Times {
         return days;
     }
 
-    /** 지정한 기간을 시(Hour) 단위로 열거합니다. */
+    /**
+     * 지정한 기간을 시(Hour) 단위로 열거합니다.
+     */
     public static List<ITimePeriod> foreachHours(ITimePeriod period) {
         shouldNotBeNull(period, "period");
 
@@ -2061,7 +2240,9 @@ public abstract class Times {
         return hours;
     }
 
-    /** 지정한 기간을 분(Minute) 단위로 열거합니다. */
+    /**
+     * 지정한 기간을 분(Minute) 단위로 열거합니다.
+     */
     public static List<ITimePeriod> foreachMinutes(ITimePeriod period) {
         shouldNotBeNull(period, "period");
         if (isTraceEnabled) log.trace("기간[{}]에 대해 분(Minute) 단위로 열거합니다...", period);
@@ -2100,7 +2281,9 @@ public abstract class Times {
         assert period != null && period.hasPeriod() : "기간이 설정되지 않았습니다. period=" + period;
     }
 
-    /** 기간을 특정 단위로 열거한 값을 이용하여 특정 코드를 수행하여 결과값을 반환합니다. */
+    /**
+     * 기간을 특정 단위로 열거한 값을 이용하여 특정 코드를 수행하여 결과값을 반환합니다.
+     */
     public static <T> List<T> runPeriods(ITimePeriod period, PeriodUnit periodUnit, Function1<ITimePeriod, T> runner) {
         shouldNotBeNull(period, "period");
         shouldNotBeNull(runner, "runner");
@@ -2117,7 +2300,9 @@ public abstract class Times {
         return results;
     }
 
-    /** 기간을 특정 단위로 열거한 값을 이용하여 특정 코드를 병렬로 수행하여 결과값을 반환합니다. */
+    /**
+     * 기간을 특정 단위로 열거한 값을 이용하여 특정 코드를 병렬로 수행하여 결과값을 반환합니다.
+     */
     public static <T> List<T> runPeriodsAsParallel(ITimePeriod period, PeriodUnit periodUnit, Function1<ITimePeriod, T> runner) {
         shouldNotBeNull(period, "period");
         shouldNotBeNull(runner, "runner");
