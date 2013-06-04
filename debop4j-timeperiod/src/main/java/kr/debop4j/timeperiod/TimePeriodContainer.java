@@ -129,7 +129,7 @@ public class TimePeriodContainer implements ITimePeriodContainer {
     }
 
     @Override
-    public void setup(DateTime newStart, DateTime newEnd) {
+    public void setup(DateTime ns, DateTime ne) {
         throw new NotSupportException("TimePeriodContainer에서는 setup 메소드를 지원하지 않습니다.");
     }
 

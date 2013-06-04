@@ -43,26 +43,56 @@ public class TimePeriodBase extends ValueObjectBase implements ITimePeriod {
 
     // region << Constructors >>
 
+    /** Instantiates a new Time period base. */
     protected TimePeriodBase() {
         this(TimeSpec.MinPeriodTime, TimeSpec.MaxPeriodTime, false);
     }
 
+    /**
+     * Instantiates a new Time period base.
+     *
+     * @param readonly the readonly
+     */
     protected TimePeriodBase(boolean readonly) {
         this(TimeSpec.MinPeriodTime, TimeSpec.MaxPeriodTime, readonly);
     }
 
+    /**
+     * Instantiates a new Time period base.
+     *
+     * @param moment the moment
+     */
     protected TimePeriodBase(DateTime moment) {
         this(moment, moment, false);
     }
 
+    /**
+     * Instantiates a new Time period base.
+     *
+     * @param moment   the moment
+     * @param readonly the readonly
+     */
     protected TimePeriodBase(DateTime moment, boolean readonly) {
         this(moment, moment, readonly);
     }
 
+    /**
+     * Instantiates a new Time period base.
+     *
+     * @param start the start
+     * @param end   the end
+     */
     protected TimePeriodBase(DateTime start, DateTime end) {
         this(start, end, false);
     }
 
+    /**
+     * Instantiates a new Time period base.
+     *
+     * @param start    the start
+     * @param end      the end
+     * @param readonly the readonly
+     */
     protected TimePeriodBase(DateTime start, DateTime end, boolean readonly) {
         start = Guard.firstNotNull(start, TimeSpec.MinPeriodTime);
         end = Guard.firstNotNull(end, TimeSpec.MaxPeriodTime);
@@ -72,10 +102,23 @@ public class TimePeriodBase extends ValueObjectBase implements ITimePeriod {
         this.readonly = readonly;
     }
 
+    /**
+     * Instantiates a new Time period base.
+     *
+     * @param start    the start
+     * @param duration the duration
+     */
     protected TimePeriodBase(DateTime start, Duration duration) {
         this(start, duration, false);
     }
 
+    /**
+     * Instantiates a new Time period base.
+     *
+     * @param start    the start
+     * @param duration the duration
+     * @param readonly the readonly
+     */
     protected TimePeriodBase(DateTime start, Duration duration, boolean readonly) {
         Pair<DateTime, Duration> result = Times.adjustPeriod(start, duration);
         this.start = result.getV1();
@@ -83,6 +126,11 @@ public class TimePeriodBase extends ValueObjectBase implements ITimePeriod {
         this.readonly = readonly;
     }
 
+    /**
+     * Instantiates a new Time period base.
+     *
+     * @param source the source
+     */
     protected TimePeriodBase(ITimePeriod source) {
         Guard.shouldNotBeNull(source, "source");
 
@@ -91,6 +139,12 @@ public class TimePeriodBase extends ValueObjectBase implements ITimePeriod {
         this.readonly = source.isReadonly();
     }
 
+    /**
+     * Instantiates a new Time period base.
+     *
+     * @param source   the source
+     * @param readonly the readonly
+     */
     protected TimePeriodBase(ITimePeriod source, boolean readonly) {
         Guard.shouldNotBeNull(source, "source");
 
@@ -101,12 +155,15 @@ public class TimePeriodBase extends ValueObjectBase implements ITimePeriod {
 
     // endregion
 
+    /** The Start. */
     @Getter
     protected DateTime start;
 
+    /** The End. */
     @Getter
     protected DateTime end;
 
+    /** The Readonly. */
     @Getter
     @Setter(AccessLevel.PROTECTED)
     protected boolean readonly;
@@ -117,6 +174,11 @@ public class TimePeriodBase extends ValueObjectBase implements ITimePeriod {
         return new Duration(getStart(), getEnd());
     }
 
+    /**
+     * Sets duration.
+     *
+     * @param duration the duration
+     */
     public void setDuration(Duration duration) {
         assert duration.getMillis() >= Duration.ZERO.getMillis() : "Duration의 크기가 0보다 크거나 같아야 합니다.";
         if (hasStart())
@@ -149,22 +211,27 @@ public class TimePeriodBase extends ValueObjectBase implements ITimePeriod {
     }
 
     @Override
-    public void setup(DateTime newStart, DateTime newEnd) {
+    public void setup(DateTime ns, DateTime ne) {
         if (log.isTraceEnabled())
-            log.trace("기간을 새로 설정합니다. newStart=[{}], newEnd=[{}]", newStart, newEnd);
+            log.trace("기간을 새로 설정합니다. newStart=[{}], newEnd=[{}]", ns, ne);
 
-        newStart = Guard.firstNotNull(newStart, TimeSpec.MinPeriodTime);
-        newEnd = Guard.firstNotNull(newEnd, TimeSpec.MaxPeriodTime);
+        ns = Guard.firstNotNull(ns, TimeSpec.MinPeriodTime);
+        ne = Guard.firstNotNull(ne, TimeSpec.MaxPeriodTime);
 
-        if (newStart.compareTo(newEnd) < 0) {
-            this.start = newStart;
-            this.end = newEnd;
+        if (ns.compareTo(ne) < 0) {
+            this.start = ns;
+            this.end = ne;
         } else {
-            this.start = newEnd;
-            this.end = newStart;
+            this.start = ne;
+            this.end = ns;
         }
     }
 
+    /**
+     * Copy i time period.
+     *
+     * @return the i time period
+     */
     public ITimePeriod copy() {
         return copy(Duration.ZERO);
     }
@@ -248,6 +315,7 @@ public class TimePeriodBase extends ValueObjectBase implements ITimePeriod {
         return Times.getUnionRange(this, other);
     }
 
+    /** Assert mutable. */
     protected final void assertMutable() {
         assert !readonly : "readonly 입니다.";
     }

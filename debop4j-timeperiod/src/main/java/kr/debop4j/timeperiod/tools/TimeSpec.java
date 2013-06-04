@@ -67,16 +67,18 @@ public final class TimeSpec {
     /** 단위 초의 밀리 초 (1000) */
     public static final int MillisPerSecond = 1000;
 
+    /** 분당 밀리초 */
     public static final long MillisPerMinute = MillisPerSecond * 60L;
+    /** 시간당 밀리초 */
     public static final long MillisPerHour = MillisPerMinute * 60L;
+    /** 일당 밀리초 */
     public static final long MillisPerDay = MillisPerHour * 24L;
 
-    public static final long TicksPerMillisecond = 10000L;
-    public static final long TicksPerSecond = TicksPerMillisecond * 1000L;
-    public static final long TicksPerMinute = TicksPerSecond * 60L;
-    public static final long TicksPerHour = TicksPerMinute * 60L;
-    public static final long TicksPerDay = TicksPerHour * 24L;
-
+//    public static final long TicksPerMillisecond = 10000L;
+//    public static final long TicksPerSecond = TicksPerMillisecond * 1000L;
+//    public static final long TicksPerMinute = TicksPerSecond * 60L;
+//    public static final long TicksPerHour = TicksPerMinute * 60L;
+//    public static final long TicksPerDay = TicksPerHour * 24L;
 
     /** 1년의 시작 월 (1) */
     public static final int CalendarYearStartMonth = 1;
@@ -181,7 +183,7 @@ public final class TimeSpec {
     public static final long MinPeriodDuration = ZeroMillis;
 
     /** 최대 기간 MaxMillis - MinMillis */
-    public static final long MaxPeriodDuration = MaxMillis - MinMillis;
+    public static final long MaxPeriodDuration = MaxMillis;
 
     /** 최소 기간 (0입니다. Duration.ZERO) */
     public static final Duration MinDuration = Duration.millis(MinPeriodDuration);

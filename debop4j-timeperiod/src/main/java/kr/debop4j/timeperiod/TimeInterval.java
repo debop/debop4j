@@ -234,15 +234,15 @@ public class TimeInterval extends TimePeriodBase implements ITimeInterval {
     }
 
     @Override
-    public void setup(DateTime newStart, DateTime newEnd) {
+    public void setup(DateTime ns, DateTime ne) {
         assertMutable();
-        super.setup(newStart, newEnd);
+        super.setup(ns, ne);
         if (log.isDebugEnabled())
-            log.debug("기간을 새로 설정합니다. newStart=[{}], newEnd=[{}]", newStart, newEnd);
+            log.debug("기간을 새로 설정합니다. newStart=[{}], newEnd=[{}]", ns, ne);
 
-        Times.adjustPeriod(newStart, newEnd);
-        this.start = firstNotNull(newStart, TimeSpec.MinPeriodTime);
-        this.end = firstNotNull(newEnd, TimeSpec.MaxPeriodTime);
+        Times.adjustPeriod(ns, ne);
+        this.start = firstNotNull(ns, TimeSpec.MinPeriodTime);
+        this.end = firstNotNull(ne, TimeSpec.MaxPeriodTime);
     }
 
     @Override

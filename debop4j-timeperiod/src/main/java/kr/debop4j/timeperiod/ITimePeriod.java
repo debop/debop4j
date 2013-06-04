@@ -57,7 +57,7 @@ public interface ITimePeriod extends Comparable<ITimePeriod>, Serializable {
     boolean isReadonly();
 
     /** 기간을 새로운 값으로 설정합니다. */
-    void setup(DateTime newStart, DateTime newEnd);
+    void setup(DateTime ns, DateTime ne);
 
     /** 기간을 offset만큼 이동한 새로운 인스턴스를 반환합니다. */
     ITimePeriod copy(Duration offset);
