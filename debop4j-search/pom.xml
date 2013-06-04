@@ -111,12 +111,6 @@
             <artifactId>hibernate-search-orm</artifactId>
         </dependency>
 
-        <!-- field -->
-        <dependency>
-            <groupId>org.apache.lucene</groupId>
-            <artifactId>lucene-core</artifactId>
-        </dependency>
-
         <!-- Hibernate-OGM -->
         <dependency>
             <groupId>org.hibernate.ogm</groupId>

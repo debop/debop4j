@@ -41,7 +41,7 @@
             <artifactId>com.kendoui.taglib</artifactId>
             <version>1.0</version>
             <scope>system</scope>
-            <systemPath>${basedir}/lib/kendo-taglib-2012.3.1114.jar</systemPath>
+            <systemPath>${project.basedir}/lib/kendo-taglib-2012.3.1114.jar</systemPath>
         </dependency>
 
         <dependency>
