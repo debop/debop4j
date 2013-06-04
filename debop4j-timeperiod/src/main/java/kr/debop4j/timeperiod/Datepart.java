@@ -29,59 +29,59 @@ import org.joda.time.DateTime;
  * @author 배성혁 sunghyouk.bae@gmail.com
  * @since 13. 5. 12. 오후 2:24
  */
-public class DateValue extends ValueObjectBase implements Comparable<DateValue> {
+public class Datepart extends ValueObjectBase implements Comparable<Datepart> {
     private static final long serialVersionUID = -2730296141281632596L;
 
-    private static DateValue today() {
-        return new DateValue(DateTime.now());
+    private static Datepart today() {
+        return new Datepart(DateTime.now());
     }
 
     @Getter
     private DateTime datepart;
 
     /**
-     * Instantiates a new DateValue.
+     * Instantiates a new Datepart.
      */
-    public DateValue() {
+    public Datepart() {
         this.datepart = new DateTime(0).withTimeAtStartOfDay();
     }
 
     /**
-     * Instantiates a new DateValue.
+     * Instantiates a new Datepart.
      *
-     * @param datetime the datetime
+     * @param moment the datetime
      */
-    public DateValue(DateTime datetime) {
-        this.datepart = datetime.withTimeAtStartOfDay();
+    public Datepart(DateTime moment) {
+        this.datepart = moment.withTimeAtStartOfDay();
     }
 
     /**
-     * Instantiates a new DateValue.
+     * Instantiates a new Datepart.
      *
      * @param year the year
      */
-    public DateValue(int year) {
+    public Datepart(int year) {
         this(year, 1, 1);
     }
 
     /**
-     * Instantiates a new DateValue.
+     * Instantiates a new Datepart.
      *
      * @param year        the year
      * @param monthOfYear the month of year
      */
-    public DateValue(int year, int monthOfYear) {
+    public Datepart(int year, int monthOfYear) {
         this(year, monthOfYear, 1);
     }
 
     /**
-     * Instantiates a new DateValue.
+     * Instantiates a new Datepart.
      *
      * @param year        the year
      * @param monthOfYear the month of year
      * @param dayOfMonth  the day of month
      */
-    public DateValue(int year, int monthOfYear, int dayOfMonth) {
+    public Datepart(int year, int monthOfYear, int dayOfMonth) {
         this.datepart = Times.asDate(year, monthOfYear, dayOfMonth);
     }
 
@@ -118,7 +118,7 @@ public class DateValue extends ValueObjectBase implements Comparable<DateValue> 
      * @param time the time
      * @return the date time
      */
-    public DateTime getDateTime(TimeValue time) {
+    public DateTime getDateTime(Timepart time) {
         return datepart.plus(time.getMillis());
     }
 
@@ -144,11 +144,11 @@ public class DateValue extends ValueObjectBase implements Comparable<DateValue> 
      * @return the date time
      */
     public DateTime getDateTime(int hourOfDay, int minuteOfHour, int secondOfMinute, int millisOfSecond) {
-        return getDateTime(new TimeValue(hourOfDay, minuteOfHour, secondOfMinute, millisOfSecond));
+        return getDateTime(new Timepart(hourOfDay, minuteOfHour, secondOfMinute, millisOfSecond));
     }
 
     @Override
-    public int compareTo(DateValue o) {
+    public int compareTo(Datepart o) {
         return hashCode() - o.hashCode();
     }
 

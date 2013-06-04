@@ -45,16 +45,35 @@ public class DateTimeSet extends TreeSet<DateTime> implements IDateTimeSet {
         }
     };
 
-    public DateTimeSet() { }
+    /**
+     * Instantiates a new Date time set.
+     */
+    public DateTimeSet() {
+    }
 
+    /**
+     * Instantiates a new Date time set.
+     *
+     * @param c the c
+     */
     public DateTimeSet(Iterable<? extends DateTime> c) {
         super(Lists.newArrayList(c));
     }
 
+    /**
+     * Instantiates a new Date time set.
+     *
+     * @param comparator the comparator
+     */
     public DateTimeSet(Comparator<? super DateTime> comparator) {
         super(comparator);
     }
 
+    /**
+     * Instantiates a new Date time set.
+     *
+     * @param s the s
+     */
     public DateTimeSet(SortedSet<DateTime> s) {
         super(s);
     }
@@ -104,7 +123,12 @@ public class DateTimeSet extends TreeSet<DateTime> implements IDateTimeSet {
         super.addAll(Lists.newArrayList(moments));
     }
 
-    /** 지정된 구간의 {@link Duration}을 계산합니다. */
+    /**
+     * 지정된 구간의 {@link Duration}을 계산합니다.
+     *
+     * @param startIndex 시작 인덱스 (0부터 시작)
+     * @param count      count (갯수)
+     */
     @Override
     public List<Duration> getDurations(int startIndex, int count) {
         Guard.shouldBePositiveOrZeroNumber(startIndex, "startIndex");

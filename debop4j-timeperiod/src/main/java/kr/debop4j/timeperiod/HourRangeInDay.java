@@ -31,9 +31,9 @@ public class HourRangeInDay extends ValueObjectBase implements Comparable<HourRa
     private static final long serialVersionUID = 6958950354517975186L;
 
     @Getter
-    private final TimeValue start;
+    private final Timepart start;
     @Getter
-    private final TimeValue end;
+    private final Timepart end;
 
     /**
      * Instantiates a new Hour range in day.
@@ -51,7 +51,7 @@ public class HourRangeInDay extends ValueObjectBase implements Comparable<HourRa
      * @param endHourOfDay   the end hour of day
      */
     public HourRangeInDay(int startHourOfDay, int endHourOfDay) {
-        this(new TimeValue(startHourOfDay), new TimeValue(endHourOfDay));
+        this(new Timepart(startHourOfDay), new Timepart(endHourOfDay));
     }
 
     /**
@@ -60,7 +60,7 @@ public class HourRangeInDay extends ValueObjectBase implements Comparable<HourRa
      * @param start the start
      * @param end   the end
      */
-    public HourRangeInDay(TimeValue start, TimeValue end) {
+    public HourRangeInDay(Timepart start, Timepart end) {
         if (start.compareTo(end) <= 0) {
             this.start = start;
             this.end = end;

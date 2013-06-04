@@ -148,7 +148,7 @@ public class CalendarPeriodCollectorTest extends TimePeriodTestBase {
         // 1월의 금요일의 08:30~18:30 추출
         filter.getMonthOfYears().addAll(Lists.newArrayList(Month.January.getValue()));
         filter.getWeekDays().add(DayOfWeek.FriDay);
-        filter.getCollectingHours().add(new HourRangeInDay(new TimeValue(8, 30), new TimeValue(18, 50)));
+        filter.getCollectingHours().add(new HourRangeInDay(new Timepart(8, 30), new Timepart(18, 50)));
 
         ITimePeriod limits = new CalendarTimeRange(Times.asDate(2010, 1, 1), Times.asDate(2011, 12, 31));
         CalendarPeriodCollector collector = new CalendarPeriodCollector(filter, limits);

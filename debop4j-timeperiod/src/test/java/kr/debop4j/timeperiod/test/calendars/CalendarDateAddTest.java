@@ -196,8 +196,8 @@ public class CalendarDateAddTest extends TimePeriodTestBase {
 
         dateAdd.addWorkingWeekDays();
         dateAdd.getExcludePeriods().add(new DayRange(2011, 4, 4, dateAdd.getTimeCalendar()));
-        dateAdd.getWorkingHours().add(new HourRangeInDay(new TimeValue(8, 30), new TimeValue(12)));
-        dateAdd.getWorkingHours().add(new HourRangeInDay(new TimeValue(13, 30), new TimeValue(18)));
+        dateAdd.getWorkingHours().add(new HourRangeInDay(new Timepart(8, 30), new Timepart(12)));
+        dateAdd.getWorkingHours().add(new HourRangeInDay(new Timepart(13, 30), new Timepart(18)));
 
         DateTime start = new DateTime(2011, 4, 1, 9, 0);
 

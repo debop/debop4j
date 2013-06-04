@@ -76,23 +76,23 @@ public abstract class Times {
     }
 
     /**
-     * DateValue datepart.
+     * Datepart datepart.
      *
      * @param moment the moment
      * @return the datepart
      */
-    public static DateValue datepart(DateTime moment) {
-        return new DateValue(moment);
+    public static Datepart datepart(DateTime moment) {
+        return new Datepart(moment);
     }
 
     /**
-     * TimeValue timepart.
+     * Timepart timepart.
      *
      * @param moment the moment
      * @return the timepart
      */
-    public static TimeValue timepart(DateTime moment) {
-        return new TimeValue(moment);
+    public static Timepart timepart(DateTime moment) {
+        return new Timepart(moment);
     }
 
     /**
@@ -1152,7 +1152,7 @@ public abstract class Times {
      * 지정한 날짜에 알자(년/월/일) 부분을 지정한 datePart로 설정합니다.
      */
     public static DateTime setDate(DateTime moment, DateTime datepart) {
-        return new DateValue(datepart).getDateTime(new TimeValue(moment));
+        return new Datepart(datepart).getDateTime(new Timepart(moment));
     }
 
     /**
