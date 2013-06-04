@@ -110,7 +110,11 @@ public class TimeLineMomentCollection implements ITimeLineMomentCollection {
         return this.timeLineMoments.iterator();
     }
 
-    /** 요소를 추가합니다. */
+    /**
+     * 요소를 추가합니다.  @param moment the moment
+     *
+     * @param period the period
+     */
     protected synchronized final void addPeriod(DateTime moment, ITimePeriod period) {
 
         ITimeLineMoment item = find(moment);
@@ -125,7 +129,11 @@ public class TimeLineMomentCollection implements ITimeLineMomentCollection {
         item.getPeriods().add(period);
     }
 
-    /** 요소를 제거합니다. */
+    /**
+     * 요소를 제거합니다.  @param moment the moment
+     *
+     * @param period the period
+     */
     protected synchronized final void removePeriod(DateTime moment, ITimePeriod period) {
         ITimeLineMoment item = find(moment);
 

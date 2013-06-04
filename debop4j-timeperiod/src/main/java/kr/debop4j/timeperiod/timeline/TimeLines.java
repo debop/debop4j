@@ -23,7 +23,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * kr.debop4j.timeperiod.timeline.TimeLines
+ * TimeLine 관련 Utility Class
  *
  * @author 배성혁 sunghyouk.bae@gmail.com
  * @since 13. 5. 16. 오전 11:24
@@ -34,7 +34,12 @@ public abstract class TimeLines {
 
     private TimeLines() {}
 
-    /** {@link ITimeLineMomentCollection}의 모든 기간의 합집합을 구합니다. */
+    /**
+     * {@link ITimeLineMomentCollection}의 모든 기간의 합집합을 구합니다.
+     *
+     * @param timeLineMoments the time line moments
+     * @return the i time period collection
+     */
     public static ITimePeriodCollection combinePeriods(final ITimeLineMomentCollection timeLineMoments) {
         if (log.isTraceEnabled())
             log.trace("ITimeLineMomentCollection에서 모든 기간의 합집합을 구합니다...");
@@ -88,7 +93,12 @@ public abstract class TimeLines {
         return periods;
     }
 
-    /** {@link ITimeLineMomentCollection}의 모든 기간의 교집합을 구합니다. */
+    /**
+     * {@link ITimeLineMomentCollection}의 모든 기간의 교집합을 구합니다.
+     *
+     * @param timeLineMoments the time line moments
+     * @return the i time period collection
+     */
     public static ITimePeriodCollection intersectPeriods(final ITimeLineMomentCollection timeLineMoments) {
         if (log.isTraceEnabled())
             log.trace("ITimeLineMomentCollection의 요소들의 모든 Period로부터 교집합에 해당하는 구간을 구합니다...");
@@ -133,7 +143,13 @@ public abstract class TimeLines {
         return periods;
     }
 
-    /** {@link ITimeLineMomentCollection}이 가진 모든 {@link ITimePeriod}들의 Gap을 계산합니다. (여집합) */
+    /**
+     * {@link ITimeLineMomentCollection}이 가진 모든 {@link ITimePeriod}들의 Gap을 계산합니다. (여집합)
+     *
+     * @param timeLineMoments the time line moments
+     * @param range           the range
+     * @return Gap에 해당하는 기간들의 컬렉션
+     */
     public static ITimePeriodCollection calculateGap(ITimeLineMomentCollection timeLineMoments, ITimePeriod range) {
         if (log.isTraceEnabled())
             log.trace("ITimeLineMomentCollection의 모든 ITimePeriod에 속하지 않는 Gap을 구합니다(여집합). range=[{}]", range);

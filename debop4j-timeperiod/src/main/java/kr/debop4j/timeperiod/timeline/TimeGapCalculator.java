@@ -34,20 +34,37 @@ public class TimeGapCalculator<T extends ITimePeriod> {
 
     private final ITimeCalendar periodMapper;
 
+    /** Instantiates a new Time gap calculator. */
     public TimeGapCalculator() {
         this(null);
     }
 
+    /**
+     * Instantiates a new Time gap calculator.
+     *
+     * @param mapper the mapper
+     */
     public TimeGapCalculator(ITimeCalendar mapper) {
         this.periodMapper = mapper;
     }
 
-    /** TimeLine 들의 빈 공간 (Gap) 들을 계산합니다. */
+    /**
+     * TimeLine 들의 빈 공간 (Gap) 들을 계산합니다.
+     *
+     * @param excludePeriods the exclude periods
+     * @return the gaps
+     */
     public ITimePeriodCollection getGaps(ITimePeriodContainer excludePeriods) {
         return getGaps(excludePeriods, null);
     }
 
-    /** TimeLine 들의 빈 공간 (Gap) 들을 계산합니다. */
+    /**
+     * TimeLine 들의 빈 공간 (Gap) 들을 계산합니다.
+     *
+     * @param excludePeriods the exclude periods
+     * @param limits         the limits
+     * @return the gaps
+     */
     public ITimePeriodCollection getGaps(ITimePeriodContainer excludePeriods, ITimePeriod limits) {
         Guard.shouldNotBeNull(excludePeriods, "excludePeriods");
 

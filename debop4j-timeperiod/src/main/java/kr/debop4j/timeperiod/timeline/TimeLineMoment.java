@@ -40,6 +40,11 @@ public class TimeLineMoment extends ValueObjectBase implements ITimeLineMoment {
     private final DateTime moment;
     private final ITimePeriodCollection periods = new TimePeriodCollection();
 
+    /**
+     * Instantiates a new Time line moment.
+     *
+     * @param moment the moment
+     */
     public TimeLineMoment(DateTime moment) {
         this.moment = moment;
     }

@@ -34,14 +34,32 @@ import java.util.Collection;
 @Slf4j
 public class TimeLine<T extends ITimePeriod> implements ITimeLine {
 
+    /**
+     * Instantiates a new Time line.
+     *
+     * @param periods the periods
+     */
     public TimeLine(ITimePeriodContainer periods) {
         this(periods, null, null);
     }
 
+    /**
+     * Instantiates a new Time line.
+     *
+     * @param periods      the periods
+     * @param periodMapper the period mapper
+     */
     public TimeLine(ITimePeriodContainer periods, ITimePeriodMapper periodMapper) {
         this(periods, null, periodMapper);
     }
 
+    /**
+     * Instantiates a new Time line.
+     *
+     * @param periods      the periods
+     * @param limits       the limits
+     * @param periodMapper the period mapper
+     */
     public TimeLine(ITimePeriodContainer periods, ITimePeriod limits, ITimePeriodMapper periodMapper) {
         Guard.shouldNotBeNull(periods, "periods");
 
@@ -106,7 +124,7 @@ public class TimeLine<T extends ITimePeriod> implements ITimeLine {
     }
 
     /** 기간 컬렉션으로부터 ITimeLineMoment 컬렉션을 빌드합니다 */
-    private ITimeLineMomentCollection getTimeLineMoments(Collection<? extends ITimePeriod> momentPeriods) {
+    private ITimeLineMomentCollection getTimeLineMoments(final Collection<? extends ITimePeriod> momentPeriods) {
         if (log.isTraceEnabled())
             log.trace("기간 컬렉션으로부터 ITimeLineMoment 컬렉션을 빌드합니다...");
 
@@ -115,7 +133,8 @@ public class TimeLine<T extends ITimePeriod> implements ITimeLine {
             return moments;
 
         // setup gap set with all start/end points
-        ITimePeriodCollection intersections = new TimePeriodCollection();
+        //
+        final ITimePeriodCollection intersections = new TimePeriodCollection();
 
         for (ITimePeriod mp : momentPeriods) {
             if (!mp.isMoment()) {
@@ -137,11 +156,11 @@ public class TimeLine<T extends ITimePeriod> implements ITimeLine {
         return moments;
     }
 
-    private DateTime mapPeriodStart(DateTime moment) {
+    private DateTime mapPeriodStart(final DateTime moment) {
         return (periodMapper != null) ? periodMapper.unmapStart(moment) : moment;
     }
 
-    private DateTime mapPeriodEnd(DateTime moment) {
+    private DateTime mapPeriodEnd(final DateTime moment) {
         return (periodMapper != null) ? periodMapper.unmapEnd(moment) : moment;
     }
 
