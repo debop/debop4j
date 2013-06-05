@@ -30,10 +30,28 @@ public abstract class CompressorBase implements ICompressor {
 
     private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(CompressorBase.class);
 
+    /**
+     * 압축 알고리즘 이름
+     * @return 알고리즘 명
+     */
     abstract public String getAlgorithm();
 
+    /**
+     * byte 배열을 압축합니다.
+     *
+     * @param plain the plain
+     * @return the byte [ ]
+     * @throws IOException the iO exception
+     */
     abstract protected byte[] doCompress(byte[] plain) throws IOException;
 
+    /**
+     * 바이트 배열의 압축을 풉니다.
+     *
+     * @param compressed the compressed
+     * @return the byte [ ]
+     * @throws IOException the iO exception
+     */
     abstract protected byte[] doDecompress(byte[] compressed) throws IOException;
 
     /** {@inheritDoc} */

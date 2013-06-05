@@ -19,6 +19,8 @@ package kr.debop4j.core.compress;
 import kr.debop4j.core.BinaryStringFormat;
 import kr.debop4j.core.parallelism.AsyncTool;
 import kr.debop4j.core.tools.StreamTool;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -39,12 +41,19 @@ import static kr.debop4j.core.tools.StringTool.*;
  */
 public abstract class CompressTool {
 
-    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(CompressTool.class);
+    private static final Logger log = LoggerFactory.getLogger(CompressTool.class);
 
     private CompressTool() {}
 
     private static final byte[] buffer = new byte[ICompressor.BUFFER_SIZE];
 
+    /**
+     * Compress string.
+     *
+     * @param compressor the compressor
+     * @param plainText the plain text
+     * @return the string
+     */
     public static String compressString(final ICompressor compressor,
                                         final String plainText) {
         return compressString(compressor,
@@ -52,6 +61,14 @@ public abstract class CompressTool {
                               BinaryStringFormat.HexDecimal);
     }
 
+    /**
+     * Compress string.
+     *
+     * @param compressor the compressor
+     * @param plainText the plain text
+     * @param stringFormat the string format
+     * @return the string
+     */
     public static String compressString(final ICompressor compressor,
                                         final String plainText,
                                         final BinaryStringFormat stringFormat) {
@@ -65,6 +82,13 @@ public abstract class CompressTool {
         return getStringFromBytes(compressedBytes, stringFormat);
     }
 
+    /**
+     * Compress string async.
+     *
+     * @param compressor the compressor
+     * @param plainText the plain text
+     * @return the future
+     */
     public static Future<String> compressStringAsync(final ICompressor compressor,
                                                      final String plainText) {
         return compressStringAsync(compressor,
@@ -72,6 +96,14 @@ public abstract class CompressTool {
                                    BinaryStringFormat.HexDecimal);
     }
 
+    /**
+     * Compress string async.
+     *
+     * @param compressor the compressor
+     * @param plainText the plain text
+     * @param stringFormat the string format
+     * @return the future
+     */
     public static Future<String> compressStringAsync(final ICompressor compressor,
                                                      final String plainText,
                                                      final BinaryStringFormat stringFormat) {
@@ -92,6 +124,13 @@ public abstract class CompressTool {
         });
     }
 
+    /**
+     * Decompress string.
+     *
+     * @param compressor the compressor
+     * @param compressedText the compressed text
+     * @return the string
+     */
     public static String decompressString(final ICompressor compressor,
                                           final String compressedText) {
         return decompressString(compressor,
@@ -99,6 +138,14 @@ public abstract class CompressTool {
                                 BinaryStringFormat.HexDecimal);
     }
 
+    /**
+     * Decompress string.
+     *
+     * @param compressor the compressor
+     * @param compressedText the compressed text
+     * @param stringFormat the string format
+     * @return the string
+     */
     public static String decompressString(final ICompressor compressor,
                                           final String compressedText,
                                           final BinaryStringFormat stringFormat) {
@@ -118,6 +165,13 @@ public abstract class CompressTool {
         return plainText;
     }
 
+    /**
+     * Decompress string async.
+     *
+     * @param compressor the compressor
+     * @param compressedText the compressed text
+     * @return the future
+     */
     public static Future<String> decompressStringAsync(final ICompressor compressor,
                                                        final String compressedText) {
         return decompressStringAsync(compressor,
@@ -125,6 +179,14 @@ public abstract class CompressTool {
                                      BinaryStringFormat.HexDecimal);
     }
 
+    /**
+     * Decompress string async.
+     *
+     * @param compressor the compressor
+     * @param compressedText the compressed text
+     * @param stringFormat the string format
+     * @return the future
+     */
     public static Future<String> decompressStringAsync(final ICompressor compressor,
                                                        final String compressedText,
                                                        final BinaryStringFormat stringFormat) {
@@ -152,6 +214,14 @@ public abstract class CompressTool {
         });
     }
 
+    /**
+     * Compress stream.
+     *
+     * @param compressor the compressor
+     * @param inputStream the input stream
+     * @return the output stream
+     * @throws IOException the iO exception
+     */
     public static OutputStream compressStream(final ICompressor compressor,
                                               final InputStream inputStream) throws IOException {
         shouldNotBeNull(compressor, "compressor");
@@ -163,6 +233,14 @@ public abstract class CompressTool {
         return StreamTool.toOutputStream(compressedBytes);
     }
 
+    /**
+     * Decompress stream.
+     *
+     * @param compressor the compressor
+     * @param inputStream the input stream
+     * @return the output stream
+     * @throws IOException the iO exception
+     */
     public static OutputStream decompressStream(final ICompressor compressor,
                                                 final InputStream inputStream) throws IOException {
         shouldNotBeNull(compressor, "compressor");
@@ -174,6 +252,13 @@ public abstract class CompressTool {
         return StreamTool.toOutputStream(plainBytes);
     }
 
+    /**
+     * Compress stream async.
+     *
+     * @param compressor the compressor
+     * @param inputStream the input stream
+     * @return the future
+     */
     public static Future<OutputStream> compressStreamAsync(final ICompressor compressor,
                                                            final InputStream inputStream) {
         shouldNotBeNull(compressor, "compressor");
@@ -187,6 +272,13 @@ public abstract class CompressTool {
         });
     }
 
+    /**
+     * Decompress stream async.
+     *
+     * @param compressor the compressor
+     * @param inputStream the input stream
+     * @return the future
+     */
     public static Future<OutputStream> decompressStreamAsync(final ICompressor compressor,
                                                              final InputStream inputStream) {
         shouldNotBeNull(compressor, "compressor");
