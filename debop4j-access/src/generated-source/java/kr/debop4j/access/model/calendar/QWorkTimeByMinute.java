@@ -1,32 +1,19 @@
-/*
- * Copyright 2011-2013 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package kr.debop4j.access.model.calendar;
 
-import com.mysema.query.types.Path;
-import com.mysema.query.types.PathMetadata;
+import static com.mysema.query.types.PathMetadataFactory.*;
+
 import com.mysema.query.types.path.*;
 
+import com.mysema.query.types.PathMetadata;
 import javax.annotation.Generated;
+import com.mysema.query.types.Path;
+import com.mysema.query.types.path.PathInits;
 
-import static com.mysema.query.types.PathMetadataFactory.forVariable;
 
-
-/** QWorkTimeByMinute is a Querydsl query type for WorkTimeByMinute */
-@Generated( "com.mysema.query.codegen.EntitySerializer" )
+/**
+ * QWorkTimeByMinute is a Querydsl query type for WorkTimeByMinute
+ */
+@Generated("com.mysema.query.codegen.EntitySerializer")
 public class QWorkTimeByMinute extends EntityPathBase<WorkTimeByMinute> {
 
     private static final long serialVersionUID = -1765011225;
@@ -61,9 +48,9 @@ public class QWorkTimeByMinute extends EntityPathBase<WorkTimeByMinute> {
         this(WorkTimeByMinute.class, forVariable(variable), INITS);
     }
 
-    @SuppressWarnings( "all" )
+    @SuppressWarnings("all")
     public QWorkTimeByMinute(Path<? extends WorkTimeByMinute> path) {
-        this((Class) path.getType(), path.getMetadata(), path.getMetadata().isRoot() ? INITS : PathInits.DEFAULT);
+        this((Class)path.getType(), path.getMetadata(), path.getMetadata().isRoot() ? INITS : PathInits.DEFAULT);
     }
 
     public QWorkTimeByMinute(PathMetadata<?> metadata) {

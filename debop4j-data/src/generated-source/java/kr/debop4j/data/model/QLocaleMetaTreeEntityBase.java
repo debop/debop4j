@@ -1,31 +1,18 @@
-/*
- * Copyright 2011-2013 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package kr.debop4j.data.model;
 
-import com.mysema.query.types.Path;
-import com.mysema.query.types.PathMetadata;
+import static com.mysema.query.types.PathMetadataFactory.*;
+
 import com.mysema.query.types.path.*;
 
+import com.mysema.query.types.PathMetadata;
 import javax.annotation.Generated;
+import com.mysema.query.types.Path;
+import com.mysema.query.types.path.PathInits;
 
-import static com.mysema.query.types.PathMetadataFactory.forVariable;
 
-
-/** QLocaleMetaTreeEntityBase is a Querydsl query type for LocaleMetaTreeEntityBase */
+/**
+ * QLocaleMetaTreeEntityBase is a Querydsl query type for LocaleMetaTreeEntityBase
+ */
 @Generated("com.mysema.query.codegen.SupertypeSerializer")
 public class QLocaleMetaTreeEntityBase extends EntityPathBase<LocaleMetaTreeEntityBase<? extends IEntity<? extends java.io.Serializable>, ? extends java.io.Serializable, ? extends ILocaleValue>> {
 
@@ -72,12 +59,12 @@ public class QLocaleMetaTreeEntityBase extends EntityPathBase<LocaleMetaTreeEnti
 
     @SuppressWarnings("all")
     public QLocaleMetaTreeEntityBase(String variable) {
-        this((Class) LocaleMetaTreeEntityBase.class, forVariable(variable), INITS);
+        this((Class)LocaleMetaTreeEntityBase.class, forVariable(variable), INITS);
     }
 
     @SuppressWarnings("all")
     public QLocaleMetaTreeEntityBase(Path<? extends LocaleMetaTreeEntityBase> path) {
-        this((Class) path.getType(), path.getMetadata(), path.getMetadata().isRoot() ? INITS : PathInits.DEFAULT);
+        this((Class)path.getType(), path.getMetadata(), path.getMetadata().isRoot() ? INITS : PathInits.DEFAULT);
     }
 
     public QLocaleMetaTreeEntityBase(PathMetadata<?> metadata) {
@@ -86,7 +73,7 @@ public class QLocaleMetaTreeEntityBase extends EntityPathBase<LocaleMetaTreeEnti
 
     @SuppressWarnings("all")
     public QLocaleMetaTreeEntityBase(PathMetadata<?> metadata, PathInits inits) {
-        this((Class) LocaleMetaTreeEntityBase.class, metadata, inits);
+        this((Class)LocaleMetaTreeEntityBase.class, metadata, inits);
     }
 
     public QLocaleMetaTreeEntityBase(Class<? extends LocaleMetaTreeEntityBase<? extends IEntity<? extends java.io.Serializable>, ? extends java.io.Serializable, ? extends ILocaleValue>> type, PathMetadata<?> metadata, PathInits inits) {

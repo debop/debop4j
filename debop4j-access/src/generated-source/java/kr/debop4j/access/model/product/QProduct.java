@@ -1,35 +1,18 @@
-/*
- * Copyright 2011-2013 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package kr.debop4j.access.model.product;
 
-import com.mysema.query.types.Path;
+import static com.mysema.query.types.PathMetadataFactory.*;
+
+import com.mysema.query.types.path.*;
+
 import com.mysema.query.types.PathMetadata;
-import com.mysema.query.types.path.BooleanPath;
-import com.mysema.query.types.path.EntityPathBase;
-import com.mysema.query.types.path.NumberPath;
-import com.mysema.query.types.path.StringPath;
-
 import javax.annotation.Generated;
+import com.mysema.query.types.Path;
 
-import static com.mysema.query.types.PathMetadataFactory.forVariable;
 
-
-/** QProduct is a Querydsl query type for Product */
-@Generated( "com.mysema.query.codegen.EntitySerializer" )
+/**
+ * QProduct is a Querydsl query type for Product
+ */
+@Generated("com.mysema.query.codegen.EntitySerializer")
 public class QProduct extends EntityPathBase<Product> {
 
     private static final long serialVersionUID = -1701527682;
@@ -59,9 +42,9 @@ public class QProduct extends EntityPathBase<Product> {
         super(Product.class, forVariable(variable));
     }
 
-    @SuppressWarnings( "all" )
+    @SuppressWarnings("all")
     public QProduct(Path<? extends Product> path) {
-        super((Class) path.getType(), path.getMetadata());
+        super((Class)path.getType(), path.getMetadata());
     }
 
     public QProduct(PathMetadata<?> metadata) {
