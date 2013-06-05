@@ -38,10 +38,16 @@ public class JacksonSerializer implements IJsonSerializer {
     @Getter
     private final ObjectMapper mapper;
 
+    /** Instantiates a new Jackson serializer. */
     public JacksonSerializer() {
         this(new ObjectMapper());
     }
 
+    /**
+     * Instantiates a new Jackson serializer.
+     *
+     * @param mapper the mapper
+     */
     public JacksonSerializer(ObjectMapper mapper) {
         this.mapper = Guard.firstNotNull(mapper, new ObjectMapper());
     }
@@ -81,15 +87,15 @@ public class JacksonSerializer implements IJsonSerializer {
     }
 
     @Override
-    public <T> T deserializeFromText(String jsonText, Class<T> targetType) {
+    public <T> T deserializeFromText(String jsonText, Class<T> targetClass) {
         try {
             if (StringTool.isWhiteSpace(jsonText))
                 return (T) null;
 
             if (log.isDebugEnabled())
-                log.debug("JSON 역직렬화를 수행합니다. valueType=[{}]", targetType.getName());
+                log.debug("JSON 역직렬화를 수행합니다. valueType=[{}]", targetClass.getName());
 
-            return mapper.readValue(jsonText, targetType);
+            return mapper.readValue(jsonText, targetClass);
         } catch (Exception e) {
 
             log.error("Json 역직렬화하는데 실패했습니다.", e);
@@ -104,7 +110,7 @@ public class JacksonSerializer implements IJsonSerializer {
                 return (T) null;
 
             if (log.isDebugEnabled())
-                log.debug("JSON 역직렬화를 수행합니다. targetType=[{}]", targetType.getName());
+                log.debug("JSON 역직렬화를 수행합니다. targetClass=[{}]", targetType.getName());
 
             return mapper.readValue(bytes, targetType);
         } catch (Exception e) {

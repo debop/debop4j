@@ -44,9 +44,9 @@ public final class ReflectTool {
      */
     public static Type[] getParameterTypes(final Object x) {
         shouldNotBeNull(x, "x");
-
         if (log.isDebugEnabled())
             log.debug("객체가 Generic 수형이라면 모든 형식인자들을 가져옵니다. clazz=[{}]", x.getClass().getName());
+
         try {
             ParameterizedType ptype = (ParameterizedType) x.getClass().getGenericSuperclass();
             assert ptype != null : "지정된 객체가 generic 형식이 아닙니다.";
@@ -76,7 +76,7 @@ public final class ReflectTool {
      * @param <T>   반환할 수형
      * @return the generic parameter type
      */
-    @SuppressWarnings( "unchecked" )
+    @SuppressWarnings("unchecked")
     public static <T> Class<T> getGenericParameterType(final Object x, final int index) {
         shouldNotBeNull(x, "x");
 
@@ -99,6 +99,7 @@ public final class ReflectTool {
      * @return class
      */
     public static Class toPrimitiveType(final Class<?> clazz) {
+
         if (clazz == Boolean.class) {
             return Boolean.TYPE;
         }

@@ -54,6 +54,11 @@ import static kr.debop4j.core.Guard.shouldNotBeNull;
 @Component
 public final class Springs {
 
+    /**
+     * Instantiates a new Springs.
+     *
+     * @param context the context
+     */
     @Autowired
     protected Springs(ApplicationContext context) {
         globalContext = context;
@@ -67,10 +72,20 @@ public final class Springs {
     private static volatile ApplicationContext globalContext;
     private static ThreadLocal<Stack<GenericApplicationContext>> localContextStack = new ThreadLocal<>();
 
+    /**
+     * Is initialized.
+     *
+     * @return the boolean
+     */
     public static synchronized boolean isInitialized() {
         return (globalContext != null);
     }
 
+    /**
+     * Is not initialized.
+     *
+     * @return the boolean
+     */
     public static synchronized boolean isNotInitialized() {
         return (globalContext == null);
     }
@@ -79,6 +94,11 @@ public final class Springs {
         shouldBe(isInitialized(), NOT_INITIALIZED_MSG);
     }
 
+    /**
+     * Gets context.
+     *
+     * @return the context
+     */
     public static synchronized GenericApplicationContext getContext() {
         ApplicationContext context = getLocalContext();
         if (context == null)
@@ -101,15 +121,28 @@ public final class Springs {
         return localContextStack.get();
     }
 
+    /**
+     * Init void.
+     */
     public static synchronized void init() {
         init(DEFAULT_APPLICATION_CONTEXT_XML);
     }
 
+    /**
+     * Init void.
+     *
+     * @param resourceLocations the resource locations
+     */
     public static synchronized void init(String... resourceLocations) {
         log.info("Springs Context 를 초기화합니다. resourceLocations=[{}]", StringTool.listToString(resourceLocations));
         init(new GenericXmlApplicationContext(resourceLocations));
     }
 
+    /**
+     * Init void.
+     *
+     * @param applicationContext the application context
+     */
     public static synchronized void init(ApplicationContext applicationContext) {
         shouldNotBeNull(applicationContext, "applicationContext");
         log.info("Springs ApplicationContext 를 초기화 작업을 시작합니다...");
@@ -120,15 +153,31 @@ public final class Springs {
         log.info("Springs ApplicationContext를 초기화 작업을 완료했습니다.");
     }
 
+    /**
+     * Init by annotated classes.
+     *
+     * @param annotatedClasses the annotated classes
+     */
     public static synchronized void initByAnnotatedClasses(Class<?>... annotatedClasses) {
         init(new AnnotationConfigApplicationContext(annotatedClasses));
     }
 
+    /**
+     * Init by packages.
+     *
+     * @param basePackages the base packages
+     */
     public static synchronized void initByPackages(String... basePackages) {
         init(new AnnotationConfigApplicationContext(basePackages));
     }
 
 
+    /**
+     * Use local context.
+     *
+     * @param localContext the local context
+     * @return the auto closeable action
+     */
     public static synchronized AutoCloseableAction useLocalContext(final GenericApplicationContext localContext) {
         shouldNotBeNull(localContext, "localContext");
 
@@ -172,7 +221,6 @@ public final class Springs {
 
         if (globalContext == contextToReset) {
             globalContext = null;
-
             log.info("Global Application Context 를 Reset 했습니다!!!");
         }
     }
@@ -227,7 +275,7 @@ public final class Springs {
         shouldNotBeNull(beanClass, "beanClass");
         if (log.isDebugEnabled())
             log.debug("해당 수형의 모든 Bean의 이름을 조회합니다. beanClass=[{}], includeNonSingletons=[{}], allowEagerInit=[{}]",
-                      beanClass.getName(), includeNonSingletons, allowEagerInit);
+                    beanClass.getName(), includeNonSingletons, allowEagerInit);
 
         return getContext().getBeanNamesForType(beanClass, includeNonSingletons, allowEagerInit);
     }
@@ -266,11 +314,11 @@ public final class Springs {
         assert beanClass != null;
         if (log.isDebugEnabled())
             log.debug("해당 수형의 모든 Bean을 조회합니다. beanClass=[{}], includeNonSingletons=[{}], allowEagerInit=[{}]",
-                      beanClass.getName(), includeNonSingletons, allowEagerInit);
+                    beanClass.getName(), includeNonSingletons, allowEagerInit);
 
         return getContext().getBeansOfType(beanClass,
-                                           includeNonSingletons,
-                                           allowEagerInit);
+                includeNonSingletons,
+                allowEagerInit);
     }
 
     public static synchronized <T> T getOrRegisterBean(Class<T> beanClass) {

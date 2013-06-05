@@ -39,14 +39,16 @@ public abstract class ConstructorAccess<T> {
     boolean nonStaticMemberClass;
 
     /** Constructor for top-level classes and static nested classes. */
-    abstract public T newInstance();
+    public abstract T newInstance();
 
     /** Constructor for inner classes (non-static nested classes) - except static nested classes */
-    abstract public T newInstance(Object enclosingInstance);
+    public abstract T newInstance(Object enclosingInstance);
+
+    private static final Object syncLock = new Object();
 
     /** 지정한 수형의 생성자에 대한 접근자를 생성합니다. */
     @SuppressWarnings("unchecked")
-    static public <T> ConstructorAccess<T> get(Class<T> type) {
+    public static <T> ConstructorAccess<T> get(Class<T> type) {
         shouldNotBeNull(type, "type");
         if (log.isTraceEnabled())
             log.trace("수형[{}]의 생성자에 대한 접근자를 조회합니다.", type.getName());
@@ -63,7 +65,7 @@ public abstract class ConstructorAccess<T> {
         AccessClassLoader loader = AccessClassLoader.get(type);
         shouldNotBeNull(loader, "loader");
 
-        synchronized (loader) {
+        synchronized (syncLock) {
             try {
                 accessClass = loader.loadClass(accessClassName);
             } catch (ClassNotFoundException ignored) {

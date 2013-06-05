@@ -34,6 +34,11 @@ public class NamedThreadFactory implements ThreadFactory {
     private static final AtomicInteger threadNumber = new AtomicInteger(1);
     private String prefix;
 
+    /**
+     * Instantiates a new Named thread factory.
+     *
+     * @param prefix the prefix
+     */
     public NamedThreadFactory(String prefix) {
         this.prefix = StringTool.isEmpty(prefix) ? "thread-" : prefix + " thread-";
     }

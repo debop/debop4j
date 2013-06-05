@@ -41,7 +41,7 @@ public final class Activators {
      * className에 해당하는 클래스를 인스턴싱합니다.
      *
      * @param className 클래스 명
-     * @return 인스턴스
+     * @return 인스턴스 object
      */
     public static Object createInstance(String className) {
         if (log.isTraceEnabled())
@@ -58,7 +58,6 @@ public final class Activators {
      * 지정된 수형의 새로운 인스턴스를 생성합니다.
      *
      * @param clazz 생성할 수형
-     * @param <T>   수형
      * @return 지정한 수형의 새로운 인스턴스, 생성 실패시에는 null을 반환합니다.
      */
     public static <T> T createInstance(Class<T> clazz) {
@@ -75,6 +74,13 @@ public final class Activators {
     }
 
 
+    /**
+     * Create instance.
+     *
+     * @param clazz    the clazz
+     * @param initArgs the init args
+     * @return the t
+     */
     @SuppressWarnings("unchecked")
     public static <T> T createInstance(Class<T> clazz, Object... initArgs) {
         shouldNotBeNull(clazz, "clazz");
@@ -118,12 +124,12 @@ public final class Activators {
      *
      * @param clazz          수형
      * @param parameterTypes 생성자에 제공할 인자의 수형들
-     * @param <T>            수형
      * @return 생성자 정보
      */
     public static <T> Constructor<T> getConstructor(Class<T> clazz, Class<?>... parameterTypes) {
         if (log.isTraceEnabled())
-            log.trace("[{}] 수형의 생성자를 구합니다. parameterTypes=[{}]", clazz.getName(), StringTool.listToString(parameterTypes));
+            log.trace("[{}] 수형의 생성자를 구합니다. parameterTypes=[{}]",
+                    clazz.getName(), StringTool.listToString(parameterTypes));
 
         try {
             return clazz.getDeclaredConstructor(parameterTypes);

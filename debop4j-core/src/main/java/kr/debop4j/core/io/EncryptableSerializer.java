@@ -44,7 +44,7 @@ public class EncryptableSerializer extends SerializerDecorator {
      * Instantiates a new Encryptable serializer.
      *
      * @param serializer the serializer
-     * @param encryptor the encryptor
+     * @param encryptor  the encryptor
      */
     public EncryptableSerializer(ISerializer serializer, ISymmetricByteEncryptor encryptor) {
         super(serializer);

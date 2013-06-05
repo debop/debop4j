@@ -58,6 +58,12 @@ public class TimedExecutor {
         this.checkMilliSeconds = Math.max(1, Math.min(timeout, checkMilliSeconds));
     }
 
+    /**
+     * Execute void.
+     *
+     * @param executable the executable
+     * @throws TimeoutException the timeout exception
+     */
     public void execute(final Executable executable) throws TimeoutException {
         Guard.shouldNotBeNull(executable, "executable");
 

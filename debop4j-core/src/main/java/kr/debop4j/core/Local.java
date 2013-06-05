@@ -54,13 +54,13 @@ public class Local {
     }
 
     /** 로컬 저장소에 저장된 객체를 조회합니다. */
-    @SuppressWarnings( "unchecked" )
+    @SuppressWarnings("unchecked")
     public static <T> T get(Object key, Class<T> clazz) {
         return (T) threadLocal.get().get(key);
     }
 
     /** 로컬 저장소에 객체를 저장합니다. */
-    @SuppressWarnings( "unchecked" )
+    @SuppressWarnings("unchecked")
     public static void put(Object key, Object value) {
         assert key != null;
 

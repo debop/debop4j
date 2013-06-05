@@ -36,9 +36,12 @@ public class Triple<V1, V2, V3> extends ValueObjectBase implements Serializable 
         return new Triple<V1, V2, V3>(v1, v2, v3);
     }
 
-    @Getter public final V1 v1;
-    @Getter public final V2 v2;
-    @Getter public final V3 v3;
+    @Getter
+    public final V1 v1;
+    @Getter
+    public final V2 v2;
+    @Getter
+    public final V3 v3;
     private final int hash;
 
     public Triple(V1 v1, V2 v2, V3 v3) {

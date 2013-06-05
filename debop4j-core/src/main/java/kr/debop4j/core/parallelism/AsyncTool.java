@@ -37,8 +37,8 @@ import static kr.debop4j.core.Guard.shouldNotBeNull;
  * @since 12. 9. 14
  */
 @Slf4j
-@SuppressWarnings( "unchecked" )
-public class AsyncTool {
+@SuppressWarnings("unchecked")
+public abstract class AsyncTool {
 
     /** 생성자 */
     private AsyncTool() { }
@@ -56,7 +56,7 @@ public class AsyncTool {
 
     /**
      * 지정한 callable 을 비동기적으로 수행하고, 결과를 담는 FutureTask를 발급합니다.
-     * {@link java.util.concurrent.FutureTask#run()} 을 실행시켜야 합니다.
+     *{@link java.util.concurrent.FutureTask#run()} 을 실행시켜야 합니다.
      *
      * @param callable the callable
      * @return the future task
@@ -67,10 +67,10 @@ public class AsyncTool {
 
     /**
      * 지정한 runnable 을 수행하고, FutureTask 를 발급합니다.
-     * {@link java.util.concurrent.FutureTask#run()} 을 실행시켜야 합니다.
+     *{@link java.util.concurrent.FutureTask#run()} 을 실행시켜야 합니다.
      *
      * @param runnable the runnable
-     * @param result   the result
+     * @param result the result
      * @return the future task
      */
     public static <T> FutureTask<T> newTask(final Runnable runnable, final T result) {
@@ -79,7 +79,7 @@ public class AsyncTool {
 
     /**
      * 지정한 runnable 을 수행하고, Future 를 발급합니다.
-     * {@link java.util.concurrent.FutureTask#run()} 을 실행시켜야 합니다.
+     *{@link java.util.concurrent.FutureTask#run()} 을 실행시켜야 합니다.
      *
      * @param runnable the runnable
      * @return the future task
@@ -102,7 +102,7 @@ public class AsyncTool {
      * 새로운 작업을 생성하고, 작업을 실행합니다.
      *
      * @param runnable the runnable
-     * @param result   the result
+     * @param result the result
      * @return the future
      */
     public static <T> Future<T> startNew(final Runnable runnable, final T result) {
@@ -113,9 +113,8 @@ public class AsyncTool {
      * prevTask 가 완료되면, action을 수행합니다.
      *
      * @param prevTask the prev task
-     * @param prevTask the prev task
-     * @param action   the action
-     * @param result   the result
+     * @param action the action
+     * @param result the result
      * @return the future
      */
     public static <T, V> Future<V> continueTask(final FutureTask<T> prevTask,
@@ -200,9 +199,9 @@ public class AsyncTool {
     /**
      * Invoke all.
      *
-     * @param tasks   the tasks
+     * @param tasks the tasks
      * @param timeout the timeout
-     * @param unit    the unit
+     * @param unit the unit
      * @throws InterruptedException the interrupted exception
      */
     public static <T> void invokeAll(final Collection<? extends Callable<T>> tasks,

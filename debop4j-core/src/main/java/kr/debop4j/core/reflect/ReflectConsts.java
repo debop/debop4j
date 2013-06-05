@@ -27,7 +27,12 @@ public class ReflectConsts {
     /** Reflection 관련 base package : kr.debop4j.core.reflect */
     public static final String BASE_PACKAGE = "kr.debop4j.core.reflect";
 
+    /** Constructor Access Path */
     public static final String CONSTRUCTOR_ACCESS_PATH = "kr/debop4j/core/reflect/ConstructorAccess";
+
+    /** Method Access Path */
     public static final String METHOD_ACCESS_PATH = "kr/debop4j/core/reflect/MethodAccess";
+
+    /** Field Access Path */
     public static final String FIELD_ACCESS_PATH = "kr/debop4j/core/reflect/FieldAccess";
 }

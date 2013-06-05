@@ -32,6 +32,7 @@ public abstract class CompressorBase implements ICompressor {
 
     /**
      * 압축 알고리즘 이름
+     *
      * @return 알고리즘 명
      */
     abstract public String getAlgorithm();
@@ -67,7 +68,7 @@ public abstract class CompressorBase implements ICompressor {
 
             if (log.isTraceEnabled())
                 log.trace("데이터를 압축을 수행했습니다. 압축률=[{}], original=[{}], compressed=[{}]",
-                          result.length * 100.0 / plain.length, plain.length, result.length);
+                        result.length * 100.0 / plain.length, plain.length, result.length);
             return result;
         } catch (IOException e) {
             log.error("압축 시 예외가 발생했습니다...", e);
@@ -88,7 +89,7 @@ public abstract class CompressorBase implements ICompressor {
 
             if (log.isTraceEnabled())
                 log.trace("압축 데이터를 복원했습니다. 압축률=[{}], compressed=[{}], original=[{}]",
-                          compressed.length * 100.0 / result.length, compressed.length, result.length);
+                        compressed.length * 100.0 / result.length, compressed.length, result.length);
             return result;
         } catch (IOException e) {
             log.error("압축해제 시 예외가 발생했습니다.", e);

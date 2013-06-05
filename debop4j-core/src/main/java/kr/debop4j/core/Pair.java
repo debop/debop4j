@@ -36,8 +36,10 @@ public class Pair<V1, V2> extends ValueObjectBase implements Serializable {
         return new Pair<V1, V2>(v1, v2);
     }
 
-    @Getter public final V1 v1;
-    @Getter public final V2 v2;
+    @Getter
+    public final V1 v1;
+    @Getter
+    public final V2 v2;
     private final int hash;
 
     public Pair(V1 v1, V2 v2) {

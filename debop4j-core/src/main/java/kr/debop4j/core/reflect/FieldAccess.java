@@ -42,66 +42,230 @@ public abstract class FieldAccess {
 
     private String[] fieldNames;
 
+    /**
+     * Gets index.
+     *
+     * @param fieldName the field name
+     * @return the index
+     */
     public int getIndex(String fieldName) {
         for (int i = 0, n = fieldNames.length; i < n; i++)
             if (fieldNames[i].equals(fieldName)) return i;
         throw new IllegalArgumentException("Unable to find public field: " + fieldName);
     }
 
+    /**
+     * Set void.
+     *
+     * @param instance the instance
+     * @param fieldName the field name
+     * @param value the value
+     */
     public void set(Object instance, String fieldName, Object value) {
         if (log.isTraceEnabled())
             log.trace("객체[{}]의 속성[{}]에 값[{}] 을 설정합니다.", instance, fieldName, value);
         set(instance, getIndex(fieldName), value);
     }
 
+    /**
+     * Get object.
+     *
+     * @param instance the instance
+     * @param fieldName the field name
+     * @return the object
+     */
     public Object get(Object instance, String fieldName) {
         if (log.isTraceEnabled())
             log.trace("객체[{}]의 속성[{}] 값을 조회합니다.", instance, fieldName);
         return get(instance, getIndex(fieldName));
     }
 
+    /**
+     * Get field names.
+     *
+     * @return the string [ ]
+     */
     public String[] getFieldNames() {
         return Arrays.copyOf(fieldNames, fieldNames.length);
     }
 
+    /**
+     * Set void.
+     *
+     * @param instance the instance
+     * @param fieldIndex the field index
+     * @param value the value
+     */
     abstract public void set(Object instance, int fieldIndex, Object value);
 
+    /**
+     * Sets boolean.
+     *
+     * @param instance the instance
+     * @param fieldIndex the field index
+     * @param value the value
+     */
     abstract public void setBoolean(Object instance, int fieldIndex, boolean value);
 
+    /**
+     * Sets byte.
+     *
+     * @param instance the instance
+     * @param fieldIndex the field index
+     * @param value the value
+     */
     abstract public void setByte(Object instance, int fieldIndex, byte value);
 
+    /**
+     * Sets short.
+     *
+     * @param instance the instance
+     * @param fieldIndex the field index
+     * @param value the value
+     */
     abstract public void setShort(Object instance, int fieldIndex, short value);
 
+    /**
+     * Sets int.
+     *
+     * @param instance the instance
+     * @param fieldIndex the field index
+     * @param value the value
+     */
     abstract public void setInt(Object instance, int fieldIndex, int value);
 
+    /**
+     * Sets long.
+     *
+     * @param instance the instance
+     * @param fieldIndex the field index
+     * @param value the value
+     */
     abstract public void setLong(Object instance, int fieldIndex, long value);
 
+    /**
+     * Sets double.
+     *
+     * @param instance the instance
+     * @param fieldIndex the field index
+     * @param value the value
+     */
     abstract public void setDouble(Object instance, int fieldIndex, double value);
 
+    /**
+     * Sets float.
+     *
+     * @param instance the instance
+     * @param fieldIndex the field index
+     * @param value the value
+     */
     abstract public void setFloat(Object instance, int fieldIndex, float value);
 
+    /**
+     * Sets char.
+     *
+     * @param instance the instance
+     * @param fieldIndex the field index
+     * @param value the value
+     */
     abstract public void setChar(Object instance, int fieldIndex, char value);
 
+    /**
+     * Get object.
+     *
+     * @param instance the instance
+     * @param fieldIndex the field index
+     * @return the object
+     */
     abstract public Object get(Object instance, int fieldIndex);
 
+    /**
+     * Gets string.
+     *
+     * @param instance the instance
+     * @param fieldIndex the field index
+     * @return the string
+     */
     abstract public String getString(Object instance, int fieldIndex);
 
+    /**
+     * Gets char.
+     *
+     * @param instance the instance
+     * @param fieldIndex the field index
+     * @return the char
+     */
     abstract public char getChar(Object instance, int fieldIndex);
 
+    /**
+     * Gets boolean.
+     *
+     * @param instance the instance
+     * @param fieldIndex the field index
+     * @return the boolean
+     */
     abstract public boolean getBoolean(Object instance, int fieldIndex);
 
+    /**
+     * Gets byte.
+     *
+     * @param instance the instance
+     * @param fieldIndex the field index
+     * @return the byte
+     */
     abstract public byte getByte(Object instance, int fieldIndex);
 
+    /**
+     * Gets short.
+     *
+     * @param instance the instance
+     * @param fieldIndex the field index
+     * @return the short
+     */
     abstract public short getShort(Object instance, int fieldIndex);
 
+    /**
+     * Gets int.
+     *
+     * @param instance the instance
+     * @param fieldIndex the field index
+     * @return the int
+     */
     abstract public int getInt(Object instance, int fieldIndex);
 
+    /**
+     * Gets long.
+     *
+     * @param instance the instance
+     * @param fieldIndex the field index
+     * @return the long
+     */
     abstract public long getLong(Object instance, int fieldIndex);
 
+    /**
+     * Gets double.
+     *
+     * @param instance the instance
+     * @param fieldIndex the field index
+     * @return the double
+     */
     abstract public double getDouble(Object instance, int fieldIndex);
 
+    /**
+     * Gets float.
+     *
+     * @param instance the instance
+     * @param fieldIndex the field index
+     * @return the float
+     */
     abstract public float getFloat(Object instance, int fieldIndex);
 
+    /**
+     * Get field access.
+     *
+     * @param type the type
+     * @return the field access
+     */
     static public FieldAccess get(Class type) {
         Guard.shouldNotBeNull(type, "type");
 
@@ -137,7 +301,7 @@ public abstract class FieldAccess {
 
                 ClassWriter cw = new ClassWriter(0);
                 cw.visit(V1_1, ACC_PUBLIC + ACC_SUPER, accessClassNameInternal, null, ReflectConsts.FIELD_ACCESS_PATH,
-                         null);
+                        null);
                 insertConstructor(cw);
                 insertGetObject(cw, classNameInternal, fields);
                 insertSetObject(cw, classNameInternal, fields);

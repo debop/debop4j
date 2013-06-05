@@ -18,6 +18,7 @@ package kr.debop4j.core.json;
 
 import com.google.common.base.Objects;
 import kr.debop4j.core.ValueObjectBase;
+import kr.debop4j.core.tools.HashTool;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -31,6 +32,7 @@ public class JsonTextObject extends ValueObjectBase {
 
     private static final long serialVersionUID = 8434059177726276296L;
 
+    /** The constant Empty. */
     public static final JsonTextObject Empty = new JsonTextObject(null, null);
 
     @Getter
@@ -40,18 +42,29 @@ public class JsonTextObject extends ValueObjectBase {
     @Setter
     private String jsonText;
 
+    /**
+     * Instantiates a new Json text object.
+     *
+     * @param className the class name
+     * @param jsonText  the json text
+     */
     public JsonTextObject(String className, String jsonText) {
         this.className = className;
         this.jsonText = jsonText;
     }
 
+    /**
+     * Instantiates a new Json text object.
+     *
+     * @param src the src
+     */
     public JsonTextObject(JsonTextObject src) {
         this(src.className, src.jsonText);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(className, jsonText);
+        return HashTool.compute(className, jsonText);
     }
 
     @Override

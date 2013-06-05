@@ -55,7 +55,7 @@ public final class MapperTool {
     }
 
     /**
-     * Map t.
+     * 객체를 매핑을 통해 원하는 수형으로 변환합니다.
      *
      * @param source           the source
      * @param destinationClass the destination class
@@ -69,12 +69,12 @@ public final class MapperTool {
     }
 
     /**
-     * Map void.
+     * 객체를 매핑해서 원하는 수형으로 변환합니다.
      *
      * @param source      the source
      * @param destination the destination
      */
-    public static void map(final Object source, final Object destination) {
+    public static void map(final Object source, Object destination) {
         shouldNotBeNull(source, "source");
         shouldNotBeNull(destination, "destination");
 
@@ -82,7 +82,7 @@ public final class MapperTool {
     }
 
     /**
-     * Map list.
+     * 지정된 시퀀스의 모든 요소를 대상 수형으로 변환합니다.
      *
      * @param sources          the sources
      * @param destinationClass the destination class
@@ -98,7 +98,7 @@ public final class MapperTool {
     }
 
     /**
-     * Map async.
+     * 비동기 방식으로 매핑을 수행합니다.
      *
      * @param source           the source
      * @param destinationClass the destination class
@@ -114,7 +114,7 @@ public final class MapperTool {
     }
 
     /**
-     * Map list async.
+     * 비동기 방식으로 매핑을 수행합니다.
      *
      * @param sources          the sources
      * @param destinationClass the destination class
@@ -124,11 +124,7 @@ public final class MapperTool {
         return AsyncTool.startNew(new Callable<List<T>>() {
             @Override
             public List<T> call() throws Exception {
-                List<T> destinations = Lists.newArrayList();
-                for (S source : sources) {
-                    destinations.add(mapper.map(source, destinationClass));
-                }
-                return destinations;
+                return mapList(sources, destinationClass);
             }
         });
     }

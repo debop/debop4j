@@ -51,21 +51,21 @@ public abstract class CompressTool {
      * Compress string.
      *
      * @param compressor the compressor
-     * @param plainText the plain text
+     * @param plainText  the plain text
      * @return the string
      */
     public static String compressString(final ICompressor compressor,
                                         final String plainText) {
         return compressString(compressor,
-                              plainText,
-                              BinaryStringFormat.HexDecimal);
+                plainText,
+                BinaryStringFormat.HexDecimal);
     }
 
     /**
      * Compress string.
      *
-     * @param compressor the compressor
-     * @param plainText the plain text
+     * @param compressor   the compressor
+     * @param plainText    the plain text
      * @param stringFormat the string format
      * @return the string
      */
@@ -86,21 +86,21 @@ public abstract class CompressTool {
      * Compress string async.
      *
      * @param compressor the compressor
-     * @param plainText the plain text
+     * @param plainText  the plain text
      * @return the future
      */
     public static Future<String> compressStringAsync(final ICompressor compressor,
                                                      final String plainText) {
         return compressStringAsync(compressor,
-                                   plainText,
-                                   BinaryStringFormat.HexDecimal);
+                plainText,
+                BinaryStringFormat.HexDecimal);
     }
 
     /**
      * Compress string async.
      *
-     * @param compressor the compressor
-     * @param plainText the plain text
+     * @param compressor   the compressor
+     * @param plainText    the plain text
      * @param stringFormat the string format
      * @return the future
      */
@@ -127,23 +127,23 @@ public abstract class CompressTool {
     /**
      * Decompress string.
      *
-     * @param compressor the compressor
+     * @param compressor     the compressor
      * @param compressedText the compressed text
      * @return the string
      */
     public static String decompressString(final ICompressor compressor,
                                           final String compressedText) {
         return decompressString(compressor,
-                                compressedText,
-                                BinaryStringFormat.HexDecimal);
+                compressedText,
+                BinaryStringFormat.HexDecimal);
     }
 
     /**
      * Decompress string.
      *
-     * @param compressor the compressor
+     * @param compressor     the compressor
      * @param compressedText the compressed text
-     * @param stringFormat the string format
+     * @param stringFormat   the string format
      * @return the string
      */
     public static String decompressString(final ICompressor compressor,
@@ -168,23 +168,23 @@ public abstract class CompressTool {
     /**
      * Decompress string async.
      *
-     * @param compressor the compressor
+     * @param compressor     the compressor
      * @param compressedText the compressed text
      * @return the future
      */
     public static Future<String> decompressStringAsync(final ICompressor compressor,
                                                        final String compressedText) {
         return decompressStringAsync(compressor,
-                                     compressedText,
-                                     BinaryStringFormat.HexDecimal);
+                compressedText,
+                BinaryStringFormat.HexDecimal);
     }
 
     /**
      * Decompress string async.
      *
-     * @param compressor the compressor
+     * @param compressor     the compressor
      * @param compressedText the compressed text
-     * @param stringFormat the string format
+     * @param stringFormat   the string format
      * @return the future
      */
     public static Future<String> decompressStringAsync(final ICompressor compressor,
@@ -203,7 +203,7 @@ public abstract class CompressTool {
             @Override
             public String call() throws Exception {
                 byte[] plainBytes = compressor.decompress(getBytesFromString(compressedText,
-                                                                             stringFormat));
+                        stringFormat));
                 String plainText = getUtf8String(plainBytes);
 
                 if (log.isTraceEnabled())
@@ -217,7 +217,7 @@ public abstract class CompressTool {
     /**
      * Compress stream.
      *
-     * @param compressor the compressor
+     * @param compressor  the compressor
      * @param inputStream the input stream
      * @return the output stream
      * @throws IOException the iO exception
@@ -236,7 +236,7 @@ public abstract class CompressTool {
     /**
      * Decompress stream.
      *
-     * @param compressor the compressor
+     * @param compressor  the compressor
      * @param inputStream the input stream
      * @return the output stream
      * @throws IOException the iO exception
@@ -255,7 +255,7 @@ public abstract class CompressTool {
     /**
      * Compress stream async.
      *
-     * @param compressor the compressor
+     * @param compressor  the compressor
      * @param inputStream the input stream
      * @return the future
      */
@@ -275,7 +275,7 @@ public abstract class CompressTool {
     /**
      * Decompress stream async.
      *
-     * @param compressor the compressor
+     * @param compressor  the compressor
      * @param inputStream the input stream
      * @return the future
      */

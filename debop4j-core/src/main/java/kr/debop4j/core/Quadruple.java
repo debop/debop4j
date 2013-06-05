@@ -36,10 +36,14 @@ public class Quadruple<V1, V2, V3, V4> extends ValueObjectBase implements Serial
         return new Quadruple<V1, V2, V3, V4>(v1, v2, v3, v4);
     }
 
-    @Getter public final V1 v1;
-    @Getter public final V2 v2;
-    @Getter public final V3 v3;
-    @Getter public final V4 v4;
+    @Getter
+    public final V1 v1;
+    @Getter
+    public final V2 v2;
+    @Getter
+    public final V3 v3;
+    @Getter
+    public final V4 v4;
 
     private final int hash;
 

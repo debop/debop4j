@@ -28,9 +28,19 @@ public interface IJsonSerializer extends ISerializer {
 
     public static final byte[] EMPTY_BYTES = new byte[0];
 
-    /** JSON 포맷으로 직렬화하여 Json Text 형식의 문자열로 반환합니다. */
+    /**
+     * JSON 포맷으로 직렬화하여 Json Text 형식의 문자열로 반환합니다.
+     *
+     * @param graph 직렬화할 객체
+     * @return JSON으로 직렬화한 문자열, 객체가 Null이면 null 반환
+     */
     String serializeToText(Object graph);
 
-    /** Json Text 형식의 문자열을 역직렬화하여, 객체로 빌드합니다. */
-    <T> T deserializeFromText(String jsonText, Class<T> targetType);
+    /**
+     * Json Text 형식의 문자열을 역직렬화하여, 객체로 빌드합니다.
+     *
+     * @param jsonText    JSON으로 직렬화한 문자열
+     * @param targetClass 역직렬화할 타입
+     */
+    <T> T deserializeFromText(String jsonText, Class<T> targetClass);
 }

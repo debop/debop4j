@@ -30,7 +30,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class FastJsonSerializer implements IJsonSerializer {
 
-    private SerializerFeature[] features = new SerializerFeature[] {
+    private SerializerFeature[] features = new SerializerFeature[]{
             SerializerFeature.UseISO8601DateFormat,
             SerializerFeature.WriteClassName
     };
@@ -45,10 +45,10 @@ public class FastJsonSerializer implements IJsonSerializer {
     }
 
     @Override
-    public <T> T deserializeFromText(String jsonText, Class<T> targetType) {
+    public <T> T deserializeFromText(String jsonText, Class<T> targetClass) {
         if (log.isTraceEnabled())
-            log.trace("Json 문자열을 역직렬화하여 지정한 클래스롤 빌드합니다. targetType=[{}]", targetType.getName());
-        return JSON.parseObject(jsonText, targetType, Feature.AllowISO8601DateFormat);
+            log.trace("Json 문자열을 역직렬화하여 지정한 클래스롤 빌드합니다. targetClass=[{}]", targetClass.getName());
+        return JSON.parseObject(jsonText, targetClass, Feature.AllowISO8601DateFormat);
     }
 
     @Override

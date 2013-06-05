@@ -35,10 +35,16 @@ public class GsonSerializer implements IJsonSerializer {
     @Getter
     private final Gson gson;
 
+    /** Instantiates a new Gson serializer. */
     public GsonSerializer() {
         this(new Gson());
     }
 
+    /**
+     * Instantiates a new Gson serializer.
+     *
+     * @param gson the gson
+     */
     public GsonSerializer(Gson gson) {
         this.gson = Guard.firstNotNull(gson, new Gson());
     }
@@ -61,15 +67,15 @@ public class GsonSerializer implements IJsonSerializer {
     }
 
     @Override
-    public <T> T deserializeFromText(String jsonText, Class<T> targetType) {
+    public <T> T deserializeFromText(String jsonText, Class<T> targetClass) {
         if (StringTool.isWhiteSpace(jsonText))
-            return Defaults.defaultValue(targetType);
+            return Defaults.defaultValue(targetClass);
 
         if (log.isTraceEnabled())
-            log.trace("Json 역직렬화를 수행합니다. jsonText=[{}], targetType=[{}]",
-                      StringTool.ellipsisChar(jsonText, 255), targetType);
+            log.trace("Json 역직렬화를 수행합니다. jsonText=[{}], targetClass=[{}]",
+                    StringTool.ellipsisChar(jsonText, 255), targetClass);
 
-        return gson.fromJson(jsonText, targetType);
+        return gson.fromJson(jsonText, targetClass);
     }
 
     @Override

@@ -27,7 +27,7 @@ import org.apache.commons.pool.impl.GenericObjectPool;
  * @since 13. 4. 8. 오전 12:41
  */
 @Slf4j
-@SuppressWarnings( "unchecked" )
+@SuppressWarnings("unchecked")
 public abstract class AbstractPool<T> implements AutoCloseable {
 
     protected GenericObjectPool pool;

@@ -30,9 +30,7 @@ public abstract class StringDigesterBase implements IStringDigester {
 
     private final StandardStringDigester standardStringDigester;
 
-    /**
-     * Instantiates a new String digester base.
-     */
+    /** Instantiates a new String digester base. */
     public StringDigesterBase() {
         this(5);
     }
@@ -49,7 +47,7 @@ public abstract class StringDigesterBase implements IStringDigester {
 
         if (log.isDebugEnabled())
             log.debug("문자열을 암호화하는 [{}] 인스턴스를 생성했습니다. algorithm=[{}], iteration=[{}]",
-                      getClass().getName(), getAlgorithm(), iterations);
+                    getClass().getName(), getAlgorithm(), iterations);
     }
 
     abstract public String getAlgorithm();
