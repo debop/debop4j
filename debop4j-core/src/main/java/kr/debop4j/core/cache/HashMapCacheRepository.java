@@ -33,7 +33,7 @@ import static kr.debop4j.core.Guard.shouldNotBeWhiteSpace;
 
 
 /**
- * 설명을 추가하세요.
+ * Hash Map 을 캐시 저장소로 사용합니다.
  *
  * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 12. 9. 12

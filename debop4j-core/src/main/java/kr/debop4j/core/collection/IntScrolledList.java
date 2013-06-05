@@ -12,6 +12,13 @@ public class IntScrolledList<E> extends ScrolledListBase<E, Integer> {
 
     private static final long serialVersionUID = 290234509250517728L;
 
+    /**
+     * Instantiates a new Int scrolled list.
+     *
+     * @param list       the list
+     * @param lowerBound the lower bound
+     * @param upperBound the upper bound
+     */
     public IntScrolledList(List<E> list, int lowerBound, int upperBound) {
         super(list, lowerBound, upperBound);
     }

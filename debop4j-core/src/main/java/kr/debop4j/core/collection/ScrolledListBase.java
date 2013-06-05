@@ -1,6 +1,7 @@
 package kr.debop4j.core.collection;
 
 import com.google.common.base.Objects;
+import kr.debop4j.core.tools.StringTool;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 
@@ -38,7 +39,7 @@ public abstract class ScrolledListBase<E, N extends Comparable<N>> implements IS
         return Objects.toStringHelper(this)
                 .add("lowerBound", lowerBound)
                 .add("upperBound", upperBound)
-                .add("list", list)
+                .add("list", StringTool.listToString(list))
                 .toString();
     }
 }

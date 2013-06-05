@@ -13,6 +13,13 @@ public class TimeScrolledList<E> extends ScrolledListBase<E, Date> {
 
     private static final long serialVersionUID = 8043558335662744201L;
 
+    /**
+     * Instantiates a new Time scrolled list.
+     *
+     * @param list       the list
+     * @param lowerBound lower bound
+     * @param upperBound upper bound
+     */
     public TimeScrolledList(List<E> list, Date lowerBound, Date upperBound) {
         super(list, lowerBound, upperBound);
     }

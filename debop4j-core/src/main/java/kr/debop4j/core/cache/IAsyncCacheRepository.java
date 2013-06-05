@@ -27,17 +27,60 @@ import java.util.concurrent.Future;
  */
 public interface IAsyncCacheRepository {
 
+    /**
+     * Gets async.
+     *
+     * @param key the key
+     * @return the async
+     */
     Future<Object> getAsync(final String key);
 
+    /**
+     * Gets async.
+     *
+     * @param key the key
+     * @return the async
+     */
     Future<Map> getsAsync(final String... key);
 
+    /**
+     * Sets async.
+     *
+     * @param key the key
+     * @param value the value
+     * @param validFor the valid for
+     * @return the async
+     */
     Future<Void> setAsync(final String key, Object value, long validFor);
 
+    /**
+     * Remove async.
+     *
+     * @param key the key
+     * @return the future
+     */
     Future<Void> removeAsync(final String key);
 
+    /**
+     * Remove all async.
+     *
+     * @param keys the keys
+     * @return the future
+     */
     Future<Void> removeAllAsync(final String... keys);
 
+    /**
+     * Remove all async.
+     *
+     * @param keys the keys
+     * @return the future
+     */
     Future<Void> removeAllAsync(final Iterable<String> keys);
 
+    /**
+     * Clear async.
+     *
+     * @return the future
+     */
     Future<Void> clearAsync();
 }

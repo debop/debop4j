@@ -42,6 +42,11 @@ public class ConcurrentHashMapCacheRepository extends CacheRepositoryBase {
 
     private final Cache<String, Object> cache;
 
+    /**
+     * Instantiates a new Concurrent hash map cache repository.
+     *
+     * @param validFor the valid for
+     */
     public ConcurrentHashMapCacheRepository(long validFor) {
         if (validFor > 0)
             setExpiry(validFor);
@@ -75,6 +80,12 @@ public class ConcurrentHashMapCacheRepository extends CacheRepositoryBase {
         return cache.getIfPresent(key);
     }
 
+    /**
+     * Gets async.
+     *
+     * @param key the key
+     * @return the async
+     */
     public Future<Object> getAsync(final String key) {
         return AsyncTool.startNew(new Callable<Object>() {
             @Override
@@ -118,6 +129,11 @@ public class ConcurrentHashMapCacheRepository extends CacheRepositoryBase {
         cache.invalidateAll(Arrays.asList(keys));
     }
 
+    /**
+     * 여러개의 키를 모두 삭제합니다.
+     *
+     * @param keys 캐시 키 시퀀스
+     */
     @Override
     public void removeAll(final Iterable<String> keys) {
         cache.invalidateAll(keys);

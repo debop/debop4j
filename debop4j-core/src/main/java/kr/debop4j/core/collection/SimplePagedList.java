@@ -27,8 +27,10 @@ import static kr.debop4j.core.Guard.*;
  *
  * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 12. 9. 13
+ * @deprecated {@link PaginatedList}를 사용하세요.
  */
 @Getter
+@Deprecated
 public class SimplePagedList<E> implements IPagedList<E> {
 
     private static final long serialVersionUID = -5027718652421583413L;

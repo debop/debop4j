@@ -44,6 +44,9 @@ public class FutureWebCacheRepository extends CacheRepositoryBase {
 
     private final LoadingCache<String, String> cache;
 
+    /**
+     * Instantiates a new Future web cache repository.
+     */
     public FutureWebCacheRepository() {
         cache = CacheBuilder.newBuilder().weakValues().build(getCacheLoader());
     }
