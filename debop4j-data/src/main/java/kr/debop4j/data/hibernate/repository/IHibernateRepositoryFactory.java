@@ -23,7 +23,9 @@ import kr.debop4j.data.model.IStatefulEntity;
  *
  * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 12. 12. 18
+ * @deprecated {@link IHibernateDao} 를 사용하세요.
  */
+@Deprecated
 public interface IHibernateRepositoryFactory {
 
     <E extends IStatefulEntity> IHibernateRepository<E> getOrCreateHibernateRepository(Class<E> entityClass);

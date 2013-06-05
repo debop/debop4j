@@ -103,5 +103,7 @@ public class LoggingInterceptor extends EmptyInterceptor {
                     .add("action", action)
                     .add("timePart", time);
         }
+
+        private static final long serialVersionUID = 523516299748244454L;
     }
 }

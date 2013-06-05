@@ -25,11 +25,14 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 /**
- * {@link kr.debop4j.data.hibernate.repository.impl.HibernateRepository}를 생성해주는 Factory 입니다. 이것보다는 Spring framework의 @Repository를 사용하는 것이 좋다.
+ * {@link kr.debop4j.data.hibernate.repository.impl.HibernateRepository}를 생성해주는 Factory 입니다.
+ * 이것보다는 Spring framework의 @Repository를 사용하는 것이 좋다.
  *
  * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 12. 11. 27.
+ * @deprecated {@link HibernateDao}를 사용할 때에는 사용할 필요가 없습니다.
  */
+@Deprecated
 @Component
 @Slf4j
 public class HibernateRepositoryFactory implements IHibernateRepositoryFactory {

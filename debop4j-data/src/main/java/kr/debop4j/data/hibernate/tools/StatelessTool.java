@@ -37,11 +37,20 @@ public class StatelessTool {
 
     private StatelessTool() {}
 
+    /**
+     * Execute transactional.
+     *
+     * @param action the action
+     */
     public static void executeTransactional(Action1<StatelessSession> action) {
         executeTransactional(UnitOfWorks.getCurrentSession(), action);
     }
 
-    /** 지정한 session으로부터 StatelessSession을 생성한 후 작업을 수행하고, 닫습니다. */
+    /**
+     * 지정한 session으로부터 StatelessSession을 생성한 후 작업을 수행하고, 닫습니다.  @param session the session
+     *
+     * @param action the action
+     */
     public static void executeTransactional(Session session, Action1<StatelessSession> action) {
         if (log.isDebugEnabled())
             log.debug("StatelessSession을 이용하여 Transaction 하에서 특정 작업을 수행합니다.");
@@ -62,6 +71,12 @@ public class StatelessTool {
         }
     }
 
+    /**
+     * Execute transactional.
+     *
+     * @param session the session
+     * @param actions the actions
+     */
     public static void executeTransactional(Session session, Iterable<Action1<StatelessSession>> actions) {
         if (log.isDebugEnabled())
             log.debug("StatelessSession을 이용하여 Transaction 하에서 특정 작업을 수행합니다.");
@@ -84,10 +99,21 @@ public class StatelessTool {
         }
     }
 
+    /**
+     * Execute the action
+     *
+     * @param action the action
+     */
     public static void execute(Action1<StatelessSession> action) {
         execute(UnitOfWorks.getCurrentSession(), action);
     }
 
+    /**
+     * Execute the action.
+     *
+     * @param session the session
+     * @param action  the action
+     */
     public static void execute(Session session, Action1<StatelessSession> action) {
         if (log.isDebugEnabled())
             log.debug("StatelessSession을 이용하여 특정 작업을 수행합니다.");
@@ -102,6 +128,12 @@ public class StatelessTool {
         }
     }
 
+    /**
+     * Execute the actions.
+     *
+     * @param session the session
+     * @param actions the actions
+     */
     public static void execute(Session session, Iterable<Action1<StatelessSession>> actions) {
         if (log.isDebugEnabled())
             log.debug("StatelessSession을 이용하여 특정 작업을 수행합니다.");
@@ -117,11 +149,23 @@ public class StatelessTool {
         }
     }
 
+    /**
+     * Open stateless session.
+     *
+     * @param session the session
+     * @return the stateless session
+     */
     public static StatelessSession openStatelessSession(Session session) {
         Guard.shouldNotBeNull(session, "session");
         return session.getSessionFactory().openStatelessSession();
     }
 
+    /**
+     * Open stateless session.
+     *
+     * @param connection the connection
+     * @return the stateless session
+     */
     public static StatelessSession openStatelessSession(Connection connection) {
         Guard.shouldNotBeNull(connection, "connection");
         return UnitOfWorks.getCurrentSessionFactory().openStatelessSession(connection);

@@ -18,7 +18,6 @@ package kr.debop4j.data.hibernate.tools;
 
 import com.google.common.collect.Sets;
 import kr.debop4j.core.Function1;
-import kr.debop4j.core.Guard;
 import kr.debop4j.core.IDataObject;
 import kr.debop4j.core.json.GsonSerializer;
 import kr.debop4j.core.json.IJsonSerializer;
@@ -26,7 +25,8 @@ import kr.debop4j.core.parallelism.Parallels;
 import kr.debop4j.core.tools.MapperTool;
 import kr.debop4j.core.tools.StringTool;
 import kr.debop4j.data.hibernate.HibernateParameter;
-import kr.debop4j.data.hibernate.repository.IHibernateRepository;
+import kr.debop4j.data.hibernate.repository.IHibernateDao;
+import kr.debop4j.data.hibernate.repository.impl.HibernateDao;
 import kr.debop4j.data.model.*;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
@@ -44,6 +44,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
+import static kr.debop4j.core.Guard.shouldNotBeNull;
+import static kr.debop4j.core.Guard.shouldNotBeWhiteSpace;
+
 
 /**
  * Hibernate 엔티티 정보를 관리하기 위한 Utility Class 입니다.
@@ -55,10 +58,11 @@ import java.util.Locale;
 @SuppressWarnings("unchecked")
 public class EntityTool {
 
-    private EntityTool() {
-    }
+    private EntityTool() { }
 
+    /** The constant PROPERTY_ANCESTORS. */
     public static final String PROPERTY_ANCESTORS = "ancestors";
+    /** The constant PROPERTY_DESCENDENTS. */
     public static final String PROPERTY_DESCENDENTS = "descendents";
 
 
@@ -66,16 +70,35 @@ public class EntityTool {
     private static final IJsonSerializer gsonSerializer = new GsonSerializer();
 
 
+    /**
+     * Entity to string.
+     *
+     * @param entity the entity
+     * @return the string
+     */
     public static String entityToString(IDataObject entity) {
         return (entity != null) ? StringTool.objectToString(entity) : StringTool.NULL_STR;
     }
 
+    /**
+     * As gson text.
+     *
+     * @param entity the entity
+     * @return the string
+     * @throws Exception the exception
+     */
     public static String asGsonText(IDataObject entity) throws Exception {
         return getGsonSerializer().serializeToText(entity);
     }
 
     // region << Hierarchy >>
 
+    /**
+     * Assert not circular hierarchy.
+     *
+     * @param child  the child
+     * @param parent the parent
+     */
     public static <T extends IHierarchyEntity<T>> void assertNotCircularHierarchy(T child, T parent) {
         if (child == parent)
             throw new IllegalArgumentException("Child and Paremt are same.");
@@ -87,11 +110,18 @@ public class EntityTool {
             throw new IllegalArgumentException("parent의 조상과 child의 조상이 같은 넘이 있으면 안됩니다.");
     }
 
+    /**
+     * Sets hierarchy.
+     *
+     * @param child     the child
+     * @param oldParent the old parent
+     * @param newParent the new parent
+     */
     public static <T extends IHierarchyEntity<T>> void setHierarchy(T child, T oldParent, T newParent) {
-        Guard.shouldNotBeNull(child, "child");
+        shouldNotBeNull(child, "child");
 
-        if (log.isDebugEnabled())
-            log.debug("현재 노드의 부모를 변경하고, 계층구조 정보를 변경합니다... child=[{}], oldParent=[{}], newParent=[{}]",
+        if (log.isTraceEnabled())
+            log.trace("현재 노드의 부모를 변경하고, 계층구조 정보를 변경합니다... child=[{}], oldParent=[{}], newParent=[{}]",
                       child, oldParent, newParent);
 
         if (oldParent != null)
@@ -101,12 +131,18 @@ public class EntityTool {
             setHierarchy(child, newParent);
     }
 
+    /**
+     * Sets hierarchy.
+     *
+     * @param child  the child
+     * @param parent the parent
+     */
     public static <T extends IHierarchyEntity<T>> void setHierarchy(T child, T parent) {
         if (parent == null || child == null)
             return;
 
-        if (log.isDebugEnabled())
-            log.debug("노드의 부모 및 조상을 설정합니다. child=[{}], parent=[{}]", child, parent);
+        if (log.isTraceEnabled())
+            log.trace("노드의 부모 및 조상을 설정합니다. child=[{}], parent=[{}]", child, parent);
 
         parent.getDescendents().add(child);
         parent.getDescendents().addAll(child.getDescendents());
@@ -120,14 +156,19 @@ public class EntityTool {
         child.getAncestors().addAll(parent.getAncestors());
     }
 
+    /**
+     * Remove hierarchy.
+     *
+     * @param child  the child
+     * @param parent the parent
+     */
     public static <T extends IHierarchyEntity<T>> void removeHierarchy(T child, T parent) {
         if (parent == null)
             return;
 
-        Guard.shouldNotBeNull(child, "child");
-
-        if (log.isDebugEnabled())
-            log.debug("노드의 부모 및 조상을 제거합니다. child=[{}], parent=[{}]", child, parent);
+        shouldNotBeNull(child, "child");
+        if (log.isTraceEnabled())
+            log.trace("노드의 부모 및 조상을 제거합니다. child=[{}], parent=[{}]", child, parent);
 
 
         child.getAncestors().remove(parent);
@@ -143,53 +184,95 @@ public class EntityTool {
         }
     }
 
+    /**
+     * Get ancestors criteria.
+     *
+     * @param entity      the entity
+     * @param session     the session
+     * @param entityClass the entity class
+     * @return the detached criteria
+     */
     public static <T extends IHierarchyEntity<T> & IEntity<TId>, TId extends Serializable>
     DetachedCriteria GetAncestorsCriteria(T entity, Session session, Class<T> entityClass) {
-        return
-                DetachedCriteria
-                        .forClass(entityClass)
-                        .createAlias(PROPERTY_DESCENDENTS, "des")
-                        .add(Restrictions.eq("des.id", entity.getId()));
+        return DetachedCriteria
+                .forClass(entityClass)
+                .createAlias(PROPERTY_DESCENDENTS, "des")
+                .add(Restrictions.eq("des.id", entity.getId()));
     }
 
+    /**
+     * Get descendents criteria.
+     *
+     * @param entity      the entity
+     * @param session     the session
+     * @param entityClass the entity class
+     * @return the detached criteria
+     */
     public static <T extends IHierarchyEntity<T> & IEntity<TId>, TId extends Serializable>
     DetachedCriteria GetDescendentsCriteria(T entity, Session session, Class<T> entityClass) {
-        return
-                DetachedCriteria.forClass(entityClass)
-                        .createAlias(PROPERTY_ANCESTORS, "ans")
-                        .add(Restrictions.eq("ans.id", entity.getId()));
+        return DetachedCriteria.forClass(entityClass)
+                .createAlias(PROPERTY_ANCESTORS, "ans")
+                .add(Restrictions.eq("ans.id", entity.getId()));
     }
 
+    /**
+     * Get ancestors id criteria.
+     *
+     * @param entity      the entity
+     * @param session     the session
+     * @param entityClass the entity class
+     * @return the detached criteria
+     */
     public static <T extends IHierarchyEntity<T> & IEntity<TId>, TId extends Serializable>
     DetachedCriteria GetAncestorsIdCriteria(T entity, Session session, Class<T> entityClass) {
-        return
-                GetAncestorsCriteria(entity, session, entityClass)
-                        .setProjection(Projections.distinct(Projections.id()));
+        return GetAncestorsCriteria(entity, session, entityClass)
+                .setProjection(Projections.distinct(Projections.id()));
     }
 
+    /**
+     * Get descendents id criteria.
+     *
+     * @param entity      the entity
+     * @param session     the session
+     * @param entityClass the entity class
+     * @return the detached criteria
+     */
     public static <T extends IHierarchyEntity<T> & IEntity<TId>, TId extends Serializable>
     DetachedCriteria GetDescendentsIdCriteria(T entity, Session session, Class<T> entityClass) {
-        return
-                GetDescendentsCriteria(entity, session, entityClass)
-                        .setProjection(Projections.distinct(Projections.id()));
+        return GetDescendentsCriteria(entity, session, entityClass)
+                .setProjection(Projections.distinct(Projections.id()));
     }
 
     // endregion
 
     // region << ILocaleEntity >>
 
-    final static String GET_LIST_BY_LOCALE_KEY =
+    /** 특정 로케일 키를 가지는 엔티티를 조회하는 HQL 문. */
+    public static final String GET_LIST_BY_LOCALE_KEY =
             "select distinct loen from %s loen where :key in indices (loen.localeMap)";
 
-    final static String GET_LIST_BY_LOCALE_PROPERTY =
+    /** 특정 로케일 속성값에 따른 엔티티를 조회하는 HQL 문. */
+    public static final String GET_LIST_BY_LOCALE_PROPERTY =
             "select distinct loen from %s loen join loen.localeMap locale where locale.%s = :%s";
 
-    public static <T extends ILocaleEntity<TLocaleValue>, TLocaleValue extends ILocaleValue>
-    void CopyLocale(T source, T destination) {
+    /**
+     * Copy locale.
+     *
+     * @param source      the source
+     * @param destination the destination
+     */
+    public static <T extends ILocaleEntity<TLocaleValue>, TLocaleValue extends ILocaleValue> void CopyLocale(T source, T destination) {
         for (Locale locale : source.getLocales())
             destination.addLocaleValue(locale, source.getLocaleValue(locale));
     }
 
+    /**
+     * Contains locale.
+     *
+     * @param entityClass the entity class
+     * @param locale      the locale
+     * @return the list
+     */
     public static <T extends ILocaleEntity<TLocaleValue>, TLocaleValue extends ILocaleValue>
     List<T> containsLocale(Class<T> entityClass, Locale locale) {
 
@@ -198,24 +281,33 @@ public class EntityTool {
             log.debug("IEntity [{}] 의 Locale[{}]를 가지는 엔티티 조회 hql=[{}]",
                       entityClass.getName(), locale, hql);
 
-        IHibernateRepository<T> dao = HibernateTool.getHibernateDao(entityClass);
-        return dao.findByHql(hql, new HibernateParameter("key", locale, LocaleType.INSTANCE));
+        IHibernateDao dao = new HibernateDao();
+        return dao.find(entityClass, hql, new HibernateParameter("key", locale, LocaleType.INSTANCE));
 
     }
 
+    /**
+     * Contains locale.
+     *
+     * @param entityClass  the entity class
+     * @param propertyName the property name
+     * @param value        the value
+     * @param type         the type
+     * @return the list
+     */
     public static <T extends ILocaleEntity<TLocaleValue>, TLocaleValue extends ILocaleValue>
-    List<T> containsLocale(Class<T> entityClass,
-                           String propertyName,
-                           Object value,
-                           org.hibernate.type.Type type) {
+    List<T> containsLocale(final Class<T> entityClass,
+                           final String propertyName,
+                           final Object value,
+                           final org.hibernate.type.Type type) {
 
-        String hql = String.format(GET_LIST_BY_LOCALE_PROPERTY, entityClass.getName(), propertyName, propertyName);
+        final String hql = String.format(GET_LIST_BY_LOCALE_PROPERTY, entityClass.getName(), propertyName, propertyName);
         if (log.isDebugEnabled())
             log.debug("IEntity [{}] 에 Locale 속성[{}]의 값이 [{}] 인 엔티티를 조회합니다. hql=[{}]",
                       entityClass.getName(), propertyName, value, hql);
 
-        IHibernateRepository<T> dao = HibernateTool.getHibernateDao(entityClass);
-        return dao.findByHql(hql, new HibernateParameter(propertyName, value, ObjectType.INSTANCE));
+        IHibernateDao dao = new HibernateDao();
+        return dao.find(entityClass, hql, new HibernateParameter(propertyName, value, ObjectType.INSTANCE));
     }
 
     // endregion
@@ -223,53 +315,86 @@ public class EntityTool {
 
     // region << IMetaEntity >>
 
-    static final String GET_LIST_BY_META_KEY =
+    private static final String GET_LIST_BY_META_KEY =
             "select distinct me from %s me where :key in indices(me.metaMap)";
-    static final String GET_LIST_BY_META_VALUE =
+    public static final String GET_LIST_BY_META_VALUE =
             "select distinct me from %s me join me.metaMap meta where meta.value = :value";
 
+    /**
+     * Contains meta key.
+     *
+     * @param entityClass the entity class
+     * @param key         the key
+     * @return the list
+     */
     public static <T extends IMetaEntity> List<T> containsMetaKey(Class<T> entityClass, String key) {
-        Guard.shouldNotBeWhiteSpace(key, "key");
+        shouldNotBeWhiteSpace(key, "key");
 
         String hql = String.format(GET_LIST_BY_META_KEY, entityClass.getName());
 
         if (log.isDebugEnabled())
             log.debug("엔티티 [{}]의 메타데이타 키 [{}] 를 가지는 엔티티 조회 hql=[{}]", entityClass.getName(), key, hql);
 
-        IHibernateRepository<T> dao = HibernateTool.getHibernateDao(entityClass);
-        return dao.findByHql(hql, new HibernateParameter("key", key, StringType.INSTANCE));
+        IHibernateDao dao = new HibernateDao();
+        return dao.find(entityClass, hql, new HibernateParameter("key", key, StringType.INSTANCE));
     }
 
-    public static <T extends IMetaEntity> List<T> containsMetaValue(Class<T> entityClass, String value) {
-        Guard.shouldNotBeWhiteSpace(value, "value");
+    /**
+     * Contains meta value.
+     *
+     * @param entityClass the entity class
+     * @param value       the value
+     * @return the list
+     */
+    public static <T extends IMetaEntity> List<T> containsMetaValue(final Class<T> entityClass, final String value) {
+        shouldNotBeWhiteSpace(value, "value");
 
         String hql = String.format(GET_LIST_BY_META_VALUE, entityClass.getName());
         if (log.isDebugEnabled())
             log.debug("메타데이타 value[{}]를 가지는 엔티티 조회 hql=[{}]", value, hql);
 
-        IHibernateRepository<T> dao = HibernateTool.getHibernateDao(entityClass);
-        return dao.findByHql(hql, new HibernateParameter("value", value, StringType.INSTANCE));
+        IHibernateDao dao = new HibernateDao();
+        return dao.find(entityClass, hql, new HibernateParameter("value", value, StringType.INSTANCE));
     }
 
     // endregion
 
     // region << IEntity Mapper >>
 
-    /** 원본 엔티티의 속성정보를 대상 엔티티의 속성정보로 매핑시킵니다. */
+    /**
+     * 원본 엔티티의 속성정보를 대상 엔티티의 속성정보로 매핑시킵니다.
+     *
+     * @param source the source
+     * @param target the target
+     * @return target entity
+     */
     public static <S, T> T mapEntity(S source, T target) {
         MapperTool.map(source, target);
         return target;
     }
 
+    /**
+     * Map entity.
+     *
+     * @param source      the source
+     * @param targetClass the target class
+     * @return target entity
+     */
     public static <S, T> T mapEntity(S source, Class<T> targetClass) {
-        Guard.shouldNotBeNull(source, "source");
+        shouldNotBeNull(source, "source");
         return MapperTool.map(source, targetClass);
     }
 
-    /** 원본 엔티티를 대상 엔티티로 매핑을 수행합니다. {@link kr.debop4j.core.tools.MapperTool} 을 사용합니다. */
+    /**
+     * 원본 엔티티를 대상 엔티티로 매핑을 수행합니다. {@link kr.debop4j.core.tools.MapperTool} 을 사용합니다.
+     *
+     * @param sources the sources
+     * @param targets the targets
+     * @return the list
+     */
     public static <S, T> List<T> mapEntities(List<S> sources, List<T> targets) {
-        Guard.shouldNotBeNull(sources, "sources");
-        Guard.shouldNotBeNull(targets, "targets");
+        shouldNotBeNull(sources, "sources");
+        shouldNotBeNull(targets, "targets");
 
         int size = Math.min(sources.size(), targets.size());
 
@@ -279,27 +404,37 @@ public class EntityTool {
         return targets;
     }
 
-    /** 병렬 방식으로 원본으로부터 대상엔티티로 매핑합니다. 대용량 정보의 DTO 생성 시 유리합니다. */
+    /**
+     * 병렬 방식으로 원본으로부터 대상엔티티로 매핑합니다. 대용량 정보의 DTO 생성 시 유리합니다.
+     *
+     * @param sources     the sources
+     * @param targetClass the target class
+     * @return the list
+     */
     public static <S, T> List<T> mapEntitiesAsParallel(final List<S> sources,
                                                        final Class<T> targetClass) {
         if (sources == null || sources.size() == 0)
             return new ArrayList<>();
 
-        return
-                Parallels.runEach(sources, new Function1<S, T>() {
-                    @Override
-                    public T execute(@Nullable S input) {
-                        return MapperTool.map(input, targetClass);
-                    }
-                });
+        return Parallels.runEach(sources, new Function1<S, T>() {
+            @Override
+            public T execute(@Nullable S input) {
+                return MapperTool.map(input, targetClass);
+            }
+        });
     }
 
     // endregion
 
     // region << TreeNode >>
 
+    /**
+     * Update tree node position.
+     *
+     * @param entity the entity
+     */
     public static <T extends ITreeEntity<T>> void updateTreeNodePosition(T entity) {
-        Guard.shouldNotBeNull(entity, "entity");
+        shouldNotBeNull(entity, "entity");
 
         if (log.isTraceEnabled())
             log.trace("update tree node position... entity=[{}]", entity);
@@ -316,30 +451,38 @@ public class EntityTool {
         }
     }
 
+    /**
+     * 트리구조를 가지는 엔티티의 자식 수를 계산합니다.
+     *
+     * @param entity the entity
+     * @return the child count
+     */
     public static <T extends ITreeEntity<T>> Long getChildCount(T entity) {
-        if (log.isDebugEnabled())
-            log.debug("tree entity의 자식 엔티티의 수를 구합니다. entity=[{}]", entity);
+        if (log.isTraceEnabled())
+            log.trace("tree entity의 자식 엔티티의 수를 구합니다. entity=[{}]", entity);
 
-        DetachedCriteria criteria = HibernateTool.createDetachedCriteria(entity.getClass());
-        criteria.add(Restrictions.eq("parent", entity));
+        DetachedCriteria dc = HibernateTool.createDetachedCriteria(entity.getClass());
+        dc.add(Restrictions.eq("parent", entity));
 
-//		HibernateRepository<T> dao = (HibernateRepository<T>) HbRepositoryFactory.get(entity.getClass());
-//		return dao.countByCriteria(criteria);
-        // TODO: 구현 중
-        return null;
+        IHibernateDao dao = new HibernateDao();
+        return dao.count(entity.getClass(), dc);
     }
 
+    /**
+     * Has children.
+     *
+     * @param entity the entity
+     * @return the boolean
+     */
     public static <T extends ITreeEntity<T>> Boolean hasChildren(T entity) {
-        if (log.isDebugEnabled())
-            log.debug("tree entity 가 자식을 가지는지 확안합니다. entity=[{}]", entity);
+        if (log.isTraceEnabled())
+            log.trace("tree entity 가 자식을 가지는지 확안합니다. entity=[{}]", entity);
 
-        DetachedCriteria criteria = HibernateTool.createDetachedCriteria(entity.getClass());
-        criteria.add(Restrictions.eq("parent", entity));
+        DetachedCriteria dc = HibernateTool.createDetachedCriteria(entity.getClass());
+        dc.add(Restrictions.eq("parent", entity));
 
-//		HibernateRepository<T> dao = (HibernateRepository<T>) HbRepositoryFactory.get(entity.getClass());
-//		return dao.exists(criteria);
-        // TODO: 구현 중
-        return null;
+        IHibernateDao dao = new HibernateDao();
+        return dao.exists(entity.getClass(), dc);
     }
 
 

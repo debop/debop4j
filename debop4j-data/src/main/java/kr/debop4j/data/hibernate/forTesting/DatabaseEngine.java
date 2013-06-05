@@ -26,6 +26,8 @@ public enum DatabaseEngine {
 
     HSql("HSql"),
     HSqlWithFile("HSqlWithFile"),
+    H2("H2"),
+    H2WithFile("H2WithFile"),
     SQLite("SQLite"),
     SQLiteWithFile("SQLitewithFile"),
     MySQL("MySQL"),
@@ -37,5 +39,9 @@ public enum DatabaseEngine {
 
     DatabaseEngine(String databaseName) {
         this.databaseName = databaseName;
+    }
+
+    public String getValue() {
+        return databaseName;
     }
 }

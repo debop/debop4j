@@ -31,6 +31,11 @@ import java.util.Properties;
  */
 public abstract class HSqlConfigBase extends HibernateConfigBase {
 
+    /**
+     * Gets database engine.
+     *
+     * @return the database engine
+     */
     public DatabaseEngine getDatabaseEngine() {
         return DatabaseEngine.HSql;
     }

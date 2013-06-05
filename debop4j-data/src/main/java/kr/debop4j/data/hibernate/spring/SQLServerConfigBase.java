@@ -23,7 +23,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 import javax.sql.DataSource;
 
 /**
- * kr.debop4j.data.hibernate.spring.SQLServerConfigBase
+ * SQLServer 접속을 위한 Spring 환경설정 클래스입니다.
  *
  * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 13. 2. 22.

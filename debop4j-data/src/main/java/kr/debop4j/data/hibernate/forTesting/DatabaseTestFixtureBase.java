@@ -43,17 +43,32 @@ public abstract class DatabaseTestFixtureBase {
     @Getter
     private static UnitOfWorkTestContextBase currentContext;
 
-    private static final String TestModeKey = DatabaseTestFixtureBase.class.getName() + ".isRunningInTestMode";
+    private static final String TEST_MODE_KEY = DatabaseTestFixtureBase.class.getName() + ".isRunningInTestMode";
 
+    /**
+     * Is running in test mode.
+     *
+     * @return the boolean
+     */
     public static boolean isRunningInTestMode() {
-        Boolean isTestMode = (Boolean) Local.get(TestModeKey);
+        Boolean isTestMode = (Boolean) Local.get(TEST_MODE_KEY);
         return (isTestMode != null) ? isTestMode : false;
     }
 
+    /**
+     * Sets running in test mode.
+     *
+     * @param testMode the test mode
+     */
     public static void setRunningInTestMode(boolean testMode) {
-        Local.put(TestModeKey, testMode);
+        Local.put(TEST_MODE_KEY, testMode);
     }
 
+    /**
+     * Init Hibernate and Spring.
+     *
+     * @param dbConfigurationClass the db configuration class
+     */
     public static void initHibernateAndSpring(Class dbConfigurationClass) {
 
         UnitOfWorkTestContextBase context = getUnitOfWorkTestContext(dbConfigurationClass);
@@ -66,6 +81,12 @@ public abstract class DatabaseTestFixtureBase {
         currentContext = context;
     }
 
+    /**
+     * Gets unit of work test context.
+     *
+     * @param dbConfigurationClass the db configuration class
+     * @return the unit of work test context
+     */
     protected static UnitOfWorkTestContextBase getUnitOfWorkTestContext(final Class dbConfigurationClass) {
 
         UnitOfWorkTestContextBase context = null;
@@ -95,6 +116,7 @@ public abstract class DatabaseTestFixtureBase {
         return context;
     }
 
+    /** Close unit of work test contexts. */
     public static void closeUnitOfWorkTestContexts() {
         if (log.isDebugEnabled())
             log.debug("모든 테스트용 UnitOfWorkTestContext 를 종료합니다...");

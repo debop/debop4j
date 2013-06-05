@@ -35,6 +35,7 @@ public class UpdateTimestampedInterceptor extends EmptyInterceptor {
     private static final boolean isTraceEnabled = log.isTraceEnabled();
     private static final long serialVersionUID = 7231248402093351095L;
 
+    /** Instantiates a new Update timestamped interceptor. */
     public UpdateTimestampedInterceptor() {
         super();
         if (isTraceEnabled)

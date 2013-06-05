@@ -35,6 +35,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.hibernate.ConnectionReleaseMode;
+import org.hibernate.Interceptor;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Environment;
 import org.springframework.context.annotation.Bean;
@@ -96,6 +97,15 @@ public abstract class HibernateConfigBase {
         return props;
     }
 
+    /**
+     * Build data source.
+     *
+     * @param driverClass the driver class
+     * @param url         the url
+     * @param username    the username
+     * @param password    the password
+     * @return the data source
+     */
     protected DataSource buildDataSource(String driverClass, String url, String username, String password) {
         return JdbcTool.getDataSource(driverClass, url, username, password);
     }
@@ -104,12 +114,22 @@ public abstract class HibernateConfigBase {
         return JdbcTool.getEmbeddedHsqlDataSource();
     }
 
+    /**
+     * Provide {@link DataSource}.
+     *
+     * @return the data source
+     */
     @Bean(destroyMethod = "close")
     abstract public DataSource dataSource();
 
     /** factoryBean 에 추가 설정을 지정할 수 있습니다. */
     protected void setupSessionFactory(LocalSessionFactoryBean factoryBean) { }
 
+    /**
+     * Provide Hibernate ISessionFactory.
+     *
+     * @return the session factory
+     */
     @Bean
     public SessionFactory sessionFactory() {
 
@@ -133,9 +153,7 @@ public abstract class HibernateConfigBase {
 
         try {
             factoryBean.afterPropertiesSet();
-
-            if (log.isInfoEnabled())
-                log.info("SessionFactory Bean을 생성했습니다!!!");
+            log.info("SessionFactory Bean을 생성했습니다!!!");
 
             return factoryBean.getObject();
 
@@ -144,13 +162,23 @@ public abstract class HibernateConfigBase {
         }
     }
 
+    /**
+     * Hibernate transaction manager.
+     *
+     * @return the hibernate transaction manager
+     */
     @Bean
     public HibernateTransactionManager hibernateTransactionManager() {
         return new HibernateTransactionManager(sessionFactory());
     }
 
+    /**
+     * Provide hibernate interceptor.
+     *
+     * @return Interceptor instance
+     */
     @Bean
-    public MultiInterceptor hibernateInterceptor() {
+    public Interceptor hibernateInterceptor() {
 
         MultiInterceptor interceptor = new MultiInterceptor();
         interceptor.getInterceptors().add(new StatefulEntityInterceptor());
@@ -159,7 +187,12 @@ public abstract class HibernateConfigBase {
         return interceptor;
     }
 
-    /** {@link IUnitOfWorkFactory} 를 생성합니다. */
+
+    /**
+     * Provide {@link IUnitOfWorkFactory}
+     *
+     * @return IUnitOfWorkFactory instance.
+     */
     @Bean
     public IUnitOfWorkFactory unitOfWorkFactory() {
         log.info("UnitOfWorkFactory를 생성합니다.");
@@ -171,9 +204,9 @@ public abstract class HibernateConfigBase {
     private static final String HIBERNATE_DAO_KEY = HibernateDao.class.getName() + ".Current";
 
     /**
-     * {@link IHibernateDao}를 Transaction Context별로 제공합니다.
+     * {@link IHibernateDao}를 Transaction Context 별로 제공합니다.
      *
-     * @return
+     * @return {@link IHibernateDao} instance.
      */
     @Bean
     @Scope("prototype")

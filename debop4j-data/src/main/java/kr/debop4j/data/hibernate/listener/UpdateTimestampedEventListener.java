@@ -30,10 +30,15 @@ import org.hibernate.event.spi.PreUpdateEventListener;
  */
 public class UpdateTimestampedEventListener implements PreInsertEventListener, PreUpdateEventListener {
 
-    private static final long serialVersionUID = -7472589588444503777L;
-
+    /** Instantiates a new Update timestamped event listener. */
     public UpdateTimestampedEventListener() { }
 
+    /**
+     * 엔티티를 새로 추가하기 전에 최종 갱신 시간을 추가합니다.
+     *
+     * @param event 이벤트 정보
+     * @return event bubbling을 그만 둘 것인가?
+     */
     @Override
     public boolean onPreInsert(PreInsertEvent event) {
         Object entity = event.getEntity();
@@ -43,6 +48,12 @@ public class UpdateTimestampedEventListener implements PreInsertEventListener, P
         return false;
     }
 
+    /**
+     * 엔티티를 갱신하기전에 최종 갱신 시간을 갱신합니다.
+     *
+     * @param event 이벤트 정보
+     * @return event bubbling을 그만 둘 것인가?
+     */
     @Override
     public boolean onPreUpdate(PreUpdateEvent event) {
         Object entity = event.getEntity();
@@ -51,4 +62,6 @@ public class UpdateTimestampedEventListener implements PreInsertEventListener, P
         }
         return false;
     }
+
+    private static final long serialVersionUID = -7472589588444503777L;
 }

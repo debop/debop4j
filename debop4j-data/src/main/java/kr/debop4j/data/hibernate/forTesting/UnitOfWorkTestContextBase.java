@@ -40,8 +40,10 @@ import java.util.UUID;
 @Slf4j
 public abstract class UnitOfWorkTestContextBase implements AutoCloseable {
 
+    /** The Current hibernate session key. */
     public final String CurrentHibernateSessionKey = UUID.randomUUID().toString();
 
+    /** The Spring context. */
     protected GenericApplicationContext springContext;
 
     @Getter
@@ -49,6 +51,11 @@ public abstract class UnitOfWorkTestContextBase implements AutoCloseable {
     @Getter
     private int unitOfWorkNestingLevel = -1;
 
+    /**
+     * Instantiates a new Unit of work test context base.
+     *
+     * @param dbConfigurationClass the db configuration class
+     */
     protected UnitOfWorkTestContextBase(Class dbConfigurationClass) {
         this.dbConfigurationClass = dbConfigurationClass;
 
@@ -56,6 +63,11 @@ public abstract class UnitOfWorkTestContextBase implements AutoCloseable {
         Springs.init(springContext);
     }
 
+    /**
+     * Gets spring context.
+     *
+     * @return the spring context
+     */
     public GenericApplicationContext getSpringContext() {
         synchronized (this) {
             if (springContext == null) {
@@ -65,6 +77,7 @@ public abstract class UnitOfWorkTestContextBase implements AutoCloseable {
         return springContext;
     }
 
+    /** Create unit of work. */
     public void createUnitOfWork() {
         Guard.shouldBe(unitOfWorkNestingLevel != 0, "중첩된 UnitOfWork를 만들려면 createNestedUnitOfWork() 메소드를 사용하세요.");
 
@@ -88,6 +101,11 @@ public abstract class UnitOfWorkTestContextBase implements AutoCloseable {
         }
     }
 
+    /**
+     * Create nested unit of work.
+     *
+     * @return the i unit of work
+     */
     public IUnitOfWork createNestedUnitOfWork() {
         Guard.shouldBe(this.unitOfWorkNestingLevel != -1, "부모 UnitOfWork가 존재하지 않습니다. 먼저 createUnitOfWork() 를 호출하세요");
 
@@ -100,15 +118,30 @@ public abstract class UnitOfWorkTestContextBase implements AutoCloseable {
         }
     }
 
+    /**
+     * Gets session factory.
+     *
+     * @return the session factory
+     */
     public SessionFactory getSessionFactory() {
         return Springs.getBean(SessionFactory.class);
     }
 
+    /**
+     * Create session.
+     *
+     * @return the session
+     */
     public Session createSession() {
         Session session = getSessionFactory().openSession();
         return session;
     }
 
+    /**
+     * Dispose session.
+     *
+     * @param sessionToClose the session to close
+     */
     public void disposeSession(Session sessionToClose) {
         if (sessionToClose == null)
             return;
@@ -122,6 +155,7 @@ public abstract class UnitOfWorkTestContextBase implements AutoCloseable {
             log.debug("hibernate session을 close 했습니다.");
     }
 
+    /** Dispose unit of work. */
     public void disposeUnitOfWork() {
         try {
             UnitOfWorks.stop();
@@ -130,8 +164,14 @@ public abstract class UnitOfWorkTestContextBase implements AutoCloseable {
         }
     }
 
+    /** Initialize container and unit of work factory. */
     abstract public void initializeContainerAndUnitOfWorkFactory();
 
+    /**
+     * Sets database.
+     *
+     * @param session the session
+     */
     public void setupDatabase(Session session) {
         // Nothing to do.
     }
@@ -156,6 +196,12 @@ public abstract class UnitOfWorkTestContextBase implements AutoCloseable {
 
     // region << static methods >>
 
+    /**
+     * Create unit of work test context base.
+     *
+     * @param dbConfigurationClass the db configuration class
+     * @return the unit of work test context base
+     */
     public static UnitOfWorkTestContextBase create(Class dbConfigurationClass) {
         return new UnitOfWorkTestContext(dbConfigurationClass);
     }

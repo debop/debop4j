@@ -30,6 +30,11 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class UnitOfWorkTestContext extends UnitOfWorkTestContextBase {
 
+    /**
+     * Instantiates a new Unit of work test context.
+     *
+     * @param dbConfigurationClass the db configuration class
+     */
     public UnitOfWorkTestContext(Class dbConfigurationClass) {
         super(dbConfigurationClass);
     }
@@ -51,6 +56,7 @@ public class UnitOfWorkTestContext extends UnitOfWorkTestContextBase {
         IUnitOfWorkFactory factory = Springs.getBean(IUnitOfWorkFactory.class);
     }
 
+    /** Reset spring context. */
     protected void resetSpringContext() {
         if (springContext != null) {
             Springs.reset();

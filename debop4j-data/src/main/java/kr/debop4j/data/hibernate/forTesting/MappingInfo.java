@@ -32,10 +32,22 @@ import java.util.Map;
 @Slf4j
 public class MappingInfo {
 
+    /**
+     * From mapping info.
+     *
+     * @param packages the packages
+     * @return the mapping info
+     */
     public static MappingInfo from(Package... packages) {
         return new MappingInfo(Lists.newArrayList(packages));
     }
 
+    /**
+     * From package containing.
+     *
+     * @param entityClass the entity class
+     * @return the mapping info
+     */
     public static MappingInfo fromPackageContaining(Class entityClass) {
         return new MappingInfo(Lists.newArrayList(entityClass.getPackage()));
     }
@@ -49,11 +61,21 @@ public class MappingInfo {
                 mappedPackages.add(p);
     }
 
+    /**
+     * Get mapped packages.
+     *
+     * @return the package [ ]
+     */
     public Package[] getMappedPackages() {
         Package[] arr = new Package[mappedPackages.size()];
         return mappedPackages.toArray(arr);
     }
 
+    /**
+     * Get mapped package names.
+     *
+     * @return the string [ ]
+     */
     public String[] getMappedPackageNames() {
         List<String> names = Lists.newArrayList();
         for (Package pkg : mappedPackages)

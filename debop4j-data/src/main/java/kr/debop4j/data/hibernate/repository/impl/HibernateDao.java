@@ -18,7 +18,7 @@ package kr.debop4j.data.hibernate.repository.impl;
 
 import com.google.common.collect.Lists;
 import kr.debop4j.core.collection.IPagedList;
-import kr.debop4j.core.collection.SimplePagedList;
+import kr.debop4j.core.collection.PaginatedList;
 import kr.debop4j.core.tools.ArrayTool;
 import kr.debop4j.core.tools.StringTool;
 import kr.debop4j.data.hibernate.HibernateParameter;
@@ -53,10 +53,16 @@ public class HibernateDao implements IHibernateDao {
 
     private boolean cacheable;
 
+    /** Instantiates a new Hibernate dao. */
     public HibernateDao() {
         this(false);
     }
 
+    /**
+     * Instantiates a new Hibernate dao.
+     *
+     * @param cacheable the cacheable
+     */
     public HibernateDao(boolean cacheable) {
         this.cacheable = cacheable;
     }
@@ -68,6 +74,9 @@ public class HibernateDao implements IHibernateDao {
 
     @Override
     public final void flushSession() {
+        if (isDebugEnabled)
+            log.debug("Session 정보를 flush 합니다...");
+
         getSession().flush();
     }
 
@@ -92,7 +101,6 @@ public class HibernateDao implements IHibernateDao {
         return (T) getSession().load(clazz, id, lockOptions);
     }
 
-    /** {@inheritDoc} */
     @Override
     public <T> T get(Class<T> clazz, Serializable id) {
         if (isTraceEnabled)
@@ -101,7 +109,6 @@ public class HibernateDao implements IHibernateDao {
         return (T) getSession().get(clazz, id);
     }
 
-    /** {@inheritDoc} */
     @Override
     public <T> T get(Class<T> clazz, Serializable id, LockOptions lockOptions) {
         if (isTraceEnabled)
@@ -110,7 +117,6 @@ public class HibernateDao implements IHibernateDao {
         return (T) getSession().get(clazz, id, lockOptions);
     }
 
-    /** {@inheritDoc} */
     @Override
     public <T> List<T> getIn(Class<T> clazz, Collection<? extends Serializable> ids) {
         if (ArrayTool.isEmpty(ids))
@@ -159,12 +165,11 @@ public class HibernateDao implements IHibernateDao {
         return HibernateTool.setParameters(query, parameters).scroll(scrollMode);
     }
 
-    /** 모든 엔티티를 필터링 없이 반환합니다. */
     @Override
     public final <T> List<T> findAll(Class<T> clazz, Order... orders) {
         if (ArrayTool.isEmpty(orders)) {
             Query query = getSession().createQuery("from " + clazz.getName());
-            return (List<T>) query.list();
+            return (List<T>) query.setCacheable(cacheable).list();
         } else {
             Criteria criteria = getSession().createCriteria(clazz);
             HibernateTool.addOrders(criteria, orders);
@@ -172,7 +177,6 @@ public class HibernateDao implements IHibernateDao {
         }
     }
 
-    /** 모든 엔티티를 필터링 없이 Paging 처리하여 반환합니다. */
     @Override
     public final <T> List<T> findAll(Class<T> clazz, int firstResult, int maxResults, Order... orders) {
         Criteria criteria = getSession().createCriteria(clazz);
@@ -247,8 +251,8 @@ public class HibernateDao implements IHibernateDao {
     @Override
     public <T> List<T> findByNamedQuery(Class<T> clazz, String queryName, int firstResult, int maxResults, HibernateParameter... parameters) {
         assert StringTool.isNotEmpty(queryName);
-        if (isDebugEnabled)
-            log.debug("NamedQuery를 실행합니다. clazz=[{}], sqlString=[{}], firstResult=[{}], maxResults=[{}], parameters=[{}]",
+        if (isTraceEnabled)
+            log.trace("NamedQuery를 실행합니다. clazz=[{}], sqlString=[{}], firstResult=[{}], maxResults=[{}], parameters=[{}]",
                       clazz, queryName, firstResult, maxResults, StringTool.listToString(parameters));
         Query query = getSession().getNamedQuery(queryName);
         return find(clazz, query, firstResult, maxResults, parameters);
@@ -262,8 +266,8 @@ public class HibernateDao implements IHibernateDao {
     @Override
     public <T> List<T> findBySQLString(Class<T> clazz, String sqlString, int firstResult, int maxResults, HibernateParameter... parameters) {
         assert StringTool.isNotEmpty(sqlString);
-        if (isDebugEnabled)
-            log.debug("일반 SQL 문 실행합니다. clazz=[{}], sqlString=[{}], firstResult=[{}], maxResults=[{}], parameters=[{}]",
+        if (isTraceEnabled)
+            log.trace("일반 SQL 문 실행합니다. clazz=[{}], sqlString=[{}], firstResult=[{}], maxResults=[{}], parameters=[{}]",
                       clazz, sqlString, firstResult, maxResults, StringTool.listToString(parameters));
         Query query = getSession().createSQLQuery(sqlString);
         return find(clazz, query, firstResult, maxResults, parameters);
@@ -281,7 +285,7 @@ public class HibernateDao implements IHibernateDao {
 
         int firstResult = (pageNo - 1) * pageSize;
         List<T> list = find(clazz, criteria, firstResult, pageSize, orders);
-        return new SimplePagedList(list, pageNo, pageSize, itemCount);
+        return new PaginatedList(list, pageNo, pageSize, itemCount);
     }
 
     @Override
@@ -291,7 +295,7 @@ public class HibernateDao implements IHibernateDao {
 
         int firstResult = (pageNo - 1) * pageSize;
         List<T> list = find(clazz, dc, firstResult, pageSize, orders);
-        return new SimplePagedList(list, pageNo, pageSize, itemCount);
+        return new PaginatedList(list, pageNo, pageSize, itemCount);
     }
 
     @Override
@@ -302,7 +306,7 @@ public class HibernateDao implements IHibernateDao {
 
         int firstResult = (pageNo - 1) * pageSize;
         List<T> list = find(clazz, query, firstResult, pageSize, parameters);
-        return new SimplePagedList(list, pageNo, pageSize, itemCount);
+        return new PaginatedList(list, pageNo, pageSize, itemCount);
     }
 
     @Override
@@ -562,7 +566,6 @@ public class HibernateDao implements IHibernateDao {
         deleteAll(find(clazz, criteria));
     }
 
-    /** Cascade 적용 없이 엔티티들을 모두 삭제합니다. */
     @Override
     public <T> int deleteAllWithoutCascade(Class<T> clazz) {
         if (isTraceEnabled)
@@ -576,8 +579,9 @@ public class HibernateDao implements IHibernateDao {
 
     @Override
     public int executeUpdateByHql(String hql, HibernateParameter... parameters) {
-        if (isDebugEnabled)
-            log.debug("Update/Delete 구문을 수행합니다. hql=[{}], parameters=[{}]", hql, StringTool.listToString(parameters));
+        if (isTraceEnabled)
+            log.trace("Update/Delete 구문을 수행합니다. hql=[{}], parameters=[{}]",
+                      hql, StringTool.listToString(parameters));
 
         Query query = getSession().createQuery(hql);
         HibernateTool.setParameters(query, parameters);
@@ -586,8 +590,9 @@ public class HibernateDao implements IHibernateDao {
 
     @Override
     public int executeUpdateByNamedQuery(String queryName, HibernateParameter... parameters) {
-        if (isDebugEnabled)
-            log.debug("Update/Delete 구문을 수행합니다. queryName=[{}], parameters=[{}]", queryName, StringTool.listToString(parameters));
+        if (isTraceEnabled)
+            log.trace("Update/Delete 구문을 수행합니다. queryName=[{}], parameters=[{}]",
+                      queryName, StringTool.listToString(parameters));
 
         Query query = getSession().getNamedQuery(queryName);
         HibernateTool.setParameters(query, parameters);
@@ -596,26 +601,37 @@ public class HibernateDao implements IHibernateDao {
 
     @Override
     public int executeUpdateBySQLString(String sqlString, HibernateParameter... parameters) {
-        if (isDebugEnabled)
-            log.debug("Update/Delete 구문을 수행합니다. sqlString=[{}], parameters=[{}]", sqlString, StringTool.listToString(parameters));
+        if (isTraceEnabled)
+            log.trace("Update/Delete 구문을 수행합니다. sqlString=[{}], parameters=[{}]",
+                      sqlString, StringTool.listToString(parameters));
 
         SQLQuery query = getSession().createSQLQuery(sqlString);
         HibernateTool.setParameters(query, parameters);
         return query.executeUpdate();
     }
 
+    /**
+     * Build projection criteria.
+     *
+     * @param projectClass   the project class
+     * @param criteria       the criteria
+     * @param projection     the projection
+     * @param distinctResult the distinct result
+     * @return the criteria
+     */
     protected <TProject> Criteria buildProjectionCriteria(Class<TProject> projectClass,
                                                           Criteria criteria,
                                                           Projection projection,
                                                           boolean distinctResult) {
-        if (isDebugEnabled)
-            log.debug("Criteria에 Projection을 적용합니다. projectClass=[{}], projection=[{}], distinctResult=[{}]",
+        if (isTraceEnabled)
+            log.trace("Criteria에 Projection을 적용합니다. projectClass=[{}], projection=[{}], distinctResult=[{}]",
                       projectClass, projection, distinctResult);
 
-        if (distinctResult)
+        if (distinctResult) {
             criteria.setProjection(Projections.distinct(projection));
-        else
+        } else {
             criteria.setProjection(projection);
+        }
 
         criteria.setResultTransformer(Transformers.aliasToBean(projectClass));
         return criteria;
@@ -701,6 +717,6 @@ public class HibernateDao implements IHibernateDao {
         int firstResult = (pageNo - 1) * pageSize;
         HibernateTool.setPaging(projectCriteria, firstResult, pageSize);
 
-        return new SimplePagedList(projectCriteria.list(), pageNo, pageSize, itemCount);
+        return new PaginatedList(projectCriteria.list(), pageNo, pageSize, itemCount);
     }
 }

@@ -31,14 +31,26 @@ public class HibernateParameter extends NamedParameterBase {
 
     private static final long serialVersionUID = -6291985997768450558L;
 
-    @Getter
-    @Setter
+    @Getter @Setter
     private org.hibernate.type.Type type;
 
+    /**
+     * Instantiates a new Hibernate parameter.
+     *
+     * @param name  the parameter name
+     * @param value the parameter value
+     */
     public HibernateParameter(String name, Object value) {
         super(name, value);
     }
 
+    /**
+     * Instantiates a new Hibernate parameter.
+     *
+     * @param name  the parameter name
+     * @param value the parameter value
+     * @param type  the parameter type
+     */
     public HibernateParameter(String name, Object value, org.hibernate.type.Type type) {
         super(name, value);
         this.type = type;
