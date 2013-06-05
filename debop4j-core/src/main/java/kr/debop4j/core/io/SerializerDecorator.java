@@ -21,7 +21,7 @@ import kr.debop4j.core.ISerializer;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * {@link ISerializer} 를 데코레이터 패턴으로, 여러가지 작업을 수행할 수 있도록 합니다.
+ *{@link ISerializer} 를 데코레이터 패턴으로, 여러가지 작업을 수행할 수 있도록 합니다.
  *
  * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 12. 12. 17
@@ -31,6 +31,11 @@ public abstract class SerializerDecorator implements ISerializer {
 
     private final ISerializer serializer;
 
+    /**
+     * Instantiates a new Serializer decorator.
+     *
+     * @param serializer the serializer
+     */
     public SerializerDecorator(ISerializer serializer) {
         Guard.shouldNotBeNull(serializer, "serializer");
         this.serializer = serializer;

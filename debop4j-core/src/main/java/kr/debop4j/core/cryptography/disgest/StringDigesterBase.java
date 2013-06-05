@@ -30,10 +30,18 @@ public abstract class StringDigesterBase implements IStringDigester {
 
     private final StandardStringDigester standardStringDigester;
 
+    /**
+     * Instantiates a new String digester base.
+     */
     public StringDigesterBase() {
         this(5);
     }
 
+    /**
+     * Instantiates a new String digester base.
+     *
+     * @param iterations the iterations
+     */
     public StringDigesterBase(int iterations) {
         standardStringDigester = new StandardStringDigester();
         standardStringDigester.setAlgorithm(getAlgorithm());

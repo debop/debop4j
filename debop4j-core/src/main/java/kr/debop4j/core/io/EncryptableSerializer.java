@@ -31,10 +31,21 @@ public class EncryptableSerializer extends SerializerDecorator {
 
     private final ISymmetricByteEncryptor encryptor;
 
+    /**
+     * Instantiates a new Encryptable serializer.
+     *
+     * @param serializer the serializer
+     */
     public EncryptableSerializer(ISerializer serializer) {
         this(serializer, new RC2ByteEncryptor());
     }
 
+    /**
+     * Instantiates a new Encryptable serializer.
+     *
+     * @param serializer the serializer
+     * @param encryptor the encryptor
+     */
     public EncryptableSerializer(ISerializer serializer, ISymmetricByteEncryptor encryptor) {
         super(serializer);
 

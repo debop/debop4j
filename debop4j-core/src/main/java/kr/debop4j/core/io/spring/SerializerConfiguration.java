@@ -19,7 +19,6 @@ package kr.debop4j.core.io.spring;
 import kr.debop4j.core.io.BinarySerializer;
 import kr.debop4j.core.json.GsonSerializer;
 import kr.debop4j.core.json.JacksonSerializer;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -29,20 +28,34 @@ import org.springframework.context.annotation.Configuration;
  * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 12. 12. 17
  */
-@Slf4j
 @Configuration
 public class SerializerConfiguration {
 
+    /**
+     * Binary serializer.
+     *
+     * @return the binary serializer
+     */
     @Bean
     public BinarySerializer binarySerializer() {
         return new BinarySerializer();
     }
 
+    /**
+     * Gson serializer.
+     *
+     * @return the gson serializer
+     */
     @Bean
     public GsonSerializer gsonSerializer() {
         return new GsonSerializer();
     }
 
+    /**
+     * Jackson serializer.
+     *
+     * @return the jackson serializer
+     */
     @Bean
     public JacksonSerializer jacksonSerializer() {
         return new JacksonSerializer();

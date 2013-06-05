@@ -32,42 +32,82 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class EncryptorConfiguration {
 
+    /**
+     * Md 5 string digester.
+     *
+     * @return the mD 5 string digester
+     */
     @Bean(name = "md5StringDigester")
     public MD5StringDigester md5StringDigester() {
         return new MD5StringDigester();
     }
 
+    /**
+     * Sha 1 string digester.
+     *
+     * @return the sHA 1 string digester
+     */
     @Bean(name = "sha1StringDigester")
     public SHA1StringDigester sha1StringDigester() {
         return new SHA1StringDigester();
     }
 
+    /**
+     * Sha 256 string digester.
+     *
+     * @return the sHA 256 string digester
+     */
     @Bean(name = "sha256StringDigester")
     public SHA256StringDigester sha256StringDigester() {
         return new SHA256StringDigester();
     }
 
+    /**
+     * Sha 384 string digester.
+     *
+     * @return the sHA 384 string digester
+     */
     @Bean(name = "sha384StringDigester")
     public SHA384StringDigester sha384StringDigester() {
         return new SHA384StringDigester();
     }
 
+    /**
+     * Sha 512 string digester.
+     *
+     * @return the sHA 512 string digester
+     */
     @Bean(name = "sha512StringDigester")
     public SHA512StringDigester sha512StringDigester() {
         return new SHA512StringDigester();
     }
 
 
+    /**
+     * Des byte encryptor.
+     *
+     * @return the dES byte encryptor
+     */
     @Bean(name = "desByteEncryptor")
     public DESByteEncryptor desByteEncryptor() {
         return new DESByteEncryptor();
     }
 
+    /**
+     * Triple dES byte encryptor.
+     *
+     * @return the triple dES byte encryptor
+     */
     @Bean(name = "tripleByteEncryptor")
     public TripleDESByteEncryptor tripleDESByteEncryptor() {
         return new TripleDESByteEncryptor();
     }
 
+    /**
+     * Rc 2 byte encryptor.
+     *
+     * @return the rC 2 byte encryptor
+     */
     @Bean(name = "rc2ByteEncryptor")
     public RC2ByteEncryptor rc2ByteEncryptor() {
         return new RC2ByteEncryptor();

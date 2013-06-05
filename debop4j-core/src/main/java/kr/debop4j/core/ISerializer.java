@@ -24,9 +24,18 @@ package kr.debop4j.core;
  */
 public interface ISerializer {
 
-    /** 객체를 직렬화하여 바이트 배열로 변환합니다. */
-    byte[] serialize(Object graph);
+    /**
+     * 객체를 직렬화하여 바이트 배열로 변환합니다.
+     *
+     * @param graph 직렬화할 객체
+     */
+    byte[] serialize(final Object graph);
 
-    /** 직렬화된 객체 정보를 역직렬화하여 객체로 변환합니다. */
+    /**
+     * 직렬화된 객체 정보를 역직렬화하여 객체로 변환합니다.
+     *
+     * @param bytes 역직렬화할 바이트 배열
+     * @param clazz 역직렬화하여 생성할 객체의 수형
+     */
     <T> T deserialize(byte[] bytes, Class<T> clazz);
 }
