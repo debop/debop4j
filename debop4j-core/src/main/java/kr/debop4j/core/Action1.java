@@ -23,7 +23,11 @@ package kr.debop4j.core;
  * @since 12. 9. 27.
  */
 public interface Action1<T> {
-
+    /**
+     * 작업을 수행합니다.
+     *
+     * @param arg 인자
+     */
     void perform(T arg);
 }
 

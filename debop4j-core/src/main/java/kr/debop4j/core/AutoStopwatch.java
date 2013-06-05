@@ -29,10 +29,18 @@ public class AutoStopwatch implements AutoCloseable {
 
     private final Stopwatch stopwatch;
 
+    /**
+     * Instantiates a new Auto stopwatch.
+     */
     public AutoStopwatch() {
         this("");
     }
 
+    /**
+     * Instantiates a new Auto stopwatch.
+     *
+     * @param msg the msg
+     */
     public AutoStopwatch(String msg) {
         stopwatch = new Stopwatch(msg);
         stopwatch.start();

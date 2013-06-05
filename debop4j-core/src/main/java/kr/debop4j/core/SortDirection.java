@@ -16,6 +16,8 @@
 
 package kr.debop4j.core;
 
+import lombok.Getter;
+
 /**
  * 정렬 방법
  *
@@ -30,8 +32,11 @@ public enum SortDirection {
     /** 역순 정렬 */
     DESC("DESC");
 
-    SortDirection(String sortDirection) {
-        String sortDirection1 = sortDirection;
+    @Getter
+    private final String value;
+
+    SortDirection(String value) {
+        this.value = value;
     }
 
 }

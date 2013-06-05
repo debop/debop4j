@@ -24,5 +24,11 @@ package kr.debop4j.core;
  */
 public interface Action2<T1, T2> {
 
+    /**
+     * Perform method.
+     *
+     * @param arg1 the arg 1
+     * @param arg2 the arg 2
+     */
     public void perform(T1 arg1, T2 arg2);
 }

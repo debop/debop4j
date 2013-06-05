@@ -24,5 +24,10 @@ package kr.debop4j.core;
  */
 public interface Function<R> {
 
+    /**
+     * 수행할 함수
+     *
+     * @return 수행 결과
+     */
     R execute();
 }

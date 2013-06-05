@@ -22,5 +22,4 @@ package kr.debop4j.core;
  *
  * @since 12. 11. 19
  */
-public interface IValueObject extends IDataObject {
-}
+public interface IValueObject extends IDataObject { }

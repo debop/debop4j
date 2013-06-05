@@ -32,6 +32,13 @@ public class Pair<V1, V2> extends ValueObjectBase implements Serializable {
 
     private static final long serialVersionUID = 4213705024392671643L;
 
+    /**
+     * Create pair.
+     *
+     * @param v1 the v 1
+     * @param v2 the v 2
+     * @return the pair
+     */
     public static <V1, V2> Pair<V1, V2> create(V1 v1, V2 v2) {
         return new Pair<V1, V2>(v1, v2);
     }
@@ -42,6 +49,12 @@ public class Pair<V1, V2> extends ValueObjectBase implements Serializable {
     public final V2 v2;
     private final int hash;
 
+    /**
+     * Instantiates a new Pair.
+     *
+     * @param v1 the v 1
+     * @param v2 the v 2
+     */
     public Pair(V1 v1, V2 v2) {
         this.v1 = v1;
         this.v2 = v2;

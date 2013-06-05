@@ -33,6 +33,11 @@ public class ExecutableAdapter implements Runnable {
     @Getter
     private boolean done;
 
+    /**
+     * Instantiates a new Executable adapter.
+     *
+     * @param executable the executable
+     */
     public ExecutableAdapter(Executable executable) {
         Guard.shouldNotBeNull(executable, "executable");
         this.executable = executable;
@@ -71,6 +76,9 @@ public class ExecutableAdapter implements Runnable {
     }
 
 
+    /**
+     * The type Exception wrapper.
+     */
     public static class ExceptionWrapper extends RuntimeException {
         private static final long serialVersionUID = 7550028515694121476L;
 

@@ -24,5 +24,12 @@ package kr.debop4j.core;
  */
 public interface Function3<T1, T2, T3, R> {
 
+    /**
+     * 수행할 함수
+     * @param arg1 함수 인자 1
+     * @param arg2 함수 인자 2
+     * @param arg3 함수 인자 3
+     * @return  수행 결과
+     */
     R execute(T1 arg1, T2 arg2, T3 arg3);
 }

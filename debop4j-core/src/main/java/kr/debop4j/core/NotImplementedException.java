@@ -29,10 +29,18 @@ public class NotImplementedException extends RuntimeException {
 
     private static final long serialVersionUID = -1276105737644188535L;
 
+    /**
+     * Instantiates a new Not implemented exception.
+     */
     public NotImplementedException() {
         this("구현이 되지 않았습니다. 구현해 주시기 바랍니다.");
     }
 
+    /**
+     * Instantiates a new Not implemented exception.
+     *
+     * @param message the message
+     */
     public NotImplementedException(String message) {
         super(message);
     }

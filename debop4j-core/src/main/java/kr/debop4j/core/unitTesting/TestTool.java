@@ -59,14 +59,20 @@ public abstract class TestTool {
             }
             latch.await();
         } catch (InterruptedException e) {
-            log.error("작업 수행 중 예외가 발생했습니다.", e);
+            log.error("작업 테스트 중 예외가 발생했습니다.", e);
             throw new RuntimeException(e);
         } finally {
             executor.shutdown();
         }
     }
 
-    /** 지정된 횟수만큼 멀티스레드를 이용하여 작업을 수행합니다. */
+    /**
+     * 지정된 횟수만큼 멀티스레드를 이용하여 작업을 수행합니다.
+     *
+     * @param count     수행 횟수
+     * @param callables 실행할 메소드들
+     * @param <T>       반환할 수형
+     */
     @SuppressWarnings("unchecked")
     public static <T> void runTasks(int count, Callable<T> callables) {
         ExecutorService executor = newExecutorService();
@@ -89,7 +95,12 @@ public abstract class TestTool {
         }
     }
 
-    /** 지정된 횟수만큼 멀티스레드를 이용하여 작업을 수행합니다. */
+    /**
+     * 지정된 횟수만큼 멀티스레드를 이용하여 작업을 수행합니다.
+     *
+     * @param count  수행 횟수
+     * @param action 실행할 메소드들
+     */
     @SuppressWarnings("unchecked")
     public static void runTasks(int count, final Action1<Integer> action) {
         ExecutorService executor = newExecutorService();

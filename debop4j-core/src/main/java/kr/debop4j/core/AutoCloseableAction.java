@@ -30,13 +30,21 @@ public class AutoCloseableAction implements AutoCloseable {
 
     private static final Logger log = LoggerFactory.getLogger(AutoCloseableAction.class);
 
+    /** close 시에 수행할 actionWhenClosing */
     @Getter
-    private final Runnable action;
+    private final Runnable actionWhenClosing;
+
+    /** close 되었는지 여부 */
     @Getter
     protected boolean closed;
 
-    public AutoCloseableAction(final Runnable action) {
-        this.action = action;
+    /**
+     * Instantiates a new Auto closeable actionWhenClosing.
+     *
+     * @param actionWhenClosing closing 시에 수행할 action 입니다. null 이면 수행할 것이 없다는 의미
+     */
+    public AutoCloseableAction(final Runnable actionWhenClosing) {
+        this.actionWhenClosing = actionWhenClosing;
         this.closed = false;
     }
 
@@ -50,8 +58,8 @@ public class AutoCloseableAction implements AutoCloseable {
             if (log.isTraceEnabled())
                 log.trace("AutoCloseable의 close 작업을 수행합니다...");
 
-            if (action != null)
-                action.run();
+            if (actionWhenClosing != null)
+                actionWhenClosing.run();
 
             if (log.isTraceEnabled())
                 log.trace("AutoCloseable의 close 작업을 완료했습니다.");

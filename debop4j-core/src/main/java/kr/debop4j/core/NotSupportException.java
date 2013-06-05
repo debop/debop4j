@@ -26,6 +26,9 @@ public class NotSupportException extends RuntimeException {
 
     private static final long serialVersionUID = 231848084992090602L;
 
+    /**
+     * Instantiates a new Not support exception.
+     */
     public NotSupportException() {
         this("지원하지 않는 코드입니다.");
     }

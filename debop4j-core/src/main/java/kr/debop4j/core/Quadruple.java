@@ -32,6 +32,15 @@ public class Quadruple<V1, V2, V3, V4> extends ValueObjectBase implements Serial
 
     private static final long serialVersionUID = -1939638392275865110L;
 
+    /**
+     * Create quadruple.
+     *
+     * @param v1 the v 1
+     * @param v2 the v 2
+     * @param v3 the v 3
+     * @param v4 the v 4
+     * @return the quadruple
+     */
     public static <V1, V2, V3, V4> Quadruple<V1, V2, V3, V4> create(V1 v1, V2 v2, V3 v3, V4 v4) {
         return new Quadruple<V1, V2, V3, V4>(v1, v2, v3, v4);
     }
@@ -47,6 +56,14 @@ public class Quadruple<V1, V2, V3, V4> extends ValueObjectBase implements Serial
 
     private final int hash;
 
+    /**
+     * Instantiates a new Quadruple.
+     *
+     * @param v1 the v 1
+     * @param v2 the v 2
+     * @param v3 the v 3
+     * @param v4 the v 4
+     */
     public Quadruple(V1 v1, V2 v2, V3 v3, V4 v4) {
         this.v1 = v1;
         this.v2 = v2;
