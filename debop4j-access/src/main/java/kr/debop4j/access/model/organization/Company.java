@@ -21,10 +21,10 @@ import com.google.common.collect.Maps;
 import kr.debop4j.access.model.AccessLocaledEntityBase;
 import kr.debop4j.access.model.IActor;
 import kr.debop4j.core.Guard;
+import kr.debop4j.core.ValueObjectBase;
 import kr.debop4j.core.tools.HashTool;
 import kr.debop4j.data.model.ILocaleValue;
 import lombok.AccessLevel;
-import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.Cache;
@@ -129,11 +129,12 @@ public class Company extends AccessLocaledEntityBase<Company.CompanyLocale> impl
                 .add("description", description);
     }
 
-    @Data
+    @Getter
+    @Setter
     @Embeddable
     @DynamicInsert
     @DynamicUpdate
-    public static class CompanyLocale implements ILocaleValue {
+    public static class CompanyLocale extends ValueObjectBase implements ILocaleValue {
 
         public CompanyLocale() {}
 
@@ -148,5 +149,19 @@ public class Company extends AccessLocaledEntityBase<Company.CompanyLocale> impl
         @Basic
         @Column(name = "CompanyDesc", length = 2000)
         private String description;
+
+        @Override
+        public int hashCode() {
+            return HashTool.compute(name, description);
+        }
+
+        @Override
+        protected Objects.ToStringHelper buildStringHelper() {
+            return super.buildStringHelper()
+                    .add("name", name)
+                    .add("description", description);
+        }
+
+        private static final long serialVersionUID = 3403174284080835688L;
     }
 }

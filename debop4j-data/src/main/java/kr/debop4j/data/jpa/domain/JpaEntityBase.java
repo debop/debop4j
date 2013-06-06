@@ -29,16 +29,17 @@ import javax.persistence.PostPersist;
  */
 public abstract class JpaEntityBase extends StatefulEntityBase {
 
-    private static final long serialVersionUID = 8224137297852297901L;
-
-
+    /** 엔티티 저장 후에 처리해야 할 작업을 수행합니다. */
     @PostPersist
     private void postPersist() {
         onSave();
     }
 
+    /** 엔티티 로드 후에 엔티티에 후 처리할 작업입니다. */
     @PostLoad
     private void postLoad() {
         onLoad();
     }
+
+    private static final long serialVersionUID = 8224137297852297901L;
 }

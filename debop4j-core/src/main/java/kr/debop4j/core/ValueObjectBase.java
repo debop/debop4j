@@ -26,8 +26,6 @@ import com.google.common.base.Objects;
  */
 public abstract class ValueObjectBase implements IValueObject {
 
-    private static final long serialVersionUID = -6322623031885575466L;
-
     @Override
     public boolean equals(Object obj) {
         return obj == this ||
@@ -50,4 +48,6 @@ public abstract class ValueObjectBase implements IValueObject {
     protected Objects.ToStringHelper buildStringHelper() {
         return Objects.toStringHelper(this);
     }
+
+    private static final long serialVersionUID = -6322623031885575466L;
 }

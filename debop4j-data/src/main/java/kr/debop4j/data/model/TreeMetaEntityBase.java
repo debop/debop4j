@@ -34,6 +34,7 @@ public abstract class TreeMetaEntityBase<T extends IEntity<TId> & ITreeEntity<T>
 
     private static final long serialVersionUID = -7475565290976767358L;
 
+    /** 메타 정보 */
     @Getter
     private final Map<String, IMetaValue> metaMap = Maps.newLinkedHashMap();
 

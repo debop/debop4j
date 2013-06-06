@@ -32,12 +32,30 @@ public class JdbcTool {
 
     private JdbcTool() {}
 
+    /**
+     * Gets data source {@link DataSource}.
+     *
+     * @param driverClass the driver class
+     * @param url         the url
+     * @param username    the username
+     * @param passwd      the passwd
+     * @return the data source
+     */
     public static javax.sql.DataSource getDataSource(String driverClass, String url, String username, String passwd) {
         return getTomcatDataSource(driverClass, url, username, passwd);
     }
 
-    /** DataSource 를 빌드합니다. */
+    /**
+     * Bone CP DataSource 를 빌드합니다.
+     *
+     * @param driverClass the driver class
+     * @param url         the url
+     * @param username    the username
+     * @param passwd      the passwd
+     * @return the bone cp data source
+     */
     public static javax.sql.DataSource getBoneCpDataSource(String driverClass, String url, String username, String passwd) {
+
         if (log.isDebugEnabled())
             log.debug("build BoneCP DataSource... driverClass=[{}], url=[{}], username=[{}], passwd=[{}]",
                       driverClass, url, username, passwd);
@@ -60,8 +78,17 @@ public class JdbcTool {
         return ds;
     }
 
-    /** DataSource 를 빌드합니다. */
+    /**
+     * Tomcat DataSource 를 빌드합니다.
+     *
+     * @param driverClass the driver class
+     * @param url         the url
+     * @param username    the username
+     * @param passwd      the passwd
+     * @return the tomcat data source
+     */
     public static DataSource getTomcatDataSource(String driverClass, String url, String username, String passwd) {
+
         if (log.isDebugEnabled())
             log.debug("build Tomcat pool DataSource... driverClass=[{}], url=[{}], username=[{}], passwd=[{}]",
                       driverClass, url, username, passwd);
@@ -93,14 +120,15 @@ public class JdbcTool {
     /** 테스트에 사용하기 위해 메모리를 사용하는 HSql DB 에 대한 DataSource 를 반환합니다. */
     public static DataSource getEmbeddedHsqlDataSource() {
         return getDataSource("org.hsqldb.jdbcDriver",
-                             "jdbc:hsqldb:mem:test;MVCC=TRUE",
+                             "jdbc:hsqldb:mem:test;MVCC=TRUE;",
                              "sa",
                              "");
     }
 
+    /** 테스트에 사용하기 위해 메모리를 사용하는 H2 DB 에 대한 DataSource 를 반환합니다. */
     public static DataSource getEmbeddedH2DataSource() {
         return getDataSource("org.h2.Driver",
-                             "jdbc:h2:mem:test;DB_CLOSE_DELAY=-1;MVCC=TRUE",
+                             "jdbc:h2:mem:test;DB_CLOSE_DELAY=-1;MVCC=TRUE;",
                              "sa",
                              "");
     }

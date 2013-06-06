@@ -37,8 +37,6 @@ import javax.persistence.Embeddable;
 @Setter
 public class SimpleMetaValue extends ValueObjectBase implements IMetaValue {
 
-    private static final long serialVersionUID = -6675942606392780717L;
-
     public static final SimpleMetaValue Empty = new SimpleMetaValue("");
 
     private String value;
@@ -77,4 +75,6 @@ public class SimpleMetaValue extends ValueObjectBase implements IMetaValue {
                 .add("description", description)
                 .add("exAttr", exAttr);
     }
+
+    private static final long serialVersionUID = -6675942606392780717L;
 }

@@ -34,7 +34,8 @@ import java.util.Set;
 public abstract class LocaleMetaEntityBase<TId extends Serializable, TLocaleValue extends ILocaleValue>
         extends LocaleEntityBase<TId, TLocaleValue> implements IMetaEntity {
 
-    private static final long serialVersionUID = -3409892017189966160L;
+    // TODO: metaMap 에 대한 Annotation을 설정해야 하기 때문에 상속 관계를 가지게 하려면 override 를 해야 합니다!!!
+    //
 
     @Getter
     private Map<String, IMetaValue> metaMap = Maps.newLinkedHashMap();
@@ -63,4 +64,6 @@ public abstract class LocaleMetaEntityBase<TId extends Serializable, TLocaleValu
     public void removeMetaValue(String metaKey) {
         metaMap.remove(metaKey);
     }
+
+    private static final long serialVersionUID = -3409892017189966160L;
 }

@@ -34,15 +34,17 @@ import javax.persistence.PostPersist;
 @DynamicUpdate
 public abstract class AnnotatedEntityBase extends StatefulEntityBase {
 
-    private static final long serialVersionUID = 3909149271064220443L;
-
+    /** 엔티티 저장 후에 처리해야 할 작업을 수행합니다. */
     @PostPersist
     public final void postPersist() {
         onPersist();
     }
 
+    /** 엔티티 로드 후에 엔티티에 후 처리할 작업입니다. */
     @PostLoad
     public final void postLoad() {
         onLoad();
     }
+
+    private static final long serialVersionUID = 3909149271064220443L;
 }

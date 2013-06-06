@@ -37,8 +37,6 @@ import javax.persistence.Embeddable;
 @Setter
 public class TreeNodePosition extends ValueObjectBase {
 
-    private static final long serialVersionUID = 7724440843329055902L;
-
     @Column(name = "TreeLevel")
     private Integer level;
 
@@ -82,4 +80,6 @@ public class TreeNodePosition extends ValueObjectBase {
                 .add("level", level)
                 .add("order", order);
     }
+
+    private static final long serialVersionUID = 7724440843329055902L;
 }

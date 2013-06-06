@@ -1,3 +1,19 @@
+/*
+ * Copyright 2011-2013 the original author or authors.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package kr.debop4j.data.hibernate.forTesting;
 
 import kr.debop4j.core.spring.Springs;
@@ -48,7 +64,7 @@ public class DatabaseTestFixtureTest extends DatabaseTestFixtureBase {
 //    }
 
     @Test
-    @Ignore("MySQL을 설치하세요")
+    // @Ignore("MySQL을 설치하세요")
     public void canCreateUnitOfWorkContextForMySql() {
         verifyCanCreateUnitOfWorkContextFor(MySqlConfig.class);
         verifyCanCreateUseAndDisposeSession();
@@ -63,7 +79,7 @@ public class DatabaseTestFixtureTest extends DatabaseTestFixtureBase {
     }
 
     @Test
-    @Ignore("PgPool-II 를 설치해야만 테스트가 가능합니다. - Connection Pool 로만 써도 상당한 성능 향상이 있습니다.")
+    @Ignore( "PgPool-II 를 설치해야만 테스트가 가능합니다. - Connection Pool 로만 써도 상당한 성능 향상이 있습니다." )
     public void canCreateUnitOfWorkContextForPgPool() {
         verifyCanCreateUnitOfWorkContextFor(PgPoolConfig.class);
         verifyCanCreateUseAndDisposeSession();
@@ -71,7 +87,7 @@ public class DatabaseTestFixtureTest extends DatabaseTestFixtureBase {
     }
 
     @Test
-    @Ignore("pgBouncer를 설치해야만 테스트가 가능합니다. - PostgreSql의 Connection Pool 기능입니다.")
+    @Ignore( "pgBouncer를 설치해야만 테스트가 가능합니다. - PostgreSql의 Connection Pool 기능입니다." )
     public void canCreateUnitOfWorkContextForPgBouncer() {
         verifyCanCreateUnitOfWorkContextFor(PgBouncerConfig.class);
         verifyCanCreateUseAndDisposeSession();

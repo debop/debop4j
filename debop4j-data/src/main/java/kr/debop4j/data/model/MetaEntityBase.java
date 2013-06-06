@@ -19,7 +19,6 @@ package kr.debop4j.data.model;
 import com.google.common.collect.Maps;
 import lombok.Getter;
 
-import javax.persistence.MappedSuperclass;
 import java.io.Serializable;
 import java.util.Map;
 import java.util.Set;
@@ -30,11 +29,7 @@ import java.util.Set;
  * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 12. 9. 19
  */
-@MappedSuperclass
 public abstract class MetaEntityBase<TId extends Serializable> extends EntityBase<TId> implements IMetaEntity {
-
-    private static final long serialVersionUID = 8802449633388271176L;
-
     @Getter
     private final Map<String, IMetaValue> metaMap = Maps.newLinkedHashMap();
 
@@ -62,4 +57,6 @@ public abstract class MetaEntityBase<TId extends Serializable> extends EntityBas
     public void removeMetaValue(String metaKey) {
         getMetaMap().remove(metaKey);
     }
+
+    private static final long serialVersionUID = 8802449633388271176L;
 }

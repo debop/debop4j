@@ -30,8 +30,6 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class YearWeek extends ValueObjectBase implements IYearWeek, Comparable<YearWeek> {
 
-    private static final long serialVersionUID = -5529645755326276780L;
-
     public static final YearWeek MIN_VALUE = new YearWeek();
 
     @Getter
@@ -57,7 +55,12 @@ public class YearWeek extends ValueObjectBase implements IYearWeek, Comparable<Y
         this.week = (int) Objects.firstNonNull(week, 1);
     }
 
-    /** Copy 생성자 */
+
+    /**
+     * Instantiates a new Year week.
+     *
+     * @param src the 원본
+     */
     public YearWeek(YearWeek src) {
         this.year = src.year;
         this.week = src.week;
@@ -82,4 +85,6 @@ public class YearWeek extends ValueObjectBase implements IYearWeek, Comparable<Y
                 .add("year", year)
                 .add("week", week);
     }
+
+    private static final long serialVersionUID = -5529645755326276780L;
 }

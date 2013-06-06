@@ -40,12 +40,11 @@ import javax.persistence.MappedSuperclass;
 @DynamicUpdate
 public abstract class LongAnnotatedEntityBase extends AnnotatedEntityBase implements IEntity<Long> {
 
-    private static final long serialVersionUID = -5449987622950958481L;
-
+    /** 엔티티 Identifier */
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue( strategy = GenerationType.AUTO )
     @Getter
-    @Setter(AccessLevel.PROTECTED)
+    @Setter( AccessLevel.PROTECTED )
     private Long id;
 
     @Override
@@ -61,4 +60,6 @@ public abstract class LongAnnotatedEntityBase extends AnnotatedEntityBase implem
         return super.buildStringHelper()
                 .add("id", id);
     }
+
+    private static final long serialVersionUID = -5449987622950958481L;
 }

@@ -28,8 +28,8 @@ import javax.persistence.PersistenceContext;
 import java.io.Serializable;
 
 /**
- * JPA 에서 사용할 Repository 입니다.
- * {@ref http://www.baeldung.com/2011/12/13/the-persistencexml-layer-with-spring-3-1-and-annotated/}
+ * JPA 에서 사용할 Repository 입니다. <br/>
+ * 참고: http://www.baeldung.com/2011/12/13/the-persistencexml-layer-with-spring-3-1-and-annotated/
  *
  * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 12. 11. 25.

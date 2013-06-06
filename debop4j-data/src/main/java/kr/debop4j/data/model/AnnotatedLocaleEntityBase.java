@@ -39,7 +39,7 @@ public abstract class AnnotatedLocaleEntityBase<TLocaleValue extends ILocaleValu
 
     private static final long serialVersionUID = -8011956015193946896L;
 
-    abstract public Map<Locale, TLocaleValue> getLocaleMap();
+    public abstract Map<Locale, TLocaleValue> getLocaleMap();
 
     @Transient
     private TLocaleValue defaultLocaleValue = null;

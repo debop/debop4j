@@ -1,7 +1,8 @@
+target
+bin
 *.class
-*.iml
+*.log
 .idea
-logs
 .lucene
 
 # Package Files #

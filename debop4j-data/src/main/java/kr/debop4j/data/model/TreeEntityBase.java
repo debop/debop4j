@@ -42,18 +42,18 @@ public abstract class TreeEntityBase<T extends ITreeEntity<T>, TId extends Seria
 
     private static final long serialVersionUID = 5383928955741762564L;
 
-    /** {@inheritDoc} */
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "ParentId")
+    /** 부모 엔티티 */
+    @ManyToOne( fetch = FetchType.LAZY )
+    @JoinColumn( name = "ParentId" )
     private T parent;
 
-    /** {@inheritDoc} */
-    @Setter(AccessLevel.PROTECTED)
-    @OneToMany(mappedBy = "parent", cascade = { CascadeType.ALL })
-    @LazyCollection(LazyCollectionOption.EXTRA)
+    /** 자식 엔티티 컬렉션입니다. */
+    @Setter( AccessLevel.PROTECTED )
+    @OneToMany( mappedBy = "parent", cascade = { CascadeType.ALL } )
+    @LazyCollection( LazyCollectionOption.EXTRA )
     private Set<T> children = Sets.newLinkedHashSet();
 
-    /** {@inheritDoc} */
+    /** 엔티티의 트리상의 위치를 나타냅니다. */
     @Embedded
     private TreeNodePosition nodePosition = new TreeNodePosition();
 

@@ -32,18 +32,38 @@ public class Triple<V1, V2, V3> extends ValueObjectBase implements Serializable 
 
     private static final long serialVersionUID = 6306564808094409454L;
 
+    /**
+     * Create triple.
+     *
+     * @param v1 the v 1
+     * @param v2 the v 2
+     * @param v3 the v 3
+     * @return the triple
+     */
     public static <V1, V2, V3> Triple<V1, V2, V3> create(V1 v1, V2 v2, V3 v3) {
         return new Triple<V1, V2, V3>(v1, v2, v3);
     }
 
+    /** The V1. */
     @Getter
     public final V1 v1;
+
+    /** The V2. */
     @Getter
     public final V2 v2;
+
+    /** The V3. */
     @Getter
     public final V3 v3;
     private final int hash;
 
+    /**
+     * Instantiates a new Triple.
+     *
+     * @param v1 the v1
+     * @param v2 the v2
+     * @param v3 the v3
+     */
     public Triple(V1 v1, V2 v2, V3 v3) {
         this.v1 = v1;
         this.v2 = v2;
