@@ -65,14 +65,29 @@ public final class UnitOfWorks {
         return Local.get(IUnitOfWork.CURRENT_UNIT_OF_WORK_KEY, IUnitOfWork.class);
     }
 
+    /**
+     * Gets current session factory.
+     *
+     * @return the current session factory
+     */
     public static synchronized SessionFactory getCurrentSessionFactory() {
         return getUnitOfWorkFactory().getSessionFactory();
     }
 
+    /**
+     * Gets current session.
+     *
+     * @return the current session
+     */
     public static synchronized Session getCurrentSession() {
         return getUnitOfWorkFactory().getCurrentSession();
     }
 
+    /**
+     * Gets unit of work factory.
+     *
+     * @return {@link IUnitOfWorkFactory} instance.
+     */
     public static synchronized IUnitOfWorkFactory getUnitOfWorkFactory() {
         if (unitOfWorkFactory == null)
             throw new RuntimeException("Spring 환경설정에서 UnitOfWorks를 ComponentScan에 추가해주세요.");
@@ -80,24 +95,48 @@ public final class UnitOfWorks {
         return unitOfWorkFactory;
     }
 
-    /** Spring에서 직접 Injection을 수행한다. */
-    @Autowired(required = true)
+    /**
+     * Spring으로부터 {@link IUnitOfWorkFactory}를 injection 을 받습니다.<p/>
+     * 참고 : http://debop.blogspot.kr/2013/05/spring-framework-static-field-injection.html
+     *
+     * @param factory {@link IUnitOfWorkFactory} instance.
+     */
+    @Autowired
     public void injectUnitOfWorkFactory(IUnitOfWorkFactory factory) {
         log.info("Spring에서 UnitOfWorkFactory를 인젝션합니다. unitOfWorkFactory=[{}]", factory);
-        UnitOfWorks.unitOfWorkFactory = factory;
-    }
 
-    public static synchronized void setUnitOfWorkFactory(IUnitOfWorkFactory factory) {
-        log.info("UnitOfWorkFactory를 설정합니다. unitOfWorkFactory=[{}]", factory);
         unitOfWorkFactory = factory;
     }
 
+    /**
+     * Sets unit ozf work factory.
+     *
+     * @param factory the factory
+     */
+    public static synchronized void setUnitOzfWorkFactory(IUnitOfWorkFactory factory) {
+        log.info("UnitOfWorkFactory를 설정합니다. unitOfWorkFactory=[{}]", factory);
+
+        unitOfWorkFactory = factory;
+    }
+
+    /**
+     * Set current unit of work.
+     *
+     * @param unitOfWork the unit of work
+     */
     public static void setCurrent(IUnitOfWork unitOfWork) {
         if (log.isDebugEnabled())
             log.debug("현 Thread Context의 UnitOfWork 인스턴스를 설정합니다. unitOfWork=[{}]", unitOfWork);
+
         Local.put(IUnitOfWork.CURRENT_UNIT_OF_WORK_KEY, unitOfWork);
     }
 
+    /**
+     * Register global unit of work.
+     *
+     * @param globalUnitOfWork the global unit of work
+     * @return the auto closeable action
+     */
     public static synchronized AutoCloseableAction registerGlobalUnitOfWork(IUnitOfWork globalUnitOfWork) {
         if (log.isDebugEnabled())
             log.debug("전역 IUnitOfWork를 설정합니다. globalUnitOfWork=[{}]", globalUnitOfWork);
@@ -112,40 +151,64 @@ public final class UnitOfWorks {
         });
     }
 
+    /**
+     * Start new unit of work.
+     *
+     * @return {@link IUnitOfWork} instance.
+     */
     public static synchronized IUnitOfWork start() {
         return start(null, UnitOfWorkNestingOptions.ReturnExistingOrCreateUnitOfWork);
     }
 
+    /**
+     * Start new unit of work.
+     *
+     * @param nestingOptions 생성 옵션 {@link UnitOfWorkNestingOptions}
+     * @return {@link IUnitOfWork} instance.
+     */
     public static synchronized IUnitOfWork start(UnitOfWorkNestingOptions nestingOptions) {
         return start(null, nestingOptions);
     }
 
+    /**
+     * Start new unit of work.
+     *
+     * @param sessionFactory {@link SessionFactory} instance.
+     * @return {@link IUnitOfWork} instance.
+     */
     public static synchronized IUnitOfWork start(SessionFactory sessionFactory) {
         return start(sessionFactory, UnitOfWorkNestingOptions.ReturnExistingOrCreateUnitOfWork);
     }
 
+    /**
+     * Start new unit of work.
+     *
+     * @param sessionFactory {@link SessionFactory} instance.
+     * @param nestingOptions 생성 옵션 {@link UnitOfWorkNestingOptions}
+     * @return {@link IUnitOfWork} instance.
+     */
     public static synchronized IUnitOfWork start(SessionFactory sessionFactory, UnitOfWorkNestingOptions nestingOptions) {
         if (log.isDebugEnabled())
-            log.debug("새로운 UnitOfWork를 시작합니다. sessionFactory=[{}], nestingOptions=[{}]", sessionFactory, nestingOptions);
+            log.debug("새로운 UnitOfWork를 시작합니다... sessionFactory=[{}], nestingOptions=[{}]", sessionFactory, nestingOptions);
 
         if (globalNonThreadSafeUnitOfWork != null)
             return globalNonThreadSafeUnitOfWork;
 
         IUnitOfWorkImplementor existing = Local.get(IUnitOfWork.CURRENT_UNIT_OF_WORK_KEY, IUnitOfWorkImplementor.class);
-
         boolean useExisting =
-                existing != null && nestingOptions == UnitOfWorkNestingOptions.ReturnExistingOrCreateUnitOfWork;
+                existing != null &&
+                        nestingOptions == UnitOfWorkNestingOptions.ReturnExistingOrCreateUnitOfWork;
 
         if (useExisting) {
-            if (log.isDebugEnabled())
-                log.debug("기존 IUnitOfWork 가 존재하므로, 사용횟수만 증가시키고, 기존 IUnitOfWork 인스턴스를 반환합니다. 사용횟수=[{}]", existing.getUsage());
+            if (log.isTraceEnabled())
+                log.trace("기존 IUnitOfWork 가 존재하므로, 사용횟수만 증가시키고, 기존 IUnitOfWork 인스턴스를 반환합니다. 사용횟수=[{}]", existing.getUsage());
 
             existing.increseUsage();
             return existing;
         }
 
-        if (log.isDebugEnabled())
-            log.debug("새로운 IUnitOfWorkFactory 와 IUnitOfWork 를 생성합니다...");
+        if (log.isTraceEnabled())
+            log.trace("새로운 IUnitOfWorkFactory 와 IUnitOfWork 를 생성합니다...");
 
         if (existing != null && sessionFactory == null) {
             sessionFactory = existing.getSession().getSessionFactory();
@@ -156,7 +219,7 @@ public final class UnitOfWorks {
         setCurrent(getUnitOfWorkFactory().create(sessionFactory, existing));
 
         if (log.isDebugEnabled())
-            log.debug("새로운 IUnitOfWork를 시작합니다. sessionFactory=[{}]", sessionFactory);
+            log.debug("새로운 IUnitOfWork를 시작했습니다. sessionFactory=[{}]", sessionFactory);
 
         return getCurrent();
     }
@@ -169,22 +232,20 @@ public final class UnitOfWorks {
     /**
      * 현재 실행중인 UnitOfWork를 종료합니다.
      *
-     * @param needFlushing Session에 반영된 내용을 Flushing 할 것인지 여부
+     * @param needFlushing Session에 반영된 내용을 flushing 할 것인지 여부
      */
     public static void stop(boolean needFlushing) {
-        if (log.isDebugEnabled())
-            log.debug("현재 실행중인 UnitOfWork를 중지합니다... needFlushing=[{}]", needFlushing);
+        if (log.isTraceEnabled())
+            log.trace("현재 실행중인 UnitOfWork를 중지합니다... needFlushing=[{}]", needFlushing);
 
         if (isStarted() && getCurrent() != null) {
             if (needFlushing) {
                 try {
-                    if (log.isDebugEnabled())
-                        log.debug("현 UnitOfWork의 Session에 대해 flushing 작업을 시작합니다...");
+                    if (log.isTraceEnabled()) log.trace("현 UnitOfWork의 Session에 대해 flushing 작업을 시작합니다...");
 
                     getCurrent().flushSession();
 
-                    if (log.isDebugEnabled())
-                        log.debug("현 UnitOfWork의 Session에 대해 flushing 작업을 완료합니다...");
+                    if (log.isTraceEnabled()) log.trace("현 UnitOfWork의 Session에 대해 flushing 작업을 완료합니다...");
                 } catch (Exception ignored) {
                     log.error("UnitOfWork의 Session을 Flushing하는 중 예외가 발생했습니다.", ignored);
                 }
@@ -208,7 +269,7 @@ public final class UnitOfWorks {
 
     public static synchronized void closeUnitOfWorkFactory() {
         if (log.isInfoEnabled())
-            log.info("UnitOfWorkFactory를 초기화합니다...");
+            log.info("UnitOfWorkFactory를 종료합니다.");
 
         unitOfWorkFactory = null;
     }

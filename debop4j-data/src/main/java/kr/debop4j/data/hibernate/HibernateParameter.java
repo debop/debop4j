@@ -23,13 +23,11 @@ import lombok.Setter;
 
 /**
  * Hibernate용 Parameter 정보를 표현합니다.
- * Jpa@author 배성혁 ( sunghyouk.bae@gmail.com )
  *
+ * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 12. 11. 19
  */
 public class HibernateParameter extends NamedParameterBase {
-
-    private static final long serialVersionUID = -6291985997768450558L;
 
     @Getter @Setter
     private org.hibernate.type.Type type;
@@ -61,4 +59,6 @@ public class HibernateParameter extends NamedParameterBase {
         return super.buildStringHelper()
                 .add("type", type);
     }
+
+    private static final long serialVersionUID = -6291985997768450558L;
 }

@@ -41,10 +41,12 @@ import java.sql.SQLException;
 @Slf4j
 public class WeekOfYearUserType implements CompositeUserType, Serializable {
 
-    private static final long serialVersionUID = 1007278892003631396L;
-
-    /** 객체를 {@link YearWeek} 로 변환합니다. */
-    private static YearWeek asYearWeek(Object value) {
+    /**
+     * 객체를 {@link YearWeek} 로 변환합니다.
+     *
+     * @param value 객체
+     */
+    private static YearWeek asYearWeek(final Object value) {
         if (value == null)
             return YearWeek.MIN_VALUE;
 
@@ -62,7 +64,7 @@ public class WeekOfYearUserType implements CompositeUserType, Serializable {
     }
 
     @Override
-    public Object getPropertyValue(Object component, int property) throws HibernateException {
+    public Object getPropertyValue(final Object component, final int property) throws HibernateException {
         Guard.shouldNotBeNull(component, "component");
         YearWeek yw = asYearWeek(component);
 
@@ -75,7 +77,7 @@ public class WeekOfYearUserType implements CompositeUserType, Serializable {
     }
 
     @Override
-    public void setPropertyValue(Object component, int property, Object value) throws HibernateException {
+    public void setPropertyValue(final Object component, final int property, final Object value) throws HibernateException {
         Guard.shouldNotBeNull(component, "component");
         YearWeek yw = asYearWeek(component);
 
@@ -160,4 +162,6 @@ public class WeekOfYearUserType implements CompositeUserType, Serializable {
                           Object owner) throws HibernateException {
         return (YearWeek) deepCopy(original);
     }
+
+    private static final long serialVersionUID = 1007278892003631396L;
 }

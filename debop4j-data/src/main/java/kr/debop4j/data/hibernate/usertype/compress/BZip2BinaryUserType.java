@@ -30,10 +30,11 @@ import lombok.extern.slf4j.Slf4j;
 public class BZip2BinaryUserType extends AbstractCompressedBinaryUserType {
 
     private static final ICompressor compressor = new BZip2Compressor();
-    private static final long serialVersionUID = 5894112998214016162L;
 
     @Override
     public ICompressor getCompressor() {
         return compressor;
     }
+
+    private static final long serialVersionUID = 5894112998214016162L;
 }

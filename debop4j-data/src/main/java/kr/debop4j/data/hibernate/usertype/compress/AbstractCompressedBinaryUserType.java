@@ -35,16 +35,26 @@ import java.sql.SQLException;
 @Slf4j
 public abstract class AbstractCompressedBinaryUserType extends AbstractCompressedUserType {
 
-    private static final long serialVersionUID = -986318455760560003L;
-
-    protected byte[] compress(byte[] value) throws Exception {
+    /**
+     * Compress byte array.
+     *
+     * @param value the value
+     * @return the byte [ ]
+     */
+    protected final byte[] compress(final byte[] value) {
         if (ArrayTool.isEmpty(value))
             return null;
 
         return getCompressor().compress(value);
     }
 
-    protected byte[] decompress(byte[] value) throws Exception {
+    /**
+     * Decompress byte array.
+     *
+     * @param value the value
+     * @return the byte [ ]
+     */
+    protected final byte[] decompress(final byte[] value) {
         if (ArrayTool.isEmpty(value))
             return ArrayTool.EMPTY_BYTE_ARRAY;
 
@@ -57,11 +67,10 @@ public abstract class AbstractCompressedBinaryUserType extends AbstractCompresse
     }
 
     @Override
-    public Object nullSafeGet(ResultSet resultSet,
-                              String[] strings,
-                              SessionImplementor sessionImplementor,
-                              Object o)
-            throws HibernateException, SQLException {
+    public Object nullSafeGet(final ResultSet resultSet,
+                              final String[] strings,
+                              final SessionImplementor sessionImplementor,
+                              final Object o) throws HibernateException, SQLException {
         try {
             byte[] value = BinaryType.INSTANCE.nullSafeGet(resultSet, strings[0], sessionImplementor);
             return decompress(value);
@@ -72,12 +81,10 @@ public abstract class AbstractCompressedBinaryUserType extends AbstractCompresse
     }
 
     @Override
-    public void nullSafeSet(PreparedStatement preparedStatement,
-                            Object o,
-                            int i,
-                            SessionImplementor sessionImplementor)
-            throws HibernateException, SQLException {
-
+    public void nullSafeSet(final PreparedStatement preparedStatement,
+                            final Object o,
+                            final int i,
+                            final SessionImplementor sessionImplementor) throws HibernateException, SQLException {
         try {
             byte[] value = ArrayTool.isEmpty((byte[]) o) ? null : compress((byte[]) o);
             BinaryType.INSTANCE.nullSafeSet(preparedStatement, value, i, sessionImplementor);
@@ -91,4 +98,6 @@ public abstract class AbstractCompressedBinaryUserType extends AbstractCompresse
     public boolean isMutable() {
         return BinaryType.INSTANCE.isMutable();
     }
+
+    private static final long serialVersionUID = -986318455760560003L;
 }

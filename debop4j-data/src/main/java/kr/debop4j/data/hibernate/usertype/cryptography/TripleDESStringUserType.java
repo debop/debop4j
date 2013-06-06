@@ -30,10 +30,11 @@ import lombok.extern.slf4j.Slf4j;
 public class TripleDESStringUserType extends AbstractSymmetricEncryptStringUserType {
 
     private static final ISymmetricByteEncryptor encryptor = new TripleDESByteEncryptor();
-    private static final long serialVersionUID = 2584675219844345168L;
 
     @Override
     public ISymmetricByteEncryptor getEncryptor() {
         return encryptor;
     }
+
+    private static final long serialVersionUID = 2584675219844345168L;
 }

@@ -40,12 +40,11 @@ import java.util.Properties;
 @Slf4j
 public class StringEnumUserType implements UserType, ParameterizedType, Serializable {
 
-    private static final long serialVersionUID = 4135696095152036946L;
     private Class<Enum> enumClass;
 
     @Override
     @SuppressWarnings("unchecked")
-    public void setParameterValues(Properties parameters) {
+    public void setParameterValues(final Properties parameters) {
         String enumClassName = parameters.getProperty("enumClassName");
         try {
             enumClass = ReflectHelper.classForName(enumClassName);
@@ -116,4 +115,6 @@ public class StringEnumUserType implements UserType, ParameterizedType, Serializ
     public Object replace(Object original, Object target, Object owner) throws HibernateException {
         return original;
     }
+
+    private static final long serialVersionUID = 4135696095152036946L;
 }

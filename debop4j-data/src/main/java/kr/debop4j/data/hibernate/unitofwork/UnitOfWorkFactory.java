@@ -22,8 +22,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
-import java.util.Map;
-
 /**
  * Hibernate 용 IUnitOfWork Factory 클래스입니다.
  *
@@ -35,7 +33,6 @@ public class UnitOfWorkFactory implements IUnitOfWorkFactory {
 
     protected final Object syncLock = new Object();
     protected SessionFactory sessionFactory;
-    protected Map<String, SessionFactory> sessionFactories;
 
     @Override
     public SessionFactory getSessionFactory() {
@@ -49,16 +46,6 @@ public class UnitOfWorkFactory implements IUnitOfWorkFactory {
             log.info("SessionFactory를 설정합니다. sessionFactory=[{}]", sessionFactory);
 
         this.sessionFactory = sessionFactory;
-    }
-
-    @Override
-    public Map<String, SessionFactory> getSessionFactories() {
-        return this.sessionFactories;
-    }
-
-    @Override
-    public void setSessionFactories(Map<String, SessionFactory> sessionFactories) {
-        this.sessionFactories = sessionFactories;
     }
 
     @Override

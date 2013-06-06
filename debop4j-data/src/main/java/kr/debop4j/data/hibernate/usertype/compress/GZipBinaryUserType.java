@@ -30,10 +30,11 @@ import lombok.extern.slf4j.Slf4j;
 public class GZipBinaryUserType extends AbstractCompressedBinaryUserType {
 
     private static final ICompressor compressor = new GZipCompressor();
-    private static final long serialVersionUID = -5975616952629118969L;
 
     @Override
     public ICompressor getCompressor() {
         return compressor;
     }
+
+    private static final long serialVersionUID = -5975616952629118969L;
 }

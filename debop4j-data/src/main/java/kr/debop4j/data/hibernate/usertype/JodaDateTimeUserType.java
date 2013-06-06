@@ -38,9 +38,7 @@ import java.util.Date;
 @Slf4j
 public class JodaDateTimeUserType implements UserType, Serializable {
 
-    private static final long serialVersionUID = -3556921355917963632L;
-
-    public static DateTime asDateTime(Object value) {
+    public static DateTime asDateTime(final Object value) {
         if (log.isTraceEnabled())
             log.trace("값을 DateTime으로 변환합니다. value=[{}]", value);
 
@@ -52,6 +50,7 @@ public class JodaDateTimeUserType implements UserType, Serializable {
             return new DateTime(((Date) value).getTime());
         if (value instanceof DateTime)
             return (DateTime) value;
+
         return null;
     }
 
@@ -115,4 +114,6 @@ public class JodaDateTimeUserType implements UserType, Serializable {
     public Object replace(Object original, Object target, Object owner) throws HibernateException {
         return deepCopy(original);
     }
+
+    private static final long serialVersionUID = -3556921355917963632L;
 }

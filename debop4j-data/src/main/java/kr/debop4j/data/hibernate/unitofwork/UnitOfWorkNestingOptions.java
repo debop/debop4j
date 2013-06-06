@@ -34,4 +34,25 @@ public enum UnitOfWorkNestingOptions {
     UnitOfWorkNestingOptions(int option) {
         this.option = option;
     }
+
+    public final int getValue() {
+        return option;
+    }
+
+    /**
+     * UnitOfWorkNestingOptions 로 변환합니다.
+     *
+     * @param value Option 값
+     * @return UnitOfWorkNestingOptions 값
+     */
+    public static UnitOfWorkNestingOptions valueOf(int value) {
+        switch (value) {
+            case 0:
+                return ReturnExistingOrCreateUnitOfWork;
+            case 1:
+                return CreateNewOrNestUnitOfWork;
+            default:
+                throw new IllegalArgumentException();
+        }
+    }
 }

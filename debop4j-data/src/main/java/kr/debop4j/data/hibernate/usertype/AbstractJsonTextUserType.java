@@ -16,7 +16,6 @@
 
 package kr.debop4j.data.hibernate.usertype;
 
-import com.google.common.base.Objects;
 import kr.debop4j.core.Guard;
 import kr.debop4j.core.json.IJsonSerializer;
 import kr.debop4j.core.json.JsonTextObject;
@@ -31,11 +30,12 @@ import java.io.Serializable;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Objects;
 
 import static kr.debop4j.core.tools.StringTool.ellipsisChar;
 
 /**
- * 속성 정보를 Json 직렬화를 수행해 저장합니다.
+ * 속성 정보를 Json 직렬화를 수행해 저장합니다.<br/>
  * 객체의 실제 수형에 대한 정보는 첫번째 컬럼에 저장되고, 두번째 컬럼에 Json 직렬화 문자열이 저장됩니다.
  *
  * @author 배성혁 ( sunghyouk.bae@gmail.com )
@@ -45,23 +45,35 @@ import static kr.debop4j.core.tools.StringTool.ellipsisChar;
 public abstract class AbstractJsonTextUserType implements CompositeUserType, Serializable {
 
     private static final boolean isTraceEnabled = log.isTraceEnabled();
-    private static final long serialVersionUID = -1729578848869460945L;
 
-    abstract public IJsonSerializer getJsonSerializer();
+    public abstract IJsonSerializer getJsonSerializer();
 
-    public JsonTextObject serialize(Object value) {
+    /**
+     * Json 직렬화를 수행합니다.
+     *
+     * @param value 객체
+     * @return Json 객체
+     */
+    public JsonTextObject serialize(final Object value) {
         if (value == null)
             return JsonTextObject.Empty;
 
-        Guard.shouldBe(value instanceof JsonTextObject,
-                       "인스턴스 수형이 JsonTextObject가 아닙니다. value type=" + value.getClass().getName());
+//        Guard.shouldBe(value instanceof JsonTextObject,
+//                       "인스턴스 수형이 JsonTextObject가 아닙니다. value type=" + value.getClass().getName());
 
         return new JsonTextObject(value.getClass().getName(),
                                   getJsonSerializer().serializeToText(value));
     }
 
-    @SuppressWarnings("unchecked")
-    public Object deserialize(JsonTextObject jto) throws HibernateException {
+    /**
+     * Json 객체를 역직렬화하여 원하는 객체로 빌드합니다.
+     *
+     * @param jto Json 객체
+     * @return 역직렬화한 원본 객체
+     * @throws HibernateException
+     */
+    @SuppressWarnings( "unchecked" )
+    public Object deserialize(final JsonTextObject jto) throws HibernateException {
 
         if (jto == null || jto == JsonTextObject.Empty)
             return null;
@@ -77,7 +89,7 @@ public abstract class AbstractJsonTextUserType implements CompositeUserType, Ser
         }
     }
 
-    public JsonTextObject asJsonTextObject(Object value) {
+    public JsonTextObject asJsonTextObject(final Object value) {
         if (value == null)
             return JsonTextObject.Empty;
 
@@ -128,7 +140,7 @@ public abstract class AbstractJsonTextUserType implements CompositeUserType, Ser
 
     @Override
     public boolean equals(Object x, Object y) throws HibernateException {
-        return Objects.equal(x, y);
+        return Objects.equals(x, y);
     }
 
     @Override
@@ -137,10 +149,10 @@ public abstract class AbstractJsonTextUserType implements CompositeUserType, Ser
     }
 
     @Override
-    public Object nullSafeGet(ResultSet rs,
-                              String[] names,
-                              SessionImplementor session,
-                              Object owner) throws HibernateException, SQLException {
+    public Object nullSafeGet(final ResultSet rs,
+                              final String[] names,
+                              final SessionImplementor session,
+                              final Object owner) throws HibernateException, SQLException {
         String className = StringType.INSTANCE.nullSafeGet(rs, names[0], session);
         String jsonText = StringType.INSTANCE.nullSafeGet(rs, names[1], session);
 
@@ -152,10 +164,10 @@ public abstract class AbstractJsonTextUserType implements CompositeUserType, Ser
     }
 
     @Override
-    public void nullSafeSet(PreparedStatement st,
-                            Object value,
-                            int index,
-                            SessionImplementor session) throws HibernateException, SQLException {
+    public void nullSafeSet(final PreparedStatement st,
+                            final Object value,
+                            final int index,
+                            final SessionImplementor session) throws HibernateException, SQLException {
         if (value == null) {
             StringType.INSTANCE.nullSafeSet(st, null, index, session);
             StringType.INSTANCE.nullSafeSet(st, null, index + 1, session);
@@ -172,7 +184,7 @@ public abstract class AbstractJsonTextUserType implements CompositeUserType, Ser
     }
 
     @Override
-    public Object deepCopy(Object value) throws HibernateException {
+    public Object deepCopy(final Object value) throws HibernateException {
         if (value == null)
             return null;
 
@@ -205,4 +217,6 @@ public abstract class AbstractJsonTextUserType implements CompositeUserType, Ser
                           Object owner) throws HibernateException {
         return deepCopy(original);
     }
+
+    private static final long serialVersionUID = -1729578848869460945L;
 }

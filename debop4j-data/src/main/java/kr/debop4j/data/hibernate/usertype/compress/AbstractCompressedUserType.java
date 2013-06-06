@@ -16,8 +16,8 @@
 
 package kr.debop4j.data.hibernate.usertype.compress;
 
-import com.google.common.base.Objects;
 import kr.debop4j.core.compress.ICompressor;
+import kr.debop4j.core.tools.HashTool;
 import lombok.extern.slf4j.Slf4j;
 import org.hibernate.HibernateException;
 import org.hibernate.engine.spi.SessionImplementor;
@@ -28,6 +28,7 @@ import java.io.Serializable;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Objects;
 
 /**
  * 엔티티의 속성 값을 압축하여 DB에 저장 / 로드하는 Hibernate 사용자 수형의 기본 클래스입니다.
@@ -38,24 +39,22 @@ import java.sql.SQLException;
 @Slf4j
 public abstract class AbstractCompressedUserType implements UserType, Serializable {
 
-    private static final long serialVersionUID = -3570021248450932340L;
-
     /** 속성 값을 압축/복원하는 {@link ICompressor}의 구현 객체를 반환합니다. */
     abstract public ICompressor getCompressor();
 
 
-    abstract public Class returnedClass();
+    public abstract Class returnedClass();
 
-    abstract public Object nullSafeGet(ResultSet resultSet,
-                                       String[] strings,
-                                       SessionImplementor sessionImplementor,
-                                       Object o)
+    public abstract Object nullSafeGet(final ResultSet resultSet,
+                                       final String[] strings,
+                                       final SessionImplementor sessionImplementor,
+                                       final Object o)
             throws HibernateException, SQLException;
 
-    abstract public void nullSafeSet(PreparedStatement preparedStatement,
-                                     Object o,
-                                     int i,
-                                     SessionImplementor sessionImplementor)
+    public abstract void nullSafeSet(final PreparedStatement preparedStatement,
+                                     final Object o,
+                                     final int i,
+                                     final SessionImplementor sessionImplementor)
             throws HibernateException, SQLException;
 
     abstract public boolean isMutable();
@@ -67,12 +66,12 @@ public abstract class AbstractCompressedUserType implements UserType, Serializab
 
     @Override
     public boolean equals(Object x, Object y) throws HibernateException {
-        return Objects.equal(x, y);
+        return Objects.equals(x, y);
     }
 
     @Override
     public int hashCode(Object o) throws HibernateException {
-        return Objects.hashCode(o);
+        return HashTool.compute(o);
     }
 
     @Override
@@ -95,4 +94,6 @@ public abstract class AbstractCompressedUserType implements UserType, Serializab
     public Object replace(Object o, Object o1, Object o2) throws HibernateException {
         return deepCopy(o);
     }
+
+    private static final long serialVersionUID = -3570021248450932340L;
 }

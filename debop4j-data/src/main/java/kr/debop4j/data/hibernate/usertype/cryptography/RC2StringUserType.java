@@ -30,10 +30,11 @@ import lombok.extern.slf4j.Slf4j;
 public class RC2StringUserType extends AbstractSymmetricEncryptStringUserType {
 
     private static final ISymmetricByteEncryptor encryptor = new RC2ByteEncryptor();
-    private static final long serialVersionUID = -4671257855747547374L;
 
     @Override
     public ISymmetricByteEncryptor getEncryptor() {
         return encryptor;
     }
+
+    private static final long serialVersionUID = -4671257855747547374L;
 }

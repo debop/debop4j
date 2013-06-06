@@ -30,10 +30,11 @@ import lombok.extern.slf4j.Slf4j;
 public class DeflateStringUserType extends AbstractCompressedStringUserType {
 
     private static final ICompressor compressor = new DeflateCompressor();
-    private static final long serialVersionUID = -4948364167572373533L;
 
     @Override
     public ICompressor getCompressor() {
         return compressor;
     }
+
+    private static final long serialVersionUID = -4948364167572373533L;
 }

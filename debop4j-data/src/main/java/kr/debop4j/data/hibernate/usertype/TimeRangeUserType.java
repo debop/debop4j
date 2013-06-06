@@ -16,7 +16,6 @@
 
 package kr.debop4j.data.hibernate.usertype;
 
-import kr.debop4j.core.Guard;
 import kr.debop4j.data.model.DateTimeRange;
 import lombok.extern.slf4j.Slf4j;
 import org.hibernate.HibernateException;
@@ -34,6 +33,8 @@ import java.sql.SQLException;
 import java.util.Date;
 import java.util.Objects;
 
+import static kr.debop4j.core.Guard.shouldNotBeNull;
+
 /**
  * {@link DateTimeRange} 에 대한 Hibernate UserType 입니다.
  *
@@ -43,8 +44,12 @@ import java.util.Objects;
 @Slf4j
 public class TimeRangeUserType implements CompositeUserType, Serializable {
 
-    private static final long serialVersionUID = 6144414196985871379L;
-
+    /**
+     * 객체를 {@link DateTimeRange} 로 변환합니다. 아니면 null을 반환합니다.
+     *
+     * @param value the value
+     * @return the date time range
+     */
     public static DateTimeRange asDateTimeRange(Object value) {
         if (log.isTraceEnabled())
             log.trace("값을 DateTimeRange로 변경합니다. value=[{}]", value);
@@ -68,7 +73,7 @@ public class TimeRangeUserType implements CompositeUserType, Serializable {
     }
 
     @Override
-    public Object getPropertyValue(Object component, int property) throws HibernateException {
+    public Object getPropertyValue(final Object component, final int property) throws HibernateException {
         if (component == null)
             return null;
 
@@ -85,8 +90,8 @@ public class TimeRangeUserType implements CompositeUserType, Serializable {
     }
 
     @Override
-    public void setPropertyValue(Object component, int property, Object value) throws HibernateException {
-        Guard.shouldNotBeNull(component, "component");
+    public void setPropertyValue(final Object component, final int property, final Object value) throws HibernateException {
+        shouldNotBeNull(component, "component");
 
         DateTimeRange timeRange = asDateTimeRange(component);
 
@@ -169,4 +174,6 @@ public class TimeRangeUserType implements CompositeUserType, Serializable {
     public Object replace(Object original, Object target, SessionImplementor session, Object owner) throws HibernateException {
         return deepCopy(original);
     }
+
+    private static final long serialVersionUID = 6144414196985871379L;
 }

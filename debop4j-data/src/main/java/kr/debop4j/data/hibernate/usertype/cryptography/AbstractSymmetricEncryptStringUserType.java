@@ -43,12 +43,21 @@ public abstract class AbstractSymmetricEncryptStringUserType implements UserType
     private static final Logger log = LoggerFactory.getLogger(AbstractSymmetricEncryptStringUserType.class);
     private static final boolean isTraceEnabled = log.isTraceEnabled();
 
-    private static final long serialVersionUID = -3643450762631678192L;
-
+    /**
+     * Gets encryptor.
+     *
+     * @return the encryptor
+     */
     abstract public ISymmetricByteEncryptor getEncryptor();
 
-    /** 문자열을 암호화하여, 16진법 문자열로 변환합니다. */
-    protected String encrypt(String value) throws Exception {
+    /**
+     * 문자열을 암호화하여, 16진법 문자열로 변환합니다.
+     *
+     * @param value the value
+     * @return the string
+     * @throws Exception the exception
+     */
+    protected String encrypt(final String value) throws Exception {
         if (value == null)
             return null;
 
@@ -59,8 +68,14 @@ public abstract class AbstractSymmetricEncryptStringUserType implements UserType
         return StringTool.getStringFromBytes(bytes, BinaryStringFormat.HexDecimal);
     }
 
-    /** 암호화된 16진법 문자열을 복원하여, 원래 문자열로 변환합니다. */
-    protected String decrypt(String value) throws Exception {
+    /**
+     * 암호화된 16진법 문자열을 복원하여, 원래 문자열로 변환합니다.
+     *
+     * @param value the value
+     * @return the string
+     * @throws Exception the exception
+     */
+    protected String decrypt(final String value) throws Exception {
         if (value == null)
             return null;
 
@@ -143,4 +158,6 @@ public abstract class AbstractSymmetricEncryptStringUserType implements UserType
     public Object replace(Object original, Object target, Object owner) throws HibernateException {
         return deepCopy(original);
     }
+
+    private static final long serialVersionUID = -3643450762631678192L;
 }

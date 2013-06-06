@@ -19,14 +19,15 @@ package kr.debop4j.data.hibernate.unitofwork;
 import org.springframework.transaction.TransactionDefinition;
 
 /**
- * kr.nsoft.data.hibernate.unitofwork.IUnitOfWork
+ * Unit Of Work 를 표현하는 인터페이스입니다.
  *
  * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 12. 11. 27.
  */
 public interface IUnitOfWork extends AutoCloseable {
 
-    public final String CURRENT_UNIT_OF_WORK_KEY = "kr.debop4j.data.hibernate.unitofwork.UnitOfWorks.CurrentUnitOfWork";
+    /** Current Unit Of Work Key */
+    public final String CURRENT_UNIT_OF_WORK_KEY = IUnitOfWork.class.getName() + ".CurrentUnitOfWork";
 
     /** Current {@link org.hibernate.Session} 의 변경 내용을 flush 해서 저장소에 적용되도록 합니다. */
     void flushSession();
@@ -46,7 +47,11 @@ public interface IUnitOfWork extends AutoCloseable {
     /** 현 {@link org.hibernate.Session} 의 변경내용을 Transaction을 적용하여 flush를 수행합니다. */
     void transactionalFlush();
 
-    /** 현 {@link org.hibernate.Session} 의 변경 내용을 {@link org.springframework.transaction.TransactionDefinition} 설정을 가지는 Transaction을 이용하여 flush 를 수행합니다. */
+    /**
+     * 현 {@link org.hibernate.Session} 의 변경 내용을
+     * {@link org.springframework.transaction.TransactionDefinition}
+     * 설정을 가지는 Transaction을 이용하여 flush 를 수행합니다.
+     */
     void transactionalFlush(TransactionDefinition transactionDefinition);
 
     /** 현 UnitOfWork를 종료합니다. */
