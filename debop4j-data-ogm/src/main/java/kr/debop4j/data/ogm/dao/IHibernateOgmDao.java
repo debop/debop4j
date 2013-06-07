@@ -38,9 +38,13 @@ import java.util.concurrent.Future;
  */
 public interface IHibernateOgmDao {
 
-    String SESSION_KEY = HibernateOgmDao.class.getName() + ".Session";
-    String FULL_TEXT_SESSION_KEY = HibernateOgmDao.class.getName() + ".FullTextSession";
+    /** IHibernateOgmDao에서 사용할 hibernate Session 을 thread local 에 저장할 때의 키 값 */
+    String SESSION_KEY = IHibernateOgmDao.class.getName() + ".Session";
 
+    /** IHibernateOgmDao에서 사용할 hibernate-search FullTextSession 을 thread local 에 저장할 때의 키 값 */
+    String FULL_TEXT_SESSION_KEY = IHibernateOgmDao.class.getName() + ".FullTextSession";
+
+    /** 기본 Batch size (1000) */
     int DEFAUALT_BATCH_SIZE = 1000;
 
     /** 현 Thread-context 에서 사용할 Session 를 빈환합니다. */
@@ -49,7 +53,12 @@ public interface IHibernateOgmDao {
     /** 현 Thread-context 에서 사용할 hibernate-search 의 {@link  org.hibernate.search.FullTextSession} 을 반환합니다. */
     FullTextSession getFullTextSession();
 
-    /** 지정한 형식에 대한 질의 빌더를 생성합니다. */
+    /**
+     * 지정한 형식에 대한 질의 빌더를 생성합니다.
+     *
+     * @param clazz 엔티티 수형
+     * @return 쿼리 빌더
+     */
     QueryBuilder getQueryBuilder(Class<?> clazz);
 
     /**
@@ -77,7 +86,6 @@ public interface IHibernateOgmDao {
      * @param clazz 조회할 엔티티 수형
      * @return 전체 엔티티
      */
-
     <T> List<T> find(Class<T> clazz);
 
     /**
@@ -87,7 +95,6 @@ public interface IHibernateOgmDao {
      * @param luceneQuery 루씬 쿼리
      * @return 조회한 결과 엔티티 컬렉션
      */
-
     <T> List<T> find(Class<T> clazz, Query luceneQuery);
 
     /**
@@ -98,7 +105,6 @@ public interface IHibernateOgmDao {
      * @param luceneSort  정렬 방식
      * @return 조회한 결과 엔티티 컬렉션
      */
-
     <T> List<T> find(Class<T> clazz, Query luceneQuery, Sort luceneSort);
 
     /**
@@ -111,7 +117,6 @@ public interface IHibernateOgmDao {
      * @param luceneSort  정렬 방식
      * @return 조회 결과
      */
-
     <T> List<T> find(Class<T> clazz, Query luceneQuery, int firstResult, int maxResults, Sort luceneSort);
 
     /**
@@ -126,7 +131,8 @@ public interface IHibernateOgmDao {
      * @return 조회 결과
      */
 
-    <T> List<T> find(Class<T> clazz, Query luceneQuery, int firstResult, int maxResults, Sort luceneSort, Criteria criteria);
+    <T> List<T> find(Class<T> clazz, Query luceneQuery,
+                     int firstResult, int maxResults, Sort luceneSort, Criteria criteria);
 
     /**
      * 검색할 엔티티의 ID 값만 조회합니다 (많은 경우 ID만 필요한 경우가 많습니다)
@@ -147,7 +153,8 @@ public interface IHibernateOgmDao {
      * @param luceneSort  루씬 정렬 방식
      * @return 조회한 엔티티의 ID의 컬렉션
      */
-    List<Serializable> findIds(Class<?> clazz, Query luceneQuery, int firstResult, int maxResults, Sort luceneSort);
+    List<Serializable> findIds(Class<?> clazz, Query luceneQuery,
+                               int firstResult, int maxResults, Sort luceneSort);
 
     /**
      * 검색할 엔티티의 ID 값만 조회합니다 (많은 경우 ID만 필요한 경우가 많습니다)
@@ -160,7 +167,8 @@ public interface IHibernateOgmDao {
      * @param criteria    fetching 방식 등
      * @return 조회한 엔티티의 ID의 컬렉션
      */
-    List<Serializable> findIds(Class<?> clazz, Query luceneQuery, int firstResult, int maxResults, Sort luceneSort, Criteria criteria);
+    List<Serializable> findIds(Class<?> clazz, Query luceneQuery,
+                               int firstResult, int maxResults, Sort luceneSort, Criteria criteria);
 
     /**
      * 엔티티 조회 시에 특정 정보만을 가져온다. fields 값에는 {@link org.hibernate.search.ProjectionConstants} 를 쓸 수 있습니다.
@@ -231,7 +239,6 @@ public interface IHibernateOgmDao {
      * @param luceneSort  정렬 방식
      * @return 검색 결과를 페이징 결과로 반환합니다.
      */
-
     <T> IPagedList<T> getPage(Class<T> clazz, Query luceneQuery, int pageNo, int pageSize, Sort luceneSort);
 
     /**
@@ -245,8 +252,8 @@ public interface IHibernateOgmDao {
      * @param criteria    association이 있는 경우 fetching 방식을 변경할 수 있습니다.
      * @return 검색 결과를 페이징 결과로 반환합니다.
      */
-
-    <T> IPagedList<T> getPage(Class<T> clazz, Query luceneQuery, int pageNo, int pageSize, Sort luceneSort, Criteria criteria);
+    <T> IPagedList<T> getPage(Class<T> clazz, Query luceneQuery,
+                              int pageNo, int pageSize, Sort luceneSort, Criteria criteria);
 
     /**
      * 엔티티의 ID 값만 조회하여 Paging 처리해서 반환합니다.
@@ -269,7 +276,8 @@ public interface IHibernateOgmDao {
      * @param luceneSort  정렬 방식
      * @return 엔테티의 Id 값을 Paging 처리한 인스턴스
      */
-    IPagedList<Serializable> getIdPage(Class<?> clazz, Query luceneQuery, int pageNo, int pageSize, Sort luceneSort);
+    IPagedList<Serializable> getIdPage(Class<?> clazz, Query luceneQuery,
+                                       int pageNo, int pageSize, Sort luceneSort);
 
     /**
      * 엔티티의 ID 값만 조회하여 Paging 처리해서 반환합니다.
@@ -282,13 +290,14 @@ public interface IHibernateOgmDao {
      * @param criteria    fetching 등 방식을 제공
      * @return 엔테티의 Id 값을 Paging 처리한 인스턴스
      */
-
-    IPagedList<Serializable> getIdPage(Class<?> clazz, Query luceneQuery, int pageNo, int pageSize, Sort luceneSort, Criteria criteria);
+    IPagedList<Serializable> getIdPage(Class<?> clazz, Query luceneQuery,
+                                       int pageNo, int pageSize, Sort luceneSort, Criteria criteria);
 
     /**
      * 루씬 부가 정보등을 페이징 조회합니다.
      * <p/>
-     * 참고 : {@link org.hibernate.search.ProjectionConstants#ID}, {@link org.hibernate.search.ProjectionConstants#SCORE} 등
+     * 참고 : {@link org.hibernate.search.ProjectionConstants#ID},
+     * {@link org.hibernate.search.ProjectionConstants#SCORE} 등
      *
      * @param clazz       조회할 엔티티 수형
      * @param luceneQuery 루씬 쿼리
@@ -302,7 +311,8 @@ public interface IHibernateOgmDao {
     /**
      * 루씬 부가 정보등을 페이징 조회합니다.
      * <p/>
-     * 참고 : {@link org.hibernate.search.ProjectionConstants#ID}, {@link org.hibernate.search.ProjectionConstants#SCORE} 등
+     * 참고 : {@link org.hibernate.search.ProjectionConstants#ID},
+     * {@link org.hibernate.search.ProjectionConstants#SCORE} 등
      *
      * @param clazz       조회할 엔티티 수형
      * @param luceneQuery 루씬 쿼리
@@ -312,12 +322,14 @@ public interface IHibernateOgmDao {
      * @param luceneSort  루씬 정렬 방식
      * @return Projection 정보
      */
-    IPagedList<Object[]> getProjectionPage(Class<?> clazz, Query luceneQuery, String[] fields, int pageNo, int pageSize, Sort luceneSort);
+    IPagedList<Object[]> getProjectionPage(Class<?> clazz, Query luceneQuery, String[] fields,
+                                           int pageNo, int pageSize, Sort luceneSort);
 
     /**
      * 루씬 부가 정보등을 페이징 조회합니다.
      * <p/>
-     * 참고 : {@link org.hibernate.search.ProjectionConstants#ID}, {@link org.hibernate.search.ProjectionConstants#SCORE} 등
+     * 참고 : {@link org.hibernate.search.ProjectionConstants#ID},
+     * {@link org.hibernate.search.ProjectionConstants#SCORE} 등
      *
      * @param clazz       조회할 엔티티 수형
      * @param luceneQuery 루씬 쿼리
@@ -328,8 +340,8 @@ public interface IHibernateOgmDao {
      * @param criteria    fetching 방식
      * @return Projection 정보
      */
-
-    IPagedList<Object[]> getProjectionPage(Class<?> clazz, Query luceneQuery, String[] fields, int pageNo, int pageSize, Sort luceneSort, Criteria criteria);
+    IPagedList<Object[]> getProjectionPage(Class<?> clazz, Query luceneQuery, String[] fields,
+                                           int pageNo, int pageSize, Sort luceneSort, Criteria criteria);
 
     /**
      * 조회 조건에 맞는 엔티티의 갯수를 반환합니다.
@@ -337,7 +349,6 @@ public interface IHibernateOgmDao {
      * @param clazz 엔티티 수형
      * @return 조건에 맞는 엔티티의 갯수
      */
-
     long count(Class<?> clazz);
 
     /**
@@ -347,7 +358,6 @@ public interface IHibernateOgmDao {
      * @param luceneQuery 루씬 쿼리
      * @return 조건에 맞는 엔티티의 갯수
      */
-
     long count(Class<?> clazz, Query luceneQuery);
 
     /**
@@ -382,7 +392,6 @@ public interface IHibernateOgmDao {
      *
      * @param entity 저장할 transient object
      */
-
     void persist(Object entity);
 
     /**
@@ -391,7 +400,6 @@ public interface IHibernateOgmDao {
      * @param entity 엔티티
      * @return update된 엔티티
      */
-
     Object merge(Object entity);
 
     /**
@@ -400,7 +408,6 @@ public interface IHibernateOgmDao {
      * @param entity 저장할 transient object
      * @return 저장한 object의 ideneifier 값
      */
-
     Serializable save(Object entity);
 
     /**
@@ -408,7 +415,6 @@ public interface IHibernateOgmDao {
      *
      * @param entity 저장할 엔티티
      */
-
     void saveOrUpdate(Object entity);
 
     /**
@@ -416,7 +422,6 @@ public interface IHibernateOgmDao {
      *
      * @param entity persistent object
      */
-
     void update(Object entity);
 
     /**
@@ -424,7 +429,6 @@ public interface IHibernateOgmDao {
      *
      * @param entity 삭제할 엔티티
      */
-
     void delete(Object entity);
 
     /**
@@ -433,7 +437,6 @@ public interface IHibernateOgmDao {
      * @param clazz 삭제할 엔티티의 수형
      * @param id    Identifier 값
      */
-
     void deleteById(Class<?> clazz, Serializable id);
 
     /**
@@ -449,7 +452,6 @@ public interface IHibernateOgmDao {
      *
      * @param clazz 삭제할 엔티티
      */
-
     void deleteAll(Class<?> clazz);
 
     /**
@@ -465,7 +467,6 @@ public interface IHibernateOgmDao {
      *
      * @param entities 삭제할 엔티티 컬렉션
      */
-
     void deleteAll(Collection<?> entities);
 
     /**
@@ -474,7 +475,6 @@ public interface IHibernateOgmDao {
      * @param clazz 엔티티 수형
      * @param id    엔티티의 id 값
      */
-
     void purge(Class<?> clazz, Serializable id);
 
     /**
@@ -482,11 +482,9 @@ public interface IHibernateOgmDao {
      *
      * @param clazz 해당 엔티티의 수형
      */
-
     void purgeAll(Class<?> clazz);
 
     /** Session에 남아있는 인덱싱 작업을 강제로 수행하도록 합니다. */
-
     void flushToIndexes();
 
     /**
@@ -495,7 +493,6 @@ public interface IHibernateOgmDao {
      *
      * @param entity 재인덱싱할 엔티티
      */
-
     <T> void index(T entity);
 
     /**
@@ -504,11 +501,15 @@ public interface IHibernateOgmDao {
      * @param clazz     인덱싱할 엔티티
      * @param batchSize 배치 크기
      */
-
     void indexAll(Class<?> clazz, int batchSize);
 
-    /** 해당 수형의 모든 인덱스를 비동기 방식으로 구성합니다. */
-
+    /**
+     * 해당 수형의 모든 인덱스를 비동기 방식으로 구성합니다.
+     *
+     * @param clazz     엔티티 수형
+     * @param batchSize Batch 크기 (작은 크기로 나눠서 인덱싱을 수행하여, 메모리를 절약합니다.)
+     * @return {@link Future}
+     */
     Future<Void> indexAllAsync(Class<?> clazz, int batchSize);
 
     /**
@@ -516,26 +517,25 @@ public interface IHibernateOgmDao {
      *
      * @param clazz 엔티티 수형
      */
-
     void clearIndex(Class<?> clazz);
 
     /** 모든 인덱스를 삭제합니다. */
 
     void clearIndexAll();
 
-    /** 해당 수형의 인덱스를 최적화합니다. */
-
+    /**
+     * 해당 엔티티의 인덱스를 최적화합니다.
+     *
+     * @param clazz 최적화할 엔티티의 수형
+     */
     void optimize(Class<?> clazz);
 
     /** 모든 엔티티의 인덱스를 최적화합니다. */
-
     void optimizeAll();
 
     /** 세션의 모든 변경을 저장소에 적용한다. */
-
     void flush();
 
     /** 세션의 모든 인덱스 변경 정보를 저장합니다. */
-
     void flushIndexes();
 }

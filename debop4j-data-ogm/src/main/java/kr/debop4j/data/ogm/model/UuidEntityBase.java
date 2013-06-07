@@ -30,6 +30,7 @@ import javax.persistence.MappedSuperclass;
 
 /**
  * 엔티티의 Identifier의 수형이 UUID 인 엔티티입니다.
+ * <b>MongoDB를 저장소로 사용하는 경우에는 이 엔티티를 상속받아야 합니다.</b>
  *
  * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 13. 3. 31. 오전 2:19
@@ -38,7 +39,6 @@ import javax.persistence.MappedSuperclass;
 @Getter
 @Setter
 public abstract class UuidEntityBase extends AnnotatedEntityBase {
-    private static final long serialVersionUID = 7507710661157374715L;
 
     @Id
     @DocumentId
@@ -57,4 +57,6 @@ public abstract class UuidEntityBase extends AnnotatedEntityBase {
         return super.buildStringHelper()
                 .add("id", id);
     }
+
+    private static final long serialVersionUID = 7507710661157374715L;
 }

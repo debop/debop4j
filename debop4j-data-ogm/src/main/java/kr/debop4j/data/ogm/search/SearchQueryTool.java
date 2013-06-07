@@ -17,7 +17,7 @@
 package kr.debop4j.data.ogm.search;
 
 /**
- * kr.debop4j.data.ogm.search.SearchQueryTool
+ * 루씬 검색을 위한 Utility Class 입니다.
  *
  * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 13. 4. 16. 오전 11:30

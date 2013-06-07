@@ -28,7 +28,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 /**
- * kr.debop4j.data.ehcache.ogm.cfg.EhcacheGridDatastoreConfigBase
+ * EhCache를 저장소로 사용하는 hibernate-ogm용  Spring 환경설정 정보입니다.
  *
  * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 13. 3. 29

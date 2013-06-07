@@ -77,9 +77,9 @@ public class MappingInfo {
      * @return the string [ ]
      */
     public String[] getMappedPackageNames() {
-        List<String> names = Lists.newArrayList();
-        for (Package pkg : mappedPackages)
-            names.add(pkg.getName());
-        return (String[]) names.toArray();
+        String[] names = new String[mappedPackages.size()];
+        for (int i = 0; i < names.length; i++)
+            names[i] = mappedPackages.get(i).getName();
+        return names;
     }
 }

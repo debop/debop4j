@@ -295,10 +295,13 @@
         <jedis.version>2.1.0</jedis.version>
 
         <infinispan.version>5.2.6.Final</infinispan.version>
+        <hibernate.infinispan.version>4.2.1.Final</hibernate.infinispan.version>
         <infinispan.lucene3.version>5.3.0.Beta2</infinispan.lucene3.version>
 
         <tomcat.jdbc.version>7.0.37</tomcat.jdbc.version>
         <bonecp.version>0.7.1.RELEASE</bonecp.version>
+
+        <miriadb.java.client.version>1.1.1</miriadb.java.client.version>
 
         <avro.version>1.7.4</avro.version>
         <twitter4j.version>3.0.3</twitter4j.version>
@@ -793,6 +796,11 @@
             </dependency>
             <dependency>
                 <groupId>org.hibernate.ogm</groupId>
+                <artifactId>hibernate-ogm-infinispan</artifactId>
+                <version>${hibernate.ogm.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.hibernate.ogm</groupId>
                 <artifactId>hibernate-ogm-mongodb</artifactId>
                 <version>${hibernate.ogm.mongo.version}</version>
             </dependency>
@@ -841,7 +849,6 @@
                 <version>${mybatis.version}</version>
             </dependency>
 
-
             <!-- Couchbase -->
             <dependency>
                 <groupId>couchbase</groupId>
@@ -887,6 +894,14 @@
                 <version>${infinispan.version}</version>
             </dependency>
 
+            <!-- Infinispan for hibernate cache -->
+            <dependency>
+                <groupId>org.hibernate</groupId>
+                <artifactId>hibernate-infinispan</artifactId>
+                <version>${hibernate.infinispan.version}</version>
+            </dependency>
+
+
             <!-- lucene 3x 인덱스를 infinispan 에 저장합니다. -->
             <dependency>
                 <groupId>org.infinispan</groupId>
@@ -917,7 +932,6 @@
             </dependency>
 
             <!-- Database Drivers -->
-
             <dependency>
                 <groupId>org.hsqldb</groupId>
                 <artifactId>hsqldb</artifactId>
@@ -937,6 +951,12 @@
                 <artifactId>postgresql</artifactId>
                 <version>9.1-901-1.jdbc4</version>
                 <scope>test</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>org.jumpmind.symmetric.jdbc</groupId>
+                <artifactId>mariadb-java-client</artifactId>
+                <version>${mariadb.java.client.version}</version>
             </dependency>
 
             <dependency>

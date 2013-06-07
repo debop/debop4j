@@ -56,6 +56,7 @@ import java.util.Set;
 @ComponentScan(basePackageClasses = { UnitOfWorks.class, HibernateTool.class })
 @Slf4j
 public abstract class GridDatastoreConfigBase {
+
     /** DataStoreProvider 를 제공합니다. */
     @Bean
     public DatastoreProvider datastoreProvider() {
@@ -136,15 +137,31 @@ public abstract class GridDatastoreConfigBase {
     @Bean
     @Scope("prototype")
     public IHibernateOgmDao hibernateOgmDao() {
+        // TODO : ThreadLocal 변수로 만들 것
         return new HibernateOgmDao(sessionFactory());
     }
 
+    /**
+     * Database name
+     *
+     * @return database name
+     */
     abstract protected String getDatabaseName();
 
+    /**
+     * 매핑할 엔티티가 속한 패키지의 이름 배열
+     *
+     * @return 매핑할 엔티티가 속한 패키지의 이름 배열
+     */
     protected String[] getMappedPackageNames() {
         return new String[0];
     }
 
+    /**
+     * 매핑된 엔티티 배열
+     *
+     * @return 메핑된 엔티티 배열
+     */
     protected Class<?>[] getMappedEntities() {
         return new Class<?>[0];
     }

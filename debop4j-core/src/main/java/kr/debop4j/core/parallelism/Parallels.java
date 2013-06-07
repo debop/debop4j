@@ -77,7 +77,9 @@ public abstract class Parallels {
         return (itemCount / partitionCount) + ((itemCount % partitionCount) > 0 ? 1 : 0);
     }
 
-    /**지정한 작업을 병렬로 수행합니다.  @param count the count
+    /**
+     * 지정한 작업을 병렬로 수행합니다.  @param count the count
+     *
      * @param runnable the runnable
      */
     public static void run(int count, final Runnable runnable) {
@@ -88,8 +90,8 @@ public abstract class Parallels {
      * Run void.
      *
      * @param fromInclude the from include
-     * @param toExclude the to exclude
-     * @param action the action
+     * @param toExclude   the to exclude
+     * @param action      the action
      */
     public static void run(int fromInclude, int toExclude, final Runnable action) {
         int step = (fromInclude <= toExclude) ? 1 : -1;
@@ -100,16 +102,16 @@ public abstract class Parallels {
      * Run void.
      *
      * @param fromInclude the from include
-     * @param toExclude the to exclude
-     * @param step the step
-     * @param runnable the runnable
+     * @param toExclude   the to exclude
+     * @param step        the step
+     * @param runnable    the runnable
      */
     public static void run(int fromInclude, int toExclude, int step, final Runnable runnable) {
         assert runnable != null;
 
         if (log.isDebugEnabled())
             log.debug("병렬로 작업을 수행합니다... fromInclude=[{}], toExclude=[{}], step=[{}], workerCount=[{}]",
-                    fromInclude, toExclude, step, getWorkerCount());
+                      fromInclude, toExclude, step, getWorkerCount());
 
         ExecutorService executor = Executors.newFixedThreadPool(getWorkerCount());
 
@@ -149,7 +151,7 @@ public abstract class Parallels {
     /**
      * Run void.
      *
-     * @param count the count
+     * @param count  the count
      * @param action the action
      */
     public static void run(int count, final Action1<Integer> action) {
@@ -160,8 +162,8 @@ public abstract class Parallels {
      * Run void.
      *
      * @param fromInclude the from include
-     * @param toExclude the to exclude
-     * @param action the action
+     * @param toExclude   the to exclude
+     * @param action      the action
      */
     public static void run(int fromInclude, int toExclude, final Action1<Integer> action) {
         int step = (fromInclude <= toExclude) ? 1 : -1;
@@ -172,16 +174,16 @@ public abstract class Parallels {
      * Run void.
      *
      * @param fromInclude the from include
-     * @param toExclude the to exclude
-     * @param step the step
-     * @param action the action
+     * @param toExclude   the to exclude
+     * @param step        the step
+     * @param action      the action
      */
     public static void run(int fromInclude, int toExclude, int step, final Action1<Integer> action) {
         shouldNotBeNull(action, "function");
 
         if (log.isDebugEnabled())
             log.debug("병렬로 작업을 수행합니다... fromInclude=[{}], toExclude=[{}], step=[{}], workerCount=[{}]",
-                    fromInclude, toExclude, step, getWorkerCount());
+                      fromInclude, toExclude, step, getWorkerCount());
         ExecutorService executor = Executors.newFixedThreadPool(getWorkerCount());
 
         try {
@@ -220,7 +222,7 @@ public abstract class Parallels {
     /**
      * Run list.
      *
-     * @param count the count
+     * @param count    the count
      * @param callable the callable
      * @return the list
      */
@@ -232,8 +234,8 @@ public abstract class Parallels {
      * Run list.
      *
      * @param fromInclude the from include
-     * @param toExclude the to exclude
-     * @param callable the callable
+     * @param toExclude   the to exclude
+     * @param callable    the callable
      * @return the list
      */
     public static <V> List<V> run(int fromInclude, int toExclude, final Callable<V> callable) {
@@ -245,16 +247,16 @@ public abstract class Parallels {
      * Run list.
      *
      * @param fromInclude the from include
-     * @param toExclude the to exclude
-     * @param step the step
-     * @param callable the callable
+     * @param toExclude   the to exclude
+     * @param step        the step
+     * @param callable    the callable
      * @return the list
      */
     public static <V> List<V> run(int fromInclude, int toExclude, int step, final Callable<V> callable) {
         shouldNotBeNull(callable, "callable");
         if (isDebugEnabled)
             log.debug("병렬로 작업을 수행합니다... fromInclude=[{}], toExclude=[{}], step=[{}], workerCount=[{}]",
-                    fromInclude, toExclude, step, getWorkerCount());
+                      fromInclude, toExclude, step, getWorkerCount());
 
         ExecutorService executor = Executors.newFixedThreadPool(getWorkerCount());
 
@@ -300,7 +302,7 @@ public abstract class Parallels {
     /**
      * Run list.
      *
-     * @param count the count
+     * @param count    the count
      * @param function the function
      * @return the list
      */
@@ -312,8 +314,8 @@ public abstract class Parallels {
      * 지정한 범위의 정보를 수행합니다.
      *
      * @param fromInclude 시작 인덱스 (하한)
-     * @param toExclude 종료 인덱스 (상한)
-     * @param function the function
+     * @param toExclude   종료 인덱스 (상한)
+     * @param function    the function
      * @return 결과 값 컬렉션
      */
     public static <V> List<V> run(int fromInclude, int toExclude, final Function1<Integer, V> function) {
@@ -325,16 +327,16 @@ public abstract class Parallels {
      * 지정한 범위의 정보를 수행합니다.
      *
      * @param fromInclude 시작 인덱스 (하한)
-     * @param toExclude 종료 인덱스 (상한)
-     * @param step Step
-     * @param function 수행할 함수
+     * @param toExclude   종료 인덱스 (상한)
+     * @param step        Step
+     * @param function    수행할 함수
      * @return 결과 값 컬렉션
      */
     public static <V> List<V> run(int fromInclude, int toExclude, int step, final Function1<Integer, V> function) {
         shouldNotBeNull(function, "function");
         if (isDebugEnabled)
             log.debug("병렬로 작업을 수행합니다... fromInclude=[{}], toExclude=[{}], step=[{}], workerCount=[{}]",
-                    fromInclude, toExclude, step, getWorkerCount());
+                      fromInclude, toExclude, step, getWorkerCount());
 
         ExecutorService executor = Executors.newFixedThreadPool(getWorkerCount());
 
@@ -380,7 +382,7 @@ public abstract class Parallels {
      * 지정한 컬렉션을 분할하여, 멀티스레드 환경하에서 작업을 수행합니다.
      *
      * @param elements action을 입력 인자로 사용할 컬렉션
-     * @param action 수행할 function
+     * @param action   수행할 function
      */
     public static <T> void runEach(final Iterable<T> elements, final Action1<T> action) {
         shouldNotBeNull(elements, "elements");
@@ -484,7 +486,7 @@ public abstract class Parallels {
     /**
      * 지정한 범위의 정보를 수행합니다.
      *
-     * @param count 수행할 횟수
+     * @param count  수행할 횟수
      * @param action 수행할 함수
      */
     public static void runPartitions(int count, final Action1<List<Integer>> action) {
@@ -495,8 +497,8 @@ public abstract class Parallels {
      * 지정한 범위의 정보를 수행합니다.
      *
      * @param fromInclude 시작 인덱스 (하한)
-     * @param toExclude 종료 인덱스 (상한)
-     * @param action 수행할 함수
+     * @param toExclude   종료 인덱스 (상한)
+     * @param action      수행할 함수
      */
     public static void runPartitions(int fromInclude, int toExclude, final Action1<List<Integer>> action) {
         int step = (fromInclude <= toExclude) ? 1 : -1;
@@ -507,15 +509,15 @@ public abstract class Parallels {
      * 지정한 범위의 정보를 수행합니다.
      *
      * @param fromInclude 시작 인덱스 (하한)
-     * @param toExclude 종료 인덱스 (상한)
-     * @param step Step
-     * @param action 수행할 함수
+     * @param toExclude   종료 인덱스 (상한)
+     * @param step        Step
+     * @param action      수행할 함수
      */
     public static void runPartitions(int fromInclude, int toExclude, int step, final Action1<List<Integer>> action) {
         shouldNotBeNull(action, "function");
         if (isDebugEnabled)
             log.debug("병렬로 작업을 수행합니다... fromInclude=[{}], toExclude=[{}], step=[{}], workerCount=[{}]",
-                    fromInclude, toExclude, step, getWorkerCount());
+                      fromInclude, toExclude, step, getWorkerCount());
 
         ExecutorService executor = Executors.newFixedThreadPool(getWorkerCount());
 
@@ -555,7 +557,7 @@ public abstract class Parallels {
     /**
      * 지정한 범위의 정보를 수행합니다.
      *
-     * @param count 수행할 횟수
+     * @param count    수행할 횟수
      * @param function 수행할 함수
      * @return 결과 값 컬렉션
      */
@@ -567,8 +569,8 @@ public abstract class Parallels {
      * 지정한 범위의 정보를 수행합니다.
      *
      * @param fromInclude 시작 인덱스 (하한)
-     * @param toExclude 종료 인덱스 (상한)
-     * @param function 수행할 함수
+     * @param toExclude   종료 인덱스 (상한)
+     * @param function    수행할 함수
      * @return 결과 값 컬렉션
      */
     public static <V> List<V> runPartitions(int fromInclude, int toExclude, final Function1<List<Integer>, List<V>> function) {
@@ -580,16 +582,16 @@ public abstract class Parallels {
      * 지정한 범위의 정보를 수행합니다.
      *
      * @param fromInclude 시작 인덱스 (하한)
-     * @param toExclude 종료 인덱스 (상한)
-     * @param step Step
-     * @param function 수행할 함수
+     * @param toExclude   종료 인덱스 (상한)
+     * @param step        Step
+     * @param function    수행할 함수
      * @return 결과 값 컬렉션
      */
     public static <V> List<V> runPartitions(int fromInclude, int toExclude, int step, final Function1<List<Integer>, List<V>> function) {
         shouldNotBeNull(function, "function");
         if (isDebugEnabled)
             log.debug("병렬로 작업을 수행합니다... fromInclude=[{}], toExclude=[{}], step=[{}], workerCount=[{}]",
-                    fromInclude, toExclude, step, getWorkerCount());
+                      fromInclude, toExclude, step, getWorkerCount());
 
         ExecutorService executor = Executors.newFixedThreadPool(getWorkerCount());
 
@@ -605,6 +607,7 @@ public abstract class Parallels {
                         return function.execute(inputs);
                     }
                 };
+                tasks.add(task);
             }
             // 작업 시작
             List<Future<List<V>>> outputs = executor.invokeAll(tasks);
@@ -630,7 +633,7 @@ public abstract class Parallels {
      * 지정한 컬렉션을 분할하여, 병렬로 작업을 수행합니다.
      *
      * @param elements 처리할 데이터
-     * @param action 수행할 코드
+     * @param action   수행할 코드
      */
     public static <T> void runPartitions(final Iterable<T> elements, final Action1<List<T>> action) {
         shouldNotBeNull(elements, "elements");
