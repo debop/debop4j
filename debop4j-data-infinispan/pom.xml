@@ -74,10 +74,90 @@
             <artifactId>infinispan-lucene-directory</artifactId>
         </dependency>
 
+        <!-- Infinispan for hibernate cache -->
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-infinispan</artifactId>
+        </dependency>
+
         <!-- lucene 3x 인덱스를 infinispan 에 저장합니다. -->
         <dependency>
             <groupId>org.infinispan</groupId>
             <artifactId>infinispan-lucene-v3</artifactId>
+        </dependency>
+
+        <!-- Hibernate -->
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-entitymanager</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.jboss.logging</groupId>
+            <artifactId>jboss-logging</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-testing</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <!-- Hibernate-Search -->
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-search-engine</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-search-engine</artifactId>
+            <type>test-jar</type>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-search-orm</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.lucene</groupId>
+            <artifactId>lucene-core</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-validator</artifactId>
+        </dependency>
+
+        <!-- Hibernate-OGM -->
+        <dependency>
+            <groupId>org.hibernate.ogm</groupId>
+            <artifactId>hibernate-ogm-core</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.hibernate.ogm</groupId>
+            <artifactId>hibernate-ogm-infinispan</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.hibernate.jpql</groupId>
+            <artifactId>hibernate-jpql-parser</artifactId>
+        </dependency>
+
+        <!-- hibernate-ogm 을 쓸 때 필수 요소 -->
+        <dependency>
+            <groupId>org.antlr</groupId>
+            <artifactId>antlr</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.jboss.jbossts</groupId>
+            <artifactId>jbossjta</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.jboss.spec.javax.transaction</groupId>
+            <artifactId>jboss-transaction-api_1.1_spec</artifactId>
         </dependency>
     </dependencies>
 </project>
