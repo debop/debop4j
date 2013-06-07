@@ -34,7 +34,10 @@ public abstract class TreeMetaEntityBase<T extends IEntity<TId> & ITreeEntity<T>
 
     private static final long serialVersionUID = -7475565290976767358L;
 
-    /** 메타 정보 */
+    /**
+     * 메타 정보
+     * TODO: getter를 abstract로 만들어서, drived class에서 Annotation을 추가하도록 한다. field 는 protected 로 만든다.
+     */
     @Getter
     private final Map<String, IMetaValue> metaMap = Maps.newLinkedHashMap();
 
