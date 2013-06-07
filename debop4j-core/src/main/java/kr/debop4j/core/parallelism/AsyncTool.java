@@ -46,17 +46,16 @@ public abstract class AsyncTool {
     private static final ExecutorService executor =
             Executors.newScheduledThreadPool(Runtime.getRuntime().availableProcessors() * 2);
 
-    private static final Runnable emptyRunnable =
-            new Runnable() {
-                @Override
-                public void run() {
-                    if (log.isTraceEnabled()) log.trace("emptyRunnable is runEach");
-                }
-            };
+    public static final Runnable EMPTY_RUNNABLE = new Runnable() {
+        @Override
+        public void run() {
+            log.trace("EMPTY_RUNNABLE is run.");
+        }
+    };
 
     /**
      * 지정한 callable 을 비동기적으로 수행하고, 결과를 담는 FutureTask를 발급합니다.
-     *{@link java.util.concurrent.FutureTask#run()} 을 실행시켜야 합니다.
+     * {@link java.util.concurrent.FutureTask#run()} 을 실행시켜야 합니다.
      *
      * @param callable the callable
      * @return the future task
@@ -67,10 +66,10 @@ public abstract class AsyncTool {
 
     /**
      * 지정한 runnable 을 수행하고, FutureTask 를 발급합니다.
-     *{@link java.util.concurrent.FutureTask#run()} 을 실행시켜야 합니다.
+     * {@link java.util.concurrent.FutureTask#run()} 을 실행시켜야 합니다.
      *
      * @param runnable the runnable
-     * @param result the result
+     * @param result   the result
      * @return the future task
      */
     public static <T> FutureTask<T> newTask(final Runnable runnable, final T result) {
@@ -79,7 +78,7 @@ public abstract class AsyncTool {
 
     /**
      * 지정한 runnable 을 수행하고, Future 를 발급합니다.
-     *{@link java.util.concurrent.FutureTask#run()} 을 실행시켜야 합니다.
+     * {@link java.util.concurrent.FutureTask#run()} 을 실행시켜야 합니다.
      *
      * @param runnable the runnable
      * @return the future task
@@ -102,7 +101,7 @@ public abstract class AsyncTool {
      * 새로운 작업을 생성하고, 작업을 실행합니다.
      *
      * @param runnable the runnable
-     * @param result the result
+     * @param result   the result
      * @return the future
      */
     public static <T> Future<T> startNew(final Runnable runnable, final T result) {
@@ -113,8 +112,8 @@ public abstract class AsyncTool {
      * prevTask 가 완료되면, action을 수행합니다.
      *
      * @param prevTask the prev task
-     * @param action the action
-     * @param result the result
+     * @param action   the action
+     * @param result   the result
      * @return the future
      */
     public static <T, V> Future<V> continueTask(final FutureTask<T> prevTask,
@@ -157,7 +156,7 @@ public abstract class AsyncTool {
      * @return the task has result
      */
     public static <T> FutureTask<T> getTaskHasResult(final T result) {
-        return newTask(emptyRunnable, result);
+        return newTask(EMPTY_RUNNABLE, result);
     }
 
     /**
@@ -199,9 +198,9 @@ public abstract class AsyncTool {
     /**
      * Invoke all.
      *
-     * @param tasks the tasks
+     * @param tasks   the tasks
      * @param timeout the timeout
-     * @param unit the unit
+     * @param unit    the unit
      * @throws InterruptedException the interrupted exception
      */
     public static <T> void invokeAll(final Collection<? extends Callable<T>> tasks,

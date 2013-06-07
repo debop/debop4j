@@ -43,7 +43,6 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.concurrent.Callable;
 import java.util.concurrent.Future;
 
 import static kr.debop4j.core.Guard.shouldNotBeNull;
@@ -55,7 +54,7 @@ import static kr.debop4j.core.Guard.shouldNotBeNull;
  * @since 13. 5. 4. 오후 7:07
  */
 @Repository
-@SuppressWarnings( "unchecked" )
+@SuppressWarnings("unchecked")
 public class SearchDaoImpl implements SearchDao {
 
     private static final Logger log = LoggerFactory.getLogger(SearchDaoImpl.class);
@@ -450,18 +449,22 @@ public class SearchDaoImpl implements SearchDao {
         if (isTraceEnabled)
             log.trace("비동기 방식으로 엔티티에 대해 인덱싱을 수행합니다... clazz=[{}], batchSize=[{}]", clazz, batchSize);
 
-        final FullTextSession fts = getFullTextSession();
-        return AsyncTool.startNew(new Callable<Void>() {
-            @Override
-            public Void call() {
-                try {
-                    indexAll(clazz, batchSize);
-                    return null;
-                } finally {
-                    fts.close();
-                }
-            }
-        });
+        // TODO: Session이 Thread-safe 하지 않으므로, 새로운 Thread를 만들면 안됩니다.
+        indexAll(clazz, batchSize);
+        return AsyncTool.getTaskHasResult(null);
+
+//        final FullTextSession fts = getFullTextSession();
+//        return AsyncTool.startNew(new Callable<Void>() {
+//            @Override
+//            public Void call() {
+//                try {
+//                    indexAll(clazz, batchSize);
+//                    return null;
+//                } finally {
+//                    fts.close();
+//                }
+//            }
+//        });
     }
 
     @Override

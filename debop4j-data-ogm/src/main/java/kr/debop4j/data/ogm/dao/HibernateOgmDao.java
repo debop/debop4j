@@ -45,7 +45,6 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.concurrent.Callable;
 import java.util.concurrent.Future;
 
 import static kr.debop4j.core.Guard.shouldNotBeNull;
@@ -398,8 +397,8 @@ public class HibernateOgmDao implements IHibernateOgmDao {
         if (ArrayTool.isEmpty(entities))
             return;
 
-        if (isTraceEnabled)
-            log.trace("엔티티 컬렉션을 모두 삭제합니다... entity count=[{}]", entities.size());
+        if (isDebugEnabled)
+            log.debug("엔티티 컬렉션을 모두 삭제합니다... entity count=[{}]", entities.size());
 
         FullTextSession fts = getFullTextSession();
         for (Object entity : entities) {
@@ -453,12 +452,12 @@ public class HibernateOgmDao implements IHibernateOgmDao {
             Transaction tx = fts.beginTransaction();
             ScrollableResults results = fts.createCriteria(clazz).scroll(ScrollMode.FORWARD_ONLY);
             int index = 0;
-
             while (results.next()) {
                 fts.index(results.get(0));
                 if (++index % batchSize == 0) {
                     fts.flushToIndexes();
                     fts.clear();
+                    if (isTraceEnabled) log.trace("인덱싱 수행중입니다. index=[{}]", index);
                 }
             }
             fts.flushToIndexes();
@@ -476,18 +475,22 @@ public class HibernateOgmDao implements IHibernateOgmDao {
         if (isDebugEnabled)
             log.debug("비동기 방식으로 엔티티에 대해 인덱싱을 수행합니다... clazz=[{}], batchSize=[{}]", clazz, batchSize);
 
-        return AsyncTool.startNew(new Callable<Void>() {
+        // TODO: Session이 Thread-safe 하지 않으므로, 새로운 Thread를 만들면 안됩니다.
+        indexAll(clazz, batchSize);
+        return AsyncTool.getTaskHasResult(null);
 
-            public Void call() {
-                final FullTextSession fts = getFullTextSession();
-                try {
-                    indexAll(clazz, batchSize);
-                    return null;
-                } finally {
-                    fts.close();
-                }
-            }
-        });
+//        final FullTextSession fts = getFullTextSession();
+//        return AsyncTool.startNew(new Callable<Void>() {
+//            @Override
+//            public Void call() {
+//                try {
+//                    indexAll(clazz, batchSize);
+//                    return null;
+//                } finally {
+//                    fts.close();
+//                }
+//            }
+//        });
     }
 
     @Override
