@@ -22,7 +22,7 @@ import kr.debop4j.data.NamedParameterBase;
 import lombok.Getter;
 
 /**
- * 루씬 검색 시의 파라미터들
+ * 루씬 검색 시의 파라미터.
  *
  * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 13. 4. 26. 오후 4:25
@@ -33,10 +33,23 @@ public class SearchParameter extends NamedParameterBase {
     @Getter
     final QueryMethod queryMethod;
 
+    /**
+     * Instantiates a new Search parameter.
+     *
+     * @param name  파라미터 명
+     * @param value 파라미터 값
+     */
     public SearchParameter(String name, Object value) {
         this(name, value, QueryMethod.Term);
     }
 
+    /**
+     * Instantiates a new Search parameter.
+     *
+     * @param name        파라미터 명
+     * @param value       파라미터 값
+     * @param queryMethod {@link QueryMethod} 값
+     */
     public SearchParameter(String name, Object value, QueryMethod queryMethod) {
         super(name, value);
         assert queryMethod != QueryMethod.Range : " SearchRangeParameter를 사용하세요.";

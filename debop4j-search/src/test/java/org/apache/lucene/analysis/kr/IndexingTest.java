@@ -68,7 +68,6 @@ public class IndexingTest extends TestCase {
     }
 
     public void testIndexReader() throws Exception {
-
         testIndexWriter();
 
         IndexReader reader = getReader();
@@ -81,21 +80,19 @@ public class IndexingTest extends TestCase {
         }
     }
 
-    public void testHigiFreqTerms() throws Exception {
-        IndexReader reader = getReader();
+    public void testTermHighFreqTerms() throws Exception {
 
-        try {
+        testIndexWriter();
+        try (IndexReader reader = getReader()) {
             TermFreq[] termFreqs = HighFreqTerms.getHighFreqTerms(reader, 100, "description");
             for (TermFreq termFreq : termFreqs) {
                 log.debug("term=[{}]", termFreq);
             }
-        } finally {
-            reader.close();
         }
     }
 
-    public void testHigiFreqTermsWithSharding() throws Exception {
-        final String prefix = ".lucene/indexes/kr.debop4j.search.twitter.Twit";
+    public void testTermHighFreqTermsWithSharding() throws Exception {
+        final String prefix = "debop4j-search/.lucene/indexes/kr.debop4j.search.twitter.Twit";
         final int numShard = 4;
 
         IndexReader[] readers = new IndexReader[numShard];
@@ -108,7 +105,6 @@ public class IndexingTest extends TestCase {
             for (TermFreq termFreq : termFreqs) {
                 log.debug("term=[{}]", termFreq);
             }
-
         } finally {
             for (IndexReader reader : readers)
                 reader.close();

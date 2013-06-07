@@ -17,24 +17,41 @@
 package kr.debop4j.search;
 
 /**
- * kr.debop4j.search.QueryMethod
+ * 루씬 조회 방법
  *
  * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 13. 4. 26. 오후 4:29
  */
 public enum QueryMethod {
 
+    /** Term (단어) */
     Term("Term"),
+
+    /** 문장 */
     Phrase("Phrase"),
+
+    /** Wildcard */
     Wildcard("Wildcard"),
+
+    /** 접두사 */
     Prefix("Prefix"),
+
+    /** 퍼지 */
     Fuzzy("Fuzzy"),
+
+    /** 범위 */
     Range("Range"),
+
+    /** Boolean */
     Boolean("Boolean");
 
     final String queryMethod;
 
     QueryMethod(String queryMethod) {
         this.queryMethod = queryMethod;
+    }
+
+    public String getValue() {
+        return this.queryMethod;
     }
 }

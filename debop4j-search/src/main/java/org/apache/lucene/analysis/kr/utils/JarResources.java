@@ -16,6 +16,8 @@
 
 package org.apache.lucene.analysis.kr.utils;
 
+import lombok.Cleanup;
+
 import java.io.BufferedInputStream;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -72,14 +74,14 @@ public final class JarResources {
                 if (debugOn) {
                     System.out.println(dumpZipEntry(ze));
                 }
-                htSizes.put(ze.getName(), new Integer((int) ze.getSize()));
+                htSizes.put(ze.getName(), Integer.valueOf((int) ze.getSize()));
             }
             zf.close();
 
             // extract resources and put them into the hashtable.
-            FileInputStream fis = new FileInputStream(jarFileName);
-            BufferedInputStream bis = new BufferedInputStream(fis);
-            ZipInputStream zis = new ZipInputStream(bis);
+            @Cleanup FileInputStream fis = new FileInputStream(jarFileName);
+            @Cleanup BufferedInputStream bis = new BufferedInputStream(fis);
+            @Cleanup ZipInputStream zis = new ZipInputStream(bis);
             ZipEntry ze = null;
             while ((ze = zis.getNextEntry()) != null) {
                 if (ze.isDirectory()) {

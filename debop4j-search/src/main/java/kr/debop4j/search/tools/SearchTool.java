@@ -18,6 +18,7 @@ package kr.debop4j.search.tools;
 
 import com.google.common.collect.Sets;
 import kr.debop4j.core.Action1;
+import kr.debop4j.core.Guard;
 import kr.debop4j.core.parallelism.Parallels;
 import kr.debop4j.core.tools.StringTool;
 import kr.debop4j.data.hibernate.tools.HibernateTool;
@@ -31,10 +32,7 @@ import org.apache.lucene.analysis.SimpleAnalyzer;
 import org.apache.lucene.index.Term;
 import org.apache.lucene.queryParser.ParseException;
 import org.apache.lucene.queryParser.QueryParser;
-import org.apache.lucene.search.FuzzyQuery;
-import org.apache.lucene.search.PrefixQuery;
-import org.apache.lucene.search.TermQuery;
-import org.apache.lucene.search.WildcardQuery;
+import org.apache.lucene.search.*;
 import org.apache.lucene.util.Version;
 import org.hibernate.SessionFactory;
 import org.hibernate.event.spi.EventType;
@@ -62,7 +60,12 @@ public class SearchTool {
 
     private SearchTool() {}
 
-    /** Hibernate-Search의 FullTextIndexEventListener를 SessionFactory에 등록합니다. */
+    /**
+     * Hibernate-Search의 FullTextIndexEventListener를 SessionFactory에 등록합니다.
+     *
+     * @param sessionFactory the session factory
+     * @param listener       the listener
+     */
     public static void registerFullTextIndexEventListener(SessionFactory sessionFactory, FullTextIndexEventListener listener) {
         assert sessionFactory != null;
         log.info("sessionFactory에 FullTestIndexEventListener를 등록합니다... listener=[{}]", listener);
@@ -78,8 +81,16 @@ public class SearchTool {
         }
     }
 
-    /** 루씬용 Query를 빌드합니다. */
-    public static org.apache.lucene.search.Query bulidLuceneQuery(FullTextSession fts, Class<?> clazz, String fieldName, String values) {
+    /**
+     * 루씬용 Query를 빌드합니다.
+     *
+     * @param fts       the fts
+     * @param clazz     the clazz
+     * @param fieldName the field name
+     * @param values    the values
+     * @return the org . apache . lucene . search . query
+     */
+    public static Query bulidLuceneQuery(FullTextSession fts, Class<?> clazz, String fieldName, String values) {
         if (log.isTraceEnabled())
             log.trace("루씬 쿼리를 빌드합니다. clazz=[{}], fieldName=[{}], values=[{}]", clazz, fieldName, values);
 
@@ -91,7 +102,7 @@ public class SearchTool {
         }
 
         QueryParser parser = new QueryParser(Version.LUCENE_36, fieldName, analyzer);
-        org.apache.lucene.search.Query luceneQuery = null;
+        Query luceneQuery = null;
         try {
             luceneQuery = parser.parse(values);
         } catch (ParseException e) {
@@ -100,7 +111,15 @@ public class SearchTool {
         return luceneQuery;
     }
 
-    public static FullTextQuery createFullTextQuery(FullTextSession fts, org.apache.lucene.search.Query luceneQuery, Class<?> clazz) {
+    /**
+     * FullTextQuery 인스턴스를 생성합니다.
+     *
+     * @param fts         FullTextSession instance.
+     * @param luceneQuery the lucene query
+     * @param clazz       the clazz
+     * @return the full text query
+     */
+    public static FullTextQuery createFullTextQuery(FullTextSession fts, Query luceneQuery, Class<?> clazz) {
 
         FullTextQuery ftq = fts.createFullTextQuery(luceneQuery, clazz);
 
@@ -109,7 +128,12 @@ public class SearchTool {
         return ftq;
     }
 
-    /** 인덱싱을 수행할 엔티티 정보를 모두 조회합니다. */
+    /**
+     * 인덱싱된 엔티티의 수형을 반환합니다.
+     *
+     * @param sessionFactory the session factory
+     * @return 인덱싱된 엔티티의 수형들
+     */
     public static Set<Class> getIndexedClasses(SessionFactory sessionFactory) {
         if (log.isDebugEnabled())
             log.debug("매핑된 엔티티중에 인덱싱을 수행할 엔티티들을 조회합니다.");
@@ -131,6 +155,10 @@ public class SearchTool {
     /**
      * 모든 엔티티의 인덱스를 재구성합니다.
      * see {@link SearchTool#getIndexedClasses(org.hibernate.SessionFactory)}
+     *
+     * @param sessionFactory SessionFactory 인스턴스
+     * @param classes        인덱싱을 수행할 대상 엔티티의 수형
+     * @param clear          기존 인덱스를 삭제할 것인가 여부
      */
     public static void indexAll(final SessionFactory sessionFactory, final Set<Class> classes, final boolean clear) {
         if (log.isDebugEnabled())
@@ -147,6 +175,10 @@ public class SearchTool {
     /**
      * 모든 엔티티의 인덱스를 병렬 방식으로 재구성합니다.
      * see {@link SearchTool#getIndexedClasses(org.hibernate.SessionFactory)}
+     *
+     * @param sessionFactory SessionFactory 인스턴스
+     * @param classes        인덱싱을 수행할 대상 엔티티의 수형
+     * @param clear          기존 인덱스를 삭제할 것인가 여부
      */
     public static void indexAllAsParallel(final SessionFactory sessionFactory, final Set<Class> classes, final boolean clear) {
         if (log.isDebugEnabled())
@@ -163,8 +195,17 @@ public class SearchTool {
         });
     }
 
-    /** 루씬 검색용 QueryBuilder 를 생성합니다. */
+    /**
+     * 루씬 검색용 QueryBuilder 를 생성합니다.
+     *
+     * @param clazz      검색할 엔티티 수형
+     * @param fts        FullTextSession instance
+     * @param parameters 사용할 파라미터 정보
+     * @return {@link QueryBuilder} instance.
+     */
     public static QueryBuilder buildLuceneQuery(final Class<?> clazz, final FullTextSession fts, SearchParameter... parameters) {
+        Guard.shouldNotBeNull(fts, "fts");
+
         QueryBuilder builder = fts.getSearchFactory().buildQueryBuilder().forEntity(clazz).get();
 
         for (SearchParameter sp : parameters) {
@@ -173,25 +214,40 @@ public class SearchTool {
 
             QueryMethod queryMethod = sp.getQueryMethod();
 
-            if (queryMethod == QueryMethod.Term) {
-                builder.keyword().onField(sp.getName()).matching(sp.getValue());
-            } else if (queryMethod == QueryMethod.Phrase) {
-                builder.phrase().onField(sp.getName()).sentence(sp.getValue());
-            } else if (queryMethod == QueryMethod.Wildcard) {
-                final WildcardQuery query = new WildcardQuery(new Term(sp.getName(), sp.getValue()));
-                builder.bool().should(query);
-            } else if (queryMethod == QueryMethod.Prefix) {
-                final PrefixQuery query = new PrefixQuery(new Term(sp.getName(), sp.getValue()));
-                builder.bool().should(query);
-            } else if (queryMethod == QueryMethod.Fuzzy) {
-                final FuzzyQuery query = new FuzzyQuery(new Term(sp.getName(), sp.getValue()));
-                builder.bool().should(query);
-            } else if (queryMethod == QueryMethod.Range) {
-                SearchRangeParameter srp = (SearchRangeParameter) sp;
-                builder.range().onField(sp.getName()).from(srp.getFrom()).to(srp.getTo());
-            } else if (queryMethod == QueryMethod.Boolean) {
-                final TermQuery query = new TermQuery(new Term(sp.getName(), sp.getValue()));
-                builder.bool().should(query);
+            switch (queryMethod) {
+                case Term:
+                    builder.keyword().onField(sp.getName()).matching(sp.getValue());
+                    break;
+
+                case Phrase:
+                    builder.phrase().onField(sp.getName()).sentence(sp.getValue());
+                    break;
+
+                case Wildcard:
+                    final WildcardQuery wildcardQuery = new WildcardQuery(new Term(sp.getName(), sp.getValue()));
+                    builder.bool().should(wildcardQuery);
+                    break;
+
+                case Prefix:
+                    final PrefixQuery prefixQuery = new PrefixQuery(new Term(sp.getName(), sp.getValue()));
+                    builder.bool().should(prefixQuery);
+                    break;
+
+                case Fuzzy:
+                    final FuzzyQuery query = new FuzzyQuery(new Term(sp.getName(), sp.getValue()));
+                    builder.bool().should(query);
+                    break;
+
+                case Range:
+                    SearchRangeParameter srp = (SearchRangeParameter) sp;
+                    builder.range().onField(sp.getName()).from(srp.getFrom()).to(srp.getTo());
+                    break;
+
+                case Boolean:
+                default:
+                    final TermQuery termQuery = new TermQuery(new Term(sp.getName(), sp.getValue()));
+                    builder.bool().should(termQuery);
+                    break;
             }
         }
         return builder;

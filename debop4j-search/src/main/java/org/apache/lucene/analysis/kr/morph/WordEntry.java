@@ -18,6 +18,7 @@ package org.apache.lucene.analysis.kr.morph;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class WordEntry implements Serializable {
@@ -51,7 +52,7 @@ public class WordEntry implements Serializable {
 
     public WordEntry(String word, char[] cs) {
         this.word = word;
-        this.features = cs;
+        this.features = Arrays.copyOf(cs, cs.length);
     }
 
     public WordEntry(String word, List<CompoundEntry> c) {

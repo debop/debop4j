@@ -46,27 +46,27 @@ import java.util.List;
 import java.util.concurrent.Callable;
 import java.util.concurrent.Future;
 
+import static kr.debop4j.core.Guard.shouldNotBeNull;
+
 /**
- * hibernate-ogm을 기반으로 하는 Data Access Object 의 구현체입니다.
+ * hibernate-search 기반으로 하는 Data Access Object 의 구현체입니다.
  *
  * @author 배성혁 sunghyouk.bae@gmail.com
  * @since 13. 5. 4. 오후 7:07
  */
 @Repository
-@SuppressWarnings("unchecked")
+@SuppressWarnings( "unchecked" )
 public class SearchDaoImpl implements SearchDao {
 
     private static final Logger log = LoggerFactory.getLogger(SearchDaoImpl.class);
     private static final boolean isTraceEnabled = log.isTraceEnabled();
     private static final boolean isDebugEnabled = log.isDebugEnabled();
 
-
     private static final int BATCH_SIZE = 100;
 
     @Autowired
     private final SessionFactory sessionFactory;
 
-    /** 현 Thread-context에서 사용할 {@link org.hibernate.Session} 의 저장소 키 (참고: {@link kr.debop4j.core.Local}) */
     public String SESSION_KEY = IUnitOfWorkFactory.CURRENT_HIBERNATE_SESSION;
 
     @Autowired
@@ -74,7 +74,6 @@ public class SearchDaoImpl implements SearchDao {
         this.sessionFactory = sessionFactory;
     }
 
-    /** 현 Thread-context 에서 사용할 Session 를 빈환합니다. */
     @Override
     public synchronized final Session getSession() {
         Session session = Local.get(SearchDao.SESSION_KEY, Session.class);
@@ -87,7 +86,6 @@ public class SearchDaoImpl implements SearchDao {
         return session;
     }
 
-    /** 현 Thread-context 에서 사용할 hibernate-search 의 {@link  org.hibernate.search.FullTextSession} 을 반환합니다. */
     @Override
     public synchronized final FullTextSession getFullTextSession() {
         FullTextSession fts = Local.get(SearchDaoImpl.FULL_TEXT_SESSION_KEY, FullTextSession.class);
@@ -100,7 +98,6 @@ public class SearchDaoImpl implements SearchDao {
         return fts;
     }
 
-    /** lucene을 이용한 Full text search를 위한 {@link org.hibernate.search.FullTextQuery}를 반환합니다. */
     @Override
     public FullTextQuery getFullTextQuery(Query luceneQuery, Class<?>... entities) {
 
@@ -111,25 +108,21 @@ public class SearchDaoImpl implements SearchDao {
         return ftq;
     }
 
-    /** {@link org.apache.lucene.search.Query}를 빌드해주는 {@link org.hibernate.search.query.dsl.QueryBuilder}를 반환합니다. */
     @Override
     public QueryBuilder getQueryBuilder(Class<?> clazz) {
         return getFullTextSession().getSearchFactory().buildQueryBuilder().forEntity(clazz).get();
     }
 
-    /** 지정한 Id 값을 가지는 엔티티를 로드합니다. 없으면 null 을 반환합니다. */
     @Override
     public <T> T get(Class<T> clazz, Serializable id) {
         return (T) getSession().get(clazz, id);
     }
 
-    /** 지정한 수형의 모든 엔티티를 조회합니다. */
     @Override
     public <T> List<T> findAll(Class<T> clazz) {
         return findAll(clazz, null);
     }
 
-    /** 지정한 수형의 모든 엔티티를 조회합니다. */
     @Override
     public <T> List<T> findAll(Class<T> clazz, Sort luceneSort) {
         if (isTraceEnabled)
@@ -143,19 +136,16 @@ public class SearchDaoImpl implements SearchDao {
         return ftq.list();
     }
 
-    /** 지정한 엔티티를 조회합니다. */
     @Override
     public <T> List<T> findAll(Class<T> clazz, Query luceneQuery, Sort sort, Criteria criteria) {
         return findAll(clazz, luceneQuery, -1, -1, sort, criteria);
     }
 
-    /** 지정한 엔티티를 조회합니다. */
     @Override
     public <T> List<T> findAll(Class<T> clazz, Query luceneQuery, int firstResult, int maxResults, Sort sort) {
         return findAll(clazz, luceneQuery, firstResult, maxResults, sort, null);
     }
 
-    /** 지정한 엔티티를 조회합니다. */
     @Override
     public <T> List<T> findAll(Class<T> clazz, Query luceneQuery, int firstResult, int maxResults, Sort sort, Criteria criteria) {
         if (isTraceEnabled)
@@ -173,19 +163,16 @@ public class SearchDaoImpl implements SearchDao {
         return ftq.list();
     }
 
-    /** Page 단위로 엔티티를 조회합니다. */
     @Override
     public <T> PaginatedList<T> getPage(Class<T> clazz, Query luceneQuery, int pageNo, int pageSize) {
         return getPage(clazz, luceneQuery, pageNo, pageSize, null, null);
     }
 
-    /** Page 단위로 엔티티를 조회합니다. */
     @Override
     public <T> PaginatedList<T> getPage(Class<T> clazz, Query luceneQuery, int pageNo, int pageSize, Sort sort) {
         return getPage(clazz, luceneQuery, pageNo, pageSize, sort, null);
     }
 
-    /** Page 단위로 엔티티를 조회합니다. */
     @Override
     public <T> PaginatedList<T> getPage(Class<T> clazz, Query luceneQuery, int pageNo, int pageSize, Sort sort, Criteria criteria) {
         if (isDebugEnabled)
@@ -206,19 +193,16 @@ public class SearchDaoImpl implements SearchDao {
         return new PaginatedList<>(list, pageNo, pageSize, itemCount);
     }
 
-    /** 특정 엔티티에 대해 Id 만 조회한다. */
     @Override
     public List<Serializable> getAllIds(Class<?> clazz, Query luceneQuery) {
         return getAllIds(clazz, luceneQuery, -1, -1, null, null);
     }
 
-    /** 특정 엔티티에 대해 Id 만 조회한다. */
     @Override
     public List<Serializable> getAllIds(Class<?> clazz, Query luceneQuery, int firstResult, int maxResults, Sort sort) {
         return getAllIds(clazz, luceneQuery, firstResult, maxResults, sort, null);
     }
 
-    /** 엔티티에 대해 Id 만 조회한다. */
     @Override
     public List<Serializable> getAllIds(Class<?> clazz, Query luceneQuery, int firstResult, int maxResults, Sort sort, Criteria criteria) {
         List<Object[]> list = getProjections(clazz, luceneQuery, new String[] { FullTextQuery.ID }, firstResult, maxResults, sort, criteria);
@@ -229,19 +213,16 @@ public class SearchDaoImpl implements SearchDao {
         return ids;
     }
 
-    /** 페이지 단위로 엔티티에 대해 Id 만 조회한다. */
     @Override
     public PaginatedList<Serializable> getIdPage(Class<?> clazz, Query luceneQuery, int pageNo, int pageSize) {
         return getIdPage(clazz, luceneQuery, pageNo, pageSize, null, null);
     }
 
-    /** 페이지 단위로 엔티티에 대해 Id 만 조회한다. */
     @Override
     public PaginatedList<Serializable> getIdPage(Class<?> clazz, Query luceneQuery, int pageNo, int pageSize, Sort sort) {
         return getIdPage(clazz, luceneQuery, pageNo, pageSize, sort, null);
     }
 
-    /** 페이지 단위로 엔티티에 대해 Id 만 조회한다. */
     @Override
     public PaginatedList<Serializable> getIdPage(Class<?> clazz, Query luceneQuery, int pageNo, int pageSize, Sort sort, Criteria criteria) {
 
@@ -255,19 +236,16 @@ public class SearchDaoImpl implements SearchDao {
         return new PaginatedList<>(ids, pageNo, pageSize, totalCount);
     }
 
-    /** 엔티티 조회 시에 특정 정보만을 가져온다. fields 값에는 {@link org.hibernate.search.ProjectionConstants} 를 쓸 수 있습니다. */
     @Override
     public List<Object[]> getProjections(Class<?> clazz, Query luceneQuery, String[] fields) {
         return getProjections(clazz, luceneQuery, fields, -1, -1, null, null);
     }
 
-    /** 엔티티 조회 시에 특정 정보만을 가져온다. fields 값에는 {@link org.hibernate.search.ProjectionConstants} 를 쓸 수 있습니다. */
     @Override
     public List<Object[]> getProjections(Class<?> clazz, Query luceneQuery, String[] fields, Sort sort) {
         return getProjections(clazz, luceneQuery, fields, -1, -1, sort, null);
     }
 
-    /** 엔티티 조회 시에 특정 정보만을 가져온다. fields 값에는 {@link org.hibernate.search.ProjectionConstants} 를 쓸 수 있습니다. */
     @Override
     public List<Object[]> getProjections(Class<?> clazz, Query luceneQuery, String[] fields,
                                          int firstResult, int maxResults, Sort sort, Criteria criteria) {
@@ -286,21 +264,18 @@ public class SearchDaoImpl implements SearchDao {
         return ftq.list();
     }
 
-    /** 엔티티 조회 시에 특정 정보만을 가져온다. fields 값에는 {@link org.hibernate.search.ProjectionConstants} 를 쓸 수 있습니다. */
     @Override
     public PaginatedList<Object[]> getProjectionPage(Class<?> clazz, Query luceneQuery, String[] fields,
                                                      int pageNo, int pageSize) {
         return getProjectionPage(clazz, luceneQuery, fields, pageNo, pageSize, null, null);
     }
 
-    /** 엔티티 조회 시에 특정 정보만을 가져온다. fields 값에는 {@link org.hibernate.search.ProjectionConstants} 를 쓸 수 있습니다. */
     @Override
     public PaginatedList<Object[]> getProjectionPage(Class<?> clazz, Query luceneQuery, String[] fields,
                                                      int pageNo, int pageSize, Sort sort) {
         return getProjectionPage(clazz, luceneQuery, fields, pageNo, pageSize, sort, null);
     }
 
-    /** 엔티티 조회 시에 특정 정보만을 가져온다. fields 값에는 {@link org.hibernate.search.ProjectionConstants} 를 쓸 수 있습니다. */
     @Override
     public PaginatedList<Object[]> getProjectionPage(Class<?> clazz, Query luceneQuery, String[] fields,
                                                      int pageNo, int pageSize, Sort sort, Criteria criteria) {
@@ -309,19 +284,16 @@ public class SearchDaoImpl implements SearchDao {
         return new PaginatedList<>(list, pageNo, pageSize, totalCount);
     }
 
-    /** 해당 수형의 엔티티의 모든 레코드 수를 가져온다. */
     @Override
     public int count(Class<?> clazz) {
         return count(clazz, getQueryBuilder(clazz).all().createQuery());
     }
 
-    /** 특정 엔티티에 조건에 맞는 레코드 수를 가져온다. */
     @Override
     public int count(Class<?> clazz, Query luceneQuery) {
         return count(clazz, luceneQuery, null);
     }
 
-    /** 특정 엔티티에 조건에 맞는 레코드 수를 가져온다. */
     @Override
     public int count(Class<?> clazz, Query luceneQuery, Criteria criteria) {
         FullTextQuery ftq = getFullTextQuery(luceneQuery, clazz);
@@ -364,7 +336,6 @@ public class SearchDaoImpl implements SearchDao {
         getFullTextSession().delete(entity);
     }
 
-    /** 지정한 Id 값을 가진 엔티티를 삭제합니다. */
     @Override
     public void deleteById(Class<?> clazz, Serializable id) {
         try {
@@ -388,20 +359,17 @@ public class SearchDaoImpl implements SearchDao {
         deleteAll(entities);
     }
 
-    /** 해당 수형의 모든 엔티티를 삭제합니다. */
     @Override
     public void deleteAll(Class<?> clazz) {
         deleteAll(clazz, getQueryBuilder(clazz).all().createQuery());
     }
 
-    /** 쿼리 결과에 해당하는 엔티티들을 모두 삭제합니다. */
     @Override
     public void deleteAll(Class<?> clazz, Query luceneQuery) {
         List<Serializable> ids = getAllIds(clazz, luceneQuery);
         deleteByIds(clazz, ids);
     }
 
-    /** 엔티티 컬렉션의 모든 엔티티를 삭제합니다. * */
     @Override
     public void deleteAll(Collection<?> entities) {
         if (ArrayTool.isEmpty(entities)) return;
@@ -415,31 +383,28 @@ public class SearchDaoImpl implements SearchDao {
         }
     }
 
-    /** 지정한 Id를 가진 엔티티의 인덱스 정보를 삭제합니다. */
     @Override
     public void purge(Class<?> clazz, Serializable id) {
         getFullTextSession().purge(clazz, id);
     }
 
-    /** 지정한 수형의 인덱스 정보를 삭제합니다. */
     @Override
     public void purgeAll(Class<?> clazz) {
+        if (isTraceEnabled)
+            log.trace("해당 엔티티와 엔티티와 연관된 엔티티의 모든 인덱스를 삭제합니다... clazz=[{}]", clazz);
+
         getFullTextSession().purgeAll(clazz);
     }
 
-    /**
-     * 엔티티를 수동으로 재 인덱싱합니다.<br/>
-     * Force the (re)indexing of a given <b>managed</b> object.
-     */
     @Override
     public <T> void index(T entity) {
-        assert entity != null;
+        shouldNotBeNull(entity, "entity");
         if (isTraceEnabled)
             log.trace("수동으로 재 인덱스를 수행합니다. entity=[{}]", entity);
+
         getFullTextSession().index(entity);
     }
 
-    /** 지정된 수형의 모든 엔티티들을 인덱싱 합니다. */
     @Override
     public void indexAll(Class<?> clazz, int batchSize) {
         if (log.isDebugEnabled())
@@ -480,7 +445,6 @@ public class SearchDaoImpl implements SearchDao {
         }
     }
 
-    /** 해당 수형의 모든 인덱스를 비동기 방식으로 구성합니다. */
     @Override
     public Future<Void> indexAllAsync(final Class<?> clazz, final int batchSize) {
         if (isTraceEnabled)
@@ -500,18 +464,18 @@ public class SearchDaoImpl implements SearchDao {
         });
     }
 
-    /** 해당 수형의 모든 인덱스 정보를 삭제합니다. */
     @Override
     public void clearIndex(Class<?> clazz) {
         if (isDebugEnabled)
             log.debug("엔티티에 대한 모든 인덱스 정보를 삭제합니다... clazz=[{}]", clazz);
 
-        getFullTextSession().purgeAll(clazz);       // remove obsolete index
+        getFullTextSession().purgeAll(clazz);       // remove all index
         getFullTextSession().flushToIndexes();      // apply purge before optimize
         optimize(clazz);                            // physically clear space
+
+        log.info("엔티티의 모든 인덱스를 삭제했습니다. clazz=[{}]", clazz);
     }
 
-    /** 모든 인덱스를 삭제합니다. */
     @Override
     public void clearIndexAll() {
         if (isDebugEnabled) log.debug("모든 엔티티에 대해 모든 인덱스 정보를 삭제합니다...");
@@ -522,30 +486,28 @@ public class SearchDaoImpl implements SearchDao {
             fts.flushToIndexes();
         }
         optimizeAll();
+
+        log.info("모든 인덱스를 삭제했습니다.");
     }
 
-    /** 해당 수형의 인덱스를 최적화합니다. */
     @Override
     public void optimize(Class<?> clazz) {
         if (isTraceEnabled) log.trace("지정된 수형의 인덱스를 최적화합니다. clazz=[{}]", clazz);
         getFullTextSession().getSearchFactory().optimize(clazz);
     }
 
-    /** 모든 엔티티의 인덱스를 최적화합니다. */
     @Override
     public void optimizeAll() {
         if (isTraceEnabled) log.trace("모든 수형의 인덱스를 최적화합니다.");
         getFullTextSession().getSearchFactory().optimize();
     }
 
-    /** 세션의 모든 변경을 저장소에 적용한다. */
     @Override
     public void flush() {
         if (isTraceEnabled) log.trace("세션의 모든 변경 정보를 저장소에 적용합니다...");
         getFullTextSession().flush();
     }
 
-    /** Session에 남아있는 인덱싱 작업을 강제로 수행하도록 합니다. */
     @Override
     public void flushToIndexes() {
         if (isTraceEnabled) log.trace("Session에 남아있는 인덱싱 작업을 강제로 수행하도록 하고, 기다립니다.");

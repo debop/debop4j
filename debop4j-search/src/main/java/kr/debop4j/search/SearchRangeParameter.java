@@ -21,7 +21,7 @@ import kr.debop4j.core.tools.HashTool;
 import lombok.Getter;
 
 /**
- * kr.debop4j.search.SearchRangeParameter
+ * 루씬 검색 시 범위로 검색할 때 사용할 파라미터.
  *
  * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 13. 4. 26. 오후 5:29
@@ -34,6 +34,13 @@ public class SearchRangeParameter extends SearchParameter {
     @Getter
     private final Object to;
 
+    /**
+     * Instantiates a new Search range parameter.
+     *
+     * @param name 파라미터 명
+     * @param from 하한
+     * @param to   상한
+     */
     public SearchRangeParameter(String name, Object from, Object to) {
         super(name, from);
         this.from = from;
