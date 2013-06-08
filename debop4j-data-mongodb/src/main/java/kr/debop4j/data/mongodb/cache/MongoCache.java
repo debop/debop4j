@@ -16,7 +16,6 @@
 
 package kr.debop4j.data.mongodb.cache;
 
-import kr.debop4j.core.Guard;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
@@ -29,11 +28,14 @@ import org.springframework.data.mongodb.core.query.Update;
 
 import java.io.Serializable;
 
+import static kr.debop4j.core.Guard.shouldNotBeEmpty;
+import static kr.debop4j.core.Guard.shouldNotBeNull;
+
 /**
- * MongoDB를 저장소로 사용하는 캐시
+ * MongoDB를 저장소로 사용하는 Spring 캐시
  *
  * @author 배성혁 ( sunghyouk.bae@gmail.com )
- *         13. 3. 25 오후 3:14
+ * @since 13. 3. 25 오후 3:14
  */
 @Slf4j
 public class MongoCache implements Cache {
@@ -41,9 +43,15 @@ public class MongoCache implements Cache {
     private String name;
     private MongoTemplate mongoTemplate;
 
+    /**
+     * Instantiates a new MongoCache.
+     *
+     * @param name          the name
+     * @param mongoTemplate the mongo template
+     */
     public MongoCache(String name, MongoTemplate mongoTemplate) {
-        Guard.shouldNotBeEmpty(name, "name");
-        Guard.shouldNotBeNull(mongoTemplate, "mongoTemplate");
+        shouldNotBeEmpty(name, "name");
+        shouldNotBeNull(mongoTemplate, "mongoTemplate");
 
         this.name = name;
         this.mongoTemplate = mongoTemplate;
@@ -110,17 +118,23 @@ public class MongoCache implements Cache {
         mongoTemplate.dropCollection(name);
     }
 
+    /** MongoDB 에 저장할 캐시 정보를 표현합니다. */
     @Getter
     @Setter
     public static class CacheItem implements Serializable {
 
-        private static final long serialVersionUID = 6930164833651186483L;
-
         private Object key;
         private Object value;
 
-        public CacheItem() { this(null, null); }
+//        /** Instantiates a new CacheItem. */
+//        public CacheItem() { this(null, null); }
 
+        /**
+         * Instantiates a new CacheItem.
+         *
+         * @param key   the key
+         * @param value the value
+         */
         public CacheItem(Object key, Object value) {
             this.key = key;
             this.value = value;
@@ -130,5 +144,7 @@ public class MongoCache implements Cache {
         public String toString() {
             return "CacheItem@{key=" + key + ", value=" + value + "}";
         }
+
+        private static final long serialVersionUID = 6930164833651186483L;
     }
 }

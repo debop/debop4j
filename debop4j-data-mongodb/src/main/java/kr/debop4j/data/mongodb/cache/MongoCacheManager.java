@@ -17,7 +17,7 @@
 package kr.debop4j.data.mongodb.cache;
 
 import com.google.common.collect.Lists;
-import kr.debop4j.core.Guard;
+import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cache.Cache;
 import org.springframework.cache.transaction.AbstractTransactionSupportingCacheManager;
@@ -25,18 +25,28 @@ import org.springframework.data.mongodb.core.MongoTemplate;
 
 import java.util.Collection;
 
+import static kr.debop4j.core.Guard.shouldNotBeNull;
+
 /**
+ * MongoCache Manager
+ *
  * @author 배성혁 ( sunghyouk.bae@gmail.com )
- *         13. 3. 25 오후 3:15
+ * @since 13. 3. 25 오후 3:14
  */
 @Slf4j
 public class MongoCacheManager extends AbstractTransactionSupportingCacheManager {
 
-    private MongoTemplate mongoTemplate;
-    private int expireSeconds;
+    @Getter private MongoTemplate mongoTemplate;
+    @Getter private int expireSeconds;
 
+    /**
+     * Instantiates a new MongoCacheManager.
+     *
+     * @param mongoTemplate {@link MongoTemplate} instance.
+     * @param expireSeconds expiration value in second
+     */
     public MongoCacheManager(MongoTemplate mongoTemplate, int expireSeconds) {
-        Guard.shouldNotBeNull(mongoTemplate, "mongoTemplate");
+        shouldNotBeNull(mongoTemplate, "mongoTemplate");
         this.mongoTemplate = mongoTemplate;
         this.expireSeconds = expireSeconds;
     }
@@ -56,6 +66,7 @@ public class MongoCacheManager extends AbstractTransactionSupportingCacheManager
         synchronized (this) {
             Cache cache = super.getCache(name);
             if (cache == null) {
+                if (log.isTraceEnabled()) log.trace("새로운 MongoCache를 생성합니다.");
                 cache = new MongoCache(name, mongoTemplate);
                 addCache(cache);
             }

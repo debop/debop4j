@@ -524,6 +524,7 @@ public class SearchDaoImpl implements SearchDao {
             if (fts != null && fts.isOpen()) {
                 fts.close();
                 Local.put(FULL_TEXT_SESSION_KEY, null);
+                log.debug("현 ThreadContext에서 사용하는 FullTextContext를 닫았습니다.");
             }
         } catch (Exception ignored) {
         }
@@ -532,6 +533,7 @@ public class SearchDaoImpl implements SearchDao {
             if (session != null && session.isOpen()) {
                 session.close();
                 Local.put(SESSION_KEY, null);
+                log.debug("현 ThreadContext에서 사용하는 session를 닫았습니다.");
             }
         } catch (Exception ignored) {
         }
