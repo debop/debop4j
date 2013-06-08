@@ -516,4 +516,24 @@ public class SearchDaoImpl implements SearchDao {
         if (isTraceEnabled) log.trace("Session에 남아있는 인덱싱 작업을 강제로 수행하도록 하고, 기다립니다.");
         getFullTextSession().flushToIndexes();
     }
+
+    @Override
+    public void close() throws Exception {
+        try {
+            FullTextSession fts = Local.get(FULL_TEXT_SESSION_KEY, FullTextSession.class);
+            if (fts != null && fts.isOpen()) {
+                fts.close();
+                Local.put(FULL_TEXT_SESSION_KEY, null);
+            }
+        } catch (Exception ignored) {
+        }
+        try {
+            Session session = Local.get(SESSION_KEY, Session.class);
+            if (session != null && session.isOpen()) {
+                session.close();
+                Local.put(SESSION_KEY, null);
+            }
+        } catch (Exception ignored) {
+        }
+    }
 }

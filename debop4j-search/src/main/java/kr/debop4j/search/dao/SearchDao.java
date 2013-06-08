@@ -38,7 +38,7 @@ import java.util.concurrent.Future;
  * @author 배성혁 sunghyouk.bae@gmail.com
  * @since 13. 5. 5. 오전 1:16
  */
-public interface SearchDao {
+public interface SearchDao extends AutoCloseable {
 
     /** 현 Thread-context에서 사용할 {@link org.hibernate.Session} 의 저장소 키 (참고: {@link kr.debop4j.core.Local}) */
     public String SESSION_KEY = IUnitOfWorkFactory.CURRENT_HIBERNATE_SESSION;
