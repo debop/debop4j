@@ -1,6 +1,22 @@
+/*
+ * Copyright 2011-2013 the original author or authors.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package kr.debop4j.data.ehcache.cache;
 
-import kr.debop4j.core.Stopwatch;
+import kr.debop4j.core.AutoStopwatch;
 import kr.debop4j.data.ehcache.User;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Assert;
@@ -31,16 +47,14 @@ public class EhcacheTest {
     @Test
     public void getUserFromCache() {
 
-        Stopwatch sw = new Stopwatch("initial User");
-        sw.start();
-        User user1 = userRepository.getUser("debop", 100);
-        sw.stop();
+        User user1, user2;
+        try (AutoStopwatch stopwatch = new AutoStopwatch("initial User")) {
+            user1 = userRepository.getUser("debop", 100);
+        }
 
-        sw = new Stopwatch("from Cache");
-        sw.start();
-        User user2 = userRepository.getUser("debop", 100);
-        sw.stop();
-
+        try (AutoStopwatch stopwatch = new AutoStopwatch("from Cache")) {
+            user2 = userRepository.getUser("debop", 100);
+        }
         Assert.assertEquals(user1, user2);
     }
 

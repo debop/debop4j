@@ -37,6 +37,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @EnableTransactionManagement
 @Slf4j
 public abstract class EhcacheGridDatastoreConfigBase extends GridDatastoreConfigBase {
+
     @Override
     @Bean
     public DatastoreProvider datastoreProvider() {

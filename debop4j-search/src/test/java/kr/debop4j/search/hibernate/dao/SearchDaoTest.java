@@ -17,7 +17,7 @@
 package kr.debop4j.search.hibernate.dao;
 
 import kr.debop4j.core.Action1;
-import kr.debop4j.core.collection.PaginatedList;
+import kr.debop4j.core.collection.IPagedList;
 import kr.debop4j.core.parallelism.Parallels;
 import kr.debop4j.data.hibernate.unitofwork.IUnitOfWork;
 import kr.debop4j.data.hibernate.unitofwork.UnitOfWorkNestingOptions;
@@ -99,7 +99,7 @@ public class SearchDaoTest extends SearchTestBase {
         int count = searchDao.count(Document.class, query);
         assertThat(count).isGreaterThan(0);
 
-        PaginatedList<Document> documents = searchDao.getPage(Document.class, query, 1, 10);
+        IPagedList<Document> documents = searchDao.getPage(Document.class, query, 1, 10);
         assertThat(documents.getList().size()).isGreaterThan(0);
     }
 
@@ -127,7 +127,7 @@ public class SearchDaoTest extends SearchTestBase {
                         assertThat(loadedDocuments).isNotNull();
                         assertThat(loadedDocuments.size()).isGreaterThan(0);
 
-                        PaginatedList<Document> documents = dao.getPage(Document.class, query, 2, 10);
+                        IPagedList<Document> documents = dao.getPage(Document.class, query, 2, 10);
                         assertThat(documents.getList().size()).isEqualTo(10);
 
                         builder = dao.getQueryBuilder(Document.class);
