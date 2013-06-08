@@ -537,4 +537,24 @@ public class HibernateOgmDao implements IHibernateOgmDao {
         if (isDebugEnabled) log.debug("세션의 모든 인덱스 변경 정보를 저장합니다...");
         getFullTextSession().flushToIndexes();
     }
+
+    @Override
+    public void close() throws Exception {
+        try {
+            FullTextSession fts = Local.get(FULL_TEXT_SESSION_KEY, FullTextSession.class);
+            if (fts != null && fts.isOpen()) {
+                fts.close();
+                Local.put(FULL_TEXT_SESSION_KEY, null);
+            }
+        } catch (Exception ignored) {
+        }
+        try {
+            Session session = Local.get(SESSION_KEY, Session.class);
+            if (session != null && session.isOpen()) {
+                session.close();
+                Local.put(SESSION_KEY, null);
+            }
+        } catch (Exception ignored) {
+        }
+    }
 }

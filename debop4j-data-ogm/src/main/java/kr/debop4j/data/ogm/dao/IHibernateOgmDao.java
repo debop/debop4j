@@ -36,7 +36,7 @@ import java.util.concurrent.Future;
  * @author 배성혁 sunghyouk.bae@gmail.com
  * @since 13. 5. 31. 오후 10:31
  */
-public interface IHibernateOgmDao {
+public interface IHibernateOgmDao extends AutoCloseable {
 
     /** IHibernateOgmDao에서 사용할 hibernate Session 을 thread local 에 저장할 때의 키 값 */
     String SESSION_KEY = IHibernateOgmDao.class.getName() + ".Session";
