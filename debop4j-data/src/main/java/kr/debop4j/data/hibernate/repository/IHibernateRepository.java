@@ -34,9 +34,7 @@ import java.util.List;
  *
  * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 12. 11. 27.
- * @deprecated {@link IHibernateDao} 를 사용하세요.
  */
-@Deprecated
 public interface IHibernateRepository<E extends IStatefulEntity> {
 
     Class<E> getEntityClass();

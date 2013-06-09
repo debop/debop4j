@@ -16,7 +16,6 @@
 
 package org.apache.lucene.analysis.kr;
 
-import junit.framework.TestCase;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.lucene.analysis.kr.freq.HighFreqTerms;
 import org.apache.lucene.analysis.kr.freq.TermFreq;
@@ -27,16 +26,20 @@ import org.apache.lucene.index.IndexWriter;
 import org.apache.lucene.index.Term;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.FSDirectory;
+import org.junit.Before;
+import org.junit.Ignore;
+import org.junit.Test;
 
 import java.io.File;
 import java.io.IOException;
 
 @Slf4j
-public class IndexingTest extends TestCase {
+public class IndexingTest {
 
     private Directory directory;
 
-    protected void setUp() throws Exception {
+    @Before
+    public void setUp() throws Exception {
         directory = FSDirectory.open(new File(".lucene/index"));
     }
 
@@ -44,6 +47,7 @@ public class IndexingTest extends TestCase {
         return new IndexWriter(directory, new KoreanAnalyzer(), IndexWriter.MaxFieldLength.UNLIMITED);
     }
 
+    @Test
     public void testIndexWriter() throws IOException {
 
         IndexWriter writer = getWriter();
@@ -67,6 +71,7 @@ public class IndexingTest extends TestCase {
         return IndexReader.open(directory);
     }
 
+    @Test
     public void testIndexReader() throws Exception {
         testIndexWriter();
 
@@ -80,8 +85,9 @@ public class IndexingTest extends TestCase {
         }
     }
 
-    public void testTermHighFreqTerms() throws Exception {
-
+    @Test
+    @Ignore( "테스트 전에 인덱스가 만들어 졌는지 확인해야 합니다." )
+    public void termHighFreqTerms() throws Exception {
         testIndexWriter();
         try (IndexReader reader = getReader()) {
             TermFreq[] termFreqs = HighFreqTerms.getHighFreqTerms(reader, 100, "description");
@@ -91,7 +97,9 @@ public class IndexingTest extends TestCase {
         }
     }
 
-    public void testTermHighFreqTermsWithSharding() throws Exception {
+    @Test
+    @Ignore( "테스트 전에 인덱스가 만들어 졌는지 확인해야 합니다." )
+    public void termHighFreqTermsWithSharding() throws Exception {
         final String prefix = "debop4j-search/.lucene/indexes/kr.debop4j.search.twitter.Twit";
         final int numShard = 4;
 

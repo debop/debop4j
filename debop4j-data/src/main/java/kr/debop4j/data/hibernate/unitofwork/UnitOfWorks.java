@@ -113,7 +113,7 @@ public final class UnitOfWorks {
      *
      * @param factory the factory
      */
-    public static synchronized void setUnitOzfWorkFactory(IUnitOfWorkFactory factory) {
+    public static synchronized void setUnitOfWorkFactory(IUnitOfWorkFactory factory) {
         log.info("UnitOfWorkFactory를 설정합니다. unitOfWorkFactory=[{}]", factory);
 
         unitOfWorkFactory = factory;
@@ -225,7 +225,7 @@ public final class UnitOfWorks {
     }
 
     /** 현재 실행중인 UnitOfWork를 종료합니다. */
-    public static void stop() {
+    public static synchronized void stop() {
         stop(false);
     }
 
@@ -234,7 +234,7 @@ public final class UnitOfWorks {
      *
      * @param needFlushing Session에 반영된 내용을 flushing 할 것인지 여부
      */
-    public static void stop(boolean needFlushing) {
+    public static synchronized void stop(boolean needFlushing) {
         if (log.isTraceEnabled())
             log.trace("현재 실행중인 UnitOfWork를 중지합니다... needFlushing=[{}]", needFlushing);
 
@@ -252,12 +252,11 @@ public final class UnitOfWorks {
             }
 
             getCurrent().close();
-            setCurrent(null);
-
-            if (log.isDebugEnabled()) {
-                log.debug("현재 실행중인 UnitOfWork를 종료했습니다.");
-            }
         }
+        setCurrent(null);
+
+        if (log.isDebugEnabled())
+            log.debug("현재 실행중인 UnitOfWork를 종료했습니다.");
     }
 
     public static synchronized void closeUnitOfWork(IUnitOfWork unitOfWork) {
@@ -268,9 +267,7 @@ public final class UnitOfWorks {
     }
 
     public static synchronized void closeUnitOfWorkFactory() {
-        if (log.isInfoEnabled())
-            log.info("UnitOfWorkFactory를 종료합니다.");
-
+        log.info("UnitOfWorkFactory를 종료합니다.");
         unitOfWorkFactory = null;
     }
 }

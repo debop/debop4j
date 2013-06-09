@@ -42,7 +42,7 @@ public class MongoCacheManager extends AbstractTransactionSupportingCacheManager
     /**
      * Instantiates a new MongoCacheManager.
      *
-     * @param mongoTemplate {@link MongoTemplate} instance.
+     * @param mongoTemplate instance.
      * @param expireSeconds expiration value in second
      */
     public MongoCacheManager(MongoTemplate mongoTemplate, int expireSeconds) {

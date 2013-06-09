@@ -54,7 +54,7 @@ public abstract class MongoGridDatastoreConfigBase extends GridDatastoreConfigBa
         try {
             return new ServerAddress("localhost");
         } catch (UnknownHostException e) {
-            MongoGridDatastoreConfigBase.log.error("서버를 찾지 못했습니다.", e);
+            log.error("서버를 찾지 못했습니다.", e);
             throw new RuntimeException(e);
         }
     }
@@ -84,8 +84,8 @@ public abstract class MongoGridDatastoreConfigBase extends GridDatastoreConfigBa
         // 엔티티 저장 방식
         props.put(Environment.MONGODB_ASSOCIATIONS_STORE, getAssociationStorage().name());
 
-        if (MongoGridDatastoreConfigBase.log.isDebugEnabled())
-            MongoGridDatastoreConfigBase.log.debug("hibernate-ogm 환경설정 정보를 지정했습니다. props=\n{}", props.toString());
+        if (log.isDebugEnabled())
+            log.debug("hibernate-ogm 환경설정 정보를 지정했습니다. props=\n{}", props.toString());
 
         return props;
     }
@@ -94,19 +94,17 @@ public abstract class MongoGridDatastoreConfigBase extends GridDatastoreConfigBa
         return AssociationStorage.IN_ENTITY;
     }
 
-    private static final String MONGO_OGM_DAO_CLASS_NAME = MongoOgmDao.class.getName();
-
     @Override
     @Bean
-    @Scope("prototype")
+    @Scope( "prototype" )
     public MongoOgmDao hibernateOgmDao() {
-        MongoOgmDao dao = Local.get(MONGO_OGM_DAO_CLASS_NAME, MongoOgmDao.class);
+        MongoOgmDao dao = Local.get(HIBERNATE_OGM_DAO_KEY, MongoOgmDao.class);
         if (dao == null) {
-            dao = new MongoOgmDao(sessionFactory());
-            Local.put(MONGO_OGM_DAO_CLASS_NAME, dao);
+            dao = new MongoOgmDao();
+            Local.put(HIBERNATE_OGM_DAO_KEY, dao);
 
-            if (MongoGridDatastoreConfigBase.log.isDebugEnabled())
-                MongoGridDatastoreConfigBase.log.debug("현 스레드에서 새로운 MongoOgmDao 인스턴스를 생성했습니다. ThreadId=[{}]", Thread.currentThread().getId());
+            if (log.isDebugEnabled())
+                log.debug("현 스레드에서 새로운 MongoOgmDao 인스턴스를 생성했습니다. ThreadId=[{}]", Thread.currentThread().getId());
         }
         return dao;
     }
@@ -114,12 +112,15 @@ public abstract class MongoGridDatastoreConfigBase extends GridDatastoreConfigBa
     private static final String MONGO_CLIENT_CLASS_NAME = MongoClient.class.getName();
 
     @Bean
-    @Scope("prototype")
+    @Scope( "prototype" )
     public MongoClient mongoClient() {
         MongoClient client = Local.get(MONGO_CLIENT_CLASS_NAME, MongoClient.class);
         if (client == null) {
             client = new MongoClient(serverAddress());
             Local.put(MONGO_CLIENT_CLASS_NAME, client);
+
+            if (log.isDebugEnabled())
+                log.debug("현 스레드에서 새로운 MongoClient 인스턴스를 생성했습니다. ThreadId=[{}]", Thread.currentThread().getId());
         }
         return client;
     }
@@ -127,12 +128,15 @@ public abstract class MongoGridDatastoreConfigBase extends GridDatastoreConfigBa
     private static final String MONGO_TEMPLATE_CLASS_NAME = MongoTemplate.class.getName();
 
     @Bean
-    @Scope("prototype")
+    @Scope( "prototype" )
     public MongoTemplate mongoTemplate() {
         MongoTemplate template = Local.get(MONGO_TEMPLATE_CLASS_NAME, MongoTemplate.class);
         if (template == null) {
             template = new MongoTemplate(mongoClient(), getDatabaseName());
             Local.put(MONGO_TEMPLATE_CLASS_NAME, template);
+
+            if (log.isDebugEnabled())
+                log.debug("현 스레드에서 새로운 MongoTemplate 인스턴스를 생성했습니다. ThreadId=[{}]", Thread.currentThread().getId());
         }
         return template;
     }
@@ -141,7 +145,6 @@ public abstract class MongoGridDatastoreConfigBase extends GridDatastoreConfigBa
     public MongoTool mongoTool() {
         GridDialect dialect = gridDialect();
         DatastoreProvider provider = datastoreProvider();
-
         return new MongoTool(dialect, provider);
     }
 }

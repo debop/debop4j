@@ -50,7 +50,7 @@ public class UnitOfWorkFactory implements IUnitOfWorkFactory {
 
     @Override
     public Session getCurrentSession() {
-        Session session = (Session) Local.get(CURRENT_HIBERNATE_SESSION);
+        Session session = (Session) Local.get(IUnitOfWorkFactory.CURRENT_HIBERNATE_SESSION);
         Guard.shouldBe(session != null, "Session이 현 Thread Context에서 생성되지 않았습니다. UnitOfWorks.getStart() 를 먼저 호출하셔야 합니다.");
         return session;
     }
@@ -58,13 +58,13 @@ public class UnitOfWorkFactory implements IUnitOfWorkFactory {
     @Override
     public void setCurrentSession(Session session) {
         if (log.isDebugEnabled())
-            log.debug("현 ThreadContext에서 사용할 Session을 설정합니다. session=[{}]", session);
-        Local.put(CURRENT_HIBERNATE_SESSION, session);
+            log.debug("현 ThreadContext의 Session을 설정합니다. session=[{}]", session);
+        Local.put(IUnitOfWorkFactory.CURRENT_HIBERNATE_SESSION, session);
     }
 
 
     @Override
-    public void Init() {
+    public void init() {
         if (log.isInfoEnabled())
             log.info("Hibernate 용 UnitOfWorkFactory를 초기화합니다.");
     }
@@ -84,7 +84,7 @@ public class UnitOfWorkFactory implements IUnitOfWorkFactory {
         // Builder 패턴을 사용해도 됩니다.
         // sSession session = factory.withOptions().interceptor(interceptor).openSession();
         Session session = factory.openSession();
-        Local.put(CURRENT_HIBERNATE_SESSION, session);
+        setCurrentSession(session);
 
         return new UnitOfWorkAdapter(this, session, (UnitOfWorkAdapter) previous);
     }

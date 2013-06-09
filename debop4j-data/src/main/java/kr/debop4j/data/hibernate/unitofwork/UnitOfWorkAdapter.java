@@ -37,7 +37,7 @@ public class UnitOfWorkAdapter extends UnitOfWorkAdapterBase {
     @Getter
     private final IUnitOfWorkFactory factory;
     @Getter
-    private final Session session;
+    private Session session;
     @Getter
     private final UnitOfWorkAdapter previous;
     private AtomicInteger usageCount = new AtomicInteger(1);
@@ -136,7 +136,10 @@ public class UnitOfWorkAdapter extends UnitOfWorkAdapterBase {
                 } catch (Exception ignored) {}
             }
             if (session != null) {
-                try {session.close();} catch (Exception ignored) {}
+                try {
+                    session.close();
+                } catch (Exception ignored) {}
+                session = null;
             }
 
             if (log.isDebugEnabled())

@@ -46,9 +46,7 @@ import java.util.List;
  * 참고: http://forum.springsource.org/showthread.php?117227-Missing-Hibernate-Classes-Interfaces-in-spring-orm-3.1.0.RC1
  *
  * @author 배성혁 ( sunghyouk.bae@gmail.com )
- * @deprecated {@link HibernateDao} 를 사용하세요.
  */
-@Deprecated
 @Repository
 @SuppressWarnings("unchecked")
 public class HibernateRepository<E extends IStatefulEntity> implements IHibernateRepository<E> {

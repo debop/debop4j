@@ -65,7 +65,7 @@ public abstract class DatabaseTestFixtureBase {
     }
 
     /**
-     * Init Hibernate and Spring.
+     * init Hibernate and Spring.
      *
      * @param dbConfigurationClass the db configuration class
      */

@@ -28,7 +28,6 @@ import kr.debop4j.search.hibernate.model.Document;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.lucene.search.Query;
 import org.hibernate.search.query.dsl.QueryBuilder;
-import org.junit.After;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -48,12 +47,18 @@ public class SearchDaoTest extends SearchTestBase {
     @Autowired
     SearchDao searchDao;
 
-
-    @After
+    @Override
     public void after() {
-        searchDao.deleteAll(Document.class);
-        searchDao.flush();
-        searchDao.clearIndex(Document.class);
+        clearDocuments();
+        super.after();
+    }
+
+    private void clearDocuments() {
+        try (IUnitOfWork unitOfWork = UnitOfWorks.start(UnitOfWorkNestingOptions.CreateNewOrNestUnitOfWork)) {
+            searchDao.deleteAll(Document.class);
+            searchDao.flush();
+            searchDao.clearIndex(Document.class);
+        }
     }
 
     @Test
@@ -66,8 +71,8 @@ public class SearchDaoTest extends SearchTestBase {
 
         Document document = createDocument();
         searchDao.saveOrUpdate(document);
-        searchDao.getSession().flush();
-        searchDao.getSession().clear();
+        searchDao.flush();
+        searchDao.getFullTextSession().clear();
 
         Document loaded = searchDao.get(Document.class, document.getId());
         assertThat(loaded).isNotNull();
@@ -75,18 +80,20 @@ public class SearchDaoTest extends SearchTestBase {
 
         searchDao.delete(loaded);
         searchDao.flush();
-        searchDao.getSession().clear();
+        searchDao.getFullTextSession().clear();
 
         loaded = searchDao.get(Document.class, document.getId());
         assertThat(loaded).isNull();
+
+        clearDocuments();
     }
 
     @Test
     public void countTest() throws Exception {
         Document document = createDocument();
         searchDao.saveOrUpdate(document);
-        searchDao.getSession().flush();
-        searchDao.getSession().clear();
+        searchDao.flush();
+        searchDao.getFullTextSession().clear();
 
         QueryBuilder builder = searchDao.getQueryBuilder(Document.class);
         Query query =
@@ -101,6 +108,8 @@ public class SearchDaoTest extends SearchTestBase {
 
         IPagedList<Document> documents = searchDao.getPage(Document.class, query, 1, 10);
         assertThat(documents.getList().size()).isGreaterThan(0);
+
+        clearDocuments();
     }
 
     @Test
@@ -108,7 +117,7 @@ public class SearchDaoTest extends SearchTestBase {
         Action1<SearchDao> searchQueryAction =
                 new Action1<SearchDao>() {
                     @Override
-                    public void perform(SearchDao dao) {
+                    public void perform(final SearchDao dao) {
 
                         // findAll
                         List<Document> loadedDocuments = dao.findAll(Document.class);
@@ -123,7 +132,7 @@ public class SearchDaoTest extends SearchTestBase {
                                         .must(builder.keyword().onField("attrs.value").matching("송길주").createQuery())
                                         .must(builder.keyword().wildcard().onField("body").matching("백두*").createQuery())
                                         .createQuery();
-                        loadedDocuments = (List<Document>) dao.findAll(Document.class, query, null, null);
+                        loadedDocuments = dao.findAll(Document.class, query, null, null);
                         assertThat(loadedDocuments).isNotNull();
                         assertThat(loadedDocuments.size()).isGreaterThan(0);
 
@@ -137,7 +146,7 @@ public class SearchDaoTest extends SearchTestBase {
                                         .must(builder.keyword().onField("attrs.value").matching("송길").createQuery())
                                         .must(builder.keyword().wildcard().onField("body").matching("나눔*").createQuery())
                                         .createQuery();
-                        loadedDocuments = (List<Document>) dao.findAll(Document.class, query, null, null);
+                        loadedDocuments = dao.findAll(Document.class, query, null, null);
                         assertThat(loadedDocuments).isNotNull();
                         assertThat(loadedDocuments.size()).isEqualTo(0);
                     }
@@ -172,9 +181,8 @@ public class SearchDaoTest extends SearchTestBase {
             List<Document> documents = searchDao.findAll(Document.class);
             assertThat(documents.size()).isGreaterThan(0);
             searchDao.deleteAll(documents);
-            searchDao.getFullTextSession().flush();
+            searchDao.flush();
             searchDao.flushToIndexes();
-            searchDao.getFullTextSession().close();
         }
         assertThat(searchDao.count(Document.class)).isEqualTo(0);
     }
@@ -199,7 +207,6 @@ public class SearchDaoTest extends SearchTestBase {
                      * session이 닫히거나 스레드가 중단되기 전에 인덱싱을 마무리하도록 한다.
                      */
                     searchDao.flushToIndexes();
-                    searchDao.getSession().close();
 
                     log.debug("Document [{}]명을 추가했습니다.", documents.size());
                 } catch (Exception e) {
@@ -214,13 +221,16 @@ public class SearchDaoTest extends SearchTestBase {
             action.perform(searchDao);
         } finally {
             log.debug("Document 엔티티를 삭제합니다...");
-            List<Document> documents = searchDao.findAll(Document.class);
-            assertThat(documents.size()).isGreaterThan(0);
-            searchDao.deleteAll(documents);
-            searchDao.getFullTextSession().flush();
-            searchDao.flushToIndexes();
-            searchDao.getFullTextSession().close();
+            try (IUnitOfWork unitOfWork = UnitOfWorks.start(UnitOfWorkNestingOptions.CreateNewOrNestUnitOfWork)) {
+                List<Document> documents = searchDao.findAll(Document.class);
+                assertThat(documents.size()).isGreaterThan(0);
+                searchDao.deleteAll(documents);
+                searchDao.getFullTextSession().flush();
+                searchDao.flushToIndexes();
+            }
         }
-        assertThat(searchDao.count(Document.class)).isEqualTo(0);
+        try (IUnitOfWork unitOfWork = UnitOfWorks.start(UnitOfWorkNestingOptions.CreateNewOrNestUnitOfWork)) {
+            assertThat(searchDao.count(Document.class)).isEqualTo(0);
+        }
     }
 }

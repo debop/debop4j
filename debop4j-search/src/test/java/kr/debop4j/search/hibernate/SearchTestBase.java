@@ -75,8 +75,8 @@ public abstract class SearchTestBase {
     }
 
     public static final Random rnd = new Random();
-    public static final int REPEAT_COUNT = 100;
-    public static final int DOCUMENT_COUNT = 100;
+    public static final int REPEAT_COUNT = 50;
+    public static final int DOCUMENT_COUNT = 20;
 
     public static final String DefaultBody =
             "1. 동해물과 백두산이 마르고 닳도록, 하느님이 보우하사 우리나라 만세." +

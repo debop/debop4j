@@ -126,8 +126,8 @@ public class MongoCache implements Cache {
         private Object key;
         private Object value;
 
-//        /** Instantiates a new CacheItem. */
-//        public CacheItem() { this(null, null); }
+        /** Instantiates a new CacheItem. */
+        public CacheItem() { }
 
         /**
          * Instantiates a new CacheItem.

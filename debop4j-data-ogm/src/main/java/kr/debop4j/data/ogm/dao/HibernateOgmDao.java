@@ -18,13 +18,13 @@ package kr.debop4j.data.ogm.dao;
 
 import com.google.common.collect.Lists;
 import kr.debop4j.core.Guard;
-import kr.debop4j.core.Local;
 import kr.debop4j.core.collection.IPagedList;
 import kr.debop4j.core.collection.PaginatedList;
 import kr.debop4j.core.parallelism.AsyncTool;
 import kr.debop4j.core.tools.ArrayTool;
 import kr.debop4j.core.tools.StringTool;
 import kr.debop4j.data.hibernate.tools.HibernateTool;
+import kr.debop4j.data.hibernate.unitofwork.UnitOfWorks;
 import kr.debop4j.search.tools.SearchTool;
 import org.apache.lucene.search.Query;
 import org.apache.lucene.search.Sort;
@@ -38,7 +38,6 @@ import org.hibernate.search.query.ObjectLookupMethod;
 import org.hibernate.search.query.dsl.QueryBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.io.Serializable;
@@ -50,50 +49,28 @@ import java.util.concurrent.Future;
 import static kr.debop4j.core.Guard.shouldNotBeNull;
 
 /**
- * hibernate-ogm 용 DAO 입니다.<br />
+ * Hibernate-OGM 용 DAO 입니다.<br />
  * hibernate의 Criteria 기능을 제공할 수 없어, Criteria 부분은 hibernate-search를 사용합니다.
  *
  * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 13. 4. 15. 오후 5:42
  */
 @Component
-@SuppressWarnings("unchecked")
+@SuppressWarnings( "unchecked" )
 public class HibernateOgmDao implements IHibernateOgmDao {
 
     private static final Logger log = LoggerFactory.getLogger(HibernateOgmDao.class);
     private static final boolean isTraceEnabled = log.isTraceEnabled();
     private static final boolean isDebugEnabled = log.isDebugEnabled();
 
-    private SessionFactory sessionFactory;
-
-    @Autowired
-    public HibernateOgmDao(SessionFactory sessionFactory) {
-        shouldNotBeNull(sessionFactory, "sessionFactory");
-        this.sessionFactory = sessionFactory;
-    }
-
     @Override
     public synchronized final Session getSession() {
-        Session session = Local.get(SESSION_KEY, Session.class);
-
-        if (session == null || !session.isOpen()) {
-            if (isDebugEnabled) log.debug("새로운 Session을 생성합니다...");
-            session = sessionFactory.openSession();
-            Local.put(SESSION_KEY, session);
-        }
-        return session;
+        return UnitOfWorks.getCurrentSession();
     }
 
     @Override
     public synchronized final FullTextSession getFullTextSession() {
-        FullTextSession fts = Local.get(FULL_TEXT_SESSION_KEY, FullTextSession.class);
-
-        if (fts == null || !fts.isOpen()) {
-            if (isDebugEnabled) log.debug("현 ThreadContext에 새로운 FullTextSession을 생성합니다...");
-            fts = Search.getFullTextSession(getSession());
-            Local.put(FULL_TEXT_SESSION_KEY, fts);
-        }
-        return fts;
+        return Search.getFullTextSession(getSession());
     }
 
     @Override
@@ -117,7 +94,7 @@ public class HibernateOgmDao implements IHibernateOgmDao {
 
     @Override
     public <T> T get(Class<T> clazz, Serializable id) {
-        return (T) getSession().get(clazz, id);
+        return (T) getFullTextSession().get(clazz, id);
     }
 
     @Override
@@ -507,7 +484,7 @@ public class HibernateOgmDao implements IHibernateOgmDao {
         log.info("모든 엔티티에 대해 모든 인덱스 정보를 삭제합니다...");
 
         FullTextSession fts = getFullTextSession();
-        for (Class clazz : SearchTool.getIndexedClasses(getSession().getSessionFactory())) {
+        for (Class clazz : SearchTool.getIndexedClasses(fts.getSessionFactory())) {
             fts.purgeAll(clazz);
             fts.flushToIndexes();
         }
@@ -536,27 +513,5 @@ public class HibernateOgmDao implements IHibernateOgmDao {
     public void flushIndexes() {
         if (isDebugEnabled) log.debug("세션의 모든 인덱스 변경 정보를 저장합니다...");
         getFullTextSession().flushToIndexes();
-    }
-
-    @Override
-    public void close() throws Exception {
-        try {
-            FullTextSession fts = Local.get(FULL_TEXT_SESSION_KEY, FullTextSession.class);
-            if (fts != null && fts.isOpen()) {
-                fts.close();
-                Local.put(FULL_TEXT_SESSION_KEY, null);
-                log.debug("현 ThreadContext에서 사용하는 FullTextContext를 닫았습니다.");
-            }
-        } catch (Exception ignored) {
-        }
-        try {
-            Session session = Local.get(SESSION_KEY, Session.class);
-            if (session != null && session.isOpen()) {
-                session.close();
-                Local.put(SESSION_KEY, null);
-                log.debug("현 ThreadContext에서 사용하는 session를 닫았습니다.");
-            }
-        } catch (Exception ignored) {
-        }
     }
 }

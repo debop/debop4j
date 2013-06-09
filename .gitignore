@@ -4,6 +4,7 @@ bin
 *.log
 .idea
 .lucene
+.iml
 
 # Package Files #
 # *.jar

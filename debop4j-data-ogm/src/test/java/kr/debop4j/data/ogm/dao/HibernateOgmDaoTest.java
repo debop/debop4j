@@ -20,10 +20,10 @@ import com.google.common.collect.Lists;
 import kr.debop4j.data.hibernate.unitofwork.UnitOfWorks;
 import kr.debop4j.data.ogm.GridDatastoreTestBase;
 import lombok.extern.slf4j.Slf4j;
+import org.joda.time.DateTime;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.util.Date;
 import java.util.List;
 
 import static org.fest.assertions.Assertions.assertThat;
@@ -44,27 +44,6 @@ public class HibernateOgmDaoTest extends GridDatastoreTestBase {
     @Test
     public void createTest() throws Exception {
         assertThat(dao).isNotNull();
-    }
-
-    private Player createPlayer() {
-        Player player = new Player();
-
-        player.setName("성혁");
-        player.setSurname("배");
-        player.setAge(45);
-        player.setBirth(new Date(1968, 10, 14));
-        return player;
-    }
-
-    private List<Player> createTestPlayers(int count) {
-        List<Player> players = Lists.newArrayListWithCapacity(count);
-        for (int i = 0; i < count; i++) {
-            Player player = createPlayer();
-            player.setName("이름-" + i);
-            player.setAge(i);
-            players.add(player);
-        }
-        return players;
     }
 
     @Test
@@ -112,5 +91,26 @@ public class HibernateOgmDaoTest extends GridDatastoreTestBase {
 
         Player loaded = dao.get(Player.class, player.getId());
         assertThat(loaded).isNull();
+    }
+
+    private Player createPlayer() {
+        Player player = new Player();
+
+        player.setName("성혁");
+        player.setSurname("배");
+        player.setAge(45);
+        player.setBirth(new DateTime(1968, 10, 14, 0, 0).toDate());
+        return player;
+    }
+
+    private List<Player> createTestPlayers(int count) {
+        List<Player> players = Lists.newArrayListWithCapacity(count);
+        for (int i = 0; i < count; i++) {
+            Player player = createPlayer();
+            player.setName("이름-" + i);
+            player.setAge(i);
+            players.add(player);
+        }
+        return players;
     }
 }

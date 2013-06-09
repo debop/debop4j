@@ -55,7 +55,7 @@ import java.util.Set;
  * @since 13. 3. 29
  */
 @Configuration
-@ComponentScan( basePackageClasses = { UnitOfWorks.class, HibernateTool.class } )
+@ComponentScan(basePackageClasses = { UnitOfWorks.class, HibernateTool.class })
 @Slf4j
 public abstract class GridDatastoreConfigBase {
 
@@ -139,11 +139,11 @@ public abstract class GridDatastoreConfigBase {
     public static final String HIBERNATE_OGM_DAO_KEY = IHibernateOgmDao.class.getName() + ".Key";
 
     @Bean
-    @Scope( "prototype" )
+    @Scope("prototype")
     public IHibernateOgmDao hibernateOgmDao() {
         IHibernateOgmDao dao = Local.get(HIBERNATE_OGM_DAO_KEY, IHibernateOgmDao.class);
         if (dao == null) {
-            dao = new HibernateOgmDao(sessionFactory());
+            dao = new HibernateOgmDao();
             Local.put(HIBERNATE_OGM_DAO_KEY, dao);
             if (log.isDebugEnabled()) log.debug("IHibernateOgmDao 인스턴스를 생성했습니다.");
         }

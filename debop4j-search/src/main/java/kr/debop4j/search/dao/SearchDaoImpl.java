@@ -17,13 +17,12 @@
 package kr.debop4j.search.dao;
 
 import com.google.common.collect.Lists;
-import kr.debop4j.core.Local;
 import kr.debop4j.core.collection.PaginatedList;
 import kr.debop4j.core.parallelism.AsyncTool;
 import kr.debop4j.core.tools.ArrayTool;
 import kr.debop4j.core.tools.StringTool;
 import kr.debop4j.data.hibernate.tools.HibernateTool;
-import kr.debop4j.data.hibernate.unitofwork.IUnitOfWorkFactory;
+import kr.debop4j.data.hibernate.unitofwork.UnitOfWorks;
 import kr.debop4j.search.tools.SearchTool;
 import org.apache.lucene.search.Query;
 import org.apache.lucene.search.Sort;
@@ -36,7 +35,6 @@ import org.hibernate.search.query.ObjectLookupMethod;
 import org.hibernate.search.query.dsl.QueryBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.io.Serializable;
@@ -63,38 +61,40 @@ public class SearchDaoImpl implements SearchDao {
 
     private static final int BATCH_SIZE = 100;
 
-    @Autowired
-    private final SessionFactory sessionFactory;
+//    @Autowired
+//    private final SessionFactory sessionFactory;
 
-    public String SESSION_KEY = IUnitOfWorkFactory.CURRENT_HIBERNATE_SESSION;
+    // public String SESSION_KEY = IUnitOfWorkFactory.CURRENT_HIBERNATE_SESSION;
 
-    @Autowired
-    public SearchDaoImpl(SessionFactory sessionFactory) {
-        this.sessionFactory = sessionFactory;
-    }
+//    @Autowired
+//    public SearchDaoImpl(SessionFactory sessionFactory) {
+//        this.sessionFactory = sessionFactory;
+//    }
 
     @Override
     public synchronized final Session getSession() {
-        Session session = Local.get(SearchDao.SESSION_KEY, Session.class);
-
-        if (session == null || !session.isOpen()) {
-            session = sessionFactory.openSession();
-            Local.put(SearchDao.SESSION_KEY, session);
-            log.debug("새로운 Session을 생성했습니다.");
-        }
-        return session;
+        return UnitOfWorks.getCurrentSession();
+//        Session session = Local.get(SearchDao.SESSION_KEY, Session.class);
+//
+//        if (session == null || !session.isOpen()) {
+//            session = sessionFactory.openSession();
+//            Local.put(SearchDao.SESSION_KEY, session);
+//            log.debug("새로운 Session을 생성했습니다.");
+//        }
+//        return session;
     }
 
     @Override
     public synchronized final FullTextSession getFullTextSession() {
-        FullTextSession fts = Local.get(SearchDaoImpl.FULL_TEXT_SESSION_KEY, FullTextSession.class);
-
-        if (fts == null || !fts.isOpen()) {
-            fts = Search.getFullTextSession(getSession());
-            Local.put(SearchDaoImpl.FULL_TEXT_SESSION_KEY, fts);
-            log.debug("새로운 FullTextSession을 생성했습니다.");
-        }
-        return fts;
+        return Search.getFullTextSession(getSession());
+//        FullTextSession fts = Local.get(SearchDaoImpl.FULL_TEXT_SESSION_KEY, FullTextSession.class);
+//
+//        if (fts == null) {
+//            fts = Search.getFullTextSession(getSession());
+//            Local.put(SearchDaoImpl.FULL_TEXT_SESSION_KEY, fts);
+//            log.debug("새로운 FullTextSession을 생성했습니다.");
+//        }
+//        return fts;
     }
 
     @Override
@@ -338,7 +338,7 @@ public class SearchDaoImpl implements SearchDao {
     @Override
     public void deleteById(Class<?> clazz, Serializable id) {
         try {
-            Object entity = getSession().load(clazz, id);
+            Object entity = getFullTextSession().load(clazz, id);
             delete(entity);
         } catch (Exception t) {
             log.warn("엔티티 삭제에 실패했습니다. 엔티티가 없을 수 있습니다. clazz=[{}], id=[{}]", clazz, id);
@@ -350,11 +350,11 @@ public class SearchDaoImpl implements SearchDao {
         if (isTraceEnabled)
             log.trace("Ids에 해당하는 엔티티들을 삭제합니다. class=[{}], ids=[{}]", clazz, StringTool.listToString(ids));
 
-        Session session = getSession();
+        FullTextSession fts = getFullTextSession();
         List<Object> entities = new ArrayList<>();
 
         for (Serializable id : ids)
-            entities.add(session.load(clazz, id));
+            entities.add(fts.load(clazz, id));
         deleteAll(entities);
     }
 
@@ -484,7 +484,7 @@ public class SearchDaoImpl implements SearchDao {
         if (isDebugEnabled) log.debug("모든 엔티티에 대해 모든 인덱스 정보를 삭제합니다...");
 
         FullTextSession fts = getFullTextSession();
-        for (Class clazz : SearchTool.getIndexedClasses(getSession().getSessionFactory())) {
+        for (Class clazz : SearchTool.getIndexedClasses(fts.getSessionFactory())) {
             fts.purgeAll(clazz);
             fts.flushToIndexes();
         }
@@ -515,27 +515,5 @@ public class SearchDaoImpl implements SearchDao {
     public void flushToIndexes() {
         if (isTraceEnabled) log.trace("Session에 남아있는 인덱싱 작업을 강제로 수행하도록 하고, 기다립니다.");
         getFullTextSession().flushToIndexes();
-    }
-
-    @Override
-    public void close() throws Exception {
-        try {
-            FullTextSession fts = Local.get(FULL_TEXT_SESSION_KEY, FullTextSession.class);
-            if (fts != null && fts.isOpen()) {
-                fts.close();
-                Local.put(FULL_TEXT_SESSION_KEY, null);
-                log.debug("현 ThreadContext에서 사용하는 FullTextContext를 닫았습니다.");
-            }
-        } catch (Exception ignored) {
-        }
-        try {
-            Session session = Local.get(SESSION_KEY, Session.class);
-            if (session != null && session.isOpen()) {
-                session.close();
-                Local.put(SESSION_KEY, null);
-                log.debug("현 ThreadContext에서 사용하는 session를 닫았습니다.");
-            }
-        } catch (Exception ignored) {
-        }
     }
 }

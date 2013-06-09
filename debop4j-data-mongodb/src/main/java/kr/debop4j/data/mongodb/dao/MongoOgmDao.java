@@ -17,9 +17,6 @@
 package kr.debop4j.data.mongodb.dao;
 
 import kr.debop4j.data.ogm.dao.HibernateOgmDao;
-import org.apache.lucene.search.Query;
-import org.hibernate.SessionFactory;
-import org.hibernate.search.FullTextQuery;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -31,28 +28,10 @@ import org.springframework.stereotype.Component;
  * @since 13. 4. 16. 오전 11:14
  */
 @Component
-@SuppressWarnings("unchecked")
+@SuppressWarnings( "unchecked" )
 public class MongoOgmDao extends HibernateOgmDao {
 
     private static final Logger log = LoggerFactory.getLogger(MongoOgmDao.class);
     private static final boolean isTraceEnabled = log.isTraceEnabled();
     private static final boolean isDebugEnabled = log.isDebugEnabled();
-
-    public MongoOgmDao(SessionFactory sessionFactory) {
-        super(sessionFactory);
-    }
-
-    @Override
-    public long count(Class<?> clazz) {
-        return count(clazz, getQueryBuilder(clazz).all().createQuery());
-    }
-
-    @Override
-    public long count(Class<?> clazz, Query luceneQuery) {
-        if (isTraceEnabled)
-            log.trace("수형[{}]에 대해 갯수를 구합니다. luceneQuery=[{}]", clazz, luceneQuery.toString());
-
-        FullTextQuery ftq = getFullTextQuery(luceneQuery, clazz);
-        return ftq.getResultSize();
-    }
 }

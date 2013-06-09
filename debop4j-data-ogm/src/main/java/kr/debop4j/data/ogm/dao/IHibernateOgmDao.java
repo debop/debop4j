@@ -31,15 +31,17 @@ import java.util.List;
 import java.util.concurrent.Future;
 
 /**
- * kr.debop4j.data.ogm.dao.IHibernateOgmDao
+ * Data Access Object for Hibernate-OGM
+ * Hibernate-OGM 용의 조회는 hibernate-search와 lucene 을 이용하고,
+ * CUD는 hibernate-core 와 같다.
  *
  * @author 배성혁 sunghyouk.bae@gmail.com
  * @since 13. 5. 31. 오후 10:31
  */
-public interface IHibernateOgmDao extends AutoCloseable {
+public interface IHibernateOgmDao {
 
-    /** IHibernateOgmDao에서 사용할 hibernate Session 을 thread local 에 저장할 때의 키 값 */
-    String SESSION_KEY = IHibernateOgmDao.class.getName() + ".Session";
+//    /** IHibernateOgmDao에서 사용할 hibernate Session 을 thread local 에 저장할 때의 키 값 */
+//    String SESSION_KEY = IHibernateOgmDao.class.getName() + ".Session";
 
     /** IHibernateOgmDao에서 사용할 hibernate-search FullTextSession 을 thread local 에 저장할 때의 키 값 */
     String FULL_TEXT_SESSION_KEY = IHibernateOgmDao.class.getName() + ".FullTextSession";

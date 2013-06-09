@@ -32,7 +32,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 /**
- * kr.debop4j.access.repository.organization.CompanyCodeItemRepository
+ * Repository for {@link CompanyCodeItem}
  *
  * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 13. 3. 14.

@@ -46,15 +46,30 @@ public class AccessContext {
     /** 현 Thread Context 에 제공된 정보 */
     public static class Current {
 
+        /**
+         * Gets company code.
+         *
+         * @return the company code
+         */
         public static String getCompanyCode() {
             return (String) Local.get(CURRENT_COMPANY_CODE_KEY);
         }
 
+        /**
+         * Sets company code.
+         *
+         * @param companyCode the company code
+         */
         public static void setCompanyCode(String companyCode) {
             Guard.shouldNotBeEmpty(companyCode, "companyCode");
             Local.put(CURRENT_COMPANY_CODE_KEY, companyCode);
         }
 
+        /**
+         * Gets company.
+         *
+         * @return the company
+         */
         public static Company getCompany() {
             return (Company) UnitOfWorks.getCurrentSession()
                     .createCriteria(Company.class)
@@ -62,15 +77,30 @@ public class AccessContext {
                     .uniqueResult();
         }
 
+        /**
+         * Gets department code.
+         *
+         * @return the department code
+         */
         public static String getDepartmentCode() {
             return (String) Local.get(CURRENT_DEPARTMENT_CODE_KEY);
         }
 
+        /**
+         * Sets department code.
+         *
+         * @param departmentCode the department code
+         */
         public static void setDepartmentCode(String departmentCode) {
             Guard.shouldNotBeEmpty(departmentCode, "departmentCode");
             Local.put(CURRENT_DEPARTMENT_CODE_KEY, departmentCode);
         }
 
+        /**
+         * Gets department.
+         *
+         * @return the department
+         */
         public static Department getDepartment() {
             return (Department) UnitOfWorks.getCurrentSession()
                     .createCriteria(Department.class)
@@ -78,15 +108,30 @@ public class AccessContext {
                     .uniqueResult();
         }
 
+        /**
+         * Gets username.
+         *
+         * @return the username
+         */
         public static String getUsername() {
             return (String) Local.get(CURRENT_USERNAME_KEY);
         }
 
+        /**
+         * Sets username.
+         *
+         * @param username the username
+         */
         public static void setUsername(String username) {
             Guard.shouldNotBeEmpty(username, "username");
             Local.put(CURRENT_USERNAME_KEY, username);
         }
 
+        /**
+         * Gets user.
+         *
+         * @return the user
+         */
         public static User getUser() {
             return (User) UnitOfWorks.getCurrentSession()
                     .createCriteria(User.class)

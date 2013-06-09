@@ -29,8 +29,8 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
  * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 13. 4. 16. 오후 12:05
  */
-@RunWith( SpringJUnit4ClassRunner.class )
-@ContextConfiguration( classes = { GridDatastoreConfiguration.class } )
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(classes = { GridDatastoreConfiguration.class })
 public class GridDatastoreTestBase {
 
     @Before

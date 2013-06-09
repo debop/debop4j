@@ -18,7 +18,6 @@ package kr.debop4j.search.dao;
 
 import kr.debop4j.core.collection.IPagedList;
 import kr.debop4j.core.collection.PaginatedList;
-import kr.debop4j.data.hibernate.unitofwork.IUnitOfWorkFactory;
 import org.apache.lucene.search.Query;
 import org.apache.lucene.search.Sort;
 import org.hibernate.Criteria;
@@ -38,10 +37,10 @@ import java.util.concurrent.Future;
  * @author 배성혁 sunghyouk.bae@gmail.com
  * @since 13. 5. 5. 오전 1:16
  */
-public interface SearchDao extends AutoCloseable {
+public interface SearchDao {
 
-    /** 현 Thread-context에서 사용할 {@link org.hibernate.Session} 의 저장소 키 (참고: {@link kr.debop4j.core.Local}) */
-    public String SESSION_KEY = IUnitOfWorkFactory.CURRENT_HIBERNATE_SESSION;
+    // /** 현 Thread-context에서 사용할 {@link org.hibernate.Session} 의 저장소 키 (참고: {@link kr.debop4j.core.Local}) */
+    // public String SESSION_KEY = IUnitOfWorkFactory.CURRENT_HIBERNATE_SESSION;
 
     /** 현 Thread-context에서 사용할 {@link org.hibernate.search.FullTextSession}의 저장소 키 (참고: {@link kr.debop4j.core.Local}) */
     public String FULL_TEXT_SESSION_KEY = SearchDao.class.getName() + ".FullTextSession";
