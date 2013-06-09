@@ -18,6 +18,7 @@ package kr.debop4j.data.ogm.dao;
 
 import com.google.common.collect.Lists;
 import kr.debop4j.core.Guard;
+import kr.debop4j.core.Local;
 import kr.debop4j.core.collection.IPagedList;
 import kr.debop4j.core.collection.PaginatedList;
 import kr.debop4j.core.parallelism.AsyncTool;
@@ -70,7 +71,13 @@ public class HibernateOgmDao implements IHibernateOgmDao {
 
     @Override
     public synchronized final FullTextSession getFullTextSession() {
-        return Search.getFullTextSession(getSession());
+        FullTextSession fts = Local.get(IHibernateOgmDao.FULL_TEXT_SESSION_KEY, FullTextSession.class);
+        if (fts == null || !fts.isOpen()) {
+            fts = Search.getFullTextSession(getSession());
+            Local.put(IHibernateOgmDao.FULL_TEXT_SESSION_KEY, fts);
+            log.debug("새로운 FullTextSession을 생성했습니다.");
+        }
+        return fts;
     }
 
     @Override

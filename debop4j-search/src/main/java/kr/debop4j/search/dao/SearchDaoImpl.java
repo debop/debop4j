@@ -17,6 +17,7 @@
 package kr.debop4j.search.dao;
 
 import com.google.common.collect.Lists;
+import kr.debop4j.core.Local;
 import kr.debop4j.core.collection.PaginatedList;
 import kr.debop4j.core.parallelism.AsyncTool;
 import kr.debop4j.core.tools.ArrayTool;
@@ -52,7 +53,7 @@ import static kr.debop4j.core.Guard.shouldNotBeNull;
  * @since 13. 5. 4. 오후 7:07
  */
 @Repository
-@SuppressWarnings("unchecked")
+@SuppressWarnings( "unchecked" )
 public class SearchDaoImpl implements SearchDao {
 
     private static final Logger log = LoggerFactory.getLogger(SearchDaoImpl.class);
@@ -61,40 +62,20 @@ public class SearchDaoImpl implements SearchDao {
 
     private static final int BATCH_SIZE = 100;
 
-//    @Autowired
-//    private final SessionFactory sessionFactory;
-
-    // public String SESSION_KEY = IUnitOfWorkFactory.CURRENT_HIBERNATE_SESSION;
-
-//    @Autowired
-//    public SearchDaoImpl(SessionFactory sessionFactory) {
-//        this.sessionFactory = sessionFactory;
-//    }
-
     @Override
     public synchronized final Session getSession() {
         return UnitOfWorks.getCurrentSession();
-//        Session session = Local.get(SearchDao.SESSION_KEY, Session.class);
-//
-//        if (session == null || !session.isOpen()) {
-//            session = sessionFactory.openSession();
-//            Local.put(SearchDao.SESSION_KEY, session);
-//            log.debug("새로운 Session을 생성했습니다.");
-//        }
-//        return session;
     }
 
     @Override
     public synchronized final FullTextSession getFullTextSession() {
-        return Search.getFullTextSession(getSession());
-//        FullTextSession fts = Local.get(SearchDaoImpl.FULL_TEXT_SESSION_KEY, FullTextSession.class);
-//
-//        if (fts == null) {
-//            fts = Search.getFullTextSession(getSession());
-//            Local.put(SearchDaoImpl.FULL_TEXT_SESSION_KEY, fts);
-//            log.debug("새로운 FullTextSession을 생성했습니다.");
-//        }
-//        return fts;
+        FullTextSession fts = Local.get(SearchDao.FULL_TEXT_SESSION_KEY, FullTextSession.class);
+        if (fts == null || !fts.isOpen()) {
+            fts = Search.getFullTextSession(getSession());
+            Local.put(SearchDao.FULL_TEXT_SESSION_KEY, fts);
+            log.debug("새로운 FullTextSession을 생성했습니다.");
+        }
+        return fts;
     }
 
     @Override
