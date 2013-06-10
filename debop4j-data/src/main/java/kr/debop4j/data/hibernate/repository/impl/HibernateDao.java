@@ -46,8 +46,8 @@ import java.util.List;
 @Repository
 @SuppressWarnings("unchecked")
 public class HibernateDao implements IHibernateDao {
-
     private static final Logger log = LoggerFactory.getLogger(HibernateDao.class);
+
     private static final boolean isTraceEnabled = log.isTraceEnabled();
     private static final boolean isDebugEnabled = log.isDebugEnabled();
 

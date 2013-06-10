@@ -1,3 +1,19 @@
+/*
+ * Copyright 2011-2013 the original author or authors.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package kr.debop4j.data.hibernate.repository;
 
 import kr.debop4j.core.spring.Springs;
@@ -54,8 +70,8 @@ public class HibernateRepositoryTest extends HibernateTestBase {
 
         //TransactionStatus txstatus = transactionManager.getTransaction(new DefaultTransactionDefinition());
         try {
-            IHibernateRepository<JpaUser> jpaUserDao = hibernateRepositoryfactory.getOrCreateHibernateRepository(JpaUser.class);
-            List<JpaUser> users = jpaUserDao.getAll();
+            IHibernateRepository<JpaUser> userRepository = hibernateRepositoryfactory.getOrCreateHibernateRepository(JpaUser.class);
+            List<JpaUser> users = userRepository.findAll();
 
             Assert.assertEquals(0, users.size());
 
@@ -69,14 +85,14 @@ public class HibernateRepositoryTest extends HibernateTestBase {
 
     @Test
     public void createCategoryHiberateRepository() {
-        IHibernateRepository<Category> categoryDao =
+        IHibernateRepository<Category> categoryRepository =
                 hibernateRepositoryfactory.getOrCreateHibernateRepository(Category.class);
-        List<Category> categories = categoryDao.getAll();
+        List<Category> categories = categoryRepository.findAll();
         Assert.assertEquals(0, categories.size());
     }
 
     @Test
-    @SuppressWarnings( "unchecked" )
+    @SuppressWarnings("unchecked")
     public void loadSessionFactory() {
         SessionFactory sessionFactory = Springs.getBean(SessionFactory.class);
         Assert.assertNotNull(sessionFactory);

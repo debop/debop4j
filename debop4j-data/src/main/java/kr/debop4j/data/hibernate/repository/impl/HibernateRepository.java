@@ -16,9 +16,9 @@
 
 package kr.debop4j.data.hibernate.repository.impl;
 
-import kr.debop4j.core.Guard;
+import com.google.common.collect.Lists;
 import kr.debop4j.core.collection.IPagedList;
-import kr.debop4j.core.collection.SimplePagedList;
+import kr.debop4j.core.collection.PaginatedList;
 import kr.debop4j.core.tools.ArrayTool;
 import kr.debop4j.core.tools.StringTool;
 import kr.debop4j.data.hibernate.HibernateParameter;
@@ -36,7 +36,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -51,80 +50,106 @@ import java.util.List;
 @SuppressWarnings("unchecked")
 public class HibernateRepository<E extends IStatefulEntity> implements IHibernateRepository<E> {
 
-    // Slf4j
     private static final Logger log = LoggerFactory.getLogger(HibernateRepository.class);
-    private static final boolean isTranceEnabled = log.isTraceEnabled();
+    private static final boolean isTraceEnabled = log.isTraceEnabled();
     private static final boolean isDebugEnabled = log.isDebugEnabled();
+    private static final long serialVersionUID = -4172233298108681601L;
 
     @Getter
-    private Class<E> entityClass;
-    private String entityName;
-    private boolean cacheable;
+    private final boolean cacheable;
+    private final Class<E> entityClazz;
 
-    protected HibernateRepository() {}
-
-    public HibernateRepository(Class<E> entityClass) {
-        this(entityClass, false);
+    /**
+     * Instantiates a new HibernateRepository.
+     *
+     * @param entityClazz 엔티티 수형
+     */
+    public HibernateRepository(Class<E> entityClazz) {
+        this(entityClazz, false);
     }
 
-    public HibernateRepository(Class<E> entityClass, boolean cacheable) {
-        this.entityClass = entityClass;
-        this.entityName = this.entityClass.getName();
+    /**
+     * Instantiates a new HibernateRepository.
+     *
+     * @param entityClazz 엔티티 수형
+     * @param cacheable   캐시 여부
+     */
+    public HibernateRepository(Class<E> entityClazz, boolean cacheable) {
+        this.entityClazz = entityClazz;
         this.cacheable = cacheable;
     }
 
-    protected Session getSession() {
+    @Override
+    public Class<E> getEntityClass() {
+        return entityClazz;
+    }
+
+    @Override
+    public Session getSession() {
         return UnitOfWorks.getCurrentSession();
     }
 
-    public void flush() {
+    @Override
+    public final void flushSession() {
         if (isDebugEnabled)
-            log.debug("flush session...");
+            log.debug("Session 정보를 flush 합니다...");
+
         getSession().flush();
     }
 
     @Override
-    public E load(Serializable id) {
-        if (isTranceEnabled)
-            log.trace("laod entity... class=[{}], id=[{}]", entityClass, id);
-        return (E) getSession().load(entityClass, id);
+    public final void transactionalFlush() {
+        UnitOfWorks.getCurrent().transactionalFlush();
     }
 
     @Override
-    public E load(Serializable id, LockOptions lockOptions) {
-        if (isTranceEnabled)
-            log.trace("laod entity... class=[{}], id=[{}], lockOptions=[{}]", entityClass, id, lockOptions);
-        return (E) getSession().load(entityClass, id, lockOptions);
+    public <E> E load(Serializable id) {
+        if (isTraceEnabled)
+            log.trace("load entity... id=[{}]", entityClazz, id);
+
+        return (E) getSession().load(entityClazz, id);
     }
 
     @Override
-    public E get(Serializable id) {
-        if (isTranceEnabled)
-            log.trace("get entity... class=[{}], id=[{}]", entityClass, id);
-        return (E) getSession().get(entityClass, id);
+    public <E> E load(Serializable id, LockOptions lockOptions) {
+        if (isTraceEnabled)
+            log.trace("load entity... id=[{}], lockOptions=[{}]", entityClazz, id, lockOptions);
+
+        return (E) getSession().load(entityClazz, id, lockOptions);
     }
 
     @Override
-    public E get(Serializable id, LockOptions lockOptions) {
-        if (isTranceEnabled)
-            log.trace("get entity... class=[{}], id=[{}], lockOptions=[{}]", entityClass, id, lockOptions);
-        return (E) getSession().get(entityClass, id, lockOptions);
+    public <E> E get(Serializable id) {
+        if (isTraceEnabled)
+            log.trace("get entity... id=[{}]", entityClazz, id);
+
+        return (E) getSession().get(entityClazz, id);
     }
 
     @Override
-    public List<E> getIn(Collection ids) {
+    public <E> E get(Serializable id, LockOptions lockOptions) {
+        if (isTraceEnabled)
+            log.trace("get entity... id=[{}], lockOptions=[{}]", entityClazz, id, lockOptions);
+
+        return (E) getSession().get(entityClazz, id, lockOptions);
+    }
+
+    @Override
+    public <E> List<E> getIn(Collection<? extends Serializable> ids) {
         if (ArrayTool.isEmpty(ids))
-            return new ArrayList<E>();
+            return Lists.newArrayList();
 
-        return find(CriteriaTool.addIn(DetachedCriteria.forClass(entityClass), "id", ids));
+        DetachedCriteria dc = CriteriaTool.addIn(DetachedCriteria.forClass(entityClazz), "id", ids);
+        return find(dc);
     }
 
     @Override
-    public List<E> getIn(Serializable[] ids) {
+    public <E> List<E> getIn(Serializable[] ids) {
         if (ArrayTool.isEmpty(ids))
-            return new ArrayList<E>();
+            return Lists.newArrayList();
 
-        return find(CriteriaTool.addIn(DetachedCriteria.forClass(entityClass), "id", ids));
+        DetachedCriteria dc = CriteriaTool.addIn(DetachedCriteria.forClass(entityClazz), "id", ids);
+        return find(dc);
     }
 
     @Override
@@ -158,74 +183,77 @@ public class HibernateRepository<E extends IStatefulEntity> implements IHibernat
     }
 
     @Override
-    public List<E> getAll() {
-        return getSession().createCriteria(entityClass).setCacheable(cacheable).list();
+    public final <E> List<E> findAll(Order... orders) {
+        if (ArrayTool.isEmpty(orders)) {
+            Query query = getSession().createQuery("from " + entityClazz.getName());
+            return (List<E>) query.setCacheable(cacheable).list();
+        } else {
+            Criteria criteria = getSession().createCriteria(entityClazz);
+            HibernateTool.addOrders(criteria, orders);
+            return criteria.setCacheable(cacheable).list();
+        }
     }
 
     @Override
-    public List<E> findAll(Order... orders) {
-        return find(getSession().createCriteria(entityClass), orders);
-    }
-
-    @Override
-    public List<E> findAll(int firstResult, int maxResults, Order... orders) {
-        return find(getSession().createCriteria(entityClass), firstResult, maxResults, orders);
-    }
-
-    @Override
-    public List<E> find(Criteria criteria, Order... orders) {
-        return find(criteria, -1, -1, orders);
-    }
-
-    @Override
-    public List<E> find(Criteria criteria, int firstResult, int maxResults, Order... orders) {
+    public final <E> List<E> findAll(int firstResult, int maxResults, Order... orders) {
+        Criteria criteria = getSession().createCriteria(entityClazz);
         HibernateTool.setPaging(criteria, firstResult, maxResults);
         if (!ArrayTool.isEmpty(orders))
             HibernateTool.addOrders(criteria, orders);
-        return criteria.list();
+
+        return criteria.setCacheable(cacheable).list();
     }
 
     @Override
-    public List<E> find(DetachedCriteria dc) {
-        assert dc != null;
-        return dc.getExecutableCriteria(getSession()).list();
+    public final <E> List<E> find(Criteria criteria, Order... orders) {
+        if (!ArrayTool.isEmpty(orders))
+            HibernateTool.addOrders(criteria, orders);
+
+        return criteria.setCacheable(cacheable).list();
     }
 
     @Override
-    public List<E> find(DetachedCriteria dc, int firstResult, int maxResults, Order... orders) {
-        assert dc != null;
+    public final <E> List<E> find(Criteria criteria, int firstResult, int maxResults, Order... orders) {
+        HibernateTool.setPaging(criteria, firstResult, maxResults);
+        if (!ArrayTool.isEmpty(orders))
+            HibernateTool.addOrders(criteria, orders);
+        return criteria.setCacheable(cacheable).list();
+    }
+
+    @Override
+    public final <E> List<E> find(DetachedCriteria dc, Order... orders) {
+        return find(dc.getExecutableCriteria(getSession()), orders);
+    }
+
+    @Override
+    public final <E> List<E> find(DetachedCriteria dc, int firstResult, int maxResults, Order... orders) {
         return find(dc.getExecutableCriteria(getSession()), firstResult, maxResults, orders);
     }
 
     @Override
-    public List<E> findByExample(Example example) {
-        return getSession().createCriteria(entityClass).add(example).list();
-    }
-
-    @Override
-    public List<E> find(Query query, HibernateParameter... parameters) {
+    public final <E> List<E> find(Query query, HibernateParameter... parameters) {
         return find(query, -1, -1, parameters);
     }
 
     @Override
-    public List<E> find(Query query, int firstResult, int maxResults, HibernateParameter... parameters) {
+    public <E> List<E> find(Query query, int firstResult, int maxResults, HibernateParameter... parameters) {
+        assert query != null;
         HibernateTool.setPaging(query, firstResult, maxResults);
         HibernateTool.setParameters(query, parameters);
 
-        return query.list();
+        return (List<E>) query.list();
     }
 
     @Override
-    public List<E> findByHql(String hql, HibernateParameter... parameters) {
-
-        return findByHql(hql, -1, -1, parameters);
+    public final <E> List<E> find(final String hql, HibernateParameter... parameters) {
+        return find(hql, -1, -1, parameters);
     }
 
     @Override
-    public List<E> findByHql(String hql, int firstResult, int maxResults, HibernateParameter... parameters) {
-        Guard.shouldNotBeEmpty(hql, "hql");
-        if (isDebugEnabled)
-            log.debug("쿼리문을 실행합니다. hql=[{}], pageNo=[{}], pageSize=[{}],parameters=[{}]",
+    public <E> List<E> find(final String hql, int firstResult, int maxResults, HibernateParameter... parameters) {
+        assert StringTool.isNotEmpty(hql);
+        if (isTraceEnabled)
+            log.trace("HQL문을 실행합니다. hql=[{}], firstResult=[{}], maxResults=[{}], parameters=[{}]",
                       hql, firstResult, maxResults, StringTool.listToString(parameters));
 
         Query query = getSession().createQuery(hql);
@@ -233,15 +261,15 @@ public class HibernateRepository<E extends IStatefulEntity> implements IHibernat
     }
 
     @Override
-    public List<E> findByNamedQuery(String queryName, HibernateParameter... parameters) {
-        return findByNamedQuery(queryName, -1, -1, parameters);
+    public final <E> List<E> findByNamedQuery(final String queryName, HibernateParameter... parameters) {
+        return find(queryName, -1, -1, parameters);
     }
 
     @Override
-    public List<E> findByNamedQuery(String queryName, int firstResult, int maxResults, HibernateParameter... parameters) {
-        Guard.shouldNotBeEmpty(queryName, "sqlString");
-        if (isDebugEnabled)
-            log.debug("NamedQuery를 로드하여 실행합니다. queryName=[{}], pageNo=[{}], pageSize=[{}], parameters=[{}]",
+    public <E> List<E> findByNamedQuery(final String queryName, int firstResult, int maxResults, HibernateParameter... parameters) {
+        assert StringTool.isNotEmpty(queryName);
+        if (isTraceEnabled)
+            log.trace("NamedQuery를 실행합니다. sqlString=[{}], firstResult=[{}], maxResults=[{}], parameters=[{}]",
                       queryName, firstResult, maxResults, StringTool.listToString(parameters));
 
         Query query = getSession().getNamedQuery(queryName);
@@ -249,56 +277,61 @@ public class HibernateRepository<E extends IStatefulEntity> implements IHibernat
     }
 
     @Override
-    public List<E> findBySQLString(String sqlString, HibernateParameter... parameters) {
+    public final <E> List<E> findBySQLString(final String sqlString, HibernateParameter... parameters) {
         return findBySQLString(sqlString, -1, -1, parameters);
     }
 
     @Override
-    public List<E> findBySQLString(String sqlString, int firstResult, int maxResults, HibernateParameter... parameters) {
-        Guard.shouldNotBeEmpty(sqlString, "sqlString");
-        if (isDebugEnabled)
-            log.debug("SQLString을 수행합니다. sqlString=[{}], firstResult=[{}], maxResults=[{}], paramters=[{}]",
+    public <E> List<E> findBySQLString(final String sqlString, int firstResult, int maxResults, HibernateParameter... parameters) {
+        assert StringTool.isNotEmpty(sqlString);
+        if (isTraceEnabled)
+            log.trace("일반 SQL 문 실행합니다. sqlString=[{}], firstResult=[{}], maxResults=[{}], parameters=[{}]",
                       sqlString, firstResult, maxResults, StringTool.listToString(parameters));
 
         Query query = getSession().createSQLQuery(sqlString);
         return find(query, firstResult, maxResults, parameters);
     }
 
-    protected final IPagedList<E> getPage(Criteria criteria, int pageNo, int pageSize, Order... orders) {
+    @Override
+    public <E> List<E> findByExample(Example example) {
+        return getSession().createCriteria(entityClazz).add(example).list();
+    }
 
-        final Criteria countCriteria = HibernateTool.copyCriteria(criteria);
+    @Override
+    public <E> PaginatedList<E> getPage(Criteria criteria, int pageNo, int pageSize, Order... orders) {
+        Criteria countCriteria = HibernateTool.copyCriteria(criteria);
         long itemCount = count(countCriteria);
 
         int firstResult = (pageNo - 1) * pageSize;
         List<E> list = find(criteria, firstResult, pageSize, orders);
-
-        return new SimplePagedList<E>(list, pageNo, pageSize, itemCount);
+        return new PaginatedList(list, pageNo, pageSize, itemCount);
     }
 
     @Override
-    public IPagedList<E> getPage(DetachedCriteria dc, int pageNo, int pageSize, Order... orders) {
-
+    public <E> PaginatedList<E> getPage(DetachedCriteria dc, int pageNo, int pageSize, Order... orders) {
         DetachedCriteria countDc = HibernateTool.copyDetachedCriteria(dc);
         long itemCount = count(countDc);
 
-        List list = find(dc, (pageNo - 1) * pageSize, pageSize, orders);
-        return new SimplePagedList(list, pageNo, pageSize, itemCount);
+        int firstResult = (pageNo - 1) * pageSize;
+        List<E> list = find(dc, firstResult, pageSize, orders);
+        return new PaginatedList(list, pageNo, pageSize, itemCount);
     }
 
     @Override
-    public IPagedList<E> getPage(Query query, int pageNo, int pageSize, HibernateParameter... parameters) {
+    public <E> PaginatedList<E> getPage(Query query, int pageNo, int pageSize, HibernateParameter... parameters) {
+
         Query countQuery = getSession().createQuery(query.getQueryString());
         long itemCount = count(countQuery, parameters);
 
-        List<E> list = find(query, (pageNo - 1) * pageSize, pageSize, parameters);
-        return new SimplePagedList<E>(list, pageNo, pageSize, itemCount);
+        int firstResult = (pageNo - 1) * pageSize;
+        List<E> list = find(query, firstResult, pageSize, parameters);
+        return new PaginatedList(list, pageNo, pageSize, itemCount);
     }
 
     @Override
-    public IPagedList<E> getPageByHql(String hql, int pageNo, int pageSize, HibernateParameter... parameters) {
-        Guard.shouldNotBeEmpty(hql, "hql");
-        if (isDebugEnabled)
-            log.debug("쿼리문을 실행합니다. hql=[{}], pageNo=[{}], pageSize=[{}],parameters=[{}]",
+    public <E> IPagedList<E> getPageByHql(final String hql, int pageNo, int pageSize, HibernateParameter... parameters) {
+        if (isTraceEnabled)
+            log.trace("HQL문을 실행하고, 결과를 Paging처리합니다. hql=[{}], pageNo=[{}], pageSize=[{}], parameters=[{}]",
                       hql, pageNo, pageSize, StringTool.listToString(parameters));
 
         Query query = getSession().createQuery(hql);
@@ -306,10 +339,9 @@ public class HibernateRepository<E extends IStatefulEntity> implements IHibernat
     }
 
     @Override
-    public IPagedList<E> getPageByNamedQuery(String queryName, int pageNo, int pageSize, HibernateParameter... parameters) {
-        Guard.shouldNotBeEmpty(queryName, "sqlString");
-        if (isDebugEnabled)
-            log.debug("NamedQuery를 로드하여 실행합니다. queryName=[{}], pageNo=[{}], pageSize=[{}], parameters=[{}]",
+    public <E> IPagedList<E> getPageByNamedQuery(final String queryName, int pageNo, int pageSize, HibernateParameter... parameters) {
+        if (isTraceEnabled)
+            log.trace("NamedQuery를 실행하고, 결과를 Paging처리합니다. sqlString=[{}], pageNo=[{}], pageSize=[{}], parameters=[{}]",
                       queryName, pageNo, pageSize, StringTool.listToString(parameters));
 
         Query query = getSession().getNamedQuery(queryName);
@@ -317,113 +349,107 @@ public class HibernateRepository<E extends IStatefulEntity> implements IHibernat
     }
 
     @Override
-    public IPagedList<E> getPageBySQLString(String sqlString, int pageNo, int pageSize, HibernateParameter... parameters) {
-        Guard.shouldNotBeEmpty(sqlString, "sqlString");
-        if (isDebugEnabled)
-            log.debug("SQLString을 수행합니다. sqlString=[{}], firstResult=[{}], maxResults=[{}], paramters=[{}]",
+    public <E> IPagedList<E> getPageBySQLString(final String sqlString, int pageNo, int pageSize, HibernateParameter... parameters) {
+        if (isTraceEnabled)
+            log.trace("일반 SQL문을 실행하고, 결과를 Paging처리합니다. sqlString=[{}], pageNo=[{}], pageSize=[{}], parameters=[{}]",
                       sqlString, pageNo, pageSize, StringTool.listToString(parameters));
-        Query query = getSession().createSQLQuery(sqlString);
+
+        SQLQuery query = getSession().createSQLQuery(sqlString);
         return getPage(query, pageNo, pageSize, parameters);
     }
 
+
     @Override
-    public E findOne(DetachedCriteria dc) {
-        assert dc != null;
-        return (E) dc.getExecutableCriteria(getSession()).uniqueResult();
+    public <E> E findUnique(DetachedCriteria dc) {
+        return findUnique(dc.getExecutableCriteria(getSession()));
     }
 
     @Override
-    public E findOne(Criteria criteria) {
-        assert criteria != null;
-        return (E) criteria.uniqueResult();
+    public <E> E findUnique(Criteria criteria) {
+        return (E) criteria.setCacheable(cacheable).uniqueResult();
     }
 
     @Override
-    public E findOne(Query query, HibernateParameter... parameters) {
-        return (E) HibernateTool.setParameters(query, parameters).uniqueResult();
+    public <E> E findUnique(Query query, HibernateParameter... parameters) {
+        HibernateTool.setParameters(query, parameters);
+        return (E) query.setCacheable(cacheable).uniqueResult();
     }
 
     @Override
-    public E findOneByHql(String hql, HibernateParameter... parameters) {
-        if (isDebugEnabled)
-            log.debug("쿼리문을 수행하여 유일한 값을 조회합니다. 없거나 복수개이면 예외가 발생합니다. hql=[{}], parameters=[{}]",
-                      hql, StringTool.listToString(parameters));
+    public <E> E findUniqueByHql(String hql, HibernateParameter... parameters) {
+        if (isTraceEnabled)
+            log.trace("hql을 수행합니다. hql=[{}], parameters=[{}]", hql, StringTool.listToString(parameters));
 
         Query query = getSession().createQuery(hql);
-        return findOne(query, parameters);
+        return findUnique(query, parameters);
     }
 
     @Override
-    public E findOneByNamedQuery(String queryName, HibernateParameter... parameters) {
-        if (isDebugEnabled)
-            log.debug("쿼리문을 수행하여 유일한 값을 조회합니다. 없거나 복수개이면 예외가 발생합니다. queryName=[{}], parameters=[{}]",
-                      queryName, StringTool.listToString(parameters));
+    public <E> E findUniqueByNamedQuery(String queryName, HibernateParameter... parameters) {
+        if (isTraceEnabled)
+            log.trace("NamedQuery를 수행합니다. queryName=[{}], parameters=[{}]", queryName, StringTool.listToString(parameters));
 
         Query query = getSession().getNamedQuery(queryName);
-        return findOne(query, parameters);
+        return findUnique(query, parameters);
     }
 
     @Override
-    public E findOneBySQLString(String sqlString, HibernateParameter... parameters) {
-        if (isDebugEnabled)
-            log.debug("쿼리문을 수행하여 유일한 값을 조회합니다. 없거나 복수개이면 예외가 발생합니다. sqlString=[{}], parameters=[{}]",
-                      sqlString, StringTool.listToString(parameters));
+    public <E> E findUniqueBySQLString(String sqlString, HibernateParameter... parameters) {
+        if (isTraceEnabled)
+            log.trace("일반 SQL문을 수행합니다. sqlString=[{}], parameters=[{}]", sqlString, StringTool.listToString(parameters));
 
-        Query query = getSession().getNamedQuery(sqlString);
-        return findOne(query, parameters);
+        SQLQuery query = getSession().createSQLQuery(sqlString);
+        return findUnique(query, parameters);
     }
 
     @Override
-    public E findFirst(Criteria criteria) {
-        List<E> list = find(criteria, 0, 1);
-        if (list.size() > 0)
-            return list.get(0);
-        return null;
+    public <E> E findFirst(DetachedCriteria dc, Order... orders) {
+        return findFirst(dc.getExecutableCriteria(getSession()), orders);
     }
 
     @Override
-    public E findFirst(DetachedCriteria dc) {
-        return findFirst(dc.getExecutableCriteria(getSession()));
+    public <E> E findFirst(Criteria criteria, Order... orders) {
+        List<E> list = find(criteria, 0, 1, orders);
+        return (list.size() > 0) ? list.get(0) : null;
     }
 
     @Override
-    public E findFirst(Query query, HibernateParameter... parameters) {
+    public <E> E findFirst(Query query, HibernateParameter... parameters) {
+        HibernateTool.setParameters(query, parameters);
         List<E> list = find(query, 0, 1, parameters);
-        if (list.size() > 0)
-            return list.get(0);
-        return null;
+        return (list.size() > 0) ? list.get(0) : null;
     }
 
     @Override
-    public E findFirstByHql(String hql, HibernateParameter... parameters) {
-        if (isDebugEnabled)
-            log.debug("HQL문 실행. hql=[{}], parameters=[{}]", hql, StringTool.listToString(parameters));
+    public <E> E findFirstByHql(String hql, HibernateParameter... parameters) {
+        if (isTraceEnabled)
+            log.trace("hql을 수행합니다. hql=[{}], parameters=[{}]", hql, StringTool.listToString(parameters));
 
         Query query = getSession().createQuery(hql);
         return findFirst(query, parameters);
     }
 
     @Override
-    public E findFirstByNamedQuery(String queryName, HibernateParameter... parameters) {
-        if (isDebugEnabled)
-            log.debug("NamedQuery 실행. queryName=[{}], parameters=[{}]", queryName, StringTool.listToString(parameters));
+    public <E> E findFirstByNamedQuery(String queryName, HibernateParameter... parameters) {
+        if (isTraceEnabled)
+            log.trace("NamedQuery를 수행합니다. queryName=[{}], parameters=[{}]", queryName, StringTool.listToString(parameters));
 
         Query query = getSession().getNamedQuery(queryName);
-        return findFirst(query, parameters);
+        return findUnique(query, parameters);
     }
 
     @Override
-    public E findFirstBySQLString(String sqlString, HibernateParameter... parameters) {
-        if (isDebugEnabled)
-            log.debug("일반 쿼리문 실행. sqlString=[{}], parameters=[{}]", sqlString, StringTool.listToString(parameters));
+    public <E> E findFirstBySQLString(String sqlString, HibernateParameter... parameters) {
+        if (isTraceEnabled)
+            log.trace("일반 SQL문을 수행합니다. sqlString=[{}], parameters=[{}]", sqlString, StringTool.listToString(parameters));
 
-        Query query = getSession().createSQLQuery(sqlString);
-        return findFirst(query, parameters);
+        SQLQuery query = getSession().createSQLQuery(sqlString);
+        return findUnique(query, parameters);
     }
 
     @Override
     public boolean exists() {
-        return exists(getSession().createCriteria(entityClass));
+        return exists(getSession().createCriteria(entityClazz));
     }
 
     @Override
@@ -433,32 +459,40 @@ public class HibernateRepository<E extends IStatefulEntity> implements IHibernat
 
     @Override
     public boolean exists(Criteria criteria) {
-        return (findFirst(criteria) != null);
+        return findFirst(criteria) != null;
     }
 
     @Override
     public boolean exists(Query query, HibernateParameter... parameters) {
-        return (findFirst(query, parameters) != null);
+        return findFirst(query, parameters) != null;
     }
 
     @Override
     public boolean existsByHql(String hql, HibernateParameter... parameters) {
-        return (findFirstByHql(hql, parameters) != null);
+        return findFirstByHql(hql, parameters) != null;
     }
 
     @Override
     public boolean existsByNamedQuery(String queryName, HibernateParameter... parameters) {
-        return (findFirstByNamedQuery(queryName, parameters) != null);
+        return findFirstByNamedQuery(queryName, parameters) != null;
     }
 
     @Override
     public boolean existsBySQLString(String sqlString, HibernateParameter... parameters) {
-        return (findFirstBySQLString(sqlString, parameters) != null);
+        return findFirstBySQLString(sqlString, parameters) != null;
     }
 
     @Override
     public long count() {
-        return count(getSession().createCriteria(entityClass));
+        return count(getSession().createCriteria(entityClazz));
+    }
+
+    @Override
+    public long count(Criteria criteria) {
+        Object count = criteria.setProjection(Projections.rowCount()).uniqueResult();
+        if (isTraceEnabled)
+            log.trace("count=" + count);
+        return (count == null) ? 0 : ((Number) count).longValue();
     }
 
     @Override
@@ -467,79 +501,101 @@ public class HibernateRepository<E extends IStatefulEntity> implements IHibernat
     }
 
     @Override
-    public long count(Criteria criteria) {
-        Object count = criteria.setProjection(Projections.rowCount())
-                .uniqueResult();
-        return ((Number) count).longValue();
-    }
+    public long count(Query query, HibernateParameter... parameters) {
+        assert query != null;
+        Object count = HibernateTool.setParameters(query, parameters)
+                                    .setResultTransformer(Criteria.PROJECTION)
+                                    .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
+                                    .uniqueResult();
 
-    protected final long count(Query query, HibernateParameter... parameters) {
-        // TODO: 테스트가 필요합니다!!!
-        Object count = query.setResultTransformer(Criteria.PROJECTION)
-                .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
-                .uniqueResult();
+        if (isTraceEnabled)
+            log.trace("count=" + count);
 
-        return ((Number) count).longValue();
-    }
-
-    @Override
-    public E merge(E entity) {
-        return (E) getSession().merge(entity);
+        return (count == null) ? 0 : ((Number) count).longValue();
     }
 
     @Override
-    public void persist(E entity) {
+    public Object merge(Object entity) {
+        return getSession().merge(entity);
+    }
+
+    @Override
+    public void persist(Object entity) {
         getSession().persist(entity);
     }
 
     @Override
-    public Serializable save(E entity) {
+    public Serializable save(Object entity) {
         return getSession().save(entity);
     }
 
     @Override
-    public void saveOrUpdate(E entity) {
+    public void saveOrUpdate(Object entity) {
         getSession().saveOrUpdate(entity);
     }
 
     @Override
-    public void update(E entity) {
+    public void update(Object entity) {
         getSession().update(entity);
     }
 
     @Override
-    public void delete(E entity) {
+    public void delete(Object entity) {
         getSession().delete(entity);
     }
 
     @Override
-    public void deleteEntities(Collection<E> entities) {
-        Session session = getSession();
-        for (E entity : entities)
-            session.delete(entityName, entity);
-    }
-
-    @Override
-    public void delete(DetachedCriteria dc) {
-        deleteEntities(find(dc));
-    }
-
-    @Override
     public void deleteById(Serializable id) {
+        if (isTraceEnabled)
+            log.trace("엔티티[{}]를 삭제합니다. id=[{}]", entityClazz.getSimpleName(), id);
+
         getSession().delete(load(id));
     }
 
     @Override
-    public int deleteAllWithoutCascade() {
-        return getSession()
-                .createQuery("delete from " + entityName)
-                .executeUpdate();
+    public void deleteAll() {
+        if (isTraceEnabled)
+            log.trace("해당 엔티티를 모두 삭제합니다. entityClazz=[{}]", entityClazz);
+
+        deleteAll(DetachedCriteria.forClass(entityClazz));
     }
 
     @Override
-    public int executeUpdateByHql(String hql, HibernateParameter... parameters) {
-        if (isDebugEnabled)
-            log.debug("Update나 Delete용 쿼리를 수행합니다. hql=[{}], parameters=[{}]",
+    public void deleteAll(Collection<?> entities) {
+        if (isTraceEnabled)
+            log.trace("지정한 엔티티들을 모두 삭제합니다.");
+
+        final Session session = getSession();
+        for (Object entity : entities) {
+            session.delete(entity);
+        }
+    }
+
+    @Override
+    public void deleteAll(DetachedCriteria dc) {
+        deleteAll(dc.getExecutableCriteria(getSession()));
+    }
+
+    @Override
+    public void deleteAll(Criteria criteria) {
+        deleteAll(find(criteria));
+    }
+
+    @Override
+    public int deleteAllWithoutCascade() {
+        if (isTraceEnabled)
+            log.trace("해당 엔티티를 모두 삭제합니다. entityClazz=[{}]", entityClazz);
+
+        return getSession()
+                .createQuery("delete from " + entityClazz.getName())
+                .executeUpdate();
+    }
+
+
+    @Override
+    public int executeUpdateByHql(final String hql, HibernateParameter... parameters) {
+        if (isTraceEnabled)
+            log.trace("Update/Delete 구문을 수행합니다. hql=[{}], parameters=[{}]",
                       hql, StringTool.listToString(parameters));
 
         Query query = getSession().createQuery(hql);
@@ -547,11 +603,10 @@ public class HibernateRepository<E extends IStatefulEntity> implements IHibernat
         return query.executeUpdate();
     }
 
-
     @Override
-    public int executeUpdateByNamedQuery(String queryName, HibernateParameter... parameters) {
-        if (isDebugEnabled)
-            log.debug("Update나 Delete용 쿼리를 수행합니다. queryName=[{}], parameters=[{}]",
+    public int executeUpdateByNamedQuery(final String queryName, HibernateParameter... parameters) {
+        if (isTraceEnabled)
+            log.trace("Update/Delete 구문을 수행합니다. queryName=[{}], parameters=[{}]",
                       queryName, StringTool.listToString(parameters));
 
         Query query = getSession().getNamedQuery(queryName);
@@ -559,6 +614,43 @@ public class HibernateRepository<E extends IStatefulEntity> implements IHibernat
         return query.executeUpdate();
     }
 
+    @Override
+    public int executeUpdateBySQLString(final String sqlString, HibernateParameter... parameters) {
+        if (isTraceEnabled)
+            log.trace("Update/Delete 구문을 수행합니다. sqlString=[{}], parameters=[{}]",
+                      sqlString, StringTool.listToString(parameters));
+
+        SQLQuery query = getSession().createSQLQuery(sqlString);
+        HibernateTool.setParameters(query, parameters);
+        return query.executeUpdate();
+    }
+
+    /**
+     * Build projection criteria.
+     *
+     * @param projectClass   the project class
+     * @param criteria       the criteria
+     * @param projection     the projection
+     * @param distinctResult the distinct result
+     * @return the criteria
+     */
+    protected <TProject> Criteria buildProjectionCriteria(Class<TProject> projectClass,
+                                                          Criteria criteria,
+                                                          Projection projection,
+                                                          boolean distinctResult) {
+        if (isTraceEnabled)
+            log.trace("Criteria에 Projection을 적용합니다. projectClass=[{}], projection=[{}], distinctResult=[{}]",
+                      projectClass, projection, distinctResult);
+
+        if (distinctResult) {
+            criteria.setProjection(Projections.distinct(projection));
+        } else {
+            criteria.setProjection(projection);
+        }
+
+        criteria.setResultTransformer(Transformers.aliasToBean(projectClass));
+        return criteria;
+    }
 
     @Override
     public <TProject> TProject reportOne(Class<TProject> projectClass, ProjectionList projectionList, DetachedCriteria dc) {
@@ -567,8 +659,7 @@ public class HibernateRepository<E extends IStatefulEntity> implements IHibernat
 
     @Override
     public <TProject> TProject reportOne(Class<TProject> projectClass, ProjectionList projectionList, Criteria criteria) {
-        Criteria projectCriteria =
-                buildProjectionCriteria(projectClass, criteria, projectionList, true);
+        Criteria projectCriteria = buildProjectionCriteria(projectClass, criteria, projectionList, true);
         return (TProject) projectCriteria.uniqueResult();
     }
 
@@ -596,8 +687,7 @@ public class HibernateRepository<E extends IStatefulEntity> implements IHibernat
     public <TProject> List<TProject> reportList(Class<TProject> projectClass,
                                                 ProjectionList projectionList,
                                                 Criteria criteria) {
-        Criteria projectCriteria =
-                buildProjectionCriteria(projectClass, criteria, projectionList, false);
+        Criteria projectCriteria = buildProjectionCriteria(projectClass, criteria, projectionList, false);
         return projectCriteria.list();
     }
 
@@ -607,18 +697,18 @@ public class HibernateRepository<E extends IStatefulEntity> implements IHibernat
                                                 Criteria criteria,
                                                 int firstResult,
                                                 int maxResults) {
-        Criteria projectCriteria =
-                buildProjectionCriteria(projectClass, criteria, projectionList, false);
+        Criteria projectCriteria = buildProjectionCriteria(projectClass, criteria, projectionList, false);
         HibernateTool.setPaging(projectCriteria, firstResult, maxResults);
+
         return projectCriteria.list();
     }
 
     @Override
-    public <TProject> IPagedList<TProject> reportPage(Class<TProject> projectClass,
-                                                      ProjectionList projectionList,
-                                                      DetachedCriteria dc,
-                                                      int pageNo,
-                                                      int pageSize) {
+    public <TProject> PaginatedList<TProject> reportPage(Class<TProject> projectClass,
+                                                         ProjectionList projectionList,
+                                                         DetachedCriteria dc,
+                                                         int pageNo,
+                                                         int pageSize) {
         return reportPage(projectClass,
                           projectionList,
                           dc.getExecutableCriteria(getSession()),
@@ -627,11 +717,11 @@ public class HibernateRepository<E extends IStatefulEntity> implements IHibernat
     }
 
     @Override
-    public <TProject> IPagedList<TProject> reportPage(Class<TProject> projectClass,
-                                                      ProjectionList projectionList,
-                                                      Criteria criteria,
-                                                      int pageNo,
-                                                      int pageSize) {
+    public <TProject> PaginatedList<TProject> reportPage(Class<TProject> projectClass,
+                                                         ProjectionList projectionList,
+                                                         Criteria criteria,
+                                                         int pageNo,
+                                                         int pageSize) {
         Criteria projectCriteria =
                 buildProjectionCriteria(projectClass, criteria, projectionList, false);
 
@@ -639,20 +729,7 @@ public class HibernateRepository<E extends IStatefulEntity> implements IHibernat
         int firstResult = (pageNo - 1) * pageSize;
         HibernateTool.setPaging(projectCriteria, firstResult, pageSize);
 
-        return new SimplePagedList(projectCriteria.list(), pageNo, pageSize, itemCount);
+        return new PaginatedList<TProject>(projectCriteria.list(), pageNo, pageSize, itemCount);
     }
 
-    protected final <TProject> Criteria buildProjectionCriteria(Class<TProject> projectClass,
-                                                                Criteria criteria,
-                                                                Projection projection,
-                                                                boolean distinctResult) {
-
-        if (distinctResult)
-            criteria.setProjection(Projections.distinct(projection));
-        else
-            criteria.setProjection(projection);
-
-        criteria.setResultTransformer(Transformers.aliasToBean(projectClass));
-        return criteria;
-    }
 }

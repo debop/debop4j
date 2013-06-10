@@ -516,7 +516,6 @@ public interface IHibernateDao {
      * 엔티티 정보가 존재하는지를 파악합니다.
      *
      * @param clazz 엔티티 수형
-     * @param <T>   엔티티 수형
      * @return 엔티티 존재 여부
      */
     boolean exists(Class<?> clazz);
@@ -526,7 +525,6 @@ public interface IHibernateDao {
      *
      * @param clazz 엔티티 수형
      * @param dc    조회 조건
-     * @param <T>   엔티티 수형
      * @return 엔티티 존재 여부
      */
     boolean exists(Class<?> clazz, DetachedCriteria dc);
@@ -536,7 +534,6 @@ public interface IHibernateDao {
      *
      * @param clazz    엔티티 수형
      * @param criteria 조회 조건
-     * @param <T>      엔티티 수형
      * @return 엔티티 존재 여부
      */
     boolean exists(Class<?> clazz, Criteria criteria);
@@ -546,7 +543,6 @@ public interface IHibernateDao {
      *
      * @param clazz 엔티티 수형
      * @param query 조회 조건
-     * @param <T>   엔티티 수형
      * @return 엔티티 존재 여부
      */
     boolean exists(Class<?> clazz, Query query, HibernateParameter... parameters);
@@ -556,7 +552,6 @@ public interface IHibernateDao {
      *
      * @param clazz 엔티티 수형
      * @param hql   조회 조건
-     * @param <T>   엔티티 수형
      * @return 엔티티 존재 여부
      */
     boolean existsByHql(Class<?> clazz, String hql, HibernateParameter... parameters);
@@ -566,7 +561,6 @@ public interface IHibernateDao {
      *
      * @param clazz     엔티티 수형
      * @param queryName 쿼리명
-     * @param <T>       엔티티 수형
      * @return 엔티티 존재 여부
      */
     boolean existsByNamedQuery(Class<?> clazz, String queryName, HibernateParameter... parameters);
@@ -576,7 +570,6 @@ public interface IHibernateDao {
      *
      * @param clazz     엔티티 수형
      * @param sqlString 일반 SQL 문
-     * @param <T>       엔티티 수형
      * @return 엔티티 존재 여부
      */
     boolean existsBySQLString(Class<?> clazz, String sqlString, HibernateParameter... parameters);
