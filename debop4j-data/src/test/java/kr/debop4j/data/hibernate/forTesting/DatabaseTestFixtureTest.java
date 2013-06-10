@@ -56,15 +56,8 @@ public class DatabaseTestFixtureTest extends DatabaseTestFixtureBase {
         verifyCanCreateUseAndDisposeUnitOfWork();
     }
 
-//    @Test
-//    public void canCreateUnitOfWorkContextForDerby() {
-//        verifyCanCreateUnitOfWorkContextFor(DerbyConfig.class);
-//        verifyCanCreateUseAndDisposeSession();
-//        verifyCanCreateUseAndDisposeUnitOfWork();
-//    }
-
     @Test
-    // @Ignore("MySQL을 설치하세요")
+    // @Ignore("MySQL을 설치하세요.")
     public void canCreateUnitOfWorkContextForMySql() {
         verifyCanCreateUnitOfWorkContextFor(MySqlConfig.class);
         verifyCanCreateUseAndDisposeSession();
@@ -72,6 +65,7 @@ public class DatabaseTestFixtureTest extends DatabaseTestFixtureBase {
     }
 
     @Test
+    @Ignore("PostgreSQL을 설치하세요.")
     public void canCreateUnitOfWorkContextForPostgreSql() {
         verifyCanCreateUnitOfWorkContextFor(PostgreSqlConfig.class);
         verifyCanCreateUseAndDisposeSession();

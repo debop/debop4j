@@ -37,10 +37,7 @@ import java.util.concurrent.Future;
  * @author 배성혁 sunghyouk.bae@gmail.com
  * @since 13. 5. 5. 오전 1:16
  */
-public interface SearchDao {
-
-    // /** 현 Thread-context에서 사용할 {@link org.hibernate.Session} 의 저장소 키 (참고: {@link kr.debop4j.core.Local}) */
-    // public String SESSION_KEY = IUnitOfWorkFactory.CURRENT_HIBERNATE_SESSION;
+public interface SearchDao extends Serializable {
 
     /** 현 Thread-context에서 사용할 {@link org.hibernate.search.FullTextSession}의 저장소 키 (참고: {@link kr.debop4j.core.Local}) */
     public String FULL_TEXT_SESSION_KEY = SearchDao.class.getName() + ".FullTextSession";

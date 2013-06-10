@@ -519,7 +519,7 @@ public interface IHibernateDao {
      * @param <T>   엔티티 수형
      * @return 엔티티 존재 여부
      */
-    <T> boolean exists(Class<T> clazz);
+    boolean exists(Class<?> clazz);
 
     /**
      * 조회 조건에 해당하는 엔티티 정보가 존재하는지를 파악합니다.
@@ -529,7 +529,7 @@ public interface IHibernateDao {
      * @param <T>   엔티티 수형
      * @return 엔티티 존재 여부
      */
-    <T> boolean exists(Class<T> clazz, DetachedCriteria dc);
+    boolean exists(Class<?> clazz, DetachedCriteria dc);
 
     /**
      * 조회 조건에 해당하는 엔티티 정보가 존재하는지를 파악합니다.
@@ -539,7 +539,7 @@ public interface IHibernateDao {
      * @param <T>      엔티티 수형
      * @return 엔티티 존재 여부
      */
-    <T> boolean exists(Class<T> clazz, Criteria criteria);
+    boolean exists(Class<?> clazz, Criteria criteria);
 
     /**
      * 조회 조건에 해당하는 엔티티 정보가 존재하는지를 파악합니다.
@@ -549,7 +549,7 @@ public interface IHibernateDao {
      * @param <T>   엔티티 수형
      * @return 엔티티 존재 여부
      */
-    <T> boolean exists(Class<T> clazz, Query query, HibernateParameter... parameters);
+    boolean exists(Class<?> clazz, Query query, HibernateParameter... parameters);
 
     /**
      * 조회 조건에 해당하는 엔티티 정보가 존재하는지를 파악합니다.
@@ -559,7 +559,7 @@ public interface IHibernateDao {
      * @param <T>   엔티티 수형
      * @return 엔티티 존재 여부
      */
-    <T> boolean existsByHql(Class<T> clazz, String hql, HibernateParameter... parameters);
+    boolean existsByHql(Class<?> clazz, String hql, HibernateParameter... parameters);
 
     /**
      * 조회 조건에 해당하는 엔티티 정보가 존재하는지를 파악합니다.
@@ -569,7 +569,7 @@ public interface IHibernateDao {
      * @param <T>       엔티티 수형
      * @return 엔티티 존재 여부
      */
-    <T> boolean existsByNamedQuery(Class<T> clazz, String queryName, HibernateParameter... parameters);
+    boolean existsByNamedQuery(Class<?> clazz, String queryName, HibernateParameter... parameters);
 
     /**
      * 조회 조건에 해당하는 엔티티 정보가 존재하는지를 파악합니다.
@@ -579,7 +579,7 @@ public interface IHibernateDao {
      * @param <T>       엔티티 수형
      * @return 엔티티 존재 여부
      */
-    <T> boolean existsBySQLString(Class<T> clazz, String sqlString, HibernateParameter... parameters);
+    boolean existsBySQLString(Class<?> clazz, String sqlString, HibernateParameter... parameters);
 
     /**
      * 해당 엔티티의 갯수를 구합니다.
@@ -621,101 +621,90 @@ public interface IHibernateDao {
      * 엔티티를 Session에 추가합니다. 기존에 있다면 update하고, 없으면 save 합니다.
      *
      * @param entity 엔티티
-     * @param <T>    엔티티 수형
      * @return update 된 엔티티
      */
-    <T> Object merge(T entity);
+    Object merge(Object entity);
 
     /**
      * 엔티티를 저장합니다.
      *
      * @param entity 저장할 Transient Object
-     * @param <T>    수형
      */
-    <T> void persist(T entity);
+    void persist(Object entity);
 
     /**
      * 엔티티를 저장합니다.
      *
      * @param entity 저장할 Transient Object
-     * @param <T>    entity type
      * @return identifier of entity.
      */
-    <T> Serializable save(T entity);
+    Serializable save(Object entity);
 
     /**
      * 엔티티를 저장하거나 Update 합니다.
      *
      * @param entity 엔티티
-     * @param <T>    엔티티 수형
      */
-    <T> void saveOrUpdate(T entity);
+    void saveOrUpdate(Object entity);
 
     /**
      * 엔티티를 Update 합니다.
      *
      * @param entity 엔티티
-     * @param <T>    엔티티 수형
      */
-    <T> void update(T entity);
+    void update(Object entity);
 
     /**
      * 해당 엔티티를 삭제합니다. 만약 cascading 이 지정되어 있다면 cascading delete 를 수행합니다.
      *
      * @param entity 삭제할 엔티티
-     * @param <T>    엔티티 수형
      */
-    <T> void delete(T entity);
+    void delete(Object entity);
 
     /**
      * 지정한 Id값을 가진 엔티티를 삭제합니다. 만약 cascading 이 지정되어 있다면 cascading delete 를 수행합니다.
      *
      * @param clazz 삭제할 엔티티의 수형
      * @param id    삭제할 엔티티의 id 값
-     * @param <T>   엔티티 수형
      */
-    <T> void deleteById(Class<T> clazz, Serializable id);
+    void deleteById(Class<?> clazz, Serializable id);
 
     /**
      * 해당 수형의 모든 엔티티를 삭제합니다.
      *
      * @param clazz 엔티티 수형
-     * @param <T>   엔티티 수형
      */
-    <T> void deleteAll(Class<T> clazz);
+    void deleteAll(Class<?> clazz);
 
     /**
      * 해당 수형의 모든 엔티티를 삭제합니다.
      *
      * @param entities 삭제할 엔티티의 컬렉션
-     * @param <T>      엔티티 수형
      */
-    <T> void deleteAll(Collection<T> entities);
+    void deleteAll(Collection<?> entities);
 
     /**
      * 질의 조건에 해당하는 모든 엔티티를 삭제합니다.
      *
      * @param clazz 엔티티 수형
      * @param dc    질의 조건
-     * @param <T>   엔티티 수형
      */
-    <T> void deleteAll(Class<T> clazz, DetachedCriteria dc);
+    void deleteAll(Class<?> clazz, DetachedCriteria dc);
 
     /**
      * 질의 조건에 해당하는 모든 엔티티를 삭제합니다.
      *
      * @param clazz    엔티티 수형
      * @param criteria 질의 조건
-     * @param <T>      엔티티 수형
      */
-    <T> void deleteAll(Class<T> clazz, Criteria criteria);
+    void deleteAll(Class<?> clazz, Criteria criteria);
 
     /**
      * Cascade 적용 없이 엔티티들을 모두 삭제합니다.
      *
      * @param clazz 엔티티 수형
      */
-    <T> int deleteAllWithoutCascade(Class<T> clazz);
+    int deleteAllWithoutCascade(Class<?> clazz);
 
     /**
      * 지정한 HQL 구문 (insert, update, delete) 을 수행합니다.
@@ -724,7 +713,7 @@ public interface IHibernateDao {
      * @param parameters 인자 정보
      * @return 실행에 영향 받은 행의 수
      */
-    int executeUpdateByHql(String hql, HibernateParameter... parameters);
+    int executeUpdateByHql(final String hql, HibernateParameter... parameters);
 
     /**
      * 지정한 name의 NamedQuery (insert, update, delete) 을 수행합니다.
@@ -733,7 +722,7 @@ public interface IHibernateDao {
      * @param parameters 인자 정보
      * @return 실행에 영향 받은 행의 수
      */
-    int executeUpdateByNamedQuery(String queryName, HibernateParameter... parameters);
+    int executeUpdateByNamedQuery(final String queryName, HibernateParameter... parameters);
 
     /**
      * 지정한 HQL 구문 (insert, update, delete) 을 수행합니다.
@@ -742,7 +731,7 @@ public interface IHibernateDao {
      * @param parameters 인자 정보
      * @return 실행에 영향 받은 행의 수
      */
-    int executeUpdateBySQLString(String sqlString, HibernateParameter... parameters);
+    int executeUpdateBySQLString(final String sqlString, HibernateParameter... parameters);
 
     /**
      * Projection을 수행하여, 하나의 엔티티를 반환합니다.

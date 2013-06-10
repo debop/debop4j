@@ -279,7 +279,7 @@ public class HibernateDao implements IHibernateDao {
     }
 
     @Override
-    public <T> IPagedList<T> getPage(Class<T> clazz, Criteria criteria, int pageNo, int pageSize, Order... orders) {
+    public <T> PaginatedList<T> getPage(Class<T> clazz, Criteria criteria, int pageNo, int pageSize, Order... orders) {
         Criteria countCriteria = HibernateTool.copyCriteria(criteria);
         long itemCount = count(clazz, countCriteria);
 
@@ -289,7 +289,7 @@ public class HibernateDao implements IHibernateDao {
     }
 
     @Override
-    public <T> IPagedList<T> getPage(Class<T> clazz, DetachedCriteria dc, int pageNo, int pageSize, Order... orders) {
+    public <T> PaginatedList<T> getPage(Class<T> clazz, DetachedCriteria dc, int pageNo, int pageSize, Order... orders) {
         DetachedCriteria countDc = HibernateTool.copyDetachedCriteria(dc);
         long itemCount = count(clazz, countDc);
 
@@ -299,7 +299,7 @@ public class HibernateDao implements IHibernateDao {
     }
 
     @Override
-    public <T> IPagedList<T> getPage(Class<T> clazz, Query query, int pageNo, int pageSize, HibernateParameter... parameters) {
+    public <T> PaginatedList<T> getPage(Class<T> clazz, Query query, int pageNo, int pageSize, HibernateParameter... parameters) {
 
         Query countQuery = getSession().createQuery(query.getQueryString());
         long itemCount = count(clazz, countQuery, parameters);
@@ -433,37 +433,37 @@ public class HibernateDao implements IHibernateDao {
     }
 
     @Override
-    public <T> boolean exists(Class<T> clazz) {
+    public boolean exists(Class<?> clazz) {
         return exists(clazz, getSession().createCriteria(clazz));
     }
 
     @Override
-    public <T> boolean exists(Class<T> clazz, DetachedCriteria dc) {
+    public boolean exists(Class<?> clazz, DetachedCriteria dc) {
         return exists(clazz, dc.getExecutableCriteria(getSession()));
     }
 
     @Override
-    public <T> boolean exists(Class<T> clazz, Criteria criteria) {
+    public boolean exists(Class<?> clazz, Criteria criteria) {
         return findFirst(clazz, criteria) != null;
     }
 
     @Override
-    public <T> boolean exists(Class<T> clazz, Query query, HibernateParameter... parameters) {
+    public boolean exists(Class<?> clazz, Query query, HibernateParameter... parameters) {
         return findFirst(clazz, query, parameters) != null;
     }
 
     @Override
-    public <T> boolean existsByHql(Class<T> clazz, String hql, HibernateParameter... parameters) {
+    public boolean existsByHql(Class<?> clazz, String hql, HibernateParameter... parameters) {
         return findFirstByHql(clazz, hql, parameters) != null;
     }
 
     @Override
-    public <T> boolean existsByNamedQuery(Class<T> clazz, String queryName, HibernateParameter... parameters) {
+    public boolean existsByNamedQuery(Class<?> clazz, String queryName, HibernateParameter... parameters) {
         return findFirstByNamedQuery(clazz, queryName, parameters) != null;
     }
 
     @Override
-    public <T> boolean existsBySQLString(Class<T> clazz, String sqlString, HibernateParameter... parameters) {
+    public boolean existsBySQLString(Class<?> clazz, String sqlString, HibernateParameter... parameters) {
         return findFirstBySQLString(clazz, sqlString, parameters) != null;
     }
 
@@ -489,9 +489,9 @@ public class HibernateDao implements IHibernateDao {
     public long count(Class<?> clazz, Query query, HibernateParameter... parameters) {
         assert query != null;
         Object count = HibernateTool.setParameters(query, parameters)
-                .setResultTransformer(Criteria.PROJECTION)
-                .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
-                .uniqueResult();
+                                    .setResultTransformer(Criteria.PROJECTION)
+                                    .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
+                                    .uniqueResult();
 
         if (isTraceEnabled)
             log.trace("count=" + count);
@@ -500,37 +500,37 @@ public class HibernateDao implements IHibernateDao {
     }
 
     @Override
-    public <T> Object merge(T entity) {
+    public Object merge(Object entity) {
         return getSession().merge(entity);
     }
 
     @Override
-    public <T> void persist(T entity) {
+    public void persist(Object entity) {
         getSession().persist(entity);
     }
 
     @Override
-    public <T> Serializable save(T entity) {
+    public Serializable save(Object entity) {
         return getSession().save(entity);
     }
 
     @Override
-    public <T> void saveOrUpdate(T entity) {
+    public void saveOrUpdate(Object entity) {
         getSession().saveOrUpdate(entity);
     }
 
     @Override
-    public <T> void update(T entity) {
+    public void update(Object entity) {
         getSession().update(entity);
     }
 
     @Override
-    public <T> void delete(T entity) {
+    public void delete(Object entity) {
         getSession().delete(entity);
     }
 
     @Override
-    public <T> void deleteById(Class<T> clazz, Serializable id) {
+    public void deleteById(Class<?> clazz, Serializable id) {
         if (isTraceEnabled)
             log.trace("엔티티[{}]를 삭제합니다. id=[{}]", clazz, id);
 
@@ -538,7 +538,7 @@ public class HibernateDao implements IHibernateDao {
     }
 
     @Override
-    public <T> void deleteAll(Class<T> clazz) {
+    public void deleteAll(Class<?> clazz) {
         if (isTraceEnabled)
             log.trace("해당 엔티티를 모두 삭제합니다. clazz=[{}]", clazz);
 
@@ -546,28 +546,28 @@ public class HibernateDao implements IHibernateDao {
     }
 
     @Override
-    public <T> void deleteAll(Collection<T> entities) {
+    public void deleteAll(Collection<?> entities) {
         if (isTraceEnabled)
             log.trace("엔티티들을 모두 삭제합니다. entities=[{}]", StringTool.listToString(entities));
 
         final Session session = getSession();
-        for (T entity : entities) {
+        for (Object entity : entities) {
             session.delete(entity);
         }
     }
 
     @Override
-    public <T> void deleteAll(Class<T> clazz, DetachedCriteria dc) {
+    public void deleteAll(Class<?> clazz, DetachedCriteria dc) {
         deleteAll(find(clazz, dc.getExecutableCriteria(getSession())));
     }
 
     @Override
-    public <T> void deleteAll(Class<T> clazz, Criteria criteria) {
+    public void deleteAll(Class<?> clazz, Criteria criteria) {
         deleteAll(find(clazz, criteria));
     }
 
     @Override
-    public <T> int deleteAllWithoutCascade(Class<T> clazz) {
+    public int deleteAllWithoutCascade(Class<?> clazz) {
         if (isTraceEnabled)
             log.trace("해당 엔티티를 모두 삭제합니다. clazz=[{}]", clazz);
 
@@ -689,12 +689,12 @@ public class HibernateDao implements IHibernateDao {
     }
 
     @Override
-    public <T, TProject> IPagedList<TProject> reportPage(Class<T> clazz,
-                                                         Class<TProject> projectClass,
-                                                         ProjectionList projectionList,
-                                                         DetachedCriteria dc,
-                                                         int pageNo,
-                                                         int pageSize) {
+    public <T, TProject> PaginatedList<TProject> reportPage(Class<T> clazz,
+                                                            Class<TProject> projectClass,
+                                                            ProjectionList projectionList,
+                                                            DetachedCriteria dc,
+                                                            int pageNo,
+                                                            int pageSize) {
         return reportPage(clazz,
                           projectClass,
                           projectionList,
@@ -704,12 +704,12 @@ public class HibernateDao implements IHibernateDao {
     }
 
     @Override
-    public <T, TProject> IPagedList<TProject> reportPage(Class<T> clazz,
-                                                         Class<TProject> projectClass,
-                                                         ProjectionList projectionList,
-                                                         Criteria criteria,
-                                                         int pageNo,
-                                                         int pageSize) {
+    public <T, TProject> PaginatedList<TProject> reportPage(Class<T> clazz,
+                                                            Class<TProject> projectClass,
+                                                            ProjectionList projectionList,
+                                                            Criteria criteria,
+                                                            int pageNo,
+                                                            int pageSize) {
         Criteria projectCriteria =
                 buildProjectionCriteria(projectClass, criteria, projectionList, false);
 
@@ -717,6 +717,6 @@ public class HibernateDao implements IHibernateDao {
         int firstResult = (pageNo - 1) * pageSize;
         HibernateTool.setPaging(projectCriteria, firstResult, pageSize);
 
-        return new PaginatedList(projectCriteria.list(), pageNo, pageSize, itemCount);
+        return new PaginatedList<TProject>(projectCriteria.list(), pageNo, pageSize, itemCount);
     }
 }

@@ -15,18 +15,19 @@
  */
 package kr.debop4j.search.dao;
 
+import com.google.common.collect.Lists;
 import kr.debop4j.core.Local;
-import kr.debop4j.core.collection.IPagedList;
-import kr.debop4j.core.collection.SimplePagedList;
+import kr.debop4j.core.collection.PaginatedList;
 import kr.debop4j.core.parallelism.AsyncTool;
+import kr.debop4j.core.tools.ArrayTool;
 import kr.debop4j.core.tools.StringTool;
 import kr.debop4j.data.hibernate.repository.impl.HibernateDao;
 import kr.debop4j.data.hibernate.tools.HibernateTool;
 import kr.debop4j.data.hibernate.unitofwork.UnitOfWorks;
+import kr.debop4j.search.tools.SearchTool;
 import org.apache.lucene.search.Query;
 import org.apache.lucene.search.Sort;
 import org.hibernate.*;
-import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.search.FullTextQuery;
 import org.hibernate.search.FullTextSession;
 import org.hibernate.search.Search;
@@ -37,9 +38,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
-import java.util.concurrent.Callable;
 import java.util.concurrent.Future;
+
+import static kr.debop4j.core.Guard.shouldNotBeNull;
 
 /**
  * hibernate-search 를 이용하여 엔티티를 관리하는 Data Access Object 입니다.
@@ -50,190 +54,342 @@ import java.util.concurrent.Future;
 @SuppressWarnings("unchecked")
 public class HibernateSearchDao extends HibernateDao implements IHibernateSearchDao {
 
-    private static final Logger log = LoggerFactory.getLogger(HibernateSearchDao.class);
+    private static final Logger log = LoggerFactory.getLogger(SearchDaoImpl.class);
     private static final boolean isTraceEnabled = log.isTraceEnabled();
     private static final boolean isDebugEnabled = log.isDebugEnabled();
 
-    private static final String SESSION_KEY = "kr.debop4j.search.dao.IHibernateSearchDao.Session";
-    private static final String FULL_TEXT_SESSION_KEY = "kr.debop4j.search.dao.IHibernateSearchDao.FullTextSession";
     private static final int BATCH_SIZE = 100;
 
-    private final SessionFactory sessionFactory;
-
-    public HibernateSearchDao() {
-        this(UnitOfWorks.getCurrentSessionFactory());
-    }
-
-    public HibernateSearchDao(SessionFactory sessionFactory) {
-        this.sessionFactory = sessionFactory;
-    }
-
-//    @Override
-//    public synchronized Session getSession() {
-//        Session session = (Session) Local.get(SESSION_KEY);
-//        if (session == null || !session.isOpen()) {
-//            session = sessionFactory.openSession();
-//            Local.put(SESSION_KEY, session);
-//
-//            if (isDebugEnabled)
-//                log.debug("새로운 Session을 open 했습니다.");
-//        }
-//        return session;
-//    }
 
     @Override
-    public synchronized FullTextSession getFullTextSession() {
-        FullTextSession fts = (FullTextSession) Local.get(FULL_TEXT_SESSION_KEY);
+    public synchronized final Session getSession() {
+        return UnitOfWorks.getCurrentSession();
+    }
 
+    @Override
+    public synchronized final FullTextSession getFullTextSession() {
+        FullTextSession fts = Local.get(FULL_TEXT_SESSION_KEY, FullTextSession.class);
+
+        // 현 Thread에 FullTextSession이 없거나, 있다하더라도 기존에 사용하던 것이 닫혔다면
         if (fts == null || !fts.isOpen()) {
             fts = Search.getFullTextSession(getSession());
             Local.put(FULL_TEXT_SESSION_KEY, fts);
-
-            if (isDebugEnabled)
-                log.debug("Current Thread Context에 새로운 FullTextSession을 생성했습니다. threadName=[{}]",
-                          Thread.currentThread().getName());
+            log.debug("새로운 FullTextSession을 생성했습니다.");
         }
+
         return fts;
     }
 
-    /** 지정한 형식에 대한 질의 빌더를 생성합니다. */
     @Override
-    public final QueryBuilder getQueryBuilder(Class<?> clazz) {
-        return getFullTextSession().getSearchFactory().buildQueryBuilder().forEntity(clazz).get();
-    }
+    public FullTextQuery getFullTextQuery(Query luceneQuery, Class<?>... entities) {
 
-    @Override
-    public synchronized FullTextQuery getFullTextQuery(Query luceneQuery, Class<?>... classes) {
-        FullTextQuery ftq = getFullTextSession().createFullTextQuery(luceneQuery, classes);
+        FullTextQuery ftq = getFullTextSession().createFullTextQuery(luceneQuery, entities);
 
-        // hibernate-ogm 에서는 DataRetrievalMethod.FIND_BY_ID 를 사용해야 합니다.
-        //
-        ftq.initializeObjectsWith(ObjectLookupMethod.SKIP, DatabaseRetrievalMethod.QUERY);
-
+        /* hibernate-ogm 에서는 꼭 DatabaseRetrievalMethod.FIND_BY_ID 를 사용해야 합니다. */
+        ftq.initializeObjectsWith(ObjectLookupMethod.SKIP, DatabaseRetrievalMethod.FIND_BY_ID);
         return ftq;
     }
 
     @Override
-    public <T> List<T> find(Class<T> clazz, Query luceneQuery, Sort sort) {
-        FullTextQuery ftq = this.getFullTextQuery(luceneQuery, clazz);
-        if (sort != null)
-            ftq.setSort(sort);
-
-        return (List<T>) ftq.list();
+    public QueryBuilder getQueryBuilder(Class<?> clazz) {
+        return getFullTextSession().getSearchFactory().buildQueryBuilder().forEntity(clazz).get();
     }
 
     @Override
-    public <T> List<T> find(Class<T> clazz, Query luceneQuery, int firstResult, int maxResults, Sort sort) {
-        if (isTraceEnabled)
-            log.trace("엔티티 조회. clazz=[{}], luceneQuery=[{}], fitstResult=[{}], maxResults=[{}], sort=[{}]",
-                      clazz, luceneQuery, firstResult, maxResults, sort);
+    public <T> T get(Class<T> clazz, Serializable id) {
+        return (T) getSession().get(clazz, id);
+    }
 
-        FullTextQuery ftq = this.getFullTextQuery(luceneQuery, clazz);
-        HibernateTool.setPaging(ftq, firstResult, maxResults);
-        if (sort != null) ftq.setSort(sort);
+    @Override
+    public <T> List<T> findAll(Class<T> clazz) {
+        return findAll(clazz, null);
+    }
+
+    @Override
+    public <T> List<T> findAll(Class<T> clazz, Sort luceneSort) {
+        if (isTraceEnabled)
+            log.trace("엔티티[{}]의 모든 레코드를 조회합니다...", clazz);
+
+        Query luceneQuery = getQueryBuilder(clazz).all().createQuery();
+        FullTextQuery ftq = getFullTextQuery(luceneQuery, clazz);
+        if (luceneSort != null)
+            ftq.setSort(luceneSort);
+
         return ftq.list();
     }
 
     @Override
-    public List<Object[]> find(Class<?> clazz, Query luceneQuery, int firstResult, int maxResults, Criteria criteria, Sort sort) {
+    public <T> List<T> findAll(Class<T> clazz, Query luceneQuery, Sort sort, Criteria criteria) {
+        return findAll(clazz, luceneQuery, -1, -1, sort, criteria);
+    }
+
+    @Override
+    public <T> List<T> findAll(Class<T> clazz, Query luceneQuery, int firstResult, int maxResults, Sort sort) {
+        return findAll(clazz, luceneQuery, firstResult, maxResults, sort, null);
+    }
+
+    @Override
+    public <T> List<T> findAll(Class<T> clazz, Query luceneQuery, int firstResult, int maxResults, Sort sort, Criteria criteria) {
         if (isTraceEnabled)
             log.trace("엔티티 조회. clazz=[{}], luceneQuery=[{}], fitstResult=[{}], maxResults=[{}], sort=[{}], criteria=[{}]",
-                      clazz, luceneQuery, firstResult, maxResults, sort, criteria);
+                    clazz, luceneQuery, firstResult, maxResults, sort, criteria);
 
-        FullTextQuery ftq = this.getFullTextQuery(luceneQuery, clazz);
+        if (luceneQuery == null)
+            luceneQuery = getQueryBuilder(clazz).all().createQuery();
+
+        FullTextQuery ftq = getFullTextQuery(luceneQuery, clazz);
         HibernateTool.setPaging(ftq, firstResult, maxResults);
-        ftq.setCriteriaQuery(criteria);
         if (sort != null) ftq.setSort(sort);
+        if (criteria != null) ftq.setCriteriaQuery(criteria);
 
         return ftq.list();
     }
 
     @Override
-    public <T> IPagedList<T> getPage(Class<T> clazz, Query luceneQuery, int pageNo, int pageSize, Sort sort) {
-        if (isTraceEnabled)
-            log.trace("엔티티 페이징 조회. clazz=[{}], luceneQuery=[{}], pageNo=[{}], pageSize=[{}], sort=[{}]",
-                      clazz, luceneQuery, pageNo, pageSize, sort);
+    public <T> PaginatedList<T> getPage(Class<T> clazz, Query luceneQuery, int pageNo, int pageSize) {
+        return getPage(clazz, luceneQuery, pageNo, pageSize, null, null);
+    }
 
-        long totalCount = count(clazz, luceneQuery);
-        FullTextQuery ftq = this.getFullTextQuery(luceneQuery, clazz);
+    @Override
+    public <T> PaginatedList<T> getPage(Class<T> clazz, Query luceneQuery, int pageNo, int pageSize, Sort sort) {
+        return getPage(clazz, luceneQuery, pageNo, pageSize, sort, null);
+    }
 
+    @Override
+    public <T> PaginatedList<T> getPage(Class<T> clazz, Query luceneQuery, int pageNo, int pageSize, Sort sort, Criteria criteria) {
+        if (isDebugEnabled)
+            log.debug("엔티티 조회. clazz=[{}], luceneQuery=[{}], pageNo=[{}], pageSize=[{}], sort=[{}], criteria=[{}]",
+                    clazz, luceneQuery, pageNo, pageSize, sort, criteria);
+
+        if (luceneQuery == null)
+            luceneQuery = getQueryBuilder(clazz).all().createQuery();
+
+        long itemCount = count(clazz, luceneQuery);
+
+        FullTextQuery ftq = getFullTextQuery(luceneQuery, clazz);
         HibernateTool.setPaging(ftq, (pageNo - 1) * pageSize, pageSize);
         if (sort != null) ftq.setSort(sort);
+        if (criteria != null) ftq.setCriteriaQuery(criteria);
 
-        return new SimplePagedList<T>(ftq.list(), pageNo, pageSize, totalCount);
+        List<T> list = ftq.list();
+        return new PaginatedList<>(list, pageNo, pageSize, itemCount);
     }
 
     @Override
-    public <T> IPagedList<T> getPage(Class<T> clazz, Query luceneQuery, int pageNo, int pageSize, Criteria criteria, Sort sort) {
-        if (isTraceEnabled)
-            log.trace("엔티티 페이징 조회. clazz=[{}], luceneQuery=[{}], pageNo=[{}], pageSize=[{}], criteria=[{}], sort=[{}]",
-                      clazz, luceneQuery, pageNo, pageSize, criteria, sort);
+    public List<Serializable> getAllIds(Class<?> clazz, Query luceneQuery) {
+        return getAllIds(clazz, luceneQuery, -1, -1, null, null);
+    }
+
+    @Override
+    public List<Serializable> getAllIds(Class<?> clazz, Query luceneQuery, int firstResult, int maxResults, Sort sort) {
+        return getAllIds(clazz, luceneQuery, firstResult, maxResults, sort, null);
+    }
+
+    @Override
+    public List<Serializable> getAllIds(Class<?> clazz, Query luceneQuery, int firstResult, int maxResults, Sort sort, Criteria criteria) {
+        List<Object[]> list = getProjections(clazz, luceneQuery, new String[]{FullTextQuery.ID}, firstResult, maxResults, sort, criteria);
+        List<Serializable> ids = Lists.newArrayList();
+        for (Object[] fields : list) {
+            ids.add((Serializable) fields[0]);
+        }
+        return ids;
+    }
+
+    @Override
+    public PaginatedList<Serializable> getIdPage(Class<?> clazz, Query luceneQuery, int pageNo, int pageSize) {
+        return getIdPage(clazz, luceneQuery, pageNo, pageSize, null, null);
+    }
+
+    @Override
+    public PaginatedList<Serializable> getIdPage(Class<?> clazz, Query luceneQuery, int pageNo, int pageSize, Sort sort) {
+        return getIdPage(clazz, luceneQuery, pageNo, pageSize, sort, null);
+    }
+
+    @Override
+    public PaginatedList<Serializable> getIdPage(Class<?> clazz, Query luceneQuery, int pageNo, int pageSize, Sort sort, Criteria criteria) {
 
         long totalCount = count(clazz, luceneQuery);
-        FullTextQuery ftq = this.getFullTextQuery(luceneQuery, clazz);
-
-        HibernateTool.setPaging(ftq, (pageNo - 1) * pageSize, pageSize);
-        ftq.setCriteriaQuery(criteria);  // fetching strategy 같은 겻을 제공할 수 있다.
-        if (sort != null) ftq.setSort(sort);
-
-        return new SimplePagedList<T>(ftq.list(), pageNo, pageSize, totalCount);
+        List<Object[]> list = getProjections(clazz, luceneQuery, new String[]{FullTextQuery.ID},
+                (pageNo - 1) * pageSize, pageSize, sort, criteria);
+        List<Serializable> ids = Lists.newArrayList();
+        for (Object[] fields : list) {
+            ids.add((Serializable) fields[0]);
+        }
+        return new PaginatedList<>(ids, pageNo, pageSize, totalCount);
     }
 
-    /** 지정한 쿼리를 수행하여 해당 엔티티의 ID 값만 가져옵니다. */
     @Override
-    public IPagedList<Serializable> getIds(Class<?> clazz, Query luceneQuery, int pageNo, int pageSize, Sort sort) {
-        return getProjectionPage(clazz, luceneQuery, new String[] { FullTextQuery.ID }, pageNo, pageSize, sort);
+    public List<Object[]> getProjections(Class<?> clazz, Query luceneQuery, String[] fields) {
+        return getProjections(clazz, luceneQuery, fields, -1, -1, null, null);
     }
 
-    /** 지정한 쿼리를 수행하여 해당 필드의 값들만 뽑아온다. */
     @Override
-    public IPagedList getProjectionPage(Class<?> clazz, Query luceneQuery, String[] fields, int pageNo, int pageSize, Sort sort) {
-        if (isTraceEnabled)
-            log.trace("엔티티 Projection 조회. clazz=[{}], luceneQuery=[{}], fields=[{}], pageNo=[{}], pageSize=[{}], sort=[{}]",
-                      clazz, luceneQuery, StringTool.listToString(fields), pageNo, pageSize, sort);
+    public List<Object[]> getProjections(Class<?> clazz, Query luceneQuery, String[] fields, Sort sort) {
+        return getProjections(clazz, luceneQuery, fields, -1, -1, sort, null);
+    }
 
-        FullTextQuery ftq = this.getFullTextQuery(luceneQuery, clazz);
-        HibernateTool.setPaging(ftq, (pageNo - 1) * pageSize, pageSize);
+    @Override
+    public List<Object[]> getProjections(Class<?> clazz, Query luceneQuery, String[] fields,
+                                         int firstResult, int maxResults, Sort sort, Criteria criteria) {
+        assert fields != null;
+        assert fields.length > 0;
+
+        if (luceneQuery == null)
+            luceneQuery = getQueryBuilder(clazz).all().createQuery();
+
+        FullTextQuery ftq = getFullTextQuery(luceneQuery, clazz);
+        HibernateTool.setPaging(ftq, firstResult, maxResults);
         ftq.setProjection(fields);
-        if (sort != null)
-            ftq.setSort(sort);
-        return new SimplePagedList<>(ftq.list(), pageNo, pageSize, count(clazz, luceneQuery));
+        if (sort != null) ftq.setSort(sort);
+        if (criteria != null) ftq.setCriteriaQuery(criteria);
+
+        return ftq.list();
+    }
+
+    @Override
+    public PaginatedList<Object[]> getProjectionPage(Class<?> clazz, Query luceneQuery, String[] fields,
+                                                     int pageNo, int pageSize) {
+        return getProjectionPage(clazz, luceneQuery, fields, pageNo, pageSize, null, null);
+    }
+
+    @Override
+    public PaginatedList<Object[]> getProjectionPage(Class<?> clazz, Query luceneQuery, String[] fields,
+                                                     int pageNo, int pageSize, Sort sort) {
+        return getProjectionPage(clazz, luceneQuery, fields, pageNo, pageSize, sort, null);
+    }
+
+    @Override
+    public PaginatedList<Object[]> getProjectionPage(Class<?> clazz, Query luceneQuery, String[] fields,
+                                                     int pageNo, int pageSize, Sort sort, Criteria criteria) {
+        long totalCount = count(clazz, luceneQuery, criteria);
+        List<Object[]> list = getProjections(clazz, luceneQuery, fields, (pageNo - 1) * pageSize, pageSize, sort, criteria);
+        return new PaginatedList<>(list, pageNo, pageSize, totalCount);
     }
 
     @Override
     public long count(Class<?> clazz) {
-        return count(clazz, DetachedCriteria.forClass(clazz));
+        return count(clazz, getQueryBuilder(clazz).all().createQuery());
     }
 
     @Override
     public long count(Class<?> clazz, Query luceneQuery) {
-        FullTextQuery ftq = this.getFullTextQuery(luceneQuery, clazz);
-        return (long) ftq.getResultSize();
+        return count(clazz, luceneQuery, null);
     }
 
+    @Override
+    public long count(Class<?> clazz, Query luceneQuery, Criteria criteria) {
+        FullTextQuery ftq = getFullTextQuery(luceneQuery, clazz);
+        if (criteria != null) ftq.setCriteriaQuery(criteria);
+        int count = ftq.getResultSize();
 
-    /** 해당 엔티티의 인덱스 정보만을 삭제합니다. */
+        if (isTraceEnabled)
+            log.trace("Entity=[{}], query=[{}] => count=[{}]", clazz, luceneQuery, count);
+
+        return count;
+    }
+
+    @Override
+    public void persist(Object entity) {
+        getFullTextSession().persist(entity);
+    }
+
+    @Override
+    public Object merge(Object entity) {
+        return getFullTextSession().merge(entity);
+    }
+
+    @Override
+    public Serializable save(Object entity) {
+        return getFullTextSession().save(entity);
+    }
+
+    @Override
+    public void saveOrUpdate(Object entity) {
+        getFullTextSession().saveOrUpdate(entity);
+    }
+
+    @Override
+    public void update(Object entity) {
+        getFullTextSession().update(entity);
+    }
+
+    @Override
+    public void delete(Object entity) {
+        getFullTextSession().delete(entity);
+    }
+
+    @Override
+    public void deleteById(Class<?> clazz, Serializable id) {
+        try {
+            Object entity = getFullTextSession().load(clazz, id);
+            delete(entity);
+        } catch (Exception t) {
+            log.warn("엔티티 삭제에 실패했습니다. 엔티티가 없을 수 있습니다. clazz=[{}], id=[{}]", clazz, id);
+        }
+    }
+
+    @Override
+    public void deleteByIds(Class<?> clazz, Collection<? extends Serializable> ids) {
+        if (isTraceEnabled)
+            log.trace("Ids에 해당하는 엔티티들을 삭제합니다. class=[{}], ids=[{}]", clazz, StringTool.listToString(ids));
+
+        FullTextSession fts = getFullTextSession();
+        List<Object> entities = new ArrayList<>();
+
+        for (Serializable id : ids)
+            entities.add(fts.load(clazz, id));
+        deleteAll(entities);
+    }
+
+    @Override
+    public void deleteAll(Class<?> clazz) {
+        deleteAll(clazz, getQueryBuilder(clazz).all().createQuery());
+    }
+
+    @Override
+    public void deleteAll(Class<?> clazz, Query luceneQuery) {
+        List<Serializable> ids = getAllIds(clazz, luceneQuery);
+        deleteByIds(clazz, ids);
+    }
+
+    @Override
+    public void deleteAll(Collection<?> entities) {
+        if (ArrayTool.isEmpty(entities)) return;
+        if (isTraceEnabled)
+            log.trace("엔티티 컬렉션을 모두 삭제합니다... entity count=[{}]", entities.size());
+
+        Session session = getFullTextSession();
+
+        for (Object entity : entities) {
+            session.delete(entity);
+        }
+    }
+
     @Override
     public void purge(Class<?> clazz, Serializable id) {
         getFullTextSession().purge(clazz, id);
     }
 
-    /** 지정된 수형의 인덱싱 정보를 삭제합니다. (DB의 엔티티 정보는 보존합니다.) */
     @Override
     public void purgeAll(Class<?> clazz) {
+        if (isTraceEnabled)
+            log.trace("해당 엔티티와 엔티티와 연관된 엔티티의 모든 인덱스를 삭제합니다... clazz=[{}]", clazz);
+
         getFullTextSession().purgeAll(clazz);
     }
 
-    /** 엔티티를 인덱싱합니다. */
     @Override
     public <T> void index(T entity) {
+        shouldNotBeNull(entity, "entity");
+        if (isTraceEnabled)
+            log.trace("수동으로 재 인덱스를 수행합니다. entity=[{}]", entity);
+
         getFullTextSession().index(entity);
     }
 
-    /** 지정된 수형의 모든 엔티티들을 인덱싱 합니다. */
     @Override
     public void indexAll(Class<?> clazz, int batchSize) {
-        if (isDebugEnabled)
+        if (log.isDebugEnabled())
             log.debug("수형[{}]의 모든 엔티티에 대해 인덱싱을 수행합니다...", clazz);
 
         clearIndex(clazz);
@@ -241,7 +397,7 @@ public class HibernateSearchDao extends HibernateDao implements IHibernateSearch
         if (batchSize < BATCH_SIZE)
             batchSize = BATCH_SIZE;
 
-        FullTextSession fts = getFullTextSession();
+        final FullTextSession fts = getFullTextSession();
 
         FlushMode currentFlushMode = fts.getFlushMode();
         CacheMode currentCacheMode = fts.getCacheMode();
@@ -263,7 +419,7 @@ public class HibernateSearchDao extends HibernateDao implements IHibernateSearch
             fts.flushToIndexes();
             tx.commit();
 
-            if (isDebugEnabled)
+            if (log.isDebugEnabled())
                 log.debug("수형[{}]의 모든 엔티티 [{}]개 대해 재 인덱싱을 수행했습니다!!!", clazz, index);
         } finally {
             fts.setFlushMode(currentFlushMode);
@@ -273,16 +429,25 @@ public class HibernateSearchDao extends HibernateDao implements IHibernateSearch
 
     @Override
     public Future<Void> indexAllAsync(final Class<?> clazz, final int batchSize) {
-        if (isDebugEnabled)
-            log.debug("비동기 방식으로 엔티티에 대해 인덱싱을 수행합니다... clazz=[{}], batchSize=[{}]", clazz, batchSize);
+        if (isTraceEnabled)
+            log.trace("비동기 방식으로 엔티티에 대해 인덱싱을 수행합니다... clazz=[{}], batchSize=[{}]", clazz, batchSize);
 
-        return AsyncTool.startNew(new Callable<Void>() {
-            @Override
-            public Void call() {
-                indexAll(clazz, batchSize);
-                return null;
-            }
-        });
+        // TODO: Session이 Thread-safe 하지 않으므로, 새로운 Thread를 만들면 안됩니다.
+        indexAll(clazz, batchSize);
+        return AsyncTool.getTaskHasResult(null);
+
+//        final FullTextSession fts = getFullTextSession();
+//        return AsyncTool.startNew(new Callable<Void>() {
+//            @Override
+//            public Void call() {
+//                try {
+//                    indexAll(clazz, batchSize);
+//                    return null;
+//                } finally {
+//                    fts.close();
+//                }
+//            }
+//        });
     }
 
     @Override
@@ -290,28 +455,50 @@ public class HibernateSearchDao extends HibernateDao implements IHibernateSearch
         if (isDebugEnabled)
             log.debug("엔티티에 대한 모든 인덱스 정보를 삭제합니다... clazz=[{}]", clazz);
 
+        getFullTextSession().purgeAll(clazz);       // remove all index
+        getFullTextSession().flushToIndexes();      // apply purge before optimize
+        optimize(clazz);                            // physically clear space
+
+        log.info("엔티티의 모든 인덱스를 삭제했습니다. clazz=[{}]", clazz);
+    }
+
+    @Override
+    public void clearIndexAll() {
+        if (isDebugEnabled) log.debug("모든 엔티티에 대해 모든 인덱스 정보를 삭제합니다...");
+
         FullTextSession fts = getFullTextSession();
-        fts.purgeAll(clazz);                        // remove obsolete index
-        fts.flushToIndexes();                       // apply purge before optimize
-        fts.getSearchFactory().optimize(clazz);     // physically clear space
+        for (Class clazz : SearchTool.getIndexedClasses(fts.getSessionFactory())) {
+            fts.purgeAll(clazz);
+            fts.flushToIndexes();
+        }
+        optimizeAll();
+
+        log.info("모든 인덱스를 삭제했습니다.");
     }
 
-    public void flushIndexes() {
-        getFullTextSession().flushToIndexes();
-    }
-
-    /** 해당 수형의 인덱스를 최적화합니다. */
     @Override
     public void optimize(Class<?> clazz) {
-        if (isTraceEnabled)
-            log.trace("지정된 수형의 인덱스를 최적화합니다. clazz=[{}]", clazz);
+        if (isTraceEnabled) log.trace("지정된 수형의 인덱스를 최적화합니다. clazz=[{}]", clazz);
         getFullTextSession().getSearchFactory().optimize(clazz);
     }
 
     @Override
     public void optimizeAll() {
-        if (isTraceEnabled)
-            log.trace("모든 수형의 인덱스를 최적화합니다.");
+        if (isTraceEnabled) log.trace("모든 수형의 인덱스를 최적화합니다.");
         getFullTextSession().getSearchFactory().optimize();
     }
+
+    @Override
+    public void flush() {
+        if (isTraceEnabled) log.trace("세션의 모든 변경 정보를 저장소에 적용합니다...");
+        getFullTextSession().flush();
+    }
+
+    @Override
+    public void flushToIndexes() {
+        if (isTraceEnabled) log.trace("Session에 남아있는 인덱싱 작업을 강제로 수행하도록 하고, 기다립니다.");
+        getFullTextSession().flushToIndexes();
+    }
+
+    private static final long serialVersionUID = -3954150732515417589L;
 }
