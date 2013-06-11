@@ -19,7 +19,7 @@
     <parent>
         <artifactId>debop4j-parent</artifactId>
         <groupId>debop4j</groupId>
-        <version>0.9.3-SNAPSHOT</version>
+        <version>0.9.3</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
     <modelVersion>4.0.0</modelVersion>
@@ -39,6 +39,7 @@
         <dependency>
             <groupId>debop4j</groupId>
             <artifactId>debop4j-core</artifactId>
+            <version>${project.parent.version}</version>
         </dependency>
 
         <!-- joda-time -->
