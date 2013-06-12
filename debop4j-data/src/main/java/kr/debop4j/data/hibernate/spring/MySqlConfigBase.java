@@ -41,7 +41,7 @@ public abstract class MySqlConfigBase extends HibernateConfigBase {
 
     @Override
     public String getJdbcUrl() {
-        return "jdbc:mysql://localhost/" + getDatabaseName() + "?useUnicode=true;";
+        return "jdbc:mysql://localhost/" + getDatabaseName();
     }
 
     @Override
