@@ -55,9 +55,9 @@ public class ProductRepository extends HibernateRepository<Product> {
         return dc;
     }
 
-    public Product findByCode(String code) {
+    public Product findUniqueByCode(String code) {
         DetachedCriteria dc = buildCriteria(code, null, null);
-        return findOne(dc);
+        return findUnique(dc);
     }
 
     public List<Product> findByName(String name) {

@@ -116,7 +116,7 @@ public class AppConfig {
         return props;
     }
 
-    private static String[] mappingPackages = new String[] {
+    private static String[] mappingPackages = new String[]{
             SearchItem.class.getPackage().getName(),
             Twit.class.getPackage().getName()
     };
@@ -218,7 +218,7 @@ public class AppConfig {
     public IHibernateSearchDao hibernateSearchDao() {
         IHibernateSearchDao dao = Local.get(HIBERNATE_SEARCH_DAO_CURRENT, HibernateSearchDao.class);
         if (dao == null) {
-            dao = new HibernateSearchDao(sessionFactory());
+            dao = new HibernateSearchDao();
             Local.put(HIBERNATE_SEARCH_DAO_CURRENT, dao);
         }
         return dao;

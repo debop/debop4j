@@ -19,7 +19,7 @@
     <parent>
         <artifactId>debop4j-parent</artifactId>
         <groupId>debop4j</groupId>
-        <version>0.9.3</version>
+        <version>0.9.4</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
     <modelVersion>4.0.0</modelVersion>
@@ -41,6 +41,18 @@
             <groupId>debop4j</groupId>
             <artifactId>debop4j-data</artifactId>
             <version>${project.parent.version}</version>
+        </dependency>
+
+        <!-- Lucene -->
+        <dependency>
+            <groupId>org.apache.lucene</groupId>
+            <artifactId>lucene-core</artifactId>
+            <version>3.6.2</version>
+        </dependency>
+        <dependency>
+            <groupId>lucene-korean</groupId>
+            <artifactId>lucene-korean</artifactId>
+            <version>0.1.0</version>
         </dependency>
 
         <!-- Avro -->
@@ -205,11 +217,6 @@
             <groupId>org.springframework.social</groupId>
             <artifactId>spring-social-twitter</artifactId>
             <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.lucene</groupId>
-            <artifactId>lucene-core</artifactId>
-            <version>3.6.2</version>
         </dependency>
 
     </dependencies>

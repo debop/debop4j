@@ -21,7 +21,6 @@ import kr.debop4j.core.collection.PaginatedList;
 import kr.debop4j.core.parallelism.AsyncTool;
 import kr.debop4j.core.tools.ArrayTool;
 import kr.debop4j.core.tools.StringTool;
-import kr.debop4j.data.hibernate.repository.impl.HibernateDao;
 import kr.debop4j.data.hibernate.tools.HibernateTool;
 import kr.debop4j.data.hibernate.unitofwork.UnitOfWorks;
 import kr.debop4j.search.tools.SearchTool;
@@ -52,7 +51,7 @@ import static kr.debop4j.core.Guard.shouldNotBeNull;
  * @since 13. 4. 20. 오후 10:03
  */
 @SuppressWarnings("unchecked")
-public class HibernateSearchDao extends HibernateDao implements IHibernateSearchDao {
+public class HibernateSearchDao implements IHibernateSearchDao {
 
     private static final Logger log = LoggerFactory.getLogger(SearchDaoImpl.class);
     private static final boolean isTraceEnabled = log.isTraceEnabled();
@@ -132,7 +131,7 @@ public class HibernateSearchDao extends HibernateDao implements IHibernateSearch
     public <T> List<T> findAll(Class<T> clazz, Query luceneQuery, int firstResult, int maxResults, Sort sort, Criteria criteria) {
         if (isTraceEnabled)
             log.trace("엔티티 조회. clazz=[{}], luceneQuery=[{}], fitstResult=[{}], maxResults=[{}], sort=[{}], criteria=[{}]",
-                    clazz, luceneQuery, firstResult, maxResults, sort, criteria);
+                      clazz, luceneQuery, firstResult, maxResults, sort, criteria);
 
         if (luceneQuery == null)
             luceneQuery = getQueryBuilder(clazz).all().createQuery();
@@ -159,7 +158,7 @@ public class HibernateSearchDao extends HibernateDao implements IHibernateSearch
     public <T> PaginatedList<T> getPage(Class<T> clazz, Query luceneQuery, int pageNo, int pageSize, Sort sort, Criteria criteria) {
         if (isDebugEnabled)
             log.debug("엔티티 조회. clazz=[{}], luceneQuery=[{}], pageNo=[{}], pageSize=[{}], sort=[{}], criteria=[{}]",
-                    clazz, luceneQuery, pageNo, pageSize, sort, criteria);
+                      clazz, luceneQuery, pageNo, pageSize, sort, criteria);
 
         if (luceneQuery == null)
             luceneQuery = getQueryBuilder(clazz).all().createQuery();
@@ -187,7 +186,7 @@ public class HibernateSearchDao extends HibernateDao implements IHibernateSearch
 
     @Override
     public List<Serializable> getAllIds(Class<?> clazz, Query luceneQuery, int firstResult, int maxResults, Sort sort, Criteria criteria) {
-        List<Object[]> list = getProjections(clazz, luceneQuery, new String[]{FullTextQuery.ID}, firstResult, maxResults, sort, criteria);
+        List<Object[]> list = getProjections(clazz, luceneQuery, new String[]{ FullTextQuery.ID }, firstResult, maxResults, sort, criteria);
         List<Serializable> ids = Lists.newArrayList();
         for (Object[] fields : list) {
             ids.add((Serializable) fields[0]);
@@ -209,8 +208,8 @@ public class HibernateSearchDao extends HibernateDao implements IHibernateSearch
     public PaginatedList<Serializable> getIdPage(Class<?> clazz, Query luceneQuery, int pageNo, int pageSize, Sort sort, Criteria criteria) {
 
         long totalCount = count(clazz, luceneQuery);
-        List<Object[]> list = getProjections(clazz, luceneQuery, new String[]{FullTextQuery.ID},
-                (pageNo - 1) * pageSize, pageSize, sort, criteria);
+        List<Object[]> list = getProjections(clazz, luceneQuery, new String[]{ FullTextQuery.ID },
+                                             (pageNo - 1) * pageSize, pageSize, sort, criteria);
         List<Serializable> ids = Lists.newArrayList();
         for (Object[] fields : list) {
             ids.add((Serializable) fields[0]);

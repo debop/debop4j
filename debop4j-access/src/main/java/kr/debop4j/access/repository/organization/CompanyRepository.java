@@ -60,8 +60,8 @@ public class CompanyRepository extends HibernateRepository<Company> {
     public Company findByCode(String code) {
         DetachedCriteria dc =
                 DetachedCriteria.forClass(Company.class)
-                        .add(Restrictions.eq("code", code));
-        return findOne(dc);
+                                .add(Restrictions.eq("code", code));
+        return findUnique(dc);
     }
 
     public List<Company> findByName(String name) {

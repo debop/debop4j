@@ -73,7 +73,7 @@ public class CompanyCodeItemRepository extends HibernateRepository<CompanyCodeIt
     }
 
     public CompanyCodeItem getOrCreate(Company company, String code, String itemName) {
-        CompanyCodeItem item = findOneByName(company, code, itemName);
+        CompanyCodeItem item = findUniqueByCode(company, code, itemName);
 
         if (item == null) {
             synchronized (this) {
@@ -89,15 +89,15 @@ public class CompanyCodeItemRepository extends HibernateRepository<CompanyCodeIt
             if (log.isDebugEnabled())
                 log.debug("새로운 CompanyCodeItem을 생성했습니다.");
 
-            item = findOneByName(company, code, itemName);
+            item = findUniqueByCode(company, code, itemName);
         }
         return item;
     }
 
-    public CompanyCodeItem findOneByName(Company company, String code, String itemName) {
+    public CompanyCodeItem findUniqueByCode(Company company, String code, String itemName) {
         DetachedCriteria dc = buildCriteria(company, code, null, itemName, null);
 
-        return findOne(dc);
+        return findUnique(dc);
     }
 
     public List<CompanyCodeItem> findByCompany(Company company) {

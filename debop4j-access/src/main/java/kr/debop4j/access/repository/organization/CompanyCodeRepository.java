@@ -70,7 +70,7 @@ public class CompanyCodeRepository extends HibernateRepository<CompanyCode> {
     }
 
     public CompanyCode getOrCreate(Company company, String code) {
-        CompanyCode companyCode = findOneByCode(company, code);
+        CompanyCode companyCode = findUniqueByCode(company, code);
 
         if (companyCode == null) {
             synchronized (this) {
@@ -82,17 +82,17 @@ public class CompanyCodeRepository extends HibernateRepository<CompanyCode> {
             if (log.isDebugEnabled())
                 log.debug("새로운 CompanyCode 정보를 생성했습니다. CompanyCode=[{}]", companyCode);
 
-            companyCode = findOneByCode(company, code);
+            companyCode = findUniqueByCode(company, code);
         }
 
         return companyCode;
     }
 
-    public CompanyCode findOneByCode(Company company, String code) {
+    public CompanyCode findUniqueByCode(Company company, String code) {
         Guard.shouldNotBeNull(company, "company");
         Guard.shouldNotBeEmpty(code, "code");
 
-        return findOne(buildCriteria(company, code, null, null));
+        return findUnique(buildCriteria(company, code, null, null));
     }
 
     public List<CompanyCode> findByCompany(Company company) {

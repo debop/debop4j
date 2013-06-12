@@ -23,7 +23,7 @@
     <groupId>debop4j</groupId>
     <artifactId>debop4j-parent</artifactId>
     <packaging>pom</packaging>
-    <version>0.9.3</version>
+    <version>0.9.4</version>
 
     <licenses>
         <license>
@@ -918,7 +918,7 @@
             <dependency>
                 <groupId>mysql</groupId>
                 <artifactId>mysql-connector-java</artifactId>
-                <version>5.1.23</version>
+                <version>5.1.25</version>
                 <scope>test</scope>
             </dependency>
 

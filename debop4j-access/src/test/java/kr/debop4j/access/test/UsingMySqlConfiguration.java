@@ -45,12 +45,12 @@ public class UsingMySqlConfiguration extends MySqlConfigBase {
 
     @Override
     public String getDatabaseName() {
-        return "Vital";
+        return "HAccess";
     }
 
     @Override
     protected String[] getMappedPackageNames() {
-        return new String[] {
+        return new String[]{
                 CompanyCode.class.getPackage().getName(),
                 Company.class.getPackage().getName(),
                 Product.class.getPackage().getName(),

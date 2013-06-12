@@ -46,8 +46,8 @@ import static org.fest.assertions.Assertions.assertThat;
  * @since 13. 4. 23. 오후 10:53
  */
 @Slf4j
-@RunWith( SpringJUnit4ClassRunner.class )
-@ContextConfiguration( classes = { TwitterConfig.class } )
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(classes = { TwitterConfig.class })
 public class TimelineTest {
 
     @Autowired
@@ -105,7 +105,7 @@ public class TimelineTest {
 
         } finally {
             dao.deleteAll(Twit.class);
-            dao.flushSession();
+            dao.flush();
             dao.getFullTextSession().flushToIndexes();
             dao.optimize(Twit.class);
             assertThat(dao.count(Twit.class)).isEqualTo(0);
@@ -127,8 +127,8 @@ public class TimelineTest {
             }
         } finally {
             dao.deleteAll(Twit.class);
-            dao.flushSession();
-            dao.flushIndexes();
+            dao.flush();
+            dao.flushToIndexes();
             dao.clearIndex(Twit.class);
         }
     }
@@ -141,7 +141,7 @@ public class TimelineTest {
                 try (IUnitOfWork unitOfWork = UnitOfWorks.start(UnitOfWorkNestingOptions.CreateNewOrNestUnitOfWork)) {
                     final IHibernateSearchDao dao = appContext.getBean(IHibernateSearchDao.class);
                     dao.saveOrUpdate(twit);
-                    dao.flushSession();
+                    dao.flush();
                 }
 
                 if (log.isTraceEnabled())

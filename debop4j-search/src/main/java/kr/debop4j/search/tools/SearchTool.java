@@ -164,7 +164,7 @@ public class SearchTool {
         if (log.isDebugEnabled())
             log.debug("모든 엔티티에 대해 전체 인덱싱을 수행합니다. classes=[{}], clear=[{}]", StringTool.listToString(classes), clear);
 
-        final IHibernateSearchDao searchDao = new HibernateSearchDao(sessionFactory);
+        final IHibernateSearchDao searchDao = new HibernateSearchDao();
         for (Class clazz : classes) {
             if (clear)
                 searchDao.clearIndex(clazz);
@@ -187,7 +187,7 @@ public class SearchTool {
         Parallels.runEach(classes, new Action1<Class>() {
             @Override
             public void perform(Class clazz) {
-                IHibernateSearchDao searchDao = new HibernateSearchDao(sessionFactory);
+                IHibernateSearchDao searchDao = new HibernateSearchDao();
                 if (clear)
                     searchDao.clearIndex(clazz);
                 searchDao.indexAll(clazz, 100);
