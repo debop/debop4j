@@ -19,7 +19,7 @@
     <parent>
         <groupId>debop4j</groupId>
         <artifactId>debop4j-parent</artifactId>
-        <version>0.9.4</version>
+        <version>0.9.5</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
