@@ -61,8 +61,6 @@
         <module>debop4j-timeperiod</module>
 
         <module>debop4j-data</module>
-        <module>debop4j-data-mybatis</module>
-
         <module>debop4j-search</module>
 
         <module>debop4j-data-ogm</module>
@@ -70,14 +68,11 @@
         <module>debop4j-data-infinispan</module>
         <module>debop4j-data-mongodb</module>
         <module>debop4j-data-redis</module>
-        <!--<module>debop4j-data-couchbase</module>-->
 
         <module>debop4j-access</module>
-        <module>debop4j-graph</module>
+
         <module>debop4j-web</module>
         <module>debop4j-web-example</module>
-        <module>debop4j-experiments</module>
-
 
     </modules>
 

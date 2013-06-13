@@ -55,10 +55,10 @@ public abstract class Times {
     }
 
     public static final String NullString = "<null>";
-    public static final DateTime UnixEpoch = new DateTime(1970, 1, 1, 0, 0, 0, 0);
+    public static final DateTime UnixEpoch = new DateTime(1970, 1, 1, 0, 0);
 
     /**
-     * Now date time.
+     * Current system time
      *
      * @return the date time
      */
@@ -67,7 +67,7 @@ public abstract class Times {
     }
 
     /**
-     * Today date time.
+     * Today
      *
      * @return the date time
      */
@@ -2387,17 +2387,17 @@ public abstract class Times {
 
     // region << Comparator >>
 
-    @Getter( lazy = true )
+    @Getter(lazy = true)
     private static final StartComparator startComparator = new StartComparator();
-    @Getter( lazy = true )
+    @Getter(lazy = true)
     private static final StartDescComparator startDescComparator = new StartDescComparator();
-    @Getter( lazy = true )
+    @Getter(lazy = true)
     private static final EndComparator endComparator = new EndComparator();
-    @Getter( lazy = true )
+    @Getter(lazy = true)
     private static final EndDescComparator endDescComparator = new EndDescComparator();
-    @Getter( lazy = true )
+    @Getter(lazy = true)
     private static final DurationComparator durationComparator = new DurationComparator();
-    @Getter( lazy = true )
+    @Getter(lazy = true)
     private static final DurationDescComparator durationDescComparator = new DurationDescComparator();
 
     /** The type Start comparator. */
