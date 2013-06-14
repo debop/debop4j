@@ -47,13 +47,19 @@ public final class StringTool {
      * 멀티바이트 문자열을 바이트 배열로 변환 시에 선두번지에 접두사로 넣는 값입니다.
      * 이 값이 있으면 꼭 UTF-8 으로 변환해야 한다는 뜻입니다.
      */
-    protected static final byte[] MULTI_BYTES_PREFIX = new byte[]{(byte) 0xEF, (byte) 0xBB, (byte) 0xBF};
+    protected static final byte[] MULTI_BYTES_PREFIX = new byte[] { (byte) 0xEF, (byte) 0xBB, (byte) 0xBF };
+
     /** The constant TRIMMING_STR. */
     public static final String TRIMMING_STR = "...";
-    /** The constant NULL_STR. */
-    public static final String NULL_STR = "NULL";
-    /** The constant EMPTY_STR. */
+
+    /** NULL 을 표현하는 문자열 */
+    public static final String NULL_STR = "<null>";
+
+    /** 빈 문자열 */
     public static final String EMPTY_STR = "";
+
+    /** The constant COMMA String. */
+    public static final String COMMA_STR = ",";
 
     /** The constant UTF8. */
     public static final Charset UTF8 = Charsets.UTF_8;
@@ -63,9 +69,9 @@ public final class StringTool {
     //region << isNull / isEmpty / isWhiteSpace / isMultiByteString >>
 
     /**
-     * Is null.
+     * 문자열이 null 이면 true 를, null 이 아니면 false 를 반환한다.
      *
-     * @param str the str
+     * @param str 문자열
      * @return the boolean
      */
     public static boolean isNull(final String str) {
@@ -73,9 +79,9 @@ public final class StringTool {
     }
 
     /**
-     * Is not null.
+     * 문자열이 null 이 아니라면 true를 반환하고, null 이라면 false를 반환한다.
      *
-     * @param str the str
+     * @param str 문자열
      * @return the boolean
      */
     public static boolean isNotNull(final String str) {
@@ -85,7 +91,7 @@ public final class StringTool {
     /**
      * Is empty.
      *
-     * @param str the str
+     * @param str 문자열
      * @return the boolean
      */
     public static boolean isEmpty(final String str) {
@@ -106,7 +112,7 @@ public final class StringTool {
     /**
      * Is not empty.
      *
-     * @param str the str
+     * @param str 문자열
      * @return the boolean
      */
     public static boolean isNotEmpty(final String str) {
@@ -127,7 +133,7 @@ public final class StringTool {
     /**
      * Is white space.
      *
-     * @param str the str
+     * @param str 문자열
      * @return the boolean
      */
     public static boolean isWhiteSpace(final String str) {
@@ -137,7 +143,7 @@ public final class StringTool {
     /**
      * Is not white space.
      *
-     * @param str the str
+     * @param str 문자열
      * @return the boolean
      */
     public static boolean isNotWhiteSpace(final String str) {
@@ -155,13 +161,13 @@ public final class StringTool {
             return false;
 
         return Arrays.equals(MULTI_BYTES_PREFIX,
-                Arrays.copyOf(bytes, MULTI_BYTES_PREFIX.length));
+                             Arrays.copyOf(bytes, MULTI_BYTES_PREFIX.length));
     }
 
     /**
      * Is multi byte string.
      *
-     * @param str the str
+     * @param str 문자열
      * @return the boolean
      */
     public static boolean isMultiByteString(final String str) {
@@ -331,7 +337,7 @@ public final class StringTool {
     }
 
     /**
-     * Encode base 64 string.
+     * 문자열을 Base64 형식으로 인코딩을 합니다.
      *
      * @param input the input
      * @return the string
@@ -383,7 +389,7 @@ public final class StringTool {
     /**
      * Get utf 8 bytes.
      *
-     * @param str the str
+     * @param str 문자열
      * @return the byte [ ]
      */
     public static byte[] getUtf8Bytes(final String str) {
@@ -498,7 +504,7 @@ public final class StringTool {
     /**
      * Delete char.
      *
-     * @param str the str
+     * @param str 문자열
      * @param dc  the dc
      * @return the string
      */
@@ -588,7 +594,7 @@ public final class StringTool {
     /**
      * Quoted str.
      *
-     * @param str the str
+     * @param str 문자열
      * @return the string
      */
     public static String quotedStr(final String str) {
@@ -609,7 +615,7 @@ public final class StringTool {
     /**
      * Reverse string.
      *
-     * @param str the str
+     * @param str 문자열
      * @return the string
      */
     public static String reverse(final String str) {
@@ -626,7 +632,7 @@ public final class StringTool {
     /**
      * Replicate string.
      *
-     * @param str the str
+     * @param str 문자열
      * @param n   the n
      * @return the string
      */
@@ -791,7 +797,7 @@ public final class StringTool {
     /**
      * Gets first line.
      *
-     * @param str the str
+     * @param str 문자열
      * @return the first line
      */
     public static String getFirstLine(final String str) {
@@ -848,7 +854,7 @@ public final class StringTool {
      * @param obj the obj
      * @return the string
      */
-    public static String objectToString(Object obj) {
+    public static String objectToString(final Object obj) {
         if (obj == null)
             return NULL_STR;
 
@@ -860,6 +866,7 @@ public final class StringTool {
 
             for (Field field : fields)
                 helper.add(field.getName(), field.get(obj));
+
         } catch (IllegalAccessException ignored) {
             log.warn("필드 정보를 얻는데 실패했습니다.", ignored);
         }
@@ -872,8 +879,8 @@ public final class StringTool {
      * @param items the items
      * @return the string
      */
-    public static <T> String listToString(Iterable<? extends T> items) {
-        return items == null ? NULL_STR : join(items, ",");
+    public static <T> String listToString(final Iterable<? extends T> items) {
+        return items == null ? NULL_STR : join(items, COMMA_STR);
     }
 
     /**
@@ -882,8 +889,8 @@ public final class StringTool {
      * @param items the items
      * @return the string
      */
-    public static String listToString(Object[] items) {
-        return items == null || items.length == 0 ? NULL_STR : join(items, ",");
+    public static String listToString(final Object[] items) {
+        return items == null || items.length == 0 ? NULL_STR : join(items, COMMA_STR);
     }
 
     /**
@@ -893,7 +900,11 @@ public final class StringTool {
      * @return map 정보를 표현한 문자열
      */
     public static String mapToString(final Map map) {
-        return map == null ? NULL_STR : "{" + join(mapToEntryList(map), ",") + "}";
+        return mapToString(map, "{", COMMA_STR, "}");
+    }
+
+    public static String mapToString(final Map map, final String openStr, final String delimiter, final String closeStr) {
+        return map == null ? NULL_STR : openStr + join(mapToEntryList(map), delimiter) + closeStr;
     }
 
     /**
@@ -902,7 +913,7 @@ public final class StringTool {
      * @param map Map
      * @return Map 내용을 문자열로 표현한 컬렉션
      */
-    @SuppressWarnings("unchecked")
+    @SuppressWarnings( "unchecked" )
     private static List<String> mapToEntryList(final Map map) {
         List<String> list = new ArrayList<String>();
         if (map == null) {

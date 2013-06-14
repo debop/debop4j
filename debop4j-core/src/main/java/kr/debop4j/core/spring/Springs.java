@@ -65,15 +65,16 @@ public final class Springs {
     }
 
     public static final String DEFAULT_APPLICATION_CONTEXT_XML = "applicationContext.xml";
+
     private static final String LOCAL_SPRING_CONTEXT = Springs.class.getName() + ".globalContext";
     private static final String NOT_INITIALIZED_MSG =
-            "Springs의 ApplicationContext가 초기화되지 않았습니다. Springs를 ComponentScan 해주셔야합니다. ";
+            "Springs의 ApplicationContext가 초기화되지 않았습니다. Springs를 ComponentScan 해주셔야합니다!!!";
 
     private static volatile ApplicationContext globalContext;
     private static ThreadLocal<Stack<GenericApplicationContext>> localContextStack = new ThreadLocal<>();
 
     /**
-     * Is initialized.
+     * Spring ApplicationContext 가 초기화 되었으면 true를 반환한다.
      *
      * @return the boolean
      */
@@ -82,7 +83,7 @@ public final class Springs {
     }
 
     /**
-     * Is not initialized.
+     * Spring ApplicationContext 가 초기화 되지 않았으면 true를 반환한다.
      *
      * @return the boolean
      */
@@ -121,15 +122,13 @@ public final class Springs {
         return localContextStack.get();
     }
 
-    /**
-     * Init void.
-     */
+    /** 초기화를 합니다. */
     public static synchronized void init() {
         init(DEFAULT_APPLICATION_CONTEXT_XML);
     }
 
     /**
-     * Init void.
+     * 초기화를 합니다.
      *
      * @param resourceLocations the resource locations
      */
@@ -139,16 +138,18 @@ public final class Springs {
     }
 
     /**
-     * Init void.
+     * 초기화를 합니다.
      *
      * @param applicationContext the application context
      */
     public static synchronized void init(ApplicationContext applicationContext) {
         shouldNotBeNull(applicationContext, "applicationContext");
         log.info("Springs ApplicationContext 를 초기화 작업을 시작합니다...");
+
         if (globalContext != null) {
-            log.warn("Springs ApplicationContext가 이미 초기화 되었으므로, 무시합니다. reset 후 init 을 호출하세요.");
+            log.info("Springs ApplicationContext가 이미 초기화 되었으므로, 무시합니다. reset 후 init 을 호출하세요.");
         }
+
         globalContext = applicationContext;
         log.info("Springs ApplicationContext를 초기화 작업을 완료했습니다.");
     }
@@ -234,7 +235,7 @@ public final class Springs {
     }
 
 
-    public static synchronized Object getBean(String name) {
+    public static synchronized Object getBean(final String name) {
         assertInitialized();
         if (log.isDebugEnabled())
             log.debug("ApplicationContext로부터 Bean을 가져옵니다. name=[{}]", name);
@@ -242,7 +243,7 @@ public final class Springs {
         return getContext().getBean(name);
     }
 
-    public static synchronized Object getBean(String name, Object... args) {
+    public static synchronized Object getBean(final String name, Object... args) {
         assertInitialized();
         if (log.isDebugEnabled())
             log.debug("ApplicationContext로부터 Bean을 가져옵니다. name=[{}], args=[{}]", name, StringTool.listToString(args));
@@ -250,14 +251,14 @@ public final class Springs {
         return getContext().getBean(name, args);
     }
 
-    public static synchronized <T> T getBean(Class<T> beanClass) {
+    public static synchronized <T> T getBean(final Class<T> beanClass) {
         assertInitialized();
         if (log.isDebugEnabled())
             log.debug("ApplicationContext로부터 Bean을 가져옵니다. beanClass=[{}]", beanClass.getName());
         return getContext().getBean(beanClass);
     }
 
-    public static synchronized <T> T getBean(String name, Class<T> beanClass) {
+    public static synchronized <T> T getBean(final String name, Class<T> beanClass) {
         assertInitialized();
         if (log.isDebugEnabled())
             log.debug("ApplicationContext로부터 Bean을 가져옵니다. beanName=[{}], beanClass=[{}]", name, beanClass);
@@ -275,7 +276,7 @@ public final class Springs {
         shouldNotBeNull(beanClass, "beanClass");
         if (log.isDebugEnabled())
             log.debug("해당 수형의 모든 Bean의 이름을 조회합니다. beanClass=[{}], includeNonSingletons=[{}], allowEagerInit=[{}]",
-                    beanClass.getName(), includeNonSingletons, allowEagerInit);
+                      beanClass.getName(), includeNonSingletons, allowEagerInit);
 
         return getContext().getBeanNamesForType(beanClass, includeNonSingletons, allowEagerInit);
     }
@@ -307,28 +308,54 @@ public final class Springs {
         return getBeansOfType(beanClass, true, true);
     }
 
-    /** 지정된 수형 또는 상속한 수형으로 등록된 bean 들을 조회합니다. */
+    /**
+     * 지정된 수형 또는 상속한 수형으로 등록된 bean 들을 조회합니다.
+     *
+     * @param beanClass            Bean 수형
+     * @param includeNonSingletons Singleton 타입의 Bean 이 아닌 경우도 포함
+     * @param allowEagerInit       미리 초기화를 수행할 것인가?
+     */
     public static synchronized <T> Map<String, T> getBeansOfType(Class<T> beanClass,
                                                                  boolean includeNonSingletons,
                                                                  boolean allowEagerInit) {
         assert beanClass != null;
         if (log.isDebugEnabled())
             log.debug("해당 수형의 모든 Bean을 조회합니다. beanClass=[{}], includeNonSingletons=[{}], allowEagerInit=[{}]",
-                    beanClass.getName(), includeNonSingletons, allowEagerInit);
+                      beanClass.getName(), includeNonSingletons, allowEagerInit);
 
         return getContext().getBeansOfType(beanClass,
-                includeNonSingletons,
-                allowEagerInit);
+                                           includeNonSingletons,
+                                           allowEagerInit);
     }
 
+    /**
+     * 지정된 수형의 Bean 을 조회합니다. 등록되지 않았으면 등록하고 반환합니다.
+     *
+     * @param beanClass Bean 수형
+     * @return Bean 인스턴스
+     */
     public static synchronized <T> T getOrRegisterBean(Class<T> beanClass) {
         return getOrRegisterBean(beanClass, ConfigurableBeanFactory.SCOPE_SINGLETON);
     }
 
+    /**
+     * 지정된 수형의 Bean 을 조회합니다. 등록되지 않았으면 등록하고 반환합니다.
+     *
+     * @param beanClass Bean 수형
+     * @param scope     scope ( singleton, prototype )
+     * @return Bean 인스턴스
+     */
     public static synchronized <T> T getOrRegisterBean(Class<T> beanClass, String scope) {
         return getOrRegisterBean(beanClass, beanClass, scope);
     }
 
+    /**
+     * 지정된 수형의 Bean 을 조회합니다. 등록되지 않았으면 등록하고 반환합니다.
+     *
+     * @param beanClass       Bean 수형
+     * @param registBeanClass 등록되지 않은 beanClass 일때, 실제 등록할 Bean의 수형 (Concrete Class)
+     * @return Bean 인스턴스
+     */
     public static synchronized <T> T getOrRegisterBean(Class<T> beanClass, Class<? extends T> registBeanClass) {
         return getOrRegisterBean(beanClass, registBeanClass, ConfigurableBeanFactory.SCOPE_SINGLETON);
     }
@@ -338,7 +365,7 @@ public final class Springs {
      *
      * @param beanClass       조회할 Bean의 수형 (보통 인터페이스)
      * @param registBeanClass 등록되지 않은 beanClass 일때, 실제 등록할 Bean의 수형 (Concrete Class)
-     * @param scope           "Singleton", "Scope"
+     * @param scope           "singleton", "prototype"
      * @param <T>             Bean의 수형
      * @return 등록된 Bean의 인스턴스
      */
@@ -361,14 +388,32 @@ public final class Springs {
         return getOrRegisterBean(beanClass, ConfigurableBeanFactory.SCOPE_PROTOTYPE);
     }
 
-    public static synchronized boolean isBeanNameInUse(String beanName) {
+    /**
+     * 지정된 Bean 이름이 사용되었는가?
+     *
+     * @param beanName Bean 이름
+     * @return 사용 여부
+     */
+    public static synchronized boolean isBeanNameInUse(final String beanName) {
         return getContext().isBeanNameInUse(beanName);
     }
 
-    public static synchronized boolean isRegisteredBean(String beanName) {
+    /**
+     * 지정된 Bean 이름이 현재 Context에 등록되었는가?
+     *
+     * @param beanName Bean 이름
+     * @return 사용 여부
+     */
+    public static synchronized boolean isRegisteredBean(final String beanName) {
         return getContext().isBeanNameInUse(beanName);
     }
 
+    /**
+     * Is registered bean.
+     *
+     * @param beanClass the bean class
+     * @return the boolean
+     */
     public static synchronized <T> boolean isRegisteredBean(Class<T> beanClass) {
         assert beanClass != null;
         try {
@@ -378,10 +423,26 @@ public final class Springs {
         }
     }
 
+    /**
+     * Register bean.
+     *
+     * @param beanName  the bean name
+     * @param beanClass the bean class
+     * @return the boolean
+     */
     public static synchronized <T> boolean registerBean(String beanName, Class<T> beanClass) {
         return registerBean(beanName, beanClass, ConfigurableBeanFactory.SCOPE_SINGLETON);
     }
 
+    /**
+     * Register bean.
+     *
+     * @param beanName       the bean name
+     * @param beanClass      the bean class
+     * @param scope          the scope
+     * @param propertyValues the property values
+     * @return the boolean
+     */
     public static synchronized <T> boolean registerBean(String beanName,
                                                         Class<T> beanClass,
                                                         String scope,
@@ -396,6 +457,13 @@ public final class Springs {
         return registerBean(beanName, definition);
     }
 
+    /**
+     * Register bean.
+     *
+     * @param beanName       the bean name
+     * @param beanDefinition the bean definition
+     * @return the boolean
+     */
     public static synchronized boolean registerBean(String beanName, BeanDefinition beanDefinition) {
         Guard.shouldNotBeEmpty(beanName, "beanName");
         shouldNotBeNull(beanDefinition, "beanDefinition");
@@ -415,6 +483,13 @@ public final class Springs {
         return false;
     }
 
+    /**
+     * Register bean.
+     *
+     * @param beanName the bean name
+     * @param instance the instance
+     * @return the boolean
+     */
     public static synchronized boolean registerBean(String beanName, Object instance) {
         Guard.shouldNotBeEmpty(beanName, "beanName");
 
@@ -427,29 +502,71 @@ public final class Springs {
         }
     }
 
+    /**
+     * Register singleton bean.
+     *
+     * @param beanName the bean name
+     * @param instance the instance
+     * @return the boolean
+     */
     public static synchronized boolean registerSingletonBean(String beanName, Object instance) {
         return registerBean(beanName, instance);
     }
 
+    /**
+     * Register singleton bean.
+     *
+     * @param beanClass the bean class
+     * @param pvs       the pvs
+     * @return the boolean
+     */
     public static synchronized <T> boolean registerSingletonBean(Class<T> beanClass, PropertyValue... pvs) {
         assert beanClass != null;
         return registerSingletonBean(beanClass.getName(), beanClass, pvs);
     }
 
-    public static synchronized <T> boolean registerSingletonBean(String beanName, Class<T> beanClass, PropertyValue... pvs) {
+    /**
+     * Register singleton bean.
+     *
+     * @param beanName  the bean name
+     * @param beanClass the bean class
+     * @param pvs       the pvs
+     * @return the boolean
+     */
+    public static synchronized <T> boolean registerSingletonBean(final String beanName, final Class<T> beanClass, PropertyValue... pvs) {
         return registerBean(beanName, beanClass, ConfigurableBeanFactory.SCOPE_SINGLETON, pvs);
     }
 
-    public static synchronized <T> boolean registerPrototypeBean(Class<T> beanClass, PropertyValue... pvs) {
+    /**
+     * Register prototype bean.
+     *
+     * @param beanClass the bean class
+     * @param pvs       the pvs
+     * @return the boolean
+     */
+    public static synchronized <T> boolean registerPrototypeBean(final Class<T> beanClass, PropertyValue... pvs) {
         assert beanClass != null;
         return registerPrototypeBean(beanClass.getName(), beanClass, pvs);
     }
 
-    public static synchronized <T> boolean registerPrototypeBean(String beanName, Class<T> beanClass, PropertyValue... pvs) {
+    /**
+     * Register prototype bean.
+     *
+     * @param beanName  the bean name
+     * @param beanClass the bean class
+     * @param pvs       the pvs
+     * @return the boolean
+     */
+    public static synchronized <T> boolean registerPrototypeBean(final String beanName, Class<T> beanClass, PropertyValue... pvs) {
         return registerBean(beanName, beanClass, ConfigurableBeanFactory.SCOPE_PROTOTYPE, pvs);
     }
 
-    public static synchronized void removeBean(String beanName) {
+    /**
+     * Remove bean.
+     *
+     * @param beanName the bean name
+     */
+    public static synchronized void removeBean(final String beanName) {
         Guard.shouldNotBeEmpty(beanName, "beanName");
 
         if (isBeanNameInUse(beanName)) {
@@ -459,7 +576,12 @@ public final class Springs {
         }
     }
 
-    public static synchronized <T> void removeBean(Class<T> beanClass) {
+    /**
+     * Remove bean.
+     *
+     * @param beanClass the bean class
+     */
+    public static synchronized <T> void removeBean(final Class<T> beanClass) {
         assert beanClass != null;
         if (log.isDebugEnabled())
             log.debug("Bean 형식 [{}]의 모든 Bean을 ApplicationContext에서 제거합니다.", beanClass.getName());
@@ -469,7 +591,13 @@ public final class Springs {
             removeBean(beanName);
     }
 
-    public static synchronized Object tryGetBean(String beanName) {
+    /**
+     * Try get bean.
+     *
+     * @param beanName the bean name
+     * @return the object
+     */
+    public static synchronized Object tryGetBean(final String beanName) {
         Guard.shouldNotBeEmpty(beanName, "beanName");
         try {
             return getBean(beanName);
@@ -479,7 +607,14 @@ public final class Springs {
         }
     }
 
-    public static synchronized Object tryGetBean(String beanName, Object... args) {
+    /**
+     * Try get bean.
+     *
+     * @param beanName the bean name
+     * @param args     the args
+     * @return the object
+     */
+    public static synchronized Object tryGetBean(final String beanName, Object... args) {
         Guard.shouldNotBeEmpty(beanName, "beanName");
         try {
             return getBean(beanName, args);
@@ -489,7 +624,13 @@ public final class Springs {
         }
     }
 
-    public static synchronized <T> T tryGetBean(Class<T> beanClass) {
+    /**
+     * Try get bean.
+     *
+     * @param beanClass the bean class
+     * @return the t
+     */
+    public static synchronized <T> T tryGetBean(final Class<T> beanClass) {
         shouldNotBeNull(beanClass, "beanClass");
         try {
             return getBean(beanClass);
@@ -499,7 +640,14 @@ public final class Springs {
         }
     }
 
-    public static synchronized <T> T tryGetBean(String beanName, Class<T> beanClass) {
+    /**
+     * Try get bean.
+     *
+     * @param beanName  the bean name
+     * @param beanClass the bean class
+     * @return the t
+     */
+    public static synchronized <T> T tryGetBean(final String beanName, Class<T> beanClass) {
         shouldNotBeNull(beanClass, "beanClass");
         try {
             return getBean(beanName, beanClass);
