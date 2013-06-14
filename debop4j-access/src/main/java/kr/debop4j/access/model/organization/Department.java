@@ -27,12 +27,12 @@ import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.*;
+import org.joda.time.DateTime;
 
 import javax.persistence.CascadeType;
 import javax.persistence.*;
 import javax.persistence.Entity;
 import javax.persistence.Table;
-import java.util.Date;
 import java.util.Set;
 
 /**
@@ -98,8 +98,8 @@ public class Department extends AnnotatedTreeEntityBase<Department> implements I
     @Column(name = "ExAttr", length = 4000)
     private String exAttr;
 
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date updateTimestamp;
+    @Type(type = "kr.debop4j.data.hibernate.usertype.JodaDateTimeUserType")
+    private DateTime updateTimestamp;
 
     @OneToMany(mappedBy = "department", cascade = { CascadeType.ALL })
     @LazyCollection(value = LazyCollectionOption.EXTRA)
@@ -108,7 +108,7 @@ public class Department extends AnnotatedTreeEntityBase<Department> implements I
 
     @Override
     public void updateUpdateTimestamp() {
-        updateTimestamp = new Date();
+        updateTimestamp = DateTime.now();
     }
 
     @Override

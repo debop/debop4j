@@ -39,7 +39,7 @@ import javax.persistence.*;
 @Table(name = "Employee")
 @org.hibernate.annotations.Cache(region = "Organization", usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 @org.hibernate.annotations.Table(appliesTo = "Employee",
-                                 indexes = @org.hibernate.annotations.Index(name = "ix_department_code",
+                                 indexes = @org.hibernate.annotations.Index(name = "ix_employee_code",
                                                                             columnNames = {
                                                                                     "CompanyId",
                                                                                     "EmployeeCode",

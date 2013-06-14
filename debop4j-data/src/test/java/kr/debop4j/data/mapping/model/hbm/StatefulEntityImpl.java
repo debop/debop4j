@@ -1,3 +1,19 @@
+/*
+ * Copyright 2011-2013 the original author or authors.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package kr.debop4j.data.mapping.model.hbm;
 
 import com.google.common.base.Objects;
@@ -6,11 +22,10 @@ import kr.debop4j.data.jpa.domain.JpaEntityBase;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
-import org.hibernate.annotations.Generated;
-import org.hibernate.annotations.GenerationTime;
+import org.hibernate.annotations.Type;
+import org.joda.time.DateTime;
 
 import javax.persistence.*;
-import java.util.Date;
 
 
 /**
@@ -46,11 +61,9 @@ public class StatefulEntityImpl extends JpaEntityBase {
     //@Access(value=AccessType.FIELD)
     private String name;
 
-    @Temporal(value = TemporalType.TIMESTAMP)
-    @Column(name = "LAST_UPDATED", insertable = false, updatable = false)
-    @Generated(value = GenerationTime.ALWAYS)
     @Getter
-    private Date lastUpdated;
+    @Type( type = "kr.debop4j.data.hibernate.usertype.JodaDateTimeUserType" )
+    private DateTime lastUpdated;
 
     @PrePersist
     @PreUpdate
@@ -59,7 +72,7 @@ public class StatefulEntityImpl extends JpaEntityBase {
         if (StatefulEntityImpl.log.isDebugEnabled())
             StatefulEntityImpl.log.debug("PrePersist, PreUpdate event 발생...");
 
-        lastUpdated = new Date();
+        lastUpdated = DateTime.now();
     }
 
     @Override

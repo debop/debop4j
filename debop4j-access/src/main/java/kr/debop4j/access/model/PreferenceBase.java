@@ -46,19 +46,19 @@ public abstract class PreferenceBase extends AccessEntityBase {
         this.value = value;
     }
 
-    @Column(name = "PrefKey", nullable = false, length = 255)
+    @Column( name = "PrefKey", nullable = false, length = 255 )
     private String key;
 
     @Column(name = "PrefValue", length = 2000)
     private String value;
 
-    @Column(name = "DefaultValue", length = 2000)
+    @Column(length = 2000)
     private String defaultValue;
 
-    @Column(name = "Description", length = 2000)
+    @Column(length = 2000)
     private String description;
 
-    @Column(name = "ExAttr", length = 2000)
+    @Column(length = 2000)
     private String exAttr;
 
     @Override
@@ -70,6 +70,7 @@ public abstract class PreferenceBase extends AccessEntityBase {
     protected Objects.ToStringHelper buildStringHelper() {
         return super.buildStringHelper()
                 .add("key", key)
-                .add("value", value);
+                .add("value", value)
+                .add("defaultValue", defaultValue);
     }
 }

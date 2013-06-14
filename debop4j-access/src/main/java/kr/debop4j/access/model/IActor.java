@@ -22,9 +22,19 @@ package kr.debop4j.access.model;
  * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 13. 3. 17.
  */
-public interface IActor extends ICodeBaseEntity {
+public interface IActor extends ICodeBasedEntity {
 
+    /**
+     * Identifier of Actor
+     *
+     * @return identifier
+     */
     Long getId();
 
+    /**
+     * Get name.
+     *
+     * @return name
+     */
     String getName();
 }

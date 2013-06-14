@@ -36,7 +36,10 @@ import javax.persistence.Embeddable;
 @Setter
 public class AddressComponent extends ValueObjectBase {
 
+    @Column( length = 255 )
     private String street1;
+
+    @Column( length = 255 )
     private String street2;
 
     @Column(length = 128)
@@ -60,6 +63,12 @@ public class AddressComponent extends ValueObjectBase {
     protected Objects.ToStringHelper buildStringHelper() {
         return super.buildStringHelper()
                 .add("zipcode", zipcode)
-                .add("country", country);
+                .add("country", country)
+                .add("state", state)
+                .add("city", city)
+                .add("street1", street1)
+                .add("street2", street2);
     }
+
+    private static final long serialVersionUID = 8851834409386466237L;
 }

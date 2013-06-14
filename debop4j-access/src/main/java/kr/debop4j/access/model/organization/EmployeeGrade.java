@@ -43,7 +43,7 @@ import javax.persistence.*;
 @DynamicUpdate
 @Getter
 @Setter
-public class EmployeeGrade extends EmployeeCodeBase {
+public class EmployeeGrade extends EmployeeCodeBased {
 
     private static final long serialVersionUID = -4295473386640384874L;
 

@@ -36,12 +36,15 @@ public class AccessContext {
 
     private AccessContext() {}
 
-    private static final String LIBRARY_NAME = "Access";
-    private static final String ADMINISTRATOR = "admin";
+    public static final String LIBRARY_NAME = "Access";
+    public static final String ADMINISTRATOR = "admin";
+
+    public static final String UPDATE_TIMESTAMP = "updateTimestamp";
 
     private static final String CURRENT_COMPANY_CODE_KEY = "kr.debop4j.access.current.companyCode.key";
     private static final String CURRENT_DEPARTMENT_CODE_KEY = "kr.debop4j.access.current.departmentCode.key";
     private static final String CURRENT_USERNAME_KEY = "kr.debop4j.access.current.username.key";
+
 
     /** 현 Thread Context 에 제공된 정보 */
     public static class Current {

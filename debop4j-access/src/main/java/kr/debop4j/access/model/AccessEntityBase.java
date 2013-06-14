@@ -25,7 +25,6 @@ import org.joda.time.DateTime;
 
 import javax.persistence.MappedSuperclass;
 import javax.persistence.Transient;
-import java.util.Date;
 
 /**
  * debop4j access 모듈의 엔티티들의 기본 클래스입니다.
@@ -44,8 +43,8 @@ public abstract class AccessEntityBase extends AnnotatedEntityBase implements IU
 
     @Transient
     @Override
-    public Date getUpdateTimestamp() {
-        return updatedTime.toDate();
+    public DateTime getUpdateTimestamp() {
+        return updatedTime;
     }
 
     @Override

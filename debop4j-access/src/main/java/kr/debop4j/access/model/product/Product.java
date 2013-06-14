@@ -18,7 +18,7 @@ package kr.debop4j.access.model.product;
 
 import com.google.common.base.Objects;
 import kr.debop4j.access.model.AccessEntityBase;
-import kr.debop4j.access.model.ICodeBaseEntity;
+import kr.debop4j.access.model.ICodeBasedEntity;
 import kr.debop4j.core.Guard;
 import kr.debop4j.core.tools.HashTool;
 import lombok.Getter;
@@ -42,7 +42,7 @@ import javax.persistence.Table;
 @DynamicUpdate
 @Getter
 @Setter
-public class Product extends AccessEntityBase implements ICodeBaseEntity {
+public class Product extends AccessEntityBase implements ICodeBasedEntity {
 
     private static final long serialVersionUID = -3955160861102847816L;
 

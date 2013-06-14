@@ -18,7 +18,7 @@ package kr.debop4j.access.model.organization;
 
 import com.google.common.base.Objects;
 import kr.debop4j.access.model.AccessEntityBase;
-import kr.debop4j.access.model.ICodeBaseEntity;
+import kr.debop4j.access.model.ICodeBasedEntity;
 import kr.debop4j.core.Guard;
 import lombok.Getter;
 import lombok.Setter;
@@ -40,17 +40,17 @@ import javax.persistence.*;
 @org.hibernate.annotations.Cache(region = "Organization", usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 @Getter
 @Setter
-public abstract class EmployeeCodeBase extends AccessEntityBase implements ICodeBaseEntity {
+public abstract class EmployeeCodeBased extends AccessEntityBase implements ICodeBasedEntity {
 
     private static final long serialVersionUID = -3706853105005691162L;
 
-    protected EmployeeCodeBase() {}
+    protected EmployeeCodeBased() {}
 
-    protected EmployeeCodeBase(Company company, String code) {
+    protected EmployeeCodeBased(Company company, String code) {
         this(company, code, code);
     }
 
-    protected EmployeeCodeBase(Company company, String code, String name) {
+    protected EmployeeCodeBased(Company company, String code, String name) {
         Guard.shouldNotBeNull(company, "company");
         Guard.shouldNotBeEmpty(code, "code");
         Guard.shouldNotBeEmpty(name, "name");

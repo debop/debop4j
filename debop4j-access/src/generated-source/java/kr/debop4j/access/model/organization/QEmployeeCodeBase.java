@@ -1,20 +1,33 @@
+/*
+ * Copyright 2011-2013 the original author or authors.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package kr.debop4j.access.model.organization;
 
-import static com.mysema.query.types.PathMetadataFactory.*;
-
+import com.mysema.query.types.Path;
+import com.mysema.query.types.PathMetadata;
 import com.mysema.query.types.path.*;
 
-import com.mysema.query.types.PathMetadata;
 import javax.annotation.Generated;
-import com.mysema.query.types.Path;
-import com.mysema.query.types.path.PathInits;
+
+import static com.mysema.query.types.PathMetadataFactory.forVariable;
 
 
-/**
- * QEmployeeCodeBase is a Querydsl query type for EmployeeCodeBase
- */
+/** QEmployeeCodeBase is a Querydsl query type for EmployeeCodeBased */
 @Generated("com.mysema.query.codegen.SupertypeSerializer")
-public class QEmployeeCodeBase extends EntityPathBase<EmployeeCodeBase> {
+public class QEmployeeCodeBase extends EntityPathBase<EmployeeCodeBased> {
 
     private static final long serialVersionUID = 851911381;
 
@@ -40,12 +53,12 @@ public class QEmployeeCodeBase extends EntityPathBase<EmployeeCodeBase> {
     public final NumberPath<Integer> viewOrder = createNumber("viewOrder", Integer.class);
 
     public QEmployeeCodeBase(String variable) {
-        this(EmployeeCodeBase.class, forVariable(variable), INITS);
+        this(EmployeeCodeBased.class, forVariable(variable), INITS);
     }
 
     @SuppressWarnings("all")
-    public QEmployeeCodeBase(Path<? extends EmployeeCodeBase> path) {
-        this((Class)path.getType(), path.getMetadata(), path.getMetadata().isRoot() ? INITS : PathInits.DEFAULT);
+    public QEmployeeCodeBase(Path<? extends EmployeeCodeBased> path) {
+        this((Class) path.getType(), path.getMetadata(), path.getMetadata().isRoot() ? INITS : PathInits.DEFAULT);
     }
 
     public QEmployeeCodeBase(PathMetadata<?> metadata) {
@@ -53,10 +66,10 @@ public class QEmployeeCodeBase extends EntityPathBase<EmployeeCodeBase> {
     }
 
     public QEmployeeCodeBase(PathMetadata<?> metadata, PathInits inits) {
-        this(EmployeeCodeBase.class, metadata, inits);
+        this(EmployeeCodeBased.class, metadata, inits);
     }
 
-    public QEmployeeCodeBase(Class<? extends EmployeeCodeBase> type, PathMetadata<?> metadata, PathInits inits) {
+    public QEmployeeCodeBase(Class<? extends EmployeeCodeBased> type, PathMetadata<?> metadata, PathInits inits) {
         super(type, metadata, inits);
         this.company = inits.isInitialized("company") ? new QCompany(forProperty("company")) : null;
     }

@@ -16,18 +16,17 @@
 
 package kr.debop4j.access.model.organization;
 
-import static com.mysema.query.types.PathMetadataFactory.*;
-
-import com.mysema.query.types.path.*;
-
-import com.mysema.query.types.PathMetadata;
-import javax.annotation.Generated;
 import com.mysema.query.types.Path;
+import com.mysema.query.types.PathMetadata;
+import com.mysema.query.types.path.BeanPath;
+import com.mysema.query.types.path.StringPath;
+
+import javax.annotation.Generated;
+
+import static com.mysema.query.types.PathMetadataFactory.forVariable;
 
 
-/**
- * QCompany_CompanyLocale is a Querydsl query type for CompanyLocale
- */
+/** QCompany_CompanyLocale is a Querydsl query type for CompanyLocale */
 @Generated("com.mysema.query.codegen.EmbeddableSerializer")
 public class QCompany_CompanyLocale extends BeanPath<Company.CompanyLocale> {
 
@@ -47,7 +46,7 @@ public class QCompany_CompanyLocale extends BeanPath<Company.CompanyLocale> {
 
     @SuppressWarnings("all")
     public QCompany_CompanyLocale(Path<? extends Company.CompanyLocale> path) {
-        super((Class)path.getType(), path.getMetadata());
+        super((Class) path.getType(), path.getMetadata());
     }
 
     public QCompany_CompanyLocale(PathMetadata<?> metadata) {

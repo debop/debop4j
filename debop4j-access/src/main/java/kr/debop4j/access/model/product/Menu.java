@@ -24,13 +24,12 @@ import kr.debop4j.data.model.ITreeEntity;
 import kr.debop4j.data.model.IUpdateTimestampedEntity;
 import lombok.Getter;
 import lombok.Setter;
-import org.hibernate.annotations.CacheConcurrencyStrategy;
-import org.hibernate.annotations.DynamicInsert;
-import org.hibernate.annotations.DynamicUpdate;
-import org.hibernate.annotations.Index;
+import org.hibernate.annotations.*;
+import org.joda.time.DateTime;
 
 import javax.persistence.*;
-import java.util.Date;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 
 /**
  * 메뉴 정보를 나타냅니다.
@@ -84,12 +83,12 @@ public class Menu extends AnnotatedTreeEntityBase<Menu> implements ITreeEntity<M
     @Column(name = "ExAttr", length = 2000)
     private String exAttr;
 
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date updateTimestamp;
+    @Type(type = "kr.debop4j.data.hibernate.usertype.JodaDateTimeUserType")
+    private DateTime updateTimestamp;
 
     @Override
     public void updateUpdateTimestamp() {
-        updateTimestamp = new Date();
+        updateTimestamp = DateTime.now();
     }
 
     @Override

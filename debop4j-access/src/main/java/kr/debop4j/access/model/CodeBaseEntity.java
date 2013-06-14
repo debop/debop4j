@@ -72,4 +72,6 @@ public abstract class CodeBaseEntity extends LongAnnotatedEntityBase {
                 .add("id", id)
                 .add("code", code);
     }
+
+    private static final long serialVersionUID = -8310324998356150434L;
 }
