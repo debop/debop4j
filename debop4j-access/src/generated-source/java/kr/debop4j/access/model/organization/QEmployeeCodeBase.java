@@ -25,9 +25,9 @@ import javax.annotation.Generated;
 import static com.mysema.query.types.PathMetadataFactory.forVariable;
 
 
-/** QEmployeeCodeBase is a Querydsl query type for EmployeeCodeBased */
-@Generated("com.mysema.query.codegen.SupertypeSerializer")
-public class QEmployeeCodeBase extends EntityPathBase<EmployeeCodeBased> {
+/** QEmployeeCodeBase is a Querydsl query type for EmployeeCodeBase */
+@Generated( "com.mysema.query.codegen.SupertypeSerializer" )
+public class QEmployeeCodeBase extends EntityPathBase<EmployeeCodeBase> {
 
     private static final long serialVersionUID = 851911381;
 
@@ -50,14 +50,17 @@ public class QEmployeeCodeBase extends EntityPathBase<EmployeeCodeBased> {
     //inherited
     public final BooleanPath persisted = _super.persisted;
 
+    //inherited
+    public final DateTimePath<org.joda.time.DateTime> updatedTime = _super.updatedTime;
+
     public final NumberPath<Integer> viewOrder = createNumber("viewOrder", Integer.class);
 
     public QEmployeeCodeBase(String variable) {
-        this(EmployeeCodeBased.class, forVariable(variable), INITS);
+        this(EmployeeCodeBase.class, forVariable(variable), INITS);
     }
 
-    @SuppressWarnings("all")
-    public QEmployeeCodeBase(Path<? extends EmployeeCodeBased> path) {
+    @SuppressWarnings( "all" )
+    public QEmployeeCodeBase(Path<? extends EmployeeCodeBase> path) {
         this((Class) path.getType(), path.getMetadata(), path.getMetadata().isRoot() ? INITS : PathInits.DEFAULT);
     }
 
@@ -66,10 +69,10 @@ public class QEmployeeCodeBase extends EntityPathBase<EmployeeCodeBased> {
     }
 
     public QEmployeeCodeBase(PathMetadata<?> metadata, PathInits inits) {
-        this(EmployeeCodeBased.class, metadata, inits);
+        this(EmployeeCodeBase.class, metadata, inits);
     }
 
-    public QEmployeeCodeBase(Class<? extends EmployeeCodeBased> type, PathMetadata<?> metadata, PathInits inits) {
+    public QEmployeeCodeBase(Class<? extends EmployeeCodeBase> type, PathMetadata<?> metadata, PathInits inits) {
         super(type, metadata, inits);
         this.company = inits.isInitialized("company") ? new QCompany(forProperty("company")) : null;
     }

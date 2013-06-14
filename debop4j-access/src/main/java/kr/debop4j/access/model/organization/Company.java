@@ -43,11 +43,11 @@ import java.util.Map;
  * @since 13. 3. 1.
  */
 @Entity
-@Table(name = "Company")
-@Cache(region = "Organization", usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-@org.hibernate.annotations.Table(appliesTo = "Company",
-                                 indexes = @org.hibernate.annotations.Index(name = "ix_company_code",
-                                                                            columnNames = { "CompanyCode", "CompanyName" }))
+@Table( name = "Company" )
+@Cache( region = "Organization", usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE )
+@org.hibernate.annotations.Table( appliesTo = "Company",
+                                  indexes = @org.hibernate.annotations.Index( name = "ix_company_code",
+                                                                              columnNames = { "CompanyCode", "CompanyName" } ) )
 @DynamicInsert
 @DynamicUpdate
 @Getter
@@ -73,39 +73,37 @@ public class Company extends AccessLocaledEntityBase<Company.CompanyLocale> impl
 
     @Id
     @GeneratedValue
-    @Column(name = "CompanyId")
-    @Setter(AccessLevel.PROTECTED)
+    @Column( name = "CompanyId" )
+    @Setter( AccessLevel.PROTECTED )
     private Long id;
 
-    @Column(name = "CompanyCode", nullable = false, length = 128)
-    @Index(name = "ix_company_code")
+    @Column( name = "CompanyCode", nullable = false, length = 128 )
     private String code;
 
-    @Column(name = "CompanyName", nullable = false, length = 128)
-    @Index(name = "ix_company_code")
+    @Column( name = "CompanyName", nullable = false, length = 128 )
     private String name;
 
-    @Column(name = "CompanyEName", length = 128)
+    @Column( name = "CompanyEName", length = 128 )
     private String ename;
 
     @Basic
-    @Column(name = "IsActive")
+    @Column( name = "IsActive" )
     private Boolean active;
 
     @Basic
-    @Column(name = "CompanyDesc", length = 2000)
+    @Column( name = "CompanyDesc", length = 2000 )
     private String description;
 
-    @Basic(fetch = FetchType.LAZY)
-    @Column(name = "ExAttr", length = 2000)
+    @Basic( fetch = FetchType.LAZY )
+    @Column( name = "ExAttr", length = 2000 )
     private String exAttr;
 
     /** 다국어 지원을 위한 정보 */
-    @CollectionTable(name = "CompanyLocale", joinColumns = { @JoinColumn(name = "CompanyId") })
-    @ElementCollection(targetClass = CompanyLocale.class, fetch = FetchType.LAZY)
-    @MapKeyClass(Locale.class)
-    @Cascade({ org.hibernate.annotations.CascadeType.ALL })
-    @LazyCollection(LazyCollectionOption.EXTRA)
+    @CollectionTable( name = "CompanyLocale", joinColumns = { @JoinColumn( name = "CompanyId" ) } )
+    @ElementCollection( targetClass = CompanyLocale.class, fetch = FetchType.LAZY )
+    @MapKeyClass( Locale.class )
+    @Cascade( { org.hibernate.annotations.CascadeType.ALL } )
+    @LazyCollection( LazyCollectionOption.EXTRA )
     private Map<Locale, CompanyLocale> localeMap = Maps.newHashMap();
 
     public Map<Locale, CompanyLocale> getLocaleMap() {
@@ -143,11 +141,11 @@ public class Company extends AccessLocaledEntityBase<Company.CompanyLocale> impl
             this.description = description;
         }
 
-        @Column(name = "CompanyName", length = 128)
+        @Column( name = "CompanyName", length = 128 )
         private String name;
 
         @Basic
-        @Column(name = "CompanyDesc", length = 2000)
+        @Column( name = "CompanyDesc", length = 2000 )
         private String description;
 
         @Override

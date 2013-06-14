@@ -42,11 +42,11 @@ import java.util.Set;
  * @since 13. 3. 1.
  */
 @Entity
-@Table(name = "Department")
-@Cache(region = "Organization", usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-@org.hibernate.annotations.Table(appliesTo = "Department",
-                                 indexes = @org.hibernate.annotations.Index(name = "ix_department_code",
-                                                                            columnNames = { "CompanyId", "DepartmentCode" }))
+@Table( name = "Department" )
+@Cache( region = "Organization", usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE )
+@org.hibernate.annotations.Table( appliesTo = "Department",
+                                  indexes = @org.hibernate.annotations.Index( name = "ix_department_code",
+                                                                              columnNames = { "CompanyId", "DepartmentCode" } ) )
 @DynamicInsert
 @DynamicUpdate
 @Getter
@@ -73,37 +73,45 @@ public class Department extends AnnotatedTreeEntityBase<Department> implements I
 
     @Id
     @GeneratedValue
-    @Column(name = "DepartmentId")
+    @Column( name = "DepartmentId" )
     private Long id;
 
-    @ManyToOne
-    @JoinColumn(name = "CompanyId", nullable = false)
+    @ManyToOne( fetch = FetchType.LAZY )
+    @JoinColumn( name = "ParentId" )
+    @ForeignKey( name = "fk_department_parent" )
+    public Department getParent() {
+        return super.getParent();
+    }
+
+    @ManyToOne( fetch = FetchType.LAZY )
+    @JoinColumn( name = "CompanyId", nullable = false )
+    @ForeignKey( name = "fk_department_company" )
     private Company company;
 
-    @Column(name = "DepartmentCode", nullable = false, length = 64)
+    @Column( name = "DepartmentCode", nullable = false, length = 64 )
     private String code;
 
-    @Column(name = "DepartmentName", nullable = false, length = 128)
+    @Column( name = "DepartmentName", nullable = false, length = 128 )
     private String name;
 
-    @Column(name = "DepartmentEName", length = 128)
+    @Column( name = "DepartmentEName", length = 128 )
     private String enam;
 
-    @Column(name = "IsActive")
+    @Column( name = "IsActive" )
     private Boolean active;
 
-    @Column(name = "DepartmentDesc", length = 4000)
+    @Column( name = "DepartmentDesc", length = 4000 )
     private String description;
 
-    @Column(name = "ExAttr", length = 4000)
+    @Column( name = "ExAttr", length = 4000 )
     private String exAttr;
 
-    @Type(type = "kr.debop4j.data.hibernate.usertype.JodaDateTimeUserType")
+    @Type( type = "kr.debop4j.data.hibernate.usertype.JodaDateTimeUserType" )
     private DateTime updateTimestamp;
 
-    @OneToMany(mappedBy = "department", cascade = { CascadeType.ALL })
-    @LazyCollection(value = LazyCollectionOption.EXTRA)
-    @Fetch(FetchMode.SELECT)
+    @OneToMany( mappedBy = "department", cascade = { CascadeType.ALL } )
+    @LazyCollection( value = LazyCollectionOption.EXTRA )
+    @Fetch( FetchMode.SELECT )
     private Set<DepartmentMember> members = Sets.newHashSet();
 
     @Override

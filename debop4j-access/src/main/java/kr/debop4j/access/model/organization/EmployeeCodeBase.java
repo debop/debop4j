@@ -37,20 +37,20 @@ import javax.persistence.*;
 // @DynamicInsert
 // @DynamicUpdate
 @MappedSuperclass
-@org.hibernate.annotations.Cache(region = "Organization", usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+@org.hibernate.annotations.Cache( region = "Organization", usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE )
 @Getter
 @Setter
-public abstract class EmployeeCodeBased extends AccessEntityBase implements ICodeBasedEntity {
+public abstract class EmployeeCodeBase extends AccessEntityBase implements ICodeBasedEntity {
 
     private static final long serialVersionUID = -3706853105005691162L;
 
-    protected EmployeeCodeBased() {}
+    protected EmployeeCodeBase() {}
 
-    protected EmployeeCodeBased(Company company, String code) {
+    protected EmployeeCodeBase(Company company, String code) {
         this(company, code, code);
     }
 
-    protected EmployeeCodeBased(Company company, String code, String name) {
+    protected EmployeeCodeBase(Company company, String code, String name) {
         Guard.shouldNotBeNull(company, "company");
         Guard.shouldNotBeEmpty(code, "code");
         Guard.shouldNotBeEmpty(name, "name");
@@ -61,23 +61,23 @@ public abstract class EmployeeCodeBased extends AccessEntityBase implements ICod
     }
 
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "CompanyId")
+    @ManyToOne( fetch = FetchType.LAZY )
+    @JoinColumn( name = "CompanyId" )
     private Company company;
 
-    @Column(name = "CodeValue", nullable = false, length = 128)
+    @Column( name = "CodeValue", nullable = false, length = 128 )
     private String code;
 
-    @Column(name = "CodeName", nullable = false, length = 256)
+    @Column( name = "CodeName", nullable = false, length = 256 )
     private String name;
 
-    @Column(name = "ViewOrder")
+    @Column( name = "ViewOrder" )
     private Integer viewOrder;
 
-    @Column(name = "Description", length = 4000)
+    @Column( name = "Description", length = 4000 )
     private String description;
 
-    @Column(name = "ExAttr", length = 2000)
+    @Column( name = "ExAttr", length = 2000 )
     private String exAttr;
 
     @Override

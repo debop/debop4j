@@ -1,18 +1,31 @@
+/*
+ * Copyright 2011-2013 the original author or authors.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package kr.debop4j.access.model.product;
 
-import static com.mysema.query.types.PathMetadataFactory.*;
-
+import com.mysema.query.types.Path;
+import com.mysema.query.types.PathMetadata;
 import com.mysema.query.types.path.*;
 
-import com.mysema.query.types.PathMetadata;
 import javax.annotation.Generated;
-import com.mysema.query.types.Path;
-import com.mysema.query.types.path.PathInits;
+
+import static com.mysema.query.types.PathMetadataFactory.forVariable;
 
 
-/**
- * QUserFavorite is a Querydsl query type for UserFavorite
- */
+/** QUserFavorite is a Querydsl query type for UserFavorite */
 @Generated("com.mysema.query.codegen.EntitySerializer")
 public class QUserFavorite extends EntityPathBase<UserFavorite> {
 
@@ -41,6 +54,9 @@ public class QUserFavorite extends EntityPathBase<UserFavorite> {
 
     public final DateTimePath<java.util.Date> registDate = createDateTime("registDate", java.util.Date.class);
 
+    //inherited
+    public final DateTimePath<org.joda.time.DateTime> updatedTime = _super.updatedTime;
+
     public final QUser user;
 
     public QUserFavorite(String variable) {
@@ -49,7 +65,7 @@ public class QUserFavorite extends EntityPathBase<UserFavorite> {
 
     @SuppressWarnings("all")
     public QUserFavorite(Path<? extends UserFavorite> path) {
-        this((Class)path.getType(), path.getMetadata(), path.getMetadata().isRoot() ? INITS : PathInits.DEFAULT);
+        this((Class) path.getType(), path.getMetadata(), path.getMetadata().isRoot() ? INITS : PathInits.DEFAULT);
     }
 
     public QUserFavorite(PathMetadata<?> metadata) {

@@ -192,8 +192,8 @@
         <plugins>
             <plugin>
                 <groupId>com.mysema.maven</groupId>
-                <artifactId>maven-apt-plugin</artifactId>
-                <version>1.0.4</version>
+                <artifactId>apt-maven-plugin</artifactId>
+                <version>1.0.9</version>
                 <executions>
                     <execution>
                         <goals>
@@ -201,7 +201,8 @@
                         </goals>
                         <configuration>
                             <outputDirectory>${project.basedir}/src/generated-source/java</outputDirectory>
-                            <processor>com.mysema.query.apt.jpa.JPAAnnotationProcessor</processor>
+                            <processor>com.mysema.query.apt.hibernate.HibernateAnnotationProcessor</processor>
+                            <!--<processor>com.mysema.query.apt.jpa.JPAAnnotationProcessor</processor>-->
                         </configuration>
                     </execution>
                 </executions>

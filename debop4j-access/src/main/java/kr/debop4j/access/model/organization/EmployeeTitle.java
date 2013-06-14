@@ -34,16 +34,16 @@ import javax.persistence.*;
  * @since 13. 3. 8 오후 5:10
  */
 @Entity
-@Table(name = "EmpTitle")
-@org.hibernate.annotations.Cache(region = "Organization", usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-@org.hibernate.annotations.Table(appliesTo = "EmpTitle",
-                                 indexes = { @Index(name = "ix_emp_title",
-                                                    columnNames = { "CompanyId", "CodeValue", "CodeName" }) })
+@Table( name = "EmpTitle" )
+@org.hibernate.annotations.Cache( region = "Organization", usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE )
+@org.hibernate.annotations.Table( appliesTo = "EmpTitle",
+                                  indexes = { @Index( name = "ix_emp_title",
+                                                      columnNames = { "CompanyId", "CodeValue", "CodeName" } ) } )
 @DynamicInsert
 @DynamicUpdate
 @Getter
 @Setter
-public class EmployeeTitle extends EmployeeCodeBased {
+public class EmployeeTitle extends EmployeeCodeBase {
 
     private static final long serialVersionUID = -3548865945774656200L;
 
@@ -59,7 +59,7 @@ public class EmployeeTitle extends EmployeeCodeBased {
 
     @Id
     @GeneratedValue  // PostgreSQL, Oracle 처럼 Database 전역 Sequence 가 있는 경우에만 Table per class 상속이 가능하다.
-    @Column(name = "EmpTitleId")
+    @Column( name = "EmpTitleId" )
     private Long id;
 
 

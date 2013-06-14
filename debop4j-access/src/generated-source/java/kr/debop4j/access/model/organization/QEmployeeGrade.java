@@ -26,7 +26,7 @@ import static com.mysema.query.types.PathMetadataFactory.forVariable;
 
 
 /** QEmployeeGrade is a Querydsl query type for EmployeeGrade */
-@Generated("com.mysema.query.codegen.EntitySerializer")
+@Generated( "com.mysema.query.codegen.EntitySerializer" )
 public class QEmployeeGrade extends EntityPathBase<EmployeeGrade> {
 
     private static final long serialVersionUID = 29471424;
@@ -35,7 +35,7 @@ public class QEmployeeGrade extends EntityPathBase<EmployeeGrade> {
 
     public static final QEmployeeGrade employeeGrade = new QEmployeeGrade("employeeGrade");
 
-    public final QEmployeeCodeBased _super;
+    public final QEmployeeCodeBase _super;
 
     //inherited
     public final StringPath code;
@@ -60,13 +60,16 @@ public class QEmployeeGrade extends EntityPathBase<EmployeeGrade> {
     public final BooleanPath persisted;
 
     //inherited
+    public final DateTimePath<org.joda.time.DateTime> updatedTime;
+
+    //inherited
     public final NumberPath<Integer> viewOrder;
 
     public QEmployeeGrade(String variable) {
         this(EmployeeGrade.class, forVariable(variable), INITS);
     }
 
-    @SuppressWarnings("all")
+    @SuppressWarnings( "all" )
     public QEmployeeGrade(Path<? extends EmployeeGrade> path) {
         this((Class) path.getType(), path.getMetadata(), path.getMetadata().isRoot() ? INITS : PathInits.DEFAULT);
     }
@@ -81,13 +84,14 @@ public class QEmployeeGrade extends EntityPathBase<EmployeeGrade> {
 
     public QEmployeeGrade(Class<? extends EmployeeGrade> type, PathMetadata<?> metadata, PathInits inits) {
         super(type, metadata, inits);
-        this._super = new QEmployeeCodeBased(type, metadata, inits);
+        this._super = new QEmployeeCodeBase(type, metadata, inits);
         this.code = _super.code;
         this.company = _super.company;
         this.description = _super.description;
         this.exAttr = _super.exAttr;
         this.name = _super.name;
         this.persisted = _super.persisted;
+        this.updatedTime = _super.updatedTime;
         this.viewOrder = _super.viewOrder;
     }
 

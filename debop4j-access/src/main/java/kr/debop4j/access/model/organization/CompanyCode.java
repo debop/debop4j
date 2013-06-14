@@ -40,8 +40,8 @@ import java.util.Set;
  * @since 13. 3. 8 오후 1:07
  */
 @Entity
-@Table(name = "CompanyCode")
-@Cache(region = "Organization", usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+@Table( name = "CompanyCode" )
+@Cache( region = "Organization", usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE )
 @DynamicInsert
 @DynamicUpdate
 @Getter
@@ -65,33 +65,34 @@ public class CompanyCode extends AccessEntityBase {
 
     @Id
     @GeneratedValue
-    @Column(name = "CodeId")
-    @Setter(AccessLevel.PROTECTED)
+    @Column( name = "CodeId" )
+    @Setter( AccessLevel.PROTECTED )
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "CompanyId", nullable = false)
-    @Index(name = "ix_code")
+    @ManyToOne( fetch = FetchType.LAZY )
+    @JoinColumn( name = "CompanyId", nullable = false )
+    @Index( name = "ix_code" )
+    @ForeignKey( name = "fk_companyCode_company" )
     private Company company;
 
-    @Column(name = "CodeValue", nullable = false, length = 128)
-    @Index(name = "ix_code")
+    @Column( name = "CodeValue", nullable = false, length = 128 )
+    @Index( name = "ix_code" )
     private String code;
 
-    @Column(name = "CodeName", nullable = false, length = 255)
-    @Index(name = "ix_code")
+    @Column( name = "CodeName", nullable = false, length = 255 )
+    @Index( name = "ix_code" )
     private String name;
 
-    @Column(name = "Descripton", length = 2000)
+    @Column( length = 2000 )
     private String description;
 
     //@Basic(fetch = FetchType.LAZY)
-    @Column(name = "ExAttr", length = 2000)
+    @Column( length = 2000 )
     private String exAttr;
 
-    @OneToMany(mappedBy = "code", fetch = FetchType.EAGER, cascade = { CascadeType.ALL })
-    @LazyCollection(value = LazyCollectionOption.EXTRA)
-    @Fetch(FetchMode.SELECT)
+    @OneToMany( mappedBy = "code", fetch = FetchType.EAGER, cascade = { CascadeType.ALL } )
+    @LazyCollection( value = LazyCollectionOption.EXTRA )
+    @Fetch( FetchMode.SELECT )
     private Set<CompanyCodeItem> items = Sets.newHashSet();
 
     @Override
@@ -110,4 +111,6 @@ public class CompanyCode extends AccessEntityBase {
                 .add("description", description)
                 .add("company", company);
     }
+
+    private static final long serialVersionUID = -4699400660367108787L;
 }

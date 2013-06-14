@@ -26,7 +26,7 @@ import static com.mysema.query.types.PathMetadataFactory.forVariable;
 
 
 /** QCompany is a Querydsl query type for Company */
-@Generated("com.mysema.query.codegen.EntitySerializer")
+@Generated( "com.mysema.query.codegen.EntitySerializer" )
 public class QCompany extends EntityPathBase<Company> {
 
     private static final long serialVersionUID = -1662923084;
@@ -61,7 +61,7 @@ public class QCompany extends EntityPathBase<Company> {
         super(Company.class, forVariable(variable));
     }
 
-    @SuppressWarnings("all")
+    @SuppressWarnings( "all" )
     public QCompany(Path<? extends Company> path) {
         super((Class) path.getType(), path.getMetadata());
     }
