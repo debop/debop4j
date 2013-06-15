@@ -72,8 +72,8 @@ public class Employee extends AccessEntityBase implements IActor {
     @Column(name = "EmployeeId")
     private Long id;
 
-    @ManyToOne
-    @JoinColumn(name = "CompanyId", nullable = false)
+    @ManyToOne( fetch = FetchType.EAGER )
+    @JoinColumn( name = "CompanyId", nullable = false )
     private Company company;
 
     @Column(name = "EmployeeCode", nullable = false, length = 64)
@@ -82,23 +82,30 @@ public class Employee extends AccessEntityBase implements IActor {
     @Column(name = "EmployeeName", nullable = false, length = 128)
     private String name;
 
+    @Column( name = "EmployeeAge", nullable = false )
+    private Integer age = 0;
+
     @Basic
-    @Column(name = "IsActive")
+    @Column( name = "IsActive" )
     private Boolean active;
 
-    @ManyToOne
-    @JoinColumn(name = "EmpGradeId")
+    @ManyToOne( fetch = FetchType.LAZY )
+    @JoinColumn( name = "MemberId" )
+    private DepartmentMember member;
+
+    @ManyToOne( fetch = FetchType.LAZY )
+    @JoinColumn( name = "EmpGradeId" )
     private EmployeeGrade empGrade;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "EmpPositionId")
     private EmployeePosition empPosition;
 
-    @Column(name = "Description", length = 4000)
+    @Column(name = "Description", length = 1000)
     private String description;
 
     @Basic(fetch = FetchType.LAZY)
-    @Column(name = "ExAttr", length = 4000)
+    @Column(name = "ExAttr", length = 1000)
     private String exAttr;
 
     @Override
@@ -114,6 +121,7 @@ public class Employee extends AccessEntityBase implements IActor {
                 .add("id", id)
                 .add("code", code)
                 .add("name", name)
+                .add("age", age)
                 .add("active", active)
                 .add("empGrade", empGrade)
                 .add("empPosition", empPosition);

@@ -65,7 +65,7 @@ public class DepartmentMember extends AccessEntityBase {
 
     @Id
     @GeneratedValue
-    @Column(name = "DeptMemberId")
+    @Column(name = "MemberId")
     private Long id;
 
     /** 소속 부서 */

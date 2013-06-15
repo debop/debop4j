@@ -26,7 +26,7 @@ import static com.mysema.query.types.PathMetadataFactory.forVariable;
 
 
 /** QGroup is a Querydsl query type for Group */
-@Generated( "com.mysema.query.codegen.EntitySerializer" )
+@Generated("com.mysema.query.codegen.EntitySerializer")
 public class QGroup extends EntityPathBase<Group> {
 
     private static final long serialVersionUID = -516380042;
@@ -65,7 +65,7 @@ public class QGroup extends EntityPathBase<Group> {
         this(Group.class, forVariable(variable), INITS);
     }
 
-    @SuppressWarnings( "all" )
+    @SuppressWarnings("all")
     public QGroup(Path<? extends Group> path) {
         this((Class) path.getType(), path.getMetadata(), path.getMetadata().isRoot() ? INITS : PathInits.DEFAULT);
     }

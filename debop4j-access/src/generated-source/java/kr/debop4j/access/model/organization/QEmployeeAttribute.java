@@ -26,7 +26,7 @@ import static com.mysema.query.types.PathMetadataFactory.forVariable;
 
 
 /** QEmployeeAttribute is a Querydsl query type for EmployeeAttribute */
-@Generated( "com.mysema.query.codegen.EntitySerializer" )
+@Generated("com.mysema.query.codegen.EntitySerializer")
 public class QEmployeeAttribute extends EntityPathBase<EmployeeAttribute> {
 
     private static final long serialVersionUID = 1806893317;
@@ -56,7 +56,7 @@ public class QEmployeeAttribute extends EntityPathBase<EmployeeAttribute> {
         this(EmployeeAttribute.class, forVariable(variable), INITS);
     }
 
-    @SuppressWarnings( "all" )
+    @SuppressWarnings("all")
     public QEmployeeAttribute(Path<? extends EmployeeAttribute> path) {
         this((Class) path.getType(), path.getMetadata(), path.getMetadata().isRoot() ? INITS : PathInits.DEFAULT);
     }

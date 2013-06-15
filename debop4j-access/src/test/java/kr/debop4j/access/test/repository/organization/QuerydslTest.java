@@ -23,8 +23,6 @@ import kr.debop4j.access.test.repository.RepositoryTestBase;
 import kr.debop4j.core.tools.StringTool;
 import kr.debop4j.data.hibernate.unitofwork.UnitOfWorks;
 import lombok.extern.slf4j.Slf4j;
-import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
 
 import java.util.List;
@@ -38,16 +36,6 @@ import java.util.List;
 @Slf4j
 public class QuerydslTest extends RepositoryTestBase {
 
-    @Before
-    public void before() {
-        UnitOfWorks.start();
-    }
-
-    @After
-    public void after() {
-        UnitOfWorks.stop();
-    }
-
     @Test
     public void queryCompany() {
         QCompany qCompany = QCompany.company;
@@ -58,6 +46,5 @@ public class QuerydslTest extends RepositoryTestBase {
                 .list(qCompany);
 
         log.debug("company={}", StringTool.listToString(loaded));
-
     }
 }

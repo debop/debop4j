@@ -26,7 +26,7 @@ import lombok.extern.slf4j.Slf4j;
  * @since 13. 3. 12.
  */
 @Slf4j
-public class RepositoryTestBase extends AccessTestBase {
+public abstract class RepositoryTestBase extends AccessTestBase {
 
     public static final String DefaultCompanyCode = "KTH";
 }
