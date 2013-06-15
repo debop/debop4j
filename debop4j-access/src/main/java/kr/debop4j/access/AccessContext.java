@@ -16,14 +16,18 @@
 
 package kr.debop4j.access;
 
+import com.mysema.query.jpa.hibernate.HibernateQuery;
 import kr.debop4j.access.model.organization.Company;
 import kr.debop4j.access.model.organization.Department;
+import kr.debop4j.access.model.organization.QCompany;
+import kr.debop4j.access.model.organization.QDepartment;
+import kr.debop4j.access.model.product.QUser;
 import kr.debop4j.access.model.product.User;
-import kr.debop4j.core.Guard;
 import kr.debop4j.core.Local;
 import kr.debop4j.data.hibernate.unitofwork.UnitOfWorks;
 import lombok.extern.slf4j.Slf4j;
-import org.hibernate.criterion.Restrictions;
+
+import static kr.debop4j.core.Guard.shouldNotBeEmpty;
 
 /**
  * Access Library에서 제공하는 기본 Context 입니다.
@@ -41,9 +45,9 @@ public class AccessContext {
 
     public static final String UPDATE_TIMESTAMP = "updateTimestamp";
 
-    private static final String CURRENT_COMPANY_CODE_KEY = "kr.debop4j.access.current.companyCode.key";
-    private static final String CURRENT_DEPARTMENT_CODE_KEY = "kr.debop4j.access.current.departmentCode.key";
-    private static final String CURRENT_USERNAME_KEY = "kr.debop4j.access.current.username.key";
+    private static final String CURRENT_COMPANY_CODE_KEY = "kr.debop4j.access.current.companyCode";
+    private static final String CURRENT_DEPARTMENT_CODE_KEY = "kr.debop4j.access.current.departmentCode";
+    private static final String CURRENT_USERNAME_KEY = "kr.debop4j.access.current.username";
 
 
     /** 현 Thread Context 에 제공된 정보 */
@@ -64,7 +68,7 @@ public class AccessContext {
          * @param companyCode the company code
          */
         public static void setCompanyCode(String companyCode) {
-            Guard.shouldNotBeEmpty(companyCode, "companyCode");
+            shouldNotBeEmpty(companyCode, "companyCode");
             Local.put(CURRENT_COMPANY_CODE_KEY, companyCode);
         }
 
@@ -74,10 +78,16 @@ public class AccessContext {
          * @return the company
          */
         public static Company getCompany() {
-            return (Company) UnitOfWorks.getCurrentSession()
-                    .createCriteria(Company.class)
-                    .add(Restrictions.eq("code", getCompanyCode()))
-                    .uniqueResult();
+            HibernateQuery query = new HibernateQuery(UnitOfWorks.getCurrentSession());
+            QCompany company = QCompany.company;
+            return query
+                    .from(company)
+                    .where(company.code.eq(getCompanyCode()))
+                    .singleResult(company);
+//            return (Company) UnitOfWorks.getCurrentSession()
+//                    .createCriteria(Company.class)
+//                    .add(Restrictions.eq("code", getCompanyCode()))
+//                    .uniqueResult();
         }
 
         /**
@@ -95,7 +105,7 @@ public class AccessContext {
          * @param departmentCode the department code
          */
         public static void setDepartmentCode(String departmentCode) {
-            Guard.shouldNotBeEmpty(departmentCode, "departmentCode");
+            shouldNotBeEmpty(departmentCode, "departmentCode");
             Local.put(CURRENT_DEPARTMENT_CODE_KEY, departmentCode);
         }
 
@@ -105,10 +115,17 @@ public class AccessContext {
          * @return the department
          */
         public static Department getDepartment() {
-            return (Department) UnitOfWorks.getCurrentSession()
-                    .createCriteria(Department.class)
-                    .add(Restrictions.eq("code", getDepartmentCode()))
-                    .uniqueResult();
+            HibernateQuery query = new HibernateQuery(UnitOfWorks.getCurrentSession());
+            QDepartment department = QDepartment.department;
+
+            return query.from(department)
+                    .where(department.code.eq(getDepartmentCode()))
+                    .singleResult(department);
+
+//            return (Department) UnitOfWorks.getCurrentSession()
+//                    .createCriteria(Department.class)
+//                    .add(Restrictions.eq("code", getDepartmentCode()))
+//                    .uniqueResult();
         }
 
         /**
@@ -126,7 +143,7 @@ public class AccessContext {
          * @param username the username
          */
         public static void setUsername(String username) {
-            Guard.shouldNotBeEmpty(username, "username");
+            shouldNotBeEmpty(username, "username");
             Local.put(CURRENT_USERNAME_KEY, username);
         }
 
@@ -136,10 +153,17 @@ public class AccessContext {
          * @return the user
          */
         public static User getUser() {
-            return (User) UnitOfWorks.getCurrentSession()
-                    .createCriteria(User.class)
-                    .add(Restrictions.eq("username", getUsername()))
-                    .uniqueResult();
+            HibernateQuery query = new HibernateQuery(UnitOfWorks.getCurrentSession());
+            QUser user = QUser.user;
+
+            return query.from(user)
+                    .where(user.username.eq(getUsername()))
+                    .singleResult(user);
+
+//            return (User) UnitOfWorks.getCurrentSession()
+//                    .createCriteria(User.class)
+//                    .add(Restrictions.eq("username", getUsername()))
+//                    .uniqueResult();
         }
     }
 }

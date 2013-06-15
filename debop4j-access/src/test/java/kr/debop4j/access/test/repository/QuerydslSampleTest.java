@@ -71,7 +71,7 @@ public class QuerydslSampleTest extends RepositoryTestBase {
 
         List<Tuple> loaded =
                 query.from(employee)
-                        .groupBy(employee.company, employee.empGrade)
+                        .groupBy(employee.company.code, employee.empGrade.code)
                         .list(employee.company.code.as("CompanyCode"),
                               employee.empGrade.code.as("GradeCode"),
                               employee.countDistinct().as("RowCount"));
@@ -112,7 +112,7 @@ public class QuerydslSampleTest extends RepositoryTestBase {
     }
 
     @Test
-    public void subqueriesTest() {
+    public void subQueriesTest() {
         QDepartment department = QDepartment.department;
         QDepartmentMember member = QDepartmentMember.departmentMember;
         QDepartment d = new QDepartment("d");
@@ -139,7 +139,7 @@ public class QuerydslSampleTest extends RepositoryTestBase {
     }
 
     @Test
-    @SuppressWarnings( "unchecked" )
+    @SuppressWarnings("unchecked")
     public void getHibernateQuery() {
         HibernateQuery query = new HibernateQuery(getCurrentSession());
         QEmployee employee = QEmployee.employee;

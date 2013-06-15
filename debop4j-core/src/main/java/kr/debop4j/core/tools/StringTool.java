@@ -165,10 +165,10 @@ public final class StringTool {
     }
 
     /**
-     * Is multi byte string.
+     * 문자열이 멀티바이트 (한글,일어,중국어 등 2바이트 이상의 언어) 인가 확인한다.
      *
      * @param str 문자열
-     * @return the boolean
+     * @return 멀티바이트 언어라면 true, 아니면 false
      */
     public static boolean isMultiByteString(final String str) {
         if (!isWhiteSpace(str))
@@ -913,7 +913,7 @@ public final class StringTool {
      * @param map Map
      * @return Map 내용을 문자열로 표현한 컬렉션
      */
-    @SuppressWarnings( "unchecked" )
+    @SuppressWarnings("unchecked")
     private static List<String> mapToEntryList(final Map map) {
         List<String> list = new ArrayList<String>();
         if (map == null) {

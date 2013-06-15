@@ -23,11 +23,11 @@ import kr.debop4j.core.Guard;
 import kr.debop4j.core.tools.HashTool;
 import lombok.Getter;
 import lombok.Setter;
-import org.hibernate.annotations.CacheConcurrencyStrategy;
-import org.hibernate.annotations.DynamicInsert;
-import org.hibernate.annotations.DynamicUpdate;
+import org.hibernate.annotations.*;
 
 import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 
 /**
  * 직원 정보
@@ -36,14 +36,14 @@ import javax.persistence.*;
  * @since 13. 3. 1.
  */
 @Entity
-@Table(name = "Employee")
-@org.hibernate.annotations.Cache(region = "Organization", usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-@org.hibernate.annotations.Table(appliesTo = "Employee",
-                                 indexes = @org.hibernate.annotations.Index(name = "ix_employee_code",
-                                                                            columnNames = {
-                                                                                    "CompanyId",
-                                                                                    "EmployeeCode",
-                                                                                    "EmployeeName" }))
+@Table( name = "Employee" )
+@org.hibernate.annotations.Cache( region = "Organization", usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE )
+//@org.hibernate.annotations.Table(appliesTo = "Employee",
+//                                 indexes = @org.hibernate.annotations.Index(name = "ix_employee_code",
+//                                                                            columnNames = {
+//                                                                                    "CompanyId",
+//                                                                                    "EmployeeCode",
+//                                                                                    "EmployeeName" }))
 @DynamicInsert
 @DynamicUpdate
 @Getter
@@ -69,17 +69,21 @@ public class Employee extends AccessEntityBase implements IActor {
 
     @Id
     @GeneratedValue
-    @Column(name = "EmployeeId")
+    @Column( name = "EmployeeId" )
     private Long id;
 
     @ManyToOne( fetch = FetchType.EAGER )
     @JoinColumn( name = "CompanyId", nullable = false )
+    @ForeignKey( name = "fk_employee_company" )
+    @NaturalId
     private Company company;
 
-    @Column(name = "EmployeeCode", nullable = false, length = 64)
+    @Column( name = "EmployeeCode", nullable = false, length = 64 )
+    @NaturalId
     private String code;
 
-    @Column(name = "EmployeeName", nullable = false, length = 128)
+    @Column( name = "EmployeeName", nullable = false, length = 128 )
+    @Index( name = "ix_employee_name" )
     private String name;
 
     @Column( name = "EmployeeAge", nullable = false )
@@ -91,21 +95,24 @@ public class Employee extends AccessEntityBase implements IActor {
 
     @ManyToOne( fetch = FetchType.LAZY )
     @JoinColumn( name = "MemberId" )
+    @ForeignKey( name = "fk_employee_member" )
     private DepartmentMember member;
 
     @ManyToOne( fetch = FetchType.LAZY )
     @JoinColumn( name = "EmpGradeId" )
+    @ForeignKey( name = "fk_employee_employeeGrade" )
     private EmployeeGrade empGrade;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "EmpPositionId")
+    @ManyToOne( fetch = FetchType.LAZY )
+    @JoinColumn( name = "EmpPositionId" )
+    @ForeignKey( name = "fk_employee_employeePosition" )
     private EmployeePosition empPosition;
 
-    @Column(name = "Description", length = 1000)
+    @Column( name = "Description", length = 1000 )
     private String description;
 
-    @Basic(fetch = FetchType.LAZY)
-    @Column(name = "ExAttr", length = 1000)
+    @Basic( fetch = FetchType.LAZY )
+    @Column( name = "ExAttr", length = 1000 )
     private String exAttr;
 
     @Override

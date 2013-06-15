@@ -35,7 +35,7 @@ public class QMenu extends EntityPathBase<Menu> {
 
     public static final QMenu menu = new QMenu("menu");
 
-    public final kr.debop4j.data.model.QAnnotatedTreeEntityBase _super;
+    public final kr.debop4j.data.model.QAnnotatedEntityBase _super = new kr.debop4j.data.model.QAnnotatedEntityBase(this);
 
     public final BooleanPath active = createBoolean("active");
 
@@ -51,13 +51,12 @@ public class QMenu extends EntityPathBase<Menu> {
 
     public final NumberPath<Long> id = createNumber("id", Long.class);
 
-    // inherited
     public final kr.debop4j.data.model.QTreeNodePosition nodePosition;
 
     public final QMenu parent;
 
     //inherited
-    public final BooleanPath persisted;
+    public final BooleanPath persisted = _super.persisted;
 
     public final QProduct product;
 
@@ -86,11 +85,9 @@ public class QMenu extends EntityPathBase<Menu> {
 
     public QMenu(Class<? extends Menu> type, PathMetadata<?> metadata, PathInits inits) {
         super(type, metadata, inits);
-        this._super = new kr.debop4j.data.model.QAnnotatedTreeEntityBase(type, metadata, inits);
         this.company = inits.isInitialized("company") ? new kr.debop4j.access.model.organization.QCompany(forProperty("company")) : null;
-        this.nodePosition = _super.nodePosition;
+        this.nodePosition = inits.isInitialized("nodePosition") ? new kr.debop4j.data.model.QTreeNodePosition(forProperty("nodePosition")) : null;
         this.parent = inits.isInitialized("parent") ? new QMenu(forProperty("parent"), inits.get("parent")) : null;
-        this.persisted = _super.persisted;
         this.product = inits.isInitialized("product") ? new QProduct(forProperty("product")) : null;
     }
 

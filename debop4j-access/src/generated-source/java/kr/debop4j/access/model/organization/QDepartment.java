@@ -35,7 +35,7 @@ public class QDepartment extends EntityPathBase<Department> {
 
     public static final QDepartment department = new QDepartment("department");
 
-    public final kr.debop4j.data.model.QAnnotatedTreeEntityBase _super;
+    public final kr.debop4j.data.model.QAnnotatedEntityBase _super = new kr.debop4j.data.model.QAnnotatedEntityBase(this);
 
     public final BooleanPath active = createBoolean("active");
 
@@ -57,13 +57,12 @@ public class QDepartment extends EntityPathBase<Department> {
 
     public final StringPath name = createString("name");
 
-    // inherited
     public final kr.debop4j.data.model.QTreeNodePosition nodePosition;
 
     public final QDepartment parent;
 
     //inherited
-    public final BooleanPath persisted;
+    public final BooleanPath persisted = _super.persisted;
 
     public final DateTimePath<org.joda.time.DateTime> updateTimestamp = createDateTime("updateTimestamp", org.joda.time.DateTime.class);
 
@@ -86,11 +85,9 @@ public class QDepartment extends EntityPathBase<Department> {
 
     public QDepartment(Class<? extends Department> type, PathMetadata<?> metadata, PathInits inits) {
         super(type, metadata, inits);
-        this._super = new kr.debop4j.data.model.QAnnotatedTreeEntityBase(type, metadata, inits);
         this.company = inits.isInitialized("company") ? new QCompany(forProperty("company")) : null;
-        this.nodePosition = _super.nodePosition;
+        this.nodePosition = inits.isInitialized("nodePosition") ? new kr.debop4j.data.model.QTreeNodePosition(forProperty("nodePosition")) : null;
         this.parent = inits.isInitialized("parent") ? new QDepartment(forProperty("parent"), inits.get("parent")) : null;
-        this.persisted = _super.persisted;
     }
 
 }

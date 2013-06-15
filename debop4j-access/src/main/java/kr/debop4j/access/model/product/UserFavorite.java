@@ -35,7 +35,7 @@ import java.util.Date;
  * @since 13. 3. 11.
  */
 @Entity
-@org.hibernate.annotations.Cache(region = "Product", usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+@org.hibernate.annotations.Cache( region = "Product", usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE )
 @DynamicInsert
 @DynamicUpdate
 @Getter
@@ -55,35 +55,36 @@ public class UserFavorite extends AccessEntityBase {
 
     @Id
     @GeneratedValue
-    @Column(name = "UserFavoriteId")
+    @Column( name = "UserFavoriteId" )
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "UserId", nullable = false)
-    @Index(name = "ix_userfavorite")
+    @JoinColumn( name = "UserId", nullable = false )
+    @ForeignKey( name = "fk_userfavorite_user" )
+    @Index( name = "ix_userfavorite" )
     @NaturalId
     private User user;
 
-    @Column(name = "Content", nullable = false, length = 2000)
+    @Column( name = "Content", nullable = false, length = 2000 )
     @NaturalId
     private String content;
 
-    @Temporal(TemporalType.TIMESTAMP)
+    @Temporal( TemporalType.TIMESTAMP )
     private Date registDate;
 
     @Basic
-    @Column(name = "IsActive")
+    @Column( name = "IsActive" )
     private Boolean active;
 
     /** 우선순위 */
     @Basic
     private Integer preference;
 
-    @Column(length = 2000)
+    @Column( length = 2000 )
     private String description;
 
-    @Basic(fetch = FetchType.LAZY)
-    @Column(length = 2000)
+    @Basic( fetch = FetchType.LAZY )
+    @Column( length = 2000 )
     private String exAttr;
 
     @Override

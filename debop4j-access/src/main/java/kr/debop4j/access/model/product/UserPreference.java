@@ -22,12 +22,11 @@ import kr.debop4j.core.Guard;
 import kr.debop4j.core.tools.HashTool;
 import lombok.Getter;
 import lombok.Setter;
-import org.hibernate.annotations.CacheConcurrencyStrategy;
-import org.hibernate.annotations.DynamicInsert;
-import org.hibernate.annotations.DynamicUpdate;
-import org.hibernate.annotations.Index;
+import org.hibernate.annotations.*;
 
+import javax.persistence.Entity;
 import javax.persistence.*;
+import javax.persistence.Table;
 
 /**
  * 사용자 환경 설정 정보
@@ -36,13 +35,13 @@ import javax.persistence.*;
  * @since 13. 3. 10.
  */
 @Entity
-@Table(name = "UserPreference")
-@org.hibernate.annotations.Table(appliesTo = "UserPreference",
-                                 indexes = @Index(name = "ix_userpreference",
-                                                  columnNames = {
-                                                          "UserId",
-                                                          "PrefKey" }))
-@org.hibernate.annotations.Cache(region = "Product", usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+@Table( name = "UserPreference" )
+@org.hibernate.annotations.Table( appliesTo = "UserPreference",
+                                  indexes = @Index( name = "ix_userpreference",
+                                                    columnNames = {
+                                                            "UserId",
+                                                            "PrefKey" } ) )
+@org.hibernate.annotations.Cache( region = "Product", usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE )
 @DynamicInsert
 @DynamicUpdate
 @Getter
@@ -66,7 +65,8 @@ public class UserPreference extends PreferenceBase {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "UserId", nullable = false)
+    @JoinColumn( name = "UserId", nullable = false )
+    @ForeignKey( name = "fk_userpreference_user" )
     private User user;
 
     @Override

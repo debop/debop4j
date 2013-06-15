@@ -34,8 +34,9 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
         "kr.debop4j.access.repository",
         "kr.debop4j.access.service"
 } )
-@Import( { UsingHSqlConfiguration.class } )
-//@Import({ UsingMySqlConfiguration.class })
+// @Import( { UsingHSqlConfiguration.class } )
+// @Import({ UsingMySqlConfiguration.class })
+@Import( { UsingPostgreSqlConfiguration.class } )
 public class AppConfig {
 
     // @ComponentScan 으로 @Repository, @Service 는 정의할 필요 없다.

@@ -23,12 +23,10 @@ import kr.debop4j.core.Guard;
 import kr.debop4j.core.tools.HashTool;
 import lombok.Getter;
 import lombok.Setter;
-import org.hibernate.annotations.CacheConcurrencyStrategy;
-import org.hibernate.annotations.DynamicInsert;
-import org.hibernate.annotations.DynamicUpdate;
-import org.hibernate.annotations.NaturalId;
+import org.hibernate.annotations.*;
 
 import javax.persistence.*;
+import javax.persistence.Entity;
 
 /**
  * 프로그램에서 생산한 자원 정보. Actor가 접근 가능한 대상을 말합니다.
@@ -37,12 +35,12 @@ import javax.persistence.*;
  * @since 13. 3. 10.
  */
 @Entity
-@org.hibernate.annotations.Cache(region = "Product", usage = CacheConcurrencyStrategy.READ_WRITE)
-@org.hibernate.annotations.Table(appliesTo = "Resource",
-                                 indexes = @org.hibernate.annotations.Index(name = "ix_resource",
-                                                                            columnNames = {
-                                                                                    "ProductId",
-                                                                                    "ResourceCode" }))
+@org.hibernate.annotations.Cache( region = "Product", usage = CacheConcurrencyStrategy.READ_WRITE )
+//@org.hibernate.annotations.Table(appliesTo = "Resource",
+//                                 indexes = @org.hibernate.annotations.Index(name = "ix_resource",
+//                                                                            columnNames = {
+//                                                                                    "ProductId",
+//                                                                                    "ResourceCode" }))
 @DynamicInsert
 @DynamicUpdate
 @Getter
@@ -69,28 +67,29 @@ public class Resource extends AccessEntityBase implements ICodeBasedEntity {
 
     @Id
     @GeneratedValue
-    @Column(name = "ResourceId")
+    @Column( name = "ResourceId" )
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "ProductId", nullable = false)
+    @JoinColumn( name = "ProductId", nullable = false )
+    @ForeignKey( name = "fk_resource_product" )
     @NaturalId
     private Product product;
 
-    @Column(name = "ResourceCode", nullable = false, length = 128)
+    @Column( name = "ResourceCode", nullable = false, length = 128 )
     @NaturalId
     private String code;
 
-    @Column(name = "ResourceName", nullable = false, length = 128)
+    @Column( name = "ResourceName", nullable = false, length = 128 )
     private String name;
 
-    @Column(name = "IsActive")
+    @Column( name = "IsActive" )
     private Boolean isActive;
 
-    @Column(name = "ResourceDesc", length = 4000)
+    @Column( name = "ResourceDesc", length = 4000 )
     private String description;
 
-    @Column(name = "ResourceExAttr", length = 4000)
+    @Column( name = "ResourceExAttr", length = 4000 )
     private String exAttr;
 
     @Override
