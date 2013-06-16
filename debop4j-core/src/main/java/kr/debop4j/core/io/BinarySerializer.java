@@ -19,10 +19,7 @@ package kr.debop4j.core.io;
 import kr.debop4j.core.ISerializer;
 import lombok.extern.slf4j.Slf4j;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
+import java.io.*;
 
 /**
  * 객체를 메모리 덤프를 통해 직렬화를 수행합니다.
@@ -33,7 +30,6 @@ import java.io.ObjectOutputStream;
 @Slf4j
 public class BinarySerializer implements ISerializer {
 
-    /** {@inheritDoc} */
     @Override
     public byte[] serialize(Object graph) {
 
@@ -52,7 +48,6 @@ public class BinarySerializer implements ISerializer {
         }
     }
 
-    /** {@inheritDoc} */
     @Override
     @SuppressWarnings("unchecked")
     public <T> T deserialize(byte[] bytes, Class<T> clazz) {
@@ -65,6 +60,40 @@ public class BinarySerializer implements ISerializer {
             return (T) ois.readObject();
         } catch (Exception e) {
             log.error("객체정보를 역직렬화하는데 실패했습니다.", e);
+            throw new RuntimeException(e);
+        }
+    }
+
+    /**
+     * 입력 스트림을 읽어 객체로 빌드합니다.
+     *
+     * @param inputStream 입력 스트림
+     * @param clazz       대상 객체 수형
+     * @param <T>         객체 수형
+     * @return 객체 인스턴스
+     */
+    @SuppressWarnings( "unchecked" )
+    public <T> T readObject(InputStream inputStream, Class<T> clazz) {
+        try (ObjectInputStream ois = new ObjectInputStream(inputStream)) {
+            return (T) ois.readObject();
+        } catch (Exception e) {
+            log.error("InputStream으로부터 정보를 읽는데 실패했습니다.", e);
+            throw new RuntimeException(e);
+        }
+    }
+
+    /**
+     * 객체를 output stream 에 씁니다.
+     *
+     * @param graph        대상 객체
+     * @param outputStream output stream
+     */
+    public void writeObject(Object graph, OutputStream outputStream) {
+        try (ObjectOutputStream oos = new ObjectOutputStream(outputStream)) {
+            oos.writeObject(graph);
+            oos.flush();
+        } catch (Exception e) {
+            log.error("객체정보를 직렬화하는데 실패했습니다.", e);
             throw new RuntimeException(e);
         }
     }
