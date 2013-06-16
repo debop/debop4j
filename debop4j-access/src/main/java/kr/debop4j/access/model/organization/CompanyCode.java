@@ -40,8 +40,11 @@ import java.util.Set;
  * @since 13. 3. 8 오후 1:07
  */
 @Entity
-@Table( name = "CompanyCode" )
-@Cache( region = "Organization", usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE )
+@Table(name = "CompanyCode")
+@Cache(region = "Organization", usage = CacheConcurrencyStrategy.READ_WRITE)
+@org.hibernate.annotations.Table( appliesTo = "CompanyCode",
+                                  indexes = @Index( name = "ix_companycode_code",
+                                                    columnNames = { "CompanyId", "CodeCode", "CodeName" } ) )
 @DynamicInsert
 @DynamicUpdate
 @Getter
@@ -65,34 +68,31 @@ public class CompanyCode extends AccessEntityBase {
 
     @Id
     @GeneratedValue
-    @Column( name = "CodeId" )
-    @Setter( AccessLevel.PROTECTED )
+    @Column(name = "CodeId")
+    @Setter(AccessLevel.PROTECTED)
     private Long id;
 
-    @ManyToOne( fetch = FetchType.LAZY )
-    @JoinColumn( name = "CompanyId", nullable = false )
-    @Index( name = "ix_code" )
-    @ForeignKey( name = "fk_companyCode_company" )
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "CompanyId", nullable = false)
+    @ForeignKey(name = "fk_companyCode_company")
     private Company company;
 
-    @Column( name = "CodeValue", nullable = false, length = 128 )
-    @Index( name = "ix_code" )
+    @Column(name = "CodeCode", nullable = false, length = 128)
     private String code;
 
-    @Column( name = "CodeName", nullable = false, length = 255 )
-    @Index( name = "ix_code" )
+    @Column(name = "CodeName", nullable = false, length = 255)
     private String name;
 
-    @Column( length = 2000 )
+    @Column(length = 2000)
     private String description;
 
     //@Basic(fetch = FetchType.LAZY)
-    @Column( length = 2000 )
+    @Column(length = 2000)
     private String exAttr;
 
-    @OneToMany( mappedBy = "code", fetch = FetchType.EAGER, cascade = { CascadeType.ALL } )
-    @LazyCollection( value = LazyCollectionOption.EXTRA )
-    @Fetch( FetchMode.SELECT )
+    @OneToMany(mappedBy = "code", fetch = FetchType.EAGER, cascade = { CascadeType.ALL })
+    @LazyCollection(value = LazyCollectionOption.EXTRA)
+    @Fetch(FetchMode.SELECT)
     private Set<CompanyCodeItem> items = Sets.newHashSet();
 
     @Override
