@@ -1,10 +1,12 @@
-target
-bin
 *.class
 *.log
+*.iml
 .idea
 .lucene
-.iml
+.DS_Store
+.classpath
+target
+bin
 
 # Package Files #
 # *.jar
