@@ -115,12 +115,6 @@
             <artifactId>fastjson</artifactId>
         </dependency>
 
-        <!-- Lambda J -->
-        <dependency>
-            <groupId>com.googlecode.lambdaj</groupId>
-            <artifactId>lambdaj</artifactId>
-        </dependency>
-
         <!-- joda-time -->
         <dependency>
             <groupId>joda-time</groupId>

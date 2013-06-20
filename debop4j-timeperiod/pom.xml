@@ -52,11 +52,5 @@
             <artifactId>joda-convert</artifactId>
         </dependency>
 
-        <!-- LambdaJ -->
-        <dependency>
-            <groupId>com.googlecode.lambdaj</groupId>
-            <artifactId>lambdaj</artifactId>
-        </dependency>
-
     </dependencies>
 </project>
