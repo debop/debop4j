@@ -195,12 +195,19 @@ public class HibernateRepository<E extends IStatefulEntity> implements IHibernat
 
     @Override
     public final <E> List<E> findAll(int firstResult, int maxResults, Order... orders) {
-        Criteria criteria = getSession().createCriteria(entityClazz);
-        HibernateTool.setPaging(criteria, firstResult, maxResults);
-        if (!ArrayTool.isEmpty(orders))
-            HibernateTool.addOrders(criteria, orders);
+        if (ArrayTool.isEmpty(orders)) {
+            Query query = getSession().createQuery("from " + entityClazz.getName());
+            HibernateTool.setPaging(query, firstResult, maxResults);
 
-        return criteria.setCacheable(cacheable).list();
+            return (List<E>) query.setCacheable(cacheable).list();
+        } else {
+            Criteria criteria = getSession().createCriteria(entityClazz);
+            HibernateTool.setPaging(criteria, firstResult, maxResults);
+            if (!ArrayTool.isEmpty(orders))
+                HibernateTool.addOrders(criteria, orders);
+
+            return criteria.setCacheable(cacheable).list();
+        }
     }
 
     @Override

@@ -37,6 +37,8 @@ import java.io.Serializable;
 import java.util.Collection;
 import java.util.List;
 
+import static kr.debop4j.core.Guard.shouldNotBeNull;
+
 /**
  * Hibernate Dao 기본 클래스
  *
@@ -179,12 +181,19 @@ public class HibernateDao implements IHibernateDao {
 
     @Override
     public final <T> List<T> findAll(Class<T> clazz, int firstResult, int maxResults, Order... orders) {
-        Criteria criteria = getSession().createCriteria(clazz);
-        HibernateTool.setPaging(criteria, firstResult, maxResults);
-        if (!ArrayTool.isEmpty(orders))
-            HibernateTool.addOrders(criteria, orders);
+        if (ArrayTool.isEmpty(orders)) {
+            Query query = getSession().createQuery("from " + clazz.getName());
+            HibernateTool.setPaging(query, firstResult, maxResults);
 
-        return criteria.setCacheable(cacheable).list();
+            return (List<T>) query.setCacheable(cacheable).list();
+        } else {
+            Criteria criteria = getSession().createCriteria(clazz);
+            HibernateTool.setPaging(criteria, firstResult, maxResults);
+            if (!ArrayTool.isEmpty(orders))
+                HibernateTool.addOrders(criteria, orders);
+
+            return criteria.setCacheable(cacheable).list();
+        }
     }
 
     @Override
@@ -200,6 +209,7 @@ public class HibernateDao implements IHibernateDao {
         HibernateTool.setPaging(criteria, firstResult, maxResults);
         if (!ArrayTool.isEmpty(orders))
             HibernateTool.addOrders(criteria, orders);
+
         return criteria.setCacheable(cacheable).list();
     }
 
@@ -220,7 +230,7 @@ public class HibernateDao implements IHibernateDao {
 
     @Override
     public <T> List<T> find(Class<T> clazz, Query query, int firstResult, int maxResults, HibernateParameter... parameters) {
-        assert query != null;
+        shouldNotBeNull(query, "query");
         HibernateTool.setPaging(query, firstResult, maxResults);
         HibernateTool.setParameters(query, parameters);
 
@@ -234,7 +244,6 @@ public class HibernateDao implements IHibernateDao {
 
     @Override
     public <T> List<T> find(Class<T> clazz, String hql, int firstResult, int maxResults, HibernateParameter... parameters) {
-        assert StringTool.isNotEmpty(hql);
         if (isTraceEnabled)
             log.trace("HQL문을 실행합니다. clazz=[{}], hql=[{}], firstResult=[{}], maxResults=[{}], parameters=[{}]",
                       clazz, hql, firstResult, maxResults, StringTool.listToString(parameters));
@@ -250,10 +259,10 @@ public class HibernateDao implements IHibernateDao {
 
     @Override
     public <T> List<T> findByNamedQuery(Class<T> clazz, String queryName, int firstResult, int maxResults, HibernateParameter... parameters) {
-        assert StringTool.isNotEmpty(queryName);
         if (isTraceEnabled)
             log.trace("NamedQuery를 실행합니다. clazz=[{}], sqlString=[{}], firstResult=[{}], maxResults=[{}], parameters=[{}]",
                       clazz, queryName, firstResult, maxResults, StringTool.listToString(parameters));
+
         Query query = getSession().getNamedQuery(queryName);
         return find(clazz, query, firstResult, maxResults, parameters);
     }
@@ -265,10 +274,10 @@ public class HibernateDao implements IHibernateDao {
 
     @Override
     public <T> List<T> findBySQLString(Class<T> clazz, String sqlString, int firstResult, int maxResults, HibernateParameter... parameters) {
-        assert StringTool.isNotEmpty(sqlString);
         if (isTraceEnabled)
             log.trace("일반 SQL 문 실행합니다. clazz=[{}], sqlString=[{}], firstResult=[{}], maxResults=[{}], parameters=[{}]",
                       clazz, sqlString, firstResult, maxResults, StringTool.listToString(parameters));
+
         Query query = getSession().createSQLQuery(sqlString);
         return find(clazz, query, firstResult, maxResults, parameters);
     }
@@ -300,7 +309,6 @@ public class HibernateDao implements IHibernateDao {
 
     @Override
     public <T> PaginatedList<T> getPage(Class<T> clazz, Query query, int pageNo, int pageSize, HibernateParameter... parameters) {
-
         Query countQuery = getSession().createQuery(query.getQueryString());
         long itemCount = count(clazz, countQuery, parameters);
 
@@ -359,7 +367,8 @@ public class HibernateDao implements IHibernateDao {
     @Override
     public <T> T findUniqueByHql(Class<T> clazz, String hql, HibernateParameter... parameters) {
         if (isTraceEnabled)
-            log.trace("hql을 수행합니다. clazz=[{}], hql=[{}], parameters=[{}]", clazz, hql, StringTool.listToString(parameters));
+            log.trace("hql을 수행합니다. clazz=[{}], hql=[{}], parameters=[{}]",
+                      clazz, hql, StringTool.listToString(parameters));
 
         Query query = getSession().createQuery(hql);
         return findUnique(clazz, query, parameters);
@@ -368,7 +377,8 @@ public class HibernateDao implements IHibernateDao {
     @Override
     public <T> T findUniqueByNamedQuery(Class<T> clazz, String queryName, HibernateParameter... parameters) {
         if (isTraceEnabled)
-            log.trace("NamedQuery를 수행합니다. clazz=[{}], queryName=[{}], parameters=[{}]", clazz, queryName, StringTool.listToString(parameters));
+            log.trace("NamedQuery를 수행합니다. clazz=[{}], queryName=[{}], parameters=[{}]",
+                      clazz, queryName, StringTool.listToString(parameters));
 
         Query query = getSession().getNamedQuery(queryName);
         return findUnique(clazz, query, parameters);
@@ -377,7 +387,8 @@ public class HibernateDao implements IHibernateDao {
     @Override
     public <T> T findUniqueBySQLString(Class<T> clazz, String sqlString, HibernateParameter... parameters) {
         if (isTraceEnabled)
-            log.trace("일반 SQL문을 수행합니다. clazz=[{}], sqlString=[{}], parameters=[{}]", clazz, sqlString, StringTool.listToString(parameters));
+            log.trace("일반 SQL문을 수행합니다. clazz=[{}], sqlString=[{}], parameters=[{}]",
+                      clazz, sqlString, StringTool.listToString(parameters));
 
         SQLQuery query = getSession().createSQLQuery(sqlString);
         return findUnique(clazz, query, parameters);
@@ -408,7 +419,8 @@ public class HibernateDao implements IHibernateDao {
     @Override
     public <T> T findFirstByHql(Class<T> clazz, String hql, HibernateParameter... parameters) {
         if (isTraceEnabled)
-            log.trace("hql을 수행합니다. clazz=[{}], hql=[{}], parameters=[{}]", clazz, hql, StringTool.listToString(parameters));
+            log.trace("hql을 수행합니다. clazz=[{}], hql=[{}], parameters=[{}]",
+                      clazz, hql, StringTool.listToString(parameters));
 
         Query query = getSession().createQuery(hql);
         return findFirst(clazz, query, parameters);
@@ -417,7 +429,8 @@ public class HibernateDao implements IHibernateDao {
     @Override
     public <T> T findFirstByNamedQuery(Class<T> clazz, String queryName, HibernateParameter... parameters) {
         if (isTraceEnabled)
-            log.trace("NamedQuery를 수행합니다. clazz=[{}], queryName=[{}], parameters=[{}]", clazz, queryName, StringTool.listToString(parameters));
+            log.trace("NamedQuery를 수행합니다. clazz=[{}], queryName=[{}], parameters=[{}]",
+                      clazz, queryName, StringTool.listToString(parameters));
 
         Query query = getSession().getNamedQuery(queryName);
         return findUnique(clazz, query, parameters);
@@ -426,7 +439,8 @@ public class HibernateDao implements IHibernateDao {
     @Override
     public <T> T findFirstBySQLString(Class<T> clazz, String sqlString, HibernateParameter... parameters) {
         if (isTraceEnabled)
-            log.trace("일반 SQL문을 수행합니다. clazz=[{}], sqlString=[{}], parameters=[{}]", clazz, sqlString, StringTool.listToString(parameters));
+            log.trace("일반 SQL문을 수행합니다. clazz=[{}], sqlString=[{}], parameters=[{}]",
+                      clazz, sqlString, StringTool.listToString(parameters));
 
         SQLQuery query = getSession().createSQLQuery(sqlString);
         return findUnique(clazz, query, parameters);
