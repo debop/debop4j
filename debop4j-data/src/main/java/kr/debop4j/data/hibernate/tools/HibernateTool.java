@@ -38,7 +38,6 @@ import org.hibernate.event.spi.EventType;
 import org.hibernate.internal.CriteriaImpl;
 import org.hibernate.internal.SessionFactoryImpl;
 import org.hibernate.service.ServiceRegistryBuilder;
-import org.hibernate.type.ObjectType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,7 +45,6 @@ import org.springframework.stereotype.Component;
 
 import java.util.Map;
 
-import static kr.debop4j.core.Guard.firstNotNull;
 import static kr.debop4j.core.Guard.shouldNotBeNull;
 
 /**
@@ -334,15 +332,13 @@ public class HibernateTool {
      * @return the parameters
      */
     public static Query setParameters(Query query, HibernateParameter... params) {
-        Guard.shouldNotBeNull(query, "query");
+        shouldNotBeNull(query, "query");
 
         for (HibernateParameter param : params) {
-            if (log.isDebugEnabled())
-                log.debug("쿼리문의 인자값을 설정합니다. param=[{}]", param);
+            if (log.isTraceEnabled())
+                log.trace("쿼리문의 인자값을 설정합니다. param=[{}]", param);
 
-            query.setParameter(param.getName(),
-                               param.getValue(),
-                               firstNotNull(param.getType(), ObjectType.INSTANCE));
+            query.setParameter(param.getName(), param.getValue());
         }
         return query;
     }

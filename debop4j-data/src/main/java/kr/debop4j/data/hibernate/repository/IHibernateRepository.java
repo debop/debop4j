@@ -35,7 +35,7 @@ import java.util.List;
  * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 12. 11. 27.
  */
-public interface IHibernateRepository<E extends IStatefulEntity> extends Serializable {
+public interface IHibernateRepository<E extends IStatefulEntity> {
 
     Class<E> getEntityClass();
 

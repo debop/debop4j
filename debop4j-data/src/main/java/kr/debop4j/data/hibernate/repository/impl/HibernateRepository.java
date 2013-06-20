@@ -53,7 +53,6 @@ public class HibernateRepository<E extends IStatefulEntity> implements IHibernat
     private static final Logger log = LoggerFactory.getLogger(HibernateRepository.class);
     private static final boolean isTraceEnabled = log.isTraceEnabled();
     private static final boolean isDebugEnabled = log.isDebugEnabled();
-    private static final long serialVersionUID = -4172233298108681601L;
 
     @Getter
     private final boolean cacheable;
@@ -262,12 +261,11 @@ public class HibernateRepository<E extends IStatefulEntity> implements IHibernat
 
     @Override
     public final <E> List<E> findByNamedQuery(final String queryName, HibernateParameter... parameters) {
-        return find(queryName, -1, -1, parameters);
+        return findByNamedQuery(queryName, -1, -1, parameters);
     }
 
     @Override
     public <E> List<E> findByNamedQuery(final String queryName, int firstResult, int maxResults, HibernateParameter... parameters) {
-        assert StringTool.isNotEmpty(queryName);
         if (isTraceEnabled)
             log.trace("NamedQuery를 실행합니다. sqlString=[{}], firstResult=[{}], maxResults=[{}], parameters=[{}]",
                       queryName, firstResult, maxResults, StringTool.listToString(parameters));
@@ -372,7 +370,7 @@ public class HibernateRepository<E extends IStatefulEntity> implements IHibernat
     @Override
     public <E> E findUnique(Query query, HibernateParameter... parameters) {
         HibernateTool.setParameters(query, parameters);
-        return (E) query.setCacheable(cacheable).uniqueResult();
+        return (E) query.uniqueResult();
     }
 
     @Override
@@ -390,6 +388,11 @@ public class HibernateRepository<E extends IStatefulEntity> implements IHibernat
             log.trace("NamedQuery를 수행합니다. queryName=[{}], parameters=[{}]", queryName, StringTool.listToString(parameters));
 
         Query query = getSession().getNamedQuery(queryName);
+
+        if (isTraceEnabled)
+            log.trace("NamedQuery를 수행합니다. queryName=[{}], queryString=[{}], parameters=[{}]",
+                      queryName, query.getQueryString(), StringTool.listToString(parameters));
+
         return findUnique(query, parameters);
     }
 

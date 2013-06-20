@@ -20,6 +20,7 @@ import com.google.common.base.Objects;
 import kr.debop4j.data.NamedParameterBase;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.type.ObjectType;
 
 /**
  * Hibernate용 Parameter 정보를 표현합니다.
@@ -29,7 +30,8 @@ import lombok.Setter;
  */
 public class HibernateParameter extends NamedParameterBase {
 
-    @Getter @Setter
+    @Getter
+    @Setter
     private org.hibernate.type.Type type;
 
     /**
@@ -39,7 +41,7 @@ public class HibernateParameter extends NamedParameterBase {
      * @param value the parameter value
      */
     public HibernateParameter(String name, Object value) {
-        super(name, value);
+        this(name, value, ObjectType.INSTANCE);
     }
 
     /**
@@ -57,7 +59,7 @@ public class HibernateParameter extends NamedParameterBase {
     @Override
     protected Objects.ToStringHelper buildStringHelper() {
         return super.buildStringHelper()
-                .add("type", type);
+                    .add("type", type);
     }
 
     private static final long serialVersionUID = -6291985997768450558L;
