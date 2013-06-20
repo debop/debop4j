@@ -19,6 +19,7 @@ package kr.debop4j.data.hibernate.forTesting;
 import com.google.common.base.Objects;
 import kr.debop4j.core.Guard;
 import kr.debop4j.core.spring.Springs;
+import kr.debop4j.core.tools.HashTool;
 import kr.debop4j.data.hibernate.unitofwork.IUnitOfWork;
 import kr.debop4j.data.hibernate.unitofwork.UnitOfWorkNestingOptions;
 import kr.debop4j.data.hibernate.unitofwork.UnitOfWorks;
@@ -176,9 +177,21 @@ public abstract class UnitOfWorkTestContextBase implements AutoCloseable {
         // Nothing to do.
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        return (obj != null) &&
+                (obj instanceof UnitOfWorkTestContextBase) &&
+                (hashCode() == obj.hashCode());
+    }
+
+    @Override
+    public int hashCode() {
+        return HashTool.compute(CurrentHibernateSessionKey);
+    }
+
     public String toString() {
         return Objects.toStringHelper(this)
-                .toString();
+                      .toString();
     }
 
     @Override

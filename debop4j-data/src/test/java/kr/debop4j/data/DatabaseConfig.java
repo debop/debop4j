@@ -39,6 +39,8 @@ public class DatabaseConfig extends HSqlConfigBase {
 
         Properties props = super.hibernateProperties();
 
+        props.put(Environment.HBM2DDL_AUTO, "create-drop"); // create | spawn | spawn-drop | update | validate | none
+
         props.put(Environment.USE_SECOND_LEVEL_CACHE, true);
         props.put(Environment.USE_QUERY_CACHE, true);
         props.put(Environment.CACHE_REGION_FACTORY, SingletonEhCacheRegionFactory.class.getName());
@@ -47,7 +49,7 @@ public class DatabaseConfig extends HSqlConfigBase {
         return props;
     }
 
-    private static String[] mappedPackageNames = new String[] {
+    private static String[] mappedPackageNames = new String[]{
             "kr.debop4j.data.mapping.model.annotated",
             "kr.debop4j.data.mapping.model.annotated.collection",
             "kr.debop4j.data.mapping.model.annotated.join",
