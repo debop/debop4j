@@ -30,6 +30,8 @@ import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.*;
+import org.hibernate.annotations.NamedQueries;
+import org.hibernate.annotations.NamedQuery;
 
 import javax.persistence.*;
 import javax.persistence.CascadeType;
@@ -49,8 +51,12 @@ import java.util.Set;
 @Table(name = "Company")
 @Cache(region = "Organization", usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 @org.hibernate.annotations.Table(appliesTo = "Company",
-                                 indexes = @org.hibernate.annotations.Index(name = "ix_company_code",
-                                                                            columnNames = { "CompanyCode", "CompanyName" }))
+                                 indexes = @Index(name = "ix_company_code",
+                                                  columnNames = { "CompanyCode", "CompanyName" }))
+@NamedQueries({
+                      @NamedQuery(name = "Company.findByCode", query = "from Company c where c.code = :code"),
+                      @NamedQuery(name = "Company.findByName", query = "from Company c where c.name like :name")
+              })
 @DynamicInsert
 @DynamicUpdate
 @Getter
@@ -101,9 +107,9 @@ public class Company extends AccessLocaledEntityBase<Company.CompanyLocale> impl
     @Column(name = "ExAttr", length = 2000)
     private String exAttr;
 
-    @OneToMany( mappedBy = "company", cascade = { CascadeType.ALL } )
-    @LazyCollection( value = LazyCollectionOption.EXTRA )
-    @Fetch( FetchMode.SELECT )
+    @OneToMany(mappedBy = "company", cascade = { CascadeType.ALL })
+    @LazyCollection(value = LazyCollectionOption.EXTRA)
+    @Fetch(FetchMode.SELECT)
     private Set<Employee> employees = Sets.newHashSet();
 
 
@@ -129,11 +135,11 @@ public class Company extends AccessLocaledEntityBase<Company.CompanyLocale> impl
     @Override
     protected Objects.ToStringHelper buildStringHelper() {
         return super.buildStringHelper()
-                .add("id", id)
-                .add("code", code)
-                .add("name", name)
-                .add("active", active)
-                .add("description", description);
+                    .add("id", id)
+                    .add("code", code)
+                    .add("name", name)
+                    .add("active", active)
+                    .add("description", description);
     }
 
     @Getter
@@ -165,8 +171,8 @@ public class Company extends AccessLocaledEntityBase<Company.CompanyLocale> impl
         @Override
         protected Objects.ToStringHelper buildStringHelper() {
             return super.buildStringHelper()
-                    .add("name", name)
-                    .add("description", description);
+                        .add("name", name)
+                        .add("description", description);
         }
 
         private static final long serialVersionUID = 3403174284080835688L;

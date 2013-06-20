@@ -48,7 +48,7 @@ public class CompanyRepositoryTest extends RepositoryTestBase {
 
     @Getter
     @Autowired
-    private CompanyRepository repository; // = Springs.getBean(CompanyRepository.class);
+    private CompanyRepository repository;
 
     private Company company;
     private Company loaded;
@@ -62,7 +62,7 @@ public class CompanyRepositoryTest extends RepositoryTestBase {
     @Before
     public void before() {
 
-        company = new Company("KTH", "케이티하이텔");
+        company = new Company(DefaultCompanyCode, "케이티하이텔");
 
         getRepository().saveOrUpdate(company);
         UnitOfWorks.getCurrent().transactionalFlush();

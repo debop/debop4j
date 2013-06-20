@@ -18,6 +18,7 @@ package kr.debop4j.access.repository.organization;
 
 import kr.debop4j.access.model.organization.Company;
 import kr.debop4j.core.tools.StringTool;
+import kr.debop4j.data.hibernate.HibernateParameter;
 import kr.debop4j.data.hibernate.repository.impl.HibernateRepository;
 import kr.debop4j.data.hibernate.tools.CriteriaTool;
 import lombok.extern.slf4j.Slf4j;
@@ -58,16 +59,11 @@ public class CompanyRepository extends HibernateRepository<Company> {
     }
 
     public Company findByCode(String code) {
-        DetachedCriteria dc =
-                DetachedCriteria.forClass(Company.class)
-                                .add(Restrictions.eq("code", code));
-        return findUnique(dc);
+        return findUniqueByNamedQuery("Company.findByCode", new HibernateParameter("code", code));
     }
 
     public List<Company> findByName(String name) {
-        DetachedCriteria dc = DetachedCriteria.forClass(Company.class);
-        CriteriaTool.addILike(dc, "name", name);
-        return find(dc);
+        return findByNamedQuery("Company.findByName", new HibernateParameter("name", name + '%'));
     }
 
     public List<Company> findAllByActive(boolean active) {

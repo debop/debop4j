@@ -80,6 +80,8 @@ public class UsingMySqlConfiguration extends MySqlConfigBase {
     public Properties hibernateProperties() {
         Properties props = super.hibernateProperties();
 
+        props.put(Environment.HBM2DDL_AUTO, "create-drop"); // create | spawn | spawn-drop | update | validate | none
+
         props.put(Environment.USE_SECOND_LEVEL_CACHE, true);
         props.put(Environment.USE_QUERY_CACHE, true);
         props.put(Environment.CACHE_REGION_FACTORY, SingletonEhCacheRegionFactory.class.getName());
