@@ -245,7 +245,7 @@ public class HibernateDao implements IHibernateDao {
 
     @Override
     public final <T> List<T> findByNamedQuery(Class<T> clazz, String queryName, HibernateParameter... parameters) {
-        return find(clazz, queryName, -1, -1, parameters);
+        return findByNamedQuery(clazz, queryName, -1, -1, parameters);
     }
 
     @Override
