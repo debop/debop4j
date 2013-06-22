@@ -43,16 +43,16 @@
             <version>${project.parent.version}</version>
         </dependency>
 
+        <dependency>
+            <groupId>debop4j</groupId>
+            <artifactId>debop4j-lucene</artifactId>
+            <version>${project.parent.version}</version>
+        </dependency>
+
         <!-- Lucene -->
         <dependency>
             <groupId>org.apache.lucene</groupId>
             <artifactId>lucene-core</artifactId>
-            <version>3.6.2</version>
-        </dependency>
-        <dependency>
-            <groupId>lucene-korean</groupId>
-            <artifactId>lucene-korean</artifactId>
-            <version>0.1.0</version>
         </dependency>
 
         <!-- Avro -->
