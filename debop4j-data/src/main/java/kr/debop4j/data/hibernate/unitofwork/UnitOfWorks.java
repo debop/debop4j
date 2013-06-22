@@ -27,6 +27,8 @@ import org.springframework.stereotype.Component;
 
 import javax.annotation.concurrent.ThreadSafe;
 
+import static kr.debop4j.core.Guard.shouldNotBeNull;
+
 /**
  * Unit of Work 패턴을 구현한 Static 클래스입니다.
  *
@@ -235,17 +237,16 @@ public final class UnitOfWorks {
      * @param needFlushing Session에 반영된 내용을 flushing 할 것인지 여부
      */
     public static synchronized void stop(boolean needFlushing) {
-        if (log.isTraceEnabled())
-            log.trace("현재 실행중인 UnitOfWork를 중지합니다... needFlushing=[{}]", needFlushing);
+        log.trace("현재 실행중인 UnitOfWork를 중지합니다... needFlushing=[{}]", needFlushing);
 
         if (isStarted() && getCurrent() != null) {
             if (needFlushing) {
                 try {
-                    if (log.isTraceEnabled()) log.trace("현 UnitOfWork의 Session에 대해 flushing 작업을 시작합니다...");
+                    log.trace("현 UnitOfWork의 Session에 대해 flushing 작업을 시작합니다...");
 
                     getCurrent().flushSession();
 
-                    if (log.isTraceEnabled()) log.trace("현 UnitOfWork의 Session에 대해 flushing 작업을 완료합니다...");
+                    log.trace("현 UnitOfWork의 Session에 대해 flushing 작업을 완료합니다...");
                 } catch (Exception ignored) {
                     log.error("UnitOfWork의 Session을 Flushing하는 중 예외가 발생했습니다.", ignored);
                 }
@@ -254,11 +255,66 @@ public final class UnitOfWorks {
             getCurrent().close();
         }
         setCurrent(null);
-
-        if (log.isDebugEnabled())
-            log.debug("현재 실행중인 UnitOfWork를 종료했습니다.");
+        log.debug("현재 실행중인 UnitOfWork를 종료했습니다.");
     }
 
+    /**
+     * UnitOfWork 내에서 runnable을 수행합니다.
+     *
+     * @param runnable 수행할 코드 블럭
+     */
+    public static void run(Runnable runnable) {
+        shouldNotBeNull(runnable, "runnable");
+        try (IUnitOfWork unitOfWork = start()) {
+            runnable.run();
+        }
+    }
+
+    /**
+     * UnitOfWork 내에서 runnable을 수행합니다.
+     *
+     * @param sessionFactory the session factory
+     * @param runnable       수행할 코드 블럭
+     */
+    public static void run(SessionFactory sessionFactory, Runnable runnable) {
+        shouldNotBeNull(runnable, "runnable");
+        try (IUnitOfWork unitOfWork = start(sessionFactory)) {
+            runnable.run();
+        }
+    }
+
+    /**
+     * UnitOfWork 내에서 runnable을 수행합니다.
+     *
+     * @param options  Unit of work 생성 옵션
+     * @param runnable 수행할 코드 블럭
+     */
+    public static void run(UnitOfWorkNestingOptions options, Runnable runnable) {
+        shouldNotBeNull(runnable, "runnable");
+        try (IUnitOfWork unitOfWork = start(options)) {
+            runnable.run();
+        }
+    }
+
+    /**
+     * UnitOfWork 내에서 runnable을 수행합니다.
+     *
+     * @param sessionFactory the session factory
+     * @param options        Unit of work 생성 옵션
+     * @param runnable       수행할 코드 블럭
+     */
+    public static void run(SessionFactory sessionFactory, UnitOfWorkNestingOptions options, Runnable runnable) {
+        shouldNotBeNull(runnable, "runnable");
+        try (IUnitOfWork unitOfWork = start(sessionFactory, options)) {
+            runnable.run();
+        }
+    }
+
+    /**
+     * Unit of work 를 종료합니다.
+     *
+     * @param unitOfWork 닫을 unit of work
+     */
     public static synchronized void closeUnitOfWork(IUnitOfWork unitOfWork) {
         if (log.isDebugEnabled())
             log.debug("UnitOfWork를 종료합니다. 종료되는 IUnitOfWork 의 Previous 를 Current UnitOfWork로 교체합니다.");
@@ -266,6 +322,7 @@ public final class UnitOfWorks {
         setCurrent((unitOfWork != null) ? ((IUnitOfWorkImplementor) unitOfWork).getPrevious() : null);
     }
 
+    /** Close unit of work factory. */
     public static synchronized void closeUnitOfWorkFactory() {
         log.info("UnitOfWorkFactory를 종료합니다.");
         unitOfWorkFactory = null;
