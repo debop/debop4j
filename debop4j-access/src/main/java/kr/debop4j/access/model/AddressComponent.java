@@ -36,10 +36,10 @@ import javax.persistence.Embeddable;
 @Setter
 public class AddressComponent extends ValueObjectBase {
 
-    @Column( length = 255 )
+    @Column(length = 255)
     private String street1;
 
-    @Column( length = 255 )
+    @Column(length = 255)
     private String street2;
 
     @Column(length = 128)

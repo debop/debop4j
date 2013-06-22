@@ -46,8 +46,8 @@ public class QuerydslSampleTest extends RepositoryTestBase {
         HibernateQuery query = new HibernateQuery(getCurrentSession());
         QEmployee employee = QEmployee.employee;
         Employee loaded = query.from(employee)
-                               .where(employee.name.eq("Smith"))
-                               .uniqueResult(employee);
+                .where(employee.name.eq("Smith"))
+                .uniqueResult(employee);
 
         log.info("Employee=[{}]", loaded);
     }
@@ -58,9 +58,9 @@ public class QuerydslSampleTest extends RepositoryTestBase {
         QEmployee employee = QEmployee.employee;
         QCompany company = QCompany.company;
         Employee loaded = query.from(employee)
-                               .innerJoin(employee.company, company)
-                               .where(employee.name.eq("Smith").and(company.code.eq("KTH")))
-                               .uniqueResult(employee);
+                .innerJoin(employee.company, company)
+                .where(employee.name.eq("Smith").and(company.code.eq("KTH")))
+                .uniqueResult(employee);
 
         log.info("Employee=[{}]", loaded);
     }
@@ -73,10 +73,10 @@ public class QuerydslSampleTest extends RepositoryTestBase {
 
         List<Tuple> loaded =
                 query.from(employee)
-                     .groupBy(employee.company.code, employee.empGrade.code)
-                     .list(employee.company.code.as("CompanyCode"),
-                           employee.empGrade.code.as("GradeCode"),
-                           employee.countDistinct().as("RowCount"));
+                        .groupBy(employee.company.code, employee.empGrade.code)
+                        .list(employee.company.code.as("CompanyCode"),
+                              employee.empGrade.code.as("GradeCode"),
+                              employee.countDistinct().as("RowCount"));
 
         log.info("Group by = [{}]", loaded);
     }
@@ -124,8 +124,8 @@ public class QuerydslSampleTest extends RepositoryTestBase {
         QEmployee e = new QEmployee("e");
 
         query.from(employee)
-             .where(employee.age.gt(new HibernateSubQuery().from(e).unique(e.age.avg())))
-             .list(employee);
+                .where(employee.age.gt(new HibernateSubQuery().from(e).unique(e.age.avg())))
+                .list(employee);
 
         // 직원이 가장 많은 부서 (이것은 차라리 subquery 보다 이 방식이 낫다)
         List<Long> results = query.from(member).groupBy(member.department).list(member.count());
@@ -134,8 +134,8 @@ public class QuerydslSampleTest extends RepositoryTestBase {
             Long max = (Long) results.get(0);
             List<Department> bigDepartment =
                     query.from(department)
-                         .where(department.members.size().eq(max.intValue()))
-                         .list(department);
+                            .where(department.members.size().eq(max.intValue()))
+                            .list(department);
         }
     }
 
@@ -146,8 +146,8 @@ public class QuerydslSampleTest extends RepositoryTestBase {
         QEmployee employee = QEmployee.employee;
         org.hibernate.Query hibernateQuery =
                 query.from(employee)
-                     .where(employee.name.like("Smith%"))
-                     .createQuery(employee);
+                        .where(employee.name.like("Smith%"))
+                        .createQuery(employee);
 
         List<Employee> emps = hibernateQuery.list();
 
@@ -163,8 +163,8 @@ public class QuerydslSampleTest extends RepositoryTestBase {
 
         Map<Long, List<Employee>> results =
                 query.from(company)
-                     .innerJoin(company.employees, employee)
-                     .transform(groupBy(company.id).as(list(employee)));
+                        .innerJoin(company.employees, employee)
+                        .transform(groupBy(company.id).as(list(employee)));
 
     }
 }

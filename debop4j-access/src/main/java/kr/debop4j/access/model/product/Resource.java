@@ -35,7 +35,7 @@ import javax.persistence.Entity;
  * @since 13. 3. 10.
  */
 @Entity
-@org.hibernate.annotations.Cache( region = "Product", usage = CacheConcurrencyStrategy.READ_WRITE )
+@org.hibernate.annotations.Cache(region = "Product", usage = CacheConcurrencyStrategy.READ_WRITE)
 //@org.hibernate.annotations.Table(appliesTo = "Resource",
 //                                 indexes = @org.hibernate.annotations.Index(name = "ix_resource",
 //                                                                            columnNames = {
@@ -67,29 +67,29 @@ public class Resource extends AccessEntityBase implements ICodeBasedEntity {
 
     @Id
     @GeneratedValue
-    @Column( name = "ResourceId" )
+    @Column(name = "ResourceId")
     private Long id;
 
     @ManyToOne
-    @JoinColumn( name = "ProductId", nullable = false )
-    @ForeignKey( name = "fk_resource_product" )
+    @JoinColumn(name = "ProductId", nullable = false)
+    @ForeignKey(name = "fk_resource_product")
     @NaturalId
     private Product product;
 
-    @Column( name = "ResourceCode", nullable = false, length = 128 )
+    @Column(name = "ResourceCode", nullable = false, length = 128)
     @NaturalId
     private String code;
 
-    @Column( name = "ResourceName", nullable = false, length = 128 )
+    @Column(name = "ResourceName", nullable = false, length = 128)
     private String name;
 
-    @Column( name = "IsActive" )
+    @Column(name = "IsActive")
     private Boolean isActive;
 
-    @Column( name = "ResourceDesc", length = 4000 )
+    @Column(name = "ResourceDesc", length = 4000)
     private String description;
 
-    @Column( name = "ResourceExAttr", length = 4000 )
+    @Column(name = "ResourceExAttr", length = 4000)
     private String exAttr;
 
     @Override

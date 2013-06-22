@@ -37,7 +37,7 @@ import javax.persistence.*;
 // @DynamicInsert
 // @DynamicUpdate
 @MappedSuperclass
-@org.hibernate.annotations.Cache( region = "Organization", usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE )
+@org.hibernate.annotations.Cache(region = "Organization", usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 @Getter
 @Setter
 public abstract class EmployeeCodeBase extends AccessEntityBase implements ICodeBasedEntity {
@@ -61,23 +61,23 @@ public abstract class EmployeeCodeBase extends AccessEntityBase implements ICode
     }
 
 
-    @ManyToOne( fetch = FetchType.LAZY )
-    @JoinColumn( name = "CompanyId" )
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "CompanyId")
     private Company company;
 
-    @Column( name = "CodeValue", nullable = false, length = 128 )
+    @Column(name = "CodeValue", nullable = false, length = 128)
     private String code;
 
-    @Column( name = "CodeName", nullable = false, length = 256 )
+    @Column(name = "CodeName", nullable = false, length = 256)
     private String name;
 
-    @Column( name = "ViewOrder" )
+    @Column(name = "ViewOrder")
     private Integer viewOrder;
 
-    @Column( name = "Description", length = 4000 )
+    @Column(name = "Description", length = 4000)
     private String description;
 
-    @Column( name = "ExAttr", length = 2000 )
+    @Column(name = "ExAttr", length = 2000)
     private String exAttr;
 
     @Override

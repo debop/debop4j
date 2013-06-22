@@ -50,7 +50,7 @@ public class UsingMySqlConfiguration extends MySqlConfigBase {
 
     @Override
     protected String[] getMappedPackageNames() {
-        return new String[]{
+        return new String[] {
                 CompanyCode.class.getPackage().getName(),
                 Company.class.getPackage().getName(),
                 Product.class.getPackage().getName(),

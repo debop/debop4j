@@ -34,11 +34,11 @@ import javax.persistence.*;
  * @since 13. 3. 8 오후 5:03
  */
 @Entity
-@Table( name = "EmpGrade" )
-@org.hibernate.annotations.Cache( region = "Organization", usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE )
-@org.hibernate.annotations.Table( appliesTo = "EmpGrade",
-                                  indexes = { @Index( name = "ix_emp_grade",
-                                                      columnNames = { "CompanyId", "CodeValue", "CodeName" } ) } )
+@Table(name = "EmpGrade")
+@org.hibernate.annotations.Cache(region = "Organization", usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+@org.hibernate.annotations.Table(appliesTo = "EmpGrade",
+                                 indexes = { @Index(name = "ix_emp_grade",
+                                                    columnNames = { "CompanyId", "CodeValue", "CodeName" }) })
 @DynamicInsert
 @DynamicUpdate
 @Getter
@@ -59,10 +59,10 @@ public class EmployeeGrade extends EmployeeCodeBase {
 
     @Id
     @GeneratedValue  // PostgreSQL, Oracle 처럼 Database 전역 Sequence 가 있는 경우에만 Table per class 상속이 가능하다.
-    @Column( name = "EmpGradeId" )
+    @Column(name = "EmpGradeId")
     private Long id;
 
-    @Column( name = "ParentCode", length = 128 )
+    @Column(name = "ParentCode", length = 128)
     public String parentCode;
 
     @Override

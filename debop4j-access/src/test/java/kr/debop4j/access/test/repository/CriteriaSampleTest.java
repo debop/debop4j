@@ -66,8 +66,8 @@ public class CriteriaSampleTest extends RepositoryTestBase {
 
         DetachedCriteria dc = DetachedCriteria.forClass(Employee.class);
         dc.add(Restrictions.eq("name", "Smith"))
-          .createAlias("company", "c", JoinType.INNER_JOIN)
-          .add(Restrictions.eq("c.code", "KTH"));
+                .createAlias("company", "c", JoinType.INNER_JOIN)
+                .add(Restrictions.eq("c.code", "KTH"));
 
         Employee employee = hibernateDao.findFirst(Employee.class, dc);
         log.info("Employee=[{}]", employee);
@@ -79,11 +79,11 @@ public class CriteriaSampleTest extends RepositoryTestBase {
         DetachedCriteria dc = DetachedCriteria.forClass(Employee.class);
 
         dc.createAlias("company", "c")
-          .createAlias("empGrade", "eg")
-          .setProjection(Projections.projectionList()
-                                    .add(Projections.groupProperty("c.code"))
-                                    .add(Projections.groupProperty("eg.code"))
-                                    .add(Projections.rowCount()));
+                .createAlias("empGrade", "eg")
+                .setProjection(Projections.projectionList()
+                                       .add(Projections.groupProperty("c.code"))
+                                       .add(Projections.groupProperty("eg.code"))
+                                       .add(Projections.rowCount()));
 
         List loaded = dc.getExecutableCriteria(UnitOfWorks.getCurrentSession()).list();
         log.info("Group by = [{}]", loaded);
@@ -94,7 +94,7 @@ public class CriteriaSampleTest extends RepositoryTestBase {
 
         DetachedCriteria dc = DetachedCriteria.forClass(Employee.class);
         dc.createAlias("empGrade", "eg")
-          .add(Restrictions.eq("eg.code", "GRD001"));
+                .add(Restrictions.eq("eg.code", "GRD001"));
 
         hibernateDao.deleteAll(Employee.class, dc);
     }
@@ -115,9 +115,9 @@ public class CriteriaSampleTest extends RepositoryTestBase {
 
         DetachedCriteria memberSizeDc = DetachedCriteria.forClass(DepartmentMember.class);
         memberSizeDc.setProjection(Projections.projectionList()
-                                              .add(Projections.groupProperty("department"))
-                                              .add(Projections.rowCount(), "count"))
-                    .addOrder(Order.desc("count"));
+                                           .add(Projections.groupProperty("department"))
+                                           .add(Projections.rowCount(), "count"))
+                .addOrder(Order.desc("count"));
 
         Object[] members = (Object[]) memberSizeDc.getExecutableCriteria(UnitOfWorks.getCurrentSession()).setMaxResults(1).uniqueResult();
 
@@ -133,8 +133,8 @@ public class CriteriaSampleTest extends RepositoryTestBase {
     public void subqueriesTest2() {
         DetachedCriteria memberSizeDc = DetachedCriteria.forClass(DepartmentMember.class);
         memberSizeDc.setProjection(Projections.projectionList()
-                                              .add(Projections.groupProperty("department"))
-                                              .add(Projections.rowCount(), "count"));
+                                           .add(Projections.groupProperty("department"))
+                                           .add(Projections.rowCount(), "count"));
 
         DetachedCriteria dc = DetachedCriteria.forClass(Department.class);
 

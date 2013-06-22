@@ -41,8 +41,8 @@ import java.util.Set;
  * @since 13. 3. 5
  */
 @Entity
-@Table( name = "`Group`" )
-@Cache( region = "Organization", usage = CacheConcurrencyStrategy.READ_WRITE )
+@Table(name = "`Group`")
+@Cache(region = "Organization", usage = CacheConcurrencyStrategy.READ_WRITE)
 //@org.hibernate.annotations.Table(appliesTo = "`Group`",
 //                                 indexes = @org.hibernate.annotations.Index(name = "ix_group_code",
 //                                                                            columnNames = {
@@ -76,39 +76,39 @@ public class Group extends AccessEntityBase implements IActor {
 
     @Id
     @GeneratedValue
-    @Column( name = "GROUP_ID" )
-    @Setter( AccessLevel.PROTECTED )
+    @Column(name = "GROUP_ID")
+    @Setter(AccessLevel.PROTECTED)
     private Long id;
 
-    @ManyToOne( fetch = FetchType.LAZY )
-    @JoinColumn( name = "CompanyId", nullable = false )
-    @ForeignKey( name = "fk_group_company" )
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "CompanyId", nullable = false)
+    @ForeignKey(name = "fk_group_company")
     @NaturalId
     private Company company;
 
-    @Column( name = "GroupCode", nullable = false, length = 32 )
+    @Column(name = "GroupCode", nullable = false, length = 32)
     @NaturalId
     private String code;
 
-    @Column( name = "GroupName", nullable = false, length = 256 )
+    @Column(name = "GroupName", nullable = false, length = 256)
     private String name;
 
-    @Column( name = "GroupEName", length = 256 )
+    @Column(name = "GroupEName", length = 256)
     private String ename;
 
-    @Column( name = "active" )
+    @Column(name = "active")
     private Boolean active;
 
-    @Column( name = "GroupDesc", length = 2000 )
+    @Column(name = "GroupDesc", length = 2000)
     private String description;
 
-    @Column( name = "GroupExAttr", length = 2000 )
+    @Column(name = "GroupExAttr", length = 2000)
     private String exAttr;
 
 
-    @OneToMany( mappedBy = "group", cascade = { CascadeType.ALL } )
-    @LazyCollection( value = LazyCollectionOption.EXTRA )
-    @Fetch( FetchMode.SELECT )
+    @OneToMany(mappedBy = "group", cascade = { CascadeType.ALL })
+    @LazyCollection(value = LazyCollectionOption.EXTRA)
+    @Fetch(FetchMode.SELECT)
     private Set<GroupMember> members = Sets.newHashSet();
 
     @Override

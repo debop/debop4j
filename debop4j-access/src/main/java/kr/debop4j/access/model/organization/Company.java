@@ -135,11 +135,11 @@ public class Company extends AccessLocaledEntityBase<Company.CompanyLocale> impl
     @Override
     protected Objects.ToStringHelper buildStringHelper() {
         return super.buildStringHelper()
-                    .add("id", id)
-                    .add("code", code)
-                    .add("name", name)
-                    .add("active", active)
-                    .add("description", description);
+                .add("id", id)
+                .add("code", code)
+                .add("name", name)
+                .add("active", active)
+                .add("description", description);
     }
 
     @Getter
@@ -171,8 +171,8 @@ public class Company extends AccessLocaledEntityBase<Company.CompanyLocale> impl
         @Override
         protected Objects.ToStringHelper buildStringHelper() {
             return super.buildStringHelper()
-                        .add("name", name)
-                        .add("description", description);
+                    .add("name", name)
+                    .add("description", description);
         }
 
         private static final long serialVersionUID = 3403174284080835688L;

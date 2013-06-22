@@ -43,8 +43,8 @@ import java.util.Set;
  * @since 13. 3. 11.
  */
 @Entity
-@Table( name = "Menu" )
-@org.hibernate.annotations.Cache( region = "Product", usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE )
+@Table(name = "Menu")
+@org.hibernate.annotations.Cache(region = "Product", usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 @DynamicInsert
 @DynamicUpdate
 @Getter
@@ -55,53 +55,53 @@ public class Menu extends AnnotatedEntityBase implements ITreeEntity<Menu>, IUpd
 
     @Id
     @GeneratedValue
-    @Column( name = "MenuId" )
+    @Column(name = "MenuId")
     private Long id;
 
     @ManyToOne
-    @JoinColumn( name = "ProductId", nullable = false )
-    @Index( name = "ix_menu_code" )
+    @JoinColumn(name = "ProductId", nullable = false)
+    @Index(name = "ix_menu_code")
     private Product product;
 
     /** Company 가 null이면, Product 의 기본 메뉴라고 볼 수 있다. */
     @ManyToOne
-    @JoinColumn( name = "CompanyId" )
-    @Index( name = "ix_menu_code" )
+    @JoinColumn(name = "CompanyId")
+    @Index(name = "ix_menu_code")
     private Company company;
 
-    @Column( name = "MenuCode", nullable = false, length = 128 )
-    @Index( name = "ix_menu_code" )
+    @Column(name = "MenuCode", nullable = false, length = 128)
+    @Index(name = "ix_menu_code")
     private String code;
 
-    @Column( name = "MenuTitle", nullable = false, length = 255 )
+    @Column(name = "MenuTitle", nullable = false, length = 255)
     private String title;
 
-    @Column( name = "MenuUrl", length = 1024 )
+    @Column(name = "MenuUrl", length = 1024)
     private String url;
 
-    @Column( name = "Active" )
+    @Column(name = "Active")
     private Boolean active;
 
-    @Column( name = "Description", length = 2000 )
+    @Column(name = "Description", length = 2000)
     private String description;
 
-    @Column( name = "ExAttr", length = 2000 )
+    @Column(name = "ExAttr", length = 2000)
     private String exAttr;
 
-    @ManyToOne( fetch = FetchType.LAZY )
-    @JoinColumn( name = "ParentId" )
-    @ForeignKey( name = "fk_menu_parent" )
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "ParentId")
+    @ForeignKey(name = "fk_menu_parent")
     private Menu parent;
 
-    @Setter( AccessLevel.PROTECTED )
-    @OneToMany( mappedBy = "parent", cascade = { CascadeType.ALL } )
-    @LazyCollection( LazyCollectionOption.EXTRA )
+    @Setter(AccessLevel.PROTECTED)
+    @OneToMany(mappedBy = "parent", cascade = { CascadeType.ALL })
+    @LazyCollection(LazyCollectionOption.EXTRA)
     private Set<Menu> children = Sets.newLinkedHashSet();
 
     @Embedded
     private TreeNodePosition nodePosition = new TreeNodePosition();
 
-    @Type( type = "kr.debop4j.data.hibernate.usertype.JodaDateTimeUserType" )
+    @Type(type = "kr.debop4j.data.hibernate.usertype.JodaDateTimeUserType")
     private DateTime updateTimestamp;
 
     @Override

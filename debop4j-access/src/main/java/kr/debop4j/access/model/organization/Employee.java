@@ -36,8 +36,8 @@ import javax.persistence.Table;
  * @since 13. 3. 1.
  */
 @Entity
-@Table( name = "Employee" )
-@org.hibernate.annotations.Cache( region = "Organization", usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE )
+@Table(name = "Employee")
+@org.hibernate.annotations.Cache(region = "Organization", usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 //@org.hibernate.annotations.Table(appliesTo = "Employee",
 //                                 indexes = @org.hibernate.annotations.Index(name = "ix_employee_code",
 //                                                                            columnNames = {
@@ -69,50 +69,50 @@ public class Employee extends AccessEntityBase implements IActor {
 
     @Id
     @GeneratedValue
-    @Column( name = "EmployeeId" )
+    @Column(name = "EmployeeId")
     private Long id;
 
-    @ManyToOne( fetch = FetchType.EAGER )
-    @JoinColumn( name = "CompanyId", nullable = false )
-    @ForeignKey( name = "fk_employee_company" )
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "CompanyId", nullable = false)
+    @ForeignKey(name = "fk_employee_company")
     @NaturalId
     private Company company;
 
-    @Column( name = "EmployeeCode", nullable = false, length = 64 )
+    @Column(name = "EmployeeCode", nullable = false, length = 64)
     @NaturalId
     private String code;
 
-    @Column( name = "EmployeeName", nullable = false, length = 128 )
-    @Index( name = "ix_employee_name" )
+    @Column(name = "EmployeeName", nullable = false, length = 128)
+    @Index(name = "ix_employee_name")
     private String name;
 
-    @Column( name = "EmployeeAge", nullable = false )
+    @Column(name = "EmployeeAge", nullable = false)
     private Integer age = 0;
 
     @Basic
-    @Column( name = "IsActive" )
+    @Column(name = "IsActive")
     private Boolean active;
 
-    @ManyToOne( fetch = FetchType.LAZY )
-    @JoinColumn( name = "MemberId" )
-    @ForeignKey( name = "fk_employee_member" )
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "MemberId")
+    @ForeignKey(name = "fk_employee_member")
     private DepartmentMember member;
 
-    @ManyToOne( fetch = FetchType.LAZY )
-    @JoinColumn( name = "EmpGradeId" )
-    @ForeignKey( name = "fk_employee_employeeGrade" )
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "EmpGradeId")
+    @ForeignKey(name = "fk_employee_employeeGrade")
     private EmployeeGrade empGrade;
 
-    @ManyToOne( fetch = FetchType.LAZY )
-    @JoinColumn( name = "EmpPositionId" )
-    @ForeignKey( name = "fk_employee_employeePosition" )
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "EmpPositionId")
+    @ForeignKey(name = "fk_employee_employeePosition")
     private EmployeePosition empPosition;
 
-    @Column( name = "Description", length = 1000 )
+    @Column(name = "Description", length = 1000)
     private String description;
 
-    @Basic( fetch = FetchType.LAZY )
-    @Column( name = "ExAttr", length = 1000 )
+    @Basic(fetch = FetchType.LAZY)
+    @Column(name = "ExAttr", length = 1000)
     private String exAttr;
 
     @Override

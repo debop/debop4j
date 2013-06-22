@@ -35,13 +35,13 @@ import javax.persistence.Table;
  * @since 13. 3. 10.
  */
 @Entity
-@Table( name = "UserPreference" )
-@org.hibernate.annotations.Table( appliesTo = "UserPreference",
-                                  indexes = @Index( name = "ix_userpreference",
-                                                    columnNames = {
-                                                            "UserId",
-                                                            "PrefKey" } ) )
-@org.hibernate.annotations.Cache( region = "Product", usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE )
+@Table(name = "UserPreference")
+@org.hibernate.annotations.Table(appliesTo = "UserPreference",
+                                 indexes = @Index(name = "ix_userpreference",
+                                                  columnNames = {
+                                                          "UserId",
+                                                          "PrefKey" }))
+@org.hibernate.annotations.Cache(region = "Product", usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 @DynamicInsert
 @DynamicUpdate
 @Getter
@@ -65,8 +65,8 @@ public class UserPreference extends PreferenceBase {
     private Long id;
 
     @ManyToOne
-    @JoinColumn( name = "UserId", nullable = false )
-    @ForeignKey( name = "fk_userpreference_user" )
+    @JoinColumn(name = "UserId", nullable = false)
+    @ForeignKey(name = "fk_userpreference_user")
     private User user;
 
     @Override

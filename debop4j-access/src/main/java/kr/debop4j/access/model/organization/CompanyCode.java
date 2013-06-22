@@ -42,9 +42,9 @@ import java.util.Set;
 @Entity
 @Table(name = "CompanyCode")
 @Cache(region = "Organization", usage = CacheConcurrencyStrategy.READ_WRITE)
-@org.hibernate.annotations.Table( appliesTo = "CompanyCode",
-                                  indexes = @Index( name = "ix_companycode_code",
-                                                    columnNames = { "CompanyId", "CodeCode", "CodeName" } ) )
+@org.hibernate.annotations.Table(appliesTo = "CompanyCode",
+                                 indexes = @Index(name = "ix_companycode_code",
+                                                  columnNames = { "CompanyId", "CodeCode", "CodeName" }))
 @DynamicInsert
 @DynamicUpdate
 @Getter

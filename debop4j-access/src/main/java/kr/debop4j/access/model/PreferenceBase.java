@@ -46,7 +46,7 @@ public abstract class PreferenceBase extends AccessEntityBase {
         this.value = value;
     }
 
-    @Column( name = "PrefKey", nullable = false, length = 255 )
+    @Column(name = "PrefKey", nullable = false, length = 255)
     private String key;
 
     @Column(name = "PrefValue", length = 2000)

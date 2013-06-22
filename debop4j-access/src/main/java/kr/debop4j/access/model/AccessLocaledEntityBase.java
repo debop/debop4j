@@ -38,8 +38,8 @@ public abstract class AccessLocaledEntityBase<TLocaleValue extends ILocaleValue>
         extends AnnotatedLocaleEntityBase implements IUpdateTimestampedEntity {
 
     @Getter
-    @Type( type = "kr.debop4j.data.hibernate.usertype.JodaDateTimeUserType" )
-    @Column( name = AccessContext.UPDATE_TIMESTAMP )
+    @Type(type = "kr.debop4j.data.hibernate.usertype.JodaDateTimeUserType")
+    @Column(name = AccessContext.UPDATE_TIMESTAMP)
     private DateTime updateTimestamp;
 
     public void updateUpdateTimestamp() {
