@@ -26,7 +26,7 @@ import static com.mysema.query.types.PathMetadataFactory.forVariable;
 
 
 /** QWorkCalendarRule is a Querydsl query type for WorkCalendarRule */
-@Generated( "com.mysema.query.codegen.EntitySerializer" )
+@Generated("com.mysema.query.codegen.EntitySerializer")
 public class QWorkCalendarRule extends EntityPathBase<WorkCalendarRule> {
 
     private static final long serialVersionUID = 519367945;
@@ -71,7 +71,7 @@ public class QWorkCalendarRule extends EntityPathBase<WorkCalendarRule> {
         this(WorkCalendarRule.class, forVariable(variable), INITS);
     }
 
-    @SuppressWarnings( "all" )
+    @SuppressWarnings("all")
     public QWorkCalendarRule(Path<? extends WorkCalendarRule> path) {
         this((Class) path.getType(), path.getMetadata(), path.getMetadata().isRoot() ? INITS : PathInits.DEFAULT);
     }
