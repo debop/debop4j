@@ -23,6 +23,7 @@ import kr.debop4j.core.compress.ICompressor;
 import org.junit.Test;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
+import static org.fest.assertions.Assertions.assertThat;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
@@ -49,6 +50,7 @@ public class AnnotatedContextTest extends AbstractTest {
     @Test
     public void initByPackages() {
         final String packageName = AnnotatedBeanConfig.class.getPackage().getName();
+
         try (AutoCloseableAction action =
                      Springs.useLocalContext(new AnnotationConfigApplicationContext(packageName))) {
             Springs.initByPackages(AnnotatedBeanConfig.class.getPackage().getName());
@@ -59,8 +61,8 @@ public class AnnotatedContextTest extends AbstractTest {
             assertTrue(beanNames.length > 0);
 
             ICompressor compressor = (ICompressor) Springs.getBean("defaultCompressor");
-            assertNotNull(compressor);
-            assertTrue(compressor instanceof GZipCompressor);
+            assertThat(compressor).isNotNull();
+            assertThat(compressor).isInstanceOf(GZipCompressor.class);
         }
     }
 }

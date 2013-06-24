@@ -37,7 +37,9 @@ public class AutowiredSpringsTest {
 
     @Test
     public void initializeTest() {
-        // AnnotatedBeanConfig 에서 ComponentScan으로 Springs 를 등록해야 합니다.
+        // AnnotatedBeanConfig 에서 ComponentScan으로 Springs를 Scan 할 때,
+        // Application Context 를 Injection 합니다.
+        //
         assertThat(Springs.getContext()).isNotNull();
         assertThat(Springs.isInitialized()).isTrue();
     }

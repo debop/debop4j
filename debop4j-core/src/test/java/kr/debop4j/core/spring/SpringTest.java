@@ -1,3 +1,19 @@
+/*
+ * Copyright 2011-2013 the original author or authors.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package kr.debop4j.core.spring;
 
 import kr.debop4j.core.AbstractTest;
@@ -14,6 +30,7 @@ import java.util.List;
 import java.util.Map;
 
 import static kr.debop4j.core.spring.Springs.getOrRegisterBean;
+import static org.fest.assertions.Assertions.assertThat;
 import static org.junit.Assert.*;
 
 /**
@@ -92,9 +109,9 @@ public class SpringTest extends AbstractTest {
     @Test
     public void getOrRegisterBean_NotRegisteredBean_WithScope() {
 
-        Object compressor = getOrRegisterBean(GZipCompressor.class, BeanDefinition.SCOPE_PROTOTYPE);
-        assertNotNull(compressor);
-        assertTrue(compressor instanceof GZipCompressor);
+        ICompressor compressor = getOrRegisterBean(GZipCompressor.class, BeanDefinition.SCOPE_PROTOTYPE);
+        assertThat(compressor).isNotNull();
+        assertThat(compressor).isInstanceOf(GZipCompressor.class);
 
         Springs.removeBean(GZipCompressor.class);
 
@@ -102,8 +119,8 @@ public class SpringTest extends AbstractTest {
         assertNull(compressor);
 
         ICompressor deflator = getOrRegisterBean(DeflateCompressor.class, BeanDefinition.SCOPE_SINGLETON);
-        assertNotNull(deflator);
-        assertTrue(deflator instanceof DeflateCompressor);
+        assertThat(deflator).isNotNull();
+        assertThat(deflator).isInstanceOf(DeflateCompressor.class);
     }
 
     @Test
@@ -125,12 +142,12 @@ public class SpringTest extends AbstractTest {
 
 
     @Test
-    @SuppressWarnings("unchecked")
+    @SuppressWarnings( "unchecked" )
     public void getAllTypes() {
 
         for (Class clazz : compressorClasses) {
             ICompressor bean = (ICompressor) getOrRegisterBean(clazz, BeanDefinition.SCOPE_PROTOTYPE);
-            assertNotNull(bean);
+            assertThat(bean).isNotNull();
         }
 
         Map<String, ICompressor> compressorMap = Springs.getBeansOfType(ICompressor.class, true, true);
@@ -138,12 +155,12 @@ public class SpringTest extends AbstractTest {
         assertEquals(compressorClasses.length, compressorMap.size());
 
         ICompressor gzip = Springs.getBean(GZipCompressor.class);
-        assertNotNull(gzip);
-        assertTrue(gzip instanceof GZipCompressor);
+        assertThat(gzip).isNotNull();
+        assertThat(gzip).isInstanceOf(GZipCompressor.class);
     }
 
     @Test
-    @SuppressWarnings("unchecked")
+    @SuppressWarnings( "unchecked" )
     public void getBeansByTypeTest() {
 
         for (Class clazz : compressorClasses) {

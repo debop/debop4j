@@ -61,6 +61,7 @@ public final class Springs {
      */
     @Autowired
     protected Springs(ApplicationContext context) {
+        log.info("ApplicationContext 가 Injection 되었습니다.");
         globalContext = context;
     }
 
