@@ -23,6 +23,7 @@ import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Example;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.ProjectionList;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.io.Serializable;
 import java.util.Collection;
@@ -34,6 +35,7 @@ import java.util.List;
  * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 13. 4. 15. 오후 2:05
  */
+@Transactional
 public interface IHibernateDao {
 
     /**
@@ -54,12 +56,14 @@ public interface IHibernateDao {
      * 특정 수형의 해당 id 값을 가지는 엔티티를 로드합니다. (실제 로드하는 것이 아니라, proxy로 로드하는 것이다)
      * 주의: 실제 데이터가 없을 때에는 예외가 발생합니다.
      */
+    @Transactional(readOnly = true)
     <T> T load(Class clazz, Serializable id);
 
     /**
      * 특정 수형의 해당 id 값을 가지는 엔티티를 로드합니다. (실제 로드하는 것이 아니라, proxy로 로드하는 것이다)
      * 주의: 실제 데이터가 없을 때에는 예외가 발생합니다.
      */
+    @Transactional(readOnly = true)
     <T> T load(Class clazz, Serializable id, LockOptions lockOptions);
 
     /**
@@ -69,6 +73,7 @@ public interface IHibernateDao {
      * @param id    identifier 값
      * @return 엔티티, 없으면 null
      */
+    @Transactional(readOnly = true)
     <T> T get(Class<T> clazz, Serializable id);
 
     /**
@@ -78,12 +83,25 @@ public interface IHibernateDao {
      * @param id    identifier 값
      * @return 엔티티, 없으면 null
      */
+    @Transactional(readOnly = true)
     <T> T get(Class<T> clazz, Serializable id, LockOptions lockOptions);
 
-    /** 특정 수형의 해당 id 들을 가지는 엔티티들을 로드합니다. */
+    /**
+     * 특정 수형의 해당 id 들을 가지는 엔티티들을 로드합니다.
+     *
+     * @param clazz 엔티티 수형
+     * @param ids   대상 id 컬렉션
+     */
+    @Transactional(readOnly = true)
     <T> List<T> getIn(Class<T> clazz, Collection<? extends Serializable> ids);
 
-    /** 특정 수형의 해당 id 들을 가지는 엔티티들을 로드합니다. */
+    /**
+     * 특정 수형의 해당 id 들을 가지는 엔티티들을 로드합니다.
+     *
+     * @param clazz 엔티티 수형
+     * @param ids   대상 id 배열
+     */
+    @Transactional(readOnly = true)
     <T> List<T> getIn(Class<T> clazz, Serializable[] ids);
 
     /**
@@ -92,6 +110,7 @@ public interface IHibernateDao {
      * @param dc 질의 정보
      * @return {@link  ScrollableResults} 인스턴스
      */
+    @Transactional(readOnly = true)
     ScrollableResults getScroll(DetachedCriteria dc);
 
     /**
@@ -101,6 +120,7 @@ public interface IHibernateDao {
      * @param scrollMode the scroll mode
      * @return 검색 결과 Scollable Resutls
      */
+    @Transactional(readOnly = true)
     ScrollableResults getScroll(DetachedCriteria dc, ScrollMode scrollMode);
 
     /**
@@ -109,6 +129,7 @@ public interface IHibernateDao {
      * @param criteria 질의
      * @return 검색 결과 Scollable Resutls
      */
+    @Transactional(readOnly = true)
     ScrollableResults getScroll(Criteria criteria);
 
     /**
@@ -118,6 +139,7 @@ public interface IHibernateDao {
      * @param scrollMode scroll mode
      * @return 검색 결과 Scollable Resutls
      */
+    @Transactional(readOnly = true)
     ScrollableResults getScroll(Criteria criteria, ScrollMode scrollMode);
 
     /**
@@ -127,6 +149,7 @@ public interface IHibernateDao {
      * @param parameters the parameters
      * @return the scroll
      */
+    @Transactional(readOnly = true)
     ScrollableResults getScroll(Query query, HibernateParameter... parameters);
 
     /**
@@ -137,6 +160,7 @@ public interface IHibernateDao {
      * @param parameters the parameters
      * @return the scroll
      */
+    @Transactional(readOnly = true)
     ScrollableResults getScroll(Query query, ScrollMode scrollMode, HibernateParameter... parameters);
 
     /**
@@ -146,6 +170,7 @@ public interface IHibernateDao {
      * @param orders 정렬
      * @return 조회한 엔티티의 컬렉션
      */
+    @Transactional(readOnly = true)
     <T> List<T> findAll(Class<T> clazz, Order... orders);
 
     /**
@@ -157,6 +182,7 @@ public interface IHibernateDao {
      * @param orders      정렬
      * @return 조회한 엔티티의 컬렉션
      */
+    @Transactional(readOnly = true)
     <T> List<T> findAll(Class<T> clazz, int firstResult, int maxResults, Order... orders);
 
 
@@ -169,6 +195,7 @@ public interface IHibernateDao {
      * @param <T>      엔티티 수형
      * @return 조회한 엔티티의 컬렉션
      */
+    @Transactional(readOnly = true)
     <T> List<T> find(Class<T> clazz, Criteria criteria, Order... orders);
 
     /**
@@ -182,6 +209,7 @@ public interface IHibernateDao {
      * @param <T>         엔티티 수형
      * @return 조회한 엔티티의 컬렉션
      */
+    @Transactional(readOnly = true)
     <T> List<T> find(Class<T> clazz, Criteria criteria, int firstResult, int maxResults, Order... orders);
 
     /**
@@ -192,6 +220,7 @@ public interface IHibernateDao {
      * @param <T>    엔티티 수형
      * @return 조회한 엔티티의 컬렉션
      */
+    @Transactional(readOnly = true)
     <T> List<T> find(Class<T> clazz, DetachedCriteria dc, Order... orders);
 
     /**
@@ -205,6 +234,7 @@ public interface IHibernateDao {
      * @param <T>         엔티티 수형
      * @return 조회한 엔티티의 컬렉션
      */
+    @Transactional(readOnly = true)
     <T> List<T> find(Class<T> clazz, DetachedCriteria dc, int firstResult, int maxResults, Order... orders);
 
     /**
@@ -216,6 +246,7 @@ public interface IHibernateDao {
      * @param <T>        엔티티 수형
      * @return 조회한 엔티티의 컬렉션
      */
+    @Transactional(readOnly = true)
     <T> List<T> find(Class<T> clazz, Query query, HibernateParameter... parameters);
 
     /**
@@ -229,6 +260,7 @@ public interface IHibernateDao {
      * @param <T>         엔티티 수형
      * @return 조회한 엔티티의 컬렉션
      */
+    @Transactional(readOnly = true)
     <T> List<T> find(Class<T> clazz, Query query, int firstResult, int maxResults, HibernateParameter... parameters);
 
     /**
@@ -240,6 +272,7 @@ public interface IHibernateDao {
      * @param <T>        엔티티 수형
      * @return 조회한 엔티티의 컬렉션
      */
+    @Transactional(readOnly = true)
     <T> List<T> find(Class<T> clazz, String hql, HibernateParameter... parameters);
 
     /**
@@ -253,6 +286,7 @@ public interface IHibernateDao {
      * @param <T>         엔티티 수형
      * @return 조회한 엔티티의 컬렉션
      */
+    @Transactional(readOnly = true)
     <T> List<T> find(Class<T> clazz, String hql, int firstResult, int maxResults, HibernateParameter... parameters);
 
     /**
@@ -264,6 +298,7 @@ public interface IHibernateDao {
      * @param <T>        엔티티 수형
      * @return 조회한 엔티티의 컬렉션
      */
+    @Transactional(readOnly = true)
     <T> List<T> findByNamedQuery(Class<T> clazz, String queryName, HibernateParameter... parameters);
 
     /**
@@ -277,6 +312,7 @@ public interface IHibernateDao {
      * @param <T>         엔티티 수형
      * @return 조회한 엔티티의 컬렉션
      */
+    @Transactional(readOnly = true)
     <T> List<T> findByNamedQuery(Class<T> clazz, String queryName, int firstResult, int maxResults, HibernateParameter... parameters);
 
     /**
@@ -288,6 +324,7 @@ public interface IHibernateDao {
      * @param <T>        엔티티 수형
      * @return 조회한 엔티티의 컬렉션
      */
+    @Transactional(readOnly = true)
     <T> List<T> findBySQLString(Class<T> clazz, String sqlString, HibernateParameter... parameters);
 
     /**
@@ -301,6 +338,7 @@ public interface IHibernateDao {
      * @param <T>         엔티티 수형
      * @return 조회한 엔티티의 컬렉션
      */
+    @Transactional(readOnly = true)
     <T> List<T> findBySQLString(Class<T> clazz, String sqlString, int firstResult, int maxResults, HibernateParameter... parameters);
 
     /**
@@ -311,6 +349,7 @@ public interface IHibernateDao {
      * @param <T>     엔티티 수형
      * @return 조회된 엔티티 컬렉션
      */
+    @Transactional(readOnly = true)
     <T> List<T> findByExample(Class<T> clazz, Example example);
 
     /**
@@ -324,6 +363,7 @@ public interface IHibernateDao {
      * @param <T>      엔티티 수형
      * @return 페이징 처리된 조회 결과
      */
+    @Transactional(readOnly = true)
     <T> IPagedList<T> getPage(Class<T> clazz, Criteria criteria, int pageNo, int pageSize, Order... orders);
 
     /**
@@ -337,6 +377,7 @@ public interface IHibernateDao {
      * @param <T>      엔티티 수형
      * @return 페이징 처리된 조회 결과
      */
+    @Transactional(readOnly = true)
     <T> IPagedList<T> getPage(Class<T> clazz, DetachedCriteria dc, int pageNo, int pageSize, Order... orders);
 
     /**
@@ -350,6 +391,7 @@ public interface IHibernateDao {
      * @param <T>        엔티티 수형
      * @return 페이징 처리된 조회 결과
      */
+    @Transactional(readOnly = true)
     <T> IPagedList<T> getPage(Class<T> clazz, Query query, int pageNo, int pageSize, HibernateParameter... parameters);
 
     /**
@@ -363,6 +405,7 @@ public interface IHibernateDao {
      * @param <T>        엔티티 수형
      * @return 페이징 처리된 조회 결과
      */
+    @Transactional(readOnly = true)
     <T> IPagedList<T> getPageByHql(Class<T> clazz, String hql, int pageNo, int pageSize, HibernateParameter... parameters);
 
     /**
@@ -376,6 +419,7 @@ public interface IHibernateDao {
      * @param <T>        엔티티 수형
      * @return 페이징 처리된 조회 결과
      */
+    @Transactional(readOnly = true)
     <T> IPagedList<T> getPageByNamedQuery(Class<T> clazz, String queryName, int pageNo, int pageSize, HibernateParameter... parameters);
 
     /**
@@ -389,6 +433,7 @@ public interface IHibernateDao {
      * @param <T>        엔티티 수형
      * @return 페이징 처리된 조회 결과
      */
+    @Transactional(readOnly = true)
     <T> IPagedList<T> getPageBySQLString(Class<T> clazz, String sqlString, int pageNo, int pageSize, HibernateParameter... parameters);
 
     /**
@@ -399,6 +444,7 @@ public interface IHibernateDao {
      * @param <T>   엔티티 수형
      * @return 조회된 엔티티
      */
+    @Transactional(readOnly = true)
     <T> T findUnique(Class<T> clazz, DetachedCriteria dc);
 
     /**
@@ -409,6 +455,7 @@ public interface IHibernateDao {
      * @param <T>      엔티티 수형
      * @return 조회된 엔티티
      */
+    @Transactional(readOnly = true)
     <T> T findUnique(Class<T> clazz, Criteria criteria);
 
     /**
@@ -419,6 +466,7 @@ public interface IHibernateDao {
      * @param <T>   엔티티 수형
      * @return 조회된 엔티티
      */
+    @Transactional(readOnly = true)
     <T> T findUnique(Class<T> clazz, Query query, HibernateParameter... parameters);
 
     /**
@@ -429,6 +477,7 @@ public interface IHibernateDao {
      * @param <T>   엔티티 수형
      * @return 조회된 엔티티
      */
+    @Transactional(readOnly = true)
     <T> T findUniqueByHql(Class<T> clazz, String hql, HibernateParameter... parameters);
 
     /**
@@ -439,6 +488,7 @@ public interface IHibernateDao {
      * @param <T>       엔티티 수형
      * @return 조회된 엔티티
      */
+    @Transactional(readOnly = true)
     <T> T findUniqueByNamedQuery(Class<T> clazz, String queryName, HibernateParameter... parameters);
 
     /**
@@ -449,6 +499,7 @@ public interface IHibernateDao {
      * @param <T>       엔티티 수형
      * @return 조회된 엔티티
      */
+    @Transactional(readOnly = true)
     <T> T findUniqueBySQLString(Class<T> clazz, String sqlString, HibernateParameter... parameters);
 
     /**
@@ -460,6 +511,7 @@ public interface IHibernateDao {
      * @param <T>    엔티티 수형
      * @return 첫번째 엔티티
      */
+    @Transactional(readOnly = true)
     <T> T findFirst(Class<T> clazz, DetachedCriteria dc, Order... orders);
 
     /**
@@ -470,6 +522,7 @@ public interface IHibernateDao {
      * @param <T>      엔티티 수형
      * @return 조회된 엔티티
      */
+    @Transactional(readOnly = true)
     <T> T findFirst(Class<T> clazz, Criteria criteria, Order... orders);
 
     /**
@@ -480,6 +533,7 @@ public interface IHibernateDao {
      * @param <T>   엔티티 수형
      * @return 조회된 엔티티
      */
+    @Transactional(readOnly = true)
     <T> T findFirst(Class<T> clazz, Query query, HibernateParameter... parameters);
 
     /**
@@ -490,6 +544,7 @@ public interface IHibernateDao {
      * @param <T>   엔티티 수형
      * @return 조회된 엔티티
      */
+    @Transactional(readOnly = true)
     <T> T findFirstByHql(Class<T> clazz, String hql, HibernateParameter... parameters);
 
     /**
@@ -500,6 +555,7 @@ public interface IHibernateDao {
      * @param <T>       엔티티 수형
      * @return 조회된 엔티티
      */
+    @Transactional(readOnly = true)
     <T> T findFirstByNamedQuery(Class<T> clazz, String queryName, HibernateParameter... parameters);
 
     /**
@@ -510,6 +566,7 @@ public interface IHibernateDao {
      * @param <T>       엔티티 수형
      * @return 조회된 엔티티
      */
+    @Transactional(readOnly = true)
     <T> T findFirstBySQLString(Class<T> clazz, String sqlString, HibernateParameter... parameters);
 
     /**
@@ -518,6 +575,7 @@ public interface IHibernateDao {
      * @param clazz 엔티티 수형
      * @return 엔티티 존재 여부
      */
+    @Transactional(readOnly = true)
     boolean exists(Class<?> clazz);
 
     /**
@@ -527,6 +585,7 @@ public interface IHibernateDao {
      * @param dc    조회 조건
      * @return 엔티티 존재 여부
      */
+    @Transactional(readOnly = true)
     boolean exists(Class<?> clazz, DetachedCriteria dc);
 
     /**
@@ -536,6 +595,7 @@ public interface IHibernateDao {
      * @param criteria 조회 조건
      * @return 엔티티 존재 여부
      */
+    @Transactional(readOnly = true)
     boolean exists(Class<?> clazz, Criteria criteria);
 
     /**
@@ -545,6 +605,7 @@ public interface IHibernateDao {
      * @param query 조회 조건
      * @return 엔티티 존재 여부
      */
+    @Transactional(readOnly = true)
     boolean exists(Class<?> clazz, Query query, HibernateParameter... parameters);
 
     /**
@@ -554,6 +615,7 @@ public interface IHibernateDao {
      * @param hql   조회 조건
      * @return 엔티티 존재 여부
      */
+    @Transactional(readOnly = true)
     boolean existsByHql(Class<?> clazz, String hql, HibernateParameter... parameters);
 
     /**
@@ -563,6 +625,7 @@ public interface IHibernateDao {
      * @param queryName 쿼리명
      * @return 엔티티 존재 여부
      */
+    @Transactional(readOnly = true)
     boolean existsByNamedQuery(Class<?> clazz, String queryName, HibernateParameter... parameters);
 
     /**
@@ -572,6 +635,7 @@ public interface IHibernateDao {
      * @param sqlString 일반 SQL 문
      * @return 엔티티 존재 여부
      */
+    @Transactional(readOnly = true)
     boolean existsBySQLString(Class<?> clazz, String sqlString, HibernateParameter... parameters);
 
     /**
@@ -580,6 +644,7 @@ public interface IHibernateDao {
      * @param clazz 엔티티 수형
      * @return 해당 엔티티의 갯수
      */
+    @Transactional(readOnly = true)
     long count(Class<?> clazz);
 
     /**
@@ -589,6 +654,7 @@ public interface IHibernateDao {
      * @param criteria 질의 조건
      * @return 해당 엔티티의 갯수
      */
+    @Transactional(readOnly = true)
     long count(Class<?> clazz, Criteria criteria);
 
     /**
@@ -598,6 +664,7 @@ public interface IHibernateDao {
      * @param dc    질의 조건
      * @return 해당 엔티티의 갯수
      */
+    @Transactional(readOnly = true)
     long count(Class<?> clazz, DetachedCriteria dc);
 
     /**
@@ -608,6 +675,7 @@ public interface IHibernateDao {
      * @param parameters 질의 인자 값
      * @return 해당 엔티티의 갯수
      */
+    @Transactional(readOnly = true)
     long count(Class<?> clazz, Query query, HibernateParameter... parameters);
 
     /**
@@ -735,6 +803,7 @@ public interface IHibernateDao {
      * @param <TProject>     Projection 결과 엔티티의 수형
      * @return Projection 결과
      */
+    @Transactional(readOnly = true)
     <TProject> TProject reportOne(Class<TProject> projectClass, ProjectionList projectionList, DetachedCriteria dc);
 
     /**
@@ -746,6 +815,7 @@ public interface IHibernateDao {
      * @param <TProject>     Projection 결과 엔티티의 수형
      * @return Projection 결과
      */
+    @Transactional(readOnly = true)
     <TProject> TProject reportOne(Class<TProject> projectClass, ProjectionList projectionList, Criteria criteria);
 
     /**
@@ -757,6 +827,7 @@ public interface IHibernateDao {
      * @param <TProject>     Projection 결과 엔티티의 수형
      * @return Projection 결과 컬렉션
      */
+    @Transactional(readOnly = true)
     <TProject> List<TProject> reportList(Class<TProject> projectClass,
                                          ProjectionList projectionList,
                                          DetachedCriteria dc);
@@ -772,6 +843,7 @@ public interface IHibernateDao {
      * @param <TProject>     Projection 결과 엔티티의 수형
      * @return Projection 결과 컬렉션
      */
+    @Transactional(readOnly = true)
     <TProject> List<TProject> reportList(Class<TProject> projectClass,
                                          ProjectionList projectionList,
                                          DetachedCriteria dc,
@@ -787,6 +859,7 @@ public interface IHibernateDao {
      * @param <TProject>     Projection 결과 엔티티의 수형
      * @return Projection 결과 컬렉션
      */
+    @Transactional(readOnly = true)
     <TProject> List<TProject> reportList(Class<TProject> projectClass,
                                          ProjectionList projectionList,
                                          Criteria criteria);
@@ -802,6 +875,7 @@ public interface IHibernateDao {
      * @param <TProject>     Projection 결과 엔티티의 수형
      * @return Projection 결과 컬렉션
      */
+    @Transactional(readOnly = true)
     <TProject> List<TProject> reportList(Class<TProject> projectClass,
                                          ProjectionList projectionList,
                                          Criteria criteria,
@@ -820,6 +894,7 @@ public interface IHibernateDao {
      * @param <TProject>     Projection 결과 엔티티의 수형
      * @return Projection 결과 컬렉션
      */
+    @Transactional(readOnly = true)
     <T, TProject> IPagedList<TProject> reportPage(Class<T> clazz,
                                                   Class<TProject> projectClass,
                                                   ProjectionList projectionList,
@@ -839,6 +914,7 @@ public interface IHibernateDao {
      * @param <TProject>     Projection 결과 엔티티의 수형
      * @return Projection 결과 컬렉션
      */
+    @Transactional(readOnly = true)
     <T, TProject> IPagedList<TProject> reportPage(Class<T> clazz,
                                                   Class<TProject> projectClass,
                                                   ProjectionList projectionList,

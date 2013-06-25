@@ -16,6 +16,7 @@
 
 package kr.debop4j.data.hibernate.spring;
 
+import kr.debop4j.core.Function;
 import kr.debop4j.core.Local;
 import kr.debop4j.core.tools.StringTool;
 import kr.debop4j.data.hibernate.forTesting.UnitOfWorkTestContextBase;
@@ -43,6 +44,7 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Scope;
 import org.springframework.orm.hibernate4.HibernateTransactionManager;
 import org.springframework.orm.hibernate4.LocalSessionFactoryBean;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import javax.sql.DataSource;
 import java.io.IOException;
@@ -55,6 +57,7 @@ import java.util.Properties;
  * @since 13. 2. 21.
  */
 @Slf4j
+@EnableTransactionManagement
 @ComponentScan(basePackageClasses = { UnitOfWorks.class, HibernateTool.class })
 public abstract class HibernateConfigBase {
 
@@ -91,7 +94,6 @@ public abstract class HibernateConfigBase {
         props.put(Environment.SHOW_SQL, "true");
         props.put(Environment.RELEASE_CONNECTIONS, ConnectionReleaseMode.ON_CLOSE);
         props.put(Environment.AUTOCOMMIT, "true");
-        props.put(Environment.CURRENT_SESSION_CONTEXT_CLASS, "thread");
         props.put(Environment.STATEMENT_BATCH_SIZE, "30");
 
         return props;
@@ -201,7 +203,7 @@ public abstract class HibernateConfigBase {
         return factory;
     }
 
-    private static final String HIBERNATE_DAO_KEY = HibernateDao.class.getName() + ".Current";
+    private static final String HIBERNATE_DAO_KEY = IHibernateDao.class.getName() + ".Current";
 
     /**
      * {@link IHibernateDao}를 Transaction Context 별로 제공합니다.
@@ -211,15 +213,14 @@ public abstract class HibernateConfigBase {
     @Bean
     @Scope("prototype")
     public IHibernateDao hibernateDao() {
-        IHibernateDao hibernateDao = Local.get(HIBERNATE_DAO_KEY, IHibernateDao.class);
-        if (hibernateDao == null) {
-            hibernateDao = new HibernateDao(true);
-            Local.put(HIBERNATE_DAO_KEY, hibernateDao);
-
-            if (log.isDebugEnabled())
-                log.debug("HibernateDao 인스턴스를 생성했습니다.");
-        }
-        return hibernateDao;
+        return Local.getOrCreate(HIBERNATE_DAO_KEY,
+                                 IHibernateDao.class,
+                                 new Function<IHibernateDao>() {
+                                     @Override
+                                     public IHibernateDao execute() {
+                                         return new HibernateDao(true);
+                                     }
+                                 });
     }
 
     @Bean

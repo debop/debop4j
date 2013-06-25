@@ -31,7 +31,9 @@ import org.hibernate.criterion.*;
 import org.hibernate.transform.Transformers;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.io.Serializable;
 import java.util.Collection;
@@ -46,13 +48,13 @@ import static kr.debop4j.core.Guard.shouldNotBeNull;
  * @since 13. 4. 15. 오전 10:21
  */
 @Repository
-@SuppressWarnings("unchecked")
+@SuppressWarnings( "unchecked" )
 public class HibernateDao implements IHibernateDao {
     private static final Logger log = LoggerFactory.getLogger(HibernateDao.class);
-
     private static final boolean isTraceEnabled = log.isTraceEnabled();
     private static final boolean isDebugEnabled = log.isDebugEnabled();
 
+    @Autowired SessionFactory sessionFactory;
     private boolean cacheable;
 
     /** Instantiates a new Hibernate dao. */
@@ -71,7 +73,8 @@ public class HibernateDao implements IHibernateDao {
 
     @Override
     public Session getSession() {
-        return UnitOfWorks.getCurrentSession();
+        // return UnitOfWorks.getCurrentSession();
+        return sessionFactory.getCurrentSession();
     }
 
     @Override
@@ -168,6 +171,7 @@ public class HibernateDao implements IHibernateDao {
     }
 
     @Override
+    @Transactional( readOnly = true )
     public final <T> List<T> findAll(Class<T> clazz, Order... orders) {
         if (ArrayTool.isEmpty(orders)) {
             Query query = getSession().createQuery("from " + clazz.getName());
@@ -503,9 +507,9 @@ public class HibernateDao implements IHibernateDao {
     public long count(Class<?> clazz, Query query, HibernateParameter... parameters) {
         assert query != null;
         Object count = HibernateTool.setParameters(query, parameters)
-                                    .setResultTransformer(Criteria.PROJECTION)
-                                    .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
-                                    .uniqueResult();
+                .setResultTransformer(Criteria.PROJECTION)
+                .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
+                .uniqueResult();
 
         if (isTraceEnabled)
             log.trace("count=" + count);

@@ -16,10 +16,12 @@
 
 package kr.debop4j.data;
 
+import kr.debop4j.data.hibernate.repository.IHibernateDao;
 import kr.debop4j.data.hibernate.unitofwork.UnitOfWorks;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
+import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 /**
@@ -30,8 +32,9 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
  */
 @Configuration
 @EnableTransactionManagement
-@ComponentScan(basePackageClasses = { UnitOfWorks.class })
-@Import({ kr.debop4j.data.DatabaseConfig.class })
+@EnableAsync
+@ComponentScan( basePackageClasses = { UnitOfWorks.class, IHibernateDao.class } )
+@Import( { kr.debop4j.data.DatabaseConfig.class } )
 public class AppConfig {
 
     // 추가해야 할 것

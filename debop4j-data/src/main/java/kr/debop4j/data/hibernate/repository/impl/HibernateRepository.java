@@ -33,7 +33,6 @@ import org.hibernate.criterion.*;
 import org.hibernate.transform.Transformers;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Repository;
 
 import java.io.Serializable;
 import java.util.Collection;
@@ -46,7 +45,6 @@ import java.util.List;
  *
  * @author 배성혁 ( sunghyouk.bae@gmail.com )
  */
-@Repository
 @SuppressWarnings("unchecked")
 public class HibernateRepository<E extends IStatefulEntity> implements IHibernateRepository<E> {
 
@@ -514,9 +512,9 @@ public class HibernateRepository<E extends IStatefulEntity> implements IHibernat
     public long count(Query query, HibernateParameter... parameters) {
         assert query != null;
         Object count = HibernateTool.setParameters(query, parameters)
-                                    .setResultTransformer(Criteria.PROJECTION)
-                                    .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
-                                    .uniqueResult();
+                .setResultTransformer(Criteria.PROJECTION)
+                .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
+                .uniqueResult();
 
         if (isTraceEnabled)
             log.trace("count=" + count);
