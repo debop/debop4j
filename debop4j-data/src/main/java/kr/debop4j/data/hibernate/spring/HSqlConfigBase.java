@@ -19,6 +19,8 @@ package kr.debop4j.data.hibernate.spring;
 import kr.debop4j.data.hibernate.forTesting.DatabaseEngine;
 import org.hibernate.cfg.Environment;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import javax.sql.DataSource;
 import java.util.Properties;
@@ -29,6 +31,8 @@ import java.util.Properties;
  * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 13. 2. 21.
  */
+@Configuration
+@EnableTransactionManagement
 public abstract class HSqlConfigBase extends HibernateConfigBase {
 
     /**

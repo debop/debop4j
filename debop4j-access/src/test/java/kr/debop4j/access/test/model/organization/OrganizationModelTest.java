@@ -18,13 +18,13 @@ package kr.debop4j.access.test.model.organization;
 
 import kr.debop4j.access.model.organization.Company;
 import kr.debop4j.access.test.AccessTestBase;
-import kr.debop4j.data.hibernate.repository.IHibernateRepository;
-import kr.debop4j.data.hibernate.unitofwork.UnitOfWorks;
+import kr.debop4j.data.hibernate.repository.IHibernateDao;
 import lombok.extern.slf4j.Slf4j;
-import org.junit.AfterClass;
 import org.junit.Assert;
-import org.junit.BeforeClass;
 import org.junit.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Locale;
 
@@ -35,45 +35,38 @@ import java.util.Locale;
  * @since 13. 3. 14 오전 11:27
  */
 @Slf4j
+@Transactional
 public class OrganizationModelTest extends AccessTestBase {
 
-    @BeforeClass
-    public static void beforeClass() {
-        AccessTestBase.beforeClass();
-        new OrganizationSampleDataBuilder().createSampleData();
-    }
-
-    @AfterClass
-    public static void afterClass() {
-        AccessTestBase.afterClass();
-    }
+    @Autowired
+    @Qualifier( "hibernateDao" )
+    IHibernateDao dao;
 
     @Override
     protected void doBefore() {
         super.doBefore();
-        UnitOfWorks.getCurrentSession().clear();
+
+        new OrganizationSampleDataBuilder(dao).createSampleData();
+        dao.getSession().clear();
     }
 
     @Test
     public void createCompany() {
-        IHibernateRepository<Company> repository = getRepository(Company.class);
-
         Company company = new Company("KTH", "케이티하이텔");
         company.addLocaleValue(Locale.KOREA,
                                new Company.CompanyLocale("케이티하이텔", "케이티 자회사입니다."));
         company.addLocaleValue(Locale.ENGLISH,
                                new Company.CompanyLocale("KTHitel", "KTHitel ~"));
 
-        repository.saveOrUpdate(company);
-        UnitOfWorks.getCurrent().transactionalFlush();
-        UnitOfWorks.getCurrent().clearSession();
+        dao.saveOrUpdate(company);
+        dao.flushSession();
 
-        Company loaded = repository.get(company.getId());
+        Company loaded = dao.get(Company.class, company.getId());
         Assert.assertEquals(company, loaded);
 
         Assert.assertEquals(2, loaded.getLocaleMap().size());
 
-        repository.delete(loaded);
-        UnitOfWorks.getCurrent().transactionalFlush();
+        dao.delete(loaded);
+        dao.flushSession();
     }
 }

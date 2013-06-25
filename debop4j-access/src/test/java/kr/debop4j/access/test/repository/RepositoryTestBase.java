@@ -18,7 +18,9 @@ package kr.debop4j.access.test.repository;
 
 import kr.debop4j.access.test.AccessTestBase;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.transaction.annotation.Transactional;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  * kr.debop4j.access.test.repository.RepositoryTestBase
@@ -27,8 +29,14 @@ import org.springframework.transaction.annotation.Transactional;
  * @since 13. 3. 12.
  */
 @Slf4j
-@Transactional
 public abstract class RepositoryTestBase extends AccessTestBase {
+
+    @Autowired
+    SessionFactory sessionFactory;
+
+    protected Session getCurrentSession() {
+        return sessionFactory.getCurrentSession();
+    }
 
     public static final String DefaultCompanyCode = "KTH";
 }

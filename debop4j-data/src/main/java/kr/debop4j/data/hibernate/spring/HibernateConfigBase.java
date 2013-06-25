@@ -16,8 +16,6 @@
 
 package kr.debop4j.data.hibernate.spring;
 
-import kr.debop4j.core.Function;
-import kr.debop4j.core.Local;
 import kr.debop4j.core.tools.StringTool;
 import kr.debop4j.data.hibernate.forTesting.UnitOfWorkTestContextBase;
 import kr.debop4j.data.hibernate.interceptor.MultiInterceptor;
@@ -41,7 +39,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Environment;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Scope;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.orm.hibernate4.HibernateTransactionManager;
 import org.springframework.orm.hibernate4.LocalSessionFactoryBean;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
@@ -57,6 +55,7 @@ import java.util.Properties;
  * @since 13. 2. 21.
  */
 @Slf4j
+@Configuration
 @EnableTransactionManagement
 @ComponentScan(basePackageClasses = { UnitOfWorks.class, HibernateTool.class })
 public abstract class HibernateConfigBase {
@@ -91,6 +90,7 @@ public abstract class HibernateConfigBase {
 
         props.put(Environment.FORMAT_SQL, "true");
         props.put(Environment.HBM2DDL_AUTO, "create"); // create | spawn | spawn-drop | update | validate | none
+
         props.put(Environment.SHOW_SQL, "true");
         props.put(Environment.RELEASE_CONNECTIONS, ConnectionReleaseMode.ON_CLOSE);
         props.put(Environment.AUTOCOMMIT, "true");
@@ -210,17 +210,18 @@ public abstract class HibernateConfigBase {
      *
      * @return {@link IHibernateDao} instance.
      */
-    @Bean
-    @Scope("prototype")
+    @Bean(name = { "hibernateDao" })
+//    @Scope("prototype")
     public IHibernateDao hibernateDao() {
-        return Local.getOrCreate(HIBERNATE_DAO_KEY,
-                                 IHibernateDao.class,
-                                 new Function<IHibernateDao>() {
-                                     @Override
-                                     public IHibernateDao execute() {
-                                         return new HibernateDao(true);
-                                     }
-                                 });
+        return new HibernateDao(true);
+//        return Local.getOrCreate(HIBERNATE_DAO_KEY,
+//                                 IHibernateDao.class,
+//                                 new Function<IHibernateDao>() {
+//                                     @Override
+//                                     public IHibernateDao execute() {
+//                                         return new HibernateDao(true);
+//                                     }
+//                                 });
     }
 
     @Bean

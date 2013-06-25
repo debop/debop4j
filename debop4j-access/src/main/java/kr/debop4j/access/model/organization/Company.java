@@ -32,11 +32,11 @@ import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.*;
 import org.hibernate.annotations.NamedQueries;
 import org.hibernate.annotations.NamedQuery;
+import org.hibernate.annotations.Table;
 
 import javax.persistence.*;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.Table;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
@@ -48,15 +48,15 @@ import java.util.Set;
  * @since 13. 3. 1.
  */
 @Entity
-@Table(name = "Company")
-@Cache(region = "Organization", usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-@org.hibernate.annotations.Table(appliesTo = "Company",
-                                 indexes = @Index(name = "ix_company_code",
-                                                  columnNames = { "CompanyCode", "CompanyName" }))
-@NamedQueries({
-                      @NamedQuery(name = "Company.findByCode", query = "from Company c where c.code = :code"),
-                      @NamedQuery(name = "Company.findByName", query = "from Company c where c.name like :name")
-              })
+@javax.persistence.Table( name = "Company" )
+@Cache( region = "Organization", usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE )
+@Table( appliesTo = "Company",
+        indexes = @Index( name = "ix_company_code",
+                          columnNames = { "CompanyCode", "CompanyName" } ) )
+@NamedQueries( {
+                       @NamedQuery( name = "Company.findByCode", query = "from Company c where c.code = :code" ),
+                       @NamedQuery( name = "Company.findByName", query = "from Company c where c.name like :name" )
+               } )
 @DynamicInsert
 @DynamicUpdate
 @Getter
@@ -82,7 +82,7 @@ public class Company extends AccessLocaledEntityBase<Company.CompanyLocale> impl
 
     @Id
     @GeneratedValue
-    @Column(name = "CompanyId")
+    @Column(name = "CompanyId", updatable = false, insertable = false)
     @Setter(AccessLevel.PROTECTED)
     private Long id;
 
@@ -112,7 +112,6 @@ public class Company extends AccessLocaledEntityBase<Company.CompanyLocale> impl
     @Fetch(FetchMode.SELECT)
     private Set<Employee> employees = Sets.newHashSet();
 
-
     /** 다국어 지원을 위한 정보 */
     @CollectionTable(name = "CompanyLocale", joinColumns = { @JoinColumn(name = "CompanyId") })
     @ElementCollection(targetClass = CompanyLocale.class, fetch = FetchType.LAZY)
@@ -120,6 +119,13 @@ public class Company extends AccessLocaledEntityBase<Company.CompanyLocale> impl
     @Cascade({ org.hibernate.annotations.CascadeType.ALL })
     @LazyCollection(LazyCollectionOption.EXTRA)
     private Map<Locale, CompanyLocale> localeMap = Maps.newHashMap();
+
+//    @Column( updatable = false, insertable = false, columnDefinition = "timestamp default current_timestamp on update current_timestamp" )
+//    @Generated( GenerationTime.ALWAYS )
+//    private Timestamp dbupdate;
+//
+//    @Column( updatable = false, columnDefinition = "timestamp default 0" )
+//    private Timestamp dbentry;
 
     public Map<Locale, CompanyLocale> getLocaleMap() {
         return localeMap;

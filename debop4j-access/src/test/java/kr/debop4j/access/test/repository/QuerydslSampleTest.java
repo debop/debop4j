@@ -156,7 +156,7 @@ public class QuerydslSampleTest extends RepositoryTestBase {
 
     @Test
     @Transactional( readOnly = true )
-    @SuppressWarnings("unchecked")
+    @SuppressWarnings( "unchecked" )
     public void getHibernateQuery() {
         HibernateQuery query = new HibernateQuery(getCurrentSession());
         QEmployee employee = QEmployee.employee;

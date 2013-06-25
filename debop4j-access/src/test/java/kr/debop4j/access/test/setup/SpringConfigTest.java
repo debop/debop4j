@@ -16,15 +16,17 @@
 
 package kr.debop4j.access.test.setup;
 
-import kr.debop4j.access.repository.organization.CompanyRepository;
+import kr.debop4j.access.repository.organization.ICompanyRepository;
 import kr.debop4j.access.test.AppConfig;
-import kr.debop4j.core.spring.Springs;
-import kr.debop4j.data.hibernate.forTesting.DatabaseTestFixtureBase;
 import lombok.extern.slf4j.Slf4j;
-import org.junit.AfterClass;
-import org.junit.Assert;
-import org.junit.BeforeClass;
+import org.hibernate.SessionFactory;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+
+import static org.fest.assertions.Assertions.assertThat;
 
 /**
  * kr.debop4j.access.test.setup.SpringConfigTest
@@ -33,22 +35,19 @@ import org.junit.Test;
  * @since 13. 3. 12.
  */
 @Slf4j
-public class SpringConfigTest extends DatabaseTestFixtureBase {
+@RunWith( SpringJUnit4ClassRunner.class )
+@ContextConfiguration( classes = { AppConfig.class } )
+public class SpringConfigTest {
 
-    @BeforeClass
-    public static void beforeClass() {
-        initHibernateAndSpring(AppConfig.class);
-        getCurrentContext().createUnitOfWork();
-    }
+    @Autowired
+    SessionFactory sessionFactory;
 
-    @AfterClass
-    public static void afterClass() {
-        closeUnitOfWorkTestContexts();
-    }
+    @Autowired
+    ICompanyRepository repository;
 
     @Test
     public void repositoryExists() {
-        CompanyRepository repository = Springs.getBean(CompanyRepository.class);
-        Assert.assertNotNull(repository);
+        assertThat(sessionFactory).isNotNull();
+        assertThat(repository).isNotNull();
     }
 }

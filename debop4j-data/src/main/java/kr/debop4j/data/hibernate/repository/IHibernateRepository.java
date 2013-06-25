@@ -24,6 +24,7 @@ import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Example;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.ProjectionList;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.io.Serializable;
 import java.util.Collection;
@@ -35,6 +36,7 @@ import java.util.List;
  * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 12. 11. 27.
  */
+@Transactional
 public interface IHibernateRepository<E extends IStatefulEntity> {
 
     Class<E> getEntityClass();

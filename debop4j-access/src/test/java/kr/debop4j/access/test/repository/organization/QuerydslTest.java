@@ -21,9 +21,9 @@ import kr.debop4j.access.model.organization.Company;
 import kr.debop4j.access.model.organization.QCompany;
 import kr.debop4j.access.test.repository.RepositoryTestBase;
 import kr.debop4j.core.tools.StringTool;
-import kr.debop4j.data.hibernate.unitofwork.UnitOfWorks;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -37,10 +37,11 @@ import java.util.List;
 public class QuerydslTest extends RepositoryTestBase {
 
     @Test
+    @Transactional( readOnly = true )
     public void queryCompany() {
         QCompany qCompany = QCompany.company;
 
-        HibernateQuery query = new HibernateQuery(UnitOfWorks.getCurrentSession());
+        HibernateQuery query = new HibernateQuery(getCurrentSession());
         List<Company> loaded = query.from(qCompany)
                 .where(qCompany.active.isTrue().and(qCompany.name.isNotEmpty()).and(qCompany.code.in("KTH", "KT")))
                 .list(qCompany);

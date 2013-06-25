@@ -33,6 +33,7 @@ import org.hibernate.criterion.*;
 import org.hibernate.transform.Transformers;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.io.Serializable;
 import java.util.Collection;
@@ -45,6 +46,7 @@ import java.util.List;
  *
  * @author 배성혁 ( sunghyouk.bae@gmail.com )
  */
+@Transactional
 @SuppressWarnings("unchecked")
 public class HibernateRepository<E extends IStatefulEntity> implements IHibernateRepository<E> {
 

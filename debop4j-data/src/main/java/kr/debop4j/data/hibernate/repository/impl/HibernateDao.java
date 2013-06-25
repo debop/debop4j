@@ -47,14 +47,17 @@ import static kr.debop4j.core.Guard.shouldNotBeNull;
  * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 13. 4. 15. 오전 10:21
  */
-@Repository
-@SuppressWarnings( "unchecked" )
+@Repository("hibernateDao")
+@Transactional
+@SuppressWarnings("unchecked")
 public class HibernateDao implements IHibernateDao {
     private static final Logger log = LoggerFactory.getLogger(HibernateDao.class);
     private static final boolean isTraceEnabled = log.isTraceEnabled();
     private static final boolean isDebugEnabled = log.isDebugEnabled();
 
-    @Autowired SessionFactory sessionFactory;
+    @Autowired
+    SessionFactory sessionFactory;
+
     private boolean cacheable;
 
     /** Instantiates a new Hibernate dao. */
@@ -171,7 +174,7 @@ public class HibernateDao implements IHibernateDao {
     }
 
     @Override
-    @Transactional( readOnly = true )
+    @Transactional(readOnly = true)
     public final <T> List<T> findAll(Class<T> clazz, Order... orders) {
         if (ArrayTool.isEmpty(orders)) {
             Query query = getSession().createQuery("from " + clazz.getName());

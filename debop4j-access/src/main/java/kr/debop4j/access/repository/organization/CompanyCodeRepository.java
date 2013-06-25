@@ -28,6 +28,7 @@ import kr.debop4j.data.hibernate.unitofwork.UnitOfWorks;
 import lombok.extern.slf4j.Slf4j;
 import org.hibernate.criterion.DetachedCriteria;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -38,6 +39,7 @@ import java.util.List;
  * @since 13. 3. 12.
  */
 @Repository
+@Transactional
 @Slf4j
 public class CompanyCodeRepository extends HibernateRepository<CompanyCode> {
 

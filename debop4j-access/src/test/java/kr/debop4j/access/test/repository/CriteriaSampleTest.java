@@ -32,8 +32,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-import static kr.debop4j.data.hibernate.unitofwork.UnitOfWorks.getCurrentSession;
-
 
 /**
  * kr.debop4j.access.test.repository.CriteriaSampleTest
@@ -87,7 +85,7 @@ public class CriteriaSampleTest extends RepositoryTestBase {
                                        .add(Projections.groupProperty("eg.code"))
                                        .add(Projections.rowCount()));
 
-        List loaded = dc.getExecutableCriteria(UnitOfWorks.getCurrentSession()).list();
+        List loaded = dc.getExecutableCriteria(hibernateDao.getSession()).list();
         log.info("Group by = [{}]", loaded);
     }
 
@@ -121,7 +119,7 @@ public class CriteriaSampleTest extends RepositoryTestBase {
                                            .add(Projections.rowCount(), "count"))
                 .addOrder(Order.desc("count"));
 
-        Object[] members = (Object[]) memberSizeDc.getExecutableCriteria(UnitOfWorks.getCurrentSession()).setMaxResults(1).uniqueResult();
+        Object[] members = (Object[]) memberSizeDc.getExecutableCriteria(hibernateDao.getSession()).setMaxResults(1).uniqueResult();
 
         if (members != null) {
             Long departmentId = (Long) members[0];

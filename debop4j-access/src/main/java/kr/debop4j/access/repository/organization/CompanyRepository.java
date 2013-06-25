@@ -19,12 +19,14 @@ package kr.debop4j.access.repository.organization;
 import kr.debop4j.access.model.organization.Company;
 import kr.debop4j.core.tools.StringTool;
 import kr.debop4j.data.hibernate.HibernateParameter;
-import kr.debop4j.data.hibernate.repository.impl.HibernateRepository;
+import kr.debop4j.data.hibernate.repository.impl.HibernateDao;
 import kr.debop4j.data.hibernate.tools.CriteriaTool;
 import lombok.extern.slf4j.Slf4j;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Restrictions;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -35,13 +37,14 @@ import java.util.List;
  * @since 13. 3. 1.
  */
 @Repository
+@Qualifier( "companyRepository" )
+@Transactional
 @Slf4j
-public class CompanyRepository extends HibernateRepository<Company> {
+public class CompanyRepository extends HibernateDao implements ICompanyRepository {
 
-    public CompanyRepository() {
-        super(Company.class);
-    }
+    public CompanyRepository() { }
 
+    @Override
     public DetachedCriteria buildCriteria(String code, String name, Boolean active) {
 
         DetachedCriteria dc = DetachedCriteria.forClass(Company.class);
@@ -58,16 +61,22 @@ public class CompanyRepository extends HibernateRepository<Company> {
         return dc;
     }
 
+    @Override
+    @Transactional( readOnly = true )
     public Company findByCode(String code) {
-        return findUniqueByNamedQuery("Company.findByCode", new HibernateParameter("code", code));
+        return findUniqueByNamedQuery(Company.class, "Company.findByCode", new HibernateParameter("code", code));
     }
 
+    @Override
+    @Transactional( readOnly = true )
     public List<Company> findByName(String name) {
-        return findByNamedQuery("Company.findByName", new HibernateParameter("name", name + '%'));
+        return findByNamedQuery(Company.class, "Company.findByName", new HibernateParameter("name", name + '%'));
     }
 
+    @Override
+    @Transactional( readOnly = true )
     public List<Company> findAllByActive(boolean active) {
         DetachedCriteria dc = DetachedCriteria.forClass(Company.class);
-        return find(dc.add(Restrictions.eq("active", active)));
+        return find(Company.class, dc.add(Restrictions.eq("active", active)));
     }
 }

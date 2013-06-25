@@ -21,12 +21,9 @@ import kr.debop4j.access.model.organization.Company;
 import kr.debop4j.access.model.organization.CompanyCode;
 import kr.debop4j.access.model.product.Product;
 import kr.debop4j.data.hibernate.spring.MySqlConfigBase;
-import kr.debop4j.data.hibernate.tools.HibernateTool;
-import org.hibernate.SessionFactory;
 import org.hibernate.cache.ehcache.SingletonEhCacheRegionFactory;
 import org.hibernate.cfg.Environment;
 import org.hibernate.cfg.beanvalidation.BeanValidationEventListener;
-import org.hibernate.event.spi.EventType;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
@@ -58,18 +55,6 @@ public class UsingMySqlConfiguration extends MySqlConfigBase {
         };
     }
 
-
-    @Bean
-    public SessionFactory sessionFactory() {
-        SessionFactory sessionFactory = super.sessionFactory();
-
-        // validator용 listener 추가
-        HibernateTool.registerEventListener(sessionFactory,
-                                            beanValidationEventListener(),
-                                            EventType.PRE_INSERT, EventType.PRE_UPDATE, EventType.PRE_DELETE);
-
-        return sessionFactory;
-    }
 
     @Bean
     public BeanValidationEventListener beanValidationEventListener() {
