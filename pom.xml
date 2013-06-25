@@ -894,22 +894,27 @@
                 <scope>test</scope>
             </dependency>
 
-            <!--
-                MariaDB Cient는 로컬에 수작업으로 등록해야 합니다.
-                mvn install:install-file -Dfile=mariadb-java-client-1.1.2.jar -DgroupId=org.mariadb -DartifactId=mariadb-java-client -Dversion=1.1.2 -Dpackaging=jar -DgeneratePom=true
-            -->
-            <dependency>
-                <groupId>org.mariadb</groupId>
-                <artifactId>mariadb-java-client</artifactId>
-                <version>${mariadb.java.client.version}</version>
-                <scope>test</scope>
-            </dependency>
-
             <dependency>
                 <groupId>mysql</groupId>
                 <artifactId>mysql-connector-java</artifactId>
                 <version>5.1.25</version>
                 <scope>test</scope>
+            </dependency>
+
+            <!--
+                MariaDB Cient는 로컬에 수작업으로 등록해야 합니다.
+                mvn install:install-file -Dfile=mariadb-java-client-1.1.2.jar -DgroupId=org.mariadb -DartifactId=mariadb-java-client -Dversion=1.1.2 -Dpackaging=jar -DgeneratePom=true
+            -->
+            <!--<dependency>-->
+                <!--<groupId>org.mariadb</groupId>-->
+                <!--<artifactId>mariadb-java-client</artifactId>-->
+                <!--<version>${mariadb.java.client.version}</version>-->
+                <!--<scope>test</scope>-->
+            <!--</dependency>-->
+            <dependency>
+                <groupId>org.jumpmind.symmetric.jdbc</groupId>
+                <artifactId>mariadb-java-client</artifactId>
+                <version>1.1.1</version>
             </dependency>
 
             <dependency>
