@@ -259,10 +259,10 @@
         <spring.data.redis.version>1.0.4.RELEASE</spring.data.redis.version>
         <spring.data.mongo.version>1.2.1.RELEASE</spring.data.mongo.version>
 
-        <hibernate.version>4.2.1.Final</hibernate.version>
+        <hibernate.version>4.2.2.Final</hibernate.version>
         <hibernate.validator.version>4.3.1.Final</hibernate.validator.version>
 
-        <hibernate.search.version>4.2.0.Final</hibernate.search.version>
+        <hibernate.search.version>4.3.0.Final</hibernate.search.version>
 
         <hibernate.ogm.version>4.0.0.Beta2</hibernate.ogm.version>
         <hibernate.ogm.mongo.version>4.0.0.Beta1</hibernate.ogm.mongo.version>
