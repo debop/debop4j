@@ -292,7 +292,7 @@
         <tomcat.jdbc.version>7.0.41</tomcat.jdbc.version>
         <bonecp.version>0.7.1.RELEASE</bonecp.version>
 
-        <miriadb.java.client.version>1.1.1</miriadb.java.client.version>
+        <mariadb.java.client.version>1.1.1</mariadb.java.client.version>
 
         <avro.version>1.7.4</avro.version>
         <twitter4j.version>3.0.3</twitter4j.version>
@@ -898,6 +898,7 @@
                 <groupId>org.jumpmind.symmetric.jdbc</groupId>
                 <artifactId>mariadb-java-client</artifactId>
                 <version>${mariadb.java.client.version}</version>
+                <scope>test</scope>
             </dependency>
 
             <dependency>
