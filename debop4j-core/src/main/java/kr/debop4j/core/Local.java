@@ -75,4 +75,14 @@ public class Local {
         threadLocal.get().clear();
         log.debug("Local 저장소의 모든 정보를 삭제했습니다.");
     }
+
+    public static synchronized <T> T getOrCreate(Object key, Class<T> clazz, Function<T> factory) {
+        T result = get(key, clazz);
+        if (result == null) {
+            result = factory.execute();
+            put(key, result);
+            log.trace("Local 저장소에 인스턴스를 저장했습니다. clazz=[{}], key=[{}]", clazz, key);
+        }
+        return result;
+    }
 }
