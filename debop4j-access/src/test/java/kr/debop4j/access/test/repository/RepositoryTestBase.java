@@ -18,6 +18,7 @@ package kr.debop4j.access.test.repository;
 
 import kr.debop4j.access.test.AccessTestBase;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * kr.debop4j.access.test.repository.RepositoryTestBase
@@ -26,6 +27,7 @@ import lombok.extern.slf4j.Slf4j;
  * @since 13. 3. 12.
  */
 @Slf4j
+@Transactional
 public abstract class RepositoryTestBase extends AccessTestBase {
 
     public static final String DefaultCompanyCode = "KTH";

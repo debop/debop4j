@@ -28,6 +28,7 @@ import org.hibernate.criterion.*;
 import org.hibernate.sql.JoinType;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -41,6 +42,7 @@ import static kr.debop4j.data.hibernate.unitofwork.UnitOfWorks.getCurrentSession
  * @since 13. 6. 15. 오후 6:26
  */
 @Slf4j
+@Transactional
 public class CriteriaSampleTest extends RepositoryTestBase {
 
     @Autowired

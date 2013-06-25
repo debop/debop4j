@@ -23,14 +23,17 @@ import com.mysema.query.jpa.hibernate.HibernateSubQuery;
 import com.mysema.query.jpa.hibernate.HibernateUpdateClause;
 import kr.debop4j.access.model.organization.*;
 import lombok.extern.slf4j.Slf4j;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.junit.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Map;
 
 import static com.mysema.query.group.GroupBy.groupBy;
 import static com.mysema.query.group.GroupBy.list;
-import static kr.debop4j.data.hibernate.unitofwork.UnitOfWorks.getCurrentSession;
 
 /**
  * kr.debop4j.access.test.repository.QuerydslSampleTest
@@ -39,9 +42,18 @@ import static kr.debop4j.data.hibernate.unitofwork.UnitOfWorks.getCurrentSession
  * @since 13. 6. 15. 오전 9:44
  */
 @Slf4j
+@Transactional
 public class QuerydslSampleTest extends RepositoryTestBase {
 
+    @Autowired
+    SessionFactory sessionFactory;
+
+    public Session getCurrentSession() {
+        return sessionFactory.getCurrentSession();
+    }
+
     @Test
+    @Transactional( readOnly = true )
     public void simpleWhere() {
         HibernateQuery query = new HibernateQuery(getCurrentSession());
         QEmployee employee = QEmployee.employee;
@@ -53,6 +65,7 @@ public class QuerydslSampleTest extends RepositoryTestBase {
     }
 
     @Test
+    @Transactional( readOnly = true )
     public void joinWhere() {
         HibernateQuery query = new HibernateQuery(getCurrentSession());
         QEmployee employee = QEmployee.employee;
@@ -66,6 +79,7 @@ public class QuerydslSampleTest extends RepositoryTestBase {
     }
 
     @Test
+    @Transactional( readOnly = true )
     public void groupingTest() {
         HibernateQuery query = new HibernateQuery(getCurrentSession());
         QEmployee employee = QEmployee.employee;
@@ -113,6 +127,7 @@ public class QuerydslSampleTest extends RepositoryTestBase {
     }
 
     @Test
+    @Transactional( readOnly = true )
     public void subQueriesTest() {
         QDepartment department = QDepartment.department;
         QDepartmentMember member = QDepartmentMember.departmentMember;
@@ -140,6 +155,7 @@ public class QuerydslSampleTest extends RepositoryTestBase {
     }
 
     @Test
+    @Transactional( readOnly = true )
     @SuppressWarnings("unchecked")
     public void getHibernateQuery() {
         HibernateQuery query = new HibernateQuery(getCurrentSession());
@@ -156,6 +172,7 @@ public class QuerydslSampleTest extends RepositoryTestBase {
     }
 
     @Test
+    @Transactional( readOnly = true )
     public void transformTest() {
         QCompany company = QCompany.company;
         QEmployee employee = QEmployee.employee;
