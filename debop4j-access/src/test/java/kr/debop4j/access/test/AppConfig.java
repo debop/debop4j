@@ -36,10 +36,10 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
         "kr.debop4j.access.repository.product",
         "kr.debop4j.access.service"
 } )
-// 아래의 3개의 Configuration은 각각 HSql, MySql, PostgreSQL 대상의 환경설정입니다. 하나만 활성화해서 테스트하세요
+// 아래의 3개의 Configuration은 각각 HSql, MySql, MariaDB, PostgreSQL 대상의 환경설정입니다. 하나만 활성화해서 테스트하세요
 // @Import( { UsingHSqlConfiguration.class } )
-// @Import( { UsingMySqlConfiguration.class } )
-@Import( { UsingMariaDbConfiguration.class } )
+@Import( { UsingMySqlConfiguration.class } )
+// @Import( { UsingMariaDbConfiguration.class } )
 // @Import( { UsingPostgreSqlConfiguration.class } )
 public class AppConfig {
 

@@ -292,7 +292,7 @@
         <tomcat.jdbc.version>7.0.41</tomcat.jdbc.version>
         <bonecp.version>0.7.1.RELEASE</bonecp.version>
 
-        <mariadb.java.client.version>1.1.1</mariadb.java.client.version>
+        <mariadb.java.client.version>1.1.2</mariadb.java.client.version>
 
         <avro.version>1.7.4</avro.version>
         <twitter4j.version>3.0.3</twitter4j.version>
@@ -894,8 +894,12 @@
                 <scope>test</scope>
             </dependency>
 
+            <!--
+                MariaDB Cient는 로컬에 수작업으로 등록해야 합니다.
+                mvn install:install-file -Dfile=mariadb-java-client-1.1.2.jar -DgroupId=org.mariadb -DartifactId=mariadb-java-client -Dversion=1.1.2 -Dpackaging=jar -DgeneratePom=true
+            -->
             <dependency>
-                <groupId>org.jumpmind.symmetric.jdbc</groupId>
+                <groupId>org.mariadb</groupId>
                 <artifactId>mariadb-java-client</artifactId>
                 <version>${mariadb.java.client.version}</version>
                 <scope>test</scope>
