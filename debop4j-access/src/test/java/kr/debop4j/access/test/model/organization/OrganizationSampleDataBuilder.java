@@ -67,5 +67,7 @@ public class OrganizationSampleDataBuilder extends SampleDataBuilder {
             company.setActive(true);
             dao.saveOrUpdate(company);
         }
+
+        dao.flushSession();
     }
 }

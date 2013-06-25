@@ -55,7 +55,6 @@ public class UsingMySqlConfiguration extends MySqlConfigBase {
         };
     }
 
-
     @Bean
     public BeanValidationEventListener beanValidationEventListener() {
         return new BeanValidationEventListener();

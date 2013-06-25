@@ -20,13 +20,14 @@ import kr.debop4j.access.model.organization.Company;
 import kr.debop4j.access.test.AccessTestBase;
 import kr.debop4j.data.hibernate.repository.IHibernateDao;
 import lombok.extern.slf4j.Slf4j;
-import org.junit.Assert;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Locale;
+
+import static org.fest.assertions.Assertions.assertThat;
 
 /**
  * kr.debop4j.access.test.model.organization.OrganizationModelTest
@@ -35,7 +36,6 @@ import java.util.Locale;
  * @since 13. 3. 14 오전 11:27
  */
 @Slf4j
-@Transactional
 public class OrganizationModelTest extends AccessTestBase {
 
     @Autowired
@@ -47,10 +47,12 @@ public class OrganizationModelTest extends AccessTestBase {
         super.doBefore();
 
         new OrganizationSampleDataBuilder(dao).createSampleData();
+        dao.getSession().flush();
         dao.getSession().clear();
     }
 
     @Test
+    @Transactional
     public void createCompany() {
         Company company = new Company("KTH", "케이티하이텔");
         company.addLocaleValue(Locale.KOREA,
@@ -62,9 +64,8 @@ public class OrganizationModelTest extends AccessTestBase {
         dao.flushSession();
 
         Company loaded = dao.get(Company.class, company.getId());
-        Assert.assertEquals(company, loaded);
-
-        Assert.assertEquals(2, loaded.getLocaleMap().size());
+        assertThat(loaded).isEqualTo(company);
+        assertThat(loaded.getLocaleMap().size()).isEqualTo(2);
 
         dao.delete(loaded);
         dao.flushSession();

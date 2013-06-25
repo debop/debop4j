@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package kr.debop4j.access.model.organization;
 
 import com.google.common.base.Objects;
@@ -25,6 +24,8 @@ import kr.debop4j.core.Guard;
 import kr.debop4j.core.ValueObjectBase;
 import kr.debop4j.core.tools.HashTool;
 import kr.debop4j.data.model.ILocaleValue;
+import kr.debop4j.data.model.mysql.IMySqlCreatedTimestamp;
+import kr.debop4j.data.model.mysql.IMySqlUpdatedTimestamp;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
@@ -37,6 +38,7 @@ import org.hibernate.annotations.Table;
 import javax.persistence.*;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import java.sql.Timestamp;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
@@ -61,7 +63,8 @@ import java.util.Set;
 @DynamicUpdate
 @Getter
 @Setter
-public class Company extends AccessLocaledEntityBase<Company.CompanyLocale> implements IActor {
+public class Company extends AccessLocaledEntityBase<Company.CompanyLocale>
+        implements IActor, IMySqlUpdatedTimestamp, IMySqlCreatedTimestamp {
 
     private static final long serialVersionUID = -7337020664879632947L;
 
@@ -97,6 +100,7 @@ public class Company extends AccessLocaledEntityBase<Company.CompanyLocale> impl
 
     @Basic
     @Column(name = "IsActive")
+
     private Boolean active;
 
     @Basic
@@ -120,12 +124,15 @@ public class Company extends AccessLocaledEntityBase<Company.CompanyLocale> impl
     @LazyCollection(LazyCollectionOption.EXTRA)
     private Map<Locale, CompanyLocale> localeMap = Maps.newHashMap();
 
-//    @Column( updatable = false, insertable = false, columnDefinition = "timestamp default current_timestamp on update current_timestamp" )
-//    @Generated( GenerationTime.ALWAYS )
-//    private Timestamp dbupdate;
-//
-//    @Column( updatable = false, columnDefinition = "timestamp default 0" )
-//    private Timestamp dbentry;
+
+    /** MySQL용 UPDATE 시 시간 값 ( on update current_timestamp ) */
+    @Setter( AccessLevel.PROTECTED )
+    private Timestamp updatedTimestamp;
+
+    /** MySQL용 INSERT 시 시간 값 ( DEFAULT CURRENT_TIMESTAMP ) */
+    @Setter( AccessLevel.PROTECTED )
+    private Timestamp createdTimestamp;
+
 
     public Map<Locale, CompanyLocale> getLocaleMap() {
         return localeMap;
@@ -162,11 +169,11 @@ public class Company extends AccessLocaledEntityBase<Company.CompanyLocale> impl
             this.description = description;
         }
 
-        @Column(name = "CompanyName", length = 128)
+        @Column( name = "CompanyName", length = 128 )
         private String name;
 
         @Basic
-        @Column(name = "CompanyDesc", length = 2000)
+        @Column( name = "CompanyDesc", length = 2000 )
         private String description;
 
         @Override

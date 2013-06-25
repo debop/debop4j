@@ -39,6 +39,8 @@ public class QCompany extends EntityPathBase<Company> {
 
     public final StringPath code = createString("code");
 
+    public final DateTimePath<java.sql.Timestamp> createdTimestamp = createDateTime("createdTimestamp", java.sql.Timestamp.class);
+
     public final StringPath description = createString("description");
 
     public final SetPath<Employee, QEmployee> employees = this.<Employee, QEmployee>createSet("employees", Employee.class, QEmployee.class, PathInits.DIRECT2);
@@ -55,6 +57,8 @@ public class QCompany extends EntityPathBase<Company> {
 
     //inherited
     public final BooleanPath persisted = _super.persisted;
+
+    public final DateTimePath<java.sql.Timestamp> updatedTimestamp = createDateTime("updatedTimestamp", java.sql.Timestamp.class);
 
     //inherited
     public final DateTimePath<org.joda.time.DateTime> updateTimestamp = _super.updateTimestamp;
