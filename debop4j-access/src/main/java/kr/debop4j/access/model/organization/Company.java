@@ -50,15 +50,15 @@ import java.util.Set;
  * @since 13. 3. 1.
  */
 @Entity
-@javax.persistence.Table( name = "Company" )
-@Cache( region = "Organization", usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE )
-@Table( appliesTo = "Company",
-        indexes = @Index( name = "ix_company_code",
-                          columnNames = { "CompanyCode", "CompanyName" } ) )
-@NamedQueries( {
-                       @NamedQuery( name = "Company.findByCode", query = "from Company c where c.code = :code" ),
-                       @NamedQuery( name = "Company.findByName", query = "from Company c where c.name like :name" )
-               } )
+@javax.persistence.Table(name = "Company")
+@Cache(region = "Organization", usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+@Table(appliesTo = "Company",
+       indexes = @Index(name = "ix_company_code",
+                        columnNames = { "CompanyCode", "CompanyName" }))
+@NamedQueries({
+                      @NamedQuery(name = "Company.findByCode", query = "from Company c where c.code = :code"),
+                      @NamedQuery(name = "Company.findByName", query = "from Company c where c.name like :name")
+              })
 @DynamicInsert
 @DynamicUpdate
 @Getter
@@ -126,11 +126,11 @@ public class Company extends AccessLocaledEntityBase<Company.CompanyLocale>
 
 
     /** MySQL용 UPDATE 시 시간 값 ( on update current_timestamp ) */
-    @Setter( AccessLevel.PROTECTED )
+    @Setter(AccessLevel.PROTECTED)
     private Timestamp updatedTimestamp;
 
     /** MySQL용 INSERT 시 시간 값 ( DEFAULT CURRENT_TIMESTAMP ) */
-    @Setter( AccessLevel.PROTECTED )
+    @Setter(AccessLevel.PROTECTED)
     private Timestamp createdTimestamp;
 
 
@@ -169,11 +169,11 @@ public class Company extends AccessLocaledEntityBase<Company.CompanyLocale>
             this.description = description;
         }
 
-        @Column( name = "CompanyName", length = 128 )
+        @Column(name = "CompanyName", length = 128)
         private String name;
 
         @Basic
-        @Column( name = "CompanyDesc", length = 2000 )
+        @Column(name = "CompanyDesc", length = 2000)
         private String description;
 
         @Override

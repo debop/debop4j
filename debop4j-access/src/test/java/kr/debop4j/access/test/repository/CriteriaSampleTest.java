@@ -47,7 +47,7 @@ public class CriteriaSampleTest extends RepositoryTestBase {
     IHibernateDao hibernateDao;
 
     @Test
-    @Transactional( readOnly = true )
+    @Transactional(readOnly = true)
     public void simpleWhere() {
 
         DetachedCriteria dc = DetachedCriteria.forClass(Employee.class);
@@ -63,7 +63,7 @@ public class CriteriaSampleTest extends RepositoryTestBase {
     }
 
     @Test
-    @Transactional( readOnly = true )
+    @Transactional(readOnly = true)
     public void joinSample() {
 
         DetachedCriteria dc = DetachedCriteria.forClass(Employee.class);
@@ -76,7 +76,7 @@ public class CriteriaSampleTest extends RepositoryTestBase {
     }
 
     @Test
-    @Transactional( readOnly = true )
+    @Transactional(readOnly = true)
     public void groupingTest() {
 
         DetachedCriteria dc = DetachedCriteria.forClass(Employee.class);
@@ -115,7 +115,7 @@ public class CriteriaSampleTest extends RepositoryTestBase {
     }
 
     @Test
-    @Transactional( readOnly = true )
+    @Transactional(readOnly = true)
     public void subqueriesTest() {
 
         DetachedCriteria memberSizeDc = DetachedCriteria.forClass(DepartmentMember.class);
@@ -135,7 +135,7 @@ public class CriteriaSampleTest extends RepositoryTestBase {
     }
 
     @Test
-    @Transactional( readOnly = true )
+    @Transactional(readOnly = true)
     public void subqueriesTest2() {
         DetachedCriteria memberSizeDc = DetachedCriteria.forClass(DepartmentMember.class);
         memberSizeDc.setProjection(Projections.projectionList()

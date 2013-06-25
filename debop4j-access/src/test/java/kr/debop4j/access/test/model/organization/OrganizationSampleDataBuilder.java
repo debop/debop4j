@@ -47,7 +47,7 @@ public class OrganizationSampleDataBuilder extends SampleDataBuilder {
         createCompany();
     }
 
-    @SuppressWarnings( "unchecked" )
+    @SuppressWarnings("unchecked")
     private void createCompany() {
         Company company = new Company(AccessContext.Current.getCompanyCode());
         company.setName(company.getCode() + " Name");

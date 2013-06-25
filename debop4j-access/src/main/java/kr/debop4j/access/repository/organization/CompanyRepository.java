@@ -37,7 +37,7 @@ import java.util.List;
  * @since 13. 3. 1.
  */
 @Repository
-@Qualifier( "companyRepository" )
+@Qualifier("companyRepository")
 @Transactional
 @Slf4j
 public class CompanyRepository extends HibernateDao implements ICompanyRepository {
@@ -62,19 +62,19 @@ public class CompanyRepository extends HibernateDao implements ICompanyRepositor
     }
 
     @Override
-    @Transactional( readOnly = true )
+    @Transactional(readOnly = true)
     public Company findByCode(String code) {
         return findUniqueByNamedQuery(Company.class, "Company.findByCode", new HibernateParameter("code", code));
     }
 
     @Override
-    @Transactional( readOnly = true )
+    @Transactional(readOnly = true)
     public List<Company> findByName(String name) {
         return findByNamedQuery(Company.class, "Company.findByName", new HibernateParameter("name", name + '%'));
     }
 
     @Override
-    @Transactional( readOnly = true )
+    @Transactional(readOnly = true)
     public List<Company> findAllByActive(boolean active) {
         DetachedCriteria dc = DetachedCriteria.forClass(Company.class);
         return find(Company.class, dc.add(Restrictions.eq("active", active)));

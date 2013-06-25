@@ -30,8 +30,8 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
  * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 13. 3. 2.
  */
-@RunWith( SpringJUnit4ClassRunner.class )
-@ContextConfiguration( classes = { AppConfig.class } )
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(classes = { AppConfig.class })
 public class AccessTestBase {
 
     @BeforeClass

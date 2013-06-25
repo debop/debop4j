@@ -47,7 +47,7 @@ import static org.fest.assertions.Assertions.assertThat;
 public class CompanyRepositoryTest extends RepositoryTestBase {
 
     @Autowired
-    @Qualifier( "companyRepository" )
+    @Qualifier("companyRepository")
     private ICompanyRepository repository;
 
     private Company company;

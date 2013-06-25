@@ -33,12 +33,12 @@ import java.util.List;
 public interface ICompanyRepository extends IHibernateDao {
     DetachedCriteria buildCriteria(String code, String name, Boolean active);
 
-    @Transactional( readOnly = true )
+    @Transactional(readOnly = true)
     Company findByCode(String code);
 
-    @Transactional( readOnly = true )
+    @Transactional(readOnly = true)
     List<Company> findByName(String name);
 
-    @Transactional( readOnly = true )
+    @Transactional(readOnly = true)
     List<Company> findAllByActive(boolean active);
 }
