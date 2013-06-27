@@ -23,7 +23,7 @@
     <groupId>debop4j</groupId>
     <artifactId>debop4j-parent</artifactId>
     <packaging>pom</packaging>
-    <version>0.9.5</version>
+    <version>1.0.0.Alpha</version>
 
     <licenses>
         <license>
@@ -89,13 +89,26 @@
             <name>Spring RELEASE Repository</name>
             <url>http://repo.springsource.org/libs-release</url>
         </repository>
+        <!--<repository>-->
+        <!--<id>jboss-maven2-release-repository</id>-->
+        <!--<url>https://repository.jboss.org/nexus/content/repositories/releases/</url>-->
+        <!--</repository>-->
+        <!--<repository>-->
+        <!--<id>jboss-hibernate</id>-->
+        <!--<url>https://repository.jboss.org/nexus/content/groups/public/org/hibernate/</url>-->
+        <!--</repository>-->
         <repository>
-            <id>jboss-maven2-release-repository</id>
-            <url>https://repository.jboss.org/nexus/content/repositories/releases/</url>
-        </repository>
-        <repository>
-            <id>jboss-hibernate</id>
-            <url>https://repository.jboss.org/nexus/content/groups/public/org/hibernate/</url>
+            <id>jboss-public-repository-group</id>
+            <name>JBoss Public Maven Repository Group</name>
+            <url>http://repository.jboss.org/nexus/content/groups/public</url>
+            <releases>
+                <enabled>true</enabled>
+                <updatePolicy>never</updatePolicy>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+                <updatePolicy>never</updatePolicy>
+            </snapshots>
         </repository>
         <repository>
             <id>typesafe</id>
@@ -285,9 +298,9 @@
         <ehcache.version>2.6.5</ehcache.version>
         <jedis.version>2.1.0</jedis.version>
 
-        <infinispan.version>5.2.6.Final</infinispan.version>
-        <hibernate.infinispan.version>4.2.1.Final</hibernate.infinispan.version>
-        <infinispan.lucene3.version>5.3.0.Beta2</infinispan.lucene3.version>
+        <infinispan.version>5.3.0.Final</infinispan.version>
+        <hibernate.infinispan.version>4.2.2.Final</hibernate.infinispan.version>
+        <infinispan.lucene3.version>5.3.0.Final</infinispan.lucene3.version>
 
         <tomcat.jdbc.version>7.0.41</tomcat.jdbc.version>
         <bonecp.version>0.7.1.RELEASE</bonecp.version>
@@ -826,7 +839,7 @@
             </dependency>
             <dependency>
                 <groupId>org.infinispan</groupId>
-                <artifactId>infinispan-server-memcached</artifactId>
+                <artifactId>infinispan-spring</artifactId>
                 <version>${infinispan.version}</version>
             </dependency>
             <dependency>
@@ -906,10 +919,10 @@
                 mvn install:install-file -Dfile=mariadb-java-client-1.1.2.jar -DgroupId=org.mariadb -DartifactId=mariadb-java-client -Dversion=1.1.2 -Dpackaging=jar -DgeneratePom=true
             -->
             <!--<dependency>-->
-                <!--<groupId>org.mariadb</groupId>-->
-                <!--<artifactId>mariadb-java-client</artifactId>-->
-                <!--<version>${mariadb.java.client.version}</version>-->
-                <!--<scope>test</scope>-->
+            <!--<groupId>org.mariadb</groupId>-->
+            <!--<artifactId>mariadb-java-client</artifactId>-->
+            <!--<version>${mariadb.java.client.version}</version>-->
+            <!--<scope>test</scope>-->
             <!--</dependency>-->
             <dependency>
                 <groupId>org.jumpmind.symmetric.jdbc</groupId>

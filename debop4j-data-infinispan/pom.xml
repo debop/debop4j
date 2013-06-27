@@ -19,7 +19,7 @@
     <parent>
         <artifactId>debop4j-parent</artifactId>
         <groupId>debop4j</groupId>
-        <version>0.9.5</version>
+        <version>1.0.0.Alpha</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
     <modelVersion>4.0.0</modelVersion>
@@ -72,7 +72,7 @@
         </dependency>
         <dependency>
             <groupId>org.infinispan</groupId>
-            <artifactId>infinispan-server-memcached</artifactId>
+            <artifactId>infinispan-spring</artifactId>
         </dependency>
         <dependency>
             <groupId>org.infinispan</groupId>
