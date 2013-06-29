@@ -288,7 +288,7 @@ public abstract class AsyncTool {
         while (!allCompleted) {
             allCompleted = Iterables.all(futures, new Predicate<Future<?>>() {
                 @Override
-                public boolean apply(@Nullable Future<?> input) {
+                public boolean apply(Future<?> input) {
                     assert input != null;
                     return input.isDone() || input.isCancelled();
                 }

@@ -203,9 +203,9 @@ public final class CriteriaTool {
             return Restrictions
                     .disjunction()
                     .add(getIsInRangeCriterion(loPropertyName, hiPropertyName, hi, includeLo, includeHi))
-                    .add((includeLo) ? le(loPropertyName, hi)
+                    .add((includeHi) ? le(loPropertyName, hi)
                                  : lt(loPropertyName, hi))
-                    .add((includeLo) ? le(hiPropertyName, hi)
+                    .add((includeHi) ? le(hiPropertyName, hi)
                                  : lt(hiPropertyName, hi));
         }
     }

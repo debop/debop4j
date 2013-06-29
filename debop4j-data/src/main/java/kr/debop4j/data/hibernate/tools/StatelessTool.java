@@ -63,9 +63,10 @@ public class StatelessTool {
             action.perform(stateless);
             tx.commit();
         } catch (Exception e) {
-            log.error("StatelessSession에서 작업이 실패했습니다. rollback 합니다.", e);
+            log.error("StatelessSession을 이용한 작업에 실패했습니다. rollback 합니다.", e);
             if (tx != null)
                 tx.rollback();
+            throw new RuntimeException(e);
         } finally {
             stateless.close();
         }
@@ -94,6 +95,7 @@ public class StatelessTool {
             log.error("StatelessSession에서 작업이 실패했습니다. rollback 합니다.", e);
             if (tx != null)
                 tx.rollback();
+            throw new RuntimeException(e);
         } finally {
             stateless.close();
         }
@@ -122,7 +124,8 @@ public class StatelessTool {
         try {
             action.perform(stateless);
         } catch (Exception e) {
-            log.error("StatelessSession에서 작업이 실패했습니다. rollback 합니다.", e);
+            log.error("StatelessSession에서 작업이 실패했습니다.", e);
+            throw new RuntimeException(e);
         } finally {
             stateless.close();
         }
@@ -143,7 +146,8 @@ public class StatelessTool {
             for (Action1<StatelessSession> action : actions)
                 action.perform(stateless);
         } catch (Exception e) {
-            log.error("StatelessSession에서 작업이 실패했습니다. rollback 합니다.", e);
+            log.error("StatelessSession에서 작업이 실패했습니다.", e);
+            throw new RuntimeException(e);
         } finally {
             stateless.close();
         }

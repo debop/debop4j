@@ -101,7 +101,7 @@ public class EntityTool {
      */
     public static <T extends IHierarchyEntity<T>> void assertNotCircularHierarchy(T child, T parent) {
         if (child == parent)
-            throw new IllegalArgumentException("Child and Paremt are same.");
+            throw new IllegalArgumentException("Child and Parent are same.");
 
         if (child.getDescendents().contains(parent))
             throw new IllegalArgumentException("child 가 parent를 이미 자손으로 가지고 있습니다.");
@@ -193,7 +193,7 @@ public class EntityTool {
      * @return the detached criteria
      */
     public static <T extends IHierarchyEntity<T> & IEntity<TId>, TId extends Serializable>
-    DetachedCriteria GetAncestorsCriteria(T entity, Session session, Class<T> entityClass) {
+    DetachedCriteria getAncestorsCriteria(T entity, Session session, Class<T> entityClass) {
         return DetachedCriteria
                 .forClass(entityClass)
                 .createAlias(PROPERTY_DESCENDENTS, "des")
@@ -209,10 +209,10 @@ public class EntityTool {
      * @return the detached criteria
      */
     public static <T extends IHierarchyEntity<T> & IEntity<TId>, TId extends Serializable>
-    DetachedCriteria GetDescendentsCriteria(T entity, Session session, Class<T> entityClass) {
+    DetachedCriteria getDescendentsCriteria(T entity, Session session, Class<T> entityClass) {
         return DetachedCriteria.forClass(entityClass)
-                .createAlias(PROPERTY_ANCESTORS, "ans")
-                .add(Restrictions.eq("ans.id", entity.getId()));
+                               .createAlias(PROPERTY_ANCESTORS, "ans")
+                               .add(Restrictions.eq("ans.id", entity.getId()));
     }
 
     /**
@@ -224,8 +224,8 @@ public class EntityTool {
      * @return the detached criteria
      */
     public static <T extends IHierarchyEntity<T> & IEntity<TId>, TId extends Serializable>
-    DetachedCriteria GetAncestorsIdCriteria(T entity, Session session, Class<T> entityClass) {
-        return GetAncestorsCriteria(entity, session, entityClass)
+    DetachedCriteria getAncestorsIdCriteria(T entity, Session session, Class<T> entityClass) {
+        return getAncestorsCriteria(entity, session, entityClass)
                 .setProjection(Projections.distinct(Projections.id()));
     }
 
@@ -238,8 +238,8 @@ public class EntityTool {
      * @return the detached criteria
      */
     public static <T extends IHierarchyEntity<T> & IEntity<TId>, TId extends Serializable>
-    DetachedCriteria GetDescendentsIdCriteria(T entity, Session session, Class<T> entityClass) {
-        return GetDescendentsCriteria(entity, session, entityClass)
+    DetachedCriteria getDescendentsIdCriteria(T entity, Session session, Class<T> entityClass) {
+        return getDescendentsCriteria(entity, session, entityClass)
                 .setProjection(Projections.distinct(Projections.id()));
     }
 
