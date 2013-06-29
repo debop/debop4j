@@ -110,7 +110,7 @@ public class HibernateTool {
      * @param entityClass the entity class
      * @return the hibernate dao
      */
-    public static <E extends IStatefulEntity> IHibernateRepository getHibernateDao(Class<E> entityClass) {
+    public static <E extends IStatefulEntity> IHibernateRepository getHibernateRepository(Class<E> entityClass) {
         return getHibernateDaoFactory().getOrCreateHibernateRepository(entityClass);
     }
 

@@ -20,7 +20,7 @@ import com.google.common.base.Objects;
 import kr.debop4j.data.NamedParameterBase;
 import lombok.Getter;
 import lombok.Setter;
-import org.hibernate.type.ObjectType;
+import org.hibernate.type.StandardBasicTypes;
 
 /**
  * Hibernate용 Parameter 정보를 표현합니다.
@@ -41,7 +41,7 @@ public class HibernateParameter extends NamedParameterBase {
      * @param value the parameter value
      */
     public HibernateParameter(String name, Object value) {
-        this(name, value, ObjectType.INSTANCE);
+        this(name, value, StandardBasicTypes.SERIALIZABLE);
     }
 
     /**

@@ -16,7 +16,6 @@
 
 package kr.debop4j.core.json;
 
-import com.google.common.base.Defaults;
 import com.google.gson.Gson;
 import kr.debop4j.core.Guard;
 import kr.debop4j.core.tools.StringTool;
@@ -69,11 +68,11 @@ public class GsonSerializer implements IJsonSerializer {
     @Override
     public <T> T deserializeFromText(String jsonText, Class<T> targetClass) {
         if (StringTool.isWhiteSpace(jsonText))
-            return Defaults.defaultValue(targetClass);
+            return null;
 
         if (log.isTraceEnabled())
             log.trace("Json 역직렬화를 수행합니다. jsonText=[{}], targetClass=[{}]",
-                    StringTool.ellipsisChar(jsonText, 255), targetClass);
+                      StringTool.ellipsisChar(jsonText, 255), targetClass);
 
         return gson.fromJson(jsonText, targetClass);
     }

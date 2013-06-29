@@ -47,7 +47,7 @@ public final class StringTool {
      * 멀티바이트 문자열을 바이트 배열로 변환 시에 선두번지에 접두사로 넣는 값입니다.
      * 이 값이 있으면 꼭 UTF-8 으로 변환해야 한다는 뜻입니다.
      */
-    protected static final byte[] MULTI_BYTES_PREFIX = new byte[] { (byte) 0xEF, (byte) 0xBB, (byte) 0xBF };
+    protected static final byte[] MULTI_BYTES_PREFIX = new byte[]{ (byte) 0xEF, (byte) 0xBB, (byte) 0xBF };
 
     /** The constant TRIMMING_STR. */
     public static final String TRIMMING_STR = "...";
@@ -171,7 +171,7 @@ public final class StringTool {
      * @return 멀티바이트 언어라면 true, 아니면 false
      */
     public static boolean isMultiByteString(final String str) {
-        if (!isWhiteSpace(str))
+        if (isWhiteSpace(str))
             return false;
 
         try {
@@ -219,7 +219,7 @@ public final class StringTool {
      * @return the string
      */
     public static String ellipsisChar(final String str, final int maxLength) {
-        if (str.isEmpty() || !needEllipsis(str, maxLength))
+        if (isEmpty(str) || !needEllipsis(str, maxLength))
             return str;
 
         return str.substring(0, maxLength - TRIMMING_STR.length()) + TRIMMING_STR;
@@ -233,14 +233,14 @@ public final class StringTool {
      * @return the string
      */
     public static String ellipsisPath(final String str, final int maxLength) {
-        if (str.isEmpty() || !needEllipsis(str, maxLength))
+        if (isEmpty(str) || !needEllipsis(str, maxLength))
             return str;
 
         int length = maxLength / 2;
 
         StringBuilder builder = new StringBuilder();
         builder.append(str.substring(0, length))
-                .append(TRIMMING_STR);
+               .append(TRIMMING_STR);
 
         if (maxLength % 2 == 0)
             builder.append(str.substring(str.length() - length));
@@ -258,7 +258,7 @@ public final class StringTool {
      * @return the string
      */
     public static String ellipsisFirst(final String str, final int maxLength) {
-        if (str.isEmpty() || !needEllipsis(str, maxLength))
+        if (isEmpty(str) || !needEllipsis(str, maxLength))
             return str;
 
         return TRIMMING_STR + str.substring(str.length() - maxLength);
@@ -827,7 +827,7 @@ public final class StringTool {
         if (!isEmpty(start)) {
             int index = text.indexOf(start);
             if (index > -1) {
-                startIndex += start.length();
+                startIndex = index + start.length();
             }
         }
 

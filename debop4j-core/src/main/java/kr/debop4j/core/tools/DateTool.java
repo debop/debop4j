@@ -48,7 +48,7 @@ public abstract class DateTool {
      * @return the end of day
      */
     public static DateTime getEndOfDay(final DateTime moment) {
-        return getStartOfDay(moment).minus(1);
+        return getStartOfDay(moment).plusDays(1).minus(1);
     }
 
     /**

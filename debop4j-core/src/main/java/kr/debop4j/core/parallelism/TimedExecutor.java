@@ -43,7 +43,7 @@ public class TimedExecutor {
      *
      * @param timeout 제한 시간 (Millisecond 단위)
      */
-    private TimedExecutor(long timeout) {
+    public TimedExecutor(long timeout) {
         this(timeout, 100);
     }
 
@@ -53,7 +53,7 @@ public class TimedExecutor {
      * @param timeout           제한 시간 (Milliseconds 단위)
      * @param checkMilliSeconds 완료 여부 검사 시간 주기 (Milliseconds 딘위)
      */
-    private TimedExecutor(long timeout, long checkMilliSeconds) {
+    public TimedExecutor(long timeout, long checkMilliSeconds) {
         this.timeout = timeout;
         this.checkMilliSeconds = Math.max(1, Math.min(timeout, checkMilliSeconds));
     }

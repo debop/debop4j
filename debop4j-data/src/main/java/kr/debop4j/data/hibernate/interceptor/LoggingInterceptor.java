@@ -32,7 +32,7 @@ import java.util.Iterator;
 import java.util.List;
 
 /**
- * 엔티티의 변화에 대해 로그를 기록한 후 이를 DB에 저장하는
+ * 엔티티의 변화에 대해 로그를 기록한 후 이를 DB에 저장하는 인터셉터입니다.
  *
  * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 12. 12. 16.
@@ -98,10 +98,10 @@ public class LoggingInterceptor extends EmptyInterceptor {
         @Override
         protected Objects.ToStringHelper buildStringHelper() {
             return super.buildStringHelper()
-                    .add("entityId", entityId)
-                    .add("entityName", entityName)
-                    .add("action", action)
-                    .add("timePart", time);
+                        .add("entityId", entityId)
+                        .add("entityName", entityName)
+                        .add("action", action)
+                        .add("timePart", time);
         }
 
         private static final long serialVersionUID = 523516299748244454L;

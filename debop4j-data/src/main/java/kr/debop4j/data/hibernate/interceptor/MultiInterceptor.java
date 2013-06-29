@@ -135,7 +135,7 @@ public class MultiInterceptor extends EmptyInterceptor {
         if (isTraceEnabled)
             log.trace("인터셉터의 postFlush 메소드를 멀티캐스트로 수행합니다.");
 
-        List<FutureTask<Void>> tasks = Lists.newLinkedList();
+        // List<FutureTask<Void>> tasks = Lists.newLinkedList();
 
         for (final Interceptor interceptor : interceptors) {
             interceptor.postFlush(entities);
@@ -149,7 +149,7 @@ public class MultiInterceptor extends EmptyInterceptor {
         if (isTraceEnabled)
             log.trace("인터셉터의 preFlush 메소드를 멀티캐스트로 수행합니다.");
 
-        List<FutureTask<Void>> tasks = Lists.newLinkedList();
+        // List<FutureTask<Void>> tasks = Lists.newLinkedList();
 
         for (final Interceptor interceptor : interceptors) {
             interceptor.preFlush(entities);
