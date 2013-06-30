@@ -140,10 +140,13 @@
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>2.15</version>
                 <configuration>
-                    <!-- paralle 값은 classes, methods를 쓸 수 있다 -->
+                    <!-- 테스트 코드 내부에 이미 자체적인 병렬 테스트가 존재해서 필요없다. -->
                     <parallel>classes</parallel>
                     <threadCount>2</threadCount>
                     <perCoreThreadCount>true</perCoreThreadCount>
+                    <argLine>-Xmx8192m</argLine>
+                    <argLine>-XX:+UseCompressedOops</argLine>
+                    <argLine>-XX:+UseParallelOldGC</argLine>
                 </configuration>
             </plugin>
         </plugins>
