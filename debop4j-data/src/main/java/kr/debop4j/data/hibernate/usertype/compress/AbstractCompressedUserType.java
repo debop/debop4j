@@ -17,7 +17,6 @@
 package kr.debop4j.data.hibernate.usertype.compress;
 
 import kr.debop4j.core.compress.ICompressor;
-import kr.debop4j.core.tools.HashTool;
 import lombok.extern.slf4j.Slf4j;
 import org.hibernate.HibernateException;
 import org.hibernate.engine.spi.SessionImplementor;
@@ -61,7 +60,7 @@ public abstract class AbstractCompressedUserType implements UserType, Serializab
 
     @Override
     public int[] sqlTypes() {
-        return new int[] { BinaryType.INSTANCE.sqlType() };
+        return new int[]{ BinaryType.INSTANCE.sqlType() };
     }
 
     @Override
@@ -71,7 +70,7 @@ public abstract class AbstractCompressedUserType implements UserType, Serializab
 
     @Override
     public int hashCode(Object o) throws HibernateException {
-        return HashTool.compute(o);
+        return Objects.hashCode(o);
     }
 
     @Override

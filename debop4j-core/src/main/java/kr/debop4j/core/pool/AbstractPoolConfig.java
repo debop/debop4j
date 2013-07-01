@@ -186,8 +186,7 @@ public abstract class AbstractPoolConfig extends GenericObjectPool.Config {
      *
      * @param timeBetweenEvictionRunsMillis the time between eviction runs millis
      */
-    public void setTimeBetweenEvictionRunsMillis(
-            long timeBetweenEvictionRunsMillis) {
+    public void setTimeBetweenEvictionRunsMillis(long timeBetweenEvictionRunsMillis) {
         this.timeBetweenEvictionRunsMillis = timeBetweenEvictionRunsMillis;
     }
 

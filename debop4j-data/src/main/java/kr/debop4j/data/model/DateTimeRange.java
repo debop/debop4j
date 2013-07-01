@@ -39,7 +39,7 @@ public class DateTimeRange extends ValueObjectBase {
     public static final long ZeroMillis = 0L;
     public static final long MinMillis = 0L;
     public static final long MillisPerDay = 24 * 60 * 60 * 1000;
-    public static final long MaxMillis = 3652059 * MillisPerDay - 1;
+    public static final long MaxMillis = 3652059L * MillisPerDay - 1;
 
     public static final DateTime MinPeriodTime = new DateTime(MinMillis);
     public static final DateTime MaxPeriodTime = new DateTime(MaxMillis);
@@ -74,7 +74,7 @@ public class DateTimeRange extends ValueObjectBase {
     @Override
     protected Objects.ToStringHelper buildStringHelper() {
         return super.buildStringHelper()
-                .add("start", start)
-                .add("stop", end);
+                    .add("start", start)
+                    .add("stop", end);
     }
 }
