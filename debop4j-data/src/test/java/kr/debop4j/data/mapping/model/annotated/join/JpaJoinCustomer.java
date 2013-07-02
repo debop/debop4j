@@ -51,15 +51,18 @@ public class JpaJoinCustomer extends AnnotatedEntityBase {
     )
     private JpaJoinAddress joinAddress = new JpaJoinAddress();
 
-    @Temporal(TemporalType.TIMESTAMP)
+    // Generated 는 DB에서 값을 관리하므로, Hibernate에서 특정 작업 후 그 값을 갱신하도록 refresh를 강제화한다는 뜻이다.
+    // MySqlUpdatedTimestamp, MySqlUpdatedTimestamp 를 참고하여, DB 컬럼에 정의해줘야 한다.
+
     @Generated(GenerationTime.INSERT)
     @Column(name = "CREATED_TIME", insertable = false, updatable = false)
+    @Temporal( TemporalType.TIMESTAMP )
     //@Setter(AccessLevel.PROTECTED)
     private Date created;
 
-    @Temporal(TemporalType.TIMESTAMP)
     @Generated(GenerationTime.ALWAYS)
     @Column(name = "UPDATED_TIME", insertable = false, updatable = false)
+    @Temporal( TemporalType.TIMESTAMP )
     //@Setter(AccessLevel.PROTECTED)
     private Date lastUpdated;
 
