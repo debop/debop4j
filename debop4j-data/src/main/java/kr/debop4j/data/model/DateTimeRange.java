@@ -26,7 +26,7 @@ import org.joda.time.DateTime;
 import javax.persistence.Embeddable;
 
 /**
- * kr.nsoft.data.domain.kr.debop4j.data.mapping.model.DateTimeRange
+ * 기간을 표현하는 컴포넌트
  *
  * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 13. 1. 22.
