@@ -16,9 +16,7 @@
 
 package kr.debop4j.data.model;
 
-import com.google.common.base.Defaults;
 import com.google.common.base.Objects;
-import kr.debop4j.core.tools.ReflectTool;
 import lombok.extern.slf4j.Slf4j;
 
 import javax.persistence.*;
@@ -53,7 +51,7 @@ public abstract class EntityBase<TId extends Serializable> extends StatefulEntit
     @Override
     protected Objects.ToStringHelper buildStringHelper() {
         return super.buildStringHelper()
-                .add("id", id);
+                    .add("id", id);
     }
 
     @Override
@@ -64,7 +62,7 @@ public abstract class EntityBase<TId extends Serializable> extends StatefulEntit
         if (sameType) {
             EntityBase<TId> entity = (EntityBase<TId>) obj;
             return hasSameNonDefaultIdAs(entity) ||
-                    ((!isPersisted() || entity.isPersisted()) && hashSameBusinessSignature(entity));
+                    ((!isPersisted() || entity.isPersisted()) && hasSameBusinessSignature(entity));
         }
         return false;
     }
@@ -92,26 +90,29 @@ public abstract class EntityBase<TId extends Serializable> extends StatefulEntit
     }
 
     private boolean hasSameNonDefaultIdAs(IEntity<TId> entity) {
-
-        try {
-            Class<TId> idClass = ReflectTool.getGenericParameterType(this);
-
-            TId defaultValue = Defaults.defaultValue(idClass); //Activators.createInstance(idClass);
-
-            boolean idHasValue = !java.util.Objects.equals(id, defaultValue);
-            if (idHasValue) {
-                boolean entityIdHasValue = !java.util.Objects.equals(entity.getId(), defaultValue);
-
-                if (entityIdHasValue)
-                    return java.util.Objects.equals(id, entity.getId());
-            }
-        } catch (Exception ex) {
-            log.error("Identifier 값 비교 시 예외 발생. entity=" + entity, ex);
-        }
-        return false;
+        if (id != null && entity != null && entity.getId() != null)
+            return Objects.equal(id, entity.getId());
+        else
+            return false;
+//        try {
+//            Class<TId> idClass = ReflectTool.getGenericParameterType(this);
+//
+//            TId defaultValue = Defaults.defaultValue(idClass); //Activators.createInstance(idClass);
+//
+//            boolean idHasValue = !java.util.Objects.equals(id, defaultValue);
+//            if (idHasValue) {
+//                boolean entityIdHasValue = !java.util.Objects.equals(entity.getId(), defaultValue);
+//
+//                if (entityIdHasValue)
+//                    return java.util.Objects.equals(id, entity.getId());
+//            }
+//        } catch (Exception ex) {
+//            log.error("Identifier 값 비교 시 예외 발생. entity=" + entity, ex);
+//        }
+//        return false;
     }
 
-    private boolean hashSameBusinessSignature(IEntity<TId> other) {
+    private boolean hasSameBusinessSignature(IEntity<TId> other) {
         return (other != null) && (hashCode() == other.hashCode());
     }
 }
