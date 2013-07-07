@@ -21,6 +21,7 @@ import kr.debop4j.core.AutoCloseableAction;
 import kr.debop4j.core.compress.*;
 import kr.debop4j.core.unitTesting.TestTool;
 import lombok.extern.slf4j.Slf4j;
+import org.fest.assertions.Assertions;
 import org.junit.Test;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.support.GenericApplicationContext;
@@ -81,7 +82,7 @@ public class SpringTest extends AbstractTest {
                 fail(ex.getMessage());
             }
 
-            assertSame(context, Springs.getContext());
+            Assertions.assertThat(Springs.getContext()).isEqualTo(context);
         }
         Springs.reset();
     }
@@ -142,7 +143,7 @@ public class SpringTest extends AbstractTest {
 
 
     @Test
-    @SuppressWarnings( "unchecked" )
+    @SuppressWarnings("unchecked")
     public void getAllTypes() {
 
         for (Class clazz : compressorClasses) {
@@ -160,7 +161,7 @@ public class SpringTest extends AbstractTest {
     }
 
     @Test
-    @SuppressWarnings( "unchecked" )
+    @SuppressWarnings("unchecked")
     public void getBeansByTypeTest() {
 
         for (Class clazz : compressorClasses) {

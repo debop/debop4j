@@ -41,7 +41,7 @@
         </encoder>
     </appender>
     -->
-    <logger name="kr.debop4j.core" level="DEBUG"/>
+    <logger name="kr.debop4j.core" level="TRACE"/>
     <root level="INFO">
         <appender-ref ref="console"/>
     </root>
