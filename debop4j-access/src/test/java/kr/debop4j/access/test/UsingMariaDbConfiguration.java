@@ -21,7 +21,7 @@ import kr.debop4j.access.model.organization.Company;
 import kr.debop4j.access.model.organization.CompanyCode;
 import kr.debop4j.access.model.product.Product;
 import kr.debop4j.data.hibernate.spring.MariaDbConfigBase;
-import org.hibernate.cache.redis.SingletonRedisRegionFactory;
+import net.sf.ehcache.hibernate.SingletonEhCacheRegionFactory;
 import org.hibernate.cfg.Environment;
 import org.hibernate.cfg.beanvalidation.BeanValidationEventListener;
 import org.springframework.context.annotation.Bean;
@@ -68,7 +68,7 @@ public class UsingMariaDbConfiguration extends MariaDbConfigBase {
 
         props.put(Environment.USE_SECOND_LEVEL_CACHE, true);
         props.put(Environment.USE_QUERY_CACHE, true);
-        props.put(Environment.CACHE_REGION_FACTORY, SingletonRedisRegionFactory.class.getName());
+        props.put(Environment.CACHE_REGION_FACTORY, SingletonEhCacheRegionFactory.class.getName());
         props.put(Environment.CACHE_REGION_PREFIX, "");
         props.put(Environment.CACHE_PROVIDER_CONFIG, "classpath:redis.properties");
 

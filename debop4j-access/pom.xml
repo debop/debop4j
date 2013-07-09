@@ -136,10 +136,11 @@
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-ehcache</artifactId>
         </dependency>
-        <dependency>
-            <groupId>hibernate-redis</groupId>
-            <artifactId>hibernate-redis</artifactId>
-        </dependency>
+
+        <!--<dependency>-->
+        <!--<groupId>hibernate-redis</groupId>-->
+        <!--<artifactId>hibernate-redis</artifactId>-->
+        <!--</dependency>-->
 
         <!-- Hibernate-Validator -->
         <dependency>

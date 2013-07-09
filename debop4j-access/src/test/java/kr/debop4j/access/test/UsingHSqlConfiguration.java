@@ -20,7 +20,7 @@ import kr.debop4j.access.model.calendar.WorkCalendar;
 import kr.debop4j.access.model.organization.Company;
 import kr.debop4j.access.model.product.Product;
 import kr.debop4j.data.hibernate.spring.HSqlConfigBase;
-import org.hibernate.cache.redis.SingletonRedisRegionFactory;
+import net.sf.ehcache.hibernate.SingletonEhCacheRegionFactory;
 import org.hibernate.cfg.Environment;
 import org.hibernate.cfg.beanvalidation.BeanValidationEventListener;
 import org.springframework.context.annotation.Bean;
@@ -56,7 +56,7 @@ public class UsingHSqlConfiguration extends HSqlConfigBase {
 
         props.put(Environment.USE_SECOND_LEVEL_CACHE, true);
         props.put(Environment.USE_QUERY_CACHE, true);
-        props.put(Environment.CACHE_REGION_FACTORY, SingletonRedisRegionFactory.class.getName());
+        props.put(Environment.CACHE_REGION_FACTORY, SingletonEhCacheRegionFactory.class.getName());
         props.put(Environment.CACHE_REGION_PREFIX, "");
         props.put(Environment.CACHE_PROVIDER_CONFIG, "classpath:redis.properties");
 
