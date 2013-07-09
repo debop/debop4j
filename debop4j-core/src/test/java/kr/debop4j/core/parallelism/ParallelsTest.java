@@ -76,9 +76,9 @@ public class ParallelsTest {
                     }
                 };
 
-        @Cleanup
-        AutoStopwatch stopwatch = new AutoStopwatch();
-        Parallels.run(0, 100, action1);
+        try (AutoStopwatch stopwatch = new AutoStopwatch()) {
+            Parallels.run(0, 100, action1);
+        }
     }
 
     /** Parallel run each action. */
@@ -165,11 +165,12 @@ public class ParallelsTest {
                     }
                 };
 
-        @Cleanup
-        AutoStopwatch stopwatch = new AutoStopwatch();
-        List<Double> results = Parallels.runEach(NumberRange.range(0, 100), function1);
-        Assert.assertNotNull(results);
-        Assert.assertEquals(100, results.size());
+
+        try (AutoStopwatch stopwatch = new AutoStopwatch()) {
+            List<Double> results = Parallels.runEach(NumberRange.range(0, 100), function1);
+            Assert.assertNotNull(results);
+            Assert.assertEquals(100, results.size());
+        }
     }
 
     /**

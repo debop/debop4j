@@ -21,6 +21,8 @@ import kr.debop4j.access.model.organization.Company;
 import kr.debop4j.access.model.organization.CompanyCode;
 import kr.debop4j.access.model.product.Product;
 import kr.debop4j.data.hibernate.spring.PostgreSqlConfigBase;
+import org.hibernate.cache.ehcache.SingletonEhCacheRegionFactory;
+import org.hibernate.cfg.Environment;
 import org.hibernate.cfg.beanvalidation.BeanValidationEventListener;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -45,7 +47,7 @@ public class UsingPostgreSqlConfiguration extends PostgreSqlConfigBase {
 
     @Override
     protected String[] getMappedPackageNames() {
-        return new String[] {
+        return new String[]{
                 CompanyCode.class.getPackage().getName(),
                 Company.class.getPackage().getName(),
                 Product.class.getPackage().getName(),
@@ -57,11 +59,11 @@ public class UsingPostgreSqlConfiguration extends PostgreSqlConfigBase {
     public Properties hibernateProperties() {
         Properties props = super.hibernateProperties();
 
-//        props.put(Environment.USE_SECOND_LEVEL_CACHE, true);
-//        props.put(Environment.USE_QUERY_CACHE, true);
-//        props.put(Environment.CACHE_REGION_FACTORY, SingletonEhCacheRegionFactory.class.getName());
-//        props.put(Environment.CACHE_REGION_PREFIX, "");
-//        props.put(Environment.CACHE_PROVIDER_CONFIG, "classpath:ehcache.xml");
+        props.put(Environment.USE_SECOND_LEVEL_CACHE, true);
+        props.put(Environment.USE_QUERY_CACHE, true);
+        props.put(Environment.CACHE_REGION_FACTORY, SingletonEhCacheRegionFactory.class.getName());
+        props.put(Environment.CACHE_REGION_PREFIX, "");
+        props.put(Environment.CACHE_PROVIDER_CONFIG, "classpath:ehcache.xml");
 
         // Validator
         props.put("javax.persistencexml.validation.group.pre-persist", "javax.validation.groups.Default");
