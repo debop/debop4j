@@ -21,7 +21,7 @@ import kr.debop4j.access.model.organization.Company;
 import kr.debop4j.access.model.organization.CompanyCode;
 import kr.debop4j.access.model.product.Product;
 import kr.debop4j.data.hibernate.spring.MySqlConfigBase;
-import net.sf.ehcache.hibernate.SingletonEhCacheRegionFactory;
+import org.hibernate.cache.ehcache.SingletonEhCacheRegionFactory;
 import org.hibernate.cfg.Environment;
 import org.hibernate.cfg.beanvalidation.BeanValidationEventListener;
 import org.springframework.context.annotation.Bean;
