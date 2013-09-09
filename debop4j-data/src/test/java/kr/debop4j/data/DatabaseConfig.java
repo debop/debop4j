@@ -51,15 +51,6 @@ public class DatabaseConfig extends HSqlConfigBase {
 
     private static String[] mappedPackageNames = new String[]{
             "kr.debop4j.data.mapping.model.annotated",
-            "kr.debop4j.data.mapping.model.annotated.collection",
-            "kr.debop4j.data.mapping.model.annotated.join",
-            "kr.debop4j.data.mapping.model.annotated.joinedSubclass",
-            "kr.debop4j.data.mapping.model.annotated.onetomany",
-            "kr.debop4j.data.mapping.model.annotated.onetoone",
-            "kr.debop4j.data.mapping.model.annotated.subclass",
-            "kr.debop4j.data.mapping.model.annotated.tree",
-            "kr.debop4j.data.mapping.model.annotated.unionSubclass",
-            "kr.debop4j.data.mapping.model.annotated.usertypes",
             "kr.debop4j.data.hibernate.search.model"
     };
 
