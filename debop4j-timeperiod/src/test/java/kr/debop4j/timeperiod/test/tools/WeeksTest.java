@@ -80,7 +80,7 @@ public class WeeksTest extends TimePeriodTestBase {
             public void perform(Integer year) {
                 WeekRange startWeekRange = Weeks.getStartWeekRangeOfYear(year);
 
-                if (log.isTraceEnabled())
+
                     log.trace("year=[{}], startWeek=[{}]", year, startWeekRange.getStartDayStart());
 
                 assertThat(new Duration(asDate(year - 1, 12, 28), startWeekRange.getStartDayStart()).getStandardDays()).isGreaterThan(0);
@@ -110,7 +110,7 @@ public class WeeksTest extends TimePeriodTestBase {
                 WeekRange startWeekRange = Weeks.getStartWeekRangeOfYear(year);
                 WeekRange endWeekRange = Weeks.getEndWeekRangeOfYear(year - 1);
 
-                if (log.isTraceEnabled())
+
                     log.trace("year=[{}], startWeek=[{}], endWeek=[{}]",
                               year, startWeekRange.getStartDayStart(), endWeekRange.getStartDayStart());
 

@@ -41,7 +41,7 @@ public abstract class TimeLines {
      * @return the i time period collection
      */
     public static ITimePeriodCollection combinePeriods(final ITimeLineMomentCollection timeLineMoments) {
-        if (log.isTraceEnabled())
+
             log.trace("ITimeLineMomentCollection에서 모든 기간의 합집합을 구합니다...");
 
         ITimePeriodCollection periods = new TimePeriodCollection();
@@ -79,7 +79,7 @@ public abstract class TimeLines {
                 TimeRange period = new TimeRange();
                 period.setup(periodStart.getMoment(), periodEnd.getMoment());
 
-                if (log.isTraceEnabled())
+
                     log.trace("combine period를 추가합니다. period=[{}]", period);
 
                 periods.add(period);
@@ -100,7 +100,7 @@ public abstract class TimeLines {
      * @return the i time period collection
      */
     public static ITimePeriodCollection intersectPeriods(final ITimeLineMomentCollection timeLineMoments) {
-        if (log.isTraceEnabled())
+
             log.trace("ITimeLineMomentCollection의 요소들의 모든 Period로부터 교집합에 해당하는 구간을 구합니다...");
 
         ITimePeriodCollection periods = new TimePeriodCollection();
@@ -130,7 +130,7 @@ public abstract class TimeLines {
                 ITimePeriod period = new TimeRange();
                 period.setup(timeLineMoments.get(intersectionStart).getMoment(), moment.getMoment());
 
-                if (log.isTraceEnabled())
+
                     log.trace("Intersect period를 추가합니다. period=[{}]", period);
 
                 periods.add(period);
@@ -151,7 +151,7 @@ public abstract class TimeLines {
      * @return Gap에 해당하는 기간들의 컬렉션
      */
     public static ITimePeriodCollection calculateGap(ITimeLineMomentCollection timeLineMoments, ITimePeriod range) {
-        if (log.isTraceEnabled())
+
             log.trace("ITimeLineMomentCollection의 모든 ITimePeriod에 속하지 않는 Gap을 구합니다(여집합). range=[{}]", range);
 
         ITimePeriodCollection gaps = new TimePeriodCollection();
@@ -166,7 +166,7 @@ public abstract class TimeLines {
             ITimePeriod startingGap = new TimeRange();
             startingGap.setup(range.getStart(), periodStart.getMoment());
 
-            if (log.isTraceEnabled())
+
                 log.trace("starting gap을 추가합니다... startingGap=[{}~{}]", startingGap.getStart(), startingGap.getEnd());
 
             gaps.add(startingGap);
@@ -201,7 +201,7 @@ public abstract class TimeLines {
                 ITimePeriod gap = new TimeRange();
                 gap.setup(gapStart.getMoment(), timeLineMoments.get(itemIndex + 1).getMoment());
 
-                if (log.isTraceEnabled())
+
                     log.trace("intermediated gap을 추가합니다. gap=[{}~{}]", gap.getStart(), gap.getEnd());
 
                 gaps.add(gap);
@@ -216,7 +216,7 @@ public abstract class TimeLines {
             ITimePeriod endingGap = new TimeRange();
             endingGap.setup(periodEnd.getMoment(), range.getEnd());
 
-            if (log.isTraceEnabled())
+
                 log.trace("ending gap을 추가합니다. endingGap=[{}~{}]", endingGap.getStart(), endingGap.getEnd());
 
             gaps.add(endingGap);

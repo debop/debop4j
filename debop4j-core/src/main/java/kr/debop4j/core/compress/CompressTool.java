@@ -75,7 +75,7 @@ public abstract class CompressTool {
         shouldNotBeNull(compressor, "compressor");
         if (isEmpty(plainText)) return "";
 
-        if (log.isTraceEnabled())
+
             log.trace("다음 문자열을 압축합니다... plainText=[{}]", ellipsisChar(plainText, 80));
 
         byte[] compressedBytes = compressor.compress(getUtf8Bytes(plainText));
@@ -112,7 +112,7 @@ public abstract class CompressTool {
             AsyncTool.getTaskHasResult("");
         }
 
-        if (log.isTraceEnabled())
+
             log.trace("다음 문자열을 압축합니다... plainText=[{}]", ellipsisChar(plainText, 80));
 
         return AsyncTool.startNew(new Callable<String>() {
@@ -152,14 +152,14 @@ public abstract class CompressTool {
         shouldNotBeNull(compressor, "compressor");
         if (isEmpty(compressedText)) return "";
 
-        if (log.isTraceEnabled())
+
             log.trace("압축된 문자열을 복원합니다... compressedText=[{}]", ellipsisChar(compressedText, 80));
 
         byte[] plainBytes = compressor.decompress(getBytesFromString(compressedText, stringFormat));
 
         String plainText = getUtf8String(plainBytes);
 
-        if (log.isTraceEnabled())
+
             log.trace("압축 복원한 문자열입니다... plainText=[{}]", ellipsisChar(plainText, 80));
 
         return plainText;
@@ -196,7 +196,7 @@ public abstract class CompressTool {
             return AsyncTool.getTaskHasResult("");
         }
 
-        if (log.isTraceEnabled())
+
             log.trace("압축된 문자열을 복원합니다... compressedText=[{}]", ellipsisChar(compressedText, 80));
 
         return AsyncTool.startNew(new Callable<String>() {
@@ -206,7 +206,7 @@ public abstract class CompressTool {
                         stringFormat));
                 String plainText = getUtf8String(plainBytes);
 
-                if (log.isTraceEnabled())
+
                     log.trace("압축 복원한 문자열입니다... plainText=[{}]", ellipsisChar(plainText, 80));
 
                 return plainText;

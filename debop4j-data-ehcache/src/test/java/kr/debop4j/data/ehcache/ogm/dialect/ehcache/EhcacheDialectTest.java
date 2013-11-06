@@ -60,7 +60,7 @@ public class EhcacheDialectTest {
         Parallels.run(THREADS, new Action1<Integer>() {
             @Override
             public void perform(Integer arg) {
-                if (log.isTraceEnabled())
+
                     log.trace("perform [{}]", arg);
                 final IdentifierGeneratorHelper.BigIntegerHolder value =
                         new IdentifierGeneratorHelper.BigIntegerHolder();

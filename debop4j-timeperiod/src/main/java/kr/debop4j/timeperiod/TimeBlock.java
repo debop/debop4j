@@ -156,7 +156,7 @@ public class TimeBlock extends TimePeriodBase implements ITimeBlock {
         assertMutable();
         assertValidDuration(duration);
 
-        if (log.isTraceEnabled())
+
             log.trace("TimeBlock 값을 새로 설정합니다. newStart=[{}], duration=[{}]", newStart, duration);
 
         this.start = newStart;

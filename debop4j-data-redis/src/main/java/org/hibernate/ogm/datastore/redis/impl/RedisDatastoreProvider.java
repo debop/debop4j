@@ -69,7 +69,7 @@ public class RedisDatastoreProvider implements DatastoreProvider, Startable, Sto
         if (configurationValues != null) {
             for (Object key : configurationValues.keySet()) {
                 props.put(key, configurationValues.get(key));
-                if (log.isTraceEnabled())
+
                     log.trace("Config key=[{}], value=[{}]", key, props.get(key));
             }
         }

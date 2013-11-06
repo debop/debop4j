@@ -113,7 +113,7 @@ public class DateTimeSet extends TreeSet<DateTime> implements IDateTimeSet {
 
     @Override
     public boolean add(DateTime moment) {
-        if (log.isTraceEnabled())
+
             log.trace("새로운 요소를 추가합니다. moment=[{}]", moment);
         return !contains(moment) && super.add(moment);
     }
@@ -135,7 +135,7 @@ public class DateTimeSet extends TreeSet<DateTime> implements IDateTimeSet {
         Guard.shouldBePositiveNumber(count, "count");
         Guard.shouldBe(startIndex < count, "startIndex 는 Count보다 작아야 합니다. startIndex=[%d], count=[%d]", startIndex, count);
 
-        if (log.isTraceEnabled())
+
             log.trace("duration을 구합니다... startIndex=[{}], count=[{}]", startIndex, count);
 
         int endIndex = Math.min(startIndex + count, size() - 1);
@@ -163,7 +163,7 @@ public class DateTimeSet extends TreeSet<DateTime> implements IDateTimeSet {
      */
     @Override
     public DateTime findPrevious(DateTime moment) {
-        if (log.isTraceEnabled())
+
             log.trace("지정된 시각[{}] 바로 전의 시각을 찾습니다. 없으면 null을 반환합니다.", moment);
 
         if (isEmpty()) return null;
@@ -186,7 +186,7 @@ public class DateTimeSet extends TreeSet<DateTime> implements IDateTimeSet {
      */
     @Override
     public DateTime findNext(DateTime moment) {
-        if (log.isTraceEnabled())
+
             log.trace("지정된 시각[{}] 바루 후의 시각을 찾습니다. 없으면 null을 반환합니다.", moment);
 
         if (isEmpty()) return null;

@@ -91,7 +91,7 @@ public class SearchTool {
      * @return the org . apache . lucene . search . query
      */
     public static Query bulidLuceneQuery(FullTextSession fts, Class<?> clazz, String fieldName, String values) {
-        if (log.isTraceEnabled())
+
             log.trace("루씬 쿼리를 빌드합니다. clazz=[{}], fieldName=[{}], values=[{}]", clazz, fieldName, values);
 
         Analyzer analyzer;
@@ -145,7 +145,7 @@ public class SearchTool {
             Class clazz = meta.getMappedClass();
             if (clazz.getAnnotation(Indexed.class) != null) {
                 classes.add(clazz);
-                if (log.isTraceEnabled())
+
                     log.trace("인덱싱된 엔티티=[{}]", clazz);
             }
         }
@@ -209,7 +209,7 @@ public class SearchTool {
         QueryBuilder builder = fts.getSearchFactory().buildQueryBuilder().forEntity(clazz).get();
 
         for (SearchParameter sp : parameters) {
-            if (log.isTraceEnabled())
+
                 log.trace("QueryBulider에 다음 parameter를 추가합니다... SearchParameter=[{}]", sp);
 
             QueryMethod queryMethod = sp.getQueryMethod();

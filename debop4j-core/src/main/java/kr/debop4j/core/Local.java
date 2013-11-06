@@ -64,7 +64,7 @@ public class Local {
     public static void put(Object key, Object value) {
         assert key != null;
 
-        if (log.isTraceEnabled())
+
             log.trace("Local 저장소에 key=[{}], value=[{}]를 저장합니다.", key, value);
 
         threadLocal.get().put(key, value);

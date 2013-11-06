@@ -79,7 +79,7 @@ public class RedisDialect implements GridDialect {
 
     @Override
     public Tuple getTuple(EntityKey key, TupleContext tupleContext) {
-        if (log.isTraceEnabled())
+
             log.trace("get tuple... key=[{}]", key);
 
         throw new NotImplementedException("구현 중");
@@ -101,7 +101,7 @@ public class RedisDialect implements GridDialect {
 
     @Override
     public void removeTuple(EntityKey key) {
-        if (log.isTraceEnabled()) log.trace("remove tuple... key=[{}]", key);
+        log.trace("remove tuple... key=[{}]", key);
 
         throw new NotImplementedException("구현 중");
     }

@@ -60,13 +60,13 @@ public abstract class CompressorBase implements ICompressor {
         if (plain == null || plain.length == 0)
             return new byte[0];
 
-        if (log.isTraceEnabled())
+
             log.trace("데이터를 압축합니다... algorithm=[{}]", getAlgorithm());
 
         try {
             byte[] result = doCompress(plain);
 
-            if (log.isTraceEnabled())
+
                 log.trace("데이터를 압축을 수행했습니다. 압축률=[{}], original=[{}], compressed=[{}]",
                         result.length * 100.0 / plain.length, plain.length, result.length);
             return result;
@@ -81,13 +81,13 @@ public abstract class CompressorBase implements ICompressor {
         if (compressed == null || compressed.length == 0)
             return new byte[0];
 
-        if (log.isTraceEnabled())
+
             log.trace("압축된 데이타를 복구합니다... algorithm=[{}]", getAlgorithm());
 
         try {
             byte[] result = doDecompress(compressed);
 
-            if (log.isTraceEnabled())
+
                 log.trace("압축 데이터를 복원했습니다. 압축률=[{}], compressed=[{}], original=[{}]",
                         compressed.length * 100.0 / result.length, compressed.length, result.length);
             return result;
@@ -103,7 +103,7 @@ public abstract class CompressorBase implements ICompressor {
         if (StringTool.isWhiteSpace(plainText))
             return StringTool.EMPTY_STR;
 
-        if (log.isTraceEnabled())
+
             log.trace("문자열을 압축합니다. plainText=[{}]", plainText);
 
         byte[] bytes = compress(StringTool.getUtf8Bytes(plainText));
@@ -116,7 +116,7 @@ public abstract class CompressorBase implements ICompressor {
         if (StringTool.isWhiteSpace(compressedBase64))
             return StringTool.EMPTY_STR;
 
-        if (log.isTraceEnabled())
+
             log.trace("문자열을 복원합니다. compressedBase64=[{}]", compressedBase64);
 
         byte[] bytes = StringTool.decodeBase64(compressedBase64);

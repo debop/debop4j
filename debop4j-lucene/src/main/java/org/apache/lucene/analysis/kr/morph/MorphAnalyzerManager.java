@@ -24,7 +24,7 @@ import java.util.List;
 public class MorphAnalyzerManager {
 
     public void analyze(String strs) {
-        if (log.isTraceEnabled())
+
             log.trace("analyze strs=[{}]", strs);
 
         MorphAnalyzer analyzer = new MorphAnalyzer();

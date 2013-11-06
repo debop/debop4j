@@ -54,7 +54,7 @@ public class GsonSerializer implements IJsonSerializer {
         if (graph == null)
             return "";
 
-        if (log.isTraceEnabled())
+
             log.trace("Json 직렬화를 수행합니다... graph=[{}]", graph);
 
         return gson.toJson(graph);
@@ -70,7 +70,7 @@ public class GsonSerializer implements IJsonSerializer {
         if (StringTool.isWhiteSpace(jsonText))
             return null;
 
-        if (log.isTraceEnabled())
+
             log.trace("Json 역직렬화를 수행합니다. jsonText=[{}], targetClass=[{}]",
                       StringTool.ellipsisChar(jsonText, 255), targetClass);
 

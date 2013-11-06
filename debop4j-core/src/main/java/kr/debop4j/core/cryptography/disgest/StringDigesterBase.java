@@ -61,7 +61,7 @@ public abstract class StringDigesterBase implements IStringDigester {
     /** {@inheritDoc} */
     @Override
     public String digest(String message) {
-        if (log.isTraceEnabled())
+
             log.trace("문자열을 암호화합니다. message=[{}]", message);
         return standardStringDigester.digest(message);
     }
@@ -70,7 +70,7 @@ public abstract class StringDigesterBase implements IStringDigester {
     @Override
     public boolean matches(String message, String digest) {
         boolean match = standardStringDigester.matches(message, digest);
-        if (log.isTraceEnabled())
+
             log.trace("문자열이 암호화된 문자열과 같은 것인지 확인합니다. message=[{}], digest=[{}], match=[{}]", message, digest, match);
         return match;
     }

@@ -123,7 +123,7 @@ public class TimeLineMomentCollection implements ITimeLineMomentCollection {
             item = new TimeLineMoment(moment);
             this.timeLineMoments.add(item);
 
-            if (log.isTraceEnabled())
+
                 log.trace("TimeLineMoment를 추가했습니다. timeLineMoment=[{}]", item);
         }
         item.getPeriods().add(period);
@@ -142,7 +142,7 @@ public class TimeLineMomentCollection implements ITimeLineMomentCollection {
             if (item.getPeriods().size() == 0)
                 this.timeLineMoments.remove(item);
 
-            if (log.isTraceEnabled())
+
                 log.trace("TimeLineMoment를 제거했습니다. timeLineMoment=[{}]", item);
         }
 

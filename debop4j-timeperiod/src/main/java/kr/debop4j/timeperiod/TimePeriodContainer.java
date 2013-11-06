@@ -143,7 +143,7 @@ public class TimePeriodContainer implements ITimePeriodContainer {
         if (offset == null || offset.getMillis() == 0)
             return;
 
-        if (log.isTraceEnabled()) log.trace("모든 기간을 offset[{}] 만큼 이동합니다.", offset);
+        log.trace("모든 기간을 offset[{}] 만큼 이동합니다.", offset);
 
         for (ITimePeriod period : this.periods)
             period.move(offset);

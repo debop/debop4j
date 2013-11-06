@@ -39,7 +39,7 @@ public class WordSpaceAnalyzer {
 
     public List<AnalysisOutput> analyze(String input) throws MorphException {
 
-        if (log.isTraceEnabled())
+
             log.trace("단어를 분석합니다. input=[{}]", input);
 
         //List stack = new ArrayList();
@@ -133,7 +133,7 @@ public class WordSpaceAnalyzer {
      */
     private List<AnalysisOutput> anlysisWithJosa(String snipt, int js) throws MorphException {
 
-        if (log.isTraceEnabled())
+
             log.trace("조사로 끝나는 어구를 분석한다. snipt=[{}], js=[{}]", snipt, js);
 
         List<AnalysisOutput> candidates = new ArrayList<AnalysisOutput>();
@@ -272,7 +272,7 @@ public class WordSpaceAnalyzer {
 
     private List anlysisWithEomi(String snipt, int estart) throws MorphException {
 
-        if (log.isTraceEnabled())
+
             log.trace("어미를 분석합니다. snipt=[{}], estart=[{}]", snipt, estart);
 
         List<AnalysisOutput> candidates = new ArrayList<AnalysisOutput>();

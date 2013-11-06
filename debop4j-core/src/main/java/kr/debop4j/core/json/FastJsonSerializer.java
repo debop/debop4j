@@ -39,14 +39,14 @@ public class FastJsonSerializer implements IJsonSerializer {
     public String serializeToText(Object graph) {
         if (graph == null)
             return "";
-        if (log.isTraceEnabled())
+
             log.trace("지정한 객체를 JSON 직렬화를 수행합니다. graph=[{}]", graph);
         return JSON.toJSONString(graph, features);
     }
 
     @Override
     public <T> T deserializeFromText(String jsonText, Class<T> targetClass) {
-        if (log.isTraceEnabled())
+
             log.trace("Json 문자열을 역직렬화하여 지정한 클래스롤 빌드합니다. targetClass=[{}]", targetClass.getName());
         return JSON.parseObject(jsonText, targetClass, Feature.AllowISO8601DateFormat);
     }
@@ -56,7 +56,7 @@ public class FastJsonSerializer implements IJsonSerializer {
         if (graph == null)
             return EMPTY_BYTES;
 
-        if (log.isTraceEnabled())
+
             log.trace("지정한 객체를 JSON 직렬화를 수행합니다. graph=[{}]", graph);
 
         return JSON.toJSONBytes(graph, features);
@@ -64,7 +64,7 @@ public class FastJsonSerializer implements IJsonSerializer {
 
     @Override
     public <T> T deserialize(byte[] bytes, Class<T> clazz) {
-        if (log.isTraceEnabled())
+
             log.trace("Json 배열을 역직렬화하여 지정한 클래스롤 빌드합니다. clazz=[{}]", clazz.getName());
         return JSON.parseObject(bytes, clazz, Feature.AllowISO8601DateFormat);
     }

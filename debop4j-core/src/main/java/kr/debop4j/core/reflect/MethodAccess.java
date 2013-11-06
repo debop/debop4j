@@ -79,7 +79,7 @@ public abstract class MethodAccess {
      * @return the object
      */
     public Object invoke(Object instance, String methodName, Object... args) {
-        if (log.isTraceEnabled())
+
             log.trace("객체[{}]의 메소드[{}]를 실행합니다. args=[{}]", instance, methodName, StringTool.listToString(args));
         return invoke(instance, getIndex(methodName), args);
     }

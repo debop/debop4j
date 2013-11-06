@@ -17,8 +17,6 @@
 package kr.debop4j.timeperiod.calendars;
 
 import com.google.common.collect.Iterables;
-import kr.debop4j.core.Action1;
-import kr.debop4j.core.parallelism.Parallels;
 import kr.debop4j.timeperiod.*;
 import kr.debop4j.timeperiod.timerange.*;
 import kr.debop4j.timeperiod.tools.TimeSpec;
@@ -141,7 +139,7 @@ public abstract class CalendarVisitor<F extends ICalendarVisitorFilter, C extend
 //                            Collections.sort(hoursToVisit, Times.getEndComparator());
 //
 //                        for (HourRange hour : hoursToVisit) {
-//                            if (log.isTraceEnabled()) log.trace("hour를 탐색합니다... hour=[{}]", hour);
+//                            log.trace("hour를 탐색합니다... hour=[{}]", hour);
 //
 //                            if (!hour.overlapsWith(period))
 //                                continue;
@@ -194,51 +192,48 @@ public abstract class CalendarVisitor<F extends ICalendarVisitorFilter, C extend
                 if (seekDirection == SeekDirection.Backward)
                     Collections.sort(monthsToVisit, Times.getEndComparator());
 
-                Parallels.runEach(monthsToVisit, new Action1<MonthRange>() {
-                    @Override
-                    public void perform(MonthRange month) {
-                        if (isTraceEnabled) log.trace("month를 탐색합니다... month=[{}]", month);
+                for (MonthRange month : monthsToVisit) {
+                    if (isTraceEnabled) log.trace("month를 탐색합니다... month=[{}]", month);
 
-                        if (!month.overlapsWith(period))
-                            return;
-                        if (!onVisitMonth(month, context))
-                            return;
-                        if (!enterDays(month, context))
-                            return;
+                    if (!month.overlapsWith(period))
+                        continue;
+                    if (!onVisitMonth(month, context))
+                        continue;
+                    if (!enterDays(month, context))
+                        continue;
 
-                        List<DayRange> daysToVisit = month.getDays();
+                    List<DayRange> daysToVisit = month.getDays();
+
+                    if (seekDirection == SeekDirection.Backward)
+                        Collections.sort(daysToVisit, Times.getEndComparator());
+
+                    for (DayRange day : daysToVisit) {
+                        if (isTraceEnabled) log.trace("day를 탐색합니다... day=[{}]", day);
+
+                        if (!day.overlapsWith(period))
+                            continue;
+                        if (!onVisitDay(day, context))
+                            continue;
+                        if (!enterHours(day, context))
+                            continue;
+
+                        List<HourRange> hoursToVisit = day.getHours();
 
                         if (seekDirection == SeekDirection.Backward)
-                            Collections.sort(daysToVisit, Times.getEndComparator());
+                            Collections.sort(hoursToVisit, Times.getEndComparator());
 
-                        for (DayRange day : daysToVisit) {
-                            if (isTraceEnabled) log.trace("day를 탐색합니다... day=[{}]", day);
+                        for (HourRange hour : hoursToVisit) {
+                            log.trace("hour를 탐색합니다... hour=[{}]", hour);
 
-                            if (!day.overlapsWith(period))
+                            if (!hour.overlapsWith(period))
                                 continue;
-                            if (!onVisitDay(day, context))
-                                continue;
-                            if (!enterHours(day, context))
+                            if (!onVisitHour(hour, context))
                                 continue;
 
-                            List<HourRange> hoursToVisit = day.getHours();
-
-                            if (seekDirection == SeekDirection.Backward)
-                                Collections.sort(hoursToVisit, Times.getEndComparator());
-
-                            for (HourRange hour : hoursToVisit) {
-                                if (log.isTraceEnabled()) log.trace("hour를 탐색합니다... hour=[{}]", hour);
-
-                                if (!hour.overlapsWith(period))
-                                    continue;
-                                if (!onVisitHour(hour, context))
-                                    continue;
-
-                                enterMinutes(hour, context);
-                            }
+                            enterMinutes(hour, context);
                         }
                     }
-                });
+                }
             }
         }
 

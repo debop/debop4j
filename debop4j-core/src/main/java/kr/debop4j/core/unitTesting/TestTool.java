@@ -111,7 +111,7 @@ public abstract class TestTool {
                 executor.execute(new Runnable() {
                     @Override
                     public void run() {
-                        if (log.isTraceEnabled()) log.trace("run task... index=[{}]", index);
+                        log.trace("run task... index=[{}]", index);
                         action.perform(index);
                         latch.countDown();
                     }

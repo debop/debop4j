@@ -72,7 +72,7 @@ public final class StreamTool {
     public static byte[] toByteArray(final InputStream inputStream) throws IOException {
         shouldNotBeNull(inputStream, "inputStream");
 
-        if (log.isTraceEnabled())
+
             log.trace("InputStream의 내용을 읽어 byte[] 로 반환합니다...");
 
         @Cleanup
@@ -93,7 +93,7 @@ public final class StreamTool {
         if (bytes == null || bytes.length == 0)
             return new ByteArrayOutputStream();
 
-        if (log.isTraceEnabled())
+
             log.trace("OutputStream에 데이터를 씁니다...");
 
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream(bytes.length);

@@ -22,7 +22,7 @@ public class FibonacciProblem {
     }
 
     private long fibonacci(int n) {
-        if (log.isTraceEnabled())
+
             log.trace("Fibonacci calculates... n=[{}]", n);
 
         if (n <= 1)

@@ -44,7 +44,7 @@ public final class Activators {
      * @return 인스턴스 object
      */
     public static Object createInstance(String className) {
-        if (log.isTraceEnabled())
+
             log.trace("create instance... className=[{}]", className);
 
         try {
@@ -62,7 +62,7 @@ public final class Activators {
      */
     public static <T> T createInstance(Class<T> clazz) {
         shouldNotBeNull(clazz, "clazz");
-        if (log.isTraceEnabled())
+
             log.trace("수형 [{}] 의 새로운 인스턴스를 생성합니다...", clazz.getName());
 
         try {
@@ -84,7 +84,7 @@ public final class Activators {
     @SuppressWarnings("unchecked")
     public static <T> T createInstance(Class<T> clazz, Object... initArgs) {
         shouldNotBeNull(clazz, "clazz");
-        if (log.isTraceEnabled())
+
             log.trace("[{}] 수형의 객체를 생성합니다. initArgs=[{}]", clazz.getName(), StringTool.listToString(initArgs));
 
         if (initArgs == null || initArgs.length == 0)
@@ -127,7 +127,7 @@ public final class Activators {
      * @return 생성자 정보
      */
     public static <T> Constructor<T> getConstructor(Class<T> clazz, Class<?>... parameterTypes) {
-        if (log.isTraceEnabled())
+
             log.trace("[{}] 수형의 생성자를 구합니다. parameterTypes=[{}]",
                     clazz.getName(), StringTool.listToString(parameterTypes));
 

@@ -63,7 +63,7 @@ public class HanjaUtils {
         if (result == null)
             result = new char[] { hanja };
 
-        if (log.isTraceEnabled())
+
             log.trace("한자에 대응하는 한글을 찾아서 변환합니다. hanja=[{}], result=[{}]", hanja, result);
 
         return result;

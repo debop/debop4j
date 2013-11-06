@@ -50,7 +50,7 @@ public abstract class ConstructorAccess<T> {
     @SuppressWarnings("unchecked")
     public static <T> ConstructorAccess<T> get(Class<T> type) {
         shouldNotBeNull(type, "type");
-        if (log.isTraceEnabled())
+
             log.trace("수형[{}]의 생성자에 대한 접근자를 조회합니다.", type.getName());
 
         Class enclosingType = type.getEnclosingClass();
@@ -104,7 +104,7 @@ public abstract class ConstructorAccess<T> {
         try {
             ConstructorAccess<T> access = (ConstructorAccess<T>) accessClass.newInstance();
             access.nonStaticMemberClass = isNonStaticMemberClass;
-            if (log.isTraceEnabled())
+
                 log.trace("기본 생성자에 접근 가능한 ConstructorAccess 를 반환합니다. accessClassName=[{}]", accessClassName);
             return access;
         } catch (Exception ex) {

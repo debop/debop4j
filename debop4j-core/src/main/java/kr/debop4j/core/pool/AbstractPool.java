@@ -42,13 +42,13 @@ public abstract class AbstractPool<T> implements AutoCloseable {
 
     /** 풀에서 리소스를 얻습니다. */
     public T getResource() {
-        if (log.isTraceEnabled())
+
             log.trace("Pool에서 resource 를 얻습니다...");
 
         try {
             T result = (T) pool.borrowObject();
 
-            if (log.isTraceEnabled())
+
                 log.trace("Pool에서 resource 를 얻었습니다. resource=[{}]", result);
 
             return result;
@@ -66,7 +66,7 @@ public abstract class AbstractPool<T> implements AutoCloseable {
 
     @SuppressWarnings("unchecked")
     protected void returnResourceObject(final Object resource) {
-        if (log.isTraceEnabled())
+
             log.trace("Pool에 resource 를 반환합니다... resource=[{}]", resource);
         try {
             pool.returnObject(resource);
@@ -93,7 +93,7 @@ public abstract class AbstractPool<T> implements AutoCloseable {
 
     /** 풀을 제거합니다. 내부의 남아있는 모든 리소스를 제거합니다. */
     public void destroy() {
-        if (log.isTraceEnabled()) log.trace("Pool을 제거합니다...");
+        log.trace("Pool을 제거합니다...");
         try {
             pool.close();
             pool = null;

@@ -60,14 +60,14 @@ public class TimelineTest extends MongoGridDatastoreTestBase {
             Twitter twitter = Twitters.getTwitter();
             List<Status> statuses = twitter.getHomeTimeline(new Paging(1, 100));
 
-            if (log.isTraceEnabled())
+
                 log.trace("Timeline의 새로운 글 수 =[{}]", statuses.size());
 
             for (Status status : statuses) {
                 Twit twit = Twitters.createTwit(status);
                 dao.saveOrUpdate(twit);
 
-                if (log.isTraceEnabled())
+
                     log.trace("Twit을 저장했습니다. [{}]", twit);
             }
             dao.getFullTextSession().flush();

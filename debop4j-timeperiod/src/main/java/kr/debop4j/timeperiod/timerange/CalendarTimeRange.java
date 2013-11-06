@@ -53,7 +53,7 @@ public class CalendarTimeRange extends TimeRange implements ICalendarTimeRange {
         Times.assertValidPeriod(mappedStart, mappedEnd);
         TimeRange mapped = new TimeRange(mappedStart, mappedEnd);
 
-//        if (log.isTraceEnabled())
+//
 //            log.trace("TimeCalendar 기준의 기간으로 매핑했습니다. period=[{}], mapper=[{}], mapped=[{}]", period, mapper, mapped);
         return mapped;
     }

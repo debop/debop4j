@@ -59,7 +59,7 @@ public class MongoTool {
     public Tuple getTuple(String collectionName, String id, List<String> selectedColumns) {
         Guard.shouldNotBeNull(gridDialect, "gridDialect");
 
-        if (log.isTraceEnabled())
+
             log.trace("getTuple... collectionName=[{}], id=[{}], selectedColumns=[{}]",
                       collectionName, id, StringTool.listToString(selectedColumns));
 

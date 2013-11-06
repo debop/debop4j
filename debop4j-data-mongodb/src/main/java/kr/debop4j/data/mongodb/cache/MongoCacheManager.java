@@ -66,7 +66,7 @@ public class MongoCacheManager extends AbstractTransactionSupportingCacheManager
         synchronized (this) {
             Cache cache = super.getCache(name);
             if (cache == null) {
-                if (log.isTraceEnabled()) log.trace("새로운 MongoCache를 생성합니다.");
+                log.trace("새로운 MongoCache를 생성합니다.");
                 cache = new MongoCache(name, mongoTemplate);
                 addCache(cache);
             }

@@ -48,7 +48,7 @@ public abstract class SymmetricByteEncryptorBase implements ISymmetricByteEncryp
         if (plainBytes == null || plainBytes.length == 0)
             return new byte[0];
 
-        if (log.isTraceEnabled())
+
             log.trace("바이트 배열을 암호화합니다...");
 
         return byteEncryptor.encrypt(plainBytes);
@@ -60,7 +60,7 @@ public abstract class SymmetricByteEncryptorBase implements ISymmetricByteEncryp
         if (encryptedBytes == null || encryptedBytes.length == 0)
             return new byte[0];
 
-        if (log.isTraceEnabled())
+
             log.trace("바이트 배열을 복호화합니다...");
 
         return byteEncryptor.decrypt(encryptedBytes);

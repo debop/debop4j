@@ -202,14 +202,14 @@ public final class UnitOfWorks {
                         nestingOptions == UnitOfWorkNestingOptions.ReturnExistingOrCreateUnitOfWork;
 
         if (useExisting) {
-            if (log.isTraceEnabled())
+
                 log.trace("기존 IUnitOfWork 가 존재하므로, 사용횟수만 증가시키고, 기존 IUnitOfWork 인스턴스를 반환합니다. 사용횟수=[{}]", existing.getUsage());
 
             existing.increseUsage();
             return existing;
         }
 
-        if (log.isTraceEnabled())
+
             log.trace("새로운 IUnitOfWorkFactory 와 IUnitOfWork 를 생성합니다...");
 
         if (existing != null && sessionFactory == null) {

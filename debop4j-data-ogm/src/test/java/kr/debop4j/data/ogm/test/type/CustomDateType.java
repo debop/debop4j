@@ -76,7 +76,7 @@ public class CustomDateType extends AbstractGenericBasicType<Date> {
                         } catch (ParseException e) {
                             throw new HibernateException("Unable to read date from datastore " + result, e);
                         }
-                        if (log.isTraceEnabled()) {
+                        {
                             log.tracef("found [$s] as column [$s]", result, name);
                         }
                         return (X) date;

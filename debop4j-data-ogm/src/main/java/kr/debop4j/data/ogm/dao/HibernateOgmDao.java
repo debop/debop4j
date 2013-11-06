@@ -225,7 +225,7 @@ public class HibernateOgmDao implements IHibernateOgmDao {
 
     @Override
     public <T> IPagedList<T> getPage(Class<T> clazz, Query luceneQuery, int pageNo, int pageSize, Sort luceneSort, Criteria criteria) {
-        if (log.isTraceEnabled())
+
             log.trace("엔티티 페이징 조회. clazz=[{}], luceneQuery=[{}], pageNo=[{}], pageSize=[{}], sort=[{}], criteria=[{}]",
                       clazz, luceneQuery, pageNo, pageSize, luceneSort, criteria);
 

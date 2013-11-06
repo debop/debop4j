@@ -34,7 +34,7 @@ public class JacksonRedisSerializer<T> implements RedisSerializer<T> {
             if (graph == null)
                 return EMPTY_BYTES;
 
-            if (log.isTraceEnabled()) log.trace("인스턴스를 JSON 포맷으로 직렬화합니다. graph=[{}]", graph);
+            log.trace("인스턴스를 JSON 포맷으로 직렬화합니다. graph=[{}]", graph);
 
             return mapper.writeValueAsBytes(graph);
 

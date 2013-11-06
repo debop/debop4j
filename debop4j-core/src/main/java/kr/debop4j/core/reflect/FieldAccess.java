@@ -62,7 +62,7 @@ public abstract class FieldAccess {
      * @param value the value
      */
     public void set(Object instance, String fieldName, Object value) {
-        if (log.isTraceEnabled())
+
             log.trace("객체[{}]의 속성[{}]에 값[{}] 을 설정합니다.", instance, fieldName, value);
         set(instance, getIndex(fieldName), value);
     }
@@ -75,7 +75,7 @@ public abstract class FieldAccess {
      * @return the object
      */
     public Object get(Object instance, String fieldName) {
-        if (log.isTraceEnabled())
+
             log.trace("객체[{}]의 속성[{}] 값을 조회합니다.", instance, fieldName);
         return get(instance, getIndex(fieldName));
     }

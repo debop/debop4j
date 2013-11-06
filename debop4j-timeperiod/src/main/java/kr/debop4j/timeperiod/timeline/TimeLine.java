@@ -125,7 +125,7 @@ public class TimeLine<T extends ITimePeriod> implements ITimeLine {
 
     /** 기간 컬렉션으로부터 ITimeLineMoment 컬렉션을 빌드합니다 */
     private ITimeLineMomentCollection getTimeLineMoments(final Collection<? extends ITimePeriod> momentPeriods) {
-        if (log.isTraceEnabled())
+
             log.trace("기간 컬렉션으로부터 ITimeLineMoment 컬렉션을 빌드합니다...");
 
         ITimeLineMomentCollection moments = new TimeLineMomentCollection();
@@ -150,7 +150,7 @@ public class TimeLine<T extends ITimePeriod> implements ITimeLine {
         }
         moments.addAll(intersections);
 
-        if (log.isTraceEnabled())
+
             log.trace("기간 컬렉션으로부터 ITimeLineMoment 컬렉션을 빌드했습니다. moments=[{}]", StringTool.listToString(moments));
 
         return moments;

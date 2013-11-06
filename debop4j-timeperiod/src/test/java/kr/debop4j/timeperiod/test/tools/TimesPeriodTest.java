@@ -94,7 +94,7 @@ public class TimesPeriodTest extends TimePeriodTestBase {
             assertThat(period.hasInside(moment)).isTrue();
             assertThat(period.hasInside(endTime)).isFalse();
 
-            if (log.isTraceEnabled())
+
                 log.trace("[{}] : period[{}] hasInside=[{}]", unit, period, moment);
         }
     }
@@ -112,7 +112,7 @@ public class TimesPeriodTest extends TimePeriodTestBase {
             assertThat(period.hasInside(moment)).isTrue();
             assertThat(period.hasInside(endTime)).isFalse();
 
-            if (log.isTraceEnabled())
+
                 log.trace("[{}] : period[{}] hasInside=[{}]", unit, period, moment);
         }
     }
@@ -132,7 +132,7 @@ public class TimesPeriodTest extends TimePeriodTestBase {
                 assertThat(period.hasInside(moment)).isTrue();
                 assertThat(period.hasInside(endTime)).isFalse();
 
-                if (log.isTraceEnabled())
+
                     log.trace("[{}] : period[{}] hasInside=[{}]", unit, period, moment);
             }
         }

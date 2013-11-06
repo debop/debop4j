@@ -212,7 +212,7 @@ public class TimePeriodBase extends ValueObjectBase implements ITimePeriod {
 
     @Override
     public void setup(DateTime ns, DateTime ne) {
-        if (log.isTraceEnabled())
+
             log.trace("기간을 새로 설정합니다. newStart=[{}], newEnd=[{}]", ns, ne);
 
         ns = Guard.firstNotNull(ns, TimeSpec.MinPeriodTime);
@@ -238,7 +238,7 @@ public class TimePeriodBase extends ValueObjectBase implements ITimePeriod {
 
     @Override
     public ITimePeriod copy(Duration offset) {
-        if (log.isTraceEnabled())
+
             log.trace("기간 [{}]에 offset[{}]을 준 기간을 반환합니다...", this, offset);
 
         if (offset == Duration.ZERO)
@@ -255,7 +255,7 @@ public class TimePeriodBase extends ValueObjectBase implements ITimePeriod {
             return;
         assertMutable();
 
-        if (log.isTraceEnabled()) log.trace("기간[{}]을 offset[{}]만큼 이동합니다.", this, offset);
+        log.trace("기간[{}]을 offset[{}]만큼 이동합니다.", this, offset);
 
         if (hasStart())
             start = start.plus(offset.getMillis());
@@ -296,7 +296,7 @@ public class TimePeriodBase extends ValueObjectBase implements ITimePeriod {
         assertMutable();
         start = TimeSpec.MinPeriodTime;
         end = TimeSpec.MaxPeriodTime;
-        if (log.isTraceEnabled())
+
             log.trace("기간을 리셋했습니다. start=[{}], end=[{}]", start, end);
     }
 

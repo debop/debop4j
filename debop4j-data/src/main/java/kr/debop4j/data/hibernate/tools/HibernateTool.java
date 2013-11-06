@@ -126,7 +126,7 @@ public class HibernateTool {
         shouldNotBeNull(sessionFactory, "sessionFactory");
         shouldNotBeNull(listener, "listener");
 
-        if (log.isTraceEnabled())
+
             log.trace("sessionFactory에 event listener를 등록합니다... listener=[{}], eventTypes=[{}]",
                       listener, StringTool.listToString(eventTypes));
 
@@ -335,7 +335,7 @@ public class HibernateTool {
         shouldNotBeNull(query, "query");
 
         for (HibernateParameter param : params) {
-            if (log.isTraceEnabled())
+
                 log.trace("쿼리문의 인자값을 설정합니다. param=[{}]", param);
 
             query.setParameter(param.getName(), param.getValue());

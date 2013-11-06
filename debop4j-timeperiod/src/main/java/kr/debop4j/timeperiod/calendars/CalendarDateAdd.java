@@ -97,7 +97,7 @@ public class CalendarDateAdd extends DateAdd {
 
     @Override
     public DateTime add(DateTime start, Duration offset, SeekBoundaryMode seekBoundary) {
-        if (log.isTraceEnabled())
+
             log.trace("add. start [{}] + offset [{}]의 시각을 계산합니다... seekBoundary=[{}]", start, offset, seekBoundary);
 
         if (getWeekDays().size() == 0 && getExcludePeriods().size() == 0 && getWorkingHours().size() == 0)
@@ -110,7 +110,7 @@ public class CalendarDateAdd extends DateAdd {
 
         DateTime end = endPair.getV1();
 
-        if (log.isTraceEnabled())
+
             log.trace("add. start [{}] + offset [{}] => end=[{}] seekBoundary=[{}]", start, offset, end, seekBoundary);
 
         return end;
@@ -118,7 +118,7 @@ public class CalendarDateAdd extends DateAdd {
 
     @Override
     public DateTime subtract(DateTime start, Duration offset, SeekBoundaryMode seekBoundary) {
-        if (log.isTraceEnabled())
+
             log.trace("subtract. start [{}] - offset [{}]의 시각을 계산합니다... seekBoundary=[{}]", start, offset, seekBoundary);
 
         if (getWeekDays().size() == 0 && getExcludePeriods().size() == 0 && getWorkingHours().size() == 0)
@@ -130,7 +130,7 @@ public class CalendarDateAdd extends DateAdd {
 
         DateTime end = endTuple.getV1();
 
-        if (log.isTraceEnabled())
+
             log.trace("subtract. start [{}] - offset [{}] => end=[{}] seekBoundary=[{}]", start, offset, end, seekBoundary);
 
         return end;
@@ -147,7 +147,7 @@ public class CalendarDateAdd extends DateAdd {
      */
     @Override
     protected Pair<DateTime, Duration> calculateEnd(DateTime start, Duration offset, SeekDirection seekDir, SeekBoundaryMode seekBoundary) {
-        if (log.isTraceEnabled())
+
             log.trace("기준시각으로부터 offset 기간만큼 떨어진 시각을 구합니다... start=[{}], offset=[{}], seekDir=[{}], seekBoundary=[{}]",
                       start, offset, seekDir, seekBoundary);
         Guard.shouldBe(offset.compareTo(ZERO) >= 0, "offset 값은 0 이상 이어야 합니다. offset=[%d]", offset.getMillis());
@@ -162,7 +162,7 @@ public class CalendarDateAdd extends DateAdd {
             super.getIncludePeriods().clear();
             super.getIncludePeriods().addAll(getAvailableWeekPeriods(week));
 
-            if (log.isTraceEnabled())
+
                 log.trace("가능한 기간=[{}]", StringTool.listToString(super.getIncludePeriods()));
 
             Pair<DateTime, Duration> result = super.calculateEnd(moment, remaining, seekDir, seekBoundary);
@@ -185,7 +185,7 @@ public class CalendarDateAdd extends DateAdd {
             }
         }
 
-        if (log.isTraceEnabled())
+
             log.trace("기준시각으로부터 offset 기간만큼 떨어진 시각을 구했습니다. start=[{}], offset=[{}], seekDir=[{}], seekBoundary=[{}], end=[{}], remaining=[{}]",
                       start, offset, seekDir, seekBoundary, end, remaining);
 
@@ -199,7 +199,7 @@ public class CalendarDateAdd extends DateAdd {
      * @return 다음
      */
     private WeekRange findNextWeek(WeekRange current) {
-        if (log.isTraceEnabled())
+
             log.trace("현 week[{}]의 이후 week 기간을 구합니다...", current);
 
         WeekRange next = null;
@@ -215,7 +215,7 @@ public class CalendarDateAdd extends DateAdd {
                     ? new WeekRange(remainingPeriods.get(0).getStart(), getTimeCalendar())
                     : null;
         }
-        if (log.isTraceEnabled())
+
             log.trace("현 week[{}]의 이후 week 는 [{}] ", current, next);
 
         return next;
@@ -228,7 +228,7 @@ public class CalendarDateAdd extends DateAdd {
      * @return 선행
      */
     private WeekRange findPreviousWeek(WeekRange current) {
-        if (log.isTraceEnabled())
+
             log.trace("현 week[{}]의 이전 week 기간을 구합니다...", current);
 
         WeekRange previous = null;
@@ -244,7 +244,7 @@ public class CalendarDateAdd extends DateAdd {
                     ? new WeekRange(remainingPeriods.get(remainingPeriods.size() - 1).getEnd(), getTimeCalendar())
                     : null;
         }
-        if (log.isTraceEnabled())
+
             log.trace("현 week[{}]의 이전 week 는 [{}] ", current, previous);
 
         return previous;
@@ -259,7 +259,7 @@ public class CalendarDateAdd extends DateAdd {
     private Iterable<ITimePeriod> getAvailableWeekPeriods(ITimePeriod limits) {
         shouldNotBeNull(limits, "limits");
 
-        if (log.isTraceEnabled()) log.trace("가능한 기간을 추출합니다... 전체 기간=[{}]", limits);
+        log.trace("가능한 기간을 추출합니다... 전체 기간=[{}]", limits);
 
         if (weekDays.size() == 0 && workingHours.size() == 0 && workingDayHours.size() == 0) {
             TimePeriodCollection result = new TimePeriodCollection();

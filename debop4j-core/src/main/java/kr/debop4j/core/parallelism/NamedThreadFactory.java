@@ -47,7 +47,7 @@ public class NamedThreadFactory implements ThreadFactory {
     public Thread newThread(Runnable r) {
         assert r != null;
         final String threadName = prefix + threadNumber.getAndIncrement();
-        if (log.isTraceEnabled())
+
             log.trace("새로운 thread를 생성합니다. threadName=[{}]", threadName);
         return new Thread(r, threadName);
     }

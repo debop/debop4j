@@ -120,7 +120,7 @@ public class EntityTool {
     public static <T extends IHierarchyEntity<T>> void setHierarchy(T child, T oldParent, T newParent) {
         shouldNotBeNull(child, "child");
 
-        if (log.isTraceEnabled())
+
             log.trace("현재 노드의 부모를 변경하고, 계층구조 정보를 변경합니다... child=[{}], oldParent=[{}], newParent=[{}]",
                       child, oldParent, newParent);
 
@@ -141,7 +141,7 @@ public class EntityTool {
         if (parent == null || child == null)
             return;
 
-        if (log.isTraceEnabled())
+
             log.trace("노드의 부모 및 조상을 설정합니다. child=[{}], parent=[{}]", child, parent);
 
         parent.getDescendents().add(child);
@@ -167,7 +167,7 @@ public class EntityTool {
             return;
 
         shouldNotBeNull(child, "child");
-        if (log.isTraceEnabled())
+
             log.trace("노드의 부모 및 조상을 제거합니다. child=[{}], parent=[{}]", child, parent);
 
 
@@ -436,7 +436,7 @@ public class EntityTool {
     public static <T extends ITreeEntity<T>> void updateTreeNodePosition(T entity) {
         shouldNotBeNull(entity, "entity");
 
-        if (log.isTraceEnabled())
+
             log.trace("update tree node position... entity=[{}]", entity);
 
         TreeNodePosition nodePosition = entity.getNodePosition();
@@ -458,7 +458,7 @@ public class EntityTool {
      * @return the child count
      */
     public static <T extends ITreeEntity<T>> Long getChildCount(T entity) {
-        if (log.isTraceEnabled())
+
             log.trace("tree entity의 자식 엔티티의 수를 구합니다. entity=[{}]", entity);
 
         DetachedCriteria dc = HibernateTool.createDetachedCriteria(entity.getClass());
@@ -475,7 +475,7 @@ public class EntityTool {
      * @return the boolean
      */
     public static <T extends ITreeEntity<T>> Boolean hasChildren(T entity) {
-        if (log.isTraceEnabled())
+
             log.trace("tree entity 가 자식을 가지는지 확안합니다. entity=[{}]", entity);
 
         DetachedCriteria dc = HibernateTool.createDetachedCriteria(entity.getClass());

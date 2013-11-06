@@ -39,7 +39,7 @@ import java.util.Date;
 public class JodaDateTimeUserType implements UserType, Serializable {
 
     public static DateTime asDateTime(final Object value) {
-        if (log.isTraceEnabled())
+
             log.trace("값을 DateTime으로 변환합니다. value=[{}]", value);
 
         if (value == null)

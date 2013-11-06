@@ -51,7 +51,7 @@ public class TimeRangeUserType implements CompositeUserType, Serializable {
      * @return the date time range
      */
     public static DateTimeRange asDateTimeRange(Object value) {
-        if (log.isTraceEnabled())
+
             log.trace("값을 DateTimeRange로 변경합니다. value=[{}]", value);
 
         if (value == null)

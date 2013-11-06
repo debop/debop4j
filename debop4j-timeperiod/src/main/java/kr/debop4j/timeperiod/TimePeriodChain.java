@@ -116,7 +116,7 @@ public class TimePeriodChain extends TimePeriodContainer implements ITimePeriodC
             assertSpaceAfter(last.getEnd(), period.getDuration());
             period.setup(last.getEnd(), last.getEnd().plus(period.getDuration()));
         }
-        if (log.isTraceEnabled())
+
             log.trace("Period chain의 끝에 추가합니다. period=[{}]", period);
 
         return getPeriods().add(period);
@@ -147,7 +147,7 @@ public class TimePeriodChain extends TimePeriodContainer implements ITimePeriodC
         shouldBeInRange(index, 0, size(), "index");
         Times.assertMutable(item);
 
-        if (log.isTraceEnabled())
+
             log.trace("Chain의 인덱스[{}]에 새로운 요소[{}]를 삽입합니다...", index, item);
 
         Duration itemDuration = item.getDuration();
@@ -155,7 +155,7 @@ public class TimePeriodChain extends TimePeriodContainer implements ITimePeriodC
         ITimePeriod nextItem = null;
 
         if (size() > 0) {
-            if (log.isTraceEnabled()) log.trace("시간적 삽입 공간이 존재하는지 검사합니다...");
+            log.trace("시간적 삽입 공간이 존재하는지 검사합니다...");
             if (index > 0) {
                 prevItem = get(index - 1);
                 assertSpaceAfter(getEnd(), itemDuration);
@@ -169,7 +169,7 @@ public class TimePeriodChain extends TimePeriodContainer implements ITimePeriodC
         getPeriods().add(index, item);
 
         if (prevItem != null) {
-            if (log.isTraceEnabled())
+
                 log.trace("선행 period에 기초하여 삽입한 period와 후행 period들의 시간을 조정합니다...");
 
             item.setup(prevItem.getEnd(), prevItem.getEnd().plus(itemDuration));
@@ -182,7 +182,7 @@ public class TimePeriodChain extends TimePeriodContainer implements ITimePeriodC
         }
 
         if (nextItem != null) {
-            if (log.isTraceEnabled())
+
                 log.trace("후행 period에 기초하여 삽입한 period와 선행 period들의 시간을 조정합니다...");
 
             DateTime nextStart = nextItem.getStart().minus(itemDuration);
@@ -207,7 +207,7 @@ public class TimePeriodChain extends TimePeriodContainer implements ITimePeriodC
 
         ITimePeriod item = (ITimePeriod) o;
 
-        if (log.isTraceEnabled())
+
             log.trace("요소 [{}]를 컬렉션에서 제거합니다...", item);
 
         Duration itemDuration = item.getDuration();
@@ -220,7 +220,7 @@ public class TimePeriodChain extends TimePeriodContainer implements ITimePeriodC
         boolean removed = getPeriods().remove(item);
 
         if (removed && next != null) {
-            if (log.isTraceEnabled()) log.trace("요소[{}]를 제거하고, chain의 후속 periods 들의 기간을 조정합니다...", item);
+            log.trace("요소[{}]를 제거하고, chain의 후속 periods 들의 기간을 조정합니다...", item);
 
             for (int i = index; i < size(); i++) {
                 DateTime start = get(i).getStart().minus(itemDuration);
@@ -228,7 +228,7 @@ public class TimePeriodChain extends TimePeriodContainer implements ITimePeriodC
             }
         }
 
-        if (log.isTraceEnabled())
+
             log.trace("요소[{}]를 제거한 결과=[{}]", item, removed);
 
         return removed;
