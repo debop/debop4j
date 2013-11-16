@@ -24,8 +24,8 @@ import kr.debop4j.core.tools.StringTool;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.nio.client.DefaultHttpAsyncClient;
-import org.apache.http.nio.client.HttpAsyncClient;
+import org.apache.http.impl.nio.client.CloseableHttpAsyncClient;
+import org.apache.http.impl.nio.client.HttpAsyncClients;
 import org.apache.http.util.EntityUtils;
 
 import java.util.Arrays;
@@ -44,7 +44,9 @@ public class FutureWebCacheRepository extends CacheRepositoryBase {
 
     private final LoadingCache<String, String> cache;
 
-    /** Instantiates a new Future web cache repository. */
+    /**
+     * Instantiates a new Future web cache repository.
+     */
     public FutureWebCacheRepository() {
         cache = CacheBuilder.newBuilder().weakValues().build(getCacheLoader());
     }
@@ -89,12 +91,10 @@ public class FutureWebCacheRepository extends CacheRepositoryBase {
         return new CacheLoader<String, String>() {
             @Override
             public String load(String key) throws Exception {
-
-
-                    log.trace("URI=[{}] 의 웹 컨텐츠를 비동기 방식으로 다운로드 받아 캐시합니다.", key);
+                log.trace("URI=[{}] 의 웹 컨텐츠를 비동기 방식으로 다운로드 받아 캐시합니다.", key);
 
                 String responseStr = "";
-                HttpAsyncClient httpClient = new DefaultHttpAsyncClient();
+                CloseableHttpAsyncClient httpClient = HttpAsyncClients.createDefault(); //new DefaultHttpAsyncClient();
                 try {
                     httpClient.start();
                     HttpGet request = new HttpGet(key);
@@ -105,9 +105,9 @@ public class FutureWebCacheRepository extends CacheRepositoryBase {
 
                     if (log.isDebugEnabled())
                         log.debug("URI=[{}]로부터 웹 컨텐츠를 다운로드 받았습니다. responseStr=[{}]",
-                                key, StringTool.ellipsisChar(responseStr, 80));
+                                  key, StringTool.ellipsisChar(responseStr, 80));
                 } finally {
-                    httpClient.shutdown();
+                    httpClient.close();
                 }
                 return responseStr;
             }
