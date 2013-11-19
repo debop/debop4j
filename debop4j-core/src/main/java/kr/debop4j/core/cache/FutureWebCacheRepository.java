@@ -44,7 +44,9 @@ public class FutureWebCacheRepository extends CacheRepositoryBase {
 
     private final LoadingCache<String, String> cache;
 
-    /** Instantiates a new Future web cache repository. */
+    /**
+     * Instantiates a new Future web cache repository.
+     */
     public FutureWebCacheRepository() {
         cache = CacheBuilder.newBuilder().weakValues().build(getCacheLoader());
     }
@@ -105,7 +107,7 @@ public class FutureWebCacheRepository extends CacheRepositoryBase {
 
                     if (log.isDebugEnabled())
                         log.debug("URI=[{}]로부터 웹 컨텐츠를 다운로드 받았습니다. responseStr=[{}]",
-                                key, StringTool.ellipsisChar(responseStr, 80));
+                                  key, StringTool.ellipsisChar(responseStr, 80));
                 } finally {
                     httpClient.shutdown();
                 }

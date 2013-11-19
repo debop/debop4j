@@ -79,7 +79,9 @@ public abstract class JpaTestBase extends BaseOGMTest {
     // can be overridden by subclasses
     protected void refineInfo(GetterPersistenceUnitInfo info) { }
 
-    /** Get JBoss TM out of Hibernate */
+    /**
+     * Get JBoss TM out of Hibernate
+     */
     public static TransactionManager extractJBossTransactionManager(EntityManagerFactory factory) {
         if (log.isDebugEnabled())
             log.debug("TransactionManager를 꺼냅니다.");

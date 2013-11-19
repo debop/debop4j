@@ -28,16 +28,24 @@ import java.util.List;
  */
 public interface ITimePeriodContainer extends List<ITimePeriod>, ITimePeriod {
 
-    /** 시작시각을 설정합니다. */
+    /**
+     * 시작시각을 설정합니다.
+     */
     void setStart(DateTime start);
 
-    /** 완료시각을 설정합니다. */
+    /**
+     * 완료시각을 설정합니다.
+     */
     void setEnd(DateTime end);
 
-    /** 읽기전용 여부 */
+    /**
+     * 읽기전용 여부
+     */
     boolean isReadonly();
 
-    /** 지정한 기간을 포함하는지 여부 */
+    /**
+     * 지정한 기간을 포함하는지 여부
+     */
     boolean containsPeriod(ITimePeriod target);
 
     /**

@@ -64,7 +64,9 @@ public abstract class HalfyearTimeRange extends YearCalendarTimeRange {
     @Getter private final Halfyear endHalfyear;
     @Getter private final int halfyearCount;
 
-    /** 반기(HalfYear) 기간의 시작 년도와 완료 년도가 다른가 여부 */
+    /**
+     * 반기(HalfYear) 기간의 시작 년도와 완료 년도가 다른가 여부
+     */
     public boolean isMultipleCalendarYears() {
         return startYear != endYear;
     }

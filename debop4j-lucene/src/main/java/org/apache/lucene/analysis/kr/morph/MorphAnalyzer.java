@@ -31,13 +31,19 @@ public class MorphAnalyzer {
     private static final boolean isTraceEnabled = log.isTraceEnabled();
     private static final boolean isDebugEnabled = log.isDebugEnabled();
 
-    /** starting word of sentence. */
+    /**
+     * starting word of sentence.
+     */
     public static final int POS_START = 1;
 
-    /** middle word of sentence */
+    /**
+     * middle word of sentence
+     */
     public static final int POS_MID = 2;
 
-    /** ending word of sentence. */
+    /**
+     * ending word of sentence.
+     */
     public static final int POS_END = 3;
 
     private CompoundNounAnalyzer cnAnalyzer = new CompoundNounAnalyzer();
@@ -56,11 +62,11 @@ public class MorphAnalyzer {
         return analyze(input, POS_MID);
     }
 
-    @SuppressWarnings( "unchecked" )
+    @SuppressWarnings("unchecked")
     public List<AnalysisOutput> analyze(String input, int pos) throws MorphException {
 
-        if (isTraceEnabled)
-            log.trace("analyze input=[{}], pos=[{}]", input, pos);
+
+        log.trace("analyze input=[{}], pos=[{}]", input, pos);
 
         List<AnalysisOutput> candidates = new ArrayList<AnalysisOutput>();
         boolean isVerbOnly = MorphUtil.hasVerbOnly(input);
@@ -234,12 +240,11 @@ public class MorphAnalyzer {
      * 용언 + '아/어' + 보조용언 + '음/기' + 조사(PTN_VMXMJ)
      *
      * @throws org.apache.lucene.analysis.kr.morph.MorphException
-     *
      */
     public void analysisWithJosa(String stem, String end, List<AnalysisOutput> candidates) throws MorphException {
 
-        if (isTraceEnabled)
-            log.trace("조사를 분석합니다. stem=[{}], end=[{}]", stem, end);
+
+        log.trace("조사를 분석합니다. stem=[{}], end=[{}]", stem, end);
 
         if (stem == null || stem.length() == 0) return;
 
@@ -283,8 +288,8 @@ public class MorphAnalyzer {
      */
     public void analysisWithEomi(String stem, String end, List<AnalysisOutput> candidates) throws MorphException {
 
-        if (isTraceEnabled)
-            log.trace("조사를 분석합니다. stem=[{}], end=[{}]", stem, end);
+
+        log.trace("조사를 분석합니다. stem=[{}], end=[{}]", stem, end);
 
         String[] morphs = EomiUtil.splitEomi(stem, end);
         if (morphs[0] == null) return; // 어미가 사전에 등록되어 있지 않다면....
@@ -358,7 +363,6 @@ public class MorphAnalyzer {
      * 단위명사는 2글자 이상 단어에서만 찾는다.
      *
      * @throws org.apache.lucene.analysis.kr.morph.MorphException
-     *
      */
     public boolean confirmCNoun(AnalysisOutput o) throws MorphException {
 

@@ -26,10 +26,14 @@ import lombok.Getter;
  */
 public enum Halfyear {
 
-    /** 상반기 */
+    /**
+     * 상반기
+     */
     First(1),
 
-    /** 하반기 */
+    /**
+     * 하반기
+     */
     Second(2);
 
     @Getter private final int value;

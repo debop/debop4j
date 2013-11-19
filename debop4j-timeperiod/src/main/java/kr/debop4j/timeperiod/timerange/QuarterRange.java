@@ -35,7 +35,9 @@ public class QuarterRange extends QuarterTimeRange {
 
     // region << Constructor >>
 
-    /** Instantiates a new Quarter range. */
+    /**
+     * Instantiates a new Quarter range.
+     */
     public QuarterRange() {
         this(new TimeCalendar());
     }

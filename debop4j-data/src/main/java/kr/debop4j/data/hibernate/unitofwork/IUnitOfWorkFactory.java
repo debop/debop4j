@@ -27,10 +27,14 @@ import org.hibernate.SessionFactory;
  */
 public interface IUnitOfWorkFactory {
 
-    /** Current Hibernate Session 용 Key */
+    /**
+     * Current Hibernate Session 용 Key
+     */
     public final String CURRENT_HIBERNATE_SESSION = IUnitOfWorkFactory.class.getName() + ".Current.Hibernate.Session";
 
-    /** 현 UnitOfWorkFactory가 사용하는 {@link org.hibernate.SessionFactory} */
+    /**
+     * 현 UnitOfWorkFactory가 사용하는 {@link org.hibernate.SessionFactory}
+     */
     SessionFactory getSessionFactory();
 
     /**
@@ -46,10 +50,14 @@ public interface IUnitOfWorkFactory {
      */
     Session getCurrentSession();
 
-    /** 현 Thread-Context 에서 사용할 Session 을 설정합니다. */
+    /**
+     * 현 Thread-Context 에서 사용할 Session 을 설정합니다.
+     */
     void setCurrentSession(Session session);
 
-    /** 현 UnitOfWorkFactory를 초기화합니다. */
+    /**
+     * 현 UnitOfWorkFactory를 초기화합니다.
+     */
     void init();
 
     /**

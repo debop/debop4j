@@ -57,8 +57,8 @@ public abstract class CompressTool {
     public static String compressString(final ICompressor compressor,
                                         final String plainText) {
         return compressString(compressor,
-                plainText,
-                BinaryStringFormat.HexDecimal);
+                              plainText,
+                              BinaryStringFormat.HexDecimal);
     }
 
     /**
@@ -92,8 +92,8 @@ public abstract class CompressTool {
     public static Future<String> compressStringAsync(final ICompressor compressor,
                                                      final String plainText) {
         return compressStringAsync(compressor,
-                plainText,
-                BinaryStringFormat.HexDecimal);
+                                   plainText,
+                                   BinaryStringFormat.HexDecimal);
     }
 
     /**
@@ -134,8 +134,8 @@ public abstract class CompressTool {
     public static String decompressString(final ICompressor compressor,
                                           final String compressedText) {
         return decompressString(compressor,
-                compressedText,
-                BinaryStringFormat.HexDecimal);
+                                compressedText,
+                                BinaryStringFormat.HexDecimal);
     }
 
     /**
@@ -175,8 +175,8 @@ public abstract class CompressTool {
     public static Future<String> decompressStringAsync(final ICompressor compressor,
                                                        final String compressedText) {
         return decompressStringAsync(compressor,
-                compressedText,
-                BinaryStringFormat.HexDecimal);
+                                     compressedText,
+                                     BinaryStringFormat.HexDecimal);
     }
 
     /**
@@ -203,7 +203,7 @@ public abstract class CompressTool {
             @Override
             public String call() throws Exception {
                 byte[] plainBytes = compressor.decompress(getBytesFromString(compressedText,
-                        stringFormat));
+                                                                             stringFormat));
                 String plainText = getUtf8String(plainBytes);
 
                 if (log.isTraceEnabled())

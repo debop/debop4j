@@ -86,6 +86,8 @@ public interface ICacheRepository {
      */
     boolean exists(final String key);
 
-    /** 캐시의 모든 항목을 삭제합니다. */
+    /**
+     * 캐시의 모든 항목을 삭제합니다.
+     */
     void clear();
 }

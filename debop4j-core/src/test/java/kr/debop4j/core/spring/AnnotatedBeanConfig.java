@@ -16,7 +16,7 @@ import org.springframework.context.annotation.Configuration;
  */
 @Slf4j
 @Configuration
-@ComponentScan( basePackageClasses = { Springs.class } )
+@ComponentScan(basePackageClasses = { Springs.class })
 public class AnnotatedBeanConfig {
 
     @Bean

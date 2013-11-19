@@ -116,7 +116,9 @@ public class Company extends AccessLocaledEntityBase<Company.CompanyLocale>
     @Fetch(FetchMode.SELECT)
     private Set<Employee> employees = Sets.newHashSet();
 
-    /** 다국어 지원을 위한 정보 */
+    /**
+     * 다국어 지원을 위한 정보
+     */
     @CollectionTable(name = "CompanyLocale", joinColumns = { @JoinColumn(name = "CompanyId") })
     @ElementCollection(targetClass = CompanyLocale.class, fetch = FetchType.LAZY)
     @MapKeyClass(Locale.class)
@@ -125,11 +127,15 @@ public class Company extends AccessLocaledEntityBase<Company.CompanyLocale>
     private Map<Locale, CompanyLocale> localeMap = Maps.newHashMap();
 
 
-    /** MySQL용 UPDATE 시 시간 값 ( on update current_timestamp ) */
+    /**
+     * MySQL용 UPDATE 시 시간 값 ( on update current_timestamp )
+     */
     @Setter(AccessLevel.PROTECTED)
     private Timestamp updatedTimestamp;
 
-    /** MySQL용 INSERT 시 시간 값 ( DEFAULT CURRENT_TIMESTAMP ) */
+    /**
+     * MySQL용 INSERT 시 시간 값 ( DEFAULT CURRENT_TIMESTAMP )
+     */
     @Setter(AccessLevel.PROTECTED)
     private Timestamp createdTimestamp;
 

@@ -496,7 +496,6 @@ public class CompoundNounAnalyzer {
      * 입력된 String 을 CompoundEntry 로 변환
      *
      * @throws org.apache.lucene.analysis.kr.morph.MorphException
-     *
      */
     private CompoundEntry analyzeSingle(String input) throws MorphException {
 

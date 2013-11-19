@@ -22,7 +22,7 @@ import java.util.*;
  * @author 배성혁 sunghyouk.bae@gmail.com
  * @since 13. 5. 3. 오후 11:57
  */
-@SuppressWarnings( "unchecked" )
+@SuppressWarnings("unchecked")
 public class RedisRepository {
 
     private static final Logger log = LoggerFactory.getLogger(RedisRepository.class);
@@ -63,8 +63,8 @@ public class RedisRepository {
 
 
     public Object getEntitySet(EntityKey key) {
-        if (isTraceEnabled)
-            log.trace("엔티티 집합을 조회합니다... key=[{}]", key);
+
+        log.trace("엔티티 집합을 조회합니다... key=[{}]", key);
 
         final byte[] rawField = fieldSerializer.serialize(key);
 
@@ -79,8 +79,8 @@ public class RedisRepository {
 
     public void putEntity(EntityKey key, Map<String, Object> tuple) {
 
-        if (isTraceEnabled)
-            log.trace("엔티티를 저장합니다. key=[{}], tuple=[{}]", key, tuple);
+
+        log.trace("엔티티를 저장합니다. key=[{}], tuple=[{}]", key, tuple);
 
         final byte[] rawField = fieldSerializer.serialize(key);
         final byte[] rawValue = valueSerializer.serialize(tuple);
@@ -98,8 +98,8 @@ public class RedisRepository {
     }
 
     public void removeEntity(EntityKey key) {
-        if (isTraceEnabled)
-            log.trace("엔티티를 삭제합니다... key=[{}]", key);
+
+        log.trace("엔티티를 삭제합니다... key=[{}]", key);
         final byte[] rawField = fieldSerializer.serialize(key);
         Long result = run(new JedisCallback<Long>() {
             @Override
@@ -116,13 +116,15 @@ public class RedisRepository {
         return fieldSerializer.serialize(map);
     }
 
-    /** 키를 byte[] 로 직렬화합니다 * */
-    @SuppressWarnings( "unchecked" )
+    /**
+     * 키를 byte[] 로 직렬화합니다 *
+     */
+    @SuppressWarnings("unchecked")
     private byte[] rawKey(Object key) {
         return getFieldSerializer().serialize(key);
     }
 
-    @SuppressWarnings( "unchecked" )
+    @SuppressWarnings("unchecked")
     private byte[][] rawKeys(Collection<? extends Object> keys) {
         byte[][] rawKeys = new byte[keys.size()][];
         int i = 0;
@@ -132,18 +134,24 @@ public class RedisRepository {
         return rawKeys;
     }
 
-    /** byte[] 를 key 값으로 역직렬화 합니다 */
+    /**
+     * byte[] 를 key 값으로 역직렬화 합니다
+     */
     private Object deserializeKey(byte[] rawKey) {
         return getFieldSerializer().deserialize(rawKey);
     }
 
-    /** 캐시 값을 byte[]로 직렬화를 수행합니다. */
-    @SuppressWarnings( "unchecked" )
+    /**
+     * 캐시 값을 byte[]로 직렬화를 수행합니다.
+     */
+    @SuppressWarnings("unchecked")
     private byte[] rawValue(Object value) {
         return getValueSerializer().serialize(value);
     }
 
-    /** byte[] 를 역직렬화하여 원 객체로 변환합니다. */
+    /**
+     * byte[] 를 역직렬화하여 원 객체로 변환합니다.
+     */
     private Object deserializeValue(byte[] rawValue) {
         return getValueSerializer().deserialize(rawValue);
     }
@@ -188,14 +196,18 @@ public class RedisRepository {
         }
     }
 
-    /** Raw Key 값들을 역직렬화하여 Key Set을 반환합니다. */
-    @SuppressWarnings( "unchecked" )
+    /**
+     * Raw Key 값들을 역직렬화하여 Key Set을 반환합니다.
+     */
+    @SuppressWarnings("unchecked")
     private Set<Object> deserializeKeys(Set<byte[]> rawKeys) {
         return SerializationTool.deserialize(rawKeys, getFieldSerializer());
     }
 
-    /** Raw Value 값들을 역직렬화하여 Value List를 반환합니다. */
-    @SuppressWarnings( "unchecked" )
+    /**
+     * Raw Value 값들을 역직렬화하여 Value List를 반환합니다.
+     */
+    @SuppressWarnings("unchecked")
     private List<Object> deserializeValues(List<byte[]> rawValues) {
         return SerializationTool.deserialize(rawValues, getValueSerializer());
     }

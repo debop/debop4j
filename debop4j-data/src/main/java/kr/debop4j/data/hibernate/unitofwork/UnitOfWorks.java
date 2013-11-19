@@ -51,12 +51,16 @@ public final class UnitOfWorks {
     private static volatile IUnitOfWork globalNonThreadSafeUnitOfWork;
     private static volatile IUnitOfWorkFactory unitOfWorkFactory;
 
-    /** UnitOfWork 가 이미 시작되었는지 확인한다. */
+    /**
+     * UnitOfWork 가 이미 시작되었는지 확인한다.
+     */
     public static synchronized boolean isStarted() {
         return globalNonThreadSafeUnitOfWork != null || Local.get(IUnitOfWork.CURRENT_UNIT_OF_WORK_KEY) != null;
     }
 
-    /** 현재 시작된 {@link IUnitOfWork}의 인스턴스 ({@link UnitOfWorkAdapter}를 반환합니다. */
+    /**
+     * 현재 시작된 {@link IUnitOfWork}의 인스턴스 ({@link UnitOfWorkAdapter}를 반환합니다.
+     */
     public static synchronized IUnitOfWork getCurrent() {
         if (!isStarted())
             throw new HibernateException(UNIT_OF_WORK_NOT_STARTED);
@@ -226,7 +230,9 @@ public final class UnitOfWorks {
         return getCurrent();
     }
 
-    /** 현재 실행중인 UnitOfWork를 종료합니다. */
+    /**
+     * 현재 실행중인 UnitOfWork를 종료합니다.
+     */
     public static synchronized void stop() {
         stop(false);
     }
@@ -322,7 +328,9 @@ public final class UnitOfWorks {
         setCurrent((unitOfWork != null) ? ((IUnitOfWorkImplementor) unitOfWork).getPrevious() : null);
     }
 
-    /** Close unit of work factory. */
+    /**
+     * Close unit of work factory.
+     */
     public static synchronized void closeUnitOfWorkFactory() {
         log.info("UnitOfWorkFactory를 종료합니다.");
         unitOfWorkFactory = null;

@@ -116,7 +116,7 @@ public class AppConfig {
         return props;
     }
 
-    private static String[] mappingPackages = new String[]{
+    private static String[] mappingPackages = new String[] {
             SearchItem.class.getPackage().getName(),
             Twit.class.getPackage().getName()
     };

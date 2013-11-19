@@ -19,7 +19,9 @@ public class RollbackAction {
         this.provider = provider;
     }
 
-    /** 이전 상태로 롤백합니다. */
+    /**
+     * 이전 상태로 롤백합니다.
+     */
     public void rollback() {
 
     }

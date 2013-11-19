@@ -62,7 +62,7 @@ public class StatefulEntityImpl extends JpaEntityBase {
     private String name;
 
     @Getter
-    @Type( type = "kr.debop4j.data.hibernate.usertype.JodaDateTimeUserType" )
+    @Type(type = "kr.debop4j.data.hibernate.usertype.JodaDateTimeUserType")
     private DateTime lastUpdated;
 
     @PrePersist

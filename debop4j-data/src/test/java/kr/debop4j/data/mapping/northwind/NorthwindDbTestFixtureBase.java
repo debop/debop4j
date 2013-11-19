@@ -27,8 +27,8 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
  * @since 13. 2. 23.
  */
 @Slf4j
-@RunWith( SpringJUnit4ClassRunner.class )
-@ContextConfiguration( classes = { PostgreSqlConfig.class } )
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(classes = { PostgreSqlConfig.class })
 public class NorthwindDbTestFixtureBase extends DatabaseTestFixtureBase {
 
     @Autowired

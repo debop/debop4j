@@ -72,7 +72,7 @@ public class BinarySerializer implements ISerializer {
      * @param <T>         객체 수형
      * @return 객체 인스턴스
      */
-    @SuppressWarnings( "unchecked" )
+    @SuppressWarnings("unchecked")
     public <T> T readObject(InputStream inputStream, Class<T> clazz) {
         try (ObjectInputStream ois = new ObjectInputStream(inputStream)) {
             return (T) ois.readObject();

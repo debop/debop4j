@@ -38,15 +38,15 @@ import java.util.Set;
  * @since 13. 3. 11.
  */
 @Entity
-@Table( name = "ResourceActor" )
-@org.hibernate.annotations.Table( appliesTo = "ResourceActor",
-                                  indexes = @org.hibernate.annotations.Index( name = "ix_ResourceActor",
-                                                                              columnNames = {
-                                                                                      "ResourceId",
-                                                                                      "CompanyId",
-                                                                                      "ActorKind",
-                                                                                      "ActorId" } ) )
-@org.hibernate.annotations.Cache( region = "Product", usage = CacheConcurrencyStrategy.READ_WRITE )
+@Table(name = "ResourceActor")
+@org.hibernate.annotations.Table(appliesTo = "ResourceActor",
+                                 indexes = @org.hibernate.annotations.Index(name = "ix_ResourceActor",
+                                                                            columnNames = {
+                                                                                    "ResourceId",
+                                                                                    "CompanyId",
+                                                                                    "ActorKind",
+                                                                                    "ActorId" }))
+@org.hibernate.annotations.Cache(region = "Product", usage = CacheConcurrencyStrategy.READ_WRITE)
 @DynamicInsert
 @DynamicUpdate
 @Getter
@@ -70,32 +70,32 @@ public class ResourceActor extends AccessEntityBase {
 
     @Id
     @GeneratedValue
-    @Column( name = "ResourceActorId" )
+    @Column(name = "ResourceActorId")
     private Long id;
 
-    @ManyToOne( fetch = FetchType.LAZY )
-    @JoinColumn( name = "ResourceId", nullable = false )
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "ResourceId", nullable = false)
     private Resource resource;
 
-    @ManyToOne( fetch = FetchType.LAZY )
-    @JoinColumn( name = "CompanyId", nullable = false )
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "CompanyId", nullable = false)
     private Company company;
 
-    @Enumerated( EnumType.STRING )
-    @Column( name = "ActorKind", nullable = false, length = 128 )
+    @Enumerated(EnumType.STRING)
+    @Column(name = "ActorKind", nullable = false, length = 128)
     private ActorKind actorKind = ActorKind.User;
 
-    @Column( name = "ActorId", nullable = false )
+    @Column(name = "ActorId", nullable = false)
     private Long actorId;
 
     // one-to-many 이면서 child가 component 인 경우!!!
-    @ElementCollection( fetch = FetchType.EAGER )
-    @Enumerated( EnumType.STRING )
-    @CollectionTable( name = "ResourceActorAuths", joinColumns = @JoinColumn( name = "ResourceActorId" ) )
-    @Column( name = "AuthorityKind", nullable = false, length = 128 )
+    @ElementCollection(fetch = FetchType.EAGER)
+    @Enumerated(EnumType.STRING)
+    @CollectionTable(name = "ResourceActorAuths", joinColumns = @JoinColumn(name = "ResourceActorId"))
+    @Column(name = "AuthorityKind", nullable = false, length = 128)
     private Set<AuthorityKind> authorityKinds = EnumSet.noneOf(AuthorityKind.class);
 
-    @Column( name = "ExAttr", length = 2000 )
+    @Column(name = "ExAttr", length = 2000)
     private String exAttr;
 
     @Override

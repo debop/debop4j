@@ -24,25 +24,39 @@ package kr.debop4j.search;
  */
 public enum QueryMethod {
 
-    /** Term (단어) */
+    /**
+     * Term (단어)
+     */
     Term("Term"),
 
-    /** 문장 */
+    /**
+     * 문장
+     */
     Phrase("Phrase"),
 
-    /** Wildcard */
+    /**
+     * Wildcard
+     */
     Wildcard("Wildcard"),
 
-    /** 접두사 */
+    /**
+     * 접두사
+     */
     Prefix("Prefix"),
 
-    /** 퍼지 */
+    /**
+     * 퍼지
+     */
     Fuzzy("Fuzzy"),
 
-    /** 범위 */
+    /**
+     * 범위
+     */
     Range("Range"),
 
-    /** Boolean */
+    /**
+     * Boolean
+     */
     Boolean("Boolean");
 
     final String queryMethod;

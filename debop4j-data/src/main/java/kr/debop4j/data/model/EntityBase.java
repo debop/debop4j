@@ -38,7 +38,9 @@ public abstract class EntityBase<TId extends Serializable> extends StatefulEntit
     @GeneratedValue
     private TId id;
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @SuppressWarnings("unchecked")
     public <TId> TId getId() {
         return (TId) this.id;
@@ -51,7 +53,7 @@ public abstract class EntityBase<TId extends Serializable> extends StatefulEntit
     @Override
     protected Objects.ToStringHelper buildStringHelper() {
         return super.buildStringHelper()
-                    .add("id", id);
+                .add("id", id);
     }
 
     @Override

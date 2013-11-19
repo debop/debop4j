@@ -26,9 +26,13 @@ import org.joda.time.DateTime;
  */
 public interface IUpdateTimestampedEntity {
 
-    /** 엔티티의 최근 갱신 일자를 반환합니다. */
+    /**
+     * 엔티티의 최근 갱신 일자를 반환합니다.
+     */
     DateTime getUpdateTimestamp();
 
-    /** 엔티티의 최근 갱신 일자를 수정합니다. */
+    /**
+     * 엔티티의 최근 갱신 일자를 수정합니다.
+     */
     void updateUpdateTimestamp();
 }

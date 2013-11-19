@@ -40,7 +40,9 @@ public abstract class AbstractPool<T> implements AutoCloseable {
         pool = new GenericObjectPool<T>(factory, poolConfig);
     }
 
-    /** 풀에서 리소스를 얻습니다. */
+    /**
+     * 풀에서 리소스를 얻습니다.
+     */
     public T getResource() {
         if (log.isTraceEnabled())
             log.trace("Pool에서 resource 를 얻습니다...");
@@ -59,7 +61,9 @@ public abstract class AbstractPool<T> implements AutoCloseable {
         }
     }
 
-    /** 재사용을 위해 풀에 리소스를 반환합니다. */
+    /**
+     * 재사용을 위해 풀에 리소스를 반환합니다.
+     */
     public void returnResource(final T resource) {
         returnResourceObject(resource);
     }
@@ -76,7 +80,9 @@ public abstract class AbstractPool<T> implements AutoCloseable {
         }
     }
 
-    /** 재사용할 수 없는 리소스는 폐기하도록 합니다. */
+    /**
+     * 재사용할 수 없는 리소스는 폐기하도록 합니다.
+     */
     public void returnBrokenResource(final T resource) {
         returnBrokenResourceObject(resource);
     }
@@ -91,7 +97,9 @@ public abstract class AbstractPool<T> implements AutoCloseable {
         }
     }
 
-    /** 풀을 제거합니다. 내부의 남아있는 모든 리소스를 제거합니다. */
+    /**
+     * 풀을 제거합니다. 내부의 남아있는 모든 리소스를 제거합니다.
+     */
     public void destroy() {
         if (log.isTraceEnabled()) log.trace("Pool을 제거합니다...");
         try {

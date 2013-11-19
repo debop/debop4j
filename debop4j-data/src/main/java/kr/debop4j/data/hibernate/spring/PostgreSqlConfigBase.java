@@ -34,9 +34,13 @@ import java.util.Properties;
 @EnableTransactionManagement
 public abstract class PostgreSqlConfigBase extends HibernateConfigBase {
 
-    /** The constant DRIVER_CLASS. */
+    /**
+     * The constant DRIVER_CLASS.
+     */
     public static final String DRIVER_CLASS = "org.postgresql.Driver";
-    /** The constant DIALECT. */
+    /**
+     * The constant DIALECT.
+     */
     public static final String DIALECT = "org.hibernate.dialect.PostgreSQL82Dialect";
 
     @Override

@@ -41,7 +41,7 @@ public class UsingHSqlConfiguration extends HSqlConfigBase {
 
     @Override
     protected String[] getMappedPackageNames() {
-        return new String[]{
+        return new String[] {
                 Company.class.getPackage().getName(),
                 Product.class.getPackage().getName(),
                 WorkCalendar.class.getPackage().getName(),

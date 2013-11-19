@@ -28,13 +28,19 @@ import java.io.Serializable;
  */
 public class TermFreq implements Serializable {
 
-    /** 단어 */
+    /**
+     * 단어
+     */
     public final Term term;
 
-    /** 단어의 빈도수 */
+    /**
+     * 단어의 빈도수
+     */
     public int docFreq;
 
-    /** 전체 단어의 빈도 수 */
+    /**
+     * 전체 단어의 빈도 수
+     */
     public long totalTermFreq;
 
     public TermFreq(Term term, int docFreq) {

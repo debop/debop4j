@@ -116,7 +116,9 @@ public abstract class DatabaseTestFixtureBase {
         return context;
     }
 
-    /** Close unit of work test contexts. */
+    /**
+     * Close unit of work test contexts.
+     */
     public static void closeUnitOfWorkTestContexts() {
         if (log.isDebugEnabled())
             log.debug("모든 테스트용 UnitOfWorkTestContext 를 종료합니다...");

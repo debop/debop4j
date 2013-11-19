@@ -30,11 +30,15 @@ public class AutoCloseableAction implements AutoCloseable {
 
     private static final Logger log = LoggerFactory.getLogger(AutoCloseableAction.class);
 
-    /** close 시에 수행할 actionWhenClosing */
+    /**
+     * close 시에 수행할 actionWhenClosing
+     */
     @Getter
     private final Runnable actionWhenClosing;
 
-    /** close 되었는지 여부 */
+    /**
+     * close 되었는지 여부
+     */
     @Getter
     protected boolean closed;
 
@@ -48,7 +52,9 @@ public class AutoCloseableAction implements AutoCloseable {
         this.closed = false;
     }
 
-    /** 리소스를 정리할 action을 수행합니다. */
+    /**
+     * 리소스를 정리할 action을 수행합니다.
+     */
     @Override
     public void close() {
         if (closed)

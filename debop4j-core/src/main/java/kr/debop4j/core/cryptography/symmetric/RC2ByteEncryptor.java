@@ -8,7 +8,9 @@ package kr.debop4j.core.cryptography.symmetric;
  */
 public class RC2ByteEncryptor extends SymmetricByteEncryptorBase {
 
-    /** PBEwithSHA1andRC2_40 */
+    /**
+     * PBEwithSHA1andRC2_40
+     */
     @Override
     public String getAlgorithm() {
         return "PBEwithSHA1andRC2_40";

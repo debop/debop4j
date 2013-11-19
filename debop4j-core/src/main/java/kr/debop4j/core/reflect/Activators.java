@@ -129,7 +129,7 @@ public final class Activators {
     public static <T> Constructor<T> getConstructor(Class<T> clazz, Class<?>... parameterTypes) {
         if (log.isTraceEnabled())
             log.trace("[{}] 수형의 생성자를 구합니다. parameterTypes=[{}]",
-                    clazz.getName(), StringTool.listToString(parameterTypes));
+                      clazz.getName(), StringTool.listToString(parameterTypes));
 
         try {
             return clazz.getDeclaredConstructor(parameterTypes);

@@ -39,13 +39,19 @@ import java.util.concurrent.Future;
  */
 public interface IHibernateSearchDao extends Serializable {
 
-    /** 현 Thread-context에서 사용할 {@link org.hibernate.search.FullTextSession}의 저장소 키 (참고: {@link kr.debop4j.core.Local}) */
+    /**
+     * 현 Thread-context에서 사용할 {@link org.hibernate.search.FullTextSession}의 저장소 키 (참고: {@link kr.debop4j.core.Local})
+     */
     public static final String FULL_TEXT_SESSION_KEY = IHibernateSearchDao.class.getName() + ".FullTextSession";
 
-    /** 현 Thread-context 에서 사용할 Session 를 빈환합니다. */
+    /**
+     * 현 Thread-context 에서 사용할 Session 를 빈환합니다.
+     */
     Session getSession();
 
-    /** 현 Thread-context 에서 사용할 hibernate-search 의 {@link  FullTextSession} 을 반환합니다. */
+    /**
+     * 현 Thread-context 에서 사용할 hibernate-search 의 {@link  FullTextSession} 을 반환합니다.
+     */
     FullTextSession getFullTextSession();
 
     /**
@@ -464,7 +470,9 @@ public interface IHibernateSearchDao extends Serializable {
      */
     void clearIndex(Class<?> clazz);
 
-    /** 모든 인덱스를 삭제합니다. */
+    /**
+     * 모든 인덱스를 삭제합니다.
+     */
     void clearIndexAll();
 
     /**
@@ -474,12 +482,18 @@ public interface IHibernateSearchDao extends Serializable {
      */
     void optimize(Class<?> clazz);
 
-    /** 모든 엔티티의 인덱스를 최적화합니다. */
+    /**
+     * 모든 엔티티의 인덱스를 최적화합니다.
+     */
     void optimizeAll();
 
-    /** 세션의 모든 변경을 저장소에 적용한다. */
+    /**
+     * 세션의 모든 변경을 저장소에 적용한다.
+     */
     void flush();
 
-    /** 세션의 모든 인덱스 변경 정보를 저장합니다. */
+    /**
+     * 세션의 모든 인덱스 변경 정보를 저장합니다.
+     */
     void flushToIndexes();
 }

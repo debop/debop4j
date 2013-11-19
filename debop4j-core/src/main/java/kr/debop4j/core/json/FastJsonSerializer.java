@@ -30,7 +30,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class FastJsonSerializer implements IJsonSerializer {
 
-    private SerializerFeature[] features = new SerializerFeature[]{
+    private SerializerFeature[] features = new SerializerFeature[] {
             SerializerFeature.UseISO8601DateFormat,
             SerializerFeature.WriteClassName
     };

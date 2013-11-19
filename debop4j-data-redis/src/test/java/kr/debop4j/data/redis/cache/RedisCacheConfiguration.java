@@ -55,7 +55,9 @@ public class RedisCacheConfiguration {
     private @Value("${redis.port}") int redisPort;
     private @Value("${redis.usePool}") boolean redisUsePool;
 
-    /** @PropertySource, @Value를 사용하려면 PropertySourcesPlaceholderConfigurer를 정의해줘야 한다. */
+    /**
+     * @PropertySource, @Value를 사용하려면 PropertySourcesPlaceholderConfigurer를 정의해줘야 한다.
+     */
     @Bean
     public static PropertySourcesPlaceholderConfigurer placeholderConfigurer() {
         return new PropertySourcesPlaceholderConfigurer();

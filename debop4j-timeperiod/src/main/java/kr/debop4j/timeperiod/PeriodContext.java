@@ -30,10 +30,14 @@ public class PeriodContext {
 
     private static final String TIME_CALENDAR_KEY = PeriodContext.class.getName() + ".Current";
 
-    /** 현 Thread Context 하에서 설정된 TimeCalendar 관련 설정 정보 */
+    /**
+     * 현 Thread Context 하에서 설정된 TimeCalendar 관련 설정 정보
+     */
     public static class Current {
 
-        /** 현재 Thread Context하에서 사용할 TimeCalendar입니다. */
+        /**
+         * 현재 Thread Context하에서 사용할 TimeCalendar입니다.
+         */
         public static ITimeCalendar getTimeCalendar() {
             ITimeCalendar calendar = Local.get(TIME_CALENDAR_KEY, ITimeCalendar.class);
             if (calendar == null) {
@@ -47,12 +51,16 @@ public class PeriodContext {
             Local.put(TIME_CALENDAR_KEY, calendar);
         }
 
-        /** 현 Thread context의 {@link Locale} 정보 */
+        /**
+         * 현 Thread context의 {@link Locale} 정보
+         */
         public static Locale getLocale() {
             return getTimeCalendar().getLocale();
         }
 
-        /** 한 주의 첫번째 요일 */
+        /**
+         * 한 주의 첫번째 요일
+         */
         public static DayOfWeek getFirstDayOfWeek() {
             return getTimeCalendar().getFirstDayOfWeek();
         }

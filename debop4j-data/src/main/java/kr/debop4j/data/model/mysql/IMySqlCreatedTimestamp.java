@@ -27,7 +27,9 @@ import java.sql.Timestamp;
  */
 public interface IMySqlCreatedTimestamp {
 
-    /** MySQL 에서 레코드별로 최신 갱신일자를 표현합니다. */
-    @Column( updatable = false, insertable = false, columnDefinition = "timestamp default current_timestamp" )
+    /**
+     * MySQL 에서 레코드별로 최신 갱신일자를 표현합니다.
+     */
+    @Column(updatable = false, insertable = false, columnDefinition = "timestamp default current_timestamp")
     Timestamp getCreatedTimestamp();
 }

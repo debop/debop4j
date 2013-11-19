@@ -26,10 +26,14 @@ import java.util.Date;
  */
 public interface IWorkTimeByTime {
 
-    /** Work Time 계산의 기준이 되는 Calendar 정보 */
+    /**
+     * Work Time 계산의 기준이 되는 Calendar 정보
+     */
     WorkCalendar getWorkCalendar();
 
-    /** 기준 작업 시각 */
+    /**
+     * 기준 작업 시각
+     */
     Date getWorkTime();
 
     /**
@@ -39,10 +43,14 @@ public interface IWorkTimeByTime {
      */
     Boolean getIsWorking();
 
-    /** 지정된 WorkTime의 작업시간을 분단위로 환산해서 표현함 */
+    /**
+     * 지정된 WorkTime의 작업시간을 분단위로 환산해서 표현함
+     */
     Integer getWorkInMinute();
 
-    /** 작업시간의 누적시간을 분단위로 표시 (시작시각과 소요작업시간만 알면 완료 시각을 빠르게 알 수 있도록 하기 위해 미리 계산함) */
+    /**
+     * 작업시간의 누적시간을 분단위로 표시 (시작시각과 소요작업시간만 알면 완료 시각을 빠르게 알 수 있도록 하기 위해 미리 계산함)
+     */
     Long getCumulatedInMinute();
 
     void setCumulatedInMinute(Long cumulatedInMunute);

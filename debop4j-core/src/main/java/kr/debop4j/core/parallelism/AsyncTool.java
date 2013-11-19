@@ -40,7 +40,9 @@ import static kr.debop4j.core.Guard.shouldNotBeNull;
 @SuppressWarnings("unchecked")
 public abstract class AsyncTool {
 
-    /** 생성자 */
+    /**
+     * 생성자
+     */
     private AsyncTool() { }
 
     private static final ExecutorService executor =
@@ -209,7 +211,9 @@ public abstract class AsyncTool {
         getAll(executor.invokeAll(tasks, timeout, unit));
     }
 
-    /** 비동기 작업들을 실행하고, 작업이 완료되거나 취소될때까지 기다립니다. */
+    /**
+     * 비동기 작업들을 실행하고, 작업이 완료되거나 취소될때까지 기다립니다.
+     */
     public static <T> void runAll(final Iterable<? extends Future<T>> tasks) {
 
         if (log.isTraceEnabled())

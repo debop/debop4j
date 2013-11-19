@@ -60,9 +60,13 @@ public class EntityTool {
 
     private EntityTool() { }
 
-    /** The constant PROPERTY_ANCESTORS. */
+    /**
+     * The constant PROPERTY_ANCESTORS.
+     */
     public static final String PROPERTY_ANCESTORS = "ancestors";
-    /** The constant PROPERTY_DESCENDENTS. */
+    /**
+     * The constant PROPERTY_DESCENDENTS.
+     */
     public static final String PROPERTY_DESCENDENTS = "descendents";
 
 
@@ -211,8 +215,8 @@ public class EntityTool {
     public static <T extends IHierarchyEntity<T> & IEntity<TId>, TId extends Serializable>
     DetachedCriteria getDescendentsCriteria(T entity, Session session, Class<T> entityClass) {
         return DetachedCriteria.forClass(entityClass)
-                               .createAlias(PROPERTY_ANCESTORS, "ans")
-                               .add(Restrictions.eq("ans.id", entity.getId()));
+                .createAlias(PROPERTY_ANCESTORS, "ans")
+                .add(Restrictions.eq("ans.id", entity.getId()));
     }
 
     /**
@@ -247,11 +251,15 @@ public class EntityTool {
 
     // region << ILocaleEntity >>
 
-    /** 특정 로케일 키를 가지는 엔티티를 조회하는 HQL 문. */
+    /**
+     * 특정 로케일 키를 가지는 엔티티를 조회하는 HQL 문.
+     */
     public static final String GET_LIST_BY_LOCALE_KEY =
             "select distinct loen from %s loen where :key in indices (loen.localeMap)";
 
-    /** 특정 로케일 속성값에 따른 엔티티를 조회하는 HQL 문. */
+    /**
+     * 특정 로케일 속성값에 따른 엔티티를 조회하는 HQL 문.
+     */
     public static final String GET_LIST_BY_LOCALE_PROPERTY =
             "select distinct loen from %s loen join loen.localeMap locale where locale.%s = :%s";
 

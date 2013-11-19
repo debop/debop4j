@@ -44,7 +44,9 @@ public abstract class ValueObjectBase implements IValueObject {
         return this.buildStringHelper().toString();
     }
 
-    /** {@link ValueObjectBase#toString()}을 재정의하지 말고, buildStringHelper를 재정의 하세요. */
+    /**
+     * {@link ValueObjectBase#toString()}을 재정의하지 말고, buildStringHelper를 재정의 하세요.
+     */
     protected Objects.ToStringHelper buildStringHelper() {
         return Objects.toStringHelper(this);
     }

@@ -48,8 +48,8 @@ public class LoggingInterceptor extends EmptyInterceptor {
     @Override
     public boolean onSave(Object entity, Serializable id, Object[] state, String[] propertyNames, Type[] types) {
         if (!(entity instanceof Log)) {
-            if (isTraceEnabled)
-                logs.add(new Log("insert", (String) id, entity.getClass().getName()));
+
+            logs.add(new Log("insert", (String) id, entity.getClass().getName()));
         }
         return false;
     }
@@ -57,8 +57,8 @@ public class LoggingInterceptor extends EmptyInterceptor {
     @Override
     public boolean onFlushDirty(Object entity, Serializable id, Object[] currentState, Object[] previousState, String[] propertyNames, Type[] types) {
         if (!(entity instanceof Log)) {
-            if (isTraceEnabled)
-                logs.add(new Log("update", (String) id, entity.getClass().getName()));
+
+            logs.add(new Log("update", (String) id, entity.getClass().getName()));
         }
         return false;
     }
@@ -67,7 +67,7 @@ public class LoggingInterceptor extends EmptyInterceptor {
     public void postFlush(Iterator entities) {
         // 로그 정보를 기타 DB에 따로 저장할 수 있습니다^^
         //
-        if (isTraceEnabled) {
+        {
             for (Log x : logs) {
                 log.debug("[{}]", x);
             }
@@ -98,10 +98,10 @@ public class LoggingInterceptor extends EmptyInterceptor {
         @Override
         protected Objects.ToStringHelper buildStringHelper() {
             return super.buildStringHelper()
-                        .add("entityId", entityId)
-                        .add("entityName", entityName)
-                        .add("action", action)
-                        .add("timePart", time);
+                    .add("entityId", entityId)
+                    .add("entityName", entityName)
+                    .add("action", action)
+                    .add("timePart", time);
         }
 
         private static final long serialVersionUID = 523516299748244454L;

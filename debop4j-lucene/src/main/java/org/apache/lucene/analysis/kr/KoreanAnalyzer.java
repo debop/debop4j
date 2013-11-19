@@ -41,7 +41,9 @@ public class KoreanAnalyzer extends StopwordAnalyzerBase {
     private static final boolean isTraceEnabled = log.isTraceEnabled();
     private static final boolean isDebugEnabled = log.isDebugEnabled();
 
-    /** Default maximum allowed token length */
+    /**
+     * Default maximum allowed token length
+     */
     public static final int DEFAULT_MAX_TOKEN_LENGTH = 255;
 
     private int maxTokenLength = DEFAULT_MAX_TOKEN_LENGTH;
@@ -88,7 +90,9 @@ public class KoreanAnalyzer extends StopwordAnalyzerBase {
         this(Version.LUCENE_36, STOP_WORDS_SET);
     }
 
-    /** 검색을 위한 형태소분석 */
+    /**
+     * 검색을 위한 형태소분석
+     */
     public KoreanAnalyzer(boolean exactMatch) {
         this(Version.LUCENE_36, STOP_WORDS_SET);
         this.exactMatch = exactMatch;
@@ -98,7 +102,9 @@ public class KoreanAnalyzer extends StopwordAnalyzerBase {
         this(matchVersion, StopFilter.makeStopSet(matchVersion, stopWords));
     }
 
-    /** Builds an analyzer with the stop words from the given file. */
+    /**
+     * Builds an analyzer with the stop words from the given file.
+     */
     public KoreanAnalyzer(Version matchVersion) throws IOException {
         this(matchVersion, STOP_WORDS_SET);
     }
@@ -124,7 +130,9 @@ public class KoreanAnalyzer extends StopwordAnalyzerBase {
 //	   this(matchVersion, WordlistLoader.getWordSet(stopwords));	    
 //	}
 
-    /** Builds an analyzer with the stop words from the given reader. */
+    /**
+     * Builds an analyzer with the stop words from the given reader.
+     */
     public KoreanAnalyzer(Version matchVersion, Set<?> stopWords) {
         super(matchVersion, stopWords);
         replaceInvalidAcronym = true; // matchVersion.onOrAfter(Version.LUCENE_36);
@@ -132,8 +140,8 @@ public class KoreanAnalyzer extends StopwordAnalyzerBase {
 
     @Override
     protected TokenStreamComponents createComponents(String fieldName, Reader reader) {
-        if (isDebugEnabled)
-            log.debug("TokenStreamComponents를 생성합니다. fieldName=[{}]", fieldName);
+
+        log.debug("TokenStreamComponents를 생성합니다. fieldName=[{}]", fieldName);
 
         final KoreanTokenizer src = new KoreanTokenizer(matchVersion, reader);
         src.setMaxTokenLength(maxTokenLength);
@@ -160,17 +168,23 @@ public class KoreanAnalyzer extends StopwordAnalyzerBase {
         bigrammable = is;
     }
 
-    /** determin whether the original term is returned or not if a input word is analyzed morphically. */
+    /**
+     * determin whether the original term is returned or not if a input word is analyzed morphically.
+     */
     public void setHasOrigin(boolean has) {
         hasOrigin = has;
     }
 
-    /** determin whether the original compound noun is returned or not if a input word is analyzed morphically. */
+    /**
+     * determin whether the original compound noun is returned or not if a input word is analyzed morphically.
+     */
     public void setOriginCNoun(boolean cnoun) {
         originCNoun = cnoun;
     }
 
-    /** determin whether the original compound noun is returned or not if a input word is analyzed morphically. */
+    /**
+     * determin whether the original compound noun is returned or not if a input word is analyzed morphically.
+     */
     public void setExactMatch(boolean exact) {
         exactMatch = exact;
     }

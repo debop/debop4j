@@ -8,8 +8,12 @@ package kr.debop4j.timeperiod;
  */
 public enum OrderDirection {
 
-    /** 순차 정렬 */
+    /**
+     * 순차 정렬
+     */
     ASC,
-    /** 역순 정렬 */
+    /**
+     * 역순 정렬
+     */
     DESC;
 }

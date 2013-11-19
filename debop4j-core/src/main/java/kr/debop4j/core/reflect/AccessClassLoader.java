@@ -34,7 +34,9 @@ class AccessClassLoader extends ClassLoader {
 
     private static final List<AccessClassLoader> accessClassLoaders = Lists.newArrayList();
 
-    /** AccessClassLoger를 생성합니다. */
+    /**
+     * AccessClassLoger를 생성합니다.
+     */
     static AccessClassLoader get(Class type) {
         if (log.isDebugEnabled())
             log.debug("AccessClassLoader를 생성합니다. type=[{}]", type);
@@ -72,7 +74,7 @@ class AccessClassLoader extends ClassLoader {
         try {
             Method method = ClassLoader.class
                     .getDeclaredMethod("defineClass",
-                            new Class[]{String.class, byte[].class, int.class, int.class});
+                                       new Class[] { String.class, byte[].class, int.class, int.class });
             method.setAccessible(true);
 
             // NOTE: 꼭 Integer.valueOf() 를 써야 합니다.

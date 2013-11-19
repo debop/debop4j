@@ -8,7 +8,9 @@ package kr.debop4j.core.cryptography.symmetric;
  */
 public class TripleDESByteEncryptor extends SymmetricByteEncryptorBase {
 
-    /** PBEwithSHA1andDESEDE */
+    /**
+     * PBEwithSHA1andDESEDE
+     */
     @Override
     public String getAlgorithm() {
         return "PBEwithSHA1andDESEDE";

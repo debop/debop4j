@@ -24,9 +24,13 @@ package kr.debop4j.timeperiod;
  */
 public enum IntervalEdge {
 
-    /** 폐구간 */
+    /**
+     * 폐구간
+     */
     Closed,
 
-    /** 개구간 */
+    /**
+     * 개구간
+     */
     Open;
 }

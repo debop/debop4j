@@ -68,22 +68,30 @@ public class DepartmentMember extends AccessEntityBase {
     @Column(name = "MemberId")
     private Long id;
 
-    /** 소속 부서 */
+    /**
+     * 소속 부서
+     */
     @ManyToOne
     @JoinColumn(name = "DepartmentId", nullable = false)
     private Department department;
 
-    /** 소속 직원 */
+    /**
+     * 소속 직원
+     */
     @ManyToOne
     @JoinColumn(name = "EmployeeId", nullable = false)
     private Employee employee;
 
-    /** 소속 시작일 */
+    /**
+     * 소속 시작일
+     */
     @Column(name = "StartTime")
     @Temporal(TemporalType.TIMESTAMP)
     private Date startTime;
 
-    /** 소속 종료일 */
+    /**
+     * 소속 종료일
+     */
     @Column(name = "EndTime")
     @Temporal(TemporalType.TIMESTAMP)
     private Date endTime;
@@ -94,7 +102,9 @@ public class DepartmentMember extends AccessEntityBase {
     @Column(name = "ExAttr", length = 4000)
     private String exAttr;
 
-    /** 직책 */
+    /**
+     * 직책
+     */
     @ManyToOne
     @JoinColumn(name = "EmpTitleId")
     private EmployeeTitle empTitle;

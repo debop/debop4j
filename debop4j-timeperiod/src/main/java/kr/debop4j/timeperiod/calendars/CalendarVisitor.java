@@ -17,8 +17,6 @@
 package kr.debop4j.timeperiod.calendars;
 
 import com.google.common.collect.Iterables;
-import kr.debop4j.core.Action1;
-import kr.debop4j.core.parallelism.Parallels;
 import kr.debop4j.timeperiod.*;
 import kr.debop4j.timeperiod.timerange.*;
 import kr.debop4j.timeperiod.tools.TimeSpec;
@@ -77,7 +75,7 @@ public abstract class CalendarVisitor<F extends ICalendarVisitorFilter, C extend
     }
 
 //    protected final void startPeriodVisit(ITimePeriod period, C context) {
-//        if (isTraceEnabled)
+//
 //            log.trace("기간에 대한 탐색을 시작합니다... period=[{}], context=[{}]", period, context);
 //        shouldNotBeNull(period, "period");
 //
@@ -96,7 +94,7 @@ public abstract class CalendarVisitor<F extends ICalendarVisitorFilter, C extend
 //                Collections.sort(yearsToVisit, Times.getEndComparator());
 //
 //            for (YearRange year : yearsToVisit) {
-//                if (isTraceEnabled) log.trace("year를 탐색합니다... year=[{}]", year.getYear());
+//                log.trace("year를 탐색합니다... year=[{}]", year.getYear());
 //
 //                if (!year.overlapsWith(period))
 //                    continue;
@@ -111,7 +109,7 @@ public abstract class CalendarVisitor<F extends ICalendarVisitorFilter, C extend
 //
 //                // TODO: Parallels.runEach(); 를 이용해 병렬로 수행하는 것 테스트 할 것
 //                for (MonthRange month : monthsToVisit) {
-//                    if (isTraceEnabled) log.trace("month를 탐색합니다... month=[{}]", month);
+//                    log.trace("month를 탐색합니다... month=[{}]", month);
 //
 //                    if (!month.overlapsWith(period))
 //                        continue;
@@ -126,7 +124,7 @@ public abstract class CalendarVisitor<F extends ICalendarVisitorFilter, C extend
 //                        Collections.sort(daysToVisit, Times.getEndComparator());
 //
 //                    for (DayRange day : daysToVisit) {
-//                        if (isTraceEnabled) log.trace("day를 탐색합니다... day=[{}]", day);
+//                        log.trace("day를 탐색합니다... day=[{}]", day);
 //
 //                        if (!day.overlapsWith(period))
 //                            continue;
@@ -157,13 +155,13 @@ public abstract class CalendarVisitor<F extends ICalendarVisitorFilter, C extend
 //
 //        onVisitEnd();
 //
-//        if (isTraceEnabled)
+//
 //            log.trace("기간에 대한 탐색을 완료했습니다!!! period=[{}], context=[{}]", period, context);
 //    }
 
     protected final void startPeriodVisit(final ITimePeriod period, final C context) {
-        if (isTraceEnabled)
-            log.trace("기간에 대한 탐색을 시작합니다... period=[{}], context=[{}]", period, context);
+
+        log.trace("기간에 대한 탐색을 시작합니다... period=[{}], context=[{}]", period, context);
         shouldNotBeNull(period, "period");
 
         if (period.isMoment()) return;
@@ -181,7 +179,7 @@ public abstract class CalendarVisitor<F extends ICalendarVisitorFilter, C extend
                 Collections.sort(yearsToVisit, Times.getEndComparator());
 
             for (YearRange year : yearsToVisit) {
-                if (isTraceEnabled) log.trace("year를 탐색합니다... year=[{}]", year.getYear());
+                log.trace("year를 탐색합니다... year=[{}]", year.getYear());
 
                 if (!year.overlapsWith(period))
                     continue;
@@ -194,63 +192,57 @@ public abstract class CalendarVisitor<F extends ICalendarVisitorFilter, C extend
                 if (seekDirection == SeekDirection.Backward)
                     Collections.sort(monthsToVisit, Times.getEndComparator());
 
-                Parallels.runEach(monthsToVisit, new Action1<MonthRange>() {
-                    @Override
-                    public void perform(MonthRange month) {
-                        if (isTraceEnabled) log.trace("month를 탐색합니다... month=[{}]", month);
+                for (MonthRange month : monthsToVisit) {
+                    log.trace("month를 탐색합니다... month=[{}]", month);
 
-                        if (!month.overlapsWith(period))
-                            return;
-                        if (!onVisitMonth(month, context))
-                            return;
-                        if (!enterDays(month, context))
-                            return;
+                    if (!month.overlapsWith(period)) continue;
+                    if (!onVisitMonth(month, context)) continue;
+                    if (!enterDays(month, context)) continue;
 
-                        List<DayRange> daysToVisit = month.getDays();
+                    List<DayRange> daysToVisit = month.getDays();
+
+                    if (seekDirection == SeekDirection.Backward)
+                        Collections.sort(daysToVisit, Times.getEndComparator());
+
+                    for (DayRange day : daysToVisit) {
+                        log.trace("day를 탐색합니다... day=[{}]", day);
+
+                        if (!day.overlapsWith(period))
+                            continue;
+                        if (!onVisitDay(day, context))
+                            continue;
+                        if (!enterHours(day, context))
+                            continue;
+
+                        List<HourRange> hoursToVisit = day.getHours();
 
                         if (seekDirection == SeekDirection.Backward)
-                            Collections.sort(daysToVisit, Times.getEndComparator());
+                            Collections.sort(hoursToVisit, Times.getEndComparator());
 
-                        for (DayRange day : daysToVisit) {
-                            if (isTraceEnabled) log.trace("day를 탐색합니다... day=[{}]", day);
+                        for (HourRange hour : hoursToVisit) {
+                            if (log.isTraceEnabled()) log.trace("hour를 탐색합니다... hour=[{}]", hour);
 
-                            if (!day.overlapsWith(period))
+                            if (!hour.overlapsWith(period))
                                 continue;
-                            if (!onVisitDay(day, context))
-                                continue;
-                            if (!enterHours(day, context))
+                            if (!onVisitHour(hour, context))
                                 continue;
 
-                            List<HourRange> hoursToVisit = day.getHours();
-
-                            if (seekDirection == SeekDirection.Backward)
-                                Collections.sort(hoursToVisit, Times.getEndComparator());
-
-                            for (HourRange hour : hoursToVisit) {
-                                if (log.isTraceEnabled()) log.trace("hour를 탐색합니다... hour=[{}]", hour);
-
-                                if (!hour.overlapsWith(period))
-                                    continue;
-                                if (!onVisitHour(hour, context))
-                                    continue;
-
-                                enterMinutes(hour, context);
-                            }
+                            enterMinutes(hour, context);
                         }
                     }
-                });
+                }
             }
         }
 
         onVisitEnd();
 
-        if (isTraceEnabled) log.trace("기간에 대한 탐색을 완료했습니다!!! period=[{}], context=[{}]", period, context);
+        log.trace("기간에 대한 탐색을 완료했습니다!!! period=[{}], context=[{}]", period, context);
     }
 
     protected final YearRange startYearVisit(YearRange year, C context, SeekDirection direction) {
         shouldNotBeNull(year, "year");
-        if (isTraceEnabled)
-            log.trace("Year 단위로 탐색합니다. year=[{}], context=[{}], direction=[{}]", year, context, direction);
+
+        log.trace("Year 단위로 탐색합니다. year=[{}], context=[{}], direction=[{}]", year, context, direction);
 
         YearRange lastVisited = null;
 
@@ -269,15 +261,15 @@ public abstract class CalendarVisitor<F extends ICalendarVisitorFilter, C extend
         }
 
         onVisitEnd();
-        if (isTraceEnabled) log.trace("마지막 탐색 Year. lastVisited=[{}]", lastVisited);
+        log.trace("마지막 탐색 Year. lastVisited=[{}]", lastVisited);
 
         return lastVisited;
     }
 
     protected final MonthRange startMonthVisit(MonthRange month, C context, SeekDirection direction) {
         shouldNotBeNull(month, "month");
-        if (isTraceEnabled)
-            log.trace("Month 단위로 탐색합니다. month=[{}], context=[{}], direction=[{}]", month, context, direction);
+
+        log.trace("Month 단위로 탐색합니다. month=[{}], context=[{}], direction=[{}]", month, context, direction);
 
         MonthRange lastVisited = null;
 
@@ -296,15 +288,15 @@ public abstract class CalendarVisitor<F extends ICalendarVisitorFilter, C extend
         }
 
         onVisitEnd();
-        if (isTraceEnabled) log.trace("마지막 탐색 Month. lastVisited=[{}]", lastVisited);
+        log.trace("마지막 탐색 Month. lastVisited=[{}]", lastVisited);
 
         return lastVisited;
     }
 
     protected final DayRange startDayVisit(DayRange day, C context, SeekDirection direction) {
         shouldNotBeNull(day, "day");
-        if (isTraceEnabled)
-            log.trace("Day 단위로 탐색합니다. day=[{}], context=[{}], direction=[{}]", day, context, direction);
+
+        log.trace("Day 단위로 탐색합니다. day=[{}], context=[{}], direction=[{}]", day, context, direction);
 
         DayRange lastVisited = null;
 
@@ -323,15 +315,15 @@ public abstract class CalendarVisitor<F extends ICalendarVisitorFilter, C extend
         }
 
         onVisitEnd();
-        if (isTraceEnabled) log.trace("마지막 탐색 Day. lastVisited=[{}]", lastVisited);
+        log.trace("마지막 탐색 Day. lastVisited=[{}]", lastVisited);
 
         return lastVisited;
     }
 
     protected final HourRange startHourVisit(HourRange hour, C context, SeekDirection direction) {
         shouldNotBeNull(hour, "hour");
-        if (isTraceEnabled)
-            log.trace("Hour 단위로 탐색합니다. hour=[{}], context=[{}], direction=[{}]", hour, context, direction);
+
+        log.trace("Hour 단위로 탐색합니다. hour=[{}], context=[{}], direction=[{}]", hour, context, direction);
 
         HourRange lastVisited = null;
 
@@ -350,14 +342,14 @@ public abstract class CalendarVisitor<F extends ICalendarVisitorFilter, C extend
         }
 
         onVisitEnd();
-        if (isTraceEnabled) log.trace("마지막 탐색 hour. lastVisited=[{}]", lastVisited);
+        log.trace("마지막 탐색 hour. lastVisited=[{}]", lastVisited);
 
         return lastVisited;
     }
 
     protected void onVisitStart() {
-        if (isTraceEnabled)
-            log.trace("Calendar 탐색을 시작합니다...");
+
+        log.trace("Calendar 탐색을 시작합니다...");
     }
 
     protected boolean checkLimits(ITimePeriod target) {
@@ -476,7 +468,7 @@ public abstract class CalendarVisitor<F extends ICalendarVisitorFilter, C extend
     }
 
     protected void onVisitEnd() {
-        if (isTraceEnabled)
-            log.trace("Calendar 탐색을 종료합니다.");
+
+        log.trace("Calendar 탐색을 종료합니다.");
     }
 }

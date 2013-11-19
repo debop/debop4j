@@ -151,7 +151,9 @@ public class ConcurrentHashMapCacheRepository extends CacheRepositoryBase {
         return cache.getIfPresent(key) != null;
     }
 
-    /** 캐시의 모든 항목을 삭제합니다. */
+    /**
+     * 캐시의 모든 항목을 삭제합니다.
+     */
     @Override
     public synchronized void clear() {
         cache.cleanUp();

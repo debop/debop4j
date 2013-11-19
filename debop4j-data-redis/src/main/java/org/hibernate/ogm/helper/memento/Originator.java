@@ -21,7 +21,9 @@ public class Originator implements Serializable {
         return new Memento(obj);
     }
 
-    /** 작업을 취소하고, 기존 값으로 복구합니다. */
+    /**
+     * 작업을 취소하고, 기존 값으로 복구합니다.
+     */
     public void undo(Memento memento) {
         obj = memento.getObj();
     }

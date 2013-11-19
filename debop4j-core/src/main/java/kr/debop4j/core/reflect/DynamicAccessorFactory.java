@@ -24,7 +24,7 @@ import lombok.extern.slf4j.Slf4j;
 import java.util.concurrent.ExecutionException;
 
 /**
- *{@link DynamicAccessor} 의 생성자입니다.
+ * {@link DynamicAccessor} 의 생성자입니다.
  *
  * @author 배성혁 ( sunghyouk.bae@gmail.com )
  * @since 13. 1. 21

@@ -26,9 +26,13 @@ public interface RedisSerializer<T> {
 
     public static final byte[] EMPTY_BYTES = new byte[0];
 
-    /** Serialize Object */
+    /**
+     * Serialize Object
+     */
     byte[] serialize(T graph);
 
-    /** Deserialize to object */
+    /**
+     * Deserialize to object
+     */
     T deserialize(byte[] bytes);
 }

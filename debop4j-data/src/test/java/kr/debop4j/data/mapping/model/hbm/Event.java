@@ -50,7 +50,7 @@ public class Event extends EntityBase<Long> implements IUpdateTimestampedEntity 
     private Category category;
 
     @Setter(value = AccessLevel.PROTECTED)
-    @Type( type = "kr.debop4j.data.hibernate.usertype.JodaDateTimeUserType" )
+    @Type(type = "kr.debop4j.data.hibernate.usertype.JodaDateTimeUserType")
     private DateTime updateTimestamp;
 
     public void updateUpdateTimestamp() {

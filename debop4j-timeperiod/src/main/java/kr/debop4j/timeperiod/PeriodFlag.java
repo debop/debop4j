@@ -29,47 +29,85 @@ import java.util.EnumSet;
  */
 public class PeriodFlag {
 
-    /** None */
+    /**
+     * None
+     */
     public static final EnumSet<Flag> None = EnumSet.of(Flag.None);
-    /** 년 */
+    /**
+     * 년
+     */
     public static final EnumSet<Flag> Year = EnumSet.of(Flag.Year);
-    /** 반기 */
+    /**
+     * 반기
+     */
     public static final EnumSet<Flag> Halfyear = EnumSet.of(Flag.Halfyear);
-    /** 분기 */
+    /**
+     * 분기
+     */
     public static final EnumSet<Flag> Quarter = EnumSet.of(Flag.Quarter);
-    /** 월 */
+    /**
+     * 월
+     */
     public static final EnumSet<Flag> Month = EnumSet.of(Flag.Month);
-    /** 주 */
+    /**
+     * 주
+     */
     public static final EnumSet<Flag> Week = EnumSet.of(Flag.Week);
-    /** 일 */
+    /**
+     * 일
+     */
     public static final EnumSet<Flag> Day = EnumSet.of(Flag.Day);
-    /** 시 */
+    /**
+     * 시
+     */
     public static final EnumSet<Flag> Hour = EnumSet.of(Flag.Hour);
 
-    /** 년/월 */
+    /**
+     * 년/월
+     */
     public static final EnumSet<Flag> YearMonth = EnumSet.of(Flag.Year, Flag.Month);
-    /** 년/월/일 */
+    /**
+     * 년/월/일
+     */
     public static final EnumSet<Flag> YearMonthDay = EnumSet.of(Flag.Year, Flag.Month, Flag.Day);
-    /** 년/월/일/시 */
+    /**
+     * 년/월/일/시
+     */
     public static final EnumSet<Flag> YearMonthDayHour = EnumSet.of(Flag.Year, Flag.Month, Flag.Day, Flag.Hour);
 
-    /** 년/분기 */
+    /**
+     * 년/분기
+     */
     public static final EnumSet<Flag> YearQuarter = EnumSet.of(Flag.Year, Flag.Quarter);
-    /** 년/분기/월 */
+    /**
+     * 년/분기/월
+     */
     public static final EnumSet<Flag> YearQuarterMonth = EnumSet.of(Flag.Year, Flag.Quarter, Flag.Month);
-    /** 년/분기/월/일 */
+    /**
+     * 년/분기/월/일
+     */
     public static final EnumSet<Flag> YearQuarterMonthDay = EnumSet.of(Flag.Year, Flag.Quarter, Flag.Month, Flag.Day);
 
-    /** 년/주 */
+    /**
+     * 년/주
+     */
     public static final EnumSet<Flag> YearWeek = EnumSet.of(Flag.Year, Flag.Week);
-    /** 년/주/일 */
+    /**
+     * 년/주/일
+     */
     public static final EnumSet<Flag> YearWeekDay = EnumSet.of(Flag.Year, Flag.Week, Flag.Day);
-    /** 년/주/일/시 */
+    /**
+     * 년/주/일/시
+     */
     public static final EnumSet<Flag> YearWeekDayHour = EnumSet.of(Flag.Year, Flag.Week, Flag.Day, Flag.Hour);
 
-    /** 월/일 */
+    /**
+     * 월/일
+     */
     public static final EnumSet<Flag> MonthDay = EnumSet.of(Flag.Month, Flag.Day);
-    /** 월/일/시 */
+    /**
+     * 월/일/시
+     */
     public static final EnumSet<Flag> MonthDayHour = EnumSet.of(Flag.Month, Flag.Day, Flag.Hour);
 
     public enum Flag {

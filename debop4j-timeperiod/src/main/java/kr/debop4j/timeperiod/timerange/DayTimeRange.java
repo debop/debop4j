@@ -112,7 +112,9 @@ public abstract class DayTimeRange extends CalendarTimeRange {
         return getTimeCalendar().getDayOfWeek(getEnd());
     }
 
-    /** 일(Day) 단위의 기간에 속한 시간 단위의 기간 정보 (<see cref="HourRange"/>)의 컬렉션을 반환합니다. */
+    /**
+     * 일(Day) 단위의 기간에 속한 시간 단위의 기간 정보 (<see cref="HourRange"/>)의 컬렉션을 반환합니다.
+     */
     public List<HourRange> getHours() {
         DateTime startDay = getStartDayStart();
 

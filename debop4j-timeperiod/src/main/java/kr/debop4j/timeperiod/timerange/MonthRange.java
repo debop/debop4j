@@ -31,7 +31,9 @@ public class MonthRange extends MonthTimeRange {
 
     // region << Constructor >>
 
-    /** Instantiates a new Month range. */
+    /**
+     * Instantiates a new Month range.
+     */
     public MonthRange() {
         this(new TimeCalendar());
     }

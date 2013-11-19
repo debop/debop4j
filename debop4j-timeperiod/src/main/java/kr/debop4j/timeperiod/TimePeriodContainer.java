@@ -194,7 +194,9 @@ public class TimePeriodContainer implements ITimePeriodContainer {
         return Times.getUnionRange(this, other);
     }
 
-    /** 지정한 기간을 포함하는지 여부 */
+    /**
+     * 지정한 기간을 포함하는지 여부
+     */
     @Override
     public boolean containsPeriod(ITimePeriod target) {
         Guard.shouldNotBeNull(target, "target");

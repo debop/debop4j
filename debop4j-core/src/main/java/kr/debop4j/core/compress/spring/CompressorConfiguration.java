@@ -24,32 +24,32 @@ public class CompressorConfiguration {
 
     @Bean(name = "bzip2Compressor")
     public BZip2Compressor bzip2Compressor() {
-        if (isTraceEnabled)
-            log.trace("BZip2Compressor Bean 을 생성합니다.");
+
+        log.trace("BZip2Compressor Bean 을 생성합니다.");
 
         return new BZip2Compressor();
     }
 
     @Bean(name = "gzipCompressor")
     public GZipCompressor gzipCompressor() {
-        if (isTraceEnabled)
-            log.trace("GZipCompressor Bean 을 생성합니다.");
+
+        log.trace("GZipCompressor Bean 을 생성합니다.");
 
         return new GZipCompressor();
     }
 
     @Bean(name = "deflateCompressor")
     public DeflateCompressor deflateCompressor() {
-        if (isTraceEnabled)
-            log.trace("DeflateCompressor Bean 을 생성합니다.");
+
+        log.trace("DeflateCompressor Bean 을 생성합니다.");
 
         return new DeflateCompressor();
     }
 
     @Bean(name = "xzCompressor")
     public XZCompressor xzCompressor() {
-        if (isTraceEnabled)
-            log.trace("XZCompressor Bean 을 생성합니다.");
+
+        log.trace("XZCompressor Bean 을 생성합니다.");
 
         return new XZCompressor();
     }

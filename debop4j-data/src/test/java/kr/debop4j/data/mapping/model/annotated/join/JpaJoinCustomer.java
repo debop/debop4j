@@ -56,13 +56,13 @@ public class JpaJoinCustomer extends AnnotatedEntityBase {
 
     @Generated(GenerationTime.INSERT)
     @Column(name = "CREATED_TIME", insertable = false, updatable = false)
-    @Temporal( TemporalType.TIMESTAMP )
+    @Temporal(TemporalType.TIMESTAMP)
     //@Setter(AccessLevel.PROTECTED)
     private Date created;
 
     @Generated(GenerationTime.ALWAYS)
     @Column(name = "UPDATED_TIME", insertable = false, updatable = false)
-    @Temporal( TemporalType.TIMESTAMP )
+    @Temporal(TemporalType.TIMESTAMP)
     //@Setter(AccessLevel.PROTECTED)
     private Date lastUpdated;
 

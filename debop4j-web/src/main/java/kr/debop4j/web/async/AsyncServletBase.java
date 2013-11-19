@@ -21,7 +21,7 @@ import java.io.IOException;
  * @since 13. 2. 19
  */
 @Slf4j
-@WebServlet( asyncSupported = true )
+@WebServlet(asyncSupported = true)
 public abstract class AsyncServletBase extends HttpServlet {
 
     private static final long serialVersionUID = 3628741189209483408L;

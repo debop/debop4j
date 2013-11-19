@@ -32,12 +32,18 @@ public interface IStatefulEntity extends IValueObject {
      */
     boolean isPersisted();
 
-    /** 엔티티가 저장된 후 호출되는 함수 */
+    /**
+     * 엔티티가 저장된 후 호출되는 함수
+     */
     void onSave();
 
-    /** 엔티티가 저장된 후 호출되는 함수 */
+    /**
+     * 엔티티가 저장된 후 호출되는 함수
+     */
     void onPersist();
 
-    /** 엔티티가 영구 저장소에서 메모리로 로드된 후 호출되는 함수 */
+    /**
+     * 엔티티가 영구 저장소에서 메모리로 로드된 후 호출되는 함수
+     */
     void onLoad();
 }

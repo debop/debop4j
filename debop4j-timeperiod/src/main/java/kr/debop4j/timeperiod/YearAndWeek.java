@@ -37,7 +37,9 @@ public class YearAndWeek extends ValueObjectBase implements Comparable<YearAndWe
     private Integer year;
     private Integer weekOfYear;
 
-    /** Instantiates a new Year and week. */
+    /**
+     * Instantiates a new Year and week.
+     */
     protected YearAndWeek() { }
 
     /**

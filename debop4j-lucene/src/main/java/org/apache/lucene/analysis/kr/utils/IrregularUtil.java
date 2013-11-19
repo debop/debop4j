@@ -131,7 +131,6 @@ public class IrregularUtil {
      * ㅂ 불규칙 원형을 복원한다. (돕다, 곱다)
      *
      * @throws org.apache.lucene.analysis.kr.morph.MorphException
-     *
      */
     private static String[] restoreBIrregular(String start, String end) throws MorphException {
 
@@ -166,7 +165,6 @@ public class IrregularUtil {
      * ㄷ 불규칙 원형을 복원한다. (깨닫다, 묻다)
      *
      * @throws org.apache.lucene.analysis.kr.morph.MorphException
-     *
      */
     private static String[] restoreDIrregular(String start, String end) throws MorphException {
         if (start == null || "".equals(start)) return null;
@@ -192,7 +190,6 @@ public class IrregularUtil {
      * ㅅ 불규칙 원형을 복원한다. (긋다--그어)
      *
      * @throws org.apache.lucene.analysis.kr.morph.MorphException
-     *
      */
     private static String[] restoreSIrregular(String start, String end) throws MorphException {
         if (start == null || "".equals(start)) return null;
@@ -219,7 +216,6 @@ public class IrregularUtil {
      * "따르다"는 ㄹ불규칙이 아니지만.. 인 것처럼 처리한다.
      *
      * @throws org.apache.lucene.analysis.kr.morph.MorphException
-     *
      */
     private static String[] restoreLIrregular(String start, String end) throws MorphException {
 
@@ -255,7 +251,6 @@ public class IrregularUtil {
      * 어간의 끝소리인 ‘ㄹ’이 ‘ㄴ’, ‘ㄹ’, ‘ㅂ’, ‘오’, ‘시’ 앞에서 탈락하는 활용의 형식
      *
      * @throws org.apache.lucene.analysis.kr.morph.MorphException
-     *
      */
     private static String[] restoreELIrregular(String start, String end) throws MorphException {
 
@@ -278,7 +273,6 @@ public class IrregularUtil {
      * 러 불규칙 원형을 복원한다. (이르다->이르러, 푸르다->푸르러)
      *
      * @throws org.apache.lucene.analysis.kr.morph.MorphException
-     *
      */
     private static String[] restoreRUIrregular(String start, String end) throws MorphException {
 
@@ -308,7 +302,6 @@ public class IrregularUtil {
      * ㅎ 탈락 원형을 복원한다. (까맣다-->까만,까매서)
      *
      * @throws org.apache.lucene.analysis.kr.morph.MorphException
-     *
      */
     private static String[] restoreHIrregular(String start, String end) throws MorphException {
         if (start == null || "".equals(start) || end == null || "".equals(end)) return null;
@@ -341,7 +334,6 @@ public class IrregularUtil {
      * 으 탈락 원형을 복원한다. (뜨다->더, 크다-커)
      *
      * @throws org.apache.lucene.analysis.kr.morph.MorphException
-     *
      */
     private static String[] restoreUIrregular(String start, String end) throws MorphException {
         if (start == null || "".equals(start)) return null;

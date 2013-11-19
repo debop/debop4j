@@ -99,7 +99,9 @@ public class JedisClient {
         this.expiryInSeconds = expiryInSeconds;
     }
 
-    /** 서버와의 통신 테스트, "PONG" 을 반환한다 */
+    /**
+     * 서버와의 통신 테스트, "PONG" 을 반환한다
+     */
     public String ping() {
         return run(new JedisCallback<String>() {
             @Override
@@ -109,7 +111,9 @@ public class JedisClient {
         });
     }
 
-    /** db size를 구합니다. */
+    /**
+     * db size를 구합니다.
+     */
     public Long dbSize() {
         return run(new JedisCallback<Long>() {
             @Override
@@ -119,7 +123,9 @@ public class JedisClient {
         });
     }
 
-    /** 키에 해당하는 캐시 값이 존재하는지 확인합니다. */
+    /**
+     * 키에 해당하는 캐시 값이 존재하는지 확인합니다.
+     */
     public boolean exists(Object key) {
         final byte[] rawRegion = rawRegion(key);
         final byte[] rawKey = rawValue(key);
@@ -129,7 +135,7 @@ public class JedisClient {
                 return jedis.zrank(rawRegion, rawKey);
             }
         });
-        if (isTraceEnabled) log.trace("캐시 값이 존재하는지 확인합니다. key=[{}], exists=[{}]", key, (rank != null));
+        log.trace("캐시 값이 존재하는지 확인합니다. key=[{}], exists=[{}]", key, (rank != null));
         return rank != null;
     }
 
@@ -140,7 +146,7 @@ public class JedisClient {
      * @return 저장된 캐시 값, 없으면 null을 반환한다.
      */
     public Object get(Object key) {
-        if (isTraceEnabled) log.trace("캐시 값을 조회합니다... key=[{}]", key);
+        log.trace("캐시 값을 조회합니다... key=[{}]", key);
 
         final byte[] rawKey = rawKey(key);
         byte[] rawValue = run(new JedisCallback<byte[]>() {
@@ -159,7 +165,7 @@ public class JedisClient {
      * @return 캐시 영역에 저장된 모든 키 정보
      */
     public Set<Object> keysInRegion(String regionName) {
-        if (isTraceEnabled) log.trace("영역에 해당하는 모든 키 값을 가져옵니다. regionName=[{}]", regionName);
+        log.trace("영역에 해당하는 모든 키 값을 가져옵니다. regionName=[{}]", regionName);
 
         final byte[] rawRegion = rawKey(regionName);
         Set<byte[]> rawKeys = run(new JedisCallback<Set<byte[]>>() {
@@ -179,7 +185,7 @@ public class JedisClient {
      * @return 캐시 값의 컬렉션
      */
     public List<Object> mget(Collection<? extends Object> keys) {
-        if (isTraceEnabled) log.trace("multi get... keys=[{}]", StringTool.listToString(keys));
+        log.trace("multi get... keys=[{}]", StringTool.listToString(keys));
         if (keys == null || keys.size() == 0)
             return new ArrayList<Object>();
 
@@ -223,7 +229,7 @@ public class JedisClient {
      * @param unit    시간 단위 (기본은 seconds)
      */
     protected void set(Object key, Object value, long timeout, TimeUnit unit) {
-        if (isTraceEnabled) log.trace("캐시를 저장합니다... key=[{}], value=[{}]", key, value);
+        log.trace("캐시를 저장합니다... key=[{}], value=[{}]", key, value);
 
         final byte[] rawKey = rawKey(key);
         final byte[] rawValue = rawValue(value);
@@ -243,9 +249,11 @@ public class JedisClient {
         });
     }
 
-    /** 지정된 키의 항목으로 삭제합니다. */
+    /**
+     * 지정된 키의 항목으로 삭제합니다.
+     */
     public void del(Object key) {
-        if (isTraceEnabled) log.trace("캐시를 삭제합니다. key=[{}]", key);
+        log.trace("캐시를 삭제합니다. key=[{}]", key);
 
         final byte[] rawKey = rawKey(key);
         final byte[] rawRegion = rawRegion(key);
@@ -259,9 +267,11 @@ public class JedisClient {
         });
     }
 
-    /** 지정된 키의 항목으로 삭제합니다. */
+    /**
+     * 지정된 키의 항목으로 삭제합니다.
+     */
     public void mdel(Collection<? extends Object> keys) {
-        if (isTraceEnabled) log.trace("캐시를 삭제합니다. keys=[{}]", StringTool.listToString(keys));
+        log.trace("캐시를 삭제합니다. keys=[{}]", StringTool.listToString(keys));
 
         if (keys == null || keys.size() == 0)
             return;
@@ -321,7 +331,9 @@ public class JedisClient {
         });
     }
 
-    /** 키를 byte[] 로 직렬화합니다 * */
+    /**
+     * 키를 byte[] 로 직렬화합니다 *
+     */
     @SuppressWarnings("unchecked")
     private byte[] rawKey(Object key) {
         return getKeySerializer().serialize(key);
@@ -337,7 +349,9 @@ public class JedisClient {
         return rawKeys;
     }
 
-    /** 키를 이용해 region 값을 직렬화합니다. */
+    /**
+     * 키를 이용해 region 값을 직렬화합니다.
+     */
     @SuppressWarnings("unchecked")
     private byte[] rawRegion(Object key) {
         return getKeySerializer().serialize(getEntityName(key));
@@ -359,18 +373,24 @@ public class JedisClient {
         return regionName;
     }
 
-    /** byte[] 를 key 값으로 역직렬화 합니다 */
+    /**
+     * byte[] 를 key 값으로 역직렬화 합니다
+     */
     private Object deserializeKey(byte[] rawKey) {
         return getKeySerializer().deserialize(rawKey);
     }
 
-    /** 캐시 값을 byte[]로 직렬화를 수행합니다. */
+    /**
+     * 캐시 값을 byte[]로 직렬화를 수행합니다.
+     */
     @SuppressWarnings("unchecked")
     private byte[] rawValue(Object value) {
         return getValueSerializer().serialize(value);
     }
 
-    /** byte[] 를 역직렬화하여 원 객체로 변환합니다. */
+    /**
+     * byte[] 를 역직렬화하여 원 객체로 변환합니다.
+     */
     private Object deserializeValue(byte[] rawValue) {
         return getValueSerializer().deserialize(rawValue);
     }
@@ -439,13 +459,17 @@ public class JedisClient {
         }
     }
 
-    /** Raw Key 값들을 역직렬화하여 Key Set을 반환합니다. */
+    /**
+     * Raw Key 값들을 역직렬화하여 Key Set을 반환합니다.
+     */
     @SuppressWarnings("unchecked")
     private Set<Object> deserializeKeys(Set<byte[]> rawKeys) {
         return SerializationTool.deserialize(rawKeys, getKeySerializer());
     }
 
-    /** Raw Value 값들을 역직렬화하여 Value List를 반환합니다. */
+    /**
+     * Raw Value 값들을 역직렬화하여 Value List를 반환합니다.
+     */
     @SuppressWarnings("unchecked")
     private List<Object> deserializeValues(List<byte[]> rawValues) {
         return SerializationTool.deserialize(rawValues, getValueSerializer());

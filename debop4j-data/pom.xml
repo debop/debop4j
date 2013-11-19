@@ -231,8 +231,9 @@
                         </goals>
                         <configuration>
                             <outputDirectory>${project.basedir}/target/generated-source/java</outputDirectory>
-                            <processor>com.mysema.query.apt.hibernate.HibernateAnnotationProcessor</processor>
-                            <!--<processor>com.mysema.query.apt.jpa.JPAAnnotationProcessor</processor>-->
+                            <testOutputDirectory>${project.basedir}/target/generated-test-source/java</testOutputDirectory>
+                            <!--<processor>com.mysema.query.apt.hibernate.HibernateAnnotationProcessor</processor>-->
+                            <processor>com.mysema.query.apt.jpa.JPAAnnotationProcessor</processor>
                         </configuration>
                     </execution>
                 </executions>

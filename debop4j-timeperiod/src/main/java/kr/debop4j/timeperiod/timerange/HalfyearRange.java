@@ -35,7 +35,9 @@ public class HalfyearRange extends HalfyearTimeRange {
 
     // region << Constructor >>
 
-    /** Instantiates a new Halfyear range. */
+    /**
+     * Instantiates a new Halfyear range.
+     */
     public HalfyearRange() {
         this(new TimeCalendar());
     }

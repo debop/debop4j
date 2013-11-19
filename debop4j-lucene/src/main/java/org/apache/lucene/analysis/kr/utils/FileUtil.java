@@ -88,9 +88,8 @@ public class FileUtil {
      * @param file     the file to read, must not be <code>null</code>
      * @param encoding the encoding to use, <code>null</code> means platform default
      * @return the list of Strings representing each line in the file, never <code>null</code>
-     * @throws java.io.IOException in case of an I/O error
-     * @throws java.io.UnsupportedEncodingException
-     *                             if the encoding is not supported by the VM
+     * @throws java.io.IOException                  in case of an I/O error
+     * @throws java.io.UnsupportedEncodingException if the encoding is not supported by the VM
      * @since Commons IO 1.1
      */
     public static List<String> readLines(File file, String encoding) throws IOException {
@@ -108,10 +107,8 @@ public class FileUtil {
      * @param encoding the encoding to use, <code>null</code> means platform default
      * @return the list of Strings representing each line in the file, never <code>null</code>
      * @throws org.apache.lucene.analysis.kr.morph.MorphException
-     *
      * @throws java.io.IOException
-     * @throws java.io.UnsupportedEncodingException
-     *                             if the encoding is not supported by the VM
+     * @throws java.io.UnsupportedEncodingException               if the encoding is not supported by the VM
      * @since Commons IO 1.1
      */
     public static List<String> readLines(String fName, String encoding) {
@@ -304,7 +301,7 @@ public class FileUtil {
      *
      * @param url the file URL to convert, <code>null</code> returns <code>null</code>
      * @return the equivalent <code>File</code> object, or <code>null</code>
-     *         if the URL's protocol is not <code>file</code>
+     * if the URL's protocol is not <code>file</code>
      * @throws IllegalArgumentException if the file is incorrectly encoded
      */
     public static File toFile(URL url) {
@@ -334,9 +331,8 @@ public class FileUtil {
      * @param file     the file to read, must not be <code>null</code>
      * @param encoding the encoding to use, <code>null</code> means platform default
      * @return the file contents, never <code>null</code>
-     * @throws java.io.IOException in case of an I/O error
-     * @throws java.io.UnsupportedEncodingException
-     *                             if the encoding is not supported by the VM
+     * @throws java.io.IOException                  in case of an I/O error
+     * @throws java.io.UnsupportedEncodingException if the encoding is not supported by the VM
      */
     public static String readFileToString(File file, String encoding) throws IOException {
         InputStream in = null;

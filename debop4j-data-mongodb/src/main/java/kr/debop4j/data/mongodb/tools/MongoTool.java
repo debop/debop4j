@@ -42,10 +42,14 @@ import java.util.List;
 @Setter
 public class MongoTool {
 
-    /** MongoDB Dialect */
+    /**
+     * MongoDB Dialect
+     */
     @Autowired GridDialect gridDialect;
 
-    /** Datastore provider */
+    /**
+     * Datastore provider
+     */
     @Autowired DatastoreProvider datastoreProvider;
 
     public MongoTool() {}

@@ -43,8 +43,8 @@ public class SqlRepository extends NamedParameterJdbcDaoSupport {
      * @return 영향을 받은 레코드 수
      */
     public int update(final String sql, final SqlParameterSource paramSource) {
-        if (isTraceEnabled)
-            log.trace("update sql=[{}], parameters=[{}]", sql, paramSource);
+
+        log.trace("update sql=[{}], parameters=[{}]", sql, paramSource);
 
         return getNamedParameterJdbcTemplate().update(sql, paramSource);
     }
@@ -59,8 +59,8 @@ public class SqlRepository extends NamedParameterJdbcDaoSupport {
      * @return 엔티티의 컬렉션
      */
     public <E> List<E> query(final String sql, final SqlParameterSource paramSource, final RowMapper<E> rowMapper) {
-        if (isTraceEnabled)
-            log.trace("query sql=[{}], paramSource=[{}]", sql, paramSource);
+
+        log.trace("query sql=[{}], paramSource=[{}]", sql, paramSource);
 
         return getNamedParameterJdbcTemplate().query(sql, paramSource, rowMapper);
     }

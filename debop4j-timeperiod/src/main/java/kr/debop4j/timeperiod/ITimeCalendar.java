@@ -29,42 +29,68 @@ import java.util.Locale;
  */
 public interface ITimeCalendar extends ITimePeriodMapper {
 
-    /** 문화권 정보 (문화권에 따라 달력에 대한 규칙 및 명칭이 달라집니다.) */
+    /**
+     * 문화권 정보 (문화권에 따라 달력에 대한 규칙 및 명칭이 달라집니다.)
+     */
     Locale getLocale();
 
-    /** 시작 오프셋 (시작일자가 1월 1일이 아닌 경우) */
+    /**
+     * 시작 오프셋 (시작일자가 1월 1일이 아닌 경우)
+     */
     Duration getStartOffset();
 
-    /** 종료 오프셋 */
+    /**
+     * 종료 오프셋
+     */
     Duration getEndOffset();
 
-    /** 한 주의 시작 요일 (한국, 미국: Sunday, ISO-8601: Monday) */
+    /**
+     * 한 주의 시작 요일 (한국, 미국: Sunday, ISO-8601: Monday)
+     */
     DayOfWeek getFirstDayOfWeek();
 
-    /** 지정된 일자의 년 */
+    /**
+     * 지정된 일자의 년
+     */
     int getYear(DateTime time);
 
-    /** 지정된 일자의 월 */
+    /**
+     * 지정된 일자의 월
+     */
     int getMonthOfYear(DateTime time);
 
-    /** 지정된 시각의 시간 */
+    /**
+     * 지정된 시각의 시간
+     */
     int getHourOfDay(DateTime time);
 
-    /** 지정된 시각의 분 */
+    /**
+     * 지정된 시각의 분
+     */
     int getMinuteOfHour(DateTime time);
 
-    /** 지정된 날짜의 월 몇번째 일인지 */
+    /**
+     * 지정된 날짜의 월 몇번째 일인지
+     */
     int getDayOfMonth(DateTime time);
 
-    /** 지정된 날짜의 요일 */
+    /**
+     * 지정된 날짜의 요일
+     */
     DayOfWeek getDayOfWeek(DateTime time);
 
-    /** 지정된 년,월의 날짜수 */
+    /**
+     * 지정된 년,월의 날짜수
+     */
     int getDaysInMonth(int year, int month);
 
-    /** 지정된 일자의 주차(Week of Year)를 반환합니다. */
+    /**
+     * 지정된 일자의 주차(Week of Year)를 반환합니다.
+     */
     int getWeekOfYear(DateTime time);
 
-    /** 지정된 년, 주차에 해당하는 주의 첫번째 일자를 반환한다. (예: 2011년 3주차의 첫번째 일자는?) */
+    /**
+     * 지정된 년, 주차에 해당하는 주의 첫번째 일자를 반환한다. (예: 2011년 3주차의 첫번째 일자는?)
+     */
     DateTime getStartOfYearWeek(int year, int weekOfYear);
 }

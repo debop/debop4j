@@ -26,7 +26,7 @@ import java.util.Map;
  *
  * @author smlee
  */
-@SuppressWarnings( "unchecked" )
+@SuppressWarnings("unchecked")
 public class ConstraintUtil {
 
     private static final Map<String, String> hahes = new HashMap<String, String>();
@@ -113,7 +113,9 @@ public class ConstraintUtil {
         return hahes.get(key) != null;
     }
 
-    /** 어미가 ㄴ,ㄹ,ㅁ 으로 끝나는지 조사한다. */
+    /**
+     * 어미가 ㄴ,ㄹ,ㅁ 으로 끝나는지 조사한다.
+     */
     public static boolean isNLM(String eomi) {
 
         if (eomi == null || eomi.length() == 0) return false;

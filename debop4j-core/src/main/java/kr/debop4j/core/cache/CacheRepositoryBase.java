@@ -30,7 +30,9 @@ import java.util.concurrent.ExecutionException;
 @Slf4j
 public abstract class CacheRepositoryBase implements ICacheRepository {
 
-    /** 유효기간 (분단위). */
+    /**
+     * 유효기간 (분단위).
+     */
     private long expiry = 0;
 
     /**
@@ -108,7 +110,9 @@ public abstract class CacheRepositoryBase implements ICacheRepository {
      */
     public abstract boolean exists(final String key);
 
-    /** 캐시의 모든 항목을 삭제합니다. */
+    /**
+     * 캐시의 모든 항목을 삭제합니다.
+     */
     public abstract void clear();
 
     @Override

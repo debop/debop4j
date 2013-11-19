@@ -49,10 +49,14 @@ public interface IHibernateRepository<E extends IStatefulEntity> {
      */
     Session getSession();
 
-    /** Session의 변경을 DB에 적용합니다. */
+    /**
+     * Session의 변경을 DB에 적용합니다.
+     */
     void flushSession();
 
-    /** Session의 변경을 Transaction을 이용하여 DB에 적용합니다. */
+    /**
+     * Session의 변경을 Transaction을 이용하여 DB에 적용합니다.
+     */
     void transactionalFlush();
 
     /**
@@ -83,10 +87,14 @@ public interface IHibernateRepository<E extends IStatefulEntity> {
      */
     <E> E get(Serializable id, LockOptions lockOptions);
 
-    /** 특정 수형의 해당 id 들을 가지는 엔티티들을 로드합니다. */
+    /**
+     * 특정 수형의 해당 id 들을 가지는 엔티티들을 로드합니다.
+     */
     <E> List<E> getIn(Collection<? extends Serializable> ids);
 
-    /** 특정 수형의 해당 id 들을 가지는 엔티티들을 로드합니다. */
+    /**
+     * 특정 수형의 해당 id 들을 가지는 엔티티들을 로드합니다.
+     */
     <E> List<E> getIn(Serializable[] ids);
 
     /**
@@ -620,7 +628,9 @@ public interface IHibernateRepository<E extends IStatefulEntity> {
      */
     void deleteById(Serializable id);
 
-    /** 해당 수형의 모든 엔티티를 삭제합니다. */
+    /**
+     * 해당 수형의 모든 엔티티를 삭제합니다.
+     */
     void deleteAll();
 
     /**
@@ -644,7 +654,9 @@ public interface IHibernateRepository<E extends IStatefulEntity> {
      */
     void deleteAll(Criteria criteria);
 
-    /** Cascade 적용 없이 엔티티들을 모두 삭제합니다. */
+    /**
+     * Cascade 적용 없이 엔티티들을 모두 삭제합니다.
+     */
     int deleteAllWithoutCascade();
 
     /**

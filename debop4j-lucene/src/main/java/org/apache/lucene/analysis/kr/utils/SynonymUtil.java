@@ -41,7 +41,9 @@ public class SynonymUtil {
     private static final boolean isTraceEnabled = log.isTraceEnabled();
     private static final boolean isDebugEnabled = log.isDebugEnabled();
 
-    /** 동의어 사전 */
+    /**
+     * 동의어 사전
+     */
     private static final SetMultimap<String, String> synonymMap = TreeMultimap.create();
     private static final Set<String> EMPTY_SET = new HashSet<String>();
 
@@ -55,8 +57,8 @@ public class SynonymUtil {
             String[] words = StringUtils.split(line, ",");
             if (words != null && words.length > 1) {
                 synonymMap.putAll(words[0], Arrays.asList(words));
-                if (isTraceEnabled)
-                    log.trace("동의어를 추가합니다. words=[{}]", Joiner.on(",").join(words));
+
+                log.trace("동의어를 추가합니다. words=[{}]", Joiner.on(",").join(words));
             }
         }
         log.info("동의어 사전을 빌드했습니다. 라인수=[{}], 동의어수=[{}]", lines.size(), synonymMap.values().size());
@@ -66,7 +68,6 @@ public class SynonymUtil {
      * 지정한 단어의 동의어가 있으면, 모든 동의어를 반환합니다.
      *
      * @throws org.apache.lucene.analysis.kr.morph.MorphException
-     *
      */
     public static Set<String> getSynonym(String word) throws MorphException {
         if (word == null || word.length() == 0)
@@ -74,8 +75,8 @@ public class SynonymUtil {
 
         word = word.toLowerCase();
 
-        if (isTraceEnabled)
-            log.trace("동의어를 찾습니다... word=[{}]", word);
+
+        log.trace("동의어를 찾습니다... word=[{}]", word);
 
         if (synonymMap == null || synonymMap.size() == 0)
             return EMPTY_SET;
@@ -83,13 +84,13 @@ public class SynonymUtil {
         for (String key : synonymMap.keySet()) {
             Set<String> synonyms = synonymMap.get(key);
             if (key.equalsIgnoreCase(word) || synonyms.contains(word)) {
-                if (isTraceEnabled)
-                    log.trace("동의어를 찾았습니다. word=[{}], synonyms=[{}]", word, StringUtil.join(synonyms, ","));
+
+                log.trace("동의어를 찾았습니다. word=[{}], synonyms=[{}]", word, StringUtil.join(synonyms, ","));
                 return synonyms;
             }
         }
-        if (isTraceEnabled)
-            log.trace("동의어가 없습니다.");
+
+        log.trace("동의어가 없습니다.");
 
         return EMPTY_SET;
     }

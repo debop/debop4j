@@ -45,7 +45,7 @@ public class JacksonRedisSerializer<T> implements RedisSerializer<T> {
     }
 
     @Override
-    @SuppressWarnings( "unchecked" )
+    @SuppressWarnings("unchecked")
     public T deserialize(byte[] bytes) {
         try {
             if (ArrayTool.isEmpty(bytes))

@@ -22,7 +22,9 @@ public class OneToOne_Biography extends AnnotatedEntityBase {
 
     private static final long serialVersionUID = -5261462229916986070L;
 
-    /** Hibernate 기본의 one-to-one 입니다!!! */
+    /**
+     * Hibernate 기본의 one-to-one 입니다!!!
+     */
     @Id
     @GeneratedValue(generator = "gen")
     @GenericGenerator(name = "gen", strategy = "foreign",

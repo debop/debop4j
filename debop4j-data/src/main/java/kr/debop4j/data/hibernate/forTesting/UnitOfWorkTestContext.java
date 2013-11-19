@@ -56,7 +56,9 @@ public class UnitOfWorkTestContext extends UnitOfWorkTestContextBase {
         IUnitOfWorkFactory factory = Springs.getBean(IUnitOfWorkFactory.class);
     }
 
-    /** Reset spring context. */
+    /**
+     * Reset spring context.
+     */
     protected void resetSpringContext() {
         if (springContext != null) {
             Springs.reset();

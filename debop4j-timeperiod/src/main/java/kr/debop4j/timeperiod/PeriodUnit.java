@@ -25,25 +25,45 @@ import lombok.Getter;
  * @since 13. 5. 11. 오전 12:02
  */
 public enum PeriodUnit {
-    /** 년 */
+    /**
+     * 년
+     */
     Year("Year"),
-    /** 반기 */
+    /**
+     * 반기
+     */
     Halfyear("Halfyear"),
-    /** 분기 */
+    /**
+     * 분기
+     */
     Quarter("Quarter"),
-    /** 월 */
+    /**
+     * 월
+     */
     Month("Month"),
-    /** 주 */
+    /**
+     * 주
+     */
     Week("Week"),
-    /** 일 */
+    /**
+     * 일
+     */
     Day("Day"),
-    /** 시 */
+    /**
+     * 시
+     */
     Hour("Hour"),
-    /** 분 */
+    /**
+     * 분
+     */
     Minute("Minute"),
-    /** 초 */
+    /**
+     * 초
+     */
     Second("Second"),
-    /** 밀리초 */
+    /**
+     * 밀리초
+     */
     Millisecond("Millisecond");
 
     @Getter private final String periodKind;

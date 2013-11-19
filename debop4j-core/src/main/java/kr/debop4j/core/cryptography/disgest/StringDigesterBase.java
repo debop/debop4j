@@ -30,7 +30,9 @@ public abstract class StringDigesterBase implements IStringDigester {
 
     private final StandardStringDigester standardStringDigester;
 
-    /** Instantiates a new String digester base. */
+    /**
+     * Instantiates a new String digester base.
+     */
     public StringDigesterBase() {
         this(5);
     }
@@ -47,18 +49,22 @@ public abstract class StringDigesterBase implements IStringDigester {
 
         if (log.isDebugEnabled())
             log.debug("문자열을 암호화하는 [{}] 인스턴스를 생성했습니다. algorithm=[{}], iteration=[{}]",
-                    getClass().getName(), getAlgorithm(), iterations);
+                      getClass().getName(), getAlgorithm(), iterations);
     }
 
     abstract public String getAlgorithm();
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean isInitialized() {
         return standardStringDigester.isInitialized();
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String digest(String message) {
         if (log.isTraceEnabled())
@@ -66,7 +72,9 @@ public abstract class StringDigesterBase implements IStringDigester {
         return standardStringDigester.digest(message);
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean matches(String message, String digest) {
         boolean match = standardStringDigester.matches(message, digest);

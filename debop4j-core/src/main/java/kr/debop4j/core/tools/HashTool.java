@@ -24,11 +24,17 @@ package kr.debop4j.core.tools;
  */
 public class HashTool {
 
-    /** The constant NULL_VALUE. */
+    /**
+     * The constant NULL_VALUE.
+     */
     public static final int NULL_VALUE = 0;
-    /** The constant ONE_VALUE. */
+    /**
+     * The constant ONE_VALUE.
+     */
     public static final int ONE_VALUE = 1;
-    /** The constant FACTOR. */
+    /**
+     * The constant FACTOR.
+     */
     public static final int FACTOR = 31;
 
     /**

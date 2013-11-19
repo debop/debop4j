@@ -25,7 +25,7 @@ import org.slf4j.LoggerFactory;
 import java.util.ArrayList;
 import java.util.List;
 
-@SuppressWarnings( "unchecked" )
+@SuppressWarnings("unchecked")
 public class EomiUtil {
 
     private static final Logger log = LoggerFactory.getLogger(EomiUtil.class);
@@ -40,7 +40,6 @@ public class EomiUtil {
      * 가장 길이가 긴 어미를 분리한다.
      *
      * @throws org.apache.lucene.analysis.kr.morph.MorphException
-     *
      */
     public static String[] longestEomi(final String term) throws MorphException {
 
@@ -127,7 +126,9 @@ public class EomiUtil {
         return result;
     }
 
-    /** 선어말어미를 분석한다. */
+    /**
+     * 선어말어미를 분석한다.
+     */
     public static String[] splitPomi(String stem) throws MorphException {
 
         if (log.isTraceEnabled())
@@ -246,7 +247,6 @@ public class EomiUtil {
      * 불규칙 용언의 원형을 구한다.
      *
      * @throws org.apache.lucene.analysis.kr.morph.MorphException
-     *
      */
     public static List<AnalysisOutput> irregular(AnalysisOutput output) throws MorphException {
 
@@ -280,7 +280,9 @@ public class EomiUtil {
         return results;
     }
 
-    /** 어간만 변하는 경우 */
+    /**
+     * 어간만 변하는 경우
+     */
     private static void irregularStem(List<String[]> results, String stem, String ending) {
 
         char feCh = ending.charAt(0);
@@ -335,7 +337,9 @@ public class EomiUtil {
         }
     }
 
-    /** 어미만 변하는 경우 */
+    /**
+     * 어미만 변하는 경우
+     */
     private static void irregularEnding(List<String[]> results, String stem, String ending) {
         if (ending.startsWith("ㅆ")) return;
 
@@ -367,7 +371,9 @@ public class EomiUtil {
         }
     }
 
-    /** 어간과 어미가 모두 변하는 경우 */
+    /**
+     * 어간과 어미가 모두 변하는 경우
+     */
     private static void irregularAO(List<String[]> results, String stem, String ending) {
 
         char ls = stem.charAt(stem.length() - 1);
@@ -520,7 +526,9 @@ public class EomiUtil {
     }
 
 
-    /** '음/기' + '이' + 어미, '에서/부터/에서부터' + '이' + 어미 인지 조사한다. */
+    /**
+     * '음/기' + '이' + 어미, '에서/부터/에서부터' + '이' + 어미 인지 조사한다.
+     */
     public static boolean endsWithEEomi(String stem) {
         int len = stem.length();
         if (len < 2 || !stem.endsWith("이")) return false;
@@ -571,7 +579,6 @@ public class EomiUtil {
      * 5. '아/어'의 변이체 분리
      *
      * @throws org.apache.lucene.analysis.kr.morph.MorphException
-     *
      */
     public static String[] splitEomi(String stem, String end) throws MorphException {
 

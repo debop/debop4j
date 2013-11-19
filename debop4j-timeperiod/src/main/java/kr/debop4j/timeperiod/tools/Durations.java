@@ -47,7 +47,9 @@ public abstract class Durations {
         return Locale.getDefault();
     }
 
-    /** 기간이 0 인 Duration */
+    /**
+     * 기간이 0 인 Duration
+     */
     public static final Duration Zero = Duration.ZERO;
 
     /**
@@ -132,7 +134,9 @@ public abstract class Durations {
         return (weeks == 0) ? Zero : days(weeks * TimeSpec.DaysPerWeek);
     }
 
-    /** 1일 (하루) */
+    /**
+     * 1일 (하루)
+     */
     public static final Duration Day = Duration.standardDays(1);
 
     /**
@@ -199,7 +203,9 @@ public abstract class Durations {
                                        millis);
     }
 
-    /** 한 시간 */
+    /**
+     * 한 시간
+     */
     public static final Duration Hour = Duration.standardHours(1);
 
     /**

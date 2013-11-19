@@ -38,7 +38,9 @@ import java.util.Objects;
 @Slf4j
 public abstract class AbstractCompressedUserType implements UserType, Serializable {
 
-    /** 속성 값을 압축/복원하는 {@link ICompressor}의 구현 객체를 반환합니다. */
+    /**
+     * 속성 값을 압축/복원하는 {@link ICompressor}의 구현 객체를 반환합니다.
+     */
     abstract public ICompressor getCompressor();
 
 
@@ -60,7 +62,7 @@ public abstract class AbstractCompressedUserType implements UserType, Serializab
 
     @Override
     public int[] sqlTypes() {
-        return new int[]{ BinaryType.INSTANCE.sqlType() };
+        return new int[] { BinaryType.INSTANCE.sqlType() };
     }
 
     @Override

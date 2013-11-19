@@ -27,7 +27,7 @@ import org.junit.Test;
  * @since 13. 1. 21
  */
 @Slf4j
-@SuppressWarnings( "unchecked" )
+@SuppressWarnings("unchecked")
 public class ConstructorAccessBenchmark extends Benchmark {
 
     @Test

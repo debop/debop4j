@@ -33,7 +33,9 @@ public class YearRange extends YearTimeRange {
 
     // region << Constructor >>
 
-    /** Instantiates a new Year range. */
+    /**
+     * Instantiates a new Year range.
+     */
     public YearRange() {
         this(new TimeCalendar());
     }

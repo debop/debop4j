@@ -46,7 +46,9 @@ public abstract class LocaleEntityBase<TId extends Serializable, TLocaleValue ex
 
     private TLocaleValue defaultLocaleValue = null;
 
-    /** 기본 Locale 정보를 생성하여 제공합니다. */
+    /**
+     * 기본 Locale 정보를 생성하여 제공합니다.
+     */
     public final TLocaleValue getDefaultLocale() {
         if (defaultLocaleValue == null) {
             try {

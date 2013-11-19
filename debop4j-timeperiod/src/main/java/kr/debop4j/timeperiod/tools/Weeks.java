@@ -225,9 +225,9 @@ public abstract class Weeks {
     public static YearAndWeek addWeekOfYears(YearAndWeek yearAndWeek, int weeks, ITimeCalendar timeCalendar) {
         Guard.shouldNotBeNull(yearAndWeek, "yearAndWeek");
 
-        if (isTraceEnabled)
-            log.trace("주차 연산을 수행합니다. year=[{}], weekOfYear=[{}], weeks=[{}], timeCalendar=[{}]",
-                      yearAndWeek.getYear(), yearAndWeek.getWeekOfYear(), weeks, timeCalendar);
+
+        log.trace("주차 연산을 수행합니다. year=[{}], weekOfYear=[{}], weeks=[{}], timeCalendar=[{}]",
+                  yearAndWeek.getYear(), yearAndWeek.getWeekOfYear(), weeks, timeCalendar);
 
         YearAndWeek result = new YearAndWeek(yearAndWeek.getYear(), yearAndWeek.getWeekOfYear());
 
@@ -238,9 +238,9 @@ public abstract class Weeks {
                 ? plusWeeks(yearAndWeek, weeks, timeCalendar)
                 : minusWeeks(yearAndWeek, weeks, timeCalendar);
 
-        if (isTraceEnabled)
-            log.trace("주차 연산을 수행했습니다. year=[{}], weekOfYear=[{}], weeks=[{}], result=[{}]",
-                      yearAndWeek.getYear(), yearAndWeek.getWeekOfYear(), weeks, result);
+
+        log.trace("주차 연산을 수행했습니다. year=[{}], weekOfYear=[{}], weeks=[{}], result=[{}]",
+                  yearAndWeek.getYear(), yearAndWeek.getWeekOfYear(), weeks, result);
 
         return result;
     }

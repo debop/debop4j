@@ -123,7 +123,9 @@ public final class Springs {
         return localContextStack.get();
     }
 
-    /** 초기화를 합니다. */
+    /**
+     * 초기화를 합니다.
+     */
     public static synchronized void init() {
         init(DEFAULT_APPLICATION_CONTEXT_XML);
     }
@@ -227,7 +229,9 @@ public final class Springs {
         }
     }
 
-    /** Springs ApplicationContext를 초기화합니다. */
+    /**
+     * Springs ApplicationContext를 초기화합니다.
+     */
     public static synchronized void reset() {
         if (getLocalContext() != null)
             reset(getLocalContext());
@@ -282,7 +286,9 @@ public final class Springs {
         return getContext().getBeanNamesForType(beanClass, includeNonSingletons, allowEagerInit);
     }
 
-    /** 지정한 타입의 Bean 들의 인스턴스를 가져옵니다. (Prototype Bean 도 포함됩니다.) */
+    /**
+     * 지정한 타입의 Bean 들의 인스턴스를 가져옵니다. (Prototype Bean 도 포함됩니다.)
+     */
     public static <T> List<T> getBeansByType(Class<T> beanClass) {
         return getBeansByType(beanClass, true, true);
     }
@@ -304,7 +310,9 @@ public final class Springs {
             return null;
     }
 
-    /** 지정된 수형 또는 상속한 수형으로 등록된 bean 들을 조회합니다. */
+    /**
+     * 지정된 수형 또는 상속한 수형으로 등록된 bean 들을 조회합니다.
+     */
     public static synchronized <T> Map<String, T> getBeansOfType(Class<T> beanClass) {
         return getBeansOfType(beanClass, true, true);
     }

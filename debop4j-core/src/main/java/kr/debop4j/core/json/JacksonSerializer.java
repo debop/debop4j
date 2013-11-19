@@ -38,7 +38,9 @@ public class JacksonSerializer implements IJsonSerializer {
     @Getter
     private final ObjectMapper mapper;
 
-    /** Instantiates a new Jackson serializer. */
+    /**
+     * Instantiates a new Jackson serializer.
+     */
     public JacksonSerializer() {
         this(new ObjectMapper());
     }

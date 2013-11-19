@@ -254,9 +254,9 @@ public abstract class Parallels {
      */
     public static <V> List<V> run(int fromInclude, int toExclude, int step, final Callable<V> callable) {
         shouldNotBeNull(callable, "callable");
-        if (isDebugEnabled)
-            log.debug("병렬로 작업을 수행합니다... fromInclude=[{}], toExclude=[{}], step=[{}], workerCount=[{}]",
-                      fromInclude, toExclude, step, getWorkerCount());
+
+        log.debug("병렬로 작업을 수행합니다... fromInclude=[{}], toExclude=[{}], step=[{}], workerCount=[{}]",
+                  fromInclude, toExclude, step, getWorkerCount());
 
         ExecutorService executor = Executors.newFixedThreadPool(getWorkerCount());
 
@@ -288,7 +288,7 @@ public abstract class Parallels {
                 results.addAll(localResults.get(i));
             }
 
-            if (isDebugEnabled) log.debug("모든 작업을 병렬로 완료했습니다. workerCount=[{}]", getWorkerCount());
+            log.debug("모든 작업을 병렬로 완료했습니다. workerCount=[{}]", getWorkerCount());
 
             return results;
         } catch (Exception e) {
@@ -334,9 +334,9 @@ public abstract class Parallels {
      */
     public static <V> List<V> run(int fromInclude, int toExclude, int step, final Function1<Integer, V> function) {
         shouldNotBeNull(function, "function");
-        if (isDebugEnabled)
-            log.debug("병렬로 작업을 수행합니다... fromInclude=[{}], toExclude=[{}], step=[{}], workerCount=[{}]",
-                      fromInclude, toExclude, step, getWorkerCount());
+
+        log.debug("병렬로 작업을 수행합니다... fromInclude=[{}], toExclude=[{}], step=[{}], workerCount=[{}]",
+                  fromInclude, toExclude, step, getWorkerCount());
 
         ExecutorService executor = Executors.newFixedThreadPool(getWorkerCount());
 
@@ -367,7 +367,7 @@ public abstract class Parallels {
             for (int i = 0; i < partitions.size(); i++) {
                 results.addAll(localResults.get(i));
             }
-            if (isDebugEnabled) log.debug("모든 작업을 병렬로 완료했습니다. workerCount=[{}]", getWorkerCount());
+            log.debug("모든 작업을 병렬로 완료했습니다. workerCount=[{}]", getWorkerCount());
 
             return results;
         } catch (Exception e) {
@@ -387,7 +387,7 @@ public abstract class Parallels {
     public static <T> void runEach(final Iterable<T> elements, final Action1<T> action) {
         shouldNotBeNull(elements, "elements");
         shouldNotBeNull(action, "function");
-        if (isDebugEnabled) log.debug("병렬로 작업을 수행합니다... workerCount=[{}]", getWorkerCount());
+        log.debug("병렬로 작업을 수행합니다... workerCount=[{}]", getWorkerCount());
 
         ExecutorService executor = Executors.newFixedThreadPool(getWorkerCount());
 
@@ -414,8 +414,8 @@ public abstract class Parallels {
                 result.get();
             }
 
-            if (isDebugEnabled)
-                log.debug("모든 작업을 병렬로 수행하였습니다. workerCount=[{}]", getWorkerCount());
+
+            log.debug("모든 작업을 병렬로 수행하였습니다. workerCount=[{}]", getWorkerCount());
 
         } catch (Exception e) {
             log.error("데이터에 대한 병렬 작업 중 예외가 발생했습니다.", e);
@@ -435,7 +435,7 @@ public abstract class Parallels {
     public static <T, V> List<V> runEach(final Iterable<T> elements, final Function1<T, V> function) {
         shouldNotBeNull(elements, "elements");
         shouldNotBeNull(function, "function");
-        if (isDebugEnabled) log.debug("병렬로 작업을 수행합니다... workerCount=[{}]", getWorkerCount());
+        log.debug("병렬로 작업을 수행합니다... workerCount=[{}]", getWorkerCount());
 
         ExecutorService executor = Executors.newFixedThreadPool(getWorkerCount());
 
@@ -471,7 +471,7 @@ public abstract class Parallels {
                 results.addAll(localResults.get(i));
             }
 
-            if (isDebugEnabled) log.debug("모든 작업을 병렬로 완료했습니다. workerCount=[{}]", getWorkerCount());
+            log.debug("모든 작업을 병렬로 완료했습니다. workerCount=[{}]", getWorkerCount());
 
             return results;
 
@@ -515,9 +515,9 @@ public abstract class Parallels {
      */
     public static void runPartitions(int fromInclude, int toExclude, int step, final Action1<List<Integer>> action) {
         shouldNotBeNull(action, "function");
-        if (isDebugEnabled)
-            log.debug("병렬로 작업을 수행합니다... fromInclude=[{}], toExclude=[{}], step=[{}], workerCount=[{}]",
-                      fromInclude, toExclude, step, getWorkerCount());
+
+        log.debug("병렬로 작업을 수행합니다... fromInclude=[{}], toExclude=[{}], step=[{}], workerCount=[{}]",
+                  fromInclude, toExclude, step, getWorkerCount());
 
         ExecutorService executor = Executors.newFixedThreadPool(getWorkerCount());
 
@@ -589,9 +589,9 @@ public abstract class Parallels {
      */
     public static <V> List<V> runPartitions(int fromInclude, int toExclude, int step, final Function1<List<Integer>, List<V>> function) {
         shouldNotBeNull(function, "function");
-        if (isDebugEnabled)
-            log.debug("병렬로 작업을 수행합니다... fromInclude=[{}], toExclude=[{}], step=[{}], workerCount=[{}]",
-                      fromInclude, toExclude, step, getWorkerCount());
+
+        log.debug("병렬로 작업을 수행합니다... fromInclude=[{}], toExclude=[{}], step=[{}], workerCount=[{}]",
+                  fromInclude, toExclude, step, getWorkerCount());
 
         ExecutorService executor = Executors.newFixedThreadPool(getWorkerCount());
 
@@ -617,7 +617,7 @@ public abstract class Parallels {
                 results.addAll(output.get());
             }
 
-            if (isDebugEnabled) log.debug("모든 작업을 병렬로 완료했습니다. workerCount=[{}]", getWorkerCount());
+            log.debug("모든 작업을 병렬로 완료했습니다. workerCount=[{}]", getWorkerCount());
 
             return results;
 
@@ -638,7 +638,7 @@ public abstract class Parallels {
     public static <T> void runPartitions(final Iterable<T> elements, final Action1<List<T>> action) {
         shouldNotBeNull(elements, "elements");
         shouldNotBeNull(action, "function");
-        if (isDebugEnabled) log.debug("병렬로 작업을 수행합니다... workerCount=[{}]", getWorkerCount());
+        log.debug("병렬로 작업을 수행합니다... workerCount=[{}]", getWorkerCount());
 
         ExecutorService executor = Executors.newFixedThreadPool(getWorkerCount());
 
@@ -664,8 +664,8 @@ public abstract class Parallels {
             for (Future<Void> result : results)
                 result.get();
 
-            if (isDebugEnabled)
-                log.debug("모든 작업을 병렬로 수행했습니다. workCount=[{}]");
+
+            log.debug("모든 작업을 병렬로 수행했습니다. workCount=[{}]");
         } catch (Exception e) {
             log.error("데이터에 대한 병렬작업중 예외가 발생했습니다.", e);
             throw new RuntimeException(e);
@@ -684,7 +684,7 @@ public abstract class Parallels {
     public static <T, V> List<V> runPartitions(final Iterable<T> elements, final Function1<List<T>, List<V>> function) {
         shouldNotBeNull(elements, "elements");
         shouldNotBeNull(function, "function");
-        if (isDebugEnabled) log.debug("병렬로 작업을 수행합니다... workerCount=[{}]", getWorkerCount());
+        log.debug("병렬로 작업을 수행합니다... workerCount=[{}]", getWorkerCount());
 
         ExecutorService executor = Executors.newFixedThreadPool(getWorkerCount());
 
@@ -712,7 +712,7 @@ public abstract class Parallels {
             for (Future<List<V>> future : futures)
                 results.addAll(future.get());
 
-            if (isDebugEnabled) log.debug("모든 작업을 병렬로 완료했습니다. workerCount=[{}]", getWorkerCount());
+            log.debug("모든 작업을 병렬로 완료했습니다. workerCount=[{}]", getWorkerCount());
 
             return results;
 

@@ -36,7 +36,9 @@ public class KoreanTokenizer extends Tokenizer {
     private static final boolean isTraceEnabled = log.isTraceEnabled();
     private static final boolean isDebugEnabled = log.isDebugEnabled();
 
-    /** A private instance of the JFlex-constructed scanner */
+    /**
+     * A private instance of the JFlex-constructed scanner
+     */
     private final KoreanTokenizerImpl scanner;
 
     public static final int ALPHANUM = 0;
@@ -51,7 +53,9 @@ public class KoreanTokenizer extends Tokenizer {
     public static final int KOREAN = 9;
     public static final int CHINESE = 10;
 
-    /** String token types that correspond to token type int constants */
+    /**
+     * String token types that correspond to token type int constants
+     */
     public static final String[] TOKEN_TYPES = new String[] {
             "<ALPHANUM>",
             "<APOSTROPHE>",
@@ -78,7 +82,9 @@ public class KoreanTokenizer extends Tokenizer {
         this.maxTokenLength = length;
     }
 
-    /** @see #setMaxTokenLength */
+    /**
+     * @see #setMaxTokenLength
+     */
     public int getMaxTokenLength() {
         return maxTokenLength;
     }
@@ -97,14 +103,18 @@ public class KoreanTokenizer extends Tokenizer {
         init(input, matchVersion);
     }
 
-    /** Creates a new StandardTokenizer with a given {@link org.apache.lucene.util.AttributeSource}. */
+    /**
+     * Creates a new StandardTokenizer with a given {@link org.apache.lucene.util.AttributeSource}.
+     */
     public KoreanTokenizer(Version matchVersion, AttributeSource source, Reader input) {
         super(source, input);
         this.scanner = new KoreanTokenizerImpl(input);
         init(input, matchVersion);
     }
 
-    /** Creates a new StandardTokenizer with a given {@link org.apache.lucene.util.AttributeSource.AttributeFactory} */
+    /**
+     * Creates a new StandardTokenizer with a given {@link org.apache.lucene.util.AttributeSource.AttributeFactory}
+     */
     public KoreanTokenizer(Version matchVersion, AttributeFactory factory, Reader input) {
         super(factory, input);
         this.scanner = new KoreanTokenizerImpl(input);
@@ -136,8 +146,8 @@ public class KoreanTokenizer extends Tokenizer {
         while (true) {
             int tokenType = scanner.getNextToken();
 
-            if (isTraceEnabled)
-                log.trace("token 증가. tokenType=[{}]", tokenType);
+
+            log.trace("token 증가. tokenType=[{}]", tokenType);
 
             if (tokenType == KoreanTokenizerImpl.YYEOF) {
                 return false;
@@ -150,8 +160,8 @@ public class KoreanTokenizer extends Tokenizer {
                 offsetAtt.setOffset(correctOffset(start), correctOffset(start + termAtt.length()));
                 typeAtt.setType(KoreanTokenizer.TOKEN_TYPES[tokenType]);
 
-                if (isTraceEnabled)
-                    log.trace("토큰 타입=[{}]", KoreanTokenizer.TOKEN_TYPES[tokenType]);
+
+                log.trace("토큰 타입=[{}]", KoreanTokenizer.TOKEN_TYPES[tokenType]);
 
                 return true;
             } else
@@ -189,8 +199,8 @@ public class KoreanTokenizer extends Tokenizer {
     /**
      * @param replaceInvalidAcronym Set to true to replace mischaracterized acronyms as HOST.
      * @deprecated Remove in 3.X and make true the only valid value
-     *             <p/>
-     *             See https://issues.apache.org/jira/browse/LUCENE-1068
+     * <p/>
+     * See https://issues.apache.org/jira/browse/LUCENE-1068
      */
     @Deprecated
     public void setReplaceInvalidAcronym(boolean replaceInvalidAcronym) {

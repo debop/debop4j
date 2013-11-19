@@ -47,12 +47,18 @@ public interface ITimeLine extends Serializable {
      */
     ITimePeriodMapper getPeriodMapper();
 
-    /** 기간들의 합집합을 구합니다. */
+    /**
+     * 기간들의 합집합을 구합니다.
+     */
     ITimePeriodCollection combinePeriods();
 
-    /** 기간들의 교집합을 구합니다. */
+    /**
+     * 기간들의 교집합을 구합니다.
+     */
     ITimePeriodCollection intersectPeriods();
 
-    /** 기간들의 여집합을 구합니다. */
+    /**
+     * 기간들의 여집합을 구합니다.
+     */
     ITimePeriodCollection calculateGaps();
 }

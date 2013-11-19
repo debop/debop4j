@@ -8,16 +8,24 @@ package kr.debop4j.timeperiod;
  */
 public interface IYearAndWeekOfYear {
 
-    /** 년도 */
+    /**
+     * 년도
+     */
     int getYear();
 
-    /** 주차의 년도를 설정 */
+    /**
+     * 주차의 년도를 설정
+     */
     void setYear(int year);
 
-    /** 주차 */
+    /**
+     * 주차
+     */
     int getWeekOfYear();
 
-    /** 주차를 설정합니다. */
+    /**
+     * 주차를 설정합니다.
+     */
     void setWeekOfYear(int weekOfYear);
 
 }

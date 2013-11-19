@@ -24,6 +24,8 @@ package kr.debop4j.timeperiod;
  */
 public interface ICalendarTimeRange extends ITimeRange {
 
-    /** 기간 설정에 사용될 {@link ITimeCalendar} 입니다. */
+    /**
+     * 기간 설정에 사용될 {@link ITimeCalendar} 입니다.
+     */
     ITimeCalendar getTimeCalendar();
 }

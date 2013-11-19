@@ -37,7 +37,7 @@ import java.util.List;
 public class QuerydslTest extends RepositoryTestBase {
 
     @Test
-    @Transactional( readOnly = true )
+    @Transactional(readOnly = true)
     public void queryCompany() {
         QCompany qCompany = QCompany.company;
 

@@ -30,7 +30,9 @@ import org.hibernate.event.spi.PreUpdateEventListener;
  */
 public class UpdateTimestampedEventListener implements PreInsertEventListener, PreUpdateEventListener {
 
-    /** Instantiates a new Update timestamped event listener. */
+    /**
+     * Instantiates a new Update timestamped event listener.
+     */
     public UpdateTimestampedEventListener() { }
 
     /**

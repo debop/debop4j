@@ -53,7 +53,6 @@ public class HanjaUtils {
      * 하나의 한자는 여러 음으로 읽일 수 있으므로 가능한 모든 음을 한글로 반환한다.
      *
      * @throws org.apache.lucene.analysis.kr.morph.MorphException
-     *
      */
     public static char[] convertToHangul(char hanja) throws MorphException {
 //		if(hanja>0x9FFF||hanja<0x3400) return new char[]{hanja};

@@ -64,26 +64,38 @@ public abstract class HibernateConfigBase {
     @Setter
     private UnitOfWorkTestContextBase testContext;
 
-    /** Database 명 */
+    /**
+     * Database 명
+     */
     abstract public String getDatabaseName();
 
-    /** Database JDBC URL */
+    /**
+     * Database JDBC URL
+     */
     abstract public String getJdbcUrl();
 
-    /** 사용자 Id */
+    /**
+     * 사용자 Id
+     */
     public String getUsername() {
         return "";
     }
 
-    /** 사용자 비밀번호 */
+    /**
+     * 사용자 비밀번호
+     */
     public String getPassword() {
         return "";
     }
 
-    /** 매핑된 엔티티가 있는 Pagacke 명들 */
+    /**
+     * 매핑된 엔티티가 있는 Pagacke 명들
+     */
     abstract protected String[] getMappedPackageNames();
 
-    /** Hibernate 설정 값 */
+    /**
+     * Hibernate 설정 값
+     */
     protected Properties hibernateProperties() {
 
         Properties props = new Properties();
@@ -124,7 +136,9 @@ public abstract class HibernateConfigBase {
     @Bean(destroyMethod = "close")
     abstract public DataSource dataSource();
 
-    /** factoryBean 에 추가 설정을 지정할 수 있습니다. */
+    /**
+     * factoryBean 에 추가 설정을 지정할 수 있습니다.
+     */
     protected void setupSessionFactory(LocalSessionFactoryBean factoryBean) { }
 
     /**

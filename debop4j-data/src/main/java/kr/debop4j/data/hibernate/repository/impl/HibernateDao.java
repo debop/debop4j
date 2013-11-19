@@ -60,7 +60,9 @@ public class HibernateDao implements IHibernateDao {
 
     private boolean cacheable;
 
-    /** Instantiates a new Hibernate dao. */
+    /**
+     * Instantiates a new Hibernate dao.
+     */
     public HibernateDao() {
         this(false);
     }
@@ -82,8 +84,8 @@ public class HibernateDao implements IHibernateDao {
 
     @Override
     public final void flushSession() {
-        if (isDebugEnabled)
-            log.debug("Session 정보를 flush 합니다...");
+
+        log.debug("Session 정보를 flush 합니다...");
 
         getSession().flush();
     }
@@ -95,32 +97,32 @@ public class HibernateDao implements IHibernateDao {
 
     @Override
     public <T> T load(Class clazz, Serializable id) {
-        if (isTraceEnabled)
-            log.trace("load entity... clazz=[{}], id=[{}]", clazz, id);
+
+        log.trace("load entity... clazz=[{}], id=[{}]", clazz, id);
 
         return (T) getSession().load(clazz, id);
     }
 
     @Override
     public <T> T load(Class clazz, Serializable id, LockOptions lockOptions) {
-        if (isTraceEnabled)
-            log.trace("load entity... clazz=[{}], id=[{}], lockOptions=[{}]", clazz, id, lockOptions);
+
+        log.trace("load entity... clazz=[{}], id=[{}], lockOptions=[{}]", clazz, id, lockOptions);
 
         return (T) getSession().load(clazz, id, lockOptions);
     }
 
     @Override
     public <T> T get(Class<T> clazz, Serializable id) {
-        if (isTraceEnabled)
-            log.trace("get entity... clazz=[{}], id=[{}]", clazz, id);
+
+        log.trace("get entity... clazz=[{}], id=[{}]", clazz, id);
 
         return (T) getSession().get(clazz, id);
     }
 
     @Override
     public <T> T get(Class<T> clazz, Serializable id, LockOptions lockOptions) {
-        if (isTraceEnabled)
-            log.trace("get entity... clazz=[{}], id=[{}], lockOptions=[{}]", clazz, id, lockOptions);
+
+        log.trace("get entity... clazz=[{}], id=[{}], lockOptions=[{}]", clazz, id, lockOptions);
 
         return (T) getSession().get(clazz, id, lockOptions);
     }
@@ -251,9 +253,9 @@ public class HibernateDao implements IHibernateDao {
 
     @Override
     public <T> List<T> find(Class<T> clazz, String hql, int firstResult, int maxResults, HibernateParameter... parameters) {
-        if (isTraceEnabled)
-            log.trace("HQL문을 실행합니다. clazz=[{}], hql=[{}], firstResult=[{}], maxResults=[{}], parameters=[{}]",
-                      clazz, hql, firstResult, maxResults, StringTool.listToString(parameters));
+
+        log.trace("HQL문을 실행합니다. clazz=[{}], hql=[{}], firstResult=[{}], maxResults=[{}], parameters=[{}]",
+                  clazz, hql, firstResult, maxResults, StringTool.listToString(parameters));
 
         Query query = getSession().createQuery(hql);
         return find(clazz, query, firstResult, maxResults, parameters);
@@ -266,9 +268,9 @@ public class HibernateDao implements IHibernateDao {
 
     @Override
     public <T> List<T> findByNamedQuery(Class<T> clazz, String queryName, int firstResult, int maxResults, HibernateParameter... parameters) {
-        if (isTraceEnabled)
-            log.trace("NamedQuery를 실행합니다. clazz=[{}], sqlString=[{}], firstResult=[{}], maxResults=[{}], parameters=[{}]",
-                      clazz, queryName, firstResult, maxResults, StringTool.listToString(parameters));
+
+        log.trace("NamedQuery를 실행합니다. clazz=[{}], sqlString=[{}], firstResult=[{}], maxResults=[{}], parameters=[{}]",
+                  clazz, queryName, firstResult, maxResults, StringTool.listToString(parameters));
 
         Query query = getSession().getNamedQuery(queryName);
         return find(clazz, query, firstResult, maxResults, parameters);
@@ -281,9 +283,9 @@ public class HibernateDao implements IHibernateDao {
 
     @Override
     public <T> List<T> findBySQLString(Class<T> clazz, String sqlString, int firstResult, int maxResults, HibernateParameter... parameters) {
-        if (isTraceEnabled)
-            log.trace("일반 SQL 문 실행합니다. clazz=[{}], sqlString=[{}], firstResult=[{}], maxResults=[{}], parameters=[{}]",
-                      clazz, sqlString, firstResult, maxResults, StringTool.listToString(parameters));
+
+        log.trace("일반 SQL 문 실행합니다. clazz=[{}], sqlString=[{}], firstResult=[{}], maxResults=[{}], parameters=[{}]",
+                  clazz, sqlString, firstResult, maxResults, StringTool.listToString(parameters));
 
         Query query = getSession().createSQLQuery(sqlString);
         return find(clazz, query, firstResult, maxResults, parameters);
@@ -326,9 +328,9 @@ public class HibernateDao implements IHibernateDao {
 
     @Override
     public <T> IPagedList<T> getPageByHql(Class<T> clazz, String hql, int pageNo, int pageSize, HibernateParameter... parameters) {
-        if (isTraceEnabled)
-            log.trace("HQL문을 실행하고, 결과를 Paging처리합니다. clazz=[{}], hql=[{}], pageNo=[{}], pageSize=[{}], parameters=[{}]",
-                      clazz, hql, pageNo, pageSize, StringTool.listToString(parameters));
+
+        log.trace("HQL문을 실행하고, 결과를 Paging처리합니다. clazz=[{}], hql=[{}], pageNo=[{}], pageSize=[{}], parameters=[{}]",
+                  clazz, hql, pageNo, pageSize, StringTool.listToString(parameters));
 
         Query query = getSession().createQuery(hql);
         return getPage(clazz, query, pageNo, pageSize, parameters);
@@ -336,9 +338,9 @@ public class HibernateDao implements IHibernateDao {
 
     @Override
     public <T> IPagedList<T> getPageByNamedQuery(Class<T> clazz, String queryName, int pageNo, int pageSize, HibernateParameter... parameters) {
-        if (isTraceEnabled)
-            log.trace("NamedQuery를 실행하고, 결과를 Paging처리합니다. clazz=[{}], sqlString=[{}], pageNo=[{}], pageSize=[{}], parameters=[{}]",
-                      clazz, queryName, pageNo, pageSize, StringTool.listToString(parameters));
+
+        log.trace("NamedQuery를 실행하고, 결과를 Paging처리합니다. clazz=[{}], sqlString=[{}], pageNo=[{}], pageSize=[{}], parameters=[{}]",
+                  clazz, queryName, pageNo, pageSize, StringTool.listToString(parameters));
 
         Query query = getSession().getNamedQuery(queryName);
         return getPage(clazz, query, pageNo, pageSize, parameters);
@@ -346,9 +348,9 @@ public class HibernateDao implements IHibernateDao {
 
     @Override
     public <T> IPagedList<T> getPageBySQLString(Class<T> clazz, String sqlString, int pageNo, int pageSize, HibernateParameter... parameters) {
-        if (isTraceEnabled)
-            log.trace("일반 SQL문을 실행하고, 결과를 Paging처리합니다. clazz=[{}], sqlString=[{}], pageNo=[{}], pageSize=[{}], parameters=[{}]",
-                      clazz, sqlString, pageNo, pageSize, StringTool.listToString(parameters));
+
+        log.trace("일반 SQL문을 실행하고, 결과를 Paging처리합니다. clazz=[{}], sqlString=[{}], pageNo=[{}], pageSize=[{}], parameters=[{}]",
+                  clazz, sqlString, pageNo, pageSize, StringTool.listToString(parameters));
 
         SQLQuery query = getSession().createSQLQuery(sqlString);
         return getPage(clazz, query, pageNo, pageSize, parameters);
@@ -373,9 +375,9 @@ public class HibernateDao implements IHibernateDao {
 
     @Override
     public <T> T findUniqueByHql(Class<T> clazz, String hql, HibernateParameter... parameters) {
-        if (isTraceEnabled)
-            log.trace("hql을 수행합니다. clazz=[{}], hql=[{}], parameters=[{}]",
-                      clazz, hql, StringTool.listToString(parameters));
+
+        log.trace("hql을 수행합니다. clazz=[{}], hql=[{}], parameters=[{}]",
+                  clazz, hql, StringTool.listToString(parameters));
 
         Query query = getSession().createQuery(hql);
         return findUnique(clazz, query, parameters);
@@ -383,9 +385,9 @@ public class HibernateDao implements IHibernateDao {
 
     @Override
     public <T> T findUniqueByNamedQuery(Class<T> clazz, String queryName, HibernateParameter... parameters) {
-        if (isTraceEnabled)
-            log.trace("NamedQuery를 수행합니다. clazz=[{}], queryName=[{}], parameters=[{}]",
-                      clazz, queryName, StringTool.listToString(parameters));
+
+        log.trace("NamedQuery를 수행합니다. clazz=[{}], queryName=[{}], parameters=[{}]",
+                  clazz, queryName, StringTool.listToString(parameters));
 
         Query query = getSession().getNamedQuery(queryName);
         return findUnique(clazz, query, parameters);
@@ -393,9 +395,9 @@ public class HibernateDao implements IHibernateDao {
 
     @Override
     public <T> T findUniqueBySQLString(Class<T> clazz, String sqlString, HibernateParameter... parameters) {
-        if (isTraceEnabled)
-            log.trace("일반 SQL문을 수행합니다. clazz=[{}], sqlString=[{}], parameters=[{}]",
-                      clazz, sqlString, StringTool.listToString(parameters));
+
+        log.trace("일반 SQL문을 수행합니다. clazz=[{}], sqlString=[{}], parameters=[{}]",
+                  clazz, sqlString, StringTool.listToString(parameters));
 
         SQLQuery query = getSession().createSQLQuery(sqlString);
         return findUnique(clazz, query, parameters);
@@ -425,9 +427,9 @@ public class HibernateDao implements IHibernateDao {
 
     @Override
     public <T> T findFirstByHql(Class<T> clazz, String hql, HibernateParameter... parameters) {
-        if (isTraceEnabled)
-            log.trace("hql을 수행합니다. clazz=[{}], hql=[{}], parameters=[{}]",
-                      clazz, hql, StringTool.listToString(parameters));
+
+        log.trace("hql을 수행합니다. clazz=[{}], hql=[{}], parameters=[{}]",
+                  clazz, hql, StringTool.listToString(parameters));
 
         Query query = getSession().createQuery(hql);
         return findFirst(clazz, query, parameters);
@@ -435,9 +437,9 @@ public class HibernateDao implements IHibernateDao {
 
     @Override
     public <T> T findFirstByNamedQuery(Class<T> clazz, String queryName, HibernateParameter... parameters) {
-        if (isTraceEnabled)
-            log.trace("NamedQuery를 수행합니다. clazz=[{}], queryName=[{}], parameters=[{}]",
-                      clazz, queryName, StringTool.listToString(parameters));
+
+        log.trace("NamedQuery를 수행합니다. clazz=[{}], queryName=[{}], parameters=[{}]",
+                  clazz, queryName, StringTool.listToString(parameters));
 
         Query query = getSession().getNamedQuery(queryName);
         return findUnique(clazz, query, parameters);
@@ -445,9 +447,9 @@ public class HibernateDao implements IHibernateDao {
 
     @Override
     public <T> T findFirstBySQLString(Class<T> clazz, String sqlString, HibernateParameter... parameters) {
-        if (isTraceEnabled)
-            log.trace("일반 SQL문을 수행합니다. clazz=[{}], sqlString=[{}], parameters=[{}]",
-                      clazz, sqlString, StringTool.listToString(parameters));
+
+        log.trace("일반 SQL문을 수행합니다. clazz=[{}], sqlString=[{}], parameters=[{}]",
+                  clazz, sqlString, StringTool.listToString(parameters));
 
         SQLQuery query = getSession().createSQLQuery(sqlString);
         return findUnique(clazz, query, parameters);
@@ -496,8 +498,8 @@ public class HibernateDao implements IHibernateDao {
     @Override
     public long count(Class<?> clazz, Criteria criteria) {
         Object count = criteria.setProjection(Projections.rowCount()).uniqueResult();
-        if (isTraceEnabled)
-            log.trace("count=" + count);
+
+        log.trace("count=" + count);
         return (count == null) ? 0 : ((Number) count).longValue();
     }
 
@@ -514,8 +516,8 @@ public class HibernateDao implements IHibernateDao {
                 .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
                 .uniqueResult();
 
-        if (isTraceEnabled)
-            log.trace("count=" + count);
+
+        log.trace("count=" + count);
 
         return (count == null) ? 0 : ((Number) count).longValue();
     }
@@ -552,24 +554,24 @@ public class HibernateDao implements IHibernateDao {
 
     @Override
     public void deleteById(Class<?> clazz, Serializable id) {
-        if (isTraceEnabled)
-            log.trace("엔티티[{}]를 삭제합니다. id=[{}]", clazz, id);
+
+        log.trace("엔티티[{}]를 삭제합니다. id=[{}]", clazz, id);
 
         getSession().delete(load(clazz, id));
     }
 
     @Override
     public void deleteAll(Class<?> clazz) {
-        if (isTraceEnabled)
-            log.trace("해당 엔티티를 모두 삭제합니다. clazz=[{}]", clazz);
+
+        log.trace("해당 엔티티를 모두 삭제합니다. clazz=[{}]", clazz);
 
         deleteAll(clazz, DetachedCriteria.forClass(clazz));
     }
 
     @Override
     public void deleteAll(Collection<?> entities) {
-        if (isTraceEnabled)
-            log.trace("엔티티들을 모두 삭제합니다. entities=[{}]", StringTool.listToString(entities));
+
+        log.trace("엔티티들을 모두 삭제합니다. entities=[{}]", StringTool.listToString(entities));
 
         final Session session = getSession();
         for (Object entity : entities) {
@@ -589,8 +591,8 @@ public class HibernateDao implements IHibernateDao {
 
     @Override
     public int deleteAllWithoutCascade(Class<?> clazz) {
-        if (isTraceEnabled)
-            log.trace("해당 엔티티를 모두 삭제합니다. clazz=[{}]", clazz);
+
+        log.trace("해당 엔티티를 모두 삭제합니다. clazz=[{}]", clazz);
 
         return getSession()
                 .createQuery("delete from " + clazz.getName())
@@ -600,9 +602,9 @@ public class HibernateDao implements IHibernateDao {
 
     @Override
     public int executeUpdateByHql(String hql, HibernateParameter... parameters) {
-        if (isTraceEnabled)
-            log.trace("Update/Delete 구문을 수행합니다. hql=[{}], parameters=[{}]",
-                      hql, StringTool.listToString(parameters));
+
+        log.trace("Update/Delete 구문을 수행합니다. hql=[{}], parameters=[{}]",
+                  hql, StringTool.listToString(parameters));
 
         Query query = getSession().createQuery(hql);
         HibernateTool.setParameters(query, parameters);
@@ -611,9 +613,9 @@ public class HibernateDao implements IHibernateDao {
 
     @Override
     public int executeUpdateByNamedQuery(String queryName, HibernateParameter... parameters) {
-        if (isTraceEnabled)
-            log.trace("Update/Delete 구문을 수행합니다. queryName=[{}], parameters=[{}]",
-                      queryName, StringTool.listToString(parameters));
+
+        log.trace("Update/Delete 구문을 수행합니다. queryName=[{}], parameters=[{}]",
+                  queryName, StringTool.listToString(parameters));
 
         Query query = getSession().getNamedQuery(queryName);
         HibernateTool.setParameters(query, parameters);
@@ -622,9 +624,9 @@ public class HibernateDao implements IHibernateDao {
 
     @Override
     public int executeUpdateBySQLString(String sqlString, HibernateParameter... parameters) {
-        if (isTraceEnabled)
-            log.trace("Update/Delete 구문을 수행합니다. sqlString=[{}], parameters=[{}]",
-                      sqlString, StringTool.listToString(parameters));
+
+        log.trace("Update/Delete 구문을 수행합니다. sqlString=[{}], parameters=[{}]",
+                  sqlString, StringTool.listToString(parameters));
 
         SQLQuery query = getSession().createSQLQuery(sqlString);
         HibernateTool.setParameters(query, parameters);
@@ -644,9 +646,9 @@ public class HibernateDao implements IHibernateDao {
                                                           Criteria criteria,
                                                           Projection projection,
                                                           boolean distinctResult) {
-        if (isTraceEnabled)
-            log.trace("Criteria에 Projection을 적용합니다. projectClass=[{}], projection=[{}], distinctResult=[{}]",
-                      projectClass, projection, distinctResult);
+
+        log.trace("Criteria에 Projection을 적용합니다. projectClass=[{}], projection=[{}], distinctResult=[{}]",
+                  projectClass, projection, distinctResult);
 
         if (distinctResult) {
             criteria.setProjection(Projections.distinct(projection));

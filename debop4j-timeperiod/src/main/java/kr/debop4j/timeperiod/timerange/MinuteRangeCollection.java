@@ -87,7 +87,9 @@ public class MinuteRangeCollection extends MinuteTimeRange {
     @Getter(lazy = true)
     private final List<MinuteRange> minutes = createMinutes();
 
-    /** 기간을 분단위의 기간으로 표현한 클래스인 {@link MinuteRange}의 열거자를 반환합니다. */
+    /**
+     * 기간을 분단위의 기간으로 표현한 클래스인 {@link MinuteRange}의 열거자를 반환합니다.
+     */
     public List<MinuteRange> createMinutes() {
         int minuteCount = getMinuteCount();
         final List<MinuteRange> minutes = Lists.newArrayListWithCapacity(minuteCount);

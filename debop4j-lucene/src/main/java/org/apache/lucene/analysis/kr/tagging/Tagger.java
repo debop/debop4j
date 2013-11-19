@@ -95,7 +95,6 @@ public class Tagger {
      * 앞 어절은 NULL이 아니다.
      *
      * @throws org.apache.lucene.analysis.kr.morph.MorphException
-     *
      */
     private AnalysisOutput lookupBestByPWord(String rsource, List<AnalysisOutput> rmorphs) throws MorphException {
 
@@ -126,7 +125,6 @@ public class Tagger {
      * 뒷 어절은 NULL이 아니다.
      *
      * @throws org.apache.lucene.analysis.kr.morph.MorphException
-     *
      */
     private AnalysisOutput lookupBestByRWord(String psource, String rsource, List<AnalysisOutput> pmorphs, List<AnalysisOutput> rmorphs) throws MorphException {
 
@@ -282,7 +280,7 @@ public class Tagger {
         return false;
     }
 
-    @SuppressWarnings( "unchecked" )
+    @SuppressWarnings("unchecked")
     public static synchronized Iterator<String[]> getGR(String prefix) throws MorphException {
         return (Iterator<String[]>) occurrences.getPrefixedBy(prefix);
     }

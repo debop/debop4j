@@ -11,18 +11,28 @@ import java.util.List;
  */
 public interface IPagedList<E> extends Serializable {
 
-    /** 페이지 처리된 목록 */
+    /**
+     * 페이지 처리된 목록
+     */
     List<E> getList();
 
-    /** 페이지 번호 (1부터 시작) */
+    /**
+     * 페이지 번호 (1부터 시작)
+     */
     int getPageNo();
 
-    /** 한 페이지의 크기 (1 이상) */
+    /**
+     * 한 페이지의 크기 (1 이상)
+     */
     int getPageSize();
 
-    /** 전체 페이지 수 */
+    /**
+     * 전체 페이지 수
+     */
     long getPageCount();
 
-    /** 전체 항목의 수 */
+    /**
+     * 전체 항목의 수
+     */
     long getItemCount();
 }

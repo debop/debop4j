@@ -34,7 +34,9 @@ public class DayRange extends DayTimeRange {
 
     // region << Constructor >>
 
-    /** Instantiates a new Day range. */
+    /**
+     * Instantiates a new Day range.
+     */
     public DayRange() {
         this(new TimeCalendar());
     }

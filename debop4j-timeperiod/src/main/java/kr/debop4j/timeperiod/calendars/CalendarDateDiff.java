@@ -72,12 +72,16 @@ public class CalendarDateDiff {
         return this.collectorFilter.getCollectingDayHours();
     }
 
-    /** 주중 (월-금)을 working day로 추가합니다. */
+    /**
+     * 주중 (월-금)을 working day로 추가합니다.
+     */
     public void addWorkingDays() {
         addWeekDays(TimeSpec.Weekdays);
     }
 
-    /** 주말 (토-일)을 working day로 추가합니다. */
+    /**
+     * 주말 (토-일)을 working day로 추가합니다.
+     */
     public void addWeekendDays() {
         addWeekDays(TimeSpec.Weekends);
     }

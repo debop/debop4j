@@ -76,7 +76,9 @@ public class UserFavorite extends AccessEntityBase {
     @Column(name = "IsActive")
     private Boolean active;
 
-    /** 우선순위 */
+    /**
+     * 우선순위
+     */
     @Basic
     private Integer preference;
 

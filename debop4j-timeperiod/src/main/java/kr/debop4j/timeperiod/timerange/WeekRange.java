@@ -34,7 +34,9 @@ public class WeekRange extends WeekTimeRange {
 
     // region << Constructor >>
 
-    /** Instantiates a new Week range. */
+    /**
+     * Instantiates a new Week range.
+     */
     public WeekRange() {
         this(new TimeCalendar());
     }

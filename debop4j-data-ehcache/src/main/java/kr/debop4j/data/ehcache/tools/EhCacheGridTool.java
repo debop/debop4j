@@ -79,7 +79,7 @@ public class EhCacheGridTool {
      * @param key the key
      * @return the map
      */
-    @SuppressWarnings( "unchecked" )
+    @SuppressWarnings("unchecked")
     public Map<String, Object> extractEntityTuple(EntityKey key) {
         return (Map<String, Object>) getEntityCache().get(key).getObjectKey();
     }

@@ -74,7 +74,7 @@ public class DateTimeRange extends ValueObjectBase {
     @Override
     protected Objects.ToStringHelper buildStringHelper() {
         return super.buildStringHelper()
-                    .add("start", start)
-                    .add("stop", end);
+                .add("start", start)
+                .add("stop", end);
     }
 }

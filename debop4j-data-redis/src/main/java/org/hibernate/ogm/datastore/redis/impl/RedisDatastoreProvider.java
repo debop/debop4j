@@ -57,9 +57,13 @@ public class RedisDatastoreProvider implements DatastoreProvider, Startable, Sto
     private Map<String, String> requiredProperties;
     private Pattern setterPattern;
 
-    /** JedisPool */
+    /**
+     * JedisPool
+     */
     private JedisPool pool;
-    /** Jedis Client */
+    /**
+     * Jedis Client
+     */
     @Getter
     private RedisRepository redisClient;
 

@@ -96,7 +96,7 @@ public abstract class MongoGridDatastoreConfigBase extends GridDatastoreConfigBa
 
     @Override
     @Bean
-    @Scope( "prototype" )
+    @Scope("prototype")
     public MongoOgmDao hibernateOgmDao() {
         MongoOgmDao dao = Local.get(HIBERNATE_OGM_DAO_KEY, MongoOgmDao.class);
         if (dao == null) {
@@ -112,7 +112,7 @@ public abstract class MongoGridDatastoreConfigBase extends GridDatastoreConfigBa
     private static final String MONGO_CLIENT_CLASS_NAME = MongoClient.class.getName();
 
     @Bean
-    @Scope( "prototype" )
+    @Scope("prototype")
     public MongoClient mongoClient() {
         MongoClient client = Local.get(MONGO_CLIENT_CLASS_NAME, MongoClient.class);
         if (client == null) {
@@ -128,7 +128,7 @@ public abstract class MongoGridDatastoreConfigBase extends GridDatastoreConfigBa
     private static final String MONGO_TEMPLATE_CLASS_NAME = MongoTemplate.class.getName();
 
     @Bean
-    @Scope( "prototype" )
+    @Scope("prototype")
     public MongoTemplate mongoTemplate() {
         MongoTemplate template = Local.get(MONGO_TEMPLATE_CLASS_NAME, MongoTemplate.class);
         if (template == null) {

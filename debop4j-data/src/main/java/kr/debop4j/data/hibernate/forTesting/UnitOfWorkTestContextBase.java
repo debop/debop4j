@@ -41,10 +41,14 @@ import java.util.UUID;
 @Slf4j
 public abstract class UnitOfWorkTestContextBase implements AutoCloseable {
 
-    /** The Current hibernate session key. */
+    /**
+     * The Current hibernate session key.
+     */
     public final String CurrentHibernateSessionKey = UUID.randomUUID().toString();
 
-    /** The Spring context. */
+    /**
+     * The Spring context.
+     */
     protected GenericApplicationContext springContext;
 
     @Getter
@@ -78,7 +82,9 @@ public abstract class UnitOfWorkTestContextBase implements AutoCloseable {
         return springContext;
     }
 
-    /** Create unit of work. */
+    /**
+     * Create unit of work.
+     */
     public void createUnitOfWork() {
         Guard.shouldBe(unitOfWorkNestingLevel != 0, "중첩된 UnitOfWork를 만들려면 createNestedUnitOfWork() 메소드를 사용하세요.");
 
@@ -156,7 +162,9 @@ public abstract class UnitOfWorkTestContextBase implements AutoCloseable {
             log.debug("hibernate session을 close 했습니다.");
     }
 
-    /** Dispose unit of work. */
+    /**
+     * Dispose unit of work.
+     */
     public void disposeUnitOfWork() {
         try {
             UnitOfWorks.stop();
@@ -165,7 +173,9 @@ public abstract class UnitOfWorkTestContextBase implements AutoCloseable {
         }
     }
 
-    /** Initialize container and unit of work factory. */
+    /**
+     * Initialize container and unit of work factory.
+     */
     abstract public void initializeContainerAndUnitOfWorkFactory();
 
     /**
@@ -191,7 +201,7 @@ public abstract class UnitOfWorkTestContextBase implements AutoCloseable {
 
     public String toString() {
         return Objects.toStringHelper(this)
-                      .toString();
+                .toString();
     }
 
     @Override

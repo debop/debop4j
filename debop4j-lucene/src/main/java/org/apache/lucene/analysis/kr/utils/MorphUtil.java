@@ -45,7 +45,9 @@ public class MorphUtil {
     private static final int JUNG_JONG = JUNGSEONG.length * JONGSEONG.length;
 
 
-    /** 한글 한글자를 초성/중성/종성의 배열로 만들어 반환한다. */
+    /**
+     * 한글 한글자를 초성/중성/종성의 배열로 만들어 반환한다.
+     */
     public static char[] decompose(char c) {
         char[] result = null;
 
@@ -95,7 +97,9 @@ public class MorphUtil {
         return makeChar(dest, last);
     }
 
-    /** 형태소 유형 출력을 위한 문자열을 생성한다. */
+    /**
+     * 형태소 유형 출력을 위한 문자열을 생성한다.
+     */
     public static String buildTypeString(String word, char type) {
         return word + "(" + type + ")";
 //        StringBuilder sb = new StringBuilder();
@@ -132,7 +136,6 @@ public class MorphUtil {
      * 용언 + '음/기' + '이' + 어미, 체언 + '에서/부터/에서부터' + '이' + 어미
      *
      * @throws org.apache.lucene.analysis.kr.morph.MorphException
-     *
      */
     public static void buildPtnCM(AnalysisOutput output, List<AnalysisOutput> candidates) throws MorphException {
 

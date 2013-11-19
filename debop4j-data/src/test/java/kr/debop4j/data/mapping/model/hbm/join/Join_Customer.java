@@ -54,7 +54,7 @@ public class Join_Customer extends EntityBase<Long> implements IUpdateTimestampe
     private Address address = new Address();
 
     @Setter(value = AccessLevel.PRIVATE)
-    @Type( type = "kr.debop4j.data.hibernate.usertype.JodaDateTimeUserType" )
+    @Type(type = "kr.debop4j.data.hibernate.usertype.JodaDateTimeUserType")
     private DateTime updateTimestamp;
 
     @Override

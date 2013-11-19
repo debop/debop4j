@@ -30,19 +30,25 @@ public abstract class SymmetricByteEncryptorBase implements ISymmetricByteEncryp
 
     abstract public String getAlgorithm();
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean isInitialized() {
         return byteEncryptor.isInitialized();
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void setPassword(String password) {
         byteEncryptor.setPassword(password);
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public byte[] encrypt(byte[] plainBytes) {
         if (plainBytes == null || plainBytes.length == 0)
@@ -54,7 +60,9 @@ public abstract class SymmetricByteEncryptorBase implements ISymmetricByteEncryp
         return byteEncryptor.encrypt(plainBytes);
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public byte[] decrypt(byte[] encryptedBytes) {
         if (encryptedBytes == null || encryptedBytes.length == 0)

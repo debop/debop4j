@@ -43,16 +43,24 @@ public interface IHibernateOgmDao {
 //    /** IHibernateOgmDao에서 사용할 hibernate Session 을 thread local 에 저장할 때의 키 값 */
 //    String SESSION_KEY = IHibernateOgmDao.class.getName() + ".Session";
 
-    /** IHibernateOgmDao에서 사용할 hibernate-search FullTextSession 을 thread local 에 저장할 때의 키 값 */
+    /**
+     * IHibernateOgmDao에서 사용할 hibernate-search FullTextSession 을 thread local 에 저장할 때의 키 값
+     */
     String FULL_TEXT_SESSION_KEY = IHibernateOgmDao.class.getName() + ".FullTextSession";
 
-    /** 기본 Batch size (1000) */
+    /**
+     * 기본 Batch size (1000)
+     */
     int DEFAUALT_BATCH_SIZE = 1000;
 
-    /** 현 Thread-context 에서 사용할 Session 를 빈환합니다. */
+    /**
+     * 현 Thread-context 에서 사용할 Session 를 빈환합니다.
+     */
     Session getSession();
 
-    /** 현 Thread-context 에서 사용할 hibernate-search 의 {@link  org.hibernate.search.FullTextSession} 을 반환합니다. */
+    /**
+     * 현 Thread-context 에서 사용할 hibernate-search 의 {@link  org.hibernate.search.FullTextSession} 을 반환합니다.
+     */
     FullTextSession getFullTextSession();
 
     /**
@@ -486,7 +494,9 @@ public interface IHibernateOgmDao {
      */
     void purgeAll(Class<?> clazz);
 
-    /** Session에 남아있는 인덱싱 작업을 강제로 수행하도록 합니다. */
+    /**
+     * Session에 남아있는 인덱싱 작업을 강제로 수행하도록 합니다.
+     */
     void flushToIndexes();
 
     /**
@@ -521,7 +531,9 @@ public interface IHibernateOgmDao {
      */
     void clearIndex(Class<?> clazz);
 
-    /** 모든 인덱스를 삭제합니다. */
+    /**
+     * 모든 인덱스를 삭제합니다.
+     */
 
     void clearIndexAll();
 
@@ -532,12 +544,18 @@ public interface IHibernateOgmDao {
      */
     void optimize(Class<?> clazz);
 
-    /** 모든 엔티티의 인덱스를 최적화합니다. */
+    /**
+     * 모든 엔티티의 인덱스를 최적화합니다.
+     */
     void optimizeAll();
 
-    /** 세션의 모든 변경을 저장소에 적용한다. */
+    /**
+     * 세션의 모든 변경을 저장소에 적용한다.
+     */
     void flush();
 
-    /** 세션의 모든 인덱스 변경 정보를 저장합니다. */
+    /**
+     * 세션의 모든 인덱스 변경 정보를 저장합니다.
+     */
     void flushIndexes();
 }

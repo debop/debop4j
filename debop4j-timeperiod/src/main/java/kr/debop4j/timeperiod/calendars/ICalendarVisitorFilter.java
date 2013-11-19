@@ -30,36 +30,58 @@ import java.util.List;
  */
 public interface ICalendarVisitorFilter extends Serializable {
 
-    /** 탐색 시 제외해야 할 기간들 */
+    /**
+     * 탐색 시 제외해야 할 기간들
+     */
     ITimePeriodCollection getExcludePeriods();
 
-    /** 포함 년도 */
+    /**
+     * 포함 년도
+     */
     List<Integer> getYears();
 
-    /** 포함 월 */
+    /**
+     * 포함 월
+     */
     List<Integer> getMonthOfYears();
 
-    /** 포함 일 */
+    /**
+     * 포함 일
+     */
     List<Integer> getDayOfMonths();
 
-    /** 포함 요일 */
+    /**
+     * 포함 요일
+     */
     List<DayOfWeek> getWeekDays();
 
-    /** 포함 시 (Hour) */
+    /**
+     * 포함 시 (Hour)
+     */
     List<Integer> getHourOfDays();
 
-    /** 포함 분(Minutes) */
+    /**
+     * 포함 분(Minutes)
+     */
     List<Integer> getMinuteOfHours();
 
-    /** 주중 (월~금) 을 Working Day로 추가합니다. */
+    /**
+     * 주중 (월~금) 을 Working Day로 추가합니다.
+     */
     void addWorkingWeekdays();
 
-    /** 주말 (토,일) 을 Working Day로 추가합니다. */
+    /**
+     * 주말 (토,일) 을 Working Day로 추가합니다.
+     */
     void addWorkingWeekends();
 
-    /** 지정한 요일들을 탐색 필터에 포함시킨다. */
+    /**
+     * 지정한 요일들을 탐색 필터에 포함시킨다.
+     */
     void addWeekdays(DayOfWeek... dayOfWeeks);
 
-    /** 탐색 필터 및 예외 필터에 등록된 모든 내용을 삭제합니다. */
+    /**
+     * 탐색 필터 및 예외 필터에 등록된 모든 내용을 삭제합니다.
+     */
     void clear();
 }

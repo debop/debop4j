@@ -46,10 +46,14 @@ public interface IHibernateDao {
      */
     Session getSession();
 
-    /** Session의 변경을 DB에 적용합니다. */
+    /**
+     * Session의 변경을 DB에 적용합니다.
+     */
     void flushSession();
 
-    /** Session의 변경을 Transaction을 이용하여 DB에 적용합니다. */
+    /**
+     * Session의 변경을 Transaction을 이용하여 DB에 적용합니다.
+     */
     void transactionalFlush();
 
     /**

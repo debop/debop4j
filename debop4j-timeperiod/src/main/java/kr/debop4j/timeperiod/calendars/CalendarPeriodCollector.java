@@ -58,45 +58,55 @@ public class CalendarPeriodCollector extends CalendarVisitor<CalendarPeriodColle
     @Getter
     private final ITimePeriodCollection periods = new TimePeriodCollection();
 
-    /** 필터에 해당하는 Year 단위의 기간({@link kr.debop4j.timeperiod.timerange.YearRange})를 수집합니다. */
+    /**
+     * 필터에 해당하는 Year 단위의 기간({@link kr.debop4j.timeperiod.timerange.YearRange})를 수집합니다.
+     */
     public void collectYears() {
-        if (isTraceEnabled) log.trace("collect years...");
+        log.trace("collect years...");
 
         CalendarPeriodCollectorContext context = new CalendarPeriodCollectorContext();
         context.setScope(CalendarPeriodCollectorContext.CollectKind.Year);
         startPeriodVisit(context);
     }
 
-    /** 필터에 해당하는 Month 단위의 기간({@link kr.debop4j.timeperiod.timerange.MonthRange})를 수집합니다. */
+    /**
+     * 필터에 해당하는 Month 단위의 기간({@link kr.debop4j.timeperiod.timerange.MonthRange})를 수집합니다.
+     */
     public void collectMonths() {
-        if (isTraceEnabled) log.trace("collect months...");
+        log.trace("collect months...");
 
         CalendarPeriodCollectorContext context = new CalendarPeriodCollectorContext();
         context.setScope(CalendarPeriodCollectorContext.CollectKind.Month);
         startPeriodVisit(context);
     }
 
-    /** 필터에 해당하는 Day 단위의 기간({@link kr.debop4j.timeperiod.timerange.DayRange})를 수집합니다. */
+    /**
+     * 필터에 해당하는 Day 단위의 기간({@link kr.debop4j.timeperiod.timerange.DayRange})를 수집합니다.
+     */
     public void collectDays() {
-        if (isTraceEnabled) log.trace("collect days...");
+        log.trace("collect days...");
 
         CalendarPeriodCollectorContext context = new CalendarPeriodCollectorContext();
         context.setScope(CalendarPeriodCollectorContext.CollectKind.Day);
         startPeriodVisit(context);
     }
 
-    /** 필터에 해당하는 Hour 단위의 기간({@link kr.debop4j.timeperiod.timerange.HourRange})를 수집합니다. */
+    /**
+     * 필터에 해당하는 Hour 단위의 기간({@link kr.debop4j.timeperiod.timerange.HourRange})를 수집합니다.
+     */
     public void collectHours() {
-        if (isTraceEnabled) log.trace("collect hours...");
+        log.trace("collect hours...");
 
         CalendarPeriodCollectorContext context = new CalendarPeriodCollectorContext();
         context.setScope(CalendarPeriodCollectorContext.CollectKind.Hour);
         startPeriodVisit(context);
     }
 
-    /** 필터에 해당하는 Minute 단위의 기간({@link kr.debop4j.timeperiod.timerange.MinuteRange})를 수집합니다. */
+    /**
+     * 필터에 해당하는 Minute 단위의 기간({@link kr.debop4j.timeperiod.timerange.MinuteRange})를 수집합니다.
+     */
     public void collectMinutes() {
-        if (isTraceEnabled) log.trace("collect minutes...");
+        log.trace("collect minutes...");
 
         CalendarPeriodCollectorContext context = new CalendarPeriodCollectorContext();
         context.setScope(CalendarPeriodCollectorContext.CollectKind.Minute);
@@ -130,7 +140,7 @@ public class CalendarPeriodCollector extends CalendarVisitor<CalendarPeriodColle
 
     @Override
     protected boolean onVisitYears(YearRangeCollection years, CalendarPeriodCollectorContext context) {
-        if (isTraceEnabled) log.trace("visit years... years=[{}]", years);
+        log.trace("visit years... years=[{}]", years);
 
         if (context.getScope() != CalendarPeriodCollectorContext.CollectKind.Year)
             return true;    // continue
@@ -145,7 +155,7 @@ public class CalendarPeriodCollector extends CalendarVisitor<CalendarPeriodColle
 
     @Override
     protected boolean onVisitYear(YearRange year, final CalendarPeriodCollectorContext context) {
-        if (isTraceEnabled) log.trace("visit year... year=[{}]", year.getYear());
+        log.trace("visit year... year=[{}]", year.getYear());
 
         if (context.getScope() != CalendarPeriodCollectorContext.CollectKind.Month)
             return true;
@@ -185,8 +195,8 @@ public class CalendarPeriodCollector extends CalendarVisitor<CalendarPeriodColle
 
     @Override
     protected boolean onVisitMonth(MonthRange month, final CalendarPeriodCollectorContext context) {
-        if (isTraceEnabled)
-            log.trace("visit month... month=[{}]", month);
+
+        log.trace("visit month... month=[{}]", month);
 
         if (context.getScope() != CalendarPeriodCollectorContext.CollectKind.Day)
             return true;
@@ -228,7 +238,7 @@ public class CalendarPeriodCollector extends CalendarVisitor<CalendarPeriodColle
 
     @Override
     protected boolean onVisitDay(DayRange day, CalendarPeriodCollectorContext context) {
-        if (isTraceEnabled) log.trace("visit day... day=[{}]", day);
+        log.trace("visit day... day=[{}]", day);
 
         if (context.getScope().getValue() != CalendarPeriodCollectorContext.CollectKind.Hour.getValue())
             return true;

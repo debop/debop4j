@@ -87,7 +87,7 @@ public class IndexingTest {
     }
 
     @Test
-    @Ignore( "테스트 전에 인덱스가 만들어 졌는지 확인해야 합니다." )
+    @Ignore("테스트 전에 인덱스가 만들어 졌는지 확인해야 합니다.")
     public void termHighFreqTerms() throws Exception {
         testIndexWriter();
         try (IndexReader reader = getReader()) {
@@ -99,7 +99,7 @@ public class IndexingTest {
     }
 
     @Test
-    @Ignore( "테스트 전에 인덱스가 만들어 졌는지 확인해야 합니다." )
+    @Ignore("테스트 전에 인덱스가 만들어 졌는지 확인해야 합니다.")
     public void termHighFreqTermsWithSharding() throws Exception {
         final String prefix = "debop4j-search/.lucene/indexes/kr.debop4j.search.twitter.Twit";
         final int numShard = 4;

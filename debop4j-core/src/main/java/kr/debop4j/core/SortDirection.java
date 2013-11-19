@@ -26,10 +26,14 @@ import lombok.Getter;
  */
 public enum SortDirection {
 
-    /** 순차 정렬 */
+    /**
+     * 순차 정렬
+     */
     ASC("ASC"),
 
-    /** 역순 정렬 */
+    /**
+     * 역순 정렬
+     */
     DESC("DESC");
 
     @Getter

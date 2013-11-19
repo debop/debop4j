@@ -50,7 +50,9 @@ public class AccessContext {
     private static final String CURRENT_USERNAME_KEY = "kr.debop4j.access.current.username";
 
 
-    /** 현 Thread Context 에 제공된 정보 */
+    /**
+     * 현 Thread Context 에 제공된 정보
+     */
     public static class Current {
 
         /**

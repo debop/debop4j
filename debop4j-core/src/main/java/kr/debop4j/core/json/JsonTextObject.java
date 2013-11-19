@@ -32,7 +32,9 @@ public class JsonTextObject extends ValueObjectBase {
 
     private static final long serialVersionUID = 8434059177726276296L;
 
-    /** The constant Empty. */
+    /**
+     * The constant Empty.
+     */
     public static final JsonTextObject Empty = new JsonTextObject(null, null);
 
     @Getter

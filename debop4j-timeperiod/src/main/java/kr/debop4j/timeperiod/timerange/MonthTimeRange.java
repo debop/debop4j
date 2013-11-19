@@ -96,7 +96,9 @@ public abstract class MonthTimeRange extends CalendarTimeRange {
 
     // endregion
 
-    /** 현재 월(Month)에 속한 일단위 기간({@link DayRange}) 컬렉션을 빌드합니다. */
+    /**
+     * 현재 월(Month)에 속한 일단위 기간({@link DayRange}) 컬렉션을 빌드합니다.
+     */
     public List<DayRange> getDays() {
         DateTime startMonth = Times.startTimeOfMonth(getStart());
         List<DayRange> days = Lists.newArrayListWithCapacity(monthCount * TimeSpec.MaxDaysPerMonth);

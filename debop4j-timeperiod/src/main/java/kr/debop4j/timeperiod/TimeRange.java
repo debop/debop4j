@@ -32,7 +32,9 @@ public class TimeRange extends TimePeriodBase implements ITimeRange {
 
     private static final long serialVersionUID = -5665345604375538630L;
 
-    /** The constant Anytime. */
+    /**
+     * The constant Anytime.
+     */
     public static final TimeRange Anytime = new TimeRange(true);
 
     /**
@@ -57,7 +59,9 @@ public class TimeRange extends TimePeriodBase implements ITimeRange {
 
     // region << Constructor >>
 
-    /** Instantiates a new Time range. */
+    /**
+     * Instantiates a new Time range.
+     */
     public TimeRange() {}
 
     /**

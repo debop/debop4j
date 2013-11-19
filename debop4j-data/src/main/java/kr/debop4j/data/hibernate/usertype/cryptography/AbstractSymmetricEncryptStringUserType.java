@@ -61,8 +61,8 @@ public abstract class AbstractSymmetricEncryptStringUserType implements UserType
         if (value == null)
             return null;
 
-        if (isTraceEnabled)
-            log.trace("{}를 이용하여 문자열을 암호화합니다. value=[{}]", getEncryptor(), StringTool.ellipsisChar(value, 80));
+
+        log.trace("{}를 이용하여 문자열을 암호화합니다. value=[{}]", getEncryptor(), StringTool.ellipsisChar(value, 80));
 
         byte[] bytes = getEncryptor().encrypt(StringTool.getUtf8Bytes(value));
         return StringTool.getStringFromBytes(bytes, BinaryStringFormat.HexDecimal);
@@ -79,9 +79,9 @@ public abstract class AbstractSymmetricEncryptStringUserType implements UserType
         if (value == null)
             return null;
 
-        if (isTraceEnabled)
-            log.trace("{}를 이용하여 암호화된 문자열을 복원합니다. value=[{}]",
-                      getEncryptor(), StringTool.ellipsisChar(value, 80));
+
+        log.trace("{}를 이용하여 암호화된 문자열을 복원합니다. value=[{}]",
+                  getEncryptor(), StringTool.ellipsisChar(value, 80));
 
         byte[] bytes = getEncryptor().decrypt(StringTool.getBytesFromString(value, BinaryStringFormat.HexDecimal));
         return StringTool.getUtf8String(bytes);

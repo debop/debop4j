@@ -26,7 +26,8 @@ public interface Function1<T, R> {
 
     /**
      * 수행할 함수
-     * @param arg  인자
+     *
+     * @param arg 인자
      * @return 수행결과
      */
     R execute(T arg);

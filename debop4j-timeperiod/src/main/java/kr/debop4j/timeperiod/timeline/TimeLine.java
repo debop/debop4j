@@ -72,7 +72,9 @@ public class TimeLine<T extends ITimePeriod> implements ITimeLine {
     @Getter private final ITimePeriod limits;
     @Getter private final ITimePeriodMapper periodMapper;
 
-    /** Periods의 기간들의 합집합에 해당하는 기간들을 반환합니다. */
+    /**
+     * Periods의 기간들의 합집합에 해당하는 기간들을 반환합니다.
+     */
     @Override
     public ITimePeriodCollection combinePeriods() {
         if (periods.size() == 0)
@@ -85,7 +87,9 @@ public class TimeLine<T extends ITimePeriod> implements ITimeLine {
         return TimeLines.combinePeriods(moments);
     }
 
-    /** Periods의 기간들의 교집합에 해당하는 기간들을 반환합니다. */
+    /**
+     * Periods의 기간들의 교집합에 해당하는 기간들을 반환합니다.
+     */
     @Override
     public ITimePeriodCollection intersectPeriods() {
         if (periods.size() == 0)
@@ -98,7 +102,9 @@ public class TimeLine<T extends ITimePeriod> implements ITimeLine {
         return TimeLines.intersectPeriods(moments);
     }
 
-    /** Periods의 기간들의 여집합에 해당하는 기간들을 반환합니다. */
+    /**
+     * Periods의 기간들의 여집합에 해당하는 기간들을 반환합니다.
+     */
     @Override
     public ITimePeriodCollection calculateGaps() {
         ITimePeriodCollection gapPeriods = new TimePeriodCollection();
@@ -118,12 +124,16 @@ public class TimeLine<T extends ITimePeriod> implements ITimeLine {
         return TimeLines.calculateGap(moments, range);
     }
 
-    /** 기간 컬렉션으로부터 ITimeLineMoment 컬렉션을 빌드합니다 */
+    /**
+     * 기간 컬렉션으로부터 ITimeLineMoment 컬렉션을 빌드합니다
+     */
     private ITimeLineMomentCollection getTimeLineMoments() {
         return getTimeLineMoments(this.periods);
     }
 
-    /** 기간 컬렉션으로부터 ITimeLineMoment 컬렉션을 빌드합니다 */
+    /**
+     * 기간 컬렉션으로부터 ITimeLineMoment 컬렉션을 빌드합니다
+     */
     private ITimeLineMomentCollection getTimeLineMoments(final Collection<? extends ITimePeriod> momentPeriods) {
         if (log.isTraceEnabled())
             log.trace("기간 컬렉션으로부터 ITimeLineMoment 컬렉션을 빌드합니다...");

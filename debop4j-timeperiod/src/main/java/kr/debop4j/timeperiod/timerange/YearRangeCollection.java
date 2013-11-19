@@ -76,7 +76,9 @@ public class YearRangeCollection extends YearTimeRange {
         super(year, yearCount, calendar);
     }
 
-    /** Year 단위의 기간들을 열거합니다. */
+    /**
+     * Year 단위의 기간들을 열거합니다.
+     */
     public List<YearRange> getYears() {
         int start = getStartYear();
 

@@ -46,7 +46,9 @@ public class MultiInterceptor extends EmptyInterceptor {
     @Setter
     private List<Interceptor> interceptors = Lists.newArrayList();
 
-    /** Instantiates a new Multi interceptor. */
+    /**
+     * Instantiates a new Multi interceptor.
+     */
     public MultiInterceptor() { }
 
     /**
@@ -68,8 +70,8 @@ public class MultiInterceptor extends EmptyInterceptor {
         if (!isExists())
             return;
 
-        if (isTraceEnabled)
-            log.trace("인터셉터의 onDelete메소드를 멀티캐스트로 수행합니다.");
+
+        log.trace("인터셉터의 onDelete메소드를 멀티캐스트로 수행합니다.");
 
         for (final Interceptor interceptor : interceptors) {
             interceptor.onDelete(entity, id, state, propertyNames, types);
@@ -86,8 +88,8 @@ public class MultiInterceptor extends EmptyInterceptor {
         if (!isExists())
             return false;
 
-        if (isTraceEnabled)
-            log.trace("인터셉터의 onFlush 메소드를 멀티캐스트로 수행합니다.");
+
+        log.trace("인터셉터의 onFlush 메소드를 멀티캐스트로 수행합니다.");
 
         for (final Interceptor interceptor : interceptors) {
             interceptor.onFlushDirty(entity, id, currentState, previousState, propertyNames, types);
@@ -101,8 +103,8 @@ public class MultiInterceptor extends EmptyInterceptor {
         if (!isExists())
             return false;
 
-        if (isTraceEnabled)
-            log.trace("인터셉터의 onLoad 메소드를 멀티캐스트로 수행합니다.");
+
+        log.trace("인터셉터의 onLoad 메소드를 멀티캐스트로 수행합니다.");
 
         for (final Interceptor interceptor : interceptors) {
             interceptor.onLoad(entity, id, state, propertyNames, types);
@@ -116,8 +118,8 @@ public class MultiInterceptor extends EmptyInterceptor {
         if (!isExists())
             return false;
 
-        if (isTraceEnabled)
-            log.trace("인터셉터의 onSave 메소드를 멀티캐스트로 수행합니다.");
+
+        log.trace("인터셉터의 onSave 메소드를 멀티캐스트로 수행합니다.");
 
         List<FutureTask<Boolean>> tasks = Lists.newLinkedList();
 
@@ -132,8 +134,8 @@ public class MultiInterceptor extends EmptyInterceptor {
     public void postFlush(Iterator entities) {
         if (!isExists()) return;
 
-        if (isTraceEnabled)
-            log.trace("인터셉터의 postFlush 메소드를 멀티캐스트로 수행합니다.");
+
+        log.trace("인터셉터의 postFlush 메소드를 멀티캐스트로 수행합니다.");
 
         // List<FutureTask<Void>> tasks = Lists.newLinkedList();
 
@@ -146,8 +148,8 @@ public class MultiInterceptor extends EmptyInterceptor {
     public void preFlush(Iterator entities) {
         if (!isExists()) return;
 
-        if (isTraceEnabled)
-            log.trace("인터셉터의 preFlush 메소드를 멀티캐스트로 수행합니다.");
+
+        log.trace("인터셉터의 preFlush 메소드를 멀티캐스트로 수행합니다.");
 
         // List<FutureTask<Void>> tasks = Lists.newLinkedList();
 

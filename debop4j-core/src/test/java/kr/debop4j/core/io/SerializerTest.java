@@ -24,12 +24,12 @@ import java.util.Collection;
  * @since 12. 12. 17
  */
 @Slf4j
-@RunWith( SpringJUnit4ClassRunner.class )
-@ContextConfiguration( classes = {
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(classes = {
         CompressorConfiguration.class,
         EncryptorConfiguration.class,
         SerializerConfiguration.class
-} )
+})
 public class SerializerTest {
 
     @Autowired

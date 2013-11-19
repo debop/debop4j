@@ -65,19 +65,27 @@ public class WorkCalendarRule extends AccessEntityBase {
     @NaturalId
     private String name;
 
-    /** 특정 날짜 또는 휴일 등의 예외 규칙인지를 나타냅니다. */
+    /**
+     * 특정 날짜 또는 휴일 등의 예외 규칙인지를 나타냅니다.
+     */
     @Basic
     private Integer dayOrException;
 
-    /** 예외 규칙 종류 */
+    /**
+     * 예외 규칙 종류
+     */
     @Basic
     private Integer exceptionType;
 
-    /** 예외 패턴 (준비중이다. cron-expression을 사용할 예정) */
+    /**
+     * 예외 패턴 (준비중이다. cron-expression을 사용할 예정)
+     */
     @Basic
     private String exeptionPattern;
 
-    /** 예외를 규정할 클래스 명 (동적으로 로드해서 계산하도록 한다) */
+    /**
+     * 예외를 규정할 클래스 명 (동적으로 로드해서 계산하도록 한다)
+     */
     private String exceptionClassName;
 
     @Type(type = "kr.debop4j.data.hibernate.usertype.TimeRangeUserType")

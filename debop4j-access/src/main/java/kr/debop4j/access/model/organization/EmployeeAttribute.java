@@ -45,7 +45,9 @@ public class EmployeeAttribute extends AnnotatedEntityBase {
         this.employee = employee;
     }
 
-    /** Hibernate 기본의 one-to-one 입니다!!! */
+    /**
+     * Hibernate 기본의 one-to-one 입니다!!!
+     */
     @Id
     @GeneratedValue(generator = "gen")
     @GenericGenerator(name = "gen", strategy = "foreign",

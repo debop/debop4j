@@ -26,15 +26,31 @@ import lombok.Getter;
  */
 public enum DayOfWeek {
 
-    /** The Monday. */Monday(1),
-    /** The ThuesDay. */ThuesDay(2),
-    /** The WednesDay. */WednesDay(3),
-    /** The ThursDay. */ThursDay(4),
-    /** The FriDay. */FriDay(5),
-    /** The Saturday. */Saturday(6),
-    /** The Sunday. */Sunday(7);
+    /**
+     * The Monday.
+     */Monday(1),
+    /**
+     * The ThuesDay.
+     */ThuesDay(2),
+    /**
+     * The WednesDay.
+     */WednesDay(3),
+    /**
+     * The ThursDay.
+     */ThursDay(4),
+    /**
+     * The FriDay.
+     */FriDay(5),
+    /**
+     * The Saturday.
+     */Saturday(6),
+    /**
+     * The Sunday.
+     */Sunday(7);
 
-    /** 요일의 Int형 값을 반환한다 */
+    /**
+     * 요일의 Int형 값을 반환한다
+     */
     @Getter private final int value;
 
     DayOfWeek(int value) {

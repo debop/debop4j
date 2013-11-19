@@ -50,7 +50,7 @@ public abstract class H2ConfigBase extends HibernateConfigBase {
         return "";
     }
 
-    @Bean( destroyMethod = "close" )
+    @Bean(destroyMethod = "close")
     public DataSource dataSource() {
         return buildDataSource("org.h2.Driver", getJdbcUrl(), getUsername(), getPassword());
     }

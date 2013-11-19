@@ -43,7 +43,9 @@ public class TimePeriodBase extends ValueObjectBase implements ITimePeriod {
 
     // region << Constructors >>
 
-    /** Instantiates a new Time period base. */
+    /**
+     * Instantiates a new Time period base.
+     */
     protected TimePeriodBase() {
         this(TimeSpec.MinPeriodTime, TimeSpec.MaxPeriodTime, false);
     }
@@ -155,20 +157,28 @@ public class TimePeriodBase extends ValueObjectBase implements ITimePeriod {
 
     // endregion
 
-    /** The Start. */
+    /**
+     * The Start.
+     */
     @Getter
     protected DateTime start;
 
-    /** The End. */
+    /**
+     * The End.
+     */
     @Getter
     protected DateTime end;
 
-    /** The Readonly. */
+    /**
+     * The Readonly.
+     */
     @Getter
     @Setter(AccessLevel.PROTECTED)
     protected boolean readonly;
 
-    /** 기간을 TimeSpan으료 표현, 기간이 정해지지 않았다면 <see cref="TimeSpec.MaxPeriodTime"/> 을 반환합니다. */
+    /**
+     * 기간을 TimeSpan으료 표현, 기간이 정해지지 않았다면 <see cref="TimeSpec.MaxPeriodTime"/> 을 반환합니다.
+     */
     @Override
     public Duration getDuration() {
         return new Duration(getStart(), getEnd());
@@ -263,7 +273,9 @@ public class TimePeriodBase extends ValueObjectBase implements ITimePeriod {
             end = end.plus(offset.getMillis());
     }
 
-    /** 시작과 완료 시각이 같은지 여부 */
+    /**
+     * 시작과 완료 시각이 같은지 여부
+     */
     @Override
     public boolean isSamePeriod(ITimePeriod other) {
         return (other != null) &&
@@ -315,7 +327,9 @@ public class TimePeriodBase extends ValueObjectBase implements ITimePeriod {
         return Times.getUnionRange(this, other);
     }
 
-    /** Assert mutable. */
+    /**
+     * Assert mutable.
+     */
     protected final void assertMutable() {
         assert !readonly : "readonly 입니다.";
     }

@@ -31,7 +31,9 @@ import java.util.Set;
  */
 public abstract class MetaEntityBase<TId extends Serializable> extends EntityBase<TId> implements IMetaEntity {
 
-    /** 메타 정보 */
+    /**
+     * 메타 정보
+     */
     @Getter
     private final Map<String, IMetaValue> metaMap = Maps.newLinkedHashMap();
 

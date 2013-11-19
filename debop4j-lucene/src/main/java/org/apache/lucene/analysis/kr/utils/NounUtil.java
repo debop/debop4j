@@ -41,7 +41,6 @@ public class NounUtil {
      * 어간부가 음/기 로 끝나는 경우
      *
      * @throws org.apache.lucene.analysis.kr.morph.MorphException
-     *
      */
     public static boolean analysisMJ(AnalysisOutput o, List<AnalysisOutput> candidates) throws MorphException {
 
@@ -93,7 +92,6 @@ public class NounUtil {
      * 용언 + '음/기' + 조사(PTN_VMXMJ)
      *
      * @throws org.apache.lucene.analysis.kr.morph.MorphException
-     *
      */
     public static boolean analysisVMJ(AnalysisOutput o, List<AnalysisOutput> candidates) throws MorphException {
 
@@ -118,7 +116,6 @@ public class NounUtil {
      * 용언 + '아/어' + 보조용언 + '음/기' + 조사(PTN_VMXMJ)
      *
      * @throws org.apache.lucene.analysis.kr.morph.MorphException
-     *
      */
     public static boolean analysisVMXMJ(AnalysisOutput o, List<AnalysisOutput> candidates) throws MorphException {
 
@@ -163,7 +160,6 @@ public class NounUtil {
      * 체언 + 용언화접미사 + '음/기' + 조사 (PTN_NSMJ)
      *
      * @throws org.apache.lucene.analysis.kr.morph.MorphException
-     *
      */
     public static boolean analysisNSMJ(AnalysisOutput o, List<AnalysisOutput> candidates) throws MorphException {
 
@@ -304,12 +300,11 @@ public class NounUtil {
      * @param o   분석결과
      * @return 단위명사 리스트
      * @throws org.apache.lucene.analysis.kr.morph.MorphException
-     *
      */
     private static List findNouns(String str, int pos, AnalysisOutput o) throws MorphException {
 
-        if (isTraceEnabled)
-            log.trace("복합명사에서 단위명사를 분리합니다. str=[{}], pos=[{}]", str, pos);
+
+        log.trace("복합명사에서 단위명사를 분리합니다. str=[{}], pos=[{}]", str, pos);
 
         List<WordEntry> nList = new ArrayList<WordEntry>();
 

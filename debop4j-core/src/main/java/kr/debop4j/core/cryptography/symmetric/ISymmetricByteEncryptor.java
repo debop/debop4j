@@ -15,7 +15,9 @@ public interface ISymmetricByteEncryptor {
      */
     String getAlgorithm();
 
-    /** 초기화 여부 */
+    /**
+     * 초기화 여부
+     */
     boolean isInitialized();
 
     /**

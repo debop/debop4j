@@ -67,7 +67,9 @@ public class Stopwatch {
         elapsedTime = 0;
     }
 
-    /** 시간 측정을 시작합니다. */
+    /**
+     * 시간 측정을 시작합니다.
+     */
     public void start() {
         if (startTime != 0)
             reset();
@@ -78,7 +80,9 @@ public class Stopwatch {
         startTime = System.nanoTime();
     }
 
-    /** 시간 측정을 완료합니다. */
+    /**
+     * 시간 측정을 완료합니다.
+     */
     public double stop() throws IllegalStateException {
         if (startTime == 0)
             throw new IllegalStateException("call start() method at first.");

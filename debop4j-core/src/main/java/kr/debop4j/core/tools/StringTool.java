@@ -49,19 +49,29 @@ public final class StringTool {
      */
     protected static final byte[] MULTI_BYTES_PREFIX = new byte[] { (byte) 0xEF, (byte) 0xBB, (byte) 0xBF };
 
-    /** The constant TRIMMING_STR. */
+    /**
+     * The constant TRIMMING_STR.
+     */
     public static final String TRIMMING_STR = "...";
 
-    /** NULL 을 표현하는 문자열 */
+    /**
+     * NULL 을 표현하는 문자열
+     */
     public static final String NULL_STR = "<null>";
 
-    /** 빈 문자열 */
+    /**
+     * 빈 문자열
+     */
     public static final String EMPTY_STR = "";
 
-    /** The constant COMMA String. */
+    /**
+     * The constant COMMA String.
+     */
     public static final String COMMA_STR = ",";
 
-    /** The constant UTF8. */
+    /**
+     * The constant UTF8.
+     */
     public static final Charset UTF8 = Charsets.UTF_8;
 
     private StringTool() { }

@@ -26,10 +26,14 @@ import lombok.Getter;
  */
 public enum SeekDirection {
 
-    /** 미래로 (시간 값을 증가 시키는 방향) */
+    /**
+     * 미래로 (시간 값을 증가 시키는 방향)
+     */
     Forward(1),
 
-    /** 과거로 (시간 값을 감소 시키는 방향) */
+    /**
+     * 과거로 (시간 값을 감소 시키는 방향)
+     */
     Backward(-1);
 
     @Getter private final int value;

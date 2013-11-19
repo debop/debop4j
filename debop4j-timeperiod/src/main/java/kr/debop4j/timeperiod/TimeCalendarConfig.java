@@ -37,7 +37,9 @@ import java.util.Locale;
 @Slf4j
 public class TimeCalendarConfig extends ValueObjectBase {
 
-    /** Instantiates a new Time calendar config. */
+    /**
+     * Instantiates a new Time calendar config.
+     */
     public TimeCalendarConfig() {
         this(Locale.getDefault());
     }

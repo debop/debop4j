@@ -24,7 +24,9 @@ package kr.debop4j.core;
  */
 public interface Action {
 
-    /** 정의된 작업을 수행합니다. */
+    /**
+     * 정의된 작업을 수행합니다.
+     */
     public void perform();
 
 }

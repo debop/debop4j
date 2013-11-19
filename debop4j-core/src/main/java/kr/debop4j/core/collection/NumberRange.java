@@ -100,8 +100,8 @@ public abstract class NumberRange<T extends Number> implements Iterable<T> {
      * @return the list
      */
     public static List<IntRange> partition(IntRange range, int partitionCount) {
-        if (isTraceEnabled)
-            log.trace("partition... range=[{}], partitionCount=[{}]", range, partitionCount);
+
+        log.trace("partition... range=[{}], partitionCount=[{}]", range, partitionCount);
 
         int rangeSize = range.size();
         int stepSign = range.getStep();
@@ -123,8 +123,8 @@ public abstract class NumberRange<T extends Number> implements Iterable<T> {
             partitions.add(partition);
             fromInclude = toExclude;
 
-            if (isTraceEnabled)
-                log.trace("Partition 추가 = [{}]", partition);
+
+            log.trace("Partition 추가 = [{}]", partition);
         }
         return partitions;
     }
@@ -193,8 +193,8 @@ public abstract class NumberRange<T extends Number> implements Iterable<T> {
             LongRange partition = range(fromInclude, toExclude, step);
             partitions.add(partition);
             fromInclude = toExclude;
-            if (isTraceEnabled)
-                log.trace("Partition 추가 = [{}]", partition);
+
+            log.trace("Partition 추가 = [{}]", partition);
         }
         return partitions;
     }
@@ -235,7 +235,9 @@ public abstract class NumberRange<T extends Number> implements Iterable<T> {
         return partition(range(count), partitionCount);
     }
 
-    /** The type Int range. */
+    /**
+     * The type Int range.
+     */
     public static class IntRange extends NumberRange<Integer> implements Iterator<Integer> {
 
         @Getter
@@ -255,8 +257,8 @@ public abstract class NumberRange<T extends Number> implements Iterable<T> {
             this.toExclude = toExclude;
             this.step = step;
             this.current = this.fromInclude;
-            if (isTraceEnabled)
-                log.trace("create IntRange=[{}]", this);
+
+            log.trace("create IntRange=[{}]", this);
         }
 
         /**
@@ -288,7 +290,9 @@ public abstract class NumberRange<T extends Number> implements Iterable<T> {
             return result;
         }
 
-        /** Reset void. */
+        /**
+         * Reset void.
+         */
         public void reset() {
             this.current = this.fromInclude;
         }
@@ -315,7 +319,9 @@ public abstract class NumberRange<T extends Number> implements Iterable<T> {
         }
     }
 
-    /** The type Long range. */
+    /**
+     * The type Long range.
+     */
     public static class LongRange extends NumberRange<Long> implements Iterator<Long> {
 
         @Getter
@@ -335,8 +341,8 @@ public abstract class NumberRange<T extends Number> implements Iterable<T> {
             this.toExclude = toExclude;
             this.step = step;
             this.current = this.fromInclude;
-            if (isTraceEnabled)
-                log.trace("create IntRange=[{}]", this);
+
+            log.trace("create IntRange=[{}]", this);
         }
 
         /**
@@ -368,7 +374,9 @@ public abstract class NumberRange<T extends Number> implements Iterable<T> {
             return result;
         }
 
-        /** Reset */
+        /**
+         * Reset
+         */
         public void reset() {
             this.current = this.fromInclude;
         }

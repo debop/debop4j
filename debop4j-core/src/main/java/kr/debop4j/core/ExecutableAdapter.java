@@ -43,7 +43,9 @@ public class ExecutableAdapter implements Runnable {
         this.executable = executable;
     }
 
-    /** Re throw any errrors. */
+    /**
+     * Re throw any errrors.
+     */
     public void reThrowAnyErrrors() {
         if (error == null)
             return;

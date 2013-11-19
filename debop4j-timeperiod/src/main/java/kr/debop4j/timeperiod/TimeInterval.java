@@ -311,7 +311,9 @@ public class TimeInterval extends TimePeriodBase implements ITimeInterval {
         return copy(Duration.ZERO);
     }
 
-    /** 현재 IInterval에서 오프셋만큼 이동한 {@link ITimeInterval}을 반환합니다. */
+    /**
+     * 현재 IInterval에서 오프셋만큼 이동한 {@link ITimeInterval}을 반환합니다.
+     */
     @Override
     public ITimeInterval copy(Duration offset) {
         return new TimeInterval(getStartInterval().plus(offset),

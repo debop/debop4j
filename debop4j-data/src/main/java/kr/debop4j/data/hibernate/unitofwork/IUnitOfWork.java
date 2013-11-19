@@ -26,25 +26,39 @@ import org.springframework.transaction.TransactionDefinition;
  */
 public interface IUnitOfWork extends AutoCloseable {
 
-    /** Current Unit Of Work Key */
+    /**
+     * Current Unit Of Work Key
+     */
     public final String CURRENT_UNIT_OF_WORK_KEY = IUnitOfWork.class.getName() + ".CurrentUnitOfWork";
 
-    /** Current {@link org.hibernate.Session} 의 변경 내용을 flush 해서 저장소에 적용되도록 합니다. */
+    /**
+     * Current {@link org.hibernate.Session} 의 변경 내용을 flush 해서 저장소에 적용되도록 합니다.
+     */
     void flushSession();
 
-    /** Current {@link org.hibernate.Session} 의 정보를 메모리에서 삭제합니다. */
+    /**
+     * Current {@link org.hibernate.Session} 의 정보를 메모리에서 삭제합니다.
+     */
     void clearSession();
 
-    /** 현 IUnitOfWork 에 Transaction이 활성화 여부를 반환합니다. */
+    /**
+     * 현 IUnitOfWork 에 Transaction이 활성화 여부를 반환합니다.
+     */
     boolean isInActiveTransaction();
 
-    /** 현 IUnitOfWork 에 새로운 Transaction을 시작합니다. */
+    /**
+     * 현 IUnitOfWork 에 새로운 Transaction을 시작합니다.
+     */
     IUnitOfWorkTransaction beginTransaction();
 
-    /** 지정된 Transaction 정의를 이용하여 Transaction을 생성, 시작합니다. */
+    /**
+     * 지정된 Transaction 정의를 이용하여 Transaction을 생성, 시작합니다.
+     */
     IUnitOfWorkTransaction beginTransaction(TransactionDefinition transactionDefinition);
 
-    /** 현 {@link org.hibernate.Session} 의 변경내용을 Transaction을 적용하여 flush를 수행합니다. */
+    /**
+     * 현 {@link org.hibernate.Session} 의 변경내용을 Transaction을 적용하여 flush를 수행합니다.
+     */
     void transactionalFlush();
 
     /**
@@ -54,7 +68,9 @@ public interface IUnitOfWork extends AutoCloseable {
      */
     void transactionalFlush(TransactionDefinition transactionDefinition);
 
-    /** 현 UnitOfWork를 종료합니다. */
+    /**
+     * 현 UnitOfWork를 종료합니다.
+     */
     @Override
     void close();
 }

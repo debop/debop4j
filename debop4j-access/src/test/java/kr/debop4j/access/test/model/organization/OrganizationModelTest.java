@@ -39,7 +39,7 @@ import static org.fest.assertions.Assertions.assertThat;
 public class OrganizationModelTest extends AccessTestBase {
 
     @Autowired
-    @Qualifier( "hibernateDao" )
+    @Qualifier("hibernateDao")
     IHibernateDao dao;
 
     @Override

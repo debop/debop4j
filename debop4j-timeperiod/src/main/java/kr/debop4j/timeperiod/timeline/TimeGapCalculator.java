@@ -34,7 +34,9 @@ public class TimeGapCalculator<T extends ITimePeriod> {
 
     private final ITimeCalendar periodMapper;
 
-    /** Instantiates a new Time gap calculator. */
+    /**
+     * Instantiates a new Time gap calculator.
+     */
     public TimeGapCalculator() {
         this(null);
     }

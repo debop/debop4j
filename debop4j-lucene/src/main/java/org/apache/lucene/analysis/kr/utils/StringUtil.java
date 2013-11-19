@@ -141,10 +141,14 @@ public class StringUtil {
     // String.concat about twice as fast as StringBuilder.append
     // (not sure who tested this)
 
-    /** The default buffer size to use. */
+    /**
+     * The default buffer size to use.
+     */
     private static final int DEFAULT_BUFFER_SIZE = 1024 * 4;
 
-    /** An empty immutable <code>String</code> array. */
+    /**
+     * An empty immutable <code>String</code> array.
+     */
     public static final String[] EMPTY_STRING_ARRAY = new String[0];
 
     /**
@@ -161,7 +165,9 @@ public class StringUtil {
      */
     public static final int INDEX_NOT_FOUND = -1;
 
-    /** <p>The maximum size to which the padding constant(s) can expand.</p> */
+    /**
+     * <p>The maximum size to which the padding constant(s) can expand.</p>
+     */
     private static final int PAD_LIMIT = 8192;
 
     /**
@@ -260,7 +266,7 @@ public class StringUtil {
      *
      * @param str the String to check, may be null
      * @return <code>true</code> if the String is
-     *         not empty and not null and not whitespace
+     * not empty and not null and not whitespace
      * @since 2.0
      */
     public static boolean isNotBlank(String str) {
@@ -287,7 +293,7 @@ public class StringUtil {
      * @return the trimmed text, never <code>null</code>
      * @see String#trim()
      * @deprecated Use the clearer named {@link #trimToEmpty(String)}.
-     *             Method will be removed in Commons Lang 3.0.
+     * Method will be removed in Commons Lang 3.0.
      */
     public static String clean(String str) {
         return str == null ? EMPTY : str.trim();
@@ -339,7 +345,7 @@ public class StringUtil {
      *
      * @param str the String to be trimmed, may be null
      * @return the trimmed String,
-     *         <code>null</code> if only chars &lt;= 32, empty or null String input
+     * <code>null</code> if only chars &lt;= 32, empty or null String input
      * @since 2.0
      */
     public static String trimToNull(String str) {
@@ -421,7 +427,7 @@ public class StringUtil {
      *
      * @param str the String to be stripped, may be null
      * @return the stripped String,
-     *         <code>null</code> if whitespace, empty or null String input
+     * <code>null</code> if whitespace, empty or null String input
      * @since 2.0
      */
     public static String stripToNull(String str) {
@@ -663,7 +669,7 @@ public class StringUtil {
      * @param str1 the first String, may be null
      * @param str2 the second String, may be null
      * @return <code>true</code> if the Strings are equal, case sensitive, or
-     *         both <code>null</code>
+     * both <code>null</code>
      * @see String#equals(Object)
      */
     public static boolean equals(String str1, String str2) {
@@ -688,7 +694,7 @@ public class StringUtil {
      * @param str1 the first String, may be null
      * @param str2 the second String, may be null
      * @return <code>true</code> if the Strings are equal, case insensitive, or
-     *         both <code>null</code>
+     * both <code>null</code>
      * @see String#equalsIgnoreCase(String)
      */
     public static boolean equalsIgnoreCase(String str1, String str2) {
@@ -714,7 +720,7 @@ public class StringUtil {
      * @param str        the String to check, may be null
      * @param searchChar the character to find
      * @return the first index of the search character,
-     *         -1 if no match or <code>null</code> string input
+     * -1 if no match or <code>null</code> string input
      * @since 2.0
      */
     public static int indexOf(String str, char searchChar) {
@@ -746,7 +752,7 @@ public class StringUtil {
      * @param searchChar the character to find
      * @param startPos   the start position, negative treated as zero
      * @return the first index of the search character,
-     *         -1 if no match or <code>null</code> string input
+     * -1 if no match or <code>null</code> string input
      * @since 2.0
      */
     public static int indexOf(String str, char searchChar, int startPos) {
@@ -775,7 +781,7 @@ public class StringUtil {
      * @param str       the String to check, may be null
      * @param searchStr the String to find, may be null
      * @return the first index of the search String,
-     *         -1 if no match or <code>null</code> string input
+     * -1 if no match or <code>null</code> string input
      * @since 2.0
      */
     public static int indexOf(String str, String searchStr) {
@@ -809,7 +815,7 @@ public class StringUtil {
      * @param searchStr the String to find, may be null
      * @param ordinal   the n-th <code>searchStr</code> to find
      * @return the n-th index of the search String,
-     *         <code>-1</code> (<code>INDEX_NOT_FOUND</code>) if no match or <code>null</code> string input
+     * <code>-1</code> (<code>INDEX_NOT_FOUND</code>) if no match or <code>null</code> string input
      * @since 2.1
      */
     public static int ordinalIndexOf(String str, String searchStr, int ordinal) {
@@ -859,7 +865,7 @@ public class StringUtil {
      * @param searchStr the String to find, may be null
      * @param startPos  the start position, negative treated as zero
      * @return the first index of the search String,
-     *         -1 if no match or <code>null</code> string input
+     * -1 if no match or <code>null</code> string input
      * @since 2.0
      */
     public static int indexOf(String str, String searchStr, int startPos) {
@@ -892,7 +898,7 @@ public class StringUtil {
      * @param str        the String to check, may be null
      * @param searchChar the character to find
      * @return the last index of the search character,
-     *         -1 if no match or <code>null</code> string input
+     * -1 if no match or <code>null</code> string input
      * @since 2.0
      */
     public static int lastIndexOf(String str, char searchChar) {
@@ -926,7 +932,7 @@ public class StringUtil {
      * @param searchChar the character to find
      * @param startPos   the start position
      * @return the last index of the search character,
-     *         -1 if no match or <code>null</code> string input
+     * -1 if no match or <code>null</code> string input
      * @since 2.0
      */
     public static int lastIndexOf(String str, char searchChar, int startPos) {
@@ -955,7 +961,7 @@ public class StringUtil {
      * @param str       the String to check, may be null
      * @param searchStr the String to find, may be null
      * @return the last index of the search String,
-     *         -1 if no match or <code>null</code> string input
+     * -1 if no match or <code>null</code> string input
      * @since 2.0
      */
     public static int lastIndexOf(String str, String searchStr) {
@@ -990,7 +996,7 @@ public class StringUtil {
      * @param searchStr the String to find, may be null
      * @param startPos  the start position, negative treated as zero
      * @return the first index of the search String,
-     *         -1 if no match or <code>null</code> string input
+     * -1 if no match or <code>null</code> string input
      * @since 2.0
      */
     public static int lastIndexOf(String str, String searchStr, int startPos) {
@@ -1019,7 +1025,7 @@ public class StringUtil {
      * @param str        the String to check, may be null
      * @param searchChar the character to find
      * @return true if the String contains the search character,
-     *         false if not or <code>null</code> string input
+     * false if not or <code>null</code> string input
      * @since 2.0
      */
     public static boolean contains(String str, char searchChar) {
@@ -1047,7 +1053,7 @@ public class StringUtil {
      * @param str       the String to check, may be null
      * @param searchStr the String to find, may be null
      * @return true if the String contains the search String,
-     *         false if not or <code>null</code> string input
+     * false if not or <code>null</code> string input
      * @since 2.0
      */
     public static boolean contains(String str, String searchStr) {
@@ -1078,7 +1084,7 @@ public class StringUtil {
      * @param str       the String to check, may be null
      * @param searchStr the String to find, may be null
      * @return true if the String contains the search String irrespective of
-     *         case or false if not or <code>null</code> string input
+     * case or false if not or <code>null</code> string input
      */
     public static boolean containsIgnoreCase(String str, String searchStr) {
         if (str == null || searchStr == null) {
@@ -1179,7 +1185,7 @@ public class StringUtil {
      * @param str         the String to check, may be null
      * @param searchChars the chars to search for, may be null
      * @return the <code>true</code> if any of the chars are found,
-     *         <code>false</code> if no match or null input
+     * <code>false</code> if no match or null input
      * @since 2.4
      */
     public static boolean containsAny(String str, char[] searchChars) {
@@ -1625,7 +1631,7 @@ public class StringUtil {
      * @param end   the position to end at (exclusive), negative means
      *              count back from the end of the String by this many characters
      * @return substring from start position to end positon,
-     *         <code>null</code> if null String input
+     * <code>null</code> if null String input
      */
     public static String substring(String str, int start, int end) {
         if (str == null) {
@@ -1794,7 +1800,7 @@ public class StringUtil {
      * @param str       the String to get a substring from, may be null
      * @param separator the String to search for, may be null
      * @return the substring before the first occurrence of the separator,
-     *         <code>null</code> if null String input
+     * <code>null</code> if null String input
      * @since 2.0
      */
     public static String substringBefore(String str, String separator) {
@@ -1834,7 +1840,7 @@ public class StringUtil {
      * @param str       the String to get a substring from, may be null
      * @param separator the String to search for, may be null
      * @return the substring after the first occurrence of the separator,
-     *         <code>null</code> if null String input
+     * <code>null</code> if null String input
      * @since 2.0
      */
     public static String substringAfter(String str, String separator) {
@@ -1873,7 +1879,7 @@ public class StringUtil {
      * @param str       the String to get a substring from, may be null
      * @param separator the String to search for, may be null
      * @return the substring before the last occurrence of the separator,
-     *         <code>null</code> if null String input
+     * <code>null</code> if null String input
      * @since 2.0
      */
     public static String substringBeforeLast(String str, String separator) {
@@ -1911,7 +1917,7 @@ public class StringUtil {
      * @param str       the String to get a substring from, may be null
      * @param separator the String to search for, may be null
      * @return the substring after the last occurrence of the separator,
-     *         <code>null</code> if null String input
+     * <code>null</code> if null String input
      * @since 2.0
      */
     public static String substringAfterLast(String str, String separator) {
@@ -2073,7 +2079,7 @@ public class StringUtil {
      * @param tag the String before and after nested-string, may be null
      * @return the nested String, <code>null</code> if no match
      * @deprecated Use the better named {@link #substringBetween(String, String)}.
-     *             Method will be removed in Commons Lang 3.0.
+     * Method will be removed in Commons Lang 3.0.
      */
     public static String getNestedString(String str, String tag) {
         return substringBetween(str, tag, tag);
@@ -2103,7 +2109,7 @@ public class StringUtil {
      * @param close the String after nested-string, may be null
      * @return the nested String, <code>null</code> if no match
      * @deprecated Use the better named {@link #substringBetween(String, String, String)}.
-     *             Method will be removed in Commons Lang 3.0.
+     * Method will be removed in Commons Lang 3.0.
      */
     public static String getNestedString(String str, String open, String close) {
         return substringBetween(str, open, close);
@@ -2836,7 +2842,7 @@ public class StringUtil {
      * @param array the array of values to concatenate, may be null
      * @return the concatenated String, <code>null</code> if null array input
      * @deprecated Use the better named {@link #join(Object[])} instead.
-     *             Method will be removed in Commons Lang 3.0.
+     * Method will be removed in Commons Lang 3.0.
      */
     public static String concatenate(Object[] array) {
         return join(array, null);
@@ -3222,7 +3228,7 @@ public class StringUtil {
      * @param str    the source String to search, may be null
      * @param remove the String to search for and remove, may be null
      * @return the substring with the string removed if found,
-     *         <code>null</code> if null String input
+     * <code>null</code> if null String input
      * @since 2.1
      */
     public static String removeStart(String str, String remove) {
@@ -3257,7 +3263,7 @@ public class StringUtil {
      * @param str    the source String to search, may be null
      * @param remove the String to search for (case insensitive) and remove, may be null
      * @return the substring with the string removed if found,
-     *         <code>null</code> if null String input
+     * <code>null</code> if null String input
      * @since 2.4
      */
     public static String removeStartIgnoreCase(String str, String remove) {
@@ -3291,7 +3297,7 @@ public class StringUtil {
      * @param str    the source String to search, may be null
      * @param remove the String to search for and remove, may be null
      * @return the substring with the string removed if found,
-     *         <code>null</code> if null String input
+     * <code>null</code> if null String input
      * @since 2.1
      */
     public static String removeEnd(String str, String remove) {
@@ -3325,7 +3331,7 @@ public class StringUtil {
      * @param str    the source String to search, may be null
      * @param remove the String to search for (case insensitive) and remove, may be null
      * @return the substring with the string removed if found,
-     *         <code>null</code> if null String input
+     * <code>null</code> if null String input
      * @since 2.4
      */
     public static String removeEndIgnoreCase(String str, String remove) {
@@ -3358,7 +3364,7 @@ public class StringUtil {
      * @param str    the source String to search, may be null
      * @param remove the String to search for and remove, may be null
      * @return the substring with the string removed if found,
-     *         <code>null</code> if null String input
+     * <code>null</code> if null String input
      * @since 2.1
      */
     public static String remove(String str, String remove) {
@@ -3384,7 +3390,7 @@ public class StringUtil {
      * @param str    the source String to search, may be null
      * @param remove the char to search for and remove, may be null
      * @return the substring with the char removed if found,
-     *         <code>null</code> if null String input
+     * <code>null</code> if null String input
      * @since 2.1
      */
     public static String remove(String str, char remove) {
@@ -3424,7 +3430,7 @@ public class StringUtil {
      * @param searchString the String to search for, may be null
      * @param replacement  the String to replace with, may be null
      * @return the text with any replacements processed,
-     *         <code>null</code> if null String input
+     * <code>null</code> if null String input
      * @see #replace(String text, String searchString, String replacement, int max)
      */
     public static String replaceOnce(String text, String searchString, String replacement) {
@@ -3451,7 +3457,7 @@ public class StringUtil {
      * @param searchString the String to search for, may be null
      * @param replacement  the String to replace it with, may be null
      * @return the text with any replacements processed,
-     *         <code>null</code> if null String input
+     * <code>null</code> if null String input
      * @see #replace(String text, String searchString, String replacement, int max)
      */
     public static String replace(String text, String searchString, String replacement) {
@@ -3484,7 +3490,7 @@ public class StringUtil {
      * @param replacement  the String to replace it with, may be null
      * @param max          maximum number of values to replace, or <code>-1</code> if no maximum
      * @return the text with any replacements processed,
-     *         <code>null</code> if null String input
+     * <code>null</code> if null String input
      */
     public static String replace(String text, String searchString, String replacement, int max) {
         if (isEmpty(text) || isEmpty(searchString) || replacement == null || max == 0) {
@@ -3542,7 +3548,7 @@ public class StringUtil {
      * @param searchList      the Strings to search for, no-op if null
      * @param replacementList the Strings to replace them with, no-op if null
      * @return the text with any replacements processed, <code>null</code> if
-     *         null String input
+     * null String input
      * @throws IndexOutOfBoundsException if the lengths of the arrays are not the same (null is ok,
      *                                   and/or size 0)
      * @since 2.4
@@ -3584,7 +3590,7 @@ public class StringUtil {
      * @param searchList      the Strings to search for, no-op if null
      * @param replacementList the Strings to replace them with, no-op if null
      * @return the text with any replacements processed, <code>null</code> if
-     *         null String input
+     * null String input
      * @throws IllegalArgumentException  if the search is repeating and there is an endless loop due
      *                                   to outputs of one being inputs to another
      * @throws IndexOutOfBoundsException if the lengths of the arrays are not the same (null is ok,
@@ -3633,7 +3639,7 @@ public class StringUtil {
      * @param timeToLive      if less than 0 then there is a circular reference and endless
      *                        loop
      * @return the text with any replacements processed, <code>null</code> if
-     *         null String input
+     * null String input
      * @throws IllegalArgumentException  if the search is repeating and there is an endless loop due
      *                                   to outputs of one being inputs to another
      * @throws IndexOutOfBoundsException if the lengths of the arrays are not the same (null is ok,
@@ -3886,7 +3892,7 @@ public class StringUtil {
      * @throws NullPointerException      if text or overlay is null
      * @throws IndexOutOfBoundsException if either position is invalid
      * @deprecated Use better named {@link #overlay(String, String, int, int)} instead.
-     *             Method will be removed in Commons Lang 3.0.
+     * Method will be removed in Commons Lang 3.0.
      */
     public static String overlayString(String text, String overlay, int start, int end) {
         return new StringBuilder(start + overlay.length() + text.length() - end + 1)
@@ -3977,7 +3983,7 @@ public class StringUtil {
      * @param str    the String to repeat, may be null
      * @param repeat number of times to repeat str, negative treated as zero
      * @return a new String consisting of the original String repeated,
-     *         <code>null</code> if null String input
+     * <code>null</code> if null String input
      */
     public static String repeat(String str, int repeat) {
         // Performance tuned for 2.0 (JDK1.4)
@@ -4074,7 +4080,7 @@ public class StringUtil {
      * @param str  the String to pad out, may be null
      * @param size the size to pad to
      * @return right padded String or original String if no padding is necessary,
-     *         <code>null</code> if null String input
+     * <code>null</code> if null String input
      */
     public static String rightPad(String str, int size) {
         return rightPad(str, size, ' ');
@@ -4098,7 +4104,7 @@ public class StringUtil {
      * @param size    the size to pad to
      * @param padChar the character to pad with
      * @return right padded String or original String if no padding is necessary,
-     *         <code>null</code> if null String input
+     * <code>null</code> if null String input
      * @since 2.0
      */
     public static String rightPad(String str, int size, char padChar) {
@@ -4136,7 +4142,7 @@ public class StringUtil {
      * @param size   the size to pad to
      * @param padStr the String to pad with, null or empty treated as single space
      * @return right padded String or original String if no padding is necessary,
-     *         <code>null</code> if null String input
+     * <code>null</code> if null String input
      */
     public static String rightPad(String str, int size, String padStr) {
         if (str == null) {
@@ -4186,7 +4192,7 @@ public class StringUtil {
      * @param str  the String to pad out, may be null
      * @param size the size to pad to
      * @return left padded String or original String if no padding is necessary,
-     *         <code>null</code> if null String input
+     * <code>null</code> if null String input
      */
     public static String leftPad(String str, int size) {
         return leftPad(str, size, ' ');
@@ -4210,7 +4216,7 @@ public class StringUtil {
      * @param size    the size to pad to
      * @param padChar the character to pad with
      * @return left padded String or original String if no padding is necessary,
-     *         <code>null</code> if null String input
+     * <code>null</code> if null String input
      * @since 2.0
      */
     public static String leftPad(String str, int size, char padChar) {
@@ -4248,7 +4254,7 @@ public class StringUtil {
      * @param size   the size to pad to
      * @param padStr the String to pad with, null or empty treated as single space
      * @return left padded String or original String if no padding is necessary,
-     *         <code>null</code> if null String input
+     * <code>null</code> if null String input
      */
     public static String leftPad(String str, int size, String padStr) {
         if (str == null) {
@@ -4480,7 +4486,7 @@ public class StringUtil {
      * @param str the String to capitalize, may be null
      * @return the capitalized String, <code>null</code> if null String input
      * @deprecated Use the standardly named {@link #capitalize(String)}.
-     *             Method will be removed in Commons Lang 3.0.
+     * Method will be removed in Commons Lang 3.0.
      */
     public static String capitalise(String str) {
         return capitalize(str);
@@ -4520,7 +4526,7 @@ public class StringUtil {
      * @param str the String to uncapitalize, may be null
      * @return the uncapitalized String, <code>null</code> if null String input
      * @deprecated Use the standardly named {@link #uncapitalize(String)}.
-     *             Method will be removed in Commons Lang 3.0.
+     * Method will be removed in Commons Lang 3.0.
      */
     public static String uncapitalise(String str) {
         return uncapitalize(str);
@@ -4661,7 +4667,7 @@ public class StringUtil {
      *
      * @param str the String to check, may be null
      * @return <code>true</code> if only contains letters and space,
-     *         and is non-null
+     * and is non-null
      */
     public static boolean isAlphaSpace(String str) {
         if (str == null) {
@@ -4694,7 +4700,7 @@ public class StringUtil {
      *
      * @param str the String to check, may be null
      * @return <code>true</code> if only contains letters or digits,
-     *         and is non-null
+     * and is non-null
      */
     public static boolean isAlphanumeric(String str) {
         if (str == null) {
@@ -4728,7 +4734,7 @@ public class StringUtil {
      *
      * @param str the String to check, may be null
      * @return <code>true</code> if only contains letters, digits or space,
-     *         and is non-null
+     * and is non-null
      */
     public static boolean isAlphanumericSpace(String str) {
         if (str == null) {
@@ -4799,7 +4805,7 @@ public class StringUtil {
      *
      * @param str the String to check, may be null
      * @return <code>true</code> if only contains digits or space,
-     *         and is non-null
+     * and is non-null
      */
     public static boolean isNumericSpace(String str) {
         if (str == null) {
@@ -4861,7 +4867,7 @@ public class StringUtil {
      *
      * @param str the String to check, may be null
      * @return the passed in String, or the empty String if it
-     *         was <code>null</code>
+     * was <code>null</code>
      * @see String#valueOf(Object)
      */
     public static String defaultString(String str) {
@@ -5060,7 +5066,7 @@ public class StringUtil {
      * @param str1 the first String, may be null
      * @param str2 the second String, may be null
      * @return the portion of str2 where it differs from str1; returns the
-     *         empty String if they are equal
+     * empty String if they are equal
      * @since 2.0
      */
     public static String difference(String str1, String str2) {
@@ -5237,8 +5243,8 @@ public class StringUtil {
      *
      * @param strs array of String objects, entries may be null
      * @return the initial sequence of characters that are common to all Strings
-     *         in the array; empty String if the array is null, the elements are all null
-     *         or if there is no common prefix.
+     * in the array; empty String if the array is null, the elements are all null
+     * or if there is no common prefix.
      * @since 2.4
      */
     public static String getCommonPrefix(String[] strs) {
@@ -5416,7 +5422,7 @@ public class StringUtil {
      * @param str    the String to check, may be null
      * @param prefix the prefix to find, may be null
      * @return <code>true</code> if the String starts with the prefix, case sensitive, or
-     *         both <code>null</code>
+     * both <code>null</code>
      * @see String#startsWith(String)
      * @since 2.4
      */
@@ -5441,7 +5447,7 @@ public class StringUtil {
      * @param str    the String to check, may be null
      * @param prefix the prefix to find, may be null
      * @return <code>true</code> if the String starts with the prefix, case insensitive, or
-     *         both <code>null</code>
+     * both <code>null</code>
      * @see String#startsWith(String)
      * @since 2.4
      */
@@ -5457,7 +5463,7 @@ public class StringUtil {
      * @param ignoreCase inidicates whether the compare should ignore case
      *                   (case insensitive) or not.
      * @return <code>true</code> if the String starts with the prefix or
-     *         both <code>null</code>
+     * both <code>null</code>
      * @see String#startsWith(String)
      */
     private static boolean startsWith(String str, String prefix, boolean ignoreCase) {
@@ -5490,7 +5496,7 @@ public class StringUtil {
      * @param str    the String to check, may be null
      * @param suffix the suffix to find, may be null
      * @return <code>true</code> if the String ends with the suffix, case sensitive, or
-     *         both <code>null</code>
+     * both <code>null</code>
      * @see String#endsWith(String)
      * @since 2.4
      */
@@ -5515,7 +5521,7 @@ public class StringUtil {
      * @param str    the String to check, may be null
      * @param suffix the suffix to find, may be null
      * @return <code>true</code> if the String ends with the suffix, case insensitive, or
-     *         both <code>null</code>
+     * both <code>null</code>
      * @see String#endsWith(String)
      * @since 2.4
      */
@@ -5531,7 +5537,7 @@ public class StringUtil {
      * @param ignoreCase inidicates whether the compare should ignore case
      *                   (case insensitive) or not.
      * @return <code>true</code> if the String starts with the prefix or
-     *         both <code>null</code>
+     * both <code>null</code>
      * @see String#endsWith(String)
      */
     private static boolean endsWith(String str, String suffix, boolean ignoreCase) {

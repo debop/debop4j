@@ -31,8 +31,10 @@ import java.sql.Timestamp;
  */
 public interface IMySqlUpdatedTimestamp {
 
-    /** MySQL 에서 레코드별로 최신 갱신일자를 표현합니다. */
-    @Column( updatable = false, insertable = false, columnDefinition = "timestamp default current_timestamp on update current_timestamp" )
-    @Generated( GenerationTime.ALWAYS )
+    /**
+     * MySQL 에서 레코드별로 최신 갱신일자를 표현합니다.
+     */
+    @Column(updatable = false, insertable = false, columnDefinition = "timestamp default current_timestamp on update current_timestamp")
+    @Generated(GenerationTime.ALWAYS)
     Timestamp getUpdatedTimestamp();
 }

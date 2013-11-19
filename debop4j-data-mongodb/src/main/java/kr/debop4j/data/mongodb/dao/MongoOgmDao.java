@@ -28,7 +28,7 @@ import org.springframework.stereotype.Component;
  * @since 13. 4. 16. 오전 11:14
  */
 @Component
-@SuppressWarnings( "unchecked" )
+@SuppressWarnings("unchecked")
 public class MongoOgmDao extends HibernateOgmDao {
 
     private static final Logger log = LoggerFactory.getLogger(MongoOgmDao.class);

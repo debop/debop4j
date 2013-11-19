@@ -29,10 +29,10 @@ public class Hypothesis extends AnnotatedEntityBase {
     @Id
     private String id;
 
-    @Field( analyze = Analyze.NO )
+    @Field(analyze = Analyze.NO)
     private String description;
 
-    @Column( name = "pos" )
+    @Column(name = "pos")
     @Field
     @NumericField
     private int position;

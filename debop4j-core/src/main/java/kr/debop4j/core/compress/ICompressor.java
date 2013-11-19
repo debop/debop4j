@@ -26,7 +26,9 @@ public interface ICompressor {
 
     int BUFFER_SIZE = 4096;
 
-    /** 압축 알고리즘 정보 */
+    /**
+     * 압축 알고리즘 정보
+     */
     String getAlgorithm();
 
     /**
@@ -45,9 +47,13 @@ public interface ICompressor {
      */
     byte[] decompress(byte[] compressed);
 
-    /** 문자열을 압축하여, base64 문자열로 만듭니다. */
+    /**
+     * 문자열을 압축하여, base64 문자열로 만듭니다.
+     */
     String compressString(String plainText);
 
-    /** 압축된 base64 문자열을 복원하여 일반 문자열로 만듭니다. */
+    /**
+     * 압축된 base64 문자열을 복원하여 일반 문자열로 만듭니다.
+     */
     String decompressString(String compressedBase64);
 }

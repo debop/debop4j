@@ -33,8 +33,8 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @Configuration
 @EnableTransactionManagement
 @EnableAsync
-@ComponentScan( basePackageClasses = { UnitOfWorks.class, IHibernateDao.class } )
-@Import( { kr.debop4j.data.DatabaseConfig.class } )
+@ComponentScan(basePackageClasses = { UnitOfWorks.class, IHibernateDao.class })
+@Import({ kr.debop4j.data.DatabaseConfig.class })
 public class AppConfig {
 
     // 추가해야 할 것

@@ -54,7 +54,9 @@ public class TimePeriodChain extends TimePeriodContainer implements ITimePeriodC
         return (getFirst() != null) ? getFirst().getStart() : TimeSpec.MinPeriodTime;
     }
 
-    /** period chain의 시작 시각을 지정합니다. */
+    /**
+     * period chain의 시작 시각을 지정합니다.
+     */
     @Override
     public void setStart(DateTime value) {
         if (getFirst() != null)
@@ -196,7 +198,9 @@ public class TimePeriodChain extends TimePeriodContainer implements ITimePeriodC
         }
     }
 
-    /** 지정한 요소를 제거하고, 후속 ITimePeriod 들의 기간을 재조정합니다. (앞으로 당깁니다) */
+    /**
+     * 지정한 요소를 제거하고, 후속 ITimePeriod 들의 기간을 재조정합니다. (앞으로 당깁니다)
+     */
     @Override
     public boolean remove(Object o) {
         shouldNotBeNull(o, "o");
@@ -234,7 +238,9 @@ public class TimePeriodChain extends TimePeriodContainer implements ITimePeriodC
         return removed;
     }
 
-    /** 지정한 요소를 제거하고, 후속 ITimePeriod 들의 기간을 재조정합니다. (앞으로 당깁니다) */
+    /**
+     * 지정한 요소를 제거하고, 후속 ITimePeriod 들의 기간을 재조정합니다. (앞으로 당깁니다)
+     */
     @Override
     public ITimePeriod remove(int index) {
         shouldBeInRange(index, 0, size(), "index");
@@ -243,7 +249,9 @@ public class TimePeriodChain extends TimePeriodContainer implements ITimePeriodC
         return remove(removed) ? removed : null;
     }
 
-    /** moment 이전에 duration 만큼의 시간적 공간이 있는지 여부 (새로운 기간을 추가하기 위해서는 공간이 필요합니다) */
+    /**
+     * moment 이전에 duration 만큼의 시간적 공간이 있는지 여부 (새로운 기간을 추가하기 위해서는 공간이 필요합니다)
+     */
     protected void assertSpaceBefore(DateTime moment, Duration duration) {
         boolean hasSpace = moment != TimeSpec.MinPeriodTime;
         if (hasSpace) {
@@ -253,7 +261,9 @@ public class TimePeriodChain extends TimePeriodContainer implements ITimePeriodC
         shouldBe(hasSpace, "duration [%s] is out of range.", duration);
     }
 
-    /** moment 이후에 duration 만큼의 시간적 공간이 있는지 여부 (새로운 기간을 추가하기 위해서는 공간이 필요합니다) */
+    /**
+     * moment 이후에 duration 만큼의 시간적 공간이 있는지 여부 (새로운 기간을 추가하기 위해서는 공간이 필요합니다)
+     */
     protected void assertSpaceAfter(DateTime moment, Duration duration) {
         boolean hasSpace = moment != TimeSpec.MaxPeriodTime;
         if (hasSpace) {

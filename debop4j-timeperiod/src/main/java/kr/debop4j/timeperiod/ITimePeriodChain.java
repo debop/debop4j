@@ -10,15 +10,23 @@ import org.joda.time.DateTime;
  */
 public interface ITimePeriodChain extends ITimePeriodContainer {
 
-    /** Chain의 시작 시각 */
+    /**
+     * Chain의 시작 시각
+     */
     void setStart(DateTime start);
 
-    /** Chain의 완료 시각 */
+    /**
+     * Chain의 완료 시각
+     */
     void setEnd(DateTime end);
 
-    /** Chain의 첫번째 Period */
+    /**
+     * Chain의 첫번째 Period
+     */
     ITimePeriod getFirst();
 
-    /** Chain의 마지막 Period */
+    /**
+     * Chain의 마지막 Period
+     */
     ITimePeriod getLast();
 }

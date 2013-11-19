@@ -117,7 +117,9 @@ public class JdbcTool {
         return ds;
     }
 
-    /** 테스트에 사용하기 위해 메모리를 사용하는 HSql DB 에 대한 DataSource 를 반환합니다. */
+    /**
+     * 테스트에 사용하기 위해 메모리를 사용하는 HSql DB 에 대한 DataSource 를 반환합니다.
+     */
     public static DataSource getEmbeddedHsqlDataSource() {
         return getDataSource("org.hsqldb.jdbcDriver",
                              "jdbc:hsqldb:mem:test;MVCC=TRUE;",
@@ -125,7 +127,9 @@ public class JdbcTool {
                              "");
     }
 
-    /** 테스트에 사용하기 위해 메모리를 사용하는 H2 DB 에 대한 DataSource 를 반환합니다. */
+    /**
+     * 테스트에 사용하기 위해 메모리를 사용하는 H2 DB 에 대한 DataSource 를 반환합니다.
+     */
     public static DataSource getEmbeddedH2DataSource() {
         return getDataSource("org.h2.Driver",
                              "jdbc:h2:mem:test;DB_CLOSE_DELAY=-1;MVCC=TRUE;",

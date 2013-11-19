@@ -90,8 +90,8 @@ public class HibernateRepository<E extends IStatefulEntity> implements IHibernat
 
     @Override
     public final void flushSession() {
-        if (isDebugEnabled)
-            log.debug("Session 정보를 flush 합니다...");
+
+        log.debug("Session 정보를 flush 합니다...");
 
         getSession().flush();
     }
@@ -103,32 +103,32 @@ public class HibernateRepository<E extends IStatefulEntity> implements IHibernat
 
     @Override
     public <E> E load(Serializable id) {
-        if (isTraceEnabled)
-            log.trace("load entity... id=[{}]", entityClazz, id);
+
+        log.trace("load entity... id=[{}]", entityClazz, id);
 
         return (E) getSession().load(entityClazz, id);
     }
 
     @Override
     public <E> E load(Serializable id, LockOptions lockOptions) {
-        if (isTraceEnabled)
-            log.trace("load entity... id=[{}], lockOptions=[{}]", entityClazz, id, lockOptions);
+
+        log.trace("load entity... id=[{}], lockOptions=[{}]", entityClazz, id, lockOptions);
 
         return (E) getSession().load(entityClazz, id, lockOptions);
     }
 
     @Override
     public <E> E get(Serializable id) {
-        if (isTraceEnabled)
-            log.trace("get entity... id=[{}]", entityClazz, id);
+
+        log.trace("get entity... id=[{}]", entityClazz, id);
 
         return (E) getSession().get(entityClazz, id);
     }
 
     @Override
     public <E> E get(Serializable id, LockOptions lockOptions) {
-        if (isTraceEnabled)
-            log.trace("get entity... id=[{}], lockOptions=[{}]", entityClazz, id, lockOptions);
+
+        log.trace("get entity... id=[{}], lockOptions=[{}]", entityClazz, id, lockOptions);
 
         return (E) getSession().get(entityClazz, id, lockOptions);
     }
@@ -258,9 +258,9 @@ public class HibernateRepository<E extends IStatefulEntity> implements IHibernat
     @Override
     public <E> List<E> find(final String hql, int firstResult, int maxResults, HibernateParameter... parameters) {
         assert StringTool.isNotEmpty(hql);
-        if (isTraceEnabled)
-            log.trace("HQL문을 실행합니다. hql=[{}], firstResult=[{}], maxResults=[{}], parameters=[{}]",
-                      hql, firstResult, maxResults, StringTool.listToString(parameters));
+
+        log.trace("HQL문을 실행합니다. hql=[{}], firstResult=[{}], maxResults=[{}], parameters=[{}]",
+                  hql, firstResult, maxResults, StringTool.listToString(parameters));
 
         Query query = getSession().createQuery(hql);
         return find(query, firstResult, maxResults, parameters);
@@ -273,9 +273,9 @@ public class HibernateRepository<E extends IStatefulEntity> implements IHibernat
 
     @Override
     public <E> List<E> findByNamedQuery(final String queryName, int firstResult, int maxResults, HibernateParameter... parameters) {
-        if (isTraceEnabled)
-            log.trace("NamedQuery를 실행합니다. sqlString=[{}], firstResult=[{}], maxResults=[{}], parameters=[{}]",
-                      queryName, firstResult, maxResults, StringTool.listToString(parameters));
+
+        log.trace("NamedQuery를 실행합니다. sqlString=[{}], firstResult=[{}], maxResults=[{}], parameters=[{}]",
+                  queryName, firstResult, maxResults, StringTool.listToString(parameters));
 
         Query query = getSession().getNamedQuery(queryName);
         return find(query, firstResult, maxResults, parameters);
@@ -289,9 +289,9 @@ public class HibernateRepository<E extends IStatefulEntity> implements IHibernat
     @Override
     public <E> List<E> findBySQLString(final String sqlString, int firstResult, int maxResults, HibernateParameter... parameters) {
         assert StringTool.isNotEmpty(sqlString);
-        if (isTraceEnabled)
-            log.trace("일반 SQL 문 실행합니다. sqlString=[{}], firstResult=[{}], maxResults=[{}], parameters=[{}]",
-                      sqlString, firstResult, maxResults, StringTool.listToString(parameters));
+
+        log.trace("일반 SQL 문 실행합니다. sqlString=[{}], firstResult=[{}], maxResults=[{}], parameters=[{}]",
+                  sqlString, firstResult, maxResults, StringTool.listToString(parameters));
 
         Query query = getSession().createSQLQuery(sqlString);
         return find(query, firstResult, maxResults, parameters);
@@ -335,9 +335,9 @@ public class HibernateRepository<E extends IStatefulEntity> implements IHibernat
 
     @Override
     public <E> IPagedList<E> getPageByHql(final String hql, int pageNo, int pageSize, HibernateParameter... parameters) {
-        if (isTraceEnabled)
-            log.trace("HQL문을 실행하고, 결과를 Paging처리합니다. hql=[{}], pageNo=[{}], pageSize=[{}], parameters=[{}]",
-                      hql, pageNo, pageSize, StringTool.listToString(parameters));
+
+        log.trace("HQL문을 실행하고, 결과를 Paging처리합니다. hql=[{}], pageNo=[{}], pageSize=[{}], parameters=[{}]",
+                  hql, pageNo, pageSize, StringTool.listToString(parameters));
 
         Query query = getSession().createQuery(hql);
         return getPage(query, pageNo, pageSize, parameters);
@@ -345,9 +345,9 @@ public class HibernateRepository<E extends IStatefulEntity> implements IHibernat
 
     @Override
     public <E> IPagedList<E> getPageByNamedQuery(final String queryName, int pageNo, int pageSize, HibernateParameter... parameters) {
-        if (isTraceEnabled)
-            log.trace("NamedQuery를 실행하고, 결과를 Paging처리합니다. sqlString=[{}], pageNo=[{}], pageSize=[{}], parameters=[{}]",
-                      queryName, pageNo, pageSize, StringTool.listToString(parameters));
+
+        log.trace("NamedQuery를 실행하고, 결과를 Paging처리합니다. sqlString=[{}], pageNo=[{}], pageSize=[{}], parameters=[{}]",
+                  queryName, pageNo, pageSize, StringTool.listToString(parameters));
 
         Query query = getSession().getNamedQuery(queryName);
         return getPage(query, pageNo, pageSize, parameters);
@@ -355,9 +355,9 @@ public class HibernateRepository<E extends IStatefulEntity> implements IHibernat
 
     @Override
     public <E> IPagedList<E> getPageBySQLString(final String sqlString, int pageNo, int pageSize, HibernateParameter... parameters) {
-        if (isTraceEnabled)
-            log.trace("일반 SQL문을 실행하고, 결과를 Paging처리합니다. sqlString=[{}], pageNo=[{}], pageSize=[{}], parameters=[{}]",
-                      sqlString, pageNo, pageSize, StringTool.listToString(parameters));
+
+        log.trace("일반 SQL문을 실행하고, 결과를 Paging처리합니다. sqlString=[{}], pageNo=[{}], pageSize=[{}], parameters=[{}]",
+                  sqlString, pageNo, pageSize, StringTool.listToString(parameters));
 
         SQLQuery query = getSession().createSQLQuery(sqlString);
         return getPage(query, pageNo, pageSize, parameters);
@@ -382,8 +382,8 @@ public class HibernateRepository<E extends IStatefulEntity> implements IHibernat
 
     @Override
     public <E> E findUniqueByHql(String hql, HibernateParameter... parameters) {
-        if (isTraceEnabled)
-            log.trace("hql을 수행합니다. hql=[{}], parameters=[{}]", hql, StringTool.listToString(parameters));
+
+        log.trace("hql을 수행합니다. hql=[{}], parameters=[{}]", hql, StringTool.listToString(parameters));
 
         Query query = getSession().createQuery(hql);
         return findUnique(query, parameters);
@@ -391,22 +391,22 @@ public class HibernateRepository<E extends IStatefulEntity> implements IHibernat
 
     @Override
     public <E> E findUniqueByNamedQuery(String queryName, HibernateParameter... parameters) {
-        if (isTraceEnabled)
-            log.trace("NamedQuery를 수행합니다. queryName=[{}], parameters=[{}]", queryName, StringTool.listToString(parameters));
+
+        log.trace("NamedQuery를 수행합니다. queryName=[{}], parameters=[{}]", queryName, StringTool.listToString(parameters));
 
         Query query = getSession().getNamedQuery(queryName);
 
-        if (isTraceEnabled)
-            log.trace("NamedQuery를 수행합니다. queryName=[{}], queryString=[{}], parameters=[{}]",
-                      queryName, query.getQueryString(), StringTool.listToString(parameters));
+
+        log.trace("NamedQuery를 수행합니다. queryName=[{}], queryString=[{}], parameters=[{}]",
+                  queryName, query.getQueryString(), StringTool.listToString(parameters));
 
         return findUnique(query, parameters);
     }
 
     @Override
     public <E> E findUniqueBySQLString(String sqlString, HibernateParameter... parameters) {
-        if (isTraceEnabled)
-            log.trace("일반 SQL문을 수행합니다. sqlString=[{}], parameters=[{}]", sqlString, StringTool.listToString(parameters));
+
+        log.trace("일반 SQL문을 수행합니다. sqlString=[{}], parameters=[{}]", sqlString, StringTool.listToString(parameters));
 
         SQLQuery query = getSession().createSQLQuery(sqlString);
         return findUnique(query, parameters);
@@ -432,8 +432,8 @@ public class HibernateRepository<E extends IStatefulEntity> implements IHibernat
 
     @Override
     public <E> E findFirstByHql(String hql, HibernateParameter... parameters) {
-        if (isTraceEnabled)
-            log.trace("hql을 수행합니다. hql=[{}], parameters=[{}]", hql, StringTool.listToString(parameters));
+
+        log.trace("hql을 수행합니다. hql=[{}], parameters=[{}]", hql, StringTool.listToString(parameters));
 
         Query query = getSession().createQuery(hql);
         return findFirst(query, parameters);
@@ -441,8 +441,8 @@ public class HibernateRepository<E extends IStatefulEntity> implements IHibernat
 
     @Override
     public <E> E findFirstByNamedQuery(String queryName, HibernateParameter... parameters) {
-        if (isTraceEnabled)
-            log.trace("NamedQuery를 수행합니다. queryName=[{}], parameters=[{}]", queryName, StringTool.listToString(parameters));
+
+        log.trace("NamedQuery를 수행합니다. queryName=[{}], parameters=[{}]", queryName, StringTool.listToString(parameters));
 
         Query query = getSession().getNamedQuery(queryName);
         return findUnique(query, parameters);
@@ -450,8 +450,8 @@ public class HibernateRepository<E extends IStatefulEntity> implements IHibernat
 
     @Override
     public <E> E findFirstBySQLString(String sqlString, HibernateParameter... parameters) {
-        if (isTraceEnabled)
-            log.trace("일반 SQL문을 수행합니다. sqlString=[{}], parameters=[{}]", sqlString, StringTool.listToString(parameters));
+
+        log.trace("일반 SQL문을 수행합니다. sqlString=[{}], parameters=[{}]", sqlString, StringTool.listToString(parameters));
 
         SQLQuery query = getSession().createSQLQuery(sqlString);
         return findUnique(query, parameters);
@@ -500,8 +500,8 @@ public class HibernateRepository<E extends IStatefulEntity> implements IHibernat
     @Override
     public long count(Criteria criteria) {
         Object count = criteria.setProjection(Projections.rowCount()).uniqueResult();
-        if (isTraceEnabled)
-            log.trace("count=" + count);
+
+        log.trace("count=" + count);
         return (count == null) ? 0 : ((Number) count).longValue();
     }
 
@@ -518,8 +518,8 @@ public class HibernateRepository<E extends IStatefulEntity> implements IHibernat
                 .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
                 .uniqueResult();
 
-        if (isTraceEnabled)
-            log.trace("count=" + count);
+
+        log.trace("count=" + count);
 
         return (count == null) ? 0 : ((Number) count).longValue();
     }
@@ -556,24 +556,24 @@ public class HibernateRepository<E extends IStatefulEntity> implements IHibernat
 
     @Override
     public void deleteById(Serializable id) {
-        if (isTraceEnabled)
-            log.trace("엔티티[{}]를 삭제합니다. id=[{}]", entityClazz.getSimpleName(), id);
+
+        log.trace("엔티티[{}]를 삭제합니다. id=[{}]", entityClazz.getSimpleName(), id);
 
         getSession().delete(load(id));
     }
 
     @Override
     public void deleteAll() {
-        if (isTraceEnabled)
-            log.trace("해당 엔티티를 모두 삭제합니다. entityClazz=[{}]", entityClazz);
+
+        log.trace("해당 엔티티를 모두 삭제합니다. entityClazz=[{}]", entityClazz);
 
         deleteAll(DetachedCriteria.forClass(entityClazz));
     }
 
     @Override
     public void deleteAll(Collection<?> entities) {
-        if (isTraceEnabled)
-            log.trace("지정한 엔티티들을 모두 삭제합니다.");
+
+        log.trace("지정한 엔티티들을 모두 삭제합니다.");
 
         final Session session = getSession();
         for (Object entity : entities) {
@@ -593,8 +593,8 @@ public class HibernateRepository<E extends IStatefulEntity> implements IHibernat
 
     @Override
     public int deleteAllWithoutCascade() {
-        if (isTraceEnabled)
-            log.trace("해당 엔티티를 모두 삭제합니다. entityClazz=[{}]", entityClazz);
+
+        log.trace("해당 엔티티를 모두 삭제합니다. entityClazz=[{}]", entityClazz);
 
         return getSession()
                 .createQuery("delete from " + entityClazz.getName())
@@ -604,9 +604,9 @@ public class HibernateRepository<E extends IStatefulEntity> implements IHibernat
 
     @Override
     public int executeUpdateByHql(final String hql, HibernateParameter... parameters) {
-        if (isTraceEnabled)
-            log.trace("Update/Delete 구문을 수행합니다. hql=[{}], parameters=[{}]",
-                      hql, StringTool.listToString(parameters));
+
+        log.trace("Update/Delete 구문을 수행합니다. hql=[{}], parameters=[{}]",
+                  hql, StringTool.listToString(parameters));
 
         Query query = getSession().createQuery(hql);
         HibernateTool.setParameters(query, parameters);
@@ -615,9 +615,9 @@ public class HibernateRepository<E extends IStatefulEntity> implements IHibernat
 
     @Override
     public int executeUpdateByNamedQuery(final String queryName, HibernateParameter... parameters) {
-        if (isTraceEnabled)
-            log.trace("Update/Delete 구문을 수행합니다. queryName=[{}], parameters=[{}]",
-                      queryName, StringTool.listToString(parameters));
+
+        log.trace("Update/Delete 구문을 수행합니다. queryName=[{}], parameters=[{}]",
+                  queryName, StringTool.listToString(parameters));
 
         Query query = getSession().getNamedQuery(queryName);
         HibernateTool.setParameters(query, parameters);
@@ -626,9 +626,9 @@ public class HibernateRepository<E extends IStatefulEntity> implements IHibernat
 
     @Override
     public int executeUpdateBySQLString(final String sqlString, HibernateParameter... parameters) {
-        if (isTraceEnabled)
-            log.trace("Update/Delete 구문을 수행합니다. sqlString=[{}], parameters=[{}]",
-                      sqlString, StringTool.listToString(parameters));
+
+        log.trace("Update/Delete 구문을 수행합니다. sqlString=[{}], parameters=[{}]",
+                  sqlString, StringTool.listToString(parameters));
 
         SQLQuery query = getSession().createSQLQuery(sqlString);
         HibernateTool.setParameters(query, parameters);
@@ -648,9 +648,9 @@ public class HibernateRepository<E extends IStatefulEntity> implements IHibernat
                                                           Criteria criteria,
                                                           Projection projection,
                                                           boolean distinctResult) {
-        if (isTraceEnabled)
-            log.trace("Criteria에 Projection을 적용합니다. projectClass=[{}], projection=[{}], distinctResult=[{}]",
-                      projectClass, projection, distinctResult);
+
+        log.trace("Criteria에 Projection을 적용합니다. projectClass=[{}], projection=[{}], distinctResult=[{}]",
+                  projectClass, projection, distinctResult);
 
         if (distinctResult) {
             criteria.setProjection(Projections.distinct(projection));

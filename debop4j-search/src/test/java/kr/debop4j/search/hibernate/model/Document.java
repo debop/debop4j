@@ -50,7 +50,9 @@ public class Document extends UuidEntityBase {
         this.rowId = rowId;
     }
 
-    /** Document의 고유 RowId */
+    /**
+     * Document의 고유 RowId
+     */
     @Field(store = Store.YES, index = Index.YES, analyze = Analyze.NO)
     private String rowId;
 
@@ -59,11 +61,15 @@ public class Document extends UuidEntityBase {
     @Boost(2.0f)
     private String body;
 
-    /** Document 생성자의 Id 또는 이름 */
+    /**
+     * Document 생성자의 Id 또는 이름
+     */
     @Field(analyze = Analyze.NO)
     private String creatorId;
 
-    /** Document 생성 일자 (milliseconds) */
+    /**
+     * Document 생성 일자 (milliseconds)
+     */
     @Field(store = Store.YES, index = Index.YES, analyze = Analyze.NO)
     private long createdTime = 0L;
 

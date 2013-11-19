@@ -23,7 +23,9 @@ import org.slf4j.LoggerFactory;
 import java.util.ArrayList;
 import java.util.List;
 
-/** 음절 특성 정보를 분석합니다. */
+/**
+ * 음절 특성 정보를 분석합니다.
+ */
 public class SyllableUtil {
 
     private static final Logger log = LoggerFactory.getLogger(SyllableUtil.class);
@@ -71,7 +73,9 @@ public class SyllableUtil {
 
     public static int IDX_YNPEOMI = 37; // 용언이 어미와 결합할 때 생성되는 음절의 수 734개
 
-    /** 용언의 표층 형태로만 사용되는 음절 */
+    /**
+     * 용언의 표층 형태로만 사용되는 음절
+     */
     public static int IDX_WDSURF = 38;
 
     public static int IDX_EOGAN = 39; // 어미 또는 어미의 변형으로 존재할 수 있는 음 (즉 IDX_EOMI 이거나 IDX_YNPNA 이후에 1이 있는 음절)

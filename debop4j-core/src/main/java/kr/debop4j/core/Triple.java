@@ -44,15 +44,21 @@ public class Triple<V1, V2, V3> extends ValueObjectBase implements Serializable 
         return new Triple<V1, V2, V3>(v1, v2, v3);
     }
 
-    /** The V1. */
+    /**
+     * The V1.
+     */
     @Getter
     public final V1 v1;
 
-    /** The V2. */
+    /**
+     * The V2.
+     */
     @Getter
     public final V2 v2;
 
-    /** The V3. */
+    /**
+     * The V3.
+     */
     @Getter
     public final V3 v3;
     private final int hash;

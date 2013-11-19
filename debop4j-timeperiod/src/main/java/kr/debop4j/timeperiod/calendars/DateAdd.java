@@ -46,15 +46,21 @@ public class DateAdd extends ValueObjectBase {
     @Getter private final ITimePeriodCollection includePeriods = new TimePeriodCollection();
     @Getter private final ITimePeriodCollection excludePeriods = new TimePeriodCollection();
 
-    /** 기본 생성자 */
+    /**
+     * 기본 생성자
+     */
     public DateAdd() { }
 
-    /** start 시각으로부터 offset 기간이 지난 시각을 계산합니다. */
+    /**
+     * start 시각으로부터 offset 기간이 지난 시각을 계산합니다.
+     */
     public DateTime add(DateTime start, Duration offset) {
         return add(start, offset, SeekBoundaryMode.Next);
     }
 
-    /** start 시각으로부터 offset 기간이 지난 시각을 계산합니다. */
+    /**
+     * start 시각으로부터 offset 기간이 지난 시각을 계산합니다.
+     */
     public DateTime add(DateTime start, Duration offset, SeekBoundaryMode seekBoundary) {
         if (isTraceEnable)
             log.trace("Add. start=[{}] + offset=[{}]의 시각을 계산합니다. seekBoundaryMode=[{}]", start, offset, seekBoundary);
@@ -77,12 +83,16 @@ public class DateAdd extends ValueObjectBase {
         return end;
     }
 
-    /** start 시각으로부터 offset 기간을 뺀 (즉 이전의) 시각을 계산합니다. */
+    /**
+     * start 시각으로부터 offset 기간을 뺀 (즉 이전의) 시각을 계산합니다.
+     */
     public DateTime subtract(DateTime start, Duration offset) {
         return subtract(start, offset, SeekBoundaryMode.Next);
     }
 
-    /** start 시각으로부터 offset 기간을 뺀 (즉 이전의) 시각을 계산합니다. */
+    /**
+     * start 시각으로부터 offset 기간을 뺀 (즉 이전의) 시각을 계산합니다.
+     */
     public DateTime subtract(DateTime start, Duration offset, SeekBoundaryMode seekBoundary) {
         if (isTraceEnable)
             log.trace("Subtract. start=[{}] - offset=[{}]의 시각을 계산합니다. seekBoundaryMode=[{}]", start, offset, seekBoundary);

@@ -49,13 +49,19 @@ public class CalendarDateAdd extends DateAdd {
 
     @Getter private final ITimeCalendar timeCalendar;
 
-    /** 일하는 요일 */
+    /**
+     * 일하는 요일
+     */
     @Getter private final List<DayOfWeek> weekDays = new ArrayList<>();
 
-    /** 하루중 일하는 시간들 (오전, 오후, 야간으로 나뉠 수 있으므로 */
+    /**
+     * 하루중 일하는 시간들 (오전, 오후, 야간으로 나뉠 수 있으므로
+     */
     @Getter private final List<HourRangeInDay> workingHours = new ArrayList<>();
 
-    /** 특정요일의 일하는 시간을 표현 (툐요일 반일 근무 등) */
+    /**
+     * 특정요일의 일하는 시간을 표현 (툐요일 반일 근무 등)
+     */
     @Getter private final List<DayHourRange> workingDayHours = new ArrayList<>();
 
     public CalendarDateAdd() {
@@ -76,12 +82,16 @@ public class CalendarDateAdd extends DateAdd {
         throw new NotSupportException("IncludePeriods는 지원하지 않습니다.");
     }
 
-    /** 주중 (월-금)을 working day로 추가합니다. */
+    /**
+     * 주중 (월-금)을 working day로 추가합니다.
+     */
     public void addWorkingWeekDays() {
         addWeekDays(TimeSpec.Weekdays);
     }
 
-    /** 주말 (토-일)을 working day로 추가합니다. */
+    /**
+     * 주말 (토-일)을 working day로 추가합니다.
+     */
     public void addWeekendWeekDays() {
         addWeekDays(TimeSpec.Weekends);
     }
@@ -90,7 +100,9 @@ public class CalendarDateAdd extends DateAdd {
         Collections.addAll(weekDays, dayOfWeeks);
     }
 
-    /** start 시각으로부터 offset 기간이 지난 시각을 계산합니다. */
+    /**
+     * start 시각으로부터 offset 기간이 지난 시각을 계산합니다.
+     */
     public DateTime add(DateTime start, Duration offset) {
         return add(start, offset, SeekBoundaryMode.Next);
     }

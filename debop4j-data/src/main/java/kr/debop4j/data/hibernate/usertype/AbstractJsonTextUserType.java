@@ -72,14 +72,14 @@ public abstract class AbstractJsonTextUserType implements CompositeUserType, Ser
      * @return 역직렬화한 원본 객체
      * @throws HibernateException
      */
-    @SuppressWarnings( "unchecked" )
+    @SuppressWarnings("unchecked")
     public Object deserialize(final JsonTextObject jto) throws HibernateException {
 
         if (jto == null || jto == JsonTextObject.Empty)
             return null;
 
-        if (isTraceEnabled)
-            log.trace("JsonTextObject를 역직렬화 합니다. jto=[{}]", jto);
+
+        log.trace("JsonTextObject를 역직렬화 합니다. jto=[{}]", jto);
 
         try {
             Class clazz = Class.forName(jto.getClassName());
@@ -156,9 +156,9 @@ public abstract class AbstractJsonTextUserType implements CompositeUserType, Ser
         String className = StringType.INSTANCE.nullSafeGet(rs, names[0], session);
         String jsonText = StringType.INSTANCE.nullSafeGet(rs, names[1], session);
 
-        if (isTraceEnabled)
-            log.trace("JsonText 정보를 로드했습니다. className=[{}], jsonText=[{}]",
-                      className, ellipsisChar(jsonText, 80));
+
+        log.trace("JsonText 정보를 로드했습니다. className=[{}], jsonText=[{}]",
+                  className, ellipsisChar(jsonText, 80));
 
         return deserialize(new JsonTextObject(className, jsonText));
     }
@@ -175,8 +175,8 @@ public abstract class AbstractJsonTextUserType implements CompositeUserType, Ser
         } else {
             JsonTextObject jto = serialize(value);
 
-            if (isTraceEnabled)
-                log.trace("객체를 Json 정보로 직렬화하여 저장합니다. jto=[{}]", jto.toString());
+
+            log.trace("객체를 Json 정보로 직렬화하여 저장합니다. jto=[{}]", jto.toString());
 
             StringType.INSTANCE.nullSafeSet(st, jto.getClassName(), index, session);
             StringType.INSTANCE.nullSafeSet(st, jto.getJsonText(), index + 1, session);

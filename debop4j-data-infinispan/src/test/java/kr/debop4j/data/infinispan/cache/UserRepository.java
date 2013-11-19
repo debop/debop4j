@@ -31,12 +31,12 @@ import org.springframework.stereotype.Repository;
 @Slf4j
 public class UserRepository {
 
-    @Cacheable( value = "user", key = "#id" )
+    @Cacheable(value = "user", key = "#id")
     public User getUser(String id) {
         return getUser(id, 1000);
     }
 
-    @Cacheable( value = "user", key = "#id" )
+    @Cacheable(value = "user", key = "#id")
     public User getUser(String id, int favoriteMovieSize) {
         User user = new User();
 

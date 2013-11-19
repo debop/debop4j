@@ -43,7 +43,7 @@ public class Category extends EntityBase<Long> implements IUpdateTimestampedEnti
     private String name;
 
     @Getter
-    @Type( type = "kr.debop4j.data.hibernate.usertype.JodaDateTimeUserType" )
+    @Type(type = "kr.debop4j.data.hibernate.usertype.JodaDateTimeUserType")
     private DateTime updateTimestamp;
 
     public void updateUpdateTimestamp() {

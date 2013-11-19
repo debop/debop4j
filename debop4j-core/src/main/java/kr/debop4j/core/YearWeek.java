@@ -39,7 +39,9 @@ public class YearWeek extends ValueObjectBase implements IYearWeek, Comparable<Y
     @Setter
     private int week;
 
-    /** 기본 생성자 */
+    /**
+     * 기본 생성자
+     */
     public YearWeek() {
         this(0, 1);
     }

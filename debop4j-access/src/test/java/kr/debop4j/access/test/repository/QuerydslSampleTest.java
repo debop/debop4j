@@ -53,7 +53,7 @@ public class QuerydslSampleTest extends RepositoryTestBase {
     }
 
     @Test
-    @Transactional( readOnly = true )
+    @Transactional(readOnly = true)
     public void simpleWhere() {
         HibernateQuery query = new HibernateQuery(getCurrentSession());
         QEmployee employee = QEmployee.employee;
@@ -65,7 +65,7 @@ public class QuerydslSampleTest extends RepositoryTestBase {
     }
 
     @Test
-    @Transactional( readOnly = true )
+    @Transactional(readOnly = true)
     public void joinWhere() {
         HibernateQuery query = new HibernateQuery(getCurrentSession());
         QEmployee employee = QEmployee.employee;
@@ -79,7 +79,7 @@ public class QuerydslSampleTest extends RepositoryTestBase {
     }
 
     @Test
-    @Transactional( readOnly = true )
+    @Transactional(readOnly = true)
     public void groupingTest() {
         HibernateQuery query = new HibernateQuery(getCurrentSession());
         QEmployee employee = QEmployee.employee;
@@ -127,7 +127,7 @@ public class QuerydslSampleTest extends RepositoryTestBase {
     }
 
     @Test
-    @Transactional( readOnly = true )
+    @Transactional(readOnly = true)
     public void subQueriesTest() {
         QDepartment department = QDepartment.department;
         QDepartmentMember member = QDepartmentMember.departmentMember;
@@ -155,8 +155,8 @@ public class QuerydslSampleTest extends RepositoryTestBase {
     }
 
     @Test
-    @Transactional( readOnly = true )
-    @SuppressWarnings( "unchecked" )
+    @Transactional(readOnly = true)
+    @SuppressWarnings("unchecked")
     public void getHibernateQuery() {
         HibernateQuery query = new HibernateQuery(getCurrentSession());
         QEmployee employee = QEmployee.employee;
@@ -172,7 +172,7 @@ public class QuerydslSampleTest extends RepositoryTestBase {
     }
 
     @Test
-    @Transactional( readOnly = true )
+    @Transactional(readOnly = true)
     public void transformTest() {
         QCompany company = QCompany.company;
         QEmployee employee = QEmployee.employee;

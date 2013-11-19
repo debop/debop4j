@@ -36,7 +36,9 @@ import static kr.debop4j.core.Guard.shouldNotBeNull;
 @Slf4j
 public final class StreamTool {
 
-    /** 기본 버퍼 크기 (4096) */
+    /**
+     * 기본 버퍼 크기 (4096)
+     */
     public static final int BUFFER_SIZE = 4096;
 
     private StreamTool() { }

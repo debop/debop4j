@@ -35,11 +35,13 @@ public class UpdateTimestampedInterceptor extends EmptyInterceptor {
     private static final boolean isTraceEnabled = log.isTraceEnabled();
     private static final long serialVersionUID = 7231248402093351095L;
 
-    /** Instantiates a new Update timestamped interceptor. */
+    /**
+     * Instantiates a new Update timestamped interceptor.
+     */
     public UpdateTimestampedInterceptor() {
         super();
-        if (isTraceEnabled)
-            log.trace("UpdateTimestampedInterceptor 생성");
+
+        log.trace("UpdateTimestampedInterceptor 생성");
     }
 
     public void preFlush(Iterator entities) {
@@ -48,8 +50,8 @@ public class UpdateTimestampedInterceptor extends EmptyInterceptor {
             if (entity instanceof IUpdateTimestampedEntity) {
                 ((IUpdateTimestampedEntity) entity).updateUpdateTimestamp();
 
-                if (isTraceEnabled)
-                    log.trace("updateTimestamp 값을 현재 시각으로 갱신했습니다. entity=[{}]", entity);
+
+                log.trace("updateTimestamp 값을 현재 시각으로 갱신했습니다. entity=[{}]", entity);
             }
         }
     }

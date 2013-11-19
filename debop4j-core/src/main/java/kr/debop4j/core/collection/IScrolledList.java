@@ -11,13 +11,19 @@ import java.util.List;
  */
 public interface IScrolledList<E, N extends Comparable<N>> extends Serializable {
 
-    /** 스크롤 영역의 목록 */
+    /**
+     * 스크롤 영역의 목록
+     */
     List<E> getList();
 
-    /** 스크롤 영역의 하한 값 */
+    /**
+     * 스크롤 영역의 하한 값
+     */
     N getLowerBound();
 
-    /** 스크롤 영역의 상한 값 */
+    /**
+     * 스크롤 영역의 상한 값
+     */
     N getUpperBound();
 
 }

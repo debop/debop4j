@@ -33,7 +33,9 @@ public class MinuteRange extends MinuteTimeRange {
 
     // region << Constructor >>
 
-    /** Instantiates a new Minute range. */
+    /**
+     * Instantiates a new Minute range.
+     */
     public MinuteRange() {
         this(new TimeCalendar());
     }

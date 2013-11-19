@@ -45,7 +45,7 @@ public class ConnectionInterceptor {
     @Autowired
     private SessionFactory sessionFactory;
 
-    @Around( "@annotation(ReadOnlyConnection)" )
+    @Around("@annotation(ReadOnlyConnection)")
     public Object proceed(ProceedingJoinPoint pjp) throws Throwable {
 
         log.debug("읽기전용 작업을 수행하기 위해 현 connection를 readonly로 설정합니다...");

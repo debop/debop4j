@@ -89,7 +89,7 @@ public class HibernateDaoTest extends HibernateTestBase {
     }
 
     @Test
-    @SuppressWarnings( "unchecked" )
+    @SuppressWarnings("unchecked")
     public void loadSessionFactory() {
         SessionFactory sessionFactory = Springs.getBean(SessionFactory.class);
         Assert.assertNotNull(sessionFactory);

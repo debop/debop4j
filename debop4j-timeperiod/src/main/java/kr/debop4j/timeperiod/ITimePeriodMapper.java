@@ -28,15 +28,23 @@ import java.io.Serializable;
  */
 public interface ITimePeriodMapper extends Serializable {
 
-    /** Start offset을 적용합니다. */
+    /**
+     * Start offset을 적용합니다.
+     */
     DateTime mapStart(final DateTime moment);
 
-    /** End offset을 적용합니다. */
+    /**
+     * End offset을 적용합니다.
+     */
     DateTime mapEnd(final DateTime moment);
 
-    /** Offset이 적용된 시각에서 Start offset을 제거합니다. */
+    /**
+     * Offset이 적용된 시각에서 Start offset을 제거합니다.
+     */
     DateTime unmapStart(final DateTime moment);
 
-    /** Offset이 적용된 시각에서 End offset을 제거합니다. */
+    /**
+     * Offset이 적용된 시각에서 End offset을 제거합니다.
+     */
     DateTime unmapEnd(final DateTime moment);
 }

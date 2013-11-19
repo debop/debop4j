@@ -25,8 +25,8 @@ import java.lang.annotation.*;
  * @author 배성혁 sunghyouk.bae@gmail.com
  * @since 13. 7. 5. 오후 11:08
  */
-@Target( { ElementType.METHOD } )
-@Retention( RetentionPolicy.RUNTIME )
+@Target({ ElementType.METHOD })
+@Retention(RetentionPolicy.RUNTIME)
 @Inherited
 public @interface ReadOnlyConnection {
 }

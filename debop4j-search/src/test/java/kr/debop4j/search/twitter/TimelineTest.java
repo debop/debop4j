@@ -75,7 +75,9 @@ public class TimelineTest {
         assertThat(props.getValue("oauth.consumerKey")).isNotEmpty();
     }
 
-    /** hibernate-ogm 은 아직 hibernate 의 criteria api 를 지원하지 않습니다!!! */
+    /**
+     * hibernate-ogm 은 아직 hibernate 의 criteria api 를 지원하지 않습니다!!!
+     */
     @Test
     public void insertAndLoadDelete() throws Exception {
         IHibernateSearchDao dao = appContext.getBean(IHibernateSearchDao.class);

@@ -50,7 +50,7 @@ public abstract class DerbyConfigBase extends HibernateConfigBase {
         return "";
     }
 
-    @Bean( destroyMethod = "close" )
+    @Bean(destroyMethod = "close")
     public DataSource dataSource() {
         return buildDataSource("org.apache.derby.jdbc.EmbeddedDriver", getJdbcUrl(), getUsername(), getPassword());
     }

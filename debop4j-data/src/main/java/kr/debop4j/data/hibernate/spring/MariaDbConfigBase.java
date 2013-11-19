@@ -50,7 +50,7 @@ public abstract class MariaDbConfigBase extends HibernateConfigBase {
         return "root";
     }
 
-    @Bean( destroyMethod = "close" )
+    @Bean(destroyMethod = "close")
     public DataSource dataSource() {
 
         return buildDataSource("org.mariadb.jdbc.Driver",

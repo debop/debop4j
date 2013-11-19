@@ -31,7 +31,9 @@ public class HourRange extends HourTimeRange {
 
     // region << Contructor >>
 
-    /** Instantiates a new Hour range. */
+    /**
+     * Instantiates a new Hour range.
+     */
     public HourRange() {
         this(new TimeCalendar());
     }

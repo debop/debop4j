@@ -26,7 +26,9 @@ import java.io.Serializable;
  */
 public interface INamedParameter extends Serializable {
 
-    /** 인자 명 */
+    /**
+     * 인자 명
+     */
     String getName();
 
     /**
@@ -36,7 +38,9 @@ public interface INamedParameter extends Serializable {
      */
     void setName(String name);
 
-    /** 인자 값 */
+    /**
+     * 인자 값
+     */
     Object getValue();
 
     /**

@@ -34,7 +34,9 @@ public class GsonSerializer implements IJsonSerializer {
     @Getter
     private final Gson gson;
 
-    /** Instantiates a new Gson serializer. */
+    /**
+     * Instantiates a new Gson serializer.
+     */
     public GsonSerializer() {
         this(new Gson());
     }

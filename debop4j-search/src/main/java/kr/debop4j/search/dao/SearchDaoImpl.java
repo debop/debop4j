@@ -53,7 +53,7 @@ import static kr.debop4j.core.Guard.shouldNotBeNull;
  * @since 13. 5. 4. 오후 7:07
  */
 @Repository
-@SuppressWarnings( "unchecked" )
+@SuppressWarnings("unchecked")
 public class SearchDaoImpl implements SearchDao {
 
     private static final Logger log = LoggerFactory.getLogger(SearchDaoImpl.class);
@@ -105,8 +105,8 @@ public class SearchDaoImpl implements SearchDao {
 
     @Override
     public <T> List<T> findAll(Class<T> clazz, Sort luceneSort) {
-        if (isTraceEnabled)
-            log.trace("엔티티[{}]의 모든 레코드를 조회합니다...", clazz);
+
+        log.trace("엔티티[{}]의 모든 레코드를 조회합니다...", clazz);
 
         Query luceneQuery = getQueryBuilder(clazz).all().createQuery();
         FullTextQuery ftq = getFullTextQuery(luceneQuery, clazz);
@@ -128,9 +128,9 @@ public class SearchDaoImpl implements SearchDao {
 
     @Override
     public <T> List<T> findAll(Class<T> clazz, Query luceneQuery, int firstResult, int maxResults, Sort sort, Criteria criteria) {
-        if (isTraceEnabled)
-            log.trace("엔티티 조회. clazz=[{}], luceneQuery=[{}], fitstResult=[{}], maxResults=[{}], sort=[{}], criteria=[{}]",
-                      clazz, luceneQuery, firstResult, maxResults, sort, criteria);
+
+        log.trace("엔티티 조회. clazz=[{}], luceneQuery=[{}], fitstResult=[{}], maxResults=[{}], sort=[{}], criteria=[{}]",
+                  clazz, luceneQuery, firstResult, maxResults, sort, criteria);
 
         if (luceneQuery == null)
             luceneQuery = getQueryBuilder(clazz).all().createQuery();
@@ -155,9 +155,9 @@ public class SearchDaoImpl implements SearchDao {
 
     @Override
     public <T> PaginatedList<T> getPage(Class<T> clazz, Query luceneQuery, int pageNo, int pageSize, Sort sort, Criteria criteria) {
-        if (isDebugEnabled)
-            log.debug("엔티티 조회. clazz=[{}], luceneQuery=[{}], pageNo=[{}], pageSize=[{}], sort=[{}], criteria=[{}]",
-                      clazz, luceneQuery, pageNo, pageSize, sort, criteria);
+
+        log.debug("엔티티 조회. clazz=[{}], luceneQuery=[{}], pageNo=[{}], pageSize=[{}], sort=[{}], criteria=[{}]",
+                  clazz, luceneQuery, pageNo, pageSize, sort, criteria);
 
         if (luceneQuery == null)
             luceneQuery = getQueryBuilder(clazz).all().createQuery();
@@ -280,8 +280,8 @@ public class SearchDaoImpl implements SearchDao {
         if (criteria != null) ftq.setCriteriaQuery(criteria);
         int count = ftq.getResultSize();
 
-        if (isTraceEnabled)
-            log.trace("Entity=[{}], query=[{}] => count=[{}]", clazz, luceneQuery, count);
+
+        log.trace("Entity=[{}], query=[{}] => count=[{}]", clazz, luceneQuery, count);
 
         return count;
     }
@@ -328,8 +328,8 @@ public class SearchDaoImpl implements SearchDao {
 
     @Override
     public void deleteByIds(Class<?> clazz, Collection<? extends Serializable> ids) {
-        if (isTraceEnabled)
-            log.trace("Ids에 해당하는 엔티티들을 삭제합니다. class=[{}], ids=[{}]", clazz, StringTool.listToString(ids));
+
+        log.trace("Ids에 해당하는 엔티티들을 삭제합니다. class=[{}], ids=[{}]", clazz, StringTool.listToString(ids));
 
         FullTextSession fts = getFullTextSession();
         List<Object> entities = new ArrayList<>();
@@ -353,8 +353,8 @@ public class SearchDaoImpl implements SearchDao {
     @Override
     public void deleteAll(Collection<?> entities) {
         if (ArrayTool.isEmpty(entities)) return;
-        if (isTraceEnabled)
-            log.trace("엔티티 컬렉션을 모두 삭제합니다... entity count=[{}]", entities.size());
+
+        log.trace("엔티티 컬렉션을 모두 삭제합니다... entity count=[{}]", entities.size());
 
         Session session = getFullTextSession();
 
@@ -370,8 +370,8 @@ public class SearchDaoImpl implements SearchDao {
 
     @Override
     public void purgeAll(Class<?> clazz) {
-        if (isTraceEnabled)
-            log.trace("해당 엔티티와 엔티티와 연관된 엔티티의 모든 인덱스를 삭제합니다... clazz=[{}]", clazz);
+
+        log.trace("해당 엔티티와 엔티티와 연관된 엔티티의 모든 인덱스를 삭제합니다... clazz=[{}]", clazz);
 
         getFullTextSession().purgeAll(clazz);
     }
@@ -379,8 +379,8 @@ public class SearchDaoImpl implements SearchDao {
     @Override
     public <T> void index(T entity) {
         shouldNotBeNull(entity, "entity");
-        if (isTraceEnabled)
-            log.trace("수동으로 재 인덱스를 수행합니다. entity=[{}]", entity);
+
+        log.trace("수동으로 재 인덱스를 수행합니다. entity=[{}]", entity);
 
         getFullTextSession().index(entity);
     }
@@ -427,8 +427,8 @@ public class SearchDaoImpl implements SearchDao {
 
     @Override
     public Future<Void> indexAllAsync(final Class<?> clazz, final int batchSize) {
-        if (isTraceEnabled)
-            log.trace("비동기 방식으로 엔티티에 대해 인덱싱을 수행합니다... clazz=[{}], batchSize=[{}]", clazz, batchSize);
+
+        log.trace("비동기 방식으로 엔티티에 대해 인덱싱을 수행합니다... clazz=[{}], batchSize=[{}]", clazz, batchSize);
 
         // TODO: Session이 Thread-safe 하지 않으므로, 새로운 Thread를 만들면 안됩니다.
         indexAll(clazz, batchSize);
@@ -450,8 +450,8 @@ public class SearchDaoImpl implements SearchDao {
 
     @Override
     public void clearIndex(Class<?> clazz) {
-        if (isDebugEnabled)
-            log.debug("엔티티에 대한 모든 인덱스 정보를 삭제합니다... clazz=[{}]", clazz);
+
+        log.debug("엔티티에 대한 모든 인덱스 정보를 삭제합니다... clazz=[{}]", clazz);
 
         getFullTextSession().purgeAll(clazz);       // remove all index
         getFullTextSession().flushToIndexes();      // apply purge before optimize
@@ -462,7 +462,7 @@ public class SearchDaoImpl implements SearchDao {
 
     @Override
     public void clearIndexAll() {
-        if (isDebugEnabled) log.debug("모든 엔티티에 대해 모든 인덱스 정보를 삭제합니다...");
+        log.debug("모든 엔티티에 대해 모든 인덱스 정보를 삭제합니다...");
 
         FullTextSession fts = getFullTextSession();
         for (Class clazz : SearchTool.getIndexedClasses(fts.getSessionFactory())) {
@@ -476,25 +476,25 @@ public class SearchDaoImpl implements SearchDao {
 
     @Override
     public void optimize(Class<?> clazz) {
-        if (isTraceEnabled) log.trace("지정된 수형의 인덱스를 최적화합니다. clazz=[{}]", clazz);
+        log.trace("지정된 수형의 인덱스를 최적화합니다. clazz=[{}]", clazz);
         getFullTextSession().getSearchFactory().optimize(clazz);
     }
 
     @Override
     public void optimizeAll() {
-        if (isTraceEnabled) log.trace("모든 수형의 인덱스를 최적화합니다.");
+        log.trace("모든 수형의 인덱스를 최적화합니다.");
         getFullTextSession().getSearchFactory().optimize();
     }
 
     @Override
     public void flush() {
-        if (isTraceEnabled) log.trace("세션의 모든 변경 정보를 저장소에 적용합니다...");
+        log.trace("세션의 모든 변경 정보를 저장소에 적용합니다...");
         getFullTextSession().flush();
     }
 
     @Override
     public void flushToIndexes() {
-        if (isTraceEnabled) log.trace("Session에 남아있는 인덱싱 작업을 강제로 수행하도록 하고, 기다립니다.");
+        log.trace("Session에 남아있는 인덱싱 작업을 강제로 수행하도록 하고, 기다립니다.");
         getFullTextSession().flushToIndexes();
     }
 }

@@ -48,18 +48,24 @@ public class Local {
         return threadLocal.get();
     }
 
-    /** 로컬 저장소에 저장된 객체를 조회합니다. */
+    /**
+     * 로컬 저장소에 저장된 객체를 조회합니다.
+     */
     public static Object get(Object key) {
         return threadLocal.get().get(key);
     }
 
-    /** 로컬 저장소에 저장된 객체를 조회합니다. */
+    /**
+     * 로컬 저장소에 저장된 객체를 조회합니다.
+     */
     @SuppressWarnings("unchecked")
     public static <T> T get(Object key, Class<T> clazz) {
         return (T) threadLocal.get().get(key);
     }
 
-    /** 로컬 저장소에 객체를 저장합니다. */
+    /**
+     * 로컬 저장소에 객체를 저장합니다.
+     */
     @SuppressWarnings("unchecked")
     public static void put(Object key, Object value) {
         assert key != null;
@@ -70,7 +76,9 @@ public class Local {
         threadLocal.get().put(key, value);
     }
 
-    /** 로컬 저장소의 모든 정보를 삭제합니다. */
+    /**
+     * 로컬 저장소의 모든 정보를 삭제합니다.
+     */
     public static void clear() {
         threadLocal.get().clear();
         log.debug("Local 저장소의 모든 정보를 삭제했습니다.");

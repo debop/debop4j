@@ -118,7 +118,9 @@ public class MongoCache implements Cache {
         mongoTemplate.dropCollection(name);
     }
 
-    /** MongoDB 에 저장할 캐시 정보를 표현합니다. */
+    /**
+     * MongoDB 에 저장할 캐시 정보를 표현합니다.
+     */
     @Getter
     @Setter
     public static class CacheItem implements Serializable {
@@ -126,7 +128,9 @@ public class MongoCache implements Cache {
         private Object key;
         private Object value;
 
-        /** Instantiates a new CacheItem. */
+        /**
+         * Instantiates a new CacheItem.
+         */
         public CacheItem() { }
 
         /**

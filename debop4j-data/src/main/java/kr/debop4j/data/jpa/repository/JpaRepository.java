@@ -33,16 +33,24 @@ import java.util.List;
  */
 public interface JpaRepository<E extends JpaEntityBase> {
 
-    /** {@link EntityManager} 인스턴스 */
+    /**
+     * {@link EntityManager} 인스턴스
+     */
     EntityManager getEntityManager();
 
-    /** 엔티티 수형 */
+    /**
+     * 엔티티 수형
+     */
     Class<E> getEntityClass();
 
-    /** EntityManager의 변경을 DB에 적용합니다. */
+    /**
+     * EntityManager의 변경을 DB에 적용합니다.
+     */
     void flush();
 
-    /** EntityManager의 변경을 Transaction을 이용하여 DB에 적용합니다. */
+    /**
+     * EntityManager의 변경을 Transaction을 이용하여 DB에 적용합니다.
+     */
     void transactionalFlush();
 
     /**
@@ -59,10 +67,14 @@ public interface JpaRepository<E extends JpaEntityBase> {
      */
     <E> E get(Serializable id);
 
-    /** 특정 수형의 해당 id 들을 가지는 엔티티들을 로드합니다. */
+    /**
+     * 특정 수형의 해당 id 들을 가지는 엔티티들을 로드합니다.
+     */
     <E> List<E> getIn(Collection<? extends Serializable> ids);
 
-    /** 특정 수형의 해당 id 들을 가지는 엔티티들을 로드합니다. */
+    /**
+     * 특정 수형의 해당 id 들을 가지는 엔티티들을 로드합니다.
+     */
     <E> List<E> getIn(Serializable[] ids);
 
 
@@ -165,7 +177,9 @@ public interface JpaRepository<E extends JpaEntityBase> {
      */
     void deleteById(Serializable id);
 
-    /** 해당 수형의 모든 엔티티를 삭제합니다. */
+    /**
+     * 해당 수형의 모든 엔티티를 삭제합니다.
+     */
     void deleteAll();
 
     /**
@@ -182,7 +196,9 @@ public interface JpaRepository<E extends JpaEntityBase> {
      */
     void deleteAll(Query criteria);
 
-    /** Cascade 적용 없이 엔티티들을 모두 삭제합니다. */
+    /**
+     * Cascade 적용 없이 엔티티들을 모두 삭제합니다.
+     */
     int deleteAllWithoutCascade();
 
     /**

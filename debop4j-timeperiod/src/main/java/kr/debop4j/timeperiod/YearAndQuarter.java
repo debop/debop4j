@@ -35,7 +35,9 @@ public class YearAndQuarter extends ValueObjectBase implements Comparable<YearAn
     private Integer year;
     private Quarter quarter;
 
-    /** Instantiates a new Year and quarter. */
+    /**
+     * Instantiates a new Year and quarter.
+     */
     public YearAndQuarter() {}
 
     /**

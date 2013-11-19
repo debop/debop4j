@@ -47,9 +47,13 @@ public class FileTool {
     private static final boolean isTraceEnabled = log.isTraceEnabled();
     private static final boolean isDebugEnabled = log.isDebugEnabled();
 
-    /** The constant DEFAULT_BUFFER_SIZE. */
+    /**
+     * The constant DEFAULT_BUFFER_SIZE.
+     */
     public static final int DEFAULT_BUFFER_SIZE = 4096;
-    /** The constant UTF8. */
+    /**
+     * The constant UTF8.
+     */
     public static final Charset UTF8 = Charset.forName("UTF-8");
 
     private FileTool() { }
@@ -101,8 +105,7 @@ public class FileTool {
      * @throws IOException the iO exception
      */
     public static Path createDirectory(Path dir, FileAttribute<?>... attrs) throws IOException {
-        if (isDebugEnabled)
-            log.debug("디렉토리를 생성합니다. dir=[{}]", dir);
+        log.debug("디렉토리를 생성합니다. dir=[{}]", dir);
         return Files.createDirectory(dir, attrs);
     }
 
@@ -127,8 +130,7 @@ public class FileTool {
      * @throws IOException the iO exception
      */
     public static Path createFile(Path path, FileAttribute<?>... attrs) throws IOException {
-        if (isDebugEnabled)
-            log.debug("파일 생성. path=[{}], attrs=[{}]", path, listToString(attrs));
+        log.debug("파일 생성. path=[{}], attrs=[{}]", path, listToString(attrs));
         return Files.createFile(path, attrs);
     }
 
@@ -164,14 +166,13 @@ public class FileTool {
      * @return the future
      */
     public static Future<Void> copyAsync(final Path source, final Path target, final CopyOption... options) {
-        return
-                AsyncTool.startNew(new Callable<Void>() {
-                    @Override
-                    public Void call() throws Exception {
-                        copy(source, target, options);
-                        return null;
-                    }
-                });
+        return AsyncTool.startNew(new Callable<Void>() {
+            @Override
+            public Void call() throws Exception {
+                copy(source, target, options);
+                return null;
+            }
+        });
     }
 
     /**
@@ -181,13 +182,13 @@ public class FileTool {
      * @throws IOException the iO exception
      */
     public static void move(Path src, Path dst) throws IOException {
-        if (isTraceEnabled)
-            log.trace("파일을 이동합니다. src=[{}], dst=[{}]", src, dst);
+
+        log.trace("파일을 이동합니다. src=[{}], dst=[{}]", src, dst);
         Files.move(src,
-                dst,
-                StandardCopyOption.ATOMIC_MOVE,
-                StandardCopyOption.COPY_ATTRIBUTES,
-                StandardCopyOption.REPLACE_EXISTING);
+                   dst,
+                   StandardCopyOption.ATOMIC_MOVE,
+                   StandardCopyOption.COPY_ATTRIBUTES,
+                   StandardCopyOption.REPLACE_EXISTING);
     }
 
     /**
@@ -199,8 +200,8 @@ public class FileTool {
      * @throws IOException the iO exception
      */
     public static void move(Path src, Path dst, StandardCopyOption... options) throws IOException {
-        if (isTraceEnabled)
-            log.trace("파일을 이동합니다. src=[{}], dst=[{}], options=[{}]", src, dst, StringTool.listToString(options));
+
+        log.trace("파일을 이동합니다. src=[{}], dst=[{}], options=[{}]", src, dst, StringTool.listToString(options));
         Files.move(src, dst, options);
     }
 
@@ -213,8 +214,8 @@ public class FileTool {
      * @return the future
      */
     public static Future<Void> moveAsync(final Path src, final Path dst, final StandardCopyOption... options) {
-        if (isTraceEnabled)
-            log.trace("비동기 방식으로 파일을 이동합니다. src=[{}], dst=[{}], options=[{}]", src, dst, StringTool.listToString(options));
+
+        log.trace("비동기 방식으로 파일을 이동합니다. src=[{}], dst=[{}], options=[{}]", src, dst, StringTool.listToString(options));
 
         return AsyncTool.startNew(new Callable<Void>() {
             @Override
@@ -233,8 +234,8 @@ public class FileTool {
      * @throws IOException the iO exception
      */
     public static void delete(Path path) throws IOException {
-        if (isDebugEnabled)
-            log.debug("디렉토리/파일 삭제. path=[{}]", path);
+
+        log.debug("디렉토리/파일 삭제. path=[{}]", path);
         Files.delete(path);
     }
 
@@ -257,8 +258,8 @@ public class FileTool {
      * @throws IOException the iO exception
      */
     public static void deleteDirectory(Path directory, boolean deep) throws IOException {
-        if (isDebugEnabled)
-            log.debug("directory=[{}] 를 삭제합니다. deep=[{}]", directory, deep);
+
+        log.debug("directory=[{}] 를 삭제합니다. deep=[{}]", directory, deep);
 
         if (!deep) {
             deleteIfExists(directory);
@@ -266,14 +267,14 @@ public class FileTool {
             Files.walkFileTree(directory, new SimpleFileVisitor<Path>() {
                 @Override
                 public FileVisitResult postVisitDirectory(Path dir, IOException exc) throws IOException {
-                    if (isTraceEnabled) log.trace("Directory 삭제 dir=[{}]", dir);
+                    log.trace("Directory 삭제 dir=[{}]", dir);
                     Files.delete(dir);
                     return FileVisitResult.CONTINUE;
                 }
 
                 @Override
                 public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
-                    if (isTraceEnabled) log.trace("파일 삭제 file=[{}]", file);
+                    log.trace("파일 삭제 file=[{}]", file);
                     Files.delete(file);
                     return FileVisitResult.CONTINUE;
                 }
@@ -289,8 +290,8 @@ public class FileTool {
      * @return the future
      */
     public static Future<Void> deleteDirectoryAsync(final Path directory, final boolean deep) {
-        if (isTraceEnabled)
-            log.trace("Directory를 삭제합니다. directory=[{}], deep=[{}]", directory, deep);
+
+        log.trace("Directory를 삭제합니다. directory=[{}], deep=[{}]", directory, deep);
 
         return AsyncTool.startNew(new Callable<Void>() {
             @Override
@@ -309,8 +310,8 @@ public class FileTool {
      * @return the boolean
      */
     public static boolean exists(Path path, LinkOption... linkOptions) {
-        if (isTraceEnabled)
-            log.trace("파일 존재를 확인합니다. path=[{}], linkOptions=[{}]", path, listToString(linkOptions));
+
+        log.trace("파일 존재를 확인합니다. path=[{}], linkOptions=[{}]", path, listToString(linkOptions));
         return Files.exists(path, linkOptions);
     }
 
@@ -322,8 +323,8 @@ public class FileTool {
      * @throws IOException the iO exception
      */
     public static byte[] readAllBytes(Path path) throws IOException {
-        if (isTraceEnabled)
-            log.trace("파일로부터 모든 내용을 읽어옵니다. path=[{}]", path);
+
+        log.trace("파일로부터 모든 내용을 읽어옵니다. path=[{}]", path);
         return Files.readAllBytes(path);
     }
 
@@ -366,9 +367,9 @@ public class FileTool {
     public static Future<byte[]> readAllBytesAsync(final Path path, final OpenOption... openOptions) {
         assert path != null;
 
-        if (isTraceEnabled)
-            log.trace("비동기 방식으로 파일 정보를 읽어 byte array로 반환합니다. file=[{}], openOptions=[{}]",
-                    path, StringTool.listToString(openOptions));
+
+        log.trace("비동기 방식으로 파일 정보를 읽어 byte array로 반환합니다. file=[{}], openOptions=[{}]",
+                  path, StringTool.listToString(openOptions));
 
         return AsyncTool.startNew(new Callable<byte[]>() {
             @Override
@@ -409,8 +410,8 @@ public class FileTool {
      * @throws IOException the iO exception
      */
     public static List<String> readAllLines(Path path, Charset cs) throws IOException {
-        if (isTraceEnabled)
-            log.trace("파일 내용을 문자열로 읽어드립니다. path=[{}], charset=[{}]", path, cs);
+
+        log.trace("파일 내용을 문자열로 읽어드립니다. path=[{}], charset=[{}]", path, cs);
         return Files.readAllLines(path, cs);
     }
 
@@ -446,8 +447,8 @@ public class FileTool {
     public static Future<List<String>> readAllLinesAsync(final Path path,
                                                          final Charset cs,
                                                          final OpenOption... openOptions) {
-        if (isTraceEnabled)
-            log.trace("파일 내용을 문자열로 읽어드립니다. path=[{}], charset=[{}], openOption=[{}]", path, cs, listToString(openOptions));
+
+        log.trace("파일 내용을 문자열로 읽어드립니다. path=[{}], charset=[{}], openOption=[{}]", path, cs, listToString(openOptions));
 
         return AsyncTool.startNew(new Callable<List<String>>() {
             @Override
@@ -467,8 +468,8 @@ public class FileTool {
      * @throws IOException the iO exception
      */
     public static void write(Path target, byte[] bytes, OpenOption... openOptions) throws IOException {
-        if (isTraceEnabled)
-            log.trace("파일에 binary 형태의 정보를 씁니다. target=[{}], openOptions=[{}]", target, listToString(openOptions));
+
+        log.trace("파일에 binary 형태의 정보를 씁니다. target=[{}], openOptions=[{}]", target, listToString(openOptions));
 
         Files.write(target, bytes, openOptions);
     }
@@ -486,9 +487,9 @@ public class FileTool {
                              Iterable<String> lines,
                              Charset cs,
                              OpenOption... openOptions) throws IOException {
-        if (isTraceEnabled)
-            log.trace("파일에 텍스트 정보를 씁니다. target=[{}], lines=[{}], charset=[{}], openOptions=[{}]",
-                    target, listToString(lines), cs, listToString(openOptions));
+
+        log.trace("파일에 텍스트 정보를 씁니다. target=[{}], lines=[{}], charset=[{}], openOptions=[{}]",
+                  target, listToString(lines), cs, listToString(openOptions));
         Files.write(target, lines, cs, openOptions);
     }
 
@@ -504,8 +505,8 @@ public class FileTool {
     public static Future<Void> writeAsync(final Path target,
                                           final byte[] bytes,
                                           final OpenOption... openOptions) {
-        if (isTraceEnabled)
-            log.trace("비동기 방식으로 데이터를 파일에 씁니다. target=[{}], openOptions=[{}]", target, listToString(openOptions));
+
+        log.trace("비동기 방식으로 데이터를 파일에 씁니다. target=[{}], openOptions=[{}]", target, listToString(openOptions));
 
         return AsyncTool.startNew(new Callable<Void>() {
             @Override

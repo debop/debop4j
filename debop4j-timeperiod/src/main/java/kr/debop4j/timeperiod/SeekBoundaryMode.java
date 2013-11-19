@@ -8,9 +8,13 @@ package kr.debop4j.timeperiod;
  */
 public enum SeekBoundaryMode {
 
-    /** DateTime 검색 시 검색한 값을 반환하도록 한다. */
+    /**
+     * DateTime 검색 시 검색한 값을 반환하도록 한다.
+     */
     Fill,
 
-    /** DateTime 검색 시 검색한 다음 값을 반환하도록 한다. */
+    /**
+     * DateTime 검색 시 검색한 다음 값을 반환하도록 한다.
+     */
     Next
 }

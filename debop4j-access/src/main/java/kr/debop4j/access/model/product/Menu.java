@@ -63,7 +63,9 @@ public class Menu extends AnnotatedEntityBase implements ITreeEntity<Menu>, IUpd
     @Index(name = "ix_menu_code")
     private Product product;
 
-    /** Company 가 null이면, Product 의 기본 메뉴라고 볼 수 있다. */
+    /**
+     * Company 가 null이면, Product 의 기본 메뉴라고 볼 수 있다.
+     */
     @ManyToOne
     @JoinColumn(name = "CompanyId")
     @Index(name = "ix_menu_code")

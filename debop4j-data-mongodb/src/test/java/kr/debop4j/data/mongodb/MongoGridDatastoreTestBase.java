@@ -17,8 +17,8 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
  * @since 13. 3. 28
  */
 @Slf4j
-@RunWith( SpringJUnit4ClassRunner.class )
-@ContextConfiguration( classes = { MongoGridDatastoreConfiguration.class } )
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(classes = { MongoGridDatastoreConfiguration.class })
 public abstract class MongoGridDatastoreTestBase {
 
     @BeforeClass

@@ -34,7 +34,9 @@ import static kr.debop4j.core.Guard.shouldNotBeNull;
  */
 public final class ListTool {
 
-    /** 생성자 */
+    /**
+     * 생성자
+     */
     private ListTool() { }
 
     /**

@@ -59,7 +59,7 @@ public class HibernateParameter extends NamedParameterBase {
     @Override
     protected Objects.ToStringHelper buildStringHelper() {
         return super.buildStringHelper()
-                    .add("type", type);
+                .add("type", type);
     }
 
     private static final long serialVersionUID = -6291985997768450558L;

@@ -115,7 +115,7 @@ public class MorphAnalyzerTest extends TestCase {
      * @throws Exception
      */
     @Test
-    @Ignore( "용언 데이터 파일이 없습니다." )
+    @Ignore("용언 데이터 파일이 없습니다.")
     public void yongonAnalysis() throws Exception {
 
         String fname = "data/용언_상세.txt";

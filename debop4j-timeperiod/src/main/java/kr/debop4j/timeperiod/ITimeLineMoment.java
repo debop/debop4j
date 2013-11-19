@@ -28,15 +28,23 @@ import java.io.Serializable;
  */
 public interface ITimeLineMoment extends Serializable {
 
-    /** 특정 시점 */
+    /**
+     * 특정 시점
+     */
     DateTime getMoment();
 
-    /** 기간 컬렉션 */
+    /**
+     * 기간 컬렉션
+     */
     ITimePeriodCollection getPeriods();
 
-    /** 선행 기간 수 */
+    /**
+     * 선행 기간 수
+     */
     int getStartCount();
 
-    /** 후행 기간 수 */
+    /**
+     * 후행 기간 수
+     */
     int getEndCount();
 }

@@ -37,7 +37,7 @@ import static com.google.common.collect.Lists.newArrayList;
  * @since 13. 1. 22.
  */
 @Slf4j
-@SuppressWarnings( "unchecked" )
+@SuppressWarnings("unchecked")
 public class OrderingTest extends AbstractTest {
 
     private static final Comparator<Employee> yearsComparator =

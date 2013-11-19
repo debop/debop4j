@@ -25,9 +25,13 @@ package kr.debop4j.data.hibernate.unitofwork;
  */
 public interface IUnitOfWorkTransaction {
 
-    /** Transaction을 commit 합니다. */
+    /**
+     * Transaction을 commit 합니다.
+     */
     void commit();
 
-    /** Transaction을 Rollback합니다. */
+    /**
+     * Transaction을 Rollback합니다.
+     */
     void rollback();
 }

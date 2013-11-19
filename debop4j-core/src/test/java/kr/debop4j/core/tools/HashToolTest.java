@@ -11,7 +11,9 @@ import static org.junit.Assert.assertNotEquals;
 @Slf4j
 public class HashToolTest {
 
-    /** 테스트에 성공합니다. 아마 Scala IDE나 컴파일러의 문제로 인해, 에러로 뜨는 것 같습니다. */
+    /**
+     * 테스트에 성공합니다. 아마 Scala IDE나 컴파일러의 문제로 인해, 에러로 뜨는 것 같습니다.
+     */
     @BenchmarkOptions(benchmarkRounds = 100, warmupRounds = 1)
     @Test
     public void computeHashTest() {

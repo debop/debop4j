@@ -63,9 +63,9 @@ public abstract class MethodAccess {
     /**
      * Invoke object.
      *
-     * @param instance the instance
+     * @param instance    the instance
      * @param methodIndex the method index
-     * @param args the args
+     * @param args        the args
      * @return the object
      */
     abstract public Object invoke(Object instance, int methodIndex, Object... args);
@@ -73,9 +73,9 @@ public abstract class MethodAccess {
     /**
      * Invoke object.
      *
-     * @param instance the instance
+     * @param instance   the instance
      * @param methodName the method name
-     * @param args the args
+     * @param args       the args
      * @return the object
      */
     public Object invoke(Object instance, String methodName, Object... args) {
@@ -161,7 +161,7 @@ public abstract class MethodAccess {
                 ClassWriter cw = new ClassWriter(ClassWriter.COMPUTE_MAXS);
                 MethodVisitor mv;
                 cw.visit(V1_1, ACC_PUBLIC + ACC_SUPER, accessClassNameInternal, null, ReflectConsts.METHOD_ACCESS_PATH,
-                        null);
+                         null);
                 {
                     mv = cw.visitMethod(ACC_PUBLIC, "<init>", "()V", null, null);
                     mv.visitCode();
@@ -173,7 +173,7 @@ public abstract class MethodAccess {
                 }
                 {
                     mv = cw.visitMethod(ACC_PUBLIC + ACC_VARARGS, "invoke",
-                            "(Ljava/lang/Object;I[Ljava/lang/Object;)Ljava/lang/Object;", null, null);
+                                        "(Ljava/lang/Object;I[Ljava/lang/Object;)Ljava/lang/Object;", null, null);
                     mv.visitCode();
 
                     if (!methods.isEmpty()) {
@@ -192,7 +192,7 @@ public abstract class MethodAccess {
                         for (int i = 0, n = labels.length; i < n; i++) {
                             mv.visitLabel(labels[i]);
                             if (i == 0)
-                                mv.visitFrame(Opcodes.F_APPEND, 1, new Object[]{classNameInternal}, 0, null);
+                                mv.visitFrame(Opcodes.F_APPEND, 1, new Object[] { classNameInternal }, 0, null);
                             else
                                 mv.visitFrame(Opcodes.F_SAME, 0, null, 0, null);
                             mv.visitVarInsn(ALOAD, 4);

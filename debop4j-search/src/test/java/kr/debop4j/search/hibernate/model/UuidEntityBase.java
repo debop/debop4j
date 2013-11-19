@@ -39,7 +39,9 @@ public abstract class UuidEntityBase extends AnnotatedEntityBase {
 
     private static final long serialVersionUID = -8365829024633437112L;
 
-    /** 엔티티의 Id */
+    /**
+     * 엔티티의 Id
+     */
     @Id
     @DocumentId
     @GeneratedValue(generator = "uuid")

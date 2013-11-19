@@ -27,7 +27,9 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class MD5StringDigester extends StringDigesterBase {
 
-    /** MD5 */
+    /**
+     * MD5
+     */
     @Override
     public final String getAlgorithm() {
         return "MD5";

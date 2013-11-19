@@ -73,7 +73,7 @@ public class DatabaseTestFixtureTest extends DatabaseTestFixtureBase {
     }
 
     @Test
-    @Ignore( "PgPool-II 를 설치해야만 테스트가 가능합니다. - Connection Pool 로만 써도 상당한 성능 향상이 있습니다." )
+    @Ignore("PgPool-II 를 설치해야만 테스트가 가능합니다. - Connection Pool 로만 써도 상당한 성능 향상이 있습니다.")
     public void canCreateUnitOfWorkContextForPgPool() {
         verifyCanCreateUnitOfWorkContextFor(PgPoolConfig.class);
         verifyCanCreateUseAndDisposeSession();
@@ -81,7 +81,7 @@ public class DatabaseTestFixtureTest extends DatabaseTestFixtureBase {
     }
 
     @Test
-    @Ignore( "pgBouncer를 설치해야만 테스트가 가능합니다. - PostgreSql의 Connection Pool 기능입니다." )
+    @Ignore("pgBouncer를 설치해야만 테스트가 가능합니다. - PostgreSql의 Connection Pool 기능입니다.")
     public void canCreateUnitOfWorkContextForPgBouncer() {
         verifyCanCreateUnitOfWorkContextFor(PgBouncerConfig.class);
         verifyCanCreateUseAndDisposeSession();

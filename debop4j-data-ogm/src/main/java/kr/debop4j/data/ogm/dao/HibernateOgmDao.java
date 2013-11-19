@@ -57,7 +57,7 @@ import static kr.debop4j.core.Guard.shouldNotBeNull;
  * @since 13. 4. 15. 오후 5:42
  */
 @Component
-@SuppressWarnings( "unchecked" )
+@SuppressWarnings("unchecked")
 public class HibernateOgmDao implements IHibernateOgmDao {
 
     private static final Logger log = LoggerFactory.getLogger(HibernateOgmDao.class);
@@ -87,9 +87,9 @@ public class HibernateOgmDao implements IHibernateOgmDao {
 
     @Override
     public FullTextQuery getFullTextQuery(Query luceneQuery, Class<?>... entities) {
-        if (isTraceEnabled)
-            log.trace("FullTextQuery를 생성합니다... luceneQuery=[{}], entities=[{}]",
-                      luceneQuery, StringTool.listToString(entities));
+
+        log.trace("FullTextQuery를 생성합니다... luceneQuery=[{}], entities=[{}]",
+                  luceneQuery, StringTool.listToString(entities));
 
         FullTextQuery ftq = getFullTextSession().createFullTextQuery(luceneQuery, entities);
 
@@ -126,9 +126,9 @@ public class HibernateOgmDao implements IHibernateOgmDao {
 
     @Override
     public <T> List<T> find(Class<T> clazz, Query luceneQuery, int firstResult, int maxResults, Sort luceneSort, Criteria criteria) {
-        if (isTraceEnabled)
-            log.trace("엔티티 조회. clazz=[{}], luceneQuery=[{}], fitstResult=[{}], maxResults=[{}], sort=[{}], criteria=[{}]",
-                      clazz, luceneQuery, firstResult, maxResults, luceneSort, criteria);
+
+        log.trace("엔티티 조회. clazz=[{}], luceneQuery=[{}], fitstResult=[{}], maxResults=[{}], sort=[{}], criteria=[{}]",
+                  clazz, luceneQuery, firstResult, maxResults, luceneSort, criteria);
 
         if (luceneQuery == null)
             luceneQuery = getQueryBuilder(clazz).all().createQuery();
@@ -193,9 +193,9 @@ public class HibernateOgmDao implements IHibernateOgmDao {
         shouldNotBeNull(fields, "fields");
         Guard.shouldBe(fields.length > 0, "조회할 필드 수가 있어야합니다.");
 
-        if (isTraceEnabled)
-            log.trace("Project 조회. clazz=[{}], luceneQuery=[{}], fields=[{}], firstResult=[{}], maxResults=[{}], luceneSort=[{}], criteria=[{}]",
-                      clazz, luceneQuery, StringTool.listToString(fields), firstResult, maxResults, luceneSort, criteria);
+
+        log.trace("Project 조회. clazz=[{}], luceneQuery=[{}], fields=[{}], firstResult=[{}], maxResults=[{}], luceneSort=[{}], criteria=[{}]",
+                  clazz, luceneQuery, StringTool.listToString(fields), firstResult, maxResults, luceneSort, criteria);
 
         if (luceneQuery == null)
             luceneQuery = getQueryBuilder(clazz).all().createQuery();
@@ -302,8 +302,8 @@ public class HibernateOgmDao implements IHibernateOgmDao {
 
         int count = ftq.getResultSize();
 
-        if (isTraceEnabled)
-            log.trace("entity counting. entity=[{}], query=[{}], count=[{}]", clazz.getSimpleName(), luceneQuery, count);
+
+        log.trace("entity counting. entity=[{}], query=[{}], count=[{}]", clazz.getSimpleName(), luceneQuery, count);
 
         return count;
     }
@@ -358,8 +358,8 @@ public class HibernateOgmDao implements IHibernateOgmDao {
 
     @Override
     public void deleteByIds(Class<?> clazz, Collection<? extends Serializable> ids) {
-        if (isTraceEnabled)
-            log.trace("Id 컬렉션에 해당하는 엔티티들을 삭제합니다. clazz=[{}], ids=[{}]", clazz, StringTool.listToString(ids));
+
+        log.trace("Id 컬렉션에 해당하는 엔티티들을 삭제합니다. clazz=[{}], ids=[{}]", clazz, StringTool.listToString(ids));
 
         FullTextSession fts = getFullTextSession();
         for (Serializable id : ids)
@@ -381,8 +381,8 @@ public class HibernateOgmDao implements IHibernateOgmDao {
         if (ArrayTool.isEmpty(entities))
             return;
 
-        if (isDebugEnabled)
-            log.debug("엔티티 컬렉션을 모두 삭제합니다... entity count=[{}]", entities.size());
+
+        log.debug("엔티티 컬렉션을 모두 삭제합니다... entity count=[{}]", entities.size());
 
         FullTextSession fts = getFullTextSession();
         for (Object entity : entities) {
@@ -392,7 +392,7 @@ public class HibernateOgmDao implements IHibernateOgmDao {
 
     @Override
     public void purge(Class<?> clazz, Serializable id) {
-        if (isTraceEnabled) log.trace("인덱스를 제거합니다. clazz=[{}], id=[{}]", clazz, id);
+        log.trace("인덱스를 제거합니다. clazz=[{}], id=[{}]", clazz, id);
         getFullTextSession().purge(clazz, id);
     }
 
@@ -410,15 +410,15 @@ public class HibernateOgmDao implements IHibernateOgmDao {
     @Override
     public <T> void index(T entity) {
         shouldNotBeNull(entity, "entity");
-        if (isTraceEnabled) log.trace("수동으로 재 인덱스를 수행합니다. entity=[{}]", entity);
+        log.trace("수동으로 재 인덱스를 수행합니다. entity=[{}]", entity);
 
         getFullTextSession().index(entity);
     }
 
     @Override
     public void indexAll(Class<?> clazz, int batchSize) {
-        if (isDebugEnabled)
-            log.debug("수형[{}]의 모든 엔티티에 대해 인덱싱을 수행합니다...", clazz);
+
+        log.debug("수형[{}]의 모든 엔티티에 대해 인덱싱을 수행합니다...", clazz);
 
         clearIndex(clazz);
 
@@ -441,7 +441,7 @@ public class HibernateOgmDao implements IHibernateOgmDao {
                 if (++index % batchSize == 0) {
                     fts.flushToIndexes();
                     fts.clear();
-                    if (isTraceEnabled) log.trace("인덱싱 수행중입니다. index=[{}]", index);
+                    log.trace("인덱싱 수행중입니다. index=[{}]", index);
                 }
             }
             fts.flushToIndexes();
@@ -456,8 +456,8 @@ public class HibernateOgmDao implements IHibernateOgmDao {
 
     @Override
     public Future<Void> indexAllAsync(final Class<?> clazz, final int batchSize) {
-        if (isDebugEnabled)
-            log.debug("비동기 방식으로 엔티티에 대해 인덱싱을 수행합니다... clazz=[{}], batchSize=[{}]", clazz, batchSize);
+
+        log.debug("비동기 방식으로 엔티티에 대해 인덱싱을 수행합니다... clazz=[{}], batchSize=[{}]", clazz, batchSize);
 
         // TODO: Session이 Thread-safe 하지 않으므로, 새로운 Thread를 만들면 안됩니다.
         indexAll(clazz, batchSize);
@@ -479,7 +479,7 @@ public class HibernateOgmDao implements IHibernateOgmDao {
 
     @Override
     public void clearIndex(Class<?> clazz) {
-        if (isDebugEnabled) log.debug("엔티티에 대한 모든 인덱스 정보를 삭제합니다... clazz=[{}]", clazz);
+        log.debug("엔티티에 대한 모든 인덱스 정보를 삭제합니다... clazz=[{}]", clazz);
 
         getFullTextSession().purgeAll(clazz);       // remove obsolete index
         getFullTextSession().flushToIndexes();      // apply purge before optimize
@@ -512,13 +512,13 @@ public class HibernateOgmDao implements IHibernateOgmDao {
 
     @Override
     public void flush() {
-        if (isDebugEnabled) log.debug("세션의 모든 변경 정보를 저장소에 적용합니다...");
+        log.debug("세션의 모든 변경 정보를 저장소에 적용합니다...");
         getFullTextSession().flush();
     }
 
     @Override
     public void flushIndexes() {
-        if (isDebugEnabled) log.debug("세션의 모든 인덱스 변경 정보를 저장합니다...");
+        log.debug("세션의 모든 인덱스 변경 정보를 저장합니다...");
         getFullTextSession().flushToIndexes();
     }
 }

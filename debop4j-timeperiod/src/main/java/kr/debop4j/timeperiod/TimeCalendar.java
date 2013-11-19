@@ -44,12 +44,16 @@ public class TimeCalendar extends ValueObjectBase implements ITimeCalendar {
 
     // region << Static Methods >>
 
-    /** 기본 {@link TimeCalendar} 를 반환합니다. */
+    /**
+     * 기본 {@link TimeCalendar} 를 반환합니다.
+     */
     public static TimeCalendar getDefault() {
         return getDefault(Locale.getDefault());
     }
 
-    /** 기본 {@link TimeCalendar} 를 반환합니다. */
+    /**
+     * 기본 {@link TimeCalendar} 를 반환합니다.
+     */
     public static TimeCalendar getDefault(Locale locale) {
         TimeCalendarConfig config = new TimeCalendarConfig(locale);
         config.setStartOffset(DefaultStartOffset);
@@ -58,12 +62,16 @@ public class TimeCalendar extends ValueObjectBase implements ITimeCalendar {
         return new TimeCalendar(config);
     }
 
-    /** Offset이 없는 {@link TimeCalendar}를 반환합니다. */
+    /**
+     * Offset이 없는 {@link TimeCalendar}를 반환합니다.
+     */
     public static TimeCalendar getEmptyOffset() {
         return getEmptyOffset(Locale.getDefault());
     }
 
-    /** Offset이 없는 {@link TimeCalendar}를 반환합니다. */
+    /**
+     * Offset이 없는 {@link TimeCalendar}를 반환합니다.
+     */
     public static TimeCalendar getEmptyOffset(Locale locale) {
         TimeCalendarConfig config = new TimeCalendarConfig(locale);
         config.setStartOffset(TimeSpec.EmptyDuration);
@@ -79,7 +87,9 @@ public class TimeCalendar extends ValueObjectBase implements ITimeCalendar {
     @Getter private final Duration endOffset;
     @Getter private final DayOfWeek firstDayOfWeek;
 
-    /** 기본 생성자 */
+    /**
+     * 기본 생성자
+     */
     public TimeCalendar() {
         this(new TimeCalendarConfig());
     }

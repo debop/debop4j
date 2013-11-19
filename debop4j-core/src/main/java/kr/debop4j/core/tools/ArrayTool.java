@@ -37,10 +37,14 @@ import static kr.debop4j.core.Guard.shouldNotBeNull;
 @SuppressWarnings("unchecked")
 public final class ArrayTool {
 
-    /** 생성자 */
+    /**
+     * 생성자
+     */
     private ArrayTool() { }
 
-    /** The constant EMPTY_BYTE_ARRAY. */
+    /**
+     * The constant EMPTY_BYTE_ARRAY.
+     */
     public static final byte[] EMPTY_BYTE_ARRAY = new byte[0];
 
     /**

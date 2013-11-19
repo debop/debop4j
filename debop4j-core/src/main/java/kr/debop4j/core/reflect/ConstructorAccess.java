@@ -38,15 +38,21 @@ public abstract class ConstructorAccess<T> {
     @Getter
     boolean nonStaticMemberClass;
 
-    /** Constructor for top-level classes and static nested classes. */
+    /**
+     * Constructor for top-level classes and static nested classes.
+     */
     public abstract T newInstance();
 
-    /** Constructor for inner classes (non-static nested classes) - except static nested classes */
+    /**
+     * Constructor for inner classes (non-static nested classes) - except static nested classes
+     */
     public abstract T newInstance(Object enclosingInstance);
 
     private static final Object syncLock = new Object();
 
-    /** 지정한 수형의 생성자에 대한 접근자를 생성합니다. */
+    /**
+     * 지정한 수형의 생성자에 대한 접근자를 생성합니다.
+     */
     @SuppressWarnings("unchecked")
     public static <T> ConstructorAccess<T> get(Class<T> type) {
         shouldNotBeNull(type, "type");
@@ -112,7 +118,9 @@ public abstract class ConstructorAccess<T> {
         }
     }
 
-    /** 생성자를 추가한다. */
+    /**
+     * 생성자를 추가한다.
+     */
     static private void insertConstructor(ClassWriter cw) {
         MethodVisitor mv = cw.visitMethod(ACC_PUBLIC, "<init>", "()V", null, null);
         mv.visitCode();
@@ -123,7 +131,9 @@ public abstract class ConstructorAccess<T> {
         mv.visitEnd();
     }
 
-    /** 새로운 인스턴스를 추가합니다. */
+    /**
+     * 새로운 인스턴스를 추가합니다.
+     */
     static void insertNewInstance(ClassWriter cw, String classNameInternal) {
         MethodVisitor mv = cw.visitMethod(ACC_PUBLIC, "newInstance", "()Ljava/lang/Object;", null, null);
         mv.visitCode();
@@ -135,7 +145,9 @@ public abstract class ConstructorAccess<T> {
         mv.visitEnd();
     }
 
-    /** inner 인스턴스를 추가한다 */
+    /**
+     * inner 인스턴스를 추가한다
+     */
     static void insertNewInstanceInner(ClassWriter cw, String classNameInternal, String enclosingClassNameInternal) {
         MethodVisitor mv = cw.visitMethod(ACC_PUBLIC, "newInstance", "(Ljava/lang/Object;)Ljava/lang/Object;", null, null);
         mv.visitCode();

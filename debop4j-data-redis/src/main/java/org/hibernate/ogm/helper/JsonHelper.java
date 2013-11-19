@@ -34,7 +34,7 @@ public class JsonHelper {
         return serializer.serialize(graph);
     }
 
-    @SuppressWarnings( "unchecked" )
+    @SuppressWarnings("unchecked")
     public Map<String, Object> createAssociation(byte[] associationAsJson) {
         return (Map<String, Object>) serializer.deserialize(associationAsJson);
     }

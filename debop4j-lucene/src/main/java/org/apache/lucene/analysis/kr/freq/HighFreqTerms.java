@@ -36,7 +36,9 @@ import java.util.Comparator;
 @Slf4j
 public class HighFreqTerms {
 
-    /** 빈도수에 따른 조회 Term의 기본 갯수 */
+    /**
+     * 빈도수에 따른 조회 Term의 기본 갯수
+     */
     public static final int DEFAULT_TERMS_NUM = 100;
 
     /**
@@ -152,7 +154,9 @@ public class HighFreqTerms {
         return totalTermFreq;
     }
 
-    /** 빈도수가 높은 순으로 저장하는 큐입니다 */
+    /**
+     * 빈도수가 높은 순으로 저장하는 큐입니다
+     */
     public static class HighFreqTermQueue extends SortedArrayList<TermFreq> {
 
         private final int capacity;
@@ -187,7 +191,9 @@ public class HighFreqTerms {
     }
 
 
-    /** 전체 빈도수의 역순 (최다 빈도수가 상위에 오도록) 으로 정렬할 수 있도록 하는 비교자입니다. */
+    /**
+     * 전체 빈도수의 역순 (최다 빈도수가 상위에 오도록) 으로 정렬할 수 있도록 하는 비교자입니다.
+     */
     public static class TotalTermFreqComparatorSortDescending implements Comparator<TermFreq> {
         @Override
         public int compare(TermFreq a, TermFreq b) {

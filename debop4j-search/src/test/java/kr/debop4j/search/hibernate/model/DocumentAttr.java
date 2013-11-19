@@ -53,11 +53,15 @@ public class DocumentAttr extends ValueObjectBase {
         this.value = value;
     }
 
-    /** 특성 명 */
+    /**
+     * 특성 명
+     */
     @Field(analyze = Analyze.NO)
     private String name;
 
-    /** 특성 값 */
+    /**
+     * 특성 값
+     */
     @Field
     @Boost(1.2f)
     private String value;

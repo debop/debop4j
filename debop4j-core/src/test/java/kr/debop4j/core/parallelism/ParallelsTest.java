@@ -41,7 +41,9 @@ public class ParallelsTest {
     private static final int LowerBound = 0;
     private static final int UpperBound = 99999;
 
-    /** Parallel runnable. */
+    /**
+     * Parallel runnable.
+     */
     @Test
     public void parallelRunnable() {
         final Runnable runnable =
@@ -61,7 +63,9 @@ public class ParallelsTest {
         Parallels.run(0, 100, runnable);
     }
 
-    /** Parallel run action. */
+    /**
+     * Parallel run action.
+     */
     @Test
     public void parallelRunAction() {
         final Action1<Integer> action1 =
@@ -81,7 +85,9 @@ public class ParallelsTest {
         }
     }
 
-    /** Parallel run each action. */
+    /**
+     * Parallel run each action.
+     */
     @Test
     public void parallelRunEachAction() {
         final Action1<Integer> action1 =
@@ -101,7 +107,9 @@ public class ParallelsTest {
         Parallels.runEach(NumberRange.range(0, 100), action1);
     }
 
-    /** Parallel callable. */
+    /**
+     * Parallel callable.
+     */
     @Test
     public void parallelCallable() {
         final Callable<Double> callable =
@@ -125,7 +133,9 @@ public class ParallelsTest {
         Assert.assertEquals(100, results.size());
     }
 
-    /** Parallel run function. */
+    /**
+     * Parallel run function.
+     */
     @Test
     public void parallelRunFunction() {
         final Function1<Integer, Double> function1 =
@@ -149,7 +159,9 @@ public class ParallelsTest {
         Assert.assertEquals(100, results.size());
     }
 
-    /** Parallel run each function. */
+    /**
+     * Parallel run each function.
+     */
     @Test
     public void parallelRunEachFunction() {
         final Function1<Integer, Double> function1 =
@@ -199,7 +211,9 @@ public class ParallelsTest {
         Parallels.runPartitions(NumberRange.range(0, 100), action1);
     }
 
-    /** Run partitions function. */
+    /**
+     * Run partitions function.
+     */
     @Test
     public void runPartitionsFunction() {
         final Function1<List<Integer>, List<Double>> function1 =
@@ -228,7 +242,9 @@ public class ParallelsTest {
     }
 
 
-    /** The type Hero. */
+    /**
+     * The type Hero.
+     */
     public static class Hero {
 
         private static final double Tolerance = 1.0e-10;

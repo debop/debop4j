@@ -44,7 +44,9 @@ public abstract class AnnotatedLocaleEntityBase<TLocaleValue extends ILocaleValu
     @Transient
     private TLocaleValue defaultLocaleValue = null;
 
-    /** 기본 Locale 정보를 생성하여 제공합니다. */
+    /**
+     * 기본 Locale 정보를 생성하여 제공합니다.
+     */
     public final TLocaleValue getDefaultLocaleValue() {
         if (defaultLocaleValue == null) {
             try {

@@ -40,11 +40,13 @@ import javax.persistence.MappedSuperclass;
 @DynamicUpdate
 public abstract class LongAnnotatedEntityBase extends AnnotatedEntityBase implements IEntity<Long> {
 
-    /** 엔티티 Identifier */
+    /**
+     * 엔티티 Identifier
+     */
     @Id
-    @GeneratedValue( strategy = GenerationType.AUTO )
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Getter
-    @Setter( AccessLevel.PROTECTED )
+    @Setter(AccessLevel.PROTECTED)
     private Long id;
 
     @Override

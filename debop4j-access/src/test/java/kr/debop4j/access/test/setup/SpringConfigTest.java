@@ -35,8 +35,8 @@ import static org.fest.assertions.Assertions.assertThat;
  * @since 13. 3. 12.
  */
 @Slf4j
-@RunWith( SpringJUnit4ClassRunner.class )
-@ContextConfiguration( classes = { AppConfig.class } )
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(classes = { AppConfig.class })
 public class SpringConfigTest {
 
     @Autowired

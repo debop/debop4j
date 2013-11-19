@@ -49,7 +49,7 @@ public class DatabaseConfig extends HSqlConfigBase {
         return props;
     }
 
-    private static String[] mappedPackageNames = new String[]{
+    private static String[] mappedPackageNames = new String[] {
             "kr.debop4j.data.mapping.model.annotated",
             "kr.debop4j.data.mapping.model.annotated.collection",
             "kr.debop4j.data.mapping.model.annotated.join",

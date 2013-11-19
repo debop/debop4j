@@ -34,7 +34,7 @@ import org.slf4j.LoggerFactory;
 import java.io.IOException;
 import java.util.*;
 
-@SuppressWarnings( "unchecked" )
+@SuppressWarnings("unchecked")
 public class KoreanFilter extends TokenFilter {
 
     private static final Logger log = LoggerFactory.getLogger(KoreanFilter.class);
@@ -82,8 +82,8 @@ public class KoreanFilter extends TokenFilter {
     public KoreanFilter(TokenStream input) {
         super(input);
 
-        if (isDebugEnabled)
-            log.debug("KoreanFilter를 생성합니다...");
+
+        log.debug("KoreanFilter를 생성합니다...");
 
         morphQueue = new LinkedList<IndexWord>();
         morph = new MorphAnalyzer();
@@ -146,8 +146,8 @@ public class KoreanFilter extends TokenFilter {
                 String word = indexWord.getWord();
                 for (String syn : SynonymUtil.getSynonym(word)) {
                     if (!word.equals(syn)) {
-                        if (isTraceEnabled)
-                            log.trace("동의어를 추가합니다. word=[{}], syn=[{}]", word, syn);
+
+                        log.trace("동의어를 추가합니다. word=[{}], syn=[{}]", word, syn);
                         morphQueue.add(new IndexWord(syn, indexWord.getOffset()));
                     }
                 }
@@ -155,7 +155,7 @@ public class KoreanFilter extends TokenFilter {
 
 //            for (String syn : SynonymUtil.getSynonym(text)) {
 //                if (!text.equals(syn)) {
-//                    if (isTraceEnabled)
+//
 //                        log.trace("동의어를 추가합니다. text=[{}], 동의어=[{}]", text, syn);
 //                    morphQueue.add(new IndexWord(syn, 0));
 //                }
@@ -173,7 +173,9 @@ public class KoreanFilter extends TokenFilter {
         return true;
     }
 
-    /** queue에 저장된 값으로 buffer의 값을 복사한다. */
+    /**
+     * queue에 저장된 값으로 buffer의 값을 복사한다.
+     */
     private void setTermBufferByQueue(boolean isFirst) {
 
         clearAttributes();
@@ -195,12 +197,11 @@ public class KoreanFilter extends TokenFilter {
      * 한글을 분석한다.
      *
      * @throws org.apache.lucene.analysis.kr.morph.MorphException
-     *
      */
     private void analysisKorean(String input) throws MorphException {
 
-        if (isTraceEnabled)
-            log.trace("한글을 분석합니다. input=[{}]", input);
+
+        log.trace("한글을 분석합니다. input=[{}]", input);
 
         List<AnalysisOutput> outputs = morph.analyze(input);
         if (outputs.size() == 0) return;
@@ -236,15 +237,15 @@ public class KoreanFilter extends TokenFilter {
             if (text.length() <= 1) continue;
             morphQueue.add(map.get(text));
 
-            if (isTraceEnabled)
-                log.trace("큐에 추출한 인덱스를 추가합니다. indexWord=[{}]", map.get(text));
+
+            log.trace("큐에 추출한 인덱스를 추가합니다. indexWord=[{}]", map.get(text));
         }
     }
 
     private void extractKeyword(List<AnalysisOutput> outputs, Map<String, IndexWord> map) throws MorphException {
 
-        if (isTraceEnabled)
-            log.trace("키워드를 추출합니다...");
+
+        log.trace("키워드를 추출합니다...");
 
         for (AnalysisOutput output : outputs) {
 
@@ -287,8 +288,8 @@ public class KoreanFilter extends TokenFilter {
 
     private void addBiagramToMap(String input, Map<String, IndexWord> map) {
 
-        if (isTraceEnabled)
-            log.trace("Biagram을 분석해서 맵에 추가. input=[{}]", input);
+
+        log.trace("Biagram을 분석해서 맵에 추가. input=[{}]", input);
 
         int offset = 0;
         int strlen = input.length();
@@ -309,8 +310,8 @@ public class KoreanFilter extends TokenFilter {
 
     private String findAlphaNumeric(String text) {
 
-        if (isTraceEnabled)
-            log.trace("AlphaNumeric을 찾습니다. text=[{}]", text);
+
+        log.trace("AlphaNumeric을 찾습니다. text=[{}]", text);
 
         int pos = 0;
         for (char c : text.toCharArray()) {
@@ -332,12 +333,11 @@ public class KoreanFilter extends TokenFilter {
      *
      * @param term 단어
      * @throws org.apache.lucene.analysis.kr.morph.MorphException
-     *
      */
     private void analysisChinese(String term) throws MorphException {
 
-        if (isTraceEnabled)
-            log.trace("한자를 분석합니다. term=[{}]", term);
+
+        log.trace("한자를 분석합니다. term=[{}]", term);
 
         morphQueue.add(new IndexWord(term, 0));
         if (term.length() < 2) return; // 1글자 한자는 색인어로 한글을 추출하지 않는다.
@@ -389,8 +389,8 @@ public class KoreanFilter extends TokenFilter {
                 IndexWord indexWord = new IndexWord(term.substring(offset, pos), offset);
                 morphQueue.add(indexWord);
 
-                if (isTraceEnabled)
-                    log.trace("한글과 매치되는 한자를 큐에 저장한다. indexWord=[{}]", indexWord);
+
+                log.trace("한글과 매치되는 한자를 큐에 저장한다. indexWord=[{}]", indexWord);
 
                 cnounMap.put(entry.getWord(), entry.getWord());
 
@@ -406,8 +406,8 @@ public class KoreanFilter extends TokenFilter {
 
     private List<CompoundEntry> confirmCNoun(String input) throws MorphException {
 
-        if (isTraceEnabled)
-            log.trace("한자 명사인지 확인합니다. input=[{}]", input);
+
+        log.trace("한자 명사인지 확인합니다. input=[{}]", input);
 
         WordEntry cnoun = DictionaryUtil.getCNoun(input);
         if (cnoun != null && cnoun.getFeature(WordEntry.IDX_NOUN) == '2') {
@@ -420,8 +420,8 @@ public class KoreanFilter extends TokenFilter {
 
     private void analysisETC(String term) throws MorphException {
 
-        if (isTraceEnabled)
-            log.trace("부가적인 분석을 수행합니다. term=[{}]", term);
+
+        log.trace("부가적인 분석을 수행합니다. term=[{}]", term);
 
         final char[] buffer = termAtt.buffer();
         final int bufferLength = termAtt.length();
