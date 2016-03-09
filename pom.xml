@@ -238,7 +238,7 @@
         <commons.io.version>2.1</commons.io.version>
         <commons.compress.version>1.4.1</commons.compress.version>
         <commons.pool.version>1.6</commons.pool.version>
-        <commons.collections.version>3.2.1</commons.collections.version>
+        <commons.collections.version>3.2.2</commons.collections.version>
         <commons.lang3.version>3.1</commons.lang3.version>
         <commons.validator.version>1.4.0</commons.validator.version>
 
